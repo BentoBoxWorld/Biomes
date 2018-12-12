@@ -1,0 +1,15 @@
+name: Biomes
+version: ${project.version}
+main: world.bentobox.addons.biomes.BiomesAddon
+authors: [BONNe]
+description: Allow players to change biomes on their island
+softdepend: AcidIsland, BSkyBlock
+
+
+permissions:
+  bskyblock.island.biomes:
+    description: Player can use biomes commands
+    default: true
+  acidisland.island.biomes:
+    description: Player can use biomes commands
+    default: true

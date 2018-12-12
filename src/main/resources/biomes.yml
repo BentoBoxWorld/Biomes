@@ -1,0 +1,22 @@
+ biomes:
+  biomesList:
+    desert:
+      friendlyName: 'Desert'
+      description: 'Desert biome'
+      icon: SAND
+      changeText: 'Biome will be changed'
+
+      changeRadius: 1
+      requiredLevel: 1
+      requiredMoney: 1
+      takeMoney: true
+    ocean:
+      friendlyName: 'Ocean'
+      description: 'Ocean biome'
+      icon: STONE
+      changeText: 'Biome will be changed'
+
+      changeRadius: 1
+      requiredLevel: 1
+      requiredMoney: 1
+      takeMoney: true

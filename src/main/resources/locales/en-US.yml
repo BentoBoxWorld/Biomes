@@ -1,0 +1,12 @@
+biomes:
+  change-biome: "You changed biome on your island."
+
+  help:
+    parameters: "<biome>"
+    description: "allows you to change biome on your island"
+
+  admin:
+    gui-title: "Biomes Admin GUI"
+    edit-gui-title: "Add/Edit Biomes"
+
+  gui-title: "Biomes Panel"
