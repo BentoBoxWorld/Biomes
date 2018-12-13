@@ -21,6 +21,15 @@ import world.bentobox.bentobox.database.objects.DataObject;
 public class BiomesObject implements DataObject
 {
 	/**
+	 * Empty constructor for loader.
+	 */
+	public BiomesObject()
+	{
+		// Empty constructor.
+	}
+
+
+	/**
 	 * Default constructor.
 	 */
 	public BiomesObject(Biome biome)
@@ -33,6 +42,46 @@ public class BiomesObject implements DataObject
 // ---------------------------------------------------------------------
 // Section: Setters and Getters
 // ---------------------------------------------------------------------
+
+
+	/**
+	 * This method returns biomes name.
+	 * @return Biomes name.
+	 */
+	public String getBiomeName()
+	{
+		return this.biomeName;
+	}
+
+
+	/**
+	 * This method sets biomes name.
+	 * @param biomeName Biomes name.
+	 */
+	public void setBiomeName(String biomeName)
+	{
+		this.biomeName = biomeName;
+	}
+
+
+	/**
+	 * This method returns biomes ID.
+	 * @return Biomes ID.b
+	 */
+	public int getBiomeID()
+	{
+		return this.biomeID;
+	}
+
+
+	/**
+	 * This method sets biomes ID.
+	 * @param biomeID biomes ID.
+	 */
+	public void setBiomeID(int biomeID)
+	{
+		this.biomeID = biomeID;
+	}
 
 
 	/**
@@ -110,25 +159,25 @@ public class BiomesObject implements DataObject
 	/**
 	 * @return the reqIslandlevel
 	 */
-	public long getLevel()
+	public long getRequiredLevel()
 	{
 		return this.requiredLevel;
 	}
 
 
 	/**
-	 * @param reqIslandlevel the reqIslandlevel to set
+	 * @param requiredLevel the requiredLevel to set
 	 */
-	public void setLevel(long reqIslandlevel)
+	public void setRequiredLevel(long requiredLevel)
 	{
-		this.requiredLevel = reqIslandlevel;
+		this.requiredLevel = requiredLevel;
 	}
 
 
 	/**
 	 * @return the cost of changing biome
 	 */
-	public int getCost()
+	public int getRequiredCost()
 	{
 		return this.requiredCost;
 	}
@@ -137,7 +186,7 @@ public class BiomesObject implements DataObject
 	/**
 	 * @param requiredCost the reqMoney to set
 	 */
-	public void setCost(int requiredCost)
+	public void setRequiredCost(int requiredCost)
 	{
 		this.requiredCost = requiredCost;
 	}
@@ -158,34 +207,6 @@ public class BiomesObject implements DataObject
 	public void setSlot(int slot)
 	{
 		this.slot = slot;
-	}
-
-
-	/**
-	 * @return the environment
-	 */
-	public List<World.Environment> getEnvironment()
-	{
-		return environment;
-	}
-
-
-	/**
-	 * @param environment the environment to set
-	 */
-	public void setEnvironment(List<World.Environment> environment)
-	{
-		this.environment = environment;
-	}
-
-
-	/**
-	 * This method returns biomes ID.
-	 * @return
-	 */
-	public int getBiomesID()
-	{
-		return this.biomeID;
 	}
 
 
@@ -242,7 +263,7 @@ public class BiomesObject implements DataObject
 
 		BiomesObject other = (BiomesObject) obj;
 
-		return this.biomeID == other.getBiomesID();
+		return this.biomeID == other.getBiomeID();
 	}
 
 
@@ -252,10 +273,10 @@ public class BiomesObject implements DataObject
 
 
 	@ConfigComment("Official minecraft biome name.")
-	private final String biomeName;
+	private String biomeName;
 
 	@ConfigComment("Unique biome ID.")
-	private final int biomeID;
+	private int biomeID;
 
 	@ConfigComment("Whether this biome is deployed or not")
 	private boolean deployed;
@@ -271,9 +292,6 @@ public class BiomesObject implements DataObject
 
 	@ConfigComment("Icon slot where this biomes should be placed. 0 to 49. A negative value means any slot")
 	private int slot = -1;
-
-	@ConfigComment("List of environments where this biome will occur: NETHER, NORMAL, THE_END. Leave blank for all.")
-	private List<World.Environment> environment = new ArrayList<>();
 
 	@ConfigComment("Required island level for this biome. Only works if Level Addon is being used.")
 	private long requiredLevel;

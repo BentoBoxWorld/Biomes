@@ -229,13 +229,12 @@ public class BiomesAddonManager
 			ConfigurationSection details = reader.getConfigurationSection(biome);
 
 			newBiomeObject.setFriendlyName(details.getString("friendlyName", biome));
-			newBiomeObject.setEnvironment(Utils.parseEnvironments(details.getString("world", biome)));
 
 			newBiomeObject.setDescription(Utils.splitString(details.getString("description", "")));
 			newBiomeObject.setIcon(Utils.parseItem(this.addon, details.getString("icon") + ":1"));
 
-			newBiomeObject.setLevel(details.getInt("islandLevel", 0));
-			newBiomeObject.setCost(details.getInt("cost", 0));
+			newBiomeObject.setRequiredLevel(details.getInt("islandLevel", 0));
+			newBiomeObject.setRequiredCost(details.getInt("cost", 0));
 
 			if (this.addon.getAddonManager().storeBiome(newBiomeObject, overwrite, user, false))
 			{

@@ -121,7 +121,7 @@ public class Utils
 	 */
 	public static Biome parseBiome(BiomesObject biomesObject)
 	{
-		int id = biomesObject.getBiomesID();
+		int id = biomesObject.getBiomeID();
 
 		if (id < 0 || Biome.values().length < id)
 		{
