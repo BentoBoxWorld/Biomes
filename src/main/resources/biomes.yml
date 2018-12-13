@@ -30,7 +30,7 @@ biomes:
     ocean:
       friendlyName: 'Ocean'
       description: 'Oh, now you need to learn how to swim.'
-      icon: 'water'
+      icon: 'water_bucket'
       islandLevel: 0
       cost: 100
       world: 'NORMAL'
