@@ -16,6 +16,7 @@ import world.bentobox.bentobox.api.panels.Panel;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.bentobox.database.objects.Island;
 
 
 /**
@@ -109,7 +110,7 @@ public class BiomesPanel
 			itemBuilder.clickHandler((panel, player, c, s) -> {
 				if (this.canChangeBiome())
 				{
-					this.updateToNewBiome(player, biome);
+					this.updateToNewBiome(player, biome, UpdateMode.COMPLETE);
 				}
 
 				return true;
@@ -144,18 +145,66 @@ public class BiomesPanel
 	 * This method changes biome on island.
 	 * @param player User that changes biome.
 	 * @param biome New Biome that must be set.
+	 * @param mode UpdateMode how new biome location is calculated.
 	 */
-	private void updateToNewBiome(User player, BiomesObject biome)
+	private void updateToNewBiome(User player, BiomesObject biome, UpdateMode mode)
 	{
+		int minX;
+		int minZ;
+		int maxX;
+		int maxZ;
+
+		// Calculate minimal and maximal coordinate based on update mode.
+
+		switch (mode)
+		{
+			case COMPLETE:
+				Island island = this.addon.getIslands().getIsland(this.world, player);
+
+				int range = island.getRange();
+
+				minX = island.getMinX();
+				minZ = island.getMinZ();
+
+				maxX = minX + 2 * range;
+				maxZ = minZ + 2 * range;
+
+				break;
+			case CHUNK:
+				Chunk chunk = player.getLocation().getChunk();
+
+				minX = chunk.getX();
+				minZ = chunk.getZ();
+
+				maxX = minX + 16;
+				maxZ = minZ + 16;
+
+				break;
+			case DIAMETER:
+
+				// TODO: pass update diameter till here!
+
+				int halfDiameter = 10;
+
+				minX = player.getLocation().getBlockX() - halfDiameter;
+				minZ = player.getLocation().getBlockZ() - halfDiameter;
+
+				maxX = player.getLocation().getBlockX() + halfDiameter;
+				maxZ = player.getLocation().getBlockZ() + halfDiameter;
+
+				break;
+			default:
+				// Setting all values to 0 will skip biome changing.
+
+				minX = 0;
+				minZ = 0;
+				maxX = 0;
+				maxZ = 0;
+		}
+
+		// Update world coordinates with new biomes.
+
 		Biome newBiome = Utils.parseBiome(biome);
-
-		int radius = 8;
-
-		int minX = player.getLocation().getBlockX() - radius;
-		int minZ = player.getLocation().getBlockZ() - radius;
-
-		int maxX = player.getLocation().getBlockX() + radius;
-		int maxZ = player.getLocation().getBlockZ() + radius;
 
 		Set<Chunk> changedChunks = new HashSet<>();
 
@@ -226,5 +275,16 @@ public class BiomesPanel
 		ADMIN,
 		EDIT,
 		PLAYER
+	}
+
+
+	/**
+	 * This enum stores all possible variants how to calculate new biome location.
+	 */
+	public enum UpdateMode
+	{
+		COMPLETE,
+		CHUNK,
+		DIAMETER
 	}
 }
