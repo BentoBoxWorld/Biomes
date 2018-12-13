@@ -149,7 +149,7 @@ public class BiomesPanel
 	{
 		Biome newBiome = Utils.parseBiome(biome);
 
-		int radius = biome.getChangingRadius();
+		int radius = 8;
 
 		int minX = player.getLocation().getBlockX() - radius;
 		int minZ = player.getLocation().getBlockZ() - radius;

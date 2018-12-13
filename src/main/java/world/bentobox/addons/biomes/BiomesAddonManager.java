@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import world.bentobox.addons.biomes.objects.BiomesObject;
 import world.bentobox.addons.biomes.panel.BiomesPanel;
@@ -215,28 +216,28 @@ public class BiomesAddonManager
 
 		ConfigurationSection reader = config.getConfigurationSection("biomes.biomesList");
 
+		Map<String, Biome> biomeNameMap = Utils.getBiomeNameMap();
+
 		for (String biome : reader.getKeys(false))
 		{
-			BiomesObject newBiomes = new BiomesObject();
+			BiomesObject newBiomeObject = new BiomesObject(
+				biomeNameMap.get(biome.toUpperCase()));
 
-			newBiomes.setUniqueId(Util.getWorld(world).getName() + "_" + biome);
-			newBiomes.setDeployed(true);
+			newBiomeObject.setUniqueId(Util.getWorld(world).getName() + "_" + biome);
+			newBiomeObject.setDeployed(true);
 
 			ConfigurationSection details = reader.getConfigurationSection(biome);
 
-			newBiomes.setFriendlyName(details.getString("friendlyName", biome));
-			newBiomes.setWorld(Util.getWorld(world).getName());
+			newBiomeObject.setFriendlyName(details.getString("friendlyName", biome));
+			newBiomeObject.setEnvironment(Utils.parseEnvironments(details.getString("world", biome)));
 
-			newBiomes.setDescription(Utils.splitString(details.getString("description", "")));
-			newBiomes.setIcon(Utils.parseItem(this.addon, details.getString("icon") + ":1"));
+			newBiomeObject.setDescription(Utils.splitString(details.getString("description", "")));
+			newBiomeObject.setIcon(Utils.parseItem(this.addon, details.getString("icon") + ":1"));
 
-			newBiomes.setChangeText(details.getString("changeText", ""));
-			newBiomes.setChangingRadius(details.getInt("changeRadius", 1));
-			newBiomes.setReqIslandlevel(details.getInt("requiredLevel", 0));
-			newBiomes.setReqMoney(details.getInt("requiredMoney", 0));
-			newBiomes.setTakeMoney(details.getBoolean("takeMoney", false));
+			newBiomeObject.setLevel(details.getInt("islandLevel", 0));
+			newBiomeObject.setCost(details.getInt("cost", 0));
 
-			if (this.addon.getAddonManager().storeBiome(newBiomes, overwrite, user, false))
+			if (this.addon.getAddonManager().storeBiome(newBiomeObject, overwrite, user, false))
 			{
 				size++;
 			}

@@ -3,6 +3,7 @@ package world.bentobox.addons.biomes.objects;
 
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -20,10 +21,12 @@ import world.bentobox.bentobox.database.objects.DataObject;
 public class BiomesObject implements DataObject
 {
 	/**
-	 * Empty constructor.
+	 * Default constructor.
 	 */
-	public BiomesObject()
+	public BiomesObject(Biome biome)
 	{
+		this.biomeName = biome.name();
+		this.biomeID = biome.ordinal();
 	}
 
 
@@ -105,92 +108,38 @@ public class BiomesObject implements DataObject
 
 
 	/**
-	 * @return the changingRadius
-	 */
-	public int getChangingRadius()
-	{
-		return this.changingRadius;
-	}
-
-
-	/**
-	 * @param changingRadius the changingRadius to set
-	 */
-	public void setChangingRadius(int changingRadius)
-	{
-		this.changingRadius = changingRadius;
-	}
-
-
-	/**
 	 * @return the reqIslandlevel
 	 */
-	public long getReqIslandlevel()
+	public long getLevel()
 	{
-		return reqIslandlevel;
+		return this.requiredLevel;
 	}
 
 
 	/**
 	 * @param reqIslandlevel the reqIslandlevel to set
 	 */
-	public void setReqIslandlevel(long reqIslandlevel)
+	public void setLevel(long reqIslandlevel)
 	{
-		this.reqIslandlevel = reqIslandlevel;
+		this.requiredLevel = reqIslandlevel;
 	}
 
 
 	/**
-	 * @return the reqMoney
+	 * @return the cost of changing biome
 	 */
-	public int getReqMoney()
+	public int getCost()
 	{
-		return reqMoney;
+		return this.requiredCost;
 	}
 
 
 	/**
-	 * @param reqMoney the reqMoney to set
+	 * @param requiredCost the reqMoney to set
 	 */
-	public void setReqMoney(int reqMoney)
+	public void setCost(int requiredCost)
 	{
-		this.reqMoney = reqMoney;
-	}
-
-
-	/**
-	 * @return the reqPerms
-	 */
-	public Set<String> getReqPerms()
-	{
-		return reqPerms;
-	}
-
-
-	/**
-	 * @param reqPerms the reqPerms to set
-	 */
-	public void setReqPerms(Set<String> reqPerms)
-	{
-		this.reqPerms = reqPerms;
-	}
-
-
-	/**
-	 * @return the changeText
-	 */
-	public String getChangeText()
-	{
-		return this.changeText;
-	}
-
-
-	/**
-	 * @param changeText the changeText to set
-	 */
-	public void setChangeText(String changeText)
-	{
-		this.changeText = changeText;
+		this.requiredCost = requiredCost;
 	}
 
 
@@ -213,24 +162,6 @@ public class BiomesObject implements DataObject
 
 
 	/**
-	 * @return the takeMoney
-	 */
-	public boolean isTakeMoney()
-	{
-		return takeMoney;
-	}
-
-
-	/**
-	 * @param takeMoney the takeMoney to set
-	 */
-	public void setTakeMoney(boolean takeMoney)
-	{
-		this.takeMoney = takeMoney;
-	}
-
-
-	/**
 	 * @return the environment
 	 */
 	public List<World.Environment> getEnvironment()
@@ -249,40 +180,12 @@ public class BiomesObject implements DataObject
 
 
 	/**
-	 * @return the worlds
-	 */
-	public String getWorld()
-	{
-		return world;
-	}
-
-
-	/**
-	 * @param world the worlds to set
-	 */
-	public void setWorld(String world)
-	{
-		this.world = world;
-	}
-
-
-	/**
 	 * This method returns biomes ID.
 	 * @return
 	 */
 	public int getBiomesID()
 	{
 		return this.biomeID;
-	}
-
-
-	/**
-	 * This method sets biomes ID.
-	 * @param biomeID
-	 */
-	public void setBiomesID(int biomeID)
-	{
-		this.biomeID = biomeID;
 	}
 
 
@@ -317,10 +220,7 @@ public class BiomesObject implements DataObject
 	@Override
 	public int hashCode()
 	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((this.uniqueId == null) ? 0 : this.uniqueId.hashCode());
-		return result;
+		return this.biomeID;
 	}
 
 
@@ -342,14 +242,7 @@ public class BiomesObject implements DataObject
 
 		BiomesObject other = (BiomesObject) obj;
 
-		if (this.uniqueId == null)
-		{
-			return other.uniqueId == null;
-		}
-		else
-		{
-			return this.uniqueId.equals(other.uniqueId);
-		}
+		return this.biomeID == other.getBiomesID();
 	}
 
 
@@ -358,10 +251,15 @@ public class BiomesObject implements DataObject
 // ---------------------------------------------------------------------
 
 
+	@ConfigComment("Official minecraft biome name.")
+	private final String biomeName;
+
+	@ConfigComment("Unique biome ID.")
+	private final int biomeID;
+
 	@ConfigComment("Whether this biome is deployed or not")
 	private boolean deployed;
 
-	// Description
 	@ConfigComment("Name of the icon and biomes. May include color codes. Single line.")
 	private String friendlyName = "";
 
@@ -374,33 +272,15 @@ public class BiomesObject implements DataObject
 	@ConfigComment("Icon slot where this biomes should be placed. 0 to 49. A negative value means any slot")
 	private int slot = -1;
 
-	@ConfigComment("World where this biomes operates. List only overworld. Nether and end are automatically covered.")
-	private String world = "";
-
 	@ConfigComment("List of environments where this biome will occur: NETHER, NORMAL, THE_END. Leave blank for all.")
 	private List<World.Environment> environment = new ArrayList<>();
 
-	@ConfigComment("The required permissions to see this biome. String list.")
-	private Set<String> reqPerms = new HashSet<>();
-
-	@ConfigComment("The number of bloks around the player to change biome on an island")
-	private int changingRadius = 1;
-
-	@ConfigComment("Take the money from the player")
-	private boolean takeMoney = false;
-
 	@ConfigComment("Required island level for this biome. Only works if Level Addon is being used.")
-	private long reqIslandlevel;
+	private long requiredLevel;
 
-	@ConfigComment("Required money")
-	private int reqMoney;
+	@ConfigComment("Cost of changing biome.")
+	private int requiredCost;
 
-	@ConfigComment("If this is blank, the biome change text will be auto-generated, otherwise this will be used.")
-	private String changeText = "";
-
-	@ConfigComment("Unique id of the biome")
-	private int biomeID = 0;
-
-	@ConfigComment("Unique name of the biome")
+	@ConfigComment("Unique StringName of the biome")
 	private String uniqueId = "";
 }

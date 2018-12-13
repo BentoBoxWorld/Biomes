@@ -4,12 +4,11 @@ package world.bentobox.addons.biomes.utils;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import world.bentobox.addons.biomes.BiomesAddon;
 import world.bentobox.addons.biomes.objects.BiomesObject;
@@ -130,5 +129,56 @@ public class Utils
 		}
 
 		return Biome.values()[id];
+	}
+
+
+	/**
+	 * This method parses input string to valid list of environments.
+	 * @param environment Input string.
+	 * @return List with valid world environments.
+	 */
+	public static List<World.Environment> parseEnvironments(String environment)
+	{
+		List<World.Environment> returnList = new ArrayList<>(3);
+
+		String[] split = environment.split(":");
+
+		for (String s : split)
+		{
+			if (s.toUpperCase().equals(World.Environment.NORMAL.name()))
+			{
+				returnList.add(World.Environment.NORMAL);
+			}
+			else if (s.toUpperCase().equals(World.Environment.NETHER.name()))
+			{
+				returnList.add(World.Environment.NETHER);
+			}
+			else if (s.toUpperCase().equals(World.Environment.THE_END.name()))
+			{
+				returnList.add(World.Environment.THE_END);
+			}
+		}
+
+		return returnList;
+	}
+
+
+
+	/**
+	 * This method returns map that contains biomes name as key and biome as value.
+	 * @return Map that contains relation from biome name to biome.
+	 */
+	public static Map<String, Biome> getBiomeNameMap()
+	{
+		Biome[] biomes = Biome.values();
+
+		Map<String, Biome> returnMap = new HashMap<>(biomes.length);
+
+		for (Biome biome : biomes)
+		{
+			returnMap.put(biome.name(), biome);
+		}
+
+		return returnMap;
 	}
 }
