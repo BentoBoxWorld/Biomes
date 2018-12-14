@@ -220,25 +220,37 @@ public class BiomesAddonManager
 
 		for (String biome : reader.getKeys(false))
 		{
-			BiomesObject newBiomeObject = new BiomesObject(
-				biomeNameMap.get(biome.toUpperCase()));
-
-			newBiomeObject.setUniqueId(Util.getWorld(world).getName() + "_" + biome);
-			newBiomeObject.setDeployed(true);
-
-			ConfigurationSection details = reader.getConfigurationSection(biome);
-
-			newBiomeObject.setFriendlyName(details.getString("friendlyName", biome));
-
-			newBiomeObject.setDescription(Utils.splitString(details.getString("description", "")));
-			newBiomeObject.setIcon(Utils.parseItem(this.addon, details.getString("icon") + ":1"));
-
-			newBiomeObject.setRequiredLevel(details.getInt("islandLevel", 0));
-			newBiomeObject.setRequiredCost(details.getInt("cost", 0));
-
-			if (this.addon.getAddonManager().storeBiome(newBiomeObject, overwrite, user, false))
+			if (biomeNameMap.containsKey(biome.toUpperCase()))
 			{
-				size++;
+				BiomesObject newBiomeObject = new BiomesObject(
+					biomeNameMap.get(biome.toUpperCase()));
+
+				newBiomeObject.setUniqueId(Util.getWorld(world).getName() + "_" + biome);
+				newBiomeObject.setDeployed(true);
+
+				ConfigurationSection details = reader.getConfigurationSection(biome);
+
+				newBiomeObject.setFriendlyName(details.getString("friendlyName", biome));
+
+				newBiomeObject.setDescription(
+					Utils.splitString(details.getString("description", "")));
+				newBiomeObject.setIcon(
+					Utils.parseItem(this.addon, details.getString("icon") + ":1"));
+
+				newBiomeObject.setRequiredLevel(details.getInt("islandLevel", 0));
+				newBiomeObject.setRequiredCost(details.getInt("cost", 0));
+
+				if (this.addon.getAddonManager().storeBiome(
+					newBiomeObject, overwrite, user, false))
+				{
+					size++;
+				}
+			}
+			else
+			{
+				user.sendMessage("biomes.admin.import.wrong",
+					"[biome]",
+					biome);
 			}
 		}
 
