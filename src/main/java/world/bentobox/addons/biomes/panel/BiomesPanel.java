@@ -2,17 +2,18 @@ package world.bentobox.addons.biomes.panel;
 
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
+import org.bukkit.inventory.ItemStack;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import world.bentobox.addons.biomes.BiomesAddon;
 import world.bentobox.addons.biomes.BiomesAddonManager;
 import world.bentobox.addons.biomes.objects.BiomesObject;
 import world.bentobox.addons.biomes.utils.Utils;
-import world.bentobox.bentobox.api.panels.Panel;
+import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
@@ -39,53 +40,103 @@ public class BiomesPanel
 		this.targetUser = targetUser;
 		this.world = world;
 		this.permissionPrefix = permissionPrefix;
-		this.label = label;
 		this.mode = mode;
-
-		PanelBuilder panelBuilder = new PanelBuilder();
 
 		switch (mode)
 		{
 			case ADMIN:
-				panelBuilder.name(this.player.getTranslation("biomes.admin.gui-title"));
+				this.panelTitle = this.player.getTranslation("biomes.admin.gui-title");
 				break;
 			case EDIT:
-				panelBuilder.name(this.player.getTranslation("biomes.admin.edit-gui-title"));
+				this.panelTitle = this.player.getTranslation("biomes.admin.edit-gui-title");
 				break;
 			case PLAYER:
-				panelBuilder.name(this.player.getTranslation("biomes.gui-title"));
+				this.panelTitle = this.player.getTranslation("biomes.gui-title");
 				break;
 			default:
+				this.panelTitle = "";
 				break;
 		}
 
-		this.addBiomesItems(panelBuilder);
+		this.nextText = this.player.getTranslation("biomes.gui-next");
+		this.previousText = this.player.getTranslation("biomes.gui-prev");
 
-		// Create the panel
-		Panel panel = panelBuilder.build();
-		panel.open(this.player);
+		this.createBiomesPanel(0);
 	}
 
 
 	/**
-	 * This method adds biomes to PanelBuilder
-	 * @param panelBuilder PanelBuilder that contains all menus.
+	 * This method creates Biomes Panel with elements that should be in page by given index.
+	 * @param pageIndex Page index.
 	 */
-	private void addBiomesItems(PanelBuilder panelBuilder)
+	private void createBiomesPanel(int pageIndex)
 	{
-		for (BiomesObject biome : this.addon.getAddonManager().getBiomes())
+		List<BiomesObject> biomes = this.biomesManager.getBiomes();
+
+		final int biomeCount = biomes.size();
+
+		if (pageIndex < 0)
 		{
-			this.createItem(panelBuilder, biome);
+			pageIndex = 0;
 		}
+		else if (pageIndex > (biomeCount / PANEL_MAX_SIZE))
+		{
+			pageIndex = biomeCount / PANEL_MAX_SIZE;
+		}
+
+		// Add page index only when necessary.
+		String indexString = biomeCount > PANEL_MAX_SIZE ? " " + String.valueOf(pageIndex + 1) : "";
+
+		PanelBuilder panelBuilder = new PanelBuilder().user(this.player).name(this.panelTitle + indexString);
+
+		int itemIndex = pageIndex * PANEL_MAX_SIZE;
+
+		while (itemIndex < (pageIndex * PANEL_MAX_SIZE + PANEL_MAX_SIZE) &&
+			itemIndex < biomes.size())
+		{
+			panelBuilder.item(this.createItem(biomes.get(itemIndex)));
+			itemIndex++;
+		}
+
+		final int panelNum = pageIndex;
+
+		// Add Next / previous buttons.
+
+		if (itemIndex < biomes.size())
+		{
+			// Next
+			panelBuilder.item(PANEL_MAX_SIZE + 8,
+				new PanelItemBuilder().name(this.nextText).icon(
+					new ItemStack(Material.SIGN)).clickHandler(
+						(panel, clicker, click, slot) -> {
+							this.player.closeInventory();
+							this.createBiomesPanel(panelNum + 1);
+							return true;
+						}).build());
+		}
+
+		if (itemIndex > PANEL_MAX_SIZE)
+		{
+			// Previous
+			panelBuilder.item(PANEL_MAX_SIZE,
+				new PanelItemBuilder().name(this.previousText).icon(
+					new ItemStack(Material.SIGN)).clickHandler(
+						(panel, clicker, click, slot) -> {
+							this.player.closeInventory();
+							this.createBiomesPanel(panelNum - 1);
+							return true;
+						}).build());
+		}
+
+		panelBuilder.build();
 	}
 
 
 	/**
 	 * This method creates new icon for each biome objecct.
-	 * @param panelBuilder PanelBuilder in which icon must be added.
 	 * @param biome BiomeObject that must be added to panel.
 	 */
-	private void createItem(PanelBuilder panelBuilder, BiomesObject biome)
+	private PanelItem createItem(BiomesObject biome)
 	{
 		PanelItemBuilder itemBuilder =
 			new PanelItemBuilder().icon(biome.getIcon()).name(
@@ -95,19 +146,15 @@ public class BiomesPanel
 		if (this.mode.equals(Mode.ADMIN))
 		{
 			// TODO: need to implement.
-
-			return;
 		}
 		else if (this.mode.equals(Mode.EDIT))
 		{
 			// TODO: need to implement.
-
-			return;
 		}
 		else
 		{
 			// Player click
-			itemBuilder.clickHandler((panel, player, c, s) -> {
+			itemBuilder.clickHandler((panel, player, click, slot) -> {
 				if (this.canChangeBiome())
 				{
 					this.updateToNewBiome(player, biome, UpdateMode.COMPLETE);
@@ -117,15 +164,7 @@ public class BiomesPanel
 			});
 		}
 
-		// If the biome has a specific slot allocated, use it
-		if (biome.getSlot() >= 0)
-		{
-			panelBuilder.item(biome.getSlot(), itemBuilder.build());
-		}
-		else
-		{
-			panelBuilder.item(itemBuilder.build());
-		}
+		return itemBuilder.build();
 	}
 
 
@@ -260,12 +299,22 @@ public class BiomesPanel
 	/**
 	 * This variable stores current panel name.
 	 */
-	private String label;
+	private String panelTitle;
 
 	/**
 	 * This variable stores current panel working mode.
 	 */
 	private Mode mode;
+
+	/**
+	 * This variable holds NEXT button text.
+	 */
+	private final String nextText;
+
+	/**
+	 * This variable holds PREVIOUS button text.
+	 */
+	private final String previousText;
 
 	/**
 	 * This enum stores all possible panel creation modes.
@@ -277,7 +326,6 @@ public class BiomesPanel
 		PLAYER
 	}
 
-
 	/**
 	 * This enum stores all possible variants how to calculate new biome location.
 	 */
@@ -287,4 +335,9 @@ public class BiomesPanel
 		CHUNK,
 		DIAMETER
 	}
+
+	/**
+	 * This variable stores maximal panel size.
+	 */
+	private static final int PANEL_MAX_SIZE = 18;
 }
