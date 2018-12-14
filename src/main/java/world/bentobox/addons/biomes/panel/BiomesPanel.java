@@ -14,12 +14,14 @@ import world.bentobox.addons.biomes.BiomesAddon;
 import world.bentobox.addons.biomes.BiomesAddonManager;
 import world.bentobox.addons.biomes.objects.BiomesObject;
 import world.bentobox.addons.biomes.utils.Utils;
+import world.bentobox.bentobox.api.addons.Addon;
+import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.objects.Island;
-
+import world.bentobox.bentobox.hooks.VaultHook;
 
 /**
  * This class implements Biomes Panel for all users.
@@ -398,7 +400,7 @@ public class BiomesPanel
 		{
 			// Player click
 			itemBuilder.clickHandler((panel, player, click, slot) -> {
-				if (this.canChangeBiome())
+				if (this.canChangeBiome(biome))
 				{
 					// TODO: move to event??
 					this.updateToNewBiome(biome);
@@ -423,47 +425,80 @@ public class BiomesPanel
 	 * This method checks if user can change biome in desired place.
 	 * @return true, if biome changing is possible.
 	 */
-	private boolean canChangeBiome()
+	private boolean canChangeBiome(BiomesObject biome)
 	{
-		boolean canChange;
-
 		if (this.player == this.targetUser)
 		{
 			if (!this.updateMode.equals(UpdateMode.ISLAND) && this.updateNumber <= 0)
 			{
 				// Cannot update negative numbers.
 
-				canChange = false;
+				this.player.sendMessage("biomes.error.negative-number",
+					TextVariables.NUMBER,
+					Integer.toString(this.updateNumber));
+				return false;
 			}
-			else
+
+			Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
+
+			if (island == null)
 			{
-				Island island =
-					this.addon.getIslands().getIsland(this.world, this.targetUser);
+				// User has no island.
 
-				if (island == null)
+				this.player.sendMessage("biomes.error.no-island");
+				return false;
+			}
+
+			Optional<Island> onIsland =
+				this.addon.getIslands().getIslandAt(this.player.getLocation());
+
+			if (!onIsland.isPresent() || onIsland.get() != island)
+			{
+				// User is not on his island.
+
+				this.player.sendMessage("biomes.error.not-on-island");
+				return false;
+			}
+
+			Optional<VaultHook> vaultHook = this.addon.getPlugin().getVault();
+
+			if (vaultHook.isPresent())
+			{
+				if (!vaultHook.get().has(this.player, biome.getRequiredCost()))
 				{
-					// User has no island.
+					// Not enough money.
 
-					canChange = false;
+					this.player.sendMessage("biomes.error.not-enough-money",
+						TextVariables.NUMBER,
+						Double.toString(biome.getRequiredCost()));
+					return false;
 				}
-				else
-				{
-					Optional<Island> onIsland =
-						this.addon.getIslands().getIslandAt(this.player.getLocation());
+			}
 
-					// Return true only if player is on his island.
-					canChange = onIsland.isPresent() && onIsland.get() == island;
+			Optional<Addon> levelHook = this.addon.getAddonByName("Level");
+
+			if (levelHook.isPresent())
+			{
+				double level = ((world.bentobox.level.Level) levelHook.get()).getIslandLevel(this.world,
+					this.player.getUniqueId());
+
+				if (level <= biome.getRequiredLevel())
+				{
+					// Not enough level
+
+					this.player.sendMessage("biomes.error.island-level",
+						TextVariables.NUMBER,
+						String.valueOf(biome.getRequiredLevel()));
+					return false;
 				}
 			}
 		}
 		else
 		{
 			// TODO: implement necessary!!
-
-			canChange = true;
 		}
 
-		return canChange;
+		return true;
 	}
 
 
