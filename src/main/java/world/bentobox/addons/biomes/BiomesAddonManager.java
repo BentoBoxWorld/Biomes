@@ -9,6 +9,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -63,6 +64,8 @@ public class BiomesAddonManager
 		this.addon.getLogger().info("Loading biomes...");
 
 		this.biomesConfig.loadConfigObjects().forEach(this::storeBiome);
+
+		this.biomesList.sort(Comparator.comparingInt(BiomesObject::getBiomeID));
 	}
 
 
@@ -198,6 +201,7 @@ public class BiomesAddonManager
 		}
 
 		this.readBiomes(config, user, world, overwrite);
+		this.biomesList.sort(Comparator.comparingInt(BiomesObject::getBiomeID));
 		this.addon.getAddonManager().save(false);
 		return true;
 	}
