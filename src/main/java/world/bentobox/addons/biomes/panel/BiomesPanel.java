@@ -32,7 +32,7 @@ public class BiomesPanel
 		World world,
 		String permissionPrefix,
 		String label,
-		Mode mode)
+		Mode workingMode)
 	{
 		this.addon = addon;
 		this.biomesManager = addon.getAddonManager();
@@ -40,9 +40,9 @@ public class BiomesPanel
 		this.targetUser = targetUser;
 		this.world = world;
 		this.permissionPrefix = permissionPrefix;
-		this.mode = mode;
+		this.workingMode = workingMode;
 
-		switch (mode)
+		switch (workingMode)
 		{
 			case ADMIN:
 				this.panelTitle = this.player.getTranslation("biomes.admin.gui-title");
@@ -58,11 +58,16 @@ public class BiomesPanel
 				break;
 		}
 
-		this.nextText = this.player.getTranslation("biomes.gui-next");
-		this.previousText = this.player.getTranslation("biomes.gui-prev");
+		this.updateMode = this.parseDefaultUpdateType();
+		this.updateNumber = this.addon.getConfig().getInt("defaultsize", 3);
 
 		this.createBiomesPanel(0);
 	}
+
+
+// ---------------------------------------------------------------------
+// Section: Panel creating methods
+// ---------------------------------------------------------------------
 
 
 	/**
@@ -94,38 +99,81 @@ public class BiomesPanel
 		while (itemIndex < (pageIndex * PANEL_MAX_SIZE + PANEL_MAX_SIZE) &&
 			itemIndex < biomes.size())
 		{
-			panelBuilder.item(this.createItem(biomes.get(itemIndex)));
+			panelBuilder.item(this.createBiomeButton(biomes.get(itemIndex)));
 			itemIndex++;
 		}
 
-		final int panelNum = pageIndex;
-
-		// Add Next / previous buttons.
-
-		if (itemIndex < biomes.size())
+		if (this.addon.getConfig().getBoolean("advancedmenu", false))
 		{
-			// Next
-			panelBuilder.item(PANEL_MAX_SIZE + 8,
-				new PanelItemBuilder().name(this.nextText).icon(
-					new ItemStack(Material.SIGN)).clickHandler(
-						(panel, clicker, click, slot) -> {
-							this.player.closeInventory();
-							this.createBiomesPanel(panelNum + 1);
-							return true;
-						}).build());
+			// Create advanced menu.
+
+			// Add Type Buttons
+			panelBuilder.item(PANEL_MAX_SIZE + 2,
+				this.createAdvancedButton(AdvancedButtons.ISLAND, pageIndex));
+			panelBuilder.item(PANEL_MAX_SIZE + 9 + 2,
+				this.createAdvancedButton(AdvancedButtons.CHUNK, pageIndex));
+			panelBuilder.item(PANEL_MAX_SIZE + 18 + 2,
+				this.createAdvancedButton(AdvancedButtons.SQUARE, pageIndex));
+
+			// Add counter
+			panelBuilder.item(PANEL_MAX_SIZE + 9 + 3,
+				this.createAdvancedButton(AdvancedButtons.COUNTER, pageIndex));
+
+			// Add Setters
+			panelBuilder.item(PANEL_MAX_SIZE + 4,
+				this.createAdvancedButton(AdvancedButtons.ONE, pageIndex));
+			panelBuilder.item(PANEL_MAX_SIZE + 9 + 4,
+				this.createAdvancedButton(AdvancedButtons.FIVE, pageIndex));
+			panelBuilder.item(PANEL_MAX_SIZE + 18 + 4,
+				this.createAdvancedButton(AdvancedButtons.TEN, pageIndex));
+
+			// Add increments
+			panelBuilder.item(PANEL_MAX_SIZE + 5,
+				this.createAdvancedButton(AdvancedButtons.PLUS_ONE, pageIndex));
+			panelBuilder.item(PANEL_MAX_SIZE + 9 + 5,
+				this.createAdvancedButton(AdvancedButtons.PLUS_THREE, pageIndex));
+			panelBuilder.item(PANEL_MAX_SIZE + 18 + 5,
+				this.createAdvancedButton(AdvancedButtons.PLUS_FIVE, pageIndex));
+
+			// Add decrements
+			panelBuilder.item(PANEL_MAX_SIZE + 6,
+				this.createAdvancedButton(AdvancedButtons.MINUS_ONE, pageIndex));
+			panelBuilder.item(PANEL_MAX_SIZE + 9 + 6,
+				this.createAdvancedButton(AdvancedButtons.MINUS_THREE, pageIndex));
+			panelBuilder.item(PANEL_MAX_SIZE + 18 + 6,
+				this.createAdvancedButton(AdvancedButtons.MINUS_FIVE, pageIndex));
+
+			if (itemIndex < biomes.size())
+			{
+				// Next
+				panelBuilder.item(PANEL_MAX_SIZE + 8 + 9,
+					this.createAdvancedButton(AdvancedButtons.NEXT, pageIndex + 1));
+			}
+
+			if (itemIndex > PANEL_MAX_SIZE)
+			{
+				// Previous
+				panelBuilder.item(PANEL_MAX_SIZE + 9,
+					this.createAdvancedButton(AdvancedButtons.PREVIOUS, pageIndex - 1));
+			}
 		}
-
-		if (itemIndex > PANEL_MAX_SIZE)
+		else
 		{
-			// Previous
-			panelBuilder.item(PANEL_MAX_SIZE,
-				new PanelItemBuilder().name(this.previousText).icon(
-					new ItemStack(Material.SIGN)).clickHandler(
-						(panel, clicker, click, slot) -> {
-							this.player.closeInventory();
-							this.createBiomesPanel(panelNum - 1);
-							return true;
-						}).build());
+			// Add next and previous buttons in new line.
+
+			if (itemIndex < biomes.size())
+			{
+				// Next
+				panelBuilder.item(PANEL_MAX_SIZE + 8,
+					this.createAdvancedButton(AdvancedButtons.NEXT, pageIndex + 1));
+			}
+
+			if (itemIndex > PANEL_MAX_SIZE)
+			{
+				// Previous
+				panelBuilder.item(PANEL_MAX_SIZE,
+					this.createAdvancedButton(AdvancedButtons.PREVIOUS, pageIndex - 1));
+			}
 		}
 
 		panelBuilder.build();
@@ -133,21 +181,205 @@ public class BiomesPanel
 
 
 	/**
+	 * This method creates menu buttons for biome changing menu.
+	 * @param button Button type that must be created.
+	 * @param pageIndex Page index.
+	 * @return new panel item button.
+	 */
+	private PanelItem createAdvancedButton(AdvancedButtons button, int pageIndex)
+	{
+		PanelItem item;
+
+		switch (button)
+		{
+			case ISLAND:
+				item = new PanelItemBuilder().
+					name(this.player.getTranslation("biomes.gui.buttons.island.name")).
+					description(this.player.getTranslation("biomes.gui.buttons.island.description")).
+					icon(new ItemStack(Material.GRASS_BLOCK)).
+					clickHandler((panel, clicker, click, slot) -> {
+						this.updateMode = UpdateMode.ISLAND;
+						this.createBiomesPanel(pageIndex);
+						return true;
+					}).glow(this.updateMode == UpdateMode.ISLAND).
+					build();
+				break;
+			case CHUNK:
+				item = new PanelItemBuilder().
+					name(this.player.getTranslation("biomes.gui.buttons.chunk.name")).
+					description(this.player.getTranslation("biomes.gui.buttons.chunk.description")).
+					icon(new ItemStack(Material.DIRT)).
+					clickHandler((panel, clicker, click, slot) -> {
+						this.updateMode = UpdateMode.CHUNK;
+						this.createBiomesPanel(pageIndex);
+						return true;
+					}).glow(this.updateMode == UpdateMode.CHUNK).
+					build();
+				break;
+			case SQUARE:
+				item = new PanelItemBuilder().
+					name(this.player.getTranslation("biomes.gui.buttons.region.name")).
+					description(this.player.getTranslation("biomes.gui.buttons.region.description")).
+					icon(new ItemStack(Material.GLASS)).
+					clickHandler((panel, clicker, click, slot) -> {
+						this.updateMode = UpdateMode.SQUARE;
+						this.createBiomesPanel(pageIndex);
+						return true;
+					}).glow(this.updateMode == UpdateMode.SQUARE).
+					build();
+				break;
+
+			case COUNTER:
+				item = new PanelItemBuilder().
+					name(this.player.getTranslation("biomes.gui.buttons.counter.name") + " " + this.updateNumber).
+					description(this.player.getTranslation("biomes.gui.buttons.counter.description")).
+					icon(new ItemStack(Material.PAPER)).
+					build();
+				break;
+
+			case ONE:
+				item = new PanelItemBuilder().
+					name(this.player.getTranslation("biomes.gui.buttons.setone.name")).
+					description(this.player.getTranslation("biomes.gui.buttons.setone.description")).
+					icon(new ItemStack(Material.BLUE_STAINED_GLASS)).
+					clickHandler((panel, clicker, click, slot) -> {
+						this.updateNumber = 1;
+						this.createBiomesPanel(pageIndex);
+						return true;
+					}).build();
+				break;
+			case FIVE:
+				item = new PanelItemBuilder().
+					name(this.player.getTranslation("biomes.gui.buttons.setfive.name")).
+					description(this.player.getTranslation("biomes.gui.buttons.setfive.description")).
+					icon(new ItemStack(Material.BLUE_STAINED_GLASS)).
+					clickHandler((panel, clicker, click, slot) -> {
+						this.updateNumber = 5;
+						this.createBiomesPanel(pageIndex);
+						return true;
+					}).build();
+				break;
+			case TEN:
+				item = new PanelItemBuilder().
+					name(this.player.getTranslation("biomes.gui.buttons.setten.name")).
+					description(this.player.getTranslation("biomes.gui.buttons.setten.description")).
+					icon(new ItemStack(Material.BLUE_STAINED_GLASS)).
+					clickHandler((panel, clicker, click, slot) -> {
+						this.updateNumber = 10;
+						this.createBiomesPanel(pageIndex);
+						return true;
+					}).build();
+				break;
+
+			case PLUS_ONE:
+				item = new PanelItemBuilder().
+					name(this.player.getTranslation("biomes.gui.buttons.addone.name")).
+					description(this.player.getTranslation("biomes.gui.buttons.addone.description")).
+					icon(new ItemStack(Material.GREEN_STAINED_GLASS_PANE)).
+					clickHandler((panel, clicker, click, slot) -> {
+						this.updateNumber += 1;
+						this.createBiomesPanel(pageIndex);
+						return true;
+					}).build();
+				break;
+			case PLUS_THREE:
+				item = new PanelItemBuilder().
+					name(this.player.getTranslation("biomes.gui.buttons.addthree.name")).
+					description(this.player.getTranslation("biomes.gui.buttons.addthree.description")).
+					icon(new ItemStack(Material.GREEN_STAINED_GLASS_PANE)).
+					clickHandler((panel, clicker, click, slot) -> {
+						this.updateNumber += 3;
+						this.createBiomesPanel(pageIndex);
+						return true;
+					}).build();
+				break;
+			case PLUS_FIVE:
+				item = new PanelItemBuilder().
+					name(this.player.getTranslation("biomes.gui.buttons.addfive.name")).
+					description(this.player.getTranslation("biomes.gui.buttons.addfive.description")).
+					icon(new ItemStack(Material.GREEN_STAINED_GLASS_PANE)).
+					clickHandler((panel, clicker, click, slot) -> {
+						this.updateNumber += 5;
+						this.createBiomesPanel(pageIndex);
+						return true;
+					}).build();
+				break;
+
+			case MINUS_ONE:
+				item = new PanelItemBuilder().
+					name(this.player.getTranslation("biomes.gui.buttons.minusone.name")).
+					description(this.player.getTranslation("biomes.gui.buttons.minusone.description")).
+					icon(new ItemStack(Material.RED_STAINED_GLASS_PANE)).
+					clickHandler((panel, clicker, click, slot) -> {
+						this.updateNumber -= 1;
+						this.createBiomesPanel(pageIndex);
+						return true;
+					}).build();
+				break;
+			case MINUS_THREE:
+				item = new PanelItemBuilder().
+					name(this.player.getTranslation("biomes.gui.buttons.minusthree.name")).
+					description(this.player.getTranslation("biomes.gui.buttons.minusthree.description")).
+					icon(new ItemStack(Material.RED_STAINED_GLASS_PANE)).
+					clickHandler((panel, clicker, click, slot) -> {
+						this.updateNumber -= 3;
+						this.createBiomesPanel(pageIndex);
+						return true;
+					}).build();
+				break;
+			case MINUS_FIVE:
+				item = new PanelItemBuilder().
+					name(this.player.getTranslation("biomes.gui.buttons.minusfive.name")).
+					description(this.player.getTranslation("biomes.gui.buttons.minusfive.description")).
+					icon(new ItemStack(Material.RED_STAINED_GLASS_PANE)).
+					clickHandler((panel, clicker, click, slot) -> {
+						this.updateNumber -= 5;
+						this.createBiomesPanel(pageIndex);
+						return true;
+					}).build();
+				break;
+			case NEXT:
+				item = new PanelItemBuilder().
+					name(this.player.getTranslation("biomes.gui.buttons.next.name")).
+					icon(new ItemStack(Material.SIGN)).
+					clickHandler((panel, clicker, click, slot) -> {
+						this.createBiomesPanel(pageIndex);
+						return true;
+					}).build();
+				break;
+			case PREVIOUS:
+				item = new PanelItemBuilder().
+					name(this.player.getTranslation("biomes.gui.buttons.previous.name")).
+					icon(new ItemStack(Material.SIGN)).
+					clickHandler((panel, clicker, click, slot) -> {
+						this.createBiomesPanel(pageIndex);
+						return true;
+					}).build();
+				break;
+			default:
+				item = new PanelItemBuilder().name("").build();
+		}
+
+		return item;
+	}
+
+
+	/**
 	 * This method creates new icon for each biome objecct.
 	 * @param biome BiomeObject that must be added to panel.
 	 */
-	private PanelItem createItem(BiomesObject biome)
+	private PanelItem createBiomeButton(BiomesObject biome)
 	{
-		PanelItemBuilder itemBuilder =
-			new PanelItemBuilder().icon(biome.getIcon()).name(
-				biome.getFriendlyName().isEmpty() ? biome.getUniqueId() : biome.getFriendlyName()).
-				description(biome.getDescription()).glow(false);
+		PanelItemBuilder itemBuilder = new PanelItemBuilder().
+			icon(biome.getIcon()).
+			name(biome.getFriendlyName().isEmpty() ? biome.getUniqueId() : biome.getFriendlyName()).
+			description(biome.getDescription());
 
-		if (this.mode.equals(Mode.ADMIN))
+		if (this.workingMode.equals(Mode.ADMIN))
 		{
 			// TODO: need to implement.
 		}
-		else if (this.mode.equals(Mode.EDIT))
+		else if (this.workingMode.equals(Mode.EDIT))
 		{
 			// TODO: need to implement.
 		}
@@ -157,8 +389,11 @@ public class BiomesPanel
 			itemBuilder.clickHandler((panel, player, click, slot) -> {
 				if (this.canChangeBiome())
 				{
-					this.updateToNewBiome(player, biome, UpdateMode.COMPLETE);
+					// TODO: move to event??
+					this.updateToNewBiome(player, biome);
 				}
+
+				this.player.closeInventory();
 
 				return true;
 			});
@@ -166,6 +401,11 @@ public class BiomesPanel
 
 		return itemBuilder.build();
 	}
+
+
+// ---------------------------------------------------------------------
+// Section: Biome Changing related methods
+// ---------------------------------------------------------------------
 
 
 	/**
@@ -184,9 +424,8 @@ public class BiomesPanel
 	 * This method changes biome on island.
 	 * @param player User that changes biome.
 	 * @param biome New Biome that must be set.
-	 * @param mode UpdateMode how new biome location is calculated.
 	 */
-	private void updateToNewBiome(User player, BiomesObject biome, UpdateMode mode)
+	private void updateToNewBiome(User player, BiomesObject biome)
 	{
 		int minX;
 		int minZ;
@@ -195,9 +434,9 @@ public class BiomesPanel
 
 		// Calculate minimal and maximal coordinate based on update mode.
 
-		switch (mode)
+		switch (this.updateMode)
 		{
-			case COMPLETE:
+			case ISLAND:
 				Island island = this.addon.getIslands().getIsland(this.world, player);
 
 				int range = island.getRange();
@@ -210,6 +449,8 @@ public class BiomesPanel
 
 				break;
 			case CHUNK:
+				// TODO: implement multiple chunk updating
+
 				Chunk chunk = player.getLocation().getChunk();
 
 				minX = chunk.getX();
@@ -219,11 +460,9 @@ public class BiomesPanel
 				maxZ = minZ + 16;
 
 				break;
-			case DIAMETER:
+			case SQUARE:
 
-				// TODO: pass update diameter till here!
-
-				int halfDiameter = 10;
+				int halfDiameter = this.updateNumber / 2;
 
 				minX = player.getLocation().getBlockX() - halfDiameter;
 				minZ = player.getLocation().getBlockZ() - halfDiameter;
@@ -259,6 +498,87 @@ public class BiomesPanel
 
 		//TODO: need to check how to do it, if it is truly deprecated.
 		changedChunks.forEach(chunk -> this.world.refreshChunk(chunk.getX(), chunk.getZ()));
+	}
+
+
+// ---------------------------------------------------------------------
+// Section: Other methods
+// ---------------------------------------------------------------------
+
+
+	/**
+	 * This method parse default update type from config file.
+	 * @return Default Update mode.
+	 */
+	private UpdateMode parseDefaultUpdateType()
+	{
+		String type = this.addon.getConfig().getString("defaulttype", "").toUpperCase();
+
+		if (type.equals("ISLAND"))
+		{
+			return UpdateMode.ISLAND;
+		}
+		else if (type.equals("CHUNK"))
+		{
+			return UpdateMode.CHUNK;
+		}
+		else if (type.equals("SQUARE"))
+		{
+			return UpdateMode.SQUARE;
+		}
+		else
+		{
+			return UpdateMode.ISLAND;
+		}
+	}
+
+
+// ---------------------------------------------------------------------
+// Section: Enums
+// ---------------------------------------------------------------------
+
+
+	/**
+	 * This enum describes all possible panel creation modes.
+	 */
+	public enum Mode
+	{
+		ADMIN,
+		EDIT,
+		PLAYER
+	}
+
+	/**
+	 * This enum describes all possible variants how to calculate new biome location.
+	 */
+	private enum UpdateMode
+	{
+		ISLAND,
+		CHUNK,
+		SQUARE
+	}
+
+
+	/**
+	 * This enum describes all advanced buttons.
+	 */
+	private enum AdvancedButtons
+	{
+		ISLAND,
+		CHUNK,
+		SQUARE,
+		COUNTER,
+		ONE,
+		FIVE,
+		TEN,
+		PLUS_ONE,
+		PLUS_THREE,
+		PLUS_FIVE,
+		MINUS_ONE,
+		MINUS_THREE,
+		MINUS_FIVE,
+		NEXT,
+		PREVIOUS
 	}
 
 
@@ -304,37 +624,18 @@ public class BiomesPanel
 	/**
 	 * This variable stores current panel working mode.
 	 */
-	private Mode mode;
+	private Mode workingMode;
 
 	/**
-	 * This variable holds NEXT button text.
+	 * This variable stores current panel update mode.
 	 */
-	private final String nextText;
+	private UpdateMode updateMode;
 
 	/**
-	 * This variable holds PREVIOUS button text.
+	 * This variable stores current update distance for SQUARE mode or chunk count for
+	 * CHUNK mode.
 	 */
-	private final String previousText;
-
-	/**
-	 * This enum stores all possible panel creation modes.
-	 */
-	public enum Mode
-	{
-		ADMIN,
-		EDIT,
-		PLAYER
-	}
-
-	/**
-	 * This enum stores all possible variants how to calculate new biome location.
-	 */
-	public enum UpdateMode
-	{
-		COMPLETE,
-		CHUNK,
-		DIAMETER
-	}
+	private int updateNumber;
 
 	/**
 	 * This variable stores maximal panel size.
