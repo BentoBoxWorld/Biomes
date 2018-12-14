@@ -76,6 +76,16 @@ public class BiomesPanel
 	 */
 	private void createBiomesPanel(int pageIndex)
 	{
+		// normalize updatenumber
+		if (this.updateNumber > 200)
+		{
+			this.updateNumber = 200;
+		}
+		else if (this.updateNumber < 0)
+		{
+			this.updateNumber = 0;
+		}
+
 		List<BiomesObject> biomes = this.biomesManager.getBiomes();
 
 		final int biomeCount = biomes.size();
@@ -390,10 +400,10 @@ public class BiomesPanel
 				if (this.canChangeBiome())
 				{
 					// TODO: move to event??
-					this.updateToNewBiome(player, biome);
-				}
+					this.updateToNewBiome(biome);
 
-				this.player.closeInventory();
+					this.player.closeInventory();
+				}
 
 				return true;
 			});
@@ -414,18 +424,53 @@ public class BiomesPanel
 	 */
 	private boolean canChangeBiome()
 	{
-		// TODO: implement necessary!!
+		boolean canChange;
 
-		return true;
+		if (this.player == this.targetUser)
+		{
+			if (!this.updateMode.equals(UpdateMode.ISLAND) && this.updateNumber <= 0)
+			{
+				// Cannot update negative numbers.
+
+				canChange = false;
+			}
+			else
+			{
+				Island island =
+					this.addon.getIslands().getIsland(this.world, this.targetUser);
+
+				if (island == null)
+				{
+					// User has no island.
+
+					canChange = false;
+				}
+				else
+				{
+					Optional<Island> onIsland =
+						this.addon.getIslands().getIslandAt(this.player.getLocation());
+
+					// Return true only if player is on his island.
+					canChange = onIsland.isPresent() && onIsland.get() == island;
+				}
+			}
+		}
+		else
+		{
+			// TODO: implement necessary!!
+
+			canChange = true;
+		}
+
+		return canChange;
 	}
 
 
 	/**
 	 * This method changes biome on island.
-	 * @param player User that changes biome.
 	 * @param biome New Biome that must be set.
 	 */
-	private void updateToNewBiome(User player, BiomesObject biome)
+	private void updateToNewBiome(BiomesObject biome)
 	{
 		int minX;
 		int minZ;
@@ -437,7 +482,7 @@ public class BiomesPanel
 		switch (this.updateMode)
 		{
 			case ISLAND:
-				Island island = this.addon.getIslands().getIsland(this.world, player);
+				Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
 
 				int range = island.getRange();
 
@@ -451,7 +496,7 @@ public class BiomesPanel
 			case CHUNK:
 				// TODO: implement multiple chunk updating
 
-				Chunk chunk = player.getLocation().getChunk();
+				Chunk chunk = this.player.getLocation().getChunk();
 
 				minX = chunk.getX();
 				minZ = chunk.getZ();
@@ -464,11 +509,11 @@ public class BiomesPanel
 
 				int halfDiameter = this.updateNumber / 2;
 
-				minX = player.getLocation().getBlockX() - halfDiameter;
-				minZ = player.getLocation().getBlockZ() - halfDiameter;
+				minX = this.player.getLocation().getBlockX() - halfDiameter;
+				minZ = this.player.getLocation().getBlockZ() - halfDiameter;
 
-				maxX = player.getLocation().getBlockX() + halfDiameter;
-				maxZ = player.getLocation().getBlockZ() + halfDiameter;
+				maxX = this.player.getLocation().getBlockX() + halfDiameter;
+				maxZ = this.player.getLocation().getBlockZ() + halfDiameter;
 
 				break;
 			default:
