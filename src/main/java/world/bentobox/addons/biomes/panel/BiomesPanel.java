@@ -2,6 +2,7 @@ package world.bentobox.addons.biomes.panel;
 
 
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -472,48 +473,45 @@ public class BiomesPanel
 	 */
 	private void updateToNewBiome(BiomesObject biome)
 	{
-		int minX;
-		int minZ;
-		int maxX;
-		int maxZ;
+		Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
+		int range = island.getRange();
+
+		int minX = island.getMinX();
+		int minZ = island.getMinZ();
+
+		int maxX = minX + 2 * range;
+		int maxZ = minZ + 2 * range;
+
+		Location playerLocation = this.player.getLocation();
 
 		// Calculate minimal and maximal coordinate based on update mode.
 
 		switch (this.updateMode)
 		{
 			case ISLAND:
-				Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
-
-				int range = island.getRange();
-
-				minX = island.getMinX();
-				minZ = island.getMinZ();
-
-				maxX = minX + 2 * range;
-				maxZ = minZ + 2 * range;
-
+				// Everything is already calculated.
 				break;
 			case CHUNK:
 				// TODO: implement multiple chunk updating
 
-				Chunk chunk = this.player.getLocation().getChunk();
+				Chunk chunk = playerLocation.getChunk();
 
-				minX = chunk.getX();
-				minZ = chunk.getZ();
+				minX = Math.max(minX, chunk.getX());
+				minZ = Math.max(minZ, chunk.getZ());
 
-				maxX = minX + 16;
-				maxZ = minZ + 16;
+				maxX = Math.min(maxX, minX + 16);
+				maxZ = Math.min(maxZ, minZ + 16);
 
 				break;
 			case SQUARE:
 
 				int halfDiameter = this.updateNumber / 2;
 
-				minX = this.player.getLocation().getBlockX() - halfDiameter;
-				minZ = this.player.getLocation().getBlockZ() - halfDiameter;
+				minX = Math.max(minX, playerLocation.getBlockX() - halfDiameter);
+				minZ = Math.max(minZ, playerLocation.getBlockZ() - halfDiameter);
 
-				maxX = this.player.getLocation().getBlockX() + halfDiameter;
-				maxZ = this.player.getLocation().getBlockZ() + halfDiameter;
+				maxX = Math.min(maxX, playerLocation.getBlockX() - halfDiameter);
+				maxZ = Math.min(maxZ, playerLocation.getBlockZ() - halfDiameter);
 
 				break;
 			default:
