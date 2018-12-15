@@ -1,11 +1,7 @@
 package world.bentobox.addons.biomes.panel;
 
 
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Biome;
+import org.bukkit.*;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -13,7 +9,7 @@ import java.util.*;
 import world.bentobox.addons.biomes.BiomesAddon;
 import world.bentobox.addons.biomes.BiomesAddonManager;
 import world.bentobox.addons.biomes.objects.BiomesObject;
-import world.bentobox.addons.biomes.utils.Utils;
+import world.bentobox.addons.biomes.tasks.BiomeUpdateTask;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.panels.PanelItem;
@@ -402,9 +398,7 @@ public class BiomesPanel
 			itemBuilder.clickHandler((panel, player, click, slot) -> {
 				if (this.canChangeBiome(biome))
 				{
-					// TODO: move to event??
-					this.updateToNewBiome(biome);
-
+					this.updateIslandBiome(biome);
 					this.player.closeInventory();
 				}
 
@@ -482,7 +476,7 @@ public class BiomesPanel
 				double level = ((world.bentobox.level.Level) levelHook.get()).getIslandLevel(this.world,
 					this.player.getUniqueId());
 
-				if (level <= biome.getRequiredLevel())
+				if (biome.getRequiredLevel() > 0 && level <= biome.getRequiredLevel())
 				{
 					// Not enough level
 
@@ -503,10 +497,10 @@ public class BiomesPanel
 
 
 	/**
-	 * This method changes biome on island.
-	 * @param biome New Biome that must be set.
+	 * This method calculates update region and call BiomeUpdateTask to change given biome on island.
+	 * @param biome New Biome object.
 	 */
-	private void updateToNewBiome(BiomesObject biome)
+	private void updateIslandBiome(BiomesObject biome)
 	{
 		Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
 		int range = island.getRange();
@@ -558,24 +552,8 @@ public class BiomesPanel
 				maxZ = 0;
 		}
 
-		// Update world coordinates with new biomes.
-
-		Biome newBiome = Utils.parseBiome(biome);
-
-		Set<Chunk> changedChunks = new HashSet<>();
-
-		for (int x = minX; x < maxX; x++)
-		{
-			for (int z = minZ; z < maxZ; z++)
-			{
-				this.world.setBiome(x, z, newBiome);
-
-				changedChunks.add(this.world.getChunkAt(x, z));
-			}
-		}
-
-		//TODO: need to check how to do it, if it is truly deprecated.
-		changedChunks.forEach(chunk -> this.world.refreshChunk(chunk.getX(), chunk.getZ()));
+		BiomeUpdateTask task = new BiomeUpdateTask(this.player, this.world, minX, maxX, minZ, maxZ, biome);
+		task.runTaskAsynchronously(this.addon.getPlugin());
 	}
 
 

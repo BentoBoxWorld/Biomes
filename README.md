@@ -6,7 +6,7 @@ For Alfa Release:
 	- [ ] Allow to edit existing biomes through ingame menu.
 	- [ ] Allow to change other players biomes.
 - [ ] Add all lang elements to file.
-- [ ] Make BiomeUpdating as Event, to avoid freezing on large area updating.
+- [x] Make BiomeUpdating as Event, to avoid freezing on large area updating.
 - [ ] Fix/Implement multiple chunk updating.
 
 For Future Releases:
