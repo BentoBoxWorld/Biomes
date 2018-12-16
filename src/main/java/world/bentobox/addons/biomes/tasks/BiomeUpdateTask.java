@@ -16,15 +16,10 @@ import world.bentobox.bentobox.api.user.User;
  */
 public class BiomeUpdateTask extends BukkitRunnable
 {
-	public BiomeUpdateTask(User user, World world, int minX, int maxX, int minZ, int maxZ, BiomesObject biome)
+	public BiomeUpdateTask(User user, World world, BiomesObject biome)
 	{
 		this.user = user;
 		this.world = world;
-		this.minX = minX > maxX ? maxX : minX;
-		this.maxX = minX < maxX ? maxX : minX;
-		this.minZ = minZ > maxZ ? maxZ : minZ;
-		this.maxZ = minZ < maxZ ? maxZ : minZ;
-
 		this.biome = biome;
 	}
 
@@ -49,6 +44,51 @@ public class BiomeUpdateTask extends BukkitRunnable
 		this.user.sendMessage("biomes.update.done",
 			TextVariables.LABEL,
 			this.biome.getFriendlyName());
+	}
+
+
+// ---------------------------------------------------------------------
+// Section: Setters
+// ---------------------------------------------------------------------
+
+
+	/**
+	 * Default Setter.
+	 * @param minX Integer.
+	 */
+	public void setMinX(int minX)
+	{
+		this.minX = minX;
+	}
+
+
+	/**
+	 * Default Setter.
+	 * @param maxX Integer.
+	 */
+	public void setMaxX(int maxX)
+	{
+		this.maxX = maxX;
+	}
+
+
+	/**
+	 * Default Setter.
+	 * @param minZ Integer.
+	 */
+	public void setMinZ(int minZ)
+	{
+		this.minZ = minZ;
+	}
+
+
+	/**
+	 * Default Setter.
+	 * @param maxZ Integer.
+	 */
+	public void setMaxZ(int maxZ)
+	{
+		this.maxZ = maxZ;
 	}
 
 

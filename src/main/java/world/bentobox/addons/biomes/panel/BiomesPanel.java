@@ -384,11 +384,7 @@ public class BiomesPanel
 			name(biome.getFriendlyName().isEmpty() ? biome.getUniqueId() : biome.getFriendlyName()).
 			description(biome.getDescription());
 
-		if (this.workingMode.equals(Mode.ADMIN))
-		{
-			// TODO: need to implement.
-		}
-		else if (this.workingMode.equals(Mode.EDIT))
+		if (this.workingMode.equals(Mode.EDIT))
 		{
 			// TODO: need to implement.
 		}
@@ -489,7 +485,19 @@ public class BiomesPanel
 		}
 		else
 		{
-			// TODO: implement necessary!!
+			Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
+
+			Optional<Island> onIsland =
+				this.addon.getIslands().getIslandAt(this.player.getLocation());
+
+			if (this.updateMode != UpdateMode.ISLAND &&
+				(!onIsland.isPresent() || onIsland.get() != island))
+			{
+				// Admin is not on user island.
+
+				this.player.sendMessage("biomes.error.not-on-island");
+				return false;
+			}
 		}
 
 		return true;
@@ -515,58 +523,79 @@ public class BiomesPanel
 
 		// Calculate minimal and maximal coordinate based on update mode.
 
+		BiomeUpdateTask task = new BiomeUpdateTask(this.player, this.world, biome);
+
 		switch (this.updateMode)
 		{
 			case ISLAND:
-				// Everything is already calculated.
+				task.setMinX(minX > maxX ? maxX : minX);
+				task.setMaxX(minX < maxX ? maxX : minX);
+				task.setMinZ(minZ > maxZ ? maxZ : minZ);
+				task.setMaxZ(minZ < maxZ ? maxZ : minZ);
+
 				break;
 			case CHUNK:
 				Chunk chunk = playerLocation.getChunk();
 
 				if (chunk.getX() < 0)
 				{
-					minX = Math.max(minX, chunk.getX() + 16 * (this.updateNumber - 1));
-					maxX = Math.min(maxX, minX - 16 * this.updateNumber + 1);
+					task.setMaxX(Math.max(minX, chunk.getX() + 16 * (this.updateNumber - 1)));
+					task.setMinX(Math.min(maxX, minX - 16 * this.updateNumber + 1));
 				}
 				else
 				{
-					minX = Math.max(minX, chunk.getX() - 16 * (this.updateNumber - 1));
-					maxX = Math.min(maxX, minX + 16 * this.updateNumber - 1);
+					task.setMinX(Math.max(minX, chunk.getX() - 16 * (this.updateNumber - 1)));
+					task.setMaxX(Math.min(maxX, minX + 16 * this.updateNumber - 1));
 				}
 
 				if (chunk.getZ() < 0)
 				{
-					minZ = Math.max(minZ, chunk.getZ() + 16 * (this.updateNumber - 1));
-					maxZ = Math.min(maxZ, minZ - 16 * this.updateNumber + 1);
+					task.setMaxZ(Math.max(minZ, chunk.getZ() + 16 * (this.updateNumber - 1)));
+					task.setMinZ(Math.min(maxZ, minZ - 16 * this.updateNumber + 1));
 				}
 				else
 				{
-					minZ = Math.max(minZ, chunk.getZ() - 16 * (this.updateNumber - 1));
-					maxZ = Math.min(maxZ, minZ + 16 * this.updateNumber - 1);
+					task.setMinZ(Math.max(minZ, chunk.getZ() - 16 * (this.updateNumber - 1)));
+					task.setMaxZ(Math.min(maxZ, minZ + 16 * this.updateNumber - 1));
 				}
 
 				break;
 			case SQUARE:
-
 				int halfDiameter = this.updateNumber / 2;
 
-				minX = Math.max(minX, playerLocation.getBlockX() - halfDiameter);
-				minZ = Math.max(minZ, playerLocation.getBlockZ() - halfDiameter);
+				int x = playerLocation.getBlockX();
 
-				maxX = Math.min(maxX, playerLocation.getBlockX() + halfDiameter);
-				maxZ = Math.min(maxZ, playerLocation.getBlockZ() + halfDiameter);
+				if (x < 0)
+				{
+					task.setMaxX(Math.max(minX, x + halfDiameter));
+					task.setMinX(Math.min(maxX, x - halfDiameter));
+				}
+				else
+				{
+					task.setMinX(Math.max(minX, x - halfDiameter));
+					task.setMaxX(Math.min(maxX, x + halfDiameter));
+				}
+
+				int z = playerLocation.getBlockZ();
+
+				if (z < 0)
+				{
+					task.setMaxZ(Math.max(minZ, z + halfDiameter));
+					task.setMinZ(Math.min(maxZ, z - halfDiameter));
+				}
+				else
+				{
+					task.setMinZ(Math.max(minZ, z - halfDiameter));
+					task.setMaxZ(Math.min(maxZ, z + halfDiameter));
+				}
 
 				break;
 			default:
 				// Setting all values to 0 will skip biome changing.
-
-				minX = 0;
-				minZ = 0;
-				maxX = 0;
-				maxZ = 0;
+				// Default should never appear.
+				return;
 		}
 
-		BiomeUpdateTask task = new BiomeUpdateTask(this.player, this.world, minX, maxX, minZ, maxZ, biome);
 		task.runTaskAsynchronously(this.addon.getPlugin());
 	}
 
