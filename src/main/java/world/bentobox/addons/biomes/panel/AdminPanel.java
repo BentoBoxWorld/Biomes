@@ -15,6 +15,10 @@ import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
 
 
+/**
+ * This class creates AdminPanel GUI that allows to change user biome, edit, add or remove biome and import
+ * biomes.
+ */
 public class AdminPanel
 {
 	public AdminPanel(BiomesAddon addon, World world, User user)
@@ -23,11 +27,15 @@ public class AdminPanel
 		this.world = world;
 		this.player = user;
 
-		this.createAdminMainMenu();
+		this.createAdminMainMenu(false);
 	}
 
 
-	private void createAdminMainMenu()
+	/**
+	 * This method creates main admin menu.
+	 * @param glow indicate if Import must glow.
+	 */
+	private void createAdminMainMenu(boolean glow)
 	{
 		PanelBuilder panelBuilder = new PanelBuilder().user(this.player).name(
 			this.player.getTranslation("biomes.admin.gui-title"));
@@ -51,7 +59,23 @@ public class AdminPanel
 //		panelBuilder.item(5, new PanelItemBuilder().build());
 
 		// Import Biomes
-//		panelBuilder.item(7, new PanelItemBuilder().build());
+		panelBuilder.item(7, new PanelItemBuilder().
+			name(this.player.getTranslation("biomes.admin.import")).
+			icon(Material.HOPPER).
+			clickHandler((panel, user, clickType, slot) -> {
+				if (clickType.isRightClick())
+				{
+					// Change to overwrite mode.
+					this.createAdminMainMenu(!glow);
+				}
+				else
+				{
+					this.player.performCommand("bsbadmin biomes import" + (glow ? " overwrite" : ""));
+				}
+
+				return true;
+			}).glow(glow).
+			build());
 
 		panelBuilder.build();
 	}
@@ -162,8 +186,6 @@ public class AdminPanel
 	private World world;
 
 	private BiomesAddon addon;
-
-	String permissionPrefix;
 
 	/**
 	 * Set only 5 rows to be for Users. Last row should be reserved for navigation.
