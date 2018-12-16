@@ -922,7 +922,7 @@ public class BiomesPanel
 						Integer.toString(this.updateNumber))).
 					clickHandler((panel, user, clickType, slot) -> {
 						biome.setRequiredLevel(this.updateNumber);
-						this.biomesManager.storeBiome(biome, true, user, true);
+						this.addon.getAddonManager().save(true);
 						this.createBiomeEditPanel(pageIndex, biome, false, false);
 						user.sendMessage("biomes.admin.saved");
 						return true;
@@ -938,7 +938,7 @@ public class BiomesPanel
 						Integer.toString(this.updateNumber))).
 					clickHandler((panel, user, clickType, slot) -> {
 						biome.setRequiredCost(this.updateNumber);
-						this.biomesManager.storeBiome(biome, true, user, true);
+						this.addon.getAddonManager().save(true);
 						this.createBiomeEditPanel(pageIndex, biome, false, false);
 						user.sendMessage("challenges.admin.saved");
 						return true;
