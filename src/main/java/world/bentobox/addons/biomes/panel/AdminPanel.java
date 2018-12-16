@@ -53,7 +53,23 @@ public class AdminPanel
 //		panelBuilder.item(3, new PanelItemBuilder().build());
 
 		// Edit Biome
-//		panelBuilder.item(4, new PanelItemBuilder().build());
+		panelBuilder.item(4, new PanelItemBuilder().
+			name(this.player.getTranslation("biomes.admin.edit")).
+			icon(Material.ANVIL).
+			clickHandler((panel, clicker, click, slot) -> {
+				this.player.closeInventory();
+
+				new BiomesPanel(
+					this.addon,
+					this.player,
+					this.player,
+					"",
+					this.world,
+					"",
+					"",
+					BiomesPanel.Mode.EDIT);
+				return true;
+			}).build());
 
 		// Remove Biome
 //		panelBuilder.item(5, new PanelItemBuilder().build());
