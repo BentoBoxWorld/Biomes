@@ -7,7 +7,7 @@ For Alfa Release:
 	- [ ] Allow to change other players biomes.
 - [ ] Add all lang elements to file.
 - [x] Make BiomeUpdating as Event, to avoid freezing on large area updating.
-- [ ] Fix/Implement multiple chunk updating.
+- [x] Fix/Implement multiple chunk updating.
 
 For Future Releases:
 - [ ] Improve Admin panel
