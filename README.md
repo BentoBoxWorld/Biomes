@@ -2,9 +2,9 @@
 Biomes addon for BSkyBlock and AcidIsland
 
 For Alfa Release:
-- [ ] Create Admin panel
-	- [ ] Allow to edit existing biomes through ingame menu.
-	- [ ] Allow to change other players biomes.
+- [x] Create Admin panel
+	- [x] Allow to edit existing biomes through ingame menu.
+	- [x] Allow to change other players biomes.
 - [ ] Add all lang elements to file.
 - [x] Make BiomeUpdating as Event, to avoid freezing on large area updating.
 - [x] Fix/Implement multiple chunk updating.
