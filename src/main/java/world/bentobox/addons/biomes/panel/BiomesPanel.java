@@ -521,15 +521,29 @@ public class BiomesPanel
 				// Everything is already calculated.
 				break;
 			case CHUNK:
-				// TODO: implement multiple chunk updating
-
 				Chunk chunk = playerLocation.getChunk();
 
-				minX = Math.max(minX, chunk.getX());
-				minZ = Math.max(minZ, chunk.getZ());
+				if (chunk.getX() < 0)
+				{
+					minX = Math.max(minX, chunk.getX() + 16 * (this.updateNumber - 1));
+					maxX = Math.min(maxX, minX - 16 * this.updateNumber + 1);
+				}
+				else
+				{
+					minX = Math.max(minX, chunk.getX() - 16 * (this.updateNumber - 1));
+					maxX = Math.min(maxX, minX + 16 * this.updateNumber - 1);
+				}
 
-				maxX = Math.min(maxX, minX + 16);
-				maxZ = Math.min(maxZ, minZ + 16);
+				if (chunk.getZ() < 0)
+				{
+					minZ = Math.max(minZ, chunk.getZ() + 16 * (this.updateNumber - 1));
+					maxZ = Math.min(maxZ, minZ - 16 * this.updateNumber + 1);
+				}
+				else
+				{
+					minZ = Math.max(minZ, chunk.getZ() - 16 * (this.updateNumber - 1));
+					maxZ = Math.min(maxZ, minZ + 16 * this.updateNumber - 1);
+				}
 
 				break;
 			case SQUARE:
@@ -539,8 +553,8 @@ public class BiomesPanel
 				minX = Math.max(minX, playerLocation.getBlockX() - halfDiameter);
 				minZ = Math.max(minZ, playerLocation.getBlockZ() - halfDiameter);
 
-				maxX = Math.min(maxX, playerLocation.getBlockX() - halfDiameter);
-				maxZ = Math.min(maxZ, playerLocation.getBlockZ() - halfDiameter);
+				maxX = Math.min(maxX, playerLocation.getBlockX() + halfDiameter);
+				maxZ = Math.min(maxZ, playerLocation.getBlockZ() + halfDiameter);
 
 				break;
 			default:

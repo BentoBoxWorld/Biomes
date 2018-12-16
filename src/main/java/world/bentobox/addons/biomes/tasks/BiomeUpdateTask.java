@@ -20,10 +20,10 @@ public class BiomeUpdateTask extends BukkitRunnable
 	{
 		this.user = user;
 		this.world = world;
-		this.minX = minX;
-		this.maxX = maxX;
-		this.minZ = minZ;
-		this.maxZ = maxZ;
+		this.minX = minX > maxX ? maxX : minX;
+		this.maxX = minX < maxX ? maxX : minX;
+		this.minZ = minZ > maxZ ? maxZ : minZ;
+		this.maxZ = minZ < maxZ ? maxZ : minZ;
 
 		this.biome = biome;
 	}
@@ -38,9 +38,9 @@ public class BiomeUpdateTask extends BukkitRunnable
 
 		Biome newBiome = Utils.parseBiome(this.biome);
 
-		for (int x = this.minX; x < this.maxX; x++)
+		for (int x = this.minX; x <= this.maxX; x++)
 		{
-			for (int z = this.minZ; z < this.maxZ; z++)
+			for (int z = this.minZ; z <= this.maxZ; z++)
 			{
 				this.world.setBiome(x, z, newBiome);
 			}
