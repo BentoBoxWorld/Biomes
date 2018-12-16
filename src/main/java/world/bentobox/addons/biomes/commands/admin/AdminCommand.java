@@ -4,6 +4,7 @@ package world.bentobox.addons.biomes.commands.admin;
 import java.util.List;
 
 import world.bentobox.addons.biomes.BiomesAddon;
+import world.bentobox.addons.biomes.panel.AdminPanel;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.user.User;
 
@@ -16,6 +17,7 @@ public class AdminCommand extends CompositeCommand
 	public AdminCommand(BiomesAddon addon, CompositeCommand parent)
 	{
 		super(addon, parent, "biomes");
+		this.addon = addon;
 	}
 
 
@@ -42,10 +44,22 @@ public class AdminCommand extends CompositeCommand
 		// Open up the admin GUI
 		if (user.isPlayer())
 		{
+			new AdminPanel(this.addon, this.getWorld(), user);
 			// Create GUI
 			return true;
 		}
 
 		return false;
 	}
+
+
+// ---------------------------------------------------------------------
+// Section: Variables
+// ---------------------------------------------------------------------
+
+
+	/**
+	 * Variable stores biomes addon.
+	 */
+	private BiomesAddon addon;
 }
