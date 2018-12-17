@@ -27,10 +27,8 @@ public class BiomesPanel
 	public BiomesPanel(BiomesAddon addon,
 		User player,
 		User targetUser,
-		String level,
 		World world,
 		String permissionPrefix,
-		String label,
 		Mode workingMode)
 	{
 		this.addon = addon;
@@ -52,7 +50,7 @@ public class BiomesPanel
 				PANEL_MAX_SIZE = 36;
 				break;
 			case PLAYER:
-				this.panelTitle = this.player.getTranslation("biomes.gui-title");
+				this.panelTitle = this.player.getTranslation("biomes.gui.title");
 				PANEL_MAX_SIZE = 18;
 				break;
 			default:
@@ -241,12 +239,13 @@ public class BiomesPanel
 	{
 		PanelItem item;
 
+		// TODO: Need to cleanup this mess. It looks ugly!
+
 		switch (button)
 		{
 			case ISLAND:
 				item = new PanelItemBuilder().
-					name(this.player.getTranslation("biomes.gui.buttons.island.name")).
-					description(this.player.getTranslation("biomes.gui.buttons.island.description")).
+					name(this.player.getTranslation("biomes.gui.buttons.island")).
 					icon(new ItemStack(Material.GRASS_BLOCK)).
 					clickHandler((panel, clicker, click, slot) -> {
 						this.updateMode = UpdateMode.ISLAND;
@@ -257,8 +256,7 @@ public class BiomesPanel
 				break;
 			case CHUNK:
 				item = new PanelItemBuilder().
-					name(this.player.getTranslation("biomes.gui.buttons.chunk.name")).
-					description(this.player.getTranslation("biomes.gui.buttons.chunk.description")).
+					name(this.player.getTranslation("biomes.gui.buttons.chunk")).
 					icon(new ItemStack(Material.DIRT)).
 					clickHandler((panel, clicker, click, slot) -> {
 						this.updateMode = UpdateMode.CHUNK;
@@ -269,8 +267,7 @@ public class BiomesPanel
 				break;
 			case SQUARE:
 				item = new PanelItemBuilder().
-					name(this.player.getTranslation("biomes.gui.buttons.region.name")).
-					description(this.player.getTranslation("biomes.gui.buttons.region.description")).
+					name(this.player.getTranslation("biomes.gui.buttons.region")).
 					icon(new ItemStack(Material.GLASS)).
 					clickHandler((panel, clicker, click, slot) -> {
 						this.updateMode = UpdateMode.SQUARE;
@@ -282,16 +279,17 @@ public class BiomesPanel
 
 			case COUNTER:
 				item = new PanelItemBuilder().
-					name(this.player.getTranslation("biomes.gui.buttons.counter.name") + " " + this.updateNumber).
-					description(this.player.getTranslation("biomes.gui.buttons.counter.description")).
+					name(this.player.getTranslation("biomes.gui.buttons.counter",
+						TextVariables.NUMBER,
+						Integer.toString(this.updateNumber))).
 					icon(new ItemStack(Material.PAPER)).
+					glow(true).
 					build();
 				break;
 
 			case ONE:
 				item = new PanelItemBuilder().
-					name(this.player.getTranslation("biomes.gui.buttons.setone.name")).
-					description(this.player.getTranslation("biomes.gui.buttons.setone.description")).
+					name(this.player.getTranslation("biomes.gui.buttons.set", TextVariables.NUMBER, "1")).
 					icon(new ItemStack(Material.BLUE_STAINED_GLASS)).
 					clickHandler((panel, clicker, click, slot) -> {
 						this.updateNumber = 1;
@@ -310,8 +308,7 @@ public class BiomesPanel
 				break;
 			case FIVE:
 				item = new PanelItemBuilder().
-					name(this.player.getTranslation("biomes.gui.buttons.setfive.name")).
-					description(this.player.getTranslation("biomes.gui.buttons.setfive.description")).
+					name(this.player.getTranslation("biomes.gui.buttons.set", TextVariables.NUMBER, "5")).
 					icon(new ItemStack(Material.BLUE_STAINED_GLASS)).
 					clickHandler((panel, clicker, click, slot) -> {
 						this.updateNumber = 5;
@@ -330,8 +327,7 @@ public class BiomesPanel
 				break;
 			case TEN:
 				item = new PanelItemBuilder().
-					name(this.player.getTranslation("biomes.gui.buttons.setten.name")).
-					description(this.player.getTranslation("biomes.gui.buttons.setten.description")).
+					name(this.player.getTranslation("biomes.gui.buttons.set", TextVariables.NUMBER, "10")).
 					icon(new ItemStack(Material.BLUE_STAINED_GLASS)).
 					clickHandler((panel, clicker, click, slot) -> {
 						this.updateNumber = 10;
@@ -350,8 +346,7 @@ public class BiomesPanel
 				break;
 			case HUNDRED:
 				item = new PanelItemBuilder().
-					name(this.player.getTranslation("biomes.gui.buttons.sethundred.name")).
-					description(this.player.getTranslation("biomes.gui.buttons.sethundred.description")).
+					name(this.player.getTranslation("biomes.gui.buttons.set", TextVariables.NUMBER, "100")).
 					icon(new ItemStack(Material.BLUE_STAINED_GLASS)).
 					clickHandler((panel, clicker, click, slot) -> {
 						this.updateNumber = 100;
@@ -370,8 +365,7 @@ public class BiomesPanel
 				break;
 			case PLUS_ONE:
 				item = new PanelItemBuilder().
-					name(this.player.getTranslation("biomes.gui.buttons.addone.name")).
-					description(this.player.getTranslation("biomes.gui.buttons.addone.description")).
+					name(this.player.getTranslation("biomes.gui.buttons.increase", TextVariables.NUMBER, "1")).
 					icon(new ItemStack(Material.GREEN_STAINED_GLASS_PANE)).
 					clickHandler((panel, clicker, click, slot) -> {
 						this.updateNumber += 1;
@@ -390,8 +384,7 @@ public class BiomesPanel
 				break;
 			case PLUS_THREE:
 				item = new PanelItemBuilder().
-					name(this.player.getTranslation("biomes.gui.buttons.addthree.name")).
-					description(this.player.getTranslation("biomes.gui.buttons.addthree.description")).
+					name(this.player.getTranslation("biomes.gui.buttons.increase", TextVariables.NUMBER, "3")).
 					icon(new ItemStack(Material.GREEN_STAINED_GLASS_PANE)).
 					clickHandler((panel, clicker, click, slot) -> {
 						this.updateNumber += 3;
@@ -410,8 +403,7 @@ public class BiomesPanel
 				break;
 			case PLUS_FIVE:
 				item = new PanelItemBuilder().
-					name(this.player.getTranslation("biomes.gui.buttons.addfive.name")).
-					description(this.player.getTranslation("biomes.gui.buttons.addfive.description")).
+					name(this.player.getTranslation("biomes.gui.buttons.increase", TextVariables.NUMBER, "5")).
 					icon(new ItemStack(Material.GREEN_STAINED_GLASS_PANE)).
 					clickHandler((panel, clicker, click, slot) -> {
 						this.updateNumber += 5;
@@ -430,8 +422,7 @@ public class BiomesPanel
 				break;
 			case PLUS_FIFTY:
 				item = new PanelItemBuilder().
-					name(this.player.getTranslation("biomes.gui.buttons.addfifty.name")).
-					description(this.player.getTranslation("biomes.gui.buttons.addfifty.description")).
+					name(this.player.getTranslation("biomes.gui.buttons.increase", TextVariables.NUMBER, "50")).
 					icon(new ItemStack(Material.GREEN_STAINED_GLASS_PANE)).
 					clickHandler((panel, clicker, click, slot) -> {
 						this.updateNumber += 50;
@@ -450,8 +441,7 @@ public class BiomesPanel
 				break;
 			case PLUS_HUNDRED:
 				item = new PanelItemBuilder().
-					name(this.player.getTranslation("biomes.gui.buttons.addhundred.name")).
-					description(this.player.getTranslation("biomes.gui.buttons.addhundred.description")).
+					name(this.player.getTranslation("biomes.gui.buttons.increase", TextVariables.NUMBER, "100")).
 					icon(new ItemStack(Material.GREEN_STAINED_GLASS_PANE)).
 					clickHandler((panel, clicker, click, slot) -> {
 						this.updateNumber += 100;
@@ -470,8 +460,7 @@ public class BiomesPanel
 				break;
 			case MINUS_ONE:
 				item = new PanelItemBuilder().
-					name(this.player.getTranslation("biomes.gui.buttons.minusone.name")).
-					description(this.player.getTranslation("biomes.gui.buttons.minusone.description")).
+					name(this.player.getTranslation("biomes.gui.buttons.reduce", TextVariables.NUMBER, "1")).
 					icon(new ItemStack(Material.RED_STAINED_GLASS_PANE)).
 					clickHandler((panel, clicker, click, slot) -> {
 						this.updateNumber -= 1;
@@ -490,8 +479,7 @@ public class BiomesPanel
 				break;
 			case MINUS_THREE:
 				item = new PanelItemBuilder().
-					name(this.player.getTranslation("biomes.gui.buttons.minusthree.name")).
-					description(this.player.getTranslation("biomes.gui.buttons.minusthree.description")).
+					name(this.player.getTranslation("biomes.gui.buttons.reduce", TextVariables.NUMBER, "3")).
 					icon(new ItemStack(Material.RED_STAINED_GLASS_PANE)).
 					clickHandler((panel, clicker, click, slot) -> {
 						this.updateNumber -= 3;
@@ -510,8 +498,7 @@ public class BiomesPanel
 				break;
 			case MINUS_FIVE:
 				item = new PanelItemBuilder().
-					name(this.player.getTranslation("biomes.gui.buttons.minusfive.name")).
-					description(this.player.getTranslation("biomes.gui.buttons.minusfive.description")).
+					name(this.player.getTranslation("biomes.gui.buttons.reduce", TextVariables.NUMBER, "5")).
 					icon(new ItemStack(Material.RED_STAINED_GLASS_PANE)).
 					clickHandler((panel, clicker, click, slot) -> {
 						this.updateNumber -= 5;
@@ -530,8 +517,7 @@ public class BiomesPanel
 				break;
 			case MINUS_FIFTY:
 				item = new PanelItemBuilder().
-					name(this.player.getTranslation("biomes.gui.buttons.minusfifty.name")).
-					description(this.player.getTranslation("biomes.gui.buttons.minusfifty.description")).
+					name(this.player.getTranslation("biomes.gui.buttons.reduce", TextVariables.NUMBER, "50")).
 					icon(new ItemStack(Material.RED_STAINED_GLASS_PANE)).
 					clickHandler((panel, clicker, click, slot) -> {
 						this.updateNumber -= 50;
@@ -550,8 +536,7 @@ public class BiomesPanel
 				break;
 			case MINUS_HUNDRED:
 				item = new PanelItemBuilder().
-					name(this.player.getTranslation("biomes.gui.buttons.minushundred.name")).
-					description(this.player.getTranslation("biomes.gui.buttons.minushundred.description")).
+					name(this.player.getTranslation("biomes.gui.buttons.reduce", TextVariables.NUMBER, "100")).
 					icon(new ItemStack(Material.RED_STAINED_GLASS_PANE)).
 					clickHandler((panel, clicker, click, slot) -> {
 						this.updateNumber -= 100;
@@ -570,7 +555,7 @@ public class BiomesPanel
 				break;
 			case NEXT:
 				item = new PanelItemBuilder().
-					name(this.player.getTranslation("biomes.gui.buttons.next.name")).
+					name(this.player.getTranslation("biomes.gui.buttons.next")).
 					icon(new ItemStack(Material.SIGN)).
 					clickHandler((panel, clicker, click, slot) -> {
 						this.createBiomesPanel(pageIndex);
@@ -579,7 +564,7 @@ public class BiomesPanel
 				break;
 			case PREVIOUS:
 				item = new PanelItemBuilder().
-					name(this.player.getTranslation("biomes.gui.buttons.previous.name")).
+					name(this.player.getTranslation("biomes.gui.buttons.previous")).
 					icon(new ItemStack(Material.SIGN)).
 					clickHandler((panel, clicker, click, slot) -> {
 						this.createBiomesPanel(pageIndex);
@@ -721,7 +706,7 @@ public class BiomesPanel
 			{
 				// Admin is not on user island.
 
-				this.player.sendMessage("biomes.error.not-on-island");
+				this.player.sendMessage("biomes.error.admin-not-on-island");
 				return false;
 			}
 		}
@@ -856,7 +841,7 @@ public class BiomesPanel
 			}).build());
 
 		panelBuilder.item(9, new PanelItemBuilder().
-			name(this.player.getTranslation("biomes.admin.edit.icon")).
+			name(this.player.getTranslation("biomes.admin.buttons.icon")).
 			icon(biome.getIcon()).
 			clickHandler((panel, user, clickType, slot) -> {
 				// TODO: Implement ability to change icon name if user add item in inventory.
@@ -865,7 +850,7 @@ public class BiomesPanel
 
 		panelBuilder.item(18, new PanelItemBuilder().
 			name(Long.toString(biome.getRequiredLevel())).
-			description(this.player.getTranslation("biomes.admin.edit.level")).
+			description(this.player.getTranslation("biomes.admin.buttons.level")).
 			icon(Material.BOOK).
 			clickHandler((panel, user, clickType, slot) -> {
 				this.updateNumber = (int) biome.getRequiredLevel();
@@ -877,7 +862,7 @@ public class BiomesPanel
 
 		panelBuilder.item(27, new PanelItemBuilder().
 			name(Integer.toString(biome.getRequiredCost())).
-			description(this.player.getTranslation("biomes.admin.edit.cost")).
+			description(this.player.getTranslation("biomes.admin.buttons.cost")).
 			icon(Material.BOOK).
 			clickHandler((panel, user, clickType, slot) -> {
 				this.updateNumber = (int) biome.getRequiredCost();
@@ -923,8 +908,8 @@ public class BiomesPanel
 			{
 				panelBuilder.item(19, new PanelItemBuilder().
 					icon(Material.PAPER).
-					name(this.player.getTranslation("biomes.admin.save")).
-					description(this.player.getTranslation("biomes.admin.changevalue",
+					name(this.player.getTranslation("biomes.admin.buttons.save")).
+					description(this.player.getTranslation("biomes.admin.change-value",
 						TextVariables.NUMBER,
 						Integer.toString(this.updateNumber))).
 					clickHandler((panel, user, clickType, slot) -> {
@@ -939,8 +924,8 @@ public class BiomesPanel
 			{
 				panelBuilder.item(28, new PanelItemBuilder().
 					icon(Material.PAPER).
-					name(this.player.getTranslation("biomes.admin.save")).
-					description(this.player.getTranslation("biomes.admin.changevalue",
+					name(this.player.getTranslation("biomes.admin.buttons.save")).
+					description(this.player.getTranslation("biomes.admin.change-value",
 						TextVariables.NUMBER,
 						Integer.toString(this.updateNumber))).
 					clickHandler((panel, user, clickType, slot) -> {
@@ -955,7 +940,7 @@ public class BiomesPanel
 
 		// back button
 		panelBuilder.item(1, new PanelItemBuilder().
-			name(this.player.getTranslation("biomes.admin.back")).
+			name(this.player.getTranslation("biomes.gui.buttons.back")).
 			icon(Material.IRON_DOOR).
 			clickHandler((panel, user, clickType, slot) -> {
 				this.createBiomesPanel(pageIndex);

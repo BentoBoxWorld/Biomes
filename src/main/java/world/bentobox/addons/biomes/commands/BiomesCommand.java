@@ -44,10 +44,8 @@ public class BiomesCommand extends CompositeCommand
 				this.addon,
 				user,
 				user,
-				args.isEmpty() ? "" : args.get(0),
 				this.getWorld(),
 				this.getPermissionPrefix(),
-				this.getTopLabel(),
 				BiomesPanel.Mode.PLAYER);
 
 			return true;

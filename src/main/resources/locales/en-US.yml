@@ -1,12 +1,52 @@
 biomes:
-  change-biome: "You changed biome on your island."
-
-  help:
-    parameters: "<biome>"
-    description: "allows you to change biome on your island"
-
   admin:
-    gui-title: "Biomes Admin GUI"
-    edit-gui-title: "Add/Edit Biomes"
-
-  gui-title: "Biomes Panel"
+    description: "Biomes Addon Admin Command"
+    parameters: ""
+    gui-title: "Admin Menu"
+    edit-gui-title: "Edit Biomes Menu"
+    import:
+      parameters: "Adding 'overwrite' at the end allows to rewrite stored biomes from biomes.yml"
+      description: "Import method allows to import biomes from biomes.yml in server storage."
+      skipping: "Skipping [biome] importing"
+      overwriting: "Overwriting [biome]"
+      imported: "[biome] is imported"
+      no-file: "biomes.yml not found"
+      no-load: "An error occure while importing biomes: [message]"
+      wrong: "Cannot import [biome]. There are no biome with name [biome] in game!"
+      number: "Biomes importing ended. Imported [number] biomes."
+    buttons:
+      change: "Set island Biomes"
+      edit: "Edit Biome Settings"
+      import: "Import Biomes"
+      icon: "Biome Icon"
+      level: "Required island Level"
+      cost: "Required money"
+      save: "Save new value"
+    change-value: "Store [number] as new value."
+    saved: "Biome is saved."
+  gui:
+    title: "Biomes Menu"
+    buttons:
+      next: "Next page"
+      previous: "Previous page"
+      island: "Whole island"
+      chunk: "Per chunk"
+      region: "In region"
+      counter: "New Size: [number]"
+      set: "Set value to [number]"
+      increase: "Increase value by [number]"
+      reduce: "Reduce value by [number]"
+      back: "Return to previous menu"
+  help:
+    description: "Biomes Addon command. It opens GUI for changing biome on island."
+    parameters: ""
+  error:
+    negative-number: "New Size cannot be negative"
+    no-island: "You do not have island!"
+    not-on-island: "You are not on island!"
+    not-enough-money: "You do not have enough money. Changing biome requires $[number]"
+    island-level: "Your island level is too small. Biome requires [number] level"
+    admin-not-on-island: "You are not on target island!"
+  update:
+    start: "Start Biome changing on island."
+    done: "[label] is set on island successfully"

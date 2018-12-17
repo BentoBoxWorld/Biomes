@@ -42,7 +42,7 @@ public class AdminPanel
 
 		// Change Other players Biome
 		panelBuilder.item(1, new PanelItemBuilder().
-			name(this.player.getTranslation("biomes.admin.change")).
+			name(this.player.getTranslation("biomes.admin.buttons.change")).
 			icon(Material.LEVER).
 			clickHandler((panel, user, clickType, slot) -> {
 				this.createPlayerListMenu(0);
@@ -54,7 +54,7 @@ public class AdminPanel
 
 		// Edit Biome
 		panelBuilder.item(4, new PanelItemBuilder().
-			name(this.player.getTranslation("biomes.admin.edit")).
+			name(this.player.getTranslation("biomes.admin.buttons.edit")).
 			icon(Material.ANVIL).
 			clickHandler((panel, clicker, click, slot) -> {
 				this.player.closeInventory();
@@ -63,9 +63,7 @@ public class AdminPanel
 					this.addon,
 					this.player,
 					this.player,
-					"",
 					this.world,
-					"",
 					"",
 					BiomesPanel.Mode.EDIT);
 				return true;
@@ -76,7 +74,7 @@ public class AdminPanel
 
 		// Import Biomes
 		panelBuilder.item(7, new PanelItemBuilder().
-			name(this.player.getTranslation("biomes.admin.import")).
+			name(this.player.getTranslation("biomes.admin.buttons.import")).
 			icon(Material.HOPPER).
 			clickHandler((panel, user, clickType, slot) -> {
 				if (clickType.isRightClick())
@@ -86,12 +84,16 @@ public class AdminPanel
 				}
 				else
 				{
+					// TODO: call directly?
 					this.player.performCommand("bsbadmin biomes import" + (glow ? " overwrite" : ""));
 				}
 
 				return true;
 			}).glow(glow).
 			build());
+
+		// Edit Addon Settings
+		// panelBuilder.item(8, new PanelItemBuilder().build());
 
 		panelBuilder.build();
 	}
@@ -148,9 +150,7 @@ public class AdminPanel
 						this.addon,
 						this.player,
 						user,
-						"",
 						this.world,
-						"",
 						"",
 						BiomesPanel.Mode.ADMIN);
 					return true;
@@ -166,7 +166,7 @@ public class AdminPanel
 			final int nextPage = pageIndex + 1;
 
 			panelBuilder.item(MAX_PLAYERS_PER_PAGE + 8, new PanelItemBuilder().
-				name(this.player.getTranslation("biomes.gui.buttons.next.name")).
+				name(this.player.getTranslation("biomes.gui.buttons.next")).
 				icon(new ItemStack(Material.SIGN)).
 				clickHandler((panel, clicker, click, slot) -> {
 					this.createPlayerListMenu(nextPage);
@@ -180,7 +180,7 @@ public class AdminPanel
 			final int previousPage = pageIndex - 1;
 
 			panelBuilder.item(MAX_PLAYERS_PER_PAGE, new PanelItemBuilder().
-				name(this.player.getTranslation("biomes.gui.buttons.previous.name")).
+				name(this.player.getTranslation("biomes.gui.buttons.previous")).
 				icon(new ItemStack(Material.SIGN)).
 				clickHandler((panel, clicker, click, slot) -> {
 					this.createPlayerListMenu(previousPage);
