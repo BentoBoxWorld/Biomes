@@ -822,6 +822,13 @@ public class BiomesPanel
 				return;
 		}
 
+		// Take Money
+		if (this.workingMode == Mode.PLAYER)
+		{
+			this.addon.getPlugin().getVault().ifPresent(
+				vaultHook -> vaultHook.withdraw(this.player, biome.getRequiredCost()));
+		}
+
 		task.runTaskAsynchronously(this.addon.getPlugin());
 	}
 
