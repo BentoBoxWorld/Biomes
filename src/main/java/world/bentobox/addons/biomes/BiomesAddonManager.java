@@ -131,7 +131,7 @@ public class BiomesAddonManager
 				if (!silent)
 				{
 					user.sendMessage("biomes.admin.import.skipping",
-						"[biomes]",
+						"[biome]",
 						biome.getFriendlyName());
 				}
 
@@ -142,7 +142,7 @@ public class BiomesAddonManager
 				if (!silent)
 				{
 					user.sendMessage("biomes.admin.import.overwriting",
-						"[biomes]",
+						"[biome]",
 						biome.getFriendlyName());
 				}
 
@@ -155,7 +155,7 @@ public class BiomesAddonManager
 		if (!silent)
 		{
 			user.sendMessage("biomes.admin.import.imported",
-				"[biomes]",
+				"[biome]",
 				biome.getFriendlyName());
 		}
 
