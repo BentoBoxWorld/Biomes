@@ -92,7 +92,15 @@ public class AdminPanel
 			build());
 
 		// Edit Addon Settings
-		// panelBuilder.item(8, new PanelItemBuilder().build());
+		panelBuilder.item(8, new PanelItemBuilder().
+			name(this.player.getTranslation("biomes.admin.buttons.settings")).
+			icon(Material.ENCHANTING_TABLE).
+			clickHandler((panel, user, clickType, slot) -> {
+				new SettingsPanel(this.addon,
+					this.world,
+					this.player);
+				return true;
+			}).build());
 
 		panelBuilder.build();
 	}
