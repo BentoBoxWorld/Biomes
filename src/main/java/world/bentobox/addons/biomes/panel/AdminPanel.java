@@ -84,8 +84,7 @@ public class AdminPanel
 				}
 				else
 				{
-					// TODO: call directly?
-					this.player.performCommand("bsbadmin biomes import" + (glow ? " overwrite" : ""));
+					this.addon.getAddonManager().importBiomes(user, this.world, glow);
 				}
 
 				return true;
