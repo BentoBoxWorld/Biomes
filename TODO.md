@@ -20,11 +20,12 @@ This page contains plans for each Addon version.
 
 ## Release 0.2.0
 - [ ] Improve Admin panel
-	- [ ] Allow to edit Addon settings through ingame menu.
+	- [x] Allow to edit Addon settings through ingame menu.
 	- [ ] Add Biome changing through ingame menu.
 	- [ ] Add Biome disabling ability through ingame menu.
 - [ ] Add extra admin commands.
 - [ ] Add extra user commands.
+- [x] Implement automatic import on first init.
 
 ## Release 0.1.0
 - [x] Create Admin panel
