@@ -8,10 +8,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import world.bentobox.addons.biomes.objects.BiomesObject;
 import world.bentobox.addons.biomes.utils.Utils;
@@ -35,6 +32,7 @@ public class BiomesAddonManager
 
 		this.biomesConfig = new Config<>(addon, BiomesObject.class);
 		this.biomesList = new ArrayList<>(Biome.values().length);
+		this.biomesMap = new HashMap<>(Biome.values().length);
 
 		this.biomesFile = new File(this.addon.getDataFolder(), "biomes.yml");
 
@@ -151,6 +149,7 @@ public class BiomesAddonManager
 				}
 
 				this.biomesList.set(this.biomesList.indexOf(biome), biome);
+				this.biomesMap.put(biome.getBiomeName(), biome);
 
 				return true;
 			}
@@ -164,6 +163,7 @@ public class BiomesAddonManager
 		}
 
 		this.biomesList.add(biome);
+		this.biomesMap.put(biome.getBiomeName(), biome);
 
 		return true;
 	}
@@ -224,6 +224,7 @@ public class BiomesAddonManager
 				newBiomeObject.setRequiredCost(details.getInt("cost", 0));
 
 				this.biomesList.add(newBiomeObject);
+				this.biomesMap.put(newBiomeObject.getBiomeName(), newBiomeObject);
 			}
 		}
 
@@ -343,6 +344,18 @@ public class BiomesAddonManager
 	}
 
 
+	/**
+	 * This method returns biome object that hides behind biome name or null, if biome
+	 * with name does not exist.
+	 * @param biome Biome's name.
+	 * @return BiomesObject that is represented by biome string.
+	 */
+	public BiomesObject getBiomeFromString(String biome)
+	{
+		return this.biomesMap.getOrDefault(biome, null);
+	}
+
+
 // ---------------------------------------------------------------------
 // Section: Variables
 // ---------------------------------------------------------------------
@@ -356,6 +369,11 @@ public class BiomesAddonManager
 	 * Variable stores list of loaded biomes.
 	 */
 	private List<BiomesObject> biomesList;
+
+	/**
+	 * Variable stores map that links String to loaded biomes object.
+	 */
+	private Map<String, BiomesObject> biomesMap;
 
 	/**
 	 * Variable stores biomes object configuration.
