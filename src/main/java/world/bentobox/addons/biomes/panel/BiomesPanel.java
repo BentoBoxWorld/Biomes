@@ -9,15 +9,14 @@ import java.util.*;
 import world.bentobox.addons.biomes.BiomesAddon;
 import world.bentobox.addons.biomes.BiomesAddonManager;
 import world.bentobox.addons.biomes.objects.BiomesObject;
-import world.bentobox.addons.biomes.tasks.BiomeUpdateTask;
-import world.bentobox.bentobox.api.addons.Addon;
+import world.bentobox.addons.biomes.tasks.BiomeUpdateHelper;
+import world.bentobox.addons.biomes.utils.Utils;
+import world.bentobox.addons.biomes.utils.Utils.UpdateMode;
 import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
-import world.bentobox.bentobox.database.objects.Island;
-import world.bentobox.bentobox.hooks.VaultHook;
 
 /**
  * This class implements Biomes Panel for all users.
@@ -59,7 +58,7 @@ public class BiomesPanel
 				break;
 		}
 
-		this.updateMode = this.parseDefaultUpdateType();
+		this.updateMode = Utils.parseStringToUpdateMode(this.addon.getConfig().getString("defaulttype", ""));
 		this.updateNumber = this.addon.getConfig().getInt("defaultsize", 3);
 
 		this.createBiomesPanel(0);
@@ -603,9 +602,18 @@ public class BiomesPanel
 		{
 			// Player click
 			itemBuilder.clickHandler((panel, player, click, slot) -> {
-				if (this.canChangeBiome(biome))
+				BiomeUpdateHelper helper = new BiomeUpdateHelper(this.addon,
+					this.player,
+					this.targetUser,
+					biome,
+					this.world,
+					this.updateMode,
+					this.updateNumber,
+					this.workingMode.equals(Mode.PLAYER));
+
+				if (helper.canChangeBiome())
 				{
-					this.updateIslandBiome(biome);
+					helper.updateIslandBiome();
 					this.player.closeInventory();
 				}
 
@@ -620,202 +628,6 @@ public class BiomesPanel
 // ---------------------------------------------------------------------
 // Section: Biome Changing related methods
 // ---------------------------------------------------------------------
-
-
-	/**
-	 * This method checks if user can change biome in desired place.
-	 * @return true, if biome changing is possible.
-	 */
-	private boolean canChangeBiome(BiomesObject biome)
-	{
-		if (this.player == this.targetUser)
-		{
-			if (!this.updateMode.equals(UpdateMode.ISLAND) && this.updateNumber <= 0)
-			{
-				// Cannot update negative numbers.
-
-				this.player.sendMessage("biomes.error.negative-number",
-					TextVariables.NUMBER,
-					Integer.toString(this.updateNumber));
-				return false;
-			}
-
-			Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
-
-			if (island == null)
-			{
-				// User has no island.
-
-				this.player.sendMessage("biomes.error.no-island");
-				return false;
-			}
-
-			Optional<Island> onIsland =
-				this.addon.getIslands().getIslandAt(this.player.getLocation());
-
-			if (!onIsland.isPresent() || onIsland.get() != island)
-			{
-				// User is not on his island.
-
-				this.player.sendMessage("biomes.error.not-on-island");
-				return false;
-			}
-
-			Optional<VaultHook> vaultHook = this.addon.getPlugin().getVault();
-
-			if (vaultHook.isPresent())
-			{
-				if (!vaultHook.get().has(this.player, biome.getRequiredCost()))
-				{
-					// Not enough money.
-
-					this.player.sendMessage("biomes.error.not-enough-money",
-						TextVariables.NUMBER,
-						Double.toString(biome.getRequiredCost()));
-					return false;
-				}
-			}
-
-			Optional<Addon> levelHook = this.addon.getAddonByName("Level");
-
-			if (levelHook.isPresent())
-			{
-				double level = ((world.bentobox.level.Level) levelHook.get()).getIslandLevel(this.world,
-					this.player.getUniqueId());
-
-				if (biome.getRequiredLevel() > 0 && level <= biome.getRequiredLevel())
-				{
-					// Not enough level
-
-					this.player.sendMessage("biomes.error.island-level",
-						TextVariables.NUMBER,
-						String.valueOf(biome.getRequiredLevel()));
-					return false;
-				}
-			}
-		}
-		else
-		{
-			Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
-
-			Optional<Island> onIsland =
-				this.addon.getIslands().getIslandAt(this.player.getLocation());
-
-			if (this.updateMode != UpdateMode.ISLAND &&
-				(!onIsland.isPresent() || onIsland.get() != island))
-			{
-				// Admin is not on user island.
-
-				this.player.sendMessage("biomes.error.admin-not-on-island");
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-
-	/**
-	 * This method calculates update region and call BiomeUpdateTask to change given biome on island.
-	 * @param biome New Biome object.
-	 */
-	private void updateIslandBiome(BiomesObject biome)
-	{
-		Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
-		int range = island.getRange();
-
-		int minX = island.getMinX();
-		int minZ = island.getMinZ();
-
-		int maxX = minX + 2 * range;
-		int maxZ = minZ + 2 * range;
-
-		Location playerLocation = this.player.getLocation();
-
-		// Calculate minimal and maximal coordinate based on update mode.
-
-		BiomeUpdateTask task = new BiomeUpdateTask(this.player, this.world, biome);
-
-		switch (this.updateMode)
-		{
-			case ISLAND:
-				task.setMinX(minX > maxX ? maxX : minX);
-				task.setMaxX(minX < maxX ? maxX : minX);
-				task.setMinZ(minZ > maxZ ? maxZ : minZ);
-				task.setMaxZ(minZ < maxZ ? maxZ : minZ);
-
-				break;
-			case CHUNK:
-				Chunk chunk = playerLocation.getChunk();
-
-				if (chunk.getX() < 0)
-				{
-					task.setMaxX(Math.max(minX, chunk.getX() + 16 * (this.updateNumber - 1)));
-					task.setMinX(Math.min(maxX, minX - 16 * this.updateNumber + 1));
-				}
-				else
-				{
-					task.setMinX(Math.max(minX, chunk.getX() - 16 * (this.updateNumber - 1)));
-					task.setMaxX(Math.min(maxX, minX + 16 * this.updateNumber - 1));
-				}
-
-				if (chunk.getZ() < 0)
-				{
-					task.setMaxZ(Math.max(minZ, chunk.getZ() + 16 * (this.updateNumber - 1)));
-					task.setMinZ(Math.min(maxZ, minZ - 16 * this.updateNumber + 1));
-				}
-				else
-				{
-					task.setMinZ(Math.max(minZ, chunk.getZ() - 16 * (this.updateNumber - 1)));
-					task.setMaxZ(Math.min(maxZ, minZ + 16 * this.updateNumber - 1));
-				}
-
-				break;
-			case SQUARE:
-				int halfDiameter = this.updateNumber / 2;
-
-				int x = playerLocation.getBlockX();
-
-				if (x < 0)
-				{
-					task.setMaxX(Math.max(minX, x + halfDiameter));
-					task.setMinX(Math.min(maxX, x - halfDiameter));
-				}
-				else
-				{
-					task.setMinX(Math.max(minX, x - halfDiameter));
-					task.setMaxX(Math.min(maxX, x + halfDiameter));
-				}
-
-				int z = playerLocation.getBlockZ();
-
-				if (z < 0)
-				{
-					task.setMaxZ(Math.max(minZ, z + halfDiameter));
-					task.setMinZ(Math.min(maxZ, z - halfDiameter));
-				}
-				else
-				{
-					task.setMinZ(Math.max(minZ, z - halfDiameter));
-					task.setMaxZ(Math.min(maxZ, z + halfDiameter));
-				}
-
-				break;
-			default:
-				// Setting all values to 0 will skip biome changing.
-				// Default should never appear.
-				return;
-		}
-
-		// Take Money
-		if (this.workingMode == Mode.PLAYER)
-		{
-			this.addon.getPlugin().getVault().ifPresent(
-				vaultHook -> vaultHook.withdraw(this.player, biome.getRequiredCost()));
-		}
-
-		task.runTaskAsynchronously(this.addon.getPlugin());
-	}
 
 
 	/**
@@ -952,38 +764,6 @@ public class BiomesPanel
 
 
 // ---------------------------------------------------------------------
-// Section: Other methods
-// ---------------------------------------------------------------------
-
-
-	/**
-	 * This method parse default update type from config file.
-	 * @return Default Update mode.
-	 */
-	private UpdateMode parseDefaultUpdateType()
-	{
-		String type = this.addon.getConfig().getString("defaulttype", "").toUpperCase();
-
-		if (type.equals("ISLAND"))
-		{
-			return UpdateMode.ISLAND;
-		}
-		else if (type.equals("CHUNK"))
-		{
-			return UpdateMode.CHUNK;
-		}
-		else if (type.equals("SQUARE"))
-		{
-			return UpdateMode.SQUARE;
-		}
-		else
-		{
-			return UpdateMode.ISLAND;
-		}
-	}
-
-
-// ---------------------------------------------------------------------
 // Section: Enums
 // ---------------------------------------------------------------------
 
@@ -996,16 +776,6 @@ public class BiomesPanel
 		ADMIN,
 		EDIT,
 		PLAYER
-	}
-
-	/**
-	 * This enum describes all possible variants how to calculate new biome location.
-	 */
-	private enum UpdateMode
-	{
-		ISLAND,
-		CHUNK,
-		SQUARE
 	}
 
 
