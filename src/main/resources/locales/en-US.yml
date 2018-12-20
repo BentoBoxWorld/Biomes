@@ -64,3 +64,12 @@ biomes:
   update:
     start: "Start Biome changing on island."
     done: "[label] is set on island successfully"
+  set:
+    description: "Biomes Addon set command."
+    parameters: "<biome> [<type>] [<size>]"
+  command:
+    error:
+      incorrect-size: "Size [number] is not valid"
+      wrong-mode-name: "Cannot parse [mode] to valid UpdateMode"
+      wrong-biome-name: "Biome [biome] is not accessible"
+      biome-not-defined: "Biome is not defined"
