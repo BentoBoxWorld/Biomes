@@ -19,7 +19,7 @@ public class BiomesCommand extends CompositeCommand
 {
 	public BiomesCommand(BiomesAddon plugin, CompositeCommand bsbIslandCmd)
 	{
-		super(bsbIslandCmd, "biomes");
+		super(plugin, bsbIslandCmd, "biomes");
 		this.addon = plugin;
 	}
 
@@ -31,6 +31,8 @@ public class BiomesCommand extends CompositeCommand
 		this.setOnlyPlayer(true);
 		this.setParametersHelp("biomes.help.parameters");
 		this.setDescription("biomes.help.description");
+
+		new BiomesSetCommand(this.addon, this);
 	}
 
 
@@ -54,21 +56,6 @@ public class BiomesCommand extends CompositeCommand
 
 		this.showHelp(this, user);
 		return false;
-	}
-
-
-	@Override
-	public Optional<List<String>> tabComplete(User user, String alias, List<String> args)
-	{
-		List<String> options = new ArrayList<>();
-		final List<BiomesObject> biomesList = this.addon.getAddonManager().getBiomes();
-
-		for (BiomesObject biome : biomesList)
-		{
-			options.add(biome.getFriendlyName());
-		}
-
-		return Optional.of(options);
 	}
 
 
