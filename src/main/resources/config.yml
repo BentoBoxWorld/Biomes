@@ -1,0 +1,16 @@
+# Biomes Config
+
+# This indicates if advanced menu should be showed. If advanced menu is disabled, then
+# default type and default size will be active.
+advancedmenu: true
+
+# Default type shows which update mode will be active when Biomes Panel is opened.
+# Valid values 'ISLAND', 'CHUNK' or 'SQUARE'
+defaulttype: 'ISLAND'
+
+# Default size which will be enabled when Biomes panel is opened.
+# Indicate how much chunks or how large square will be updated with ne biome.
+defaultsize: 3
+
+# Timeout in minuted between changing biomes.
+timeout: 1
