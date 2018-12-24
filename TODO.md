@@ -3,20 +3,25 @@ This page contains plans for each Addon version.
 
 ## For Future Releases:
 - [ ] Issue #3
+	- [ ] Store Biome per Island.
+		- [ ] On owner change, reset biomes that is not available for new owner.
 
 ## Release 0.4.0
 - [ ] Create unlockable biomes:
 	- [ ] By challenge
 	- [ ] By level
-	- [ ] By premission
+	- [ ] By permission
 	- [ ] By chance
 	- [ ] By items
+- [ ] Clean up lang file.
 
 ## Release 0.3.0
 - [ ] Improve Admin panel
 	- [ ] Add icon changing through ingame menu.
 	- [ ] Add description changing through ingame menu.
 	- [ ] Allow to add new biome through ingame menu.
+- [ ] Add extra admin commands.
+	- [ ] Implement new Biome command.
 
 ## Release 0.2.0
 - [ ] Improve Admin panel
