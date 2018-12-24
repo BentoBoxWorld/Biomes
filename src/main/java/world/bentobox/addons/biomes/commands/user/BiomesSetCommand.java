@@ -1,4 +1,4 @@
-package world.bentobox.addons.biomes.commands;
+package world.bentobox.addons.biomes.commands.user;
 
 
 import java.util.*;
