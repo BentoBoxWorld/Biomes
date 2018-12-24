@@ -27,9 +27,23 @@ public class AdminUserPanel
 	 */
 	public AdminUserPanel(BiomesAddon addon, World world, User user)
 	{
+		this(addon, world, user, true);
+	}
+
+
+	/**
+	 * Default constructor that will create new Panel with players.
+	 * @param addon BiomeAddon.
+	 * @param world World form which command is called.
+	 * @param user User who calls command.
+	 * @param fromMainMenu indicate if panel is created from main menu.
+	 */
+	public AdminUserPanel(BiomesAddon addon, World world, User user, boolean fromMainMenu)
+	{
 		this.addon = addon;
 		this.world = world;
 		this.player = user;
+		this.fromMainMenu = fromMainMenu;
 
 		this.createPlayerListMenu(0);
 	}
@@ -124,14 +138,17 @@ public class AdminUserPanel
 				}).build());
 		}
 
-		// Return button
-		panelBuilder.item(MAX_PLAYERS_PER_PAGE + 4, new PanelItemBuilder().
-			name(this.player.getTranslation("biomes.gui.buttons.back")).
-			icon(new ItemStack(Material.OAK_DOOR)).
-			clickHandler((panel, clicker, click, slot) -> {
-				new AdminMainPanel(this.addon, this.world, this.player);
-				return true;
-			}).build());
+		if (this.fromMainMenu)
+		{
+			// Return button
+			panelBuilder.item(MAX_PLAYERS_PER_PAGE + 4, new PanelItemBuilder().
+				name(this.player.getTranslation("biomes.gui.buttons.back")).
+				icon(new ItemStack(Material.OAK_DOOR)).
+				clickHandler((panel, clicker, click, slot) -> {
+					new AdminMainPanel(this.addon, this.world, this.player);
+					return true;
+				}).build());
+		}
 
 		panelBuilder.build();
 	}
@@ -147,6 +164,11 @@ public class AdminUserPanel
 	private World world;
 
 	private BiomesAddon addon;
+
+	/**
+	 * This variable stores if current menu should show return button.
+	 */
+	private boolean fromMainMenu;
 
 	/**
 	 * Set only 5 rows to be for Users. Last row should be reserved for navigation.

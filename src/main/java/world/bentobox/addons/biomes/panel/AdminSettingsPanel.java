@@ -17,11 +17,31 @@ import world.bentobox.bentobox.api.user.User;
  */
 public class AdminSettingsPanel
 {
+	/**
+	 * Default constructor that will create new Panel with addon settings.
+	 * @param addon BiomeAddon.
+	 * @param world World form which command is called.
+	 * @param user User who calls command.
+	 */
 	protected AdminSettingsPanel(BiomesAddon addon, World world, User user)
 	{
+		this(addon, world, user, true);
+	}
+
+
+	/**
+	 * Default constructor that will create new Panel with addon settings.
+	 * @param addon BiomeAddon.
+	 * @param world World form which command is called.
+	 * @param user User who calls command.
+	 * @param fromMainMenu indicate if panel is created from main menu.
+	 */
+	public AdminSettingsPanel(BiomesAddon addon, World world, User user, boolean fromMainMenu)
+	{
 		this.addon = addon;
-		this.user = user;
 		this.world = world;
+		this.user = user;
+		this.fromMainMenu = fromMainMenu;
 		this.mode = Mode.RETURN;
 
 		this.createSettingPanel();
@@ -98,13 +118,16 @@ public class AdminSettingsPanel
 		switch (this.mode)
 		{
 			case RETURN:
-				panelBuilder.item(8, new PanelItemBuilder().
-					icon(Material.OAK_DOOR).
-					name(this.user.getTranslation("biomes.gui.buttons.back")).
-					clickHandler((panel, user1, clickType, slot) -> {
-						new AdminMainPanel(this.addon, this.world, this.user);
-						return true;
-					}).build());
+				if (this.fromMainMenu)
+				{
+					panelBuilder.item(8, new PanelItemBuilder().
+						icon(Material.OAK_DOOR).
+						name(this.user.getTranslation("biomes.gui.buttons.back")).
+						clickHandler((panel, user1, clickType, slot) -> {
+							new AdminMainPanel(this.addon, this.world, this.user);
+							return true;
+						}).build());
+				}
 				break;
 			case MENU:
 				panelBuilder.item(1, new PanelItemBuilder().
@@ -384,4 +407,6 @@ public class AdminSettingsPanel
 	private Mode mode;
 
 	private Object newValue;
+
+	private boolean fromMainMenu;
 }
