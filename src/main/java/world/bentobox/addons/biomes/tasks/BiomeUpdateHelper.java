@@ -9,11 +9,11 @@ import java.util.Optional;
 import world.bentobox.addons.biomes.objects.BiomesObject;
 import world.bentobox.addons.biomes.utils.Utils.UpdateMode;
 import world.bentobox.bentobox.api.addons.Addon;
+import world.bentobox.bentobox.api.addons.request.AddonRequestBuilder;
 import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.objects.Island;
 import world.bentobox.bentobox.hooks.VaultHook;
-import world.bentobox.level.Level;
 
 
 /**
@@ -85,13 +85,13 @@ public class BiomeUpdateHelper
 
 			if (vaultHook.isPresent())
 			{
-				if (!vaultHook.get().has(this.callerUser, biome.getRequiredCost()))
+				if (!vaultHook.get().has(this.callerUser, this.biome.getRequiredCost()))
 				{
 					// Not enough money.
 
 					this.callerUser.sendMessage("biomes.error.not-enough-money",
 						TextVariables.NUMBER,
-						Double.toString(biome.getRequiredCost()));
+						Double.toString(this.biome.getRequiredCost()));
 					return false;
 				}
 			}
@@ -100,16 +100,19 @@ public class BiomeUpdateHelper
 
 			if (levelHook.isPresent())
 			{
-				double level = ((Level) levelHook.get()).getIslandLevel(this.world,
-					this.callerUser.getUniqueId());
+				long level = (long) new AddonRequestBuilder().addon("Level").
+					label("get-level").
+					addMetaData("uuid", this.targetUser.getUniqueId()).
+					addMetaData("world", this.world).
+					request();
 
-				if (biome.getRequiredLevel() > 0 && level <= biome.getRequiredLevel())
+				if (this.biome.getRequiredLevel() > 0 && level <= this.biome.getRequiredLevel())
 				{
 					// Not enough level
 
 					this.callerUser.sendMessage("biomes.error.island-level",
 						TextVariables.NUMBER,
-						String.valueOf(biome.getRequiredLevel()));
+						String.valueOf(this.biome.getRequiredLevel()));
 					return false;
 				}
 			}
@@ -229,8 +232,8 @@ public class BiomeUpdateHelper
 		// Take Money
 		if (this.canWithdraw)
 		{
-//			this.addon.getPlugin().getVault().ifPresent(
-//				vaultHook -> vaultHook.withdraw(this.callerUser, this.biome.getRequiredCost()));
+			this.addon.getPlugin().getVault().ifPresent(
+				vaultHook -> vaultHook.withdraw(this.callerUser, this.biome.getRequiredCost()));
 		}
 
 		task.runTaskAsynchronously(this.addon.getPlugin());
