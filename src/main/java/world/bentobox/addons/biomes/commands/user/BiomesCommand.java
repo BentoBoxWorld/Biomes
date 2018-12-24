@@ -30,6 +30,7 @@ public class BiomesCommand extends CompositeCommand
 		this.setDescription("biomes.help.description");
 
 		new BiomesSetCommand(this.addon, this);
+		new BiomesInfoCommand(this.addon, this);
 	}
 
 
