@@ -41,15 +41,18 @@ public class BiomesSetCommand extends CompositeCommand
 	{
 		BiomesObject biome = this.getBiomeObject(args, user);
 		UpdateMode updateMode = this.getUpdateMode(args, user);
-		int size = this.getUpdateSize(args, user);
+		int size = this.getUpdateRange(args, user);
 
 		if (biome == null || updateMode == null || size < 1)
 		{
+			// Show help if something fails.
 			this.showHelp(this, user);
 			return false;
 		}
 		else
 		{
+			// Use BiomeUpdateHelper to change biome for user.
+
 			BiomeUpdateHelper helper = new BiomeUpdateHelper(this.getParent().getAddon(),
 				user,
 				user,
@@ -74,88 +77,41 @@ public class BiomesSetCommand extends CompositeCommand
 	{
 		String lastString = args.get(args.size() - 1);
 
-		final List<String> returnList;
+		final List<String> returnList = new ArrayList<>();
 		final int size = args.size();
 
 		switch (size)
 		{
 			case 3:
-			case 5:
-			case 7:
-			{
-				// Add method keys
-				returnList = new ArrayList<>();
+				List<BiomesObject> biomes =
+					((BiomesAddon) this.getParent().getAddon()).getAddonManager().getBiomes();
 
-				if (!args.contains(KEY_BIOME))
-				{
-					returnList.addAll(Util.tabLimit(Collections.singletonList(KEY_BIOME), lastString));
-				}
+				// Create suggestions with all biomes that is available for users.
 
-				if (!args.contains(KEY_TYPE))
-				{
-					returnList.addAll(Util.tabLimit(Collections.singletonList(KEY_TYPE), lastString));
-				}
-
-				if (!args.contains(KEY_SIZE))
-				{
-					returnList.addAll(Util.tabLimit(Collections.singletonList(KEY_SIZE), lastString));
-				}
+				biomes.forEach(biomesObject -> {
+					returnList.addAll(Util.tabLimit(
+						Collections.singletonList(biomesObject.getBiomeName()), lastString));
+				});
 
 				break;
-			}
 			case 4:
-			case 6:
-			case 8:
-			{
-				// Get key values
-				String lastValidKey = args.get(size - 2);
+				// Create suggestions with all biomes that is available for users.
 
-				if (lastValidKey != null)
+				returnList.addAll(Util.tabLimit(Collections.singletonList("ISLAND"), lastString));
+				returnList.addAll(Util.tabLimit(Collections.singletonList("CHUNK"), lastString));
+				returnList.addAll(Util.tabLimit(Collections.singletonList("SQUARE"), lastString));
+
+				break;
+			case 5:
+				if (lastString.isEmpty() || lastString.matches("[0-9]*"))
 				{
-					if (lastValidKey.equals(KEY_BIOME))
-					{
-						returnList = new ArrayList<>();
-						List<BiomesObject> biomes =
-							((BiomesAddon) this.getParent().getAddon()).getAddonManager()
-								.getBiomes();
-
-						biomes.forEach(biomesObject -> {
-							returnList.addAll(Util.tabLimit(Collections
-								.singletonList(biomesObject.getBiomeName()), lastString));
-						});
-					}
-					else if (lastValidKey.equals(KEY_TYPE))
-					{
-						returnList = new ArrayList<>();
-						returnList.addAll(Util.tabLimit(Collections.singletonList("island"), lastString));
-						returnList.addAll(Util.tabLimit(Collections.singletonList("chunk"), lastString));
-						returnList.addAll(Util.tabLimit(Collections.singletonList("square"), lastString));
-					}
-					else if (lastValidKey.equals(KEY_SIZE))
-					{
-						returnList = new ArrayList<>();
-
-						if (lastString.isEmpty() || lastString.matches("[0-9]*"))
-						{
-							returnList.addAll(Util.tabLimit(Collections.singletonList("<number>"), "<n"));
-						}
-					}
-					else
-					{
-						returnList = Collections.emptyList();
-					}
-				}
-				else
-				{
-					returnList = Collections.emptyList();
+					returnList.addAll(Util.tabLimit(Collections.singletonList("<number>"), lastString));
 				}
 
 				break;
-			}
 			default:
 			{
-				returnList = new ArrayList<>(Util.tabLimit(Collections.singletonList("help"), lastString));
-
+				returnList.addAll(Util.tabLimit(Collections.singletonList("help"), lastString));
 				break;
 			}
 		}
@@ -178,16 +134,16 @@ public class BiomesSetCommand extends CompositeCommand
 	 */
 	private BiomesObject getBiomeObject(List<String> args, User user)
 	{
-		if (args.contains(KEY_BIOME))
+		if (!args.isEmpty())
 		{
 			BiomesObject biome = ((BiomesAddon) this.getParent().getAddon()).getAddonManager().
-				getBiomeFromString(args.get(args.indexOf(KEY_BIOME) + 1));
+				getBiomeFromString(args.get(0));
 
 			if (biome == null)
 			{
 				user.sendMessage(user.getTranslation("biomes.command.error.wrong-biome-name",
 					"[biome]",
-					args.get(args.indexOf(KEY_BIOME) + 1)));
+					args.get(0)));
 			}
 
 			return biome;
@@ -208,15 +164,15 @@ public class BiomesSetCommand extends CompositeCommand
 	 */
 	private UpdateMode getUpdateMode(List<String> args, User user)
 	{
-		if (args.contains(KEY_TYPE))
+		if (args.size() > 1)
 		{
-			UpdateMode mode = Utils.parseStrictToUpdateMode(args.get(args.indexOf(KEY_TYPE) + 1));
+			UpdateMode mode = Utils.parseStrictToUpdateMode(args.get(1));
 
 			if (mode == null)
 			{
 				user.sendMessage(user.getTranslation("biomes.command.error.wrong-mode-name",
 					"[mode]",
-					args.get(args.indexOf(KEY_TYPE) + 1)));
+					args.get(1)));
 			}
 
 			return  mode;
@@ -229,15 +185,22 @@ public class BiomesSetCommand extends CompositeCommand
 	}
 
 
-	private int getUpdateSize(List<String> args, User user)
+	/**
+	 * This method returns third parameter, that is expected to be integer which represents update distance
+	 * for chunk and square mode.
+	 * @param args List of arguments that is passed via set command.
+	 * @param user User that calls current method.
+	 * @return Integer that represents update range distance.
+	 */
+	private int getUpdateRange(List<String> args, User user)
 	{
-		if (args.contains(KEY_SIZE))
+		if (args.size() > 2)
 		{
 			int size;
 
 			try
 			{
-				size = Integer.parseInt(args.get(args.indexOf(KEY_SIZE) + 1));
+				size = Integer.parseInt(args.get(2));
 			}
 			catch (Exception e)
 			{
@@ -248,7 +211,7 @@ public class BiomesSetCommand extends CompositeCommand
 			{
 				user.sendMessage(user.getTranslation("biomes.command.error.incorrect-size",
 					TextVariables.NUMBER,
-					args.get(args.indexOf(KEY_SIZE) + 1)));
+					args.get(2)));
 			}
 
 			return size;
@@ -258,16 +221,4 @@ public class BiomesSetCommand extends CompositeCommand
 			return this.getParent().getAddon().getConfig().getInt("defaultsize", 1);
 		}
 	}
-
-
-// ---------------------------------------------------------------------
-// Section: CONSTANTS
-// ---------------------------------------------------------------------
-
-
-	private final static String KEY_BIOME = "biome";
-
-	private final static String KEY_TYPE = "type";
-
-	private final static String KEY_SIZE = "size";
 }
