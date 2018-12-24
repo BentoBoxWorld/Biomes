@@ -100,13 +100,15 @@ public class BiomeUpdateHelper
 
 			if (levelHook.isPresent())
 			{
-				long level = (long) new AddonRequestBuilder().addon("Level").
-					label("get-level").
-					addMetaData("uuid", this.targetUser.getUniqueId()).
-					addMetaData("world", this.world).
+				Object levelObject = new AddonRequestBuilder().addon("Level").
+					label("island-level").
+					addMetaData("player", this.targetUser.getUniqueId()).
+					addMetaData("world-name", this.world.getName()).
 					request();
 
-				if (this.biome.getRequiredLevel() > 0 && level <= this.biome.getRequiredLevel())
+				if (levelObject != null &&
+					this.biome.getRequiredLevel() > 0 &&
+					(long) levelObject <= this.biome.getRequiredLevel())
 				{
 					// Not enough level
 
