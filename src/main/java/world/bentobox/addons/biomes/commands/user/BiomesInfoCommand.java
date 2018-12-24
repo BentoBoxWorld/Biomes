@@ -57,6 +57,12 @@ public class BiomesInfoCommand extends CompositeCommand
 	@Override
 	public Optional<List<String>> tabComplete(User user, String alias, List<String> args)
 	{
+ 		if (args.size() > 3)
+		{
+			// Show biome for first tab.
+			return Optional.of(new ArrayList<>());
+		}
+
 		String lastString = args.get(args.size() - 1);
 
 		final List<String> returnList = new ArrayList<>();
