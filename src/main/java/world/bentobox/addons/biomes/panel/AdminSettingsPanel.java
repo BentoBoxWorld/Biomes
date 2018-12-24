@@ -15,9 +15,9 @@ import world.bentobox.bentobox.api.user.User;
  * This class contains everything that is necessary for changing Biomes Addon settings via
  * GUI.
  */
-public class SettingsPanel
+public class AdminSettingsPanel
 {
-	protected SettingsPanel(BiomesAddon addon, World world, User user)
+	protected AdminSettingsPanel(BiomesAddon addon, World world, User user)
 	{
 		this.addon = addon;
 		this.user = user;
@@ -102,7 +102,7 @@ public class SettingsPanel
 					icon(Material.OAK_DOOR).
 					name(this.user.getTranslation("biomes.gui.buttons.back")).
 					clickHandler((panel, user1, clickType, slot) -> {
-						new AdminPanel(this.addon, this.world, this.user);
+						new AdminMainPanel(this.addon, this.world, this.user);
 						return true;
 					}).build());
 				break;
