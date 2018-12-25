@@ -31,6 +31,8 @@ public class AdminCommand extends CompositeCommand
 		// Register sub commands
 
 		new ImportCommand(this.getAddon(), this);
+		new SetBiomeCommand(this.getAddon(), this);
+		new EditBiomeCommand(this.getAddon(), this);
 
 //		new ReloadBiomes(this.getAddon(), this);
 //		new ResetBiomes(this.getAddon(), this);

@@ -41,6 +41,9 @@ biomes:
     set:
       description: "Biomes Addon set command."
       parameters: "<player> <biome> [<type>] [<size>]"
+    edit:
+      description: "Biomes Addon Edit command that allows to change Biome property."
+      parameters: "<biome> <property> <new_value>"
   gui:
     title: "Biomes Menu"
     buttons:
@@ -78,6 +81,12 @@ biomes:
       wrong-biome-name: "Biome [biome] is not accessible"
       biome-not-defined: "Biome is not defined"
       user-not-defined: "User is not defined"
+      missing-arguments: "Command is missing some arguments."
+      property-not-defined: "Property [property] is not defined for Biomes Object."
+      wrong-parameter-boolean: "Given parameter is not a boolean. Expects only 'true' or 'false'"
+      wrong-parameter-integer: "Given parameter is not an integer."
+    warning:
+      may-break-others: "Changing biome type to [biome] may break other biomes with the same type!!"
   info:
     description: "Biomes Addon info command. It shows information about given Biome"
     parameters: "<biome>"

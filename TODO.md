@@ -30,8 +30,8 @@ This page contains plans for each Addon version.
 	- [x] Add Biome disabling ability through ingame menu.
 - [ ] Add extra admin commands.
 	- [ ] Implement Edit Addon Settings command.
-	- [ ] Implement Edit Biome Properties command.
-	- [ ] Implement Change User Biome command.
+	- [x] Implement Edit Biome Properties command.
+	- [x] Implement Change User Biome command.
 - [x] Add extra user commands.
 - [x] Implement automatic import on first init.
 
