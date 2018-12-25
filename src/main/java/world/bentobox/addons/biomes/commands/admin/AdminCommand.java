@@ -33,6 +33,7 @@ public class AdminCommand extends CompositeCommand
 		new ImportCommand(this.getAddon(), this);
 		new SetBiomeCommand(this.getAddon(), this);
 		new EditBiomeCommand(this.getAddon(), this);
+		new SettingsCommand(this.getAddon(), this);
 
 //		new ReloadBiomes(this.getAddon(), this);
 //		new ResetBiomes(this.getAddon(), this);

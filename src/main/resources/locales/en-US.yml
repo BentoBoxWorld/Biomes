@@ -44,6 +44,9 @@ biomes:
     edit:
       description: "Biomes Addon Edit command that allows to change Biome property."
       parameters: "<biome> <property> <new_value>"
+    settings:
+      description: "Biomes Addon Settings command allows to change BiomesAddon settings."
+      parameters: "<property> <new_value>"
   gui:
     title: "Biomes Menu"
     buttons:
@@ -85,6 +88,7 @@ biomes:
       property-not-defined: "Property [property] is not defined for Biomes Object."
       wrong-parameter-boolean: "Given parameter is not a boolean. Expects only 'true' or 'false'"
       wrong-parameter-integer: "Given parameter is not an integer."
+      wrong-parameter-type: "Given parameter value is not Island, Chunk or Square."
     warning:
       may-break-others: "Changing biome type to [biome] may break other biomes with the same type!!"
   info:
