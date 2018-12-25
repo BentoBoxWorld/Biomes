@@ -8,7 +8,6 @@ Biomes addon for BSkyBlock and AcidIsland. It allows to change biome on Island.
 3. The addon will create a data folder and inside the folder will be a *config.yml* and an example *biomes.yml*
 4. Edit the config.yml and *biomes.yml* files how you want. The *biomes.yml* is for importing only.
 5. Restart the server
-6. To import biomes into BSkyBlock do */bsb biomes import*. To import into AcidIsland do */acid biomes import*.
 
 ## Config.yml
 
@@ -22,17 +21,28 @@ The *config.yml* has following sections:
 
 ## Biomes.yml
 
-This file contains all necessary information about default biomes. It is necessary just for first import. 
+This file contains all necessary information about default biomes. 
 If you change values in biomes.yml, then to apply them, you must run **/bsb biomes import** or **/acid biomes import**.
 
 If you want to force an overwrite of biomes via an import, add the **overwrite** option to the end of the import command.
 Note that you must import biomes into both BSkyBlock and AcidIsland separately.
 
+## User commands
+
+* /is biomes: This method opens GUI that allows to change biome on User island.
+* /is biomes help : Show help for all the commands
+* /is biomes info \<biome>: This command returns information about given biome, like cost and necessary level.
+* /is biomes set \<biome> [\<type>] [\<size>]: This command allows to change biome on island without opening GUI. If prarameters < type> and < size> are not provided, command uses default values from addon config.
+
 ## Admin commands
 
 There are a few admin commands and more being written. The main biomes admin command is **/bsb biomes** or **/acid biomes**. Use 
 
+* /bsbadmin biomes: To open Admin GUI. 
 * /bsbadmin biomes help : Show help for all the commands
 * /bsbadmin biomes import [overwrite]: import challenges from challenges.yml
-* /bsbadmin biomes: To open Admin GUI. 
+* /bsbadmin biomes set \<player> \<biome> [\<type>] [\<size>]: This command works the same as user biome set command, but it is necessary to provide also player, which island biome will be updated.
+* /bsbadmin biomes edit \<biome> \<property> \<new_value>: This command allows to edit provided biome property to new value. 
+* /bsbadmin biomes settings \<property> \<new_value>: This command allows to edit current addon settings via command. 
+
 
