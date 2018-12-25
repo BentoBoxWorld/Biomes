@@ -593,32 +593,52 @@ public class BiomesPanel
 		if (this.workingMode.equals(Mode.EDIT))
 		{
 			itemBuilder.clickHandler((panel, player, click, slot) -> {
-				this.createBiomeEditPanel(pageIndex, biome, false, false);
+				if (click.isRightClick())
+				{
+					biome.setDeployed(!biome.isDeployed());
+					this.biomesManager.saveBiome(biome);
+					this.createBiomesPanel(pageIndex);
+				}
+				else
+				{
+					this.createBiomeEditPanel(pageIndex, biome, false, false);
+				}
 
 				return true;
 			});
+
+			itemBuilder.glow(biome.isDeployed());
 		}
 		else
 		{
 			// Player click
 			itemBuilder.clickHandler((panel, player, click, slot) -> {
-				BiomeUpdateHelper helper = new BiomeUpdateHelper(this.addon,
-					this.player,
-					this.targetUser,
-					biome,
-					this.world,
-					this.updateMode,
-					this.updateNumber,
-					this.workingMode.equals(Mode.PLAYER));
-
-				if (helper.canChangeBiome())
+				if (this.workingMode.equals(Mode.PLAYER) && !biome.isDeployed())
 				{
-					helper.updateIslandBiome();
-					this.player.closeInventory();
+					this.player.sendMessage(this.player.getTranslation("biomes.error.disabled"));
+				}
+				else
+				{
+					BiomeUpdateHelper helper = new BiomeUpdateHelper(this.addon,
+						this.player,
+						this.targetUser,
+						biome,
+						this.world,
+						this.updateMode,
+						this.updateNumber,
+						this.workingMode.equals(Mode.PLAYER));
+
+					if (helper.canChangeBiome())
+					{
+						helper.updateIslandBiome();
+						this.player.closeInventory();
+					}
 				}
 
 				return true;
 			});
+
+			itemBuilder.glow(!biome.isDeployed());
 		}
 
 		return itemBuilder.build();
@@ -726,7 +746,7 @@ public class BiomesPanel
 						Integer.toString(this.updateNumber))).
 					clickHandler((panel, user, clickType, slot) -> {
 						biome.setRequiredLevel(this.updateNumber);
-						this.addon.getAddonManager().save(true);
+						this.biomesManager.saveBiome(biome);
 						this.createBiomeEditPanel(pageIndex, biome, false, false);
 						user.sendMessage("biomes.admin.saved");
 						return true;
@@ -742,7 +762,7 @@ public class BiomesPanel
 						Integer.toString(this.updateNumber))).
 					clickHandler((panel, user, clickType, slot) -> {
 						biome.setRequiredCost(this.updateNumber);
-						this.addon.getAddonManager().save(true);
+						this.biomesManager.saveBiome(biome);
 						this.createBiomeEditPanel(pageIndex, biome, false, false);
 						user.sendMessage("challenges.admin.saved");
 						return true;

@@ -27,7 +27,7 @@ This page contains plans for each Addon version.
 - [ ] Improve Admin panel
 	- [x] Allow to edit Addon settings through ingame menu.
 	- [ ] Add Biome changing through ingame menu.
-	- [ ] Add Biome disabling ability through ingame menu.
+	- [x] Add Biome disabling ability through ingame menu.
 - [ ] Add extra admin commands.
 	- [ ] Implement Edit Addon Settings command.
 	- [ ] Implement Edit Biome Properties command.

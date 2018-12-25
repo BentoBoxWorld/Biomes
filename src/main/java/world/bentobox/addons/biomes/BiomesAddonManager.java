@@ -77,6 +77,16 @@ public class BiomesAddonManager
 
 
 	/**
+	 * This method allows to store single biome object.
+	 * @param biome Biome that must be stored.
+	 */
+	public void saveBiome(BiomesObject biome)
+	{
+		this.biomesConfig.saveConfigObject(biome);
+	}
+
+
+	/**
 	 * Save configs and biomes data
 	 */
 	private void save()

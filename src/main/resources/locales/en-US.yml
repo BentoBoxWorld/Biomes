@@ -61,6 +61,7 @@ biomes:
     not-enough-money: "You do not have enough money. Changing biome requires $[number]"
     island-level: "Your island level is too small. Biome requires [number] level"
     admin-not-on-island: "You are not on target island!"
+    disabled: "Current biome is disabled by admin."
   update:
     start: "Start Biome changing on island."
     done: "[label] is set on island successfully"
