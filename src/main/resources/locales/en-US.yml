@@ -38,6 +38,9 @@ biomes:
     saved: "Biome is saved."
     enabled: "enabled"
     disabled: "disabled"
+    set:
+      description: "Biomes Addon set command."
+      parameters: "<player> <biome> [<type>] [<size>]"
   gui:
     title: "Biomes Menu"
     buttons:
@@ -74,6 +77,7 @@ biomes:
       wrong-mode-name: "Cannot parse [mode] to valid UpdateMode"
       wrong-biome-name: "Biome [biome] is not accessible"
       biome-not-defined: "Biome is not defined"
+      user-not-defined: "User is not defined"
   info:
     description: "Biomes Addon info command. It shows information about given Biome"
     parameters: "<biome>"
