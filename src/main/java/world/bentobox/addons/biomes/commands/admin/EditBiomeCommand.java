@@ -84,7 +84,6 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 					{
 						biomesObject.setBiomeName(newBiome.name());
 						biomesObject.setBiomeID(newBiome.ordinal());
-						biomesObject.setUniqueId(newBiome.name().toLowerCase());
 					}
 
 					break;

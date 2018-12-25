@@ -2,6 +2,7 @@ package world.bentobox.addons.biomes.panel;
 
 
 import org.bukkit.*;
+import org.bukkit.block.Biome;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -671,6 +672,24 @@ public class BiomesPanel
 				// TODO: Implement ability to choose biome from all menu.
 				return true;
 			}).build());
+		panelBuilder.item(1, new PanelItemBuilder().
+			name(this.player.getTranslation("biomes.admin.editpanel.name")).
+			description(biome.getBiomeName()).
+			icon(Material.BOOK).
+			clickHandler((panel, user, clickType, slot) -> {
+				this.createBiomesChoosePanel(pageIndex, 0, biome, glowLevel, glowCost);
+				return true;
+			}).build());
+		panelBuilder.item(2, new PanelItemBuilder().
+			name(this.player.getTranslation("biomes.admin.editpanel.description")).
+			description(biome.getDescription()).
+			icon(Material.BOOK).
+			clickHandler((panel, user, clickType, slot) -> {
+				// TODO: Implement ability to change friendly name
+				// if user add renamed paper via listener.
+				// TODO: Implement ability to choose biome from all menu.
+				return true;
+			}).build());
 
 		panelBuilder.item(9, new PanelItemBuilder().
 			name(this.player.getTranslation("biomes.admin.buttons.icon")).
@@ -771,11 +790,99 @@ public class BiomesPanel
 		}
 
 		// back button
-		panelBuilder.item(1, new PanelItemBuilder().
+		panelBuilder.item(35, new PanelItemBuilder().
 			name(this.player.getTranslation("biomes.gui.buttons.back")).
-			icon(Material.IRON_DOOR).
+			icon(Material.OAK_DOOR).
 			clickHandler((panel, user, clickType, slot) -> {
 				this.createBiomesPanel(pageIndex);
+				return true;
+			}).build());
+
+		panelBuilder.build();
+	}
+
+
+	/**
+	 * This method creates new panel that contains all possible biomes.
+	 * @param returnPageIndex Index of page where must return when pressed on back button or when everything is done.
+	 * @param pageIndex Index of current page.
+	 * @param biomesObject BiomeObject that must be updated.
+	 * @param glowLevel Boolean that indicate if level must glow.
+	 * @param glowCost Boolean that indicate if cost must glow.
+	 */
+	private void createBiomesChoosePanel(int returnPageIndex, int pageIndex, BiomesObject biomesObject, boolean glowLevel, boolean glowCost)
+	{
+		final int maxIndex = 45;
+		Biome[] biomes = Biome.values();
+
+		if (pageIndex < 0)
+		{
+			pageIndex = 0;
+		}
+		else if (pageIndex > (biomes.length / maxIndex))
+		{
+			pageIndex = biomes.length / maxIndex;
+		}
+
+		// Add page index only when necessary.
+		String indexString = biomes.length > maxIndex ? " " + String.valueOf(pageIndex + 1) : "";
+
+		PanelBuilder panelBuilder = new PanelBuilder().user(this.player).name(this.panelTitle + indexString);
+
+		int itemIndex = pageIndex * maxIndex;
+
+		while (itemIndex < (pageIndex * maxIndex + maxIndex) &&
+			itemIndex < biomes.length)
+		{
+			Biome biome = biomes[itemIndex];
+			panelBuilder.item(new PanelItemBuilder().
+				name(biome.name()).
+				icon(Material.MAP).
+				clickHandler((panel, user, clickType, slot) -> {
+					biomesObject.setBiomeName(biome.name());
+					biomesObject.setBiomeID(biome.ordinal());
+					this.biomesManager.saveBiome(biomesObject);
+					this.player.sendMessage("biomes.admin.saved");
+					this.createBiomeEditPanel(returnPageIndex, biomesObject, glowLevel, glowCost);
+					return true;
+				}).build());
+			itemIndex++;
+		}
+
+		if (itemIndex < biomes.length)
+		{
+			// Next
+			final int nextPage = pageIndex + 1;
+
+			panelBuilder.item(maxIndex + 8, new PanelItemBuilder().
+				name(this.player.getTranslation("biomes.gui.buttons.next")).
+				icon(new ItemStack(Material.SIGN)).
+				clickHandler((panel, clicker, click, slot) -> {
+					this.createBiomesChoosePanel(returnPageIndex, nextPage, biomesObject, glowLevel, glowCost);
+					return true;
+				}).build());
+		}
+
+		if (itemIndex > maxIndex)
+		{
+			// Previous
+			final int previousPage = pageIndex - 1;
+
+			panelBuilder.item(maxIndex, new PanelItemBuilder().
+				name(this.player.getTranslation("biomes.gui.buttons.previous")).
+				icon(new ItemStack(Material.SIGN)).
+				clickHandler((panel, clicker, click, slot) -> {
+					this.createBiomesChoosePanel(returnPageIndex, previousPage, biomesObject, glowLevel, glowCost);
+					return true;
+				}).build());
+		}
+
+		// return button
+		panelBuilder.item(maxIndex + 4, new PanelItemBuilder().
+			name(this.player.getTranslation("biomes.gui.buttons.back")).
+			icon(new ItemStack(Material.OAK_DOOR)).
+			clickHandler((panel, clicker, click, slot) -> {
+				this.createBiomeEditPanel(returnPageIndex, biomesObject, glowLevel, glowCost);
 				return true;
 			}).build());
 

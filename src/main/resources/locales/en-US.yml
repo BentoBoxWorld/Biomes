@@ -38,6 +38,9 @@ biomes:
     saved: "Biome is saved."
     enabled: "enabled"
     disabled: "disabled"
+    editpanel:
+      name: "Minecraft Original Biome Name"
+      description: "Description"
     set:
       description: "Biomes Addon set command."
       parameters: "<player> <biome> [<type>] [<size>]"

@@ -13,7 +13,6 @@ This page contains plans for each Addon version.
 	- [ ] By permission
 	- [ ] By chance
 	- [ ] By items
-- [ ] Clean up lang file.
 
 ## Release 0.3.0
 - [ ] Improve Admin panel
@@ -22,14 +21,16 @@ This page contains plans for each Addon version.
 	- [ ] Allow to add new biome through ingame menu.
 - [ ] Add extra admin commands.
 	- [ ] Implement new Biome command.
+- [ ] Clean Up lang file.
+- [ ] Populate permissions file.
 
 ## Release 0.2.0
-- [ ] Improve Admin panel
+- [x] Improve Admin panel
 	- [x] Allow to edit Addon settings through ingame menu.
-	- [ ] Add Biome changing through ingame menu.
+	- [x] Add Biome changing through ingame menu.
 	- [x] Add Biome disabling ability through ingame menu.
-- [ ] Add extra admin commands.
-	- [ ] Implement Edit Addon Settings command.
+- [x] Add extra admin commands.
+	- [x] Implement Edit Addon Settings command.
 	- [x] Implement Edit Biome Properties command.
 	- [x] Implement Change User Biome command.
 - [x] Add extra user commands.
