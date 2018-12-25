@@ -3,13 +3,12 @@ package world.bentobox.addons.biomes.commands.user;
 
 import java.util.*;
 
-import world.bentobox.addons.biomes.BiomesAddon;
+import world.bentobox.addons.biomes.commands.ExpandedCompositeCommand;
 import world.bentobox.addons.biomes.objects.BiomesObject;
 import world.bentobox.addons.biomes.tasks.BiomeUpdateHelper;
-import world.bentobox.addons.biomes.utils.Utils;
 import world.bentobox.addons.biomes.utils.Utils.UpdateMode;
+import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
-import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.util.Util;
 
@@ -17,9 +16,9 @@ import world.bentobox.bentobox.util.Util;
 /**
  * This command process <code>/is biomes set</code> command.
  */
-public class BiomesSetCommand extends CompositeCommand
+public class BiomesSetCommand extends ExpandedCompositeCommand
 {
-	public BiomesSetCommand(BiomesAddon addon, CompositeCommand command)
+	public BiomesSetCommand(Addon addon, CompositeCommand command)
 	{
 		super(addon, command, "set");
 	}
@@ -39,9 +38,9 @@ public class BiomesSetCommand extends CompositeCommand
 	@Override
 	public boolean execute(User user, String label, List<String> args)
 	{
-		BiomesObject biome = this.getBiomeObject(args, user);
-		UpdateMode updateMode = this.getUpdateMode(args, user);
-		int size = this.getUpdateRange(args, user);
+		BiomesObject biome = this.getBiomeObject(args, 0, user);
+		UpdateMode updateMode = this.getUpdateMode(args, 1, user);
+		int size = this.getUpdateRange(args, 2, user);
 
 		if (biome == null || updateMode == null || size < 1)
 		{
@@ -53,7 +52,7 @@ public class BiomesSetCommand extends CompositeCommand
 		{
 			// Use BiomeUpdateHelper to change biome for user.
 
-			BiomeUpdateHelper helper = new BiomeUpdateHelper(this.getParent().getAddon(),
+			BiomeUpdateHelper helper = new BiomeUpdateHelper(this.addon,
 				user,
 				user,
 				biome,
@@ -83,8 +82,7 @@ public class BiomesSetCommand extends CompositeCommand
 		switch (size)
 		{
 			case 3:
-				List<BiomesObject> biomes =
-					((BiomesAddon) this.getParent().getAddon()).getAddonManager().getBiomes();
+				List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes();
 
 				// Create suggestions with all biomes that is available for users.
 
@@ -117,108 +115,5 @@ public class BiomesSetCommand extends CompositeCommand
 		}
 
 		return Optional.of(returnList);
-	}
-
-
-
-// ---------------------------------------------------------------------
-// Section: Private methods
-// ---------------------------------------------------------------------
-
-
-	/**
-	 * This method returns BiomesObject or null.
-	 * @param args Args that contains all command arguments
-	 * @param user Caller user.
-	 * @return BiomesObject or null.
-	 */
-	private BiomesObject getBiomeObject(List<String> args, User user)
-	{
-		if (!args.isEmpty())
-		{
-			BiomesObject biome = ((BiomesAddon) this.getParent().getAddon()).getAddonManager().
-				getBiomeFromString(args.get(0));
-
-			if (biome == null)
-			{
-				user.sendMessage(user.getTranslation("biomes.command.error.wrong-biome-name",
-					"[biome]",
-					args.get(0)));
-			}
-
-			return biome;
-		}
-		else
-		{
-			user.sendMessage(user.getTranslation("biomes.command.error.biome-not-defined"));
-			return null;
-		}
-	}
-
-
-	/**
-	 * This method returns Update Mode type.
-	 * @param args Args that contains all command arguments
-	 * @param user Caller user.
-	 * @return UpdateMode or null.
-	 */
-	private UpdateMode getUpdateMode(List<String> args, User user)
-	{
-		if (args.size() > 1)
-		{
-			UpdateMode mode = Utils.parseStrictToUpdateMode(args.get(1));
-
-			if (mode == null)
-			{
-				user.sendMessage(user.getTranslation("biomes.command.error.wrong-mode-name",
-					"[mode]",
-					args.get(1)));
-			}
-
-			return  mode;
-		}
-		else
-		{
-			return Utils.parseStringToUpdateMode(
-				this.getParent().getAddon().getConfig().getString("defaulttype"));
-		}
-	}
-
-
-	/**
-	 * This method returns third parameter, that is expected to be integer which represents update distance
-	 * for chunk and square mode.
-	 * @param args List of arguments that is passed via set command.
-	 * @param user User that calls current method.
-	 * @return Integer that represents update range distance.
-	 */
-	private int getUpdateRange(List<String> args, User user)
-	{
-		if (args.size() > 2)
-		{
-			int size;
-
-			try
-			{
-				size = Integer.parseInt(args.get(2));
-			}
-			catch (Exception e)
-			{
-				size = -1;
-			}
-
-			if (size < 1)
-			{
-				user.sendMessage(user.getTranslation("biomes.command.error.incorrect-size",
-					TextVariables.NUMBER,
-					args.get(2)));
-			}
-
-			return size;
-		}
-		else
-		{
-			return this.getParent().getAddon().getConfig().getInt("defaultsize", 1);
-		}
 	}
 }

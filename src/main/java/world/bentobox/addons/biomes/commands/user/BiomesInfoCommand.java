@@ -3,9 +3,9 @@ package world.bentobox.addons.biomes.commands.user;
 
 import java.util.*;
 
-import world.bentobox.addons.biomes.BiomesAddon;
+import world.bentobox.addons.biomes.commands.ExpandedCompositeCommand;
 import world.bentobox.addons.biomes.objects.BiomesObject;
-import world.bentobox.bentobox.api.commands.CompositeCommand;
+import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.util.Util;
 
@@ -13,9 +13,9 @@ import world.bentobox.bentobox.util.Util;
 /**
  * This method returns information about provided biome in chat.
  */
-public class BiomesInfoCommand extends CompositeCommand
+public class BiomesInfoCommand extends ExpandedCompositeCommand
 {
-	public BiomesInfoCommand(BiomesAddon addon, BiomesCommand command)
+	public BiomesInfoCommand(Addon addon, BiomesCommand command)
 	{
 		super(addon, command, "info");
 	}
@@ -34,7 +34,7 @@ public class BiomesInfoCommand extends CompositeCommand
 	@Override
 	public boolean execute(User user, String label, List<String> args)
 	{
-		BiomesObject biomesObject = this.getBiomeObject(args, user);
+		BiomesObject biomesObject = this.getBiomeObject(args, 0, user);
 
 		if (biomesObject != null)
 		{
@@ -67,8 +67,7 @@ public class BiomesInfoCommand extends CompositeCommand
 
 		final List<String> returnList = new ArrayList<>();
 
-		List<BiomesObject> biomes =
-			((BiomesAddon) this.getParent().getAddon()).getAddonManager().getBiomes();
+		List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes();
 
 		// Create suggestions with all biomes that is available for users.
 
@@ -78,67 +77,5 @@ public class BiomesInfoCommand extends CompositeCommand
 		});
 
 		return Optional.of(returnList);
-	}
-
-
-// ---------------------------------------------------------------------
-// Section: Methods
-// ---------------------------------------------------------------------
-
-
-	/**
-	 * This method returns BiomesObject or null.
-	 * @param args Args that contains all command arguments
-	 * @param user Caller user.
-	 * @return BiomesObject or null.
-	 */
-	private BiomesObject getBiomeObject(List<String> args, User user)
-	{
-		if (!args.isEmpty())
-		{
-			BiomesObject biome = ((BiomesAddon) this.getParent().getAddon()).getAddonManager().
-				getBiomeFromString(args.get(0));
-
-			if (biome == null)
-			{
-				user.sendMessage(user.getTranslation("biomes.command.error.wrong-biome-name",
-					"[biome]",
-					args.get(0)));
-			}
-
-			return biome;
-		}
-		else
-		{
-			user.sendMessage(user.getTranslation("biomes.command.error.biome-not-defined"));
-			return null;
-		}
-	}
-
-
-	/**
-	 * This method transforms stringList to string by appending each list at the end.
-	 * @param stringList List with strings that must be concasted.
-	 * @return String from stringList.
-	 */
-	private String getSingleLineDescription(List<String> stringList)
-	{
-		if (stringList.size() > 1)
-		{
-			Iterator<String> iter = stringList.iterator();
-
-			StringBuilder returnString = new StringBuilder(iter.next());
-
-			while (iter.hasNext())
-			{
-				returnString.append(" ").append(iter.next());
-			}
-
-			return returnString.toString();
-		}
-		else
-		{
-			return stringList.get(0);
-		}
 	}
 }
