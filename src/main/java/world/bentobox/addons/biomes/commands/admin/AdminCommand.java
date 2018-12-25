@@ -4,7 +4,7 @@ package world.bentobox.addons.biomes.commands.admin;
 import java.util.List;
 
 import world.bentobox.addons.biomes.BiomesAddon;
-import world.bentobox.addons.biomes.panel.AdminPanel;
+import world.bentobox.addons.biomes.panel.AdminMainPanel;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.user.User;
 
@@ -44,12 +44,15 @@ public class AdminCommand extends CompositeCommand
 		// Open up the admin GUI
 		if (user.isPlayer())
 		{
-			new AdminPanel(this.addon, this.getWorld(), user);
 			// Create GUI
+			new AdminMainPanel(this.addon, this.getWorld(), user);
 			return true;
 		}
-
-		return false;
+		else
+		{
+			this.showHelp(this, user);
+			return false;
+		}
 	}
 
 
