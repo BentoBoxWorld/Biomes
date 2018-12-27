@@ -1,12 +1,9 @@
-package world.bentobox.addons.biomes.commands;
+package world.bentobox.addons.biomes.commands.user;
 
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import world.bentobox.addons.biomes.BiomesAddon;
-import world.bentobox.addons.biomes.objects.BiomesObject;
 import world.bentobox.addons.biomes.panel.BiomesPanel;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.user.User;
@@ -19,7 +16,7 @@ public class BiomesCommand extends CompositeCommand
 {
 	public BiomesCommand(BiomesAddon plugin, CompositeCommand bsbIslandCmd)
 	{
-		super(bsbIslandCmd, "biomes");
+		super(plugin, bsbIslandCmd, "biomes");
 		this.addon = plugin;
 	}
 
@@ -31,6 +28,9 @@ public class BiomesCommand extends CompositeCommand
 		this.setOnlyPlayer(true);
 		this.setParametersHelp("biomes.help.parameters");
 		this.setDescription("biomes.help.description");
+
+		new BiomesSetCommand(this.getAddon(), this);
+		new BiomesInfoCommand(this.getAddon(), this);
 	}
 
 
@@ -54,21 +54,6 @@ public class BiomesCommand extends CompositeCommand
 
 		this.showHelp(this, user);
 		return false;
-	}
-
-
-	@Override
-	public Optional<List<String>> tabComplete(User user, String alias, List<String> args)
-	{
-		List<String> options = new ArrayList<>();
-		final List<BiomesObject> biomesList = this.addon.getAddonManager().getBiomes();
-
-		for (BiomesObject biome : biomesList)
-		{
-			options.add(biome.getFriendlyName());
-		}
-
-		return Optional.of(options);
 	}
 
 

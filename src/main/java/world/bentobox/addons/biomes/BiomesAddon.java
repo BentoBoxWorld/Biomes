@@ -2,7 +2,7 @@ package world.bentobox.addons.biomes;
 
 
 import world.bentobox.addons.biomes.commands.admin.AdminCommand;
-import world.bentobox.addons.biomes.commands.BiomesCommand;
+import world.bentobox.addons.biomes.commands.user.BiomesCommand;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.managers.CommandsManager;

@@ -4,6 +4,7 @@ biomes:
     parameters: ""
     gui-title: "Admin Menu"
     edit-gui-title: "Edit Biomes Menu"
+    settings-title: "Edit Settings Menu"
     import:
       parameters: "Adding 'overwrite' at the end allows to rewrite stored biomes from biomes.yml"
       description: "Import method allows to import biomes from biomes.yml in server storage."
@@ -22,8 +23,33 @@ biomes:
       level: "Required island Level"
       cost: "Required money"
       save: "Save new value"
+      settings: "Edit Addon Settings"
+      advancedmenu: "Advanced Menu is [value]"
+      type: "Default type is [value]"
+      size: "Default size is [number]"
+      timeout: "Timeout is [number]"
+      cancel: "Cancel"
+    descriptions:
+      advancedmenu: "This enables or disables advanced menu when choosing biomes. It shows all possible biome changing options."
+      type: "This changes default update type when opening biomes menu. It can be 'ISLAND', 'CHUNK' or 'SQUARE'"
+      size: "This changes default size that is set when opening biomes menu."
+      timeout: "This changes timeout between changing biomes. NOT IMPLEMENTED YET."
     change-value: "Store [number] as new value."
     saved: "Biome is saved."
+    enabled: "enabled"
+    disabled: "disabled"
+    editpanel:
+      name: "Minecraft Original Biome Name"
+      description: "Description"
+    set:
+      description: "Biomes Addon set command."
+      parameters: "<player> <biome> [<type>] [<size>]"
+    edit:
+      description: "Biomes Addon Edit command that allows to change Biome property."
+      parameters: "<biome> <property> <new_value>"
+    settings:
+      description: "Biomes Addon Settings command allows to change BiomesAddon settings."
+      parameters: "<property> <new_value>"
   gui:
     title: "Biomes Menu"
     buttons:
@@ -47,6 +73,33 @@ biomes:
     not-enough-money: "You do not have enough money. Changing biome requires $[number]"
     island-level: "Your island level is too small. Biome requires [number] level"
     admin-not-on-island: "You are not on target island!"
+    disabled: "Current biome is disabled by admin."
   update:
     start: "Start Biome changing on island."
     done: "[label] is set on island successfully"
+  set:
+    description: "Biomes Addon set command."
+    parameters: "<biome> [<type>] [<size>]"
+  command:
+    error:
+      incorrect-size: "Size [number] is not valid"
+      wrong-mode-name: "Cannot parse [mode] to valid UpdateMode"
+      wrong-biome-name: "Biome [biome] is not accessible"
+      biome-not-defined: "Biome is not defined"
+      user-not-defined: "User is not defined"
+      missing-arguments: "Command is missing some arguments."
+      property-not-defined: "Property [property] is not defined for Biomes Object."
+      wrong-parameter-boolean: "Given parameter is not a boolean. Expects only 'true' or 'false'"
+      wrong-parameter-integer: "Given parameter is not an integer."
+      wrong-parameter-type: "Given parameter value is not Island, Chunk or Square."
+    warning:
+      may-break-others: "Changing biome type to [biome] may break other biomes with the same type!!"
+  info:
+    description: "Biomes Addon info command. It shows information about given Biome"
+    parameters: "<biome>"
+    message:
+      header: "Biome: [name]"
+      type: "  Type: [type]"
+      description: "  Description: [description]"
+      level: "  Level: [level]"
+      cost: "  Cost: [cost]"

@@ -12,6 +12,7 @@ import java.util.*;
 
 import world.bentobox.addons.biomes.BiomesAddon;
 import world.bentobox.addons.biomes.objects.BiomesObject;
+import world.bentobox.bentobox.api.addons.Addon;
 
 
 /**
@@ -180,5 +181,63 @@ public class Utils
 		}
 
 		return returnMap;
+	}
+
+
+
+	/**
+	 * This method parse default input string type to corresponding update mode.
+	 * @return Default Update mode.
+	 */
+	public static UpdateMode parseStringToUpdateMode(String type)
+	{
+		switch (type.toUpperCase())
+		{
+			case "ISLAND":
+				return UpdateMode.ISLAND;
+			case "CHUNK":
+				return UpdateMode.CHUNK;
+			case "SQUARE":
+				return UpdateMode.SQUARE;
+			default:
+				return UpdateMode.ISLAND;
+		}
+	}
+
+
+	/**
+	 * This method parse default input string type to corresponding update mode.
+	 * @return Update mode.
+	 */
+	public static UpdateMode parseStrictToUpdateMode(String type)
+	{
+		switch (type.toUpperCase())
+		{
+			case "ISLAND":
+				return UpdateMode.ISLAND;
+			case "CHUNK":
+				return UpdateMode.CHUNK;
+			case "SQUARE":
+				return UpdateMode.SQUARE;
+			default:
+				return null;
+		}
+	}
+
+
+
+// ---------------------------------------------------------------------
+// Section: Public Enums
+// ---------------------------------------------------------------------
+
+
+	/**
+	 * This enum describes all possible variants how to calculate new biome location.
+	 */
+	public enum UpdateMode
+	{
+		ISLAND,
+		CHUNK,
+		SQUARE
 	}
 }

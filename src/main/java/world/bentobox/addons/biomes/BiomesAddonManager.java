@@ -8,17 +8,12 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import world.bentobox.addons.biomes.objects.BiomesObject;
-import world.bentobox.addons.biomes.panel.BiomesPanel;
 import world.bentobox.addons.biomes.utils.Utils;
 import world.bentobox.bentobox.api.configuration.Config;
 import world.bentobox.bentobox.api.user.User;
-import world.bentobox.bentobox.util.Util;
 
 
 /**
@@ -37,6 +32,7 @@ public class BiomesAddonManager
 
 		this.biomesConfig = new Config<>(addon, BiomesObject.class);
 		this.biomesList = new ArrayList<>(Biome.values().length);
+		this.biomesMap = new HashMap<>(Biome.values().length);
 
 		this.biomesFile = new File(this.addon.getDataFolder(), "biomes.yml");
 
@@ -65,6 +61,12 @@ public class BiomesAddonManager
 
 		this.biomesConfig.loadConfigObjects().forEach(this::storeBiome);
 
+		// No biomes loaded. Try to import them.
+		if (this.biomesList.isEmpty())
+		{
+			this.importBiomes();
+		}
+
 		this.biomesList.sort(Comparator.comparingInt(BiomesObject::getBiomeID));
 	}
 
@@ -72,6 +74,16 @@ public class BiomesAddonManager
 // ---------------------------------------------------------------------
 // Section: Storing
 // ---------------------------------------------------------------------
+
+
+	/**
+	 * This method allows to store single biome object.
+	 * @param biome Biome that must be stored.
+	 */
+	public void saveBiome(BiomesObject biome)
+	{
+		this.biomesConfig.saveConfigObject(biome);
+	}
 
 
 	/**
@@ -147,6 +159,7 @@ public class BiomesAddonManager
 				}
 
 				this.biomesList.set(this.biomesList.indexOf(biome), biome);
+				this.biomesMap.put(biome.getBiomeName(), biome);
 
 				return true;
 			}
@@ -160,6 +173,7 @@ public class BiomesAddonManager
 		}
 
 		this.biomesList.add(biome);
+		this.biomesMap.put(biome.getBiomeName(), biome);
 
 		return true;
 	}
@@ -168,6 +182,67 @@ public class BiomesAddonManager
 // ---------------------------------------------------------------------
 // Section: Importing
 // ---------------------------------------------------------------------
+
+
+	/**
+	 * This method imports biomes on first run.
+	 */
+	private void importBiomes()
+	{
+		if (!this.biomesFile.exists())
+		{
+			this.addon.logError("Missing biomes.yml file!");
+			return;
+		}
+
+		YamlConfiguration config = new YamlConfiguration();
+
+		try
+		{
+			config.load(this.biomesFile);
+		}
+		catch (IOException | InvalidConfigurationException e)
+		{
+			this.addon.logError("Error on parsing biomes.yml file!");
+			return;
+		}
+
+		ConfigurationSection reader = config.getConfigurationSection("biomes.biomesList");
+
+		Map<String, Biome> biomeNameMap = Utils.getBiomeNameMap();
+
+		for (String biome : reader.getKeys(false))
+		{
+			if (biomeNameMap.containsKey(biome.toUpperCase()))
+			{
+				BiomesObject newBiomeObject = new BiomesObject(
+					biomeNameMap.get(biome.toUpperCase()));
+
+				newBiomeObject.setUniqueId(biome);
+				newBiomeObject.setDeployed(true);
+
+				ConfigurationSection details = reader.getConfigurationSection(biome);
+
+				newBiomeObject.setFriendlyName(details.getString("friendlyName", biome));
+
+				newBiomeObject.setDescription(
+					Utils.splitString(details.getString("description", "")));
+				newBiomeObject.setIcon(
+					Utils.parseItem(this.addon, details.getString("icon") + ":1"));
+
+				newBiomeObject.setRequiredLevel(details.getInt("islandLevel", 0));
+				newBiomeObject.setRequiredCost(details.getInt("cost", 0));
+
+				this.biomesList.add(newBiomeObject);
+				this.biomesMap.put(newBiomeObject.getBiomeName(), newBiomeObject);
+			}
+		}
+
+		this.addon.log("Imported " + this.biomesList.size() + " Biomes.");
+
+		this.biomesList.sort(Comparator.comparingInt(BiomesObject::getBiomeID));
+		this.save();
+	}
 
 
 	/**
@@ -229,7 +304,7 @@ public class BiomesAddonManager
 				BiomesObject newBiomeObject = new BiomesObject(
 					biomeNameMap.get(biome.toUpperCase()));
 
-				newBiomeObject.setUniqueId(Util.getWorld(world).getName() + "_" + biome);
+				newBiomeObject.setUniqueId(biome);
 				newBiomeObject.setDeployed(true);
 
 				ConfigurationSection details = reader.getConfigurationSection(biome);
@@ -279,6 +354,18 @@ public class BiomesAddonManager
 	}
 
 
+	/**
+	 * This method returns biome object that hides behind biome name or null, if biome
+	 * with name does not exist.
+	 * @param biome Biome's name.
+	 * @return BiomesObject that is represented by biome string.
+	 */
+	public BiomesObject getBiomeFromString(String biome)
+	{
+		return this.biomesMap.getOrDefault(biome, null);
+	}
+
+
 // ---------------------------------------------------------------------
 // Section: Variables
 // ---------------------------------------------------------------------
@@ -289,14 +376,14 @@ public class BiomesAddonManager
 	private BiomesAddon addon;
 
 	/**
-	 * Variable stores Biomes Panel.
-	 */
-	private BiomesPanel biomesPanel;
-
-	/**
 	 * Variable stores list of loaded biomes.
 	 */
 	private List<BiomesObject> biomesList;
+
+	/**
+	 * Variable stores map that links String to loaded biomes object.
+	 */
+	private Map<String, BiomesObject> biomesMap;
 
 	/**
 	 * Variable stores biomes object configuration.

@@ -5,7 +5,6 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,86 +15,37 @@ import world.bentobox.bentobox.api.user.User;
 
 
 /**
- * This class creates AdminPanel GUI that allows to change user biome, edit, add or remove biome and import
- * biomes.
+ * This Admin panel will show list with users and it allows to select user, whoes biome admin want to change.
  */
-public class AdminPanel
+public class AdminUserPanel
 {
-	public AdminPanel(BiomesAddon addon, World world, User user)
+	/**
+	 * Default constructor that will create new Panel with players.
+	 * @param addon BiomeAddon.
+ 	 * @param world World form which command is called.
+	 * @param user User who calls command.
+	 */
+	public AdminUserPanel(BiomesAddon addon, World world, User user)
 	{
-		this.addon = addon;
-		this.world = world;
-		this.player = user;
-
-		this.createAdminMainMenu(false);
+		this(addon, world, user, true);
 	}
 
 
 	/**
-	 * This method creates main admin menu.
-	 * @param glow indicate if Import must glow.
+	 * Default constructor that will create new Panel with players.
+	 * @param addon BiomeAddon.
+	 * @param world World form which command is called.
+	 * @param user User who calls command.
+	 * @param fromMainMenu indicate if panel is created from main menu.
 	 */
-	private void createAdminMainMenu(boolean glow)
+	public AdminUserPanel(BiomesAddon addon, World world, User user, boolean fromMainMenu)
 	{
-		PanelBuilder panelBuilder = new PanelBuilder().user(this.player).name(
-			this.player.getTranslation("biomes.admin.gui-title"));
+		this.addon = addon;
+		this.world = world;
+		this.player = user;
+		this.fromMainMenu = fromMainMenu;
 
-		// Change Other players Biome
-		panelBuilder.item(1, new PanelItemBuilder().
-			name(this.player.getTranslation("biomes.admin.buttons.change")).
-			icon(Material.LEVER).
-			clickHandler((panel, user, clickType, slot) -> {
-				this.createPlayerListMenu(0);
-				return true;
-			}).build());
-
-		// Add New Biome
-//		panelBuilder.item(3, new PanelItemBuilder().build());
-
-		// Edit Biome
-		panelBuilder.item(4, new PanelItemBuilder().
-			name(this.player.getTranslation("biomes.admin.buttons.edit")).
-			icon(Material.ANVIL).
-			clickHandler((panel, clicker, click, slot) -> {
-				this.player.closeInventory();
-
-				new BiomesPanel(
-					this.addon,
-					this.player,
-					this.player,
-					this.world,
-					"",
-					BiomesPanel.Mode.EDIT);
-				return true;
-			}).build());
-
-		// Remove Biome
-//		panelBuilder.item(5, new PanelItemBuilder().build());
-
-		// Import Biomes
-		panelBuilder.item(7, new PanelItemBuilder().
-			name(this.player.getTranslation("biomes.admin.buttons.import")).
-			icon(Material.HOPPER).
-			clickHandler((panel, user, clickType, slot) -> {
-				if (clickType.isRightClick())
-				{
-					// Change to overwrite mode.
-					this.createAdminMainMenu(!glow);
-				}
-				else
-				{
-					// TODO: call directly?
-					this.player.performCommand("bsbadmin biomes import" + (glow ? " overwrite" : ""));
-				}
-
-				return true;
-			}).glow(glow).
-			build());
-
-		// Edit Addon Settings
-		// panelBuilder.item(8, new PanelItemBuilder().build());
-
-		panelBuilder.build();
+		this.createPlayerListMenu(0);
 	}
 
 
@@ -188,6 +138,18 @@ public class AdminPanel
 				}).build());
 		}
 
+		if (this.fromMainMenu)
+		{
+			// Return button
+			panelBuilder.item(MAX_PLAYERS_PER_PAGE + 4, new PanelItemBuilder().
+				name(this.player.getTranslation("biomes.gui.buttons.back")).
+				icon(new ItemStack(Material.OAK_DOOR)).
+				clickHandler((panel, clicker, click, slot) -> {
+					new AdminMainPanel(this.addon, this.world, this.player);
+					return true;
+				}).build());
+		}
+
 		panelBuilder.build();
 	}
 
@@ -202,6 +164,11 @@ public class AdminPanel
 	private World world;
 
 	private BiomesAddon addon;
+
+	/**
+	 * This variable stores if current menu should show return button.
+	 */
+	private boolean fromMainMenu;
 
 	/**
 	 * Set only 5 rows to be for Users. Last row should be reserved for navigation.
