@@ -104,7 +104,7 @@ public class BiomesAddonManager
 		if (async)
 		{
 			this.addon.getServer().getScheduler().
-				runTaskAsynchronously(this.addon.getPlugin(), this::save);
+				runTaskAsynchronously(this.addon.getPlugin(), bukkitTask -> BiomesAddonManager.this.save());
 		}
 		else
 		{
