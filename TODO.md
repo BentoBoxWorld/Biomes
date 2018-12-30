@@ -19,8 +19,8 @@ This page contains plans for each Addon version.
 	- [ ] Add icon changing through ingame menu.
 	- [ ] Add description changing through ingame menu.
 	- [ ] Allow to add new biome through ingame menu.
-- [ ] Add extra admin commands.
-	- [ ] Implement new Biome command.
+- [x] Add extra admin commands.
+	- [x] Implement new Biome command.
 - [ ] Clean Up lang file.
 - [ ] Populate permissions file.
 

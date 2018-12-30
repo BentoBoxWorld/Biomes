@@ -97,6 +97,7 @@ biomes:
       wrong-parameter-boolean: "Given parameter is not a boolean. Expects only 'true' or 'false'"
       wrong-parameter-integer: "Given parameter is not an integer."
       wrong-parameter-type: "Given parameter value is not Island, Chunk or Square."
+      icon-parse: "Given icon cannot be parsed to Minecraft ItemStack. Try different."
     warning:
       may-break-others: "Changing biome type to [biome] may break other biomes with the same type!!"
   info:

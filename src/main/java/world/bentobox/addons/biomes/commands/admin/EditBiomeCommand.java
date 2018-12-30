@@ -3,6 +3,7 @@ package world.bentobox.addons.biomes.commands.admin;
 
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
+import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -94,7 +95,19 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 					biomesObject.setDescription(Utils.splitString(this.buildStringFromValue(args)));
 					break;
 				case ICON:
-					return false;
+					Material newIcon = Material.getMaterial(args.get(2).toUpperCase());
+
+					if (newIcon == null)
+					{
+						user.sendMessage("biomes.command.error.icon-parse");
+						return false;
+					}
+					else
+					{
+						biomesObject.setIcon(new ItemStack(newIcon));
+					}
+
+					break;
 				case DEPLOYED:
 
 					if (args.get(2).equalsIgnoreCase("true"))
