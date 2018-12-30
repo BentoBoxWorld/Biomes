@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import world.bentobox.addons.biomes.BiomesAddon;
+import world.bentobox.addons.biomes.objects.BiomesObject;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
@@ -52,7 +53,21 @@ public class AdminMainPanel
 			}).build());
 
 		// Add New Biome
-//		panelBuilder.item(3, new PanelItemBuilder().build());
+		panelBuilder.item(3, new PanelItemBuilder().
+			name(this.player.getTranslation("biomes.admin.buttons.add")).
+			icon(Material.BOOK).
+			clickHandler((panel, clicker, click, slot) -> {
+				this.player.closeInventory();
+
+				new BiomesPanel(
+					this.addon,
+					this.player,
+					new BiomesObject(),
+					this.world,
+					"",
+					BiomesPanel.Mode.EDIT);
+				return true;
+			}).build());
 
 		// Edit Biome
 		panelBuilder.item(4, new PanelItemBuilder().

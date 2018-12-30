@@ -66,6 +66,29 @@ public class BiomesPanel
 	}
 
 
+	public BiomesPanel(BiomesAddon addon,
+		User player,
+		BiomesObject biomesObject,
+		World world,
+		String permissionPrefix,
+		Mode workingMode)
+	{
+		this.addon = addon;
+		this.biomesManager = addon.getAddonManager();
+		this.player = player;
+		this.permissionPrefix = permissionPrefix;
+		this.workingMode = workingMode;
+		this.world = world;
+
+		this.panelTitle = this.player.getTranslation("biomes.admin.add-gui-title");
+		PANEL_MAX_SIZE = 36;
+
+		this.updateNumber = 1;
+
+		this.createBiomesChoosePanel(-3, -0, biomesObject, false, false);
+	}
+
+
 // ---------------------------------------------------------------------
 // Section: Panel creating methods
 // ---------------------------------------------------------------------
@@ -726,33 +749,33 @@ public class BiomesPanel
 		{
 			// Setters
 			panelBuilder.item(3,
-				this.createAdvancedButton(AdvancedButtons.ONE, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.ONE, pageIndex, biome, glowLevel, glowCost));
 			panelBuilder.item(12,
-				this.createAdvancedButton(AdvancedButtons.FIVE, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.FIVE, pageIndex, biome, glowLevel, glowCost));
 			panelBuilder.item(21,
-				this.createAdvancedButton(AdvancedButtons.TEN, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.TEN, pageIndex, biome, glowLevel, glowCost));
 			panelBuilder.item(30,
-				this.createAdvancedButton(AdvancedButtons.HUNDRED, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.HUNDRED, pageIndex, biome, glowLevel, glowCost));
 
 			// Increasers
 			panelBuilder.item(5,
-				this.createAdvancedButton(AdvancedButtons.PLUS_ONE, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.PLUS_ONE, pageIndex, biome, glowLevel, glowCost));
 			panelBuilder.item(14,
-				this.createAdvancedButton(AdvancedButtons.PLUS_FIVE, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.PLUS_FIVE, pageIndex, biome, glowLevel, glowCost));
 			panelBuilder.item(23,
-				this.createAdvancedButton(AdvancedButtons.PLUS_FIFTY, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.PLUS_FIFTY, pageIndex, biome, glowLevel, glowCost));
 			panelBuilder.item(32,
-				this.createAdvancedButton(AdvancedButtons.PLUS_HUNDRED, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.PLUS_HUNDRED, pageIndex, biome, glowLevel, glowCost));
 
 			// Reducers
 			panelBuilder.item(6,
-				this.createAdvancedButton(AdvancedButtons.MINUS_ONE, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.MINUS_ONE, pageIndex, biome, glowLevel, glowCost));
 			panelBuilder.item(15,
-				this.createAdvancedButton(AdvancedButtons.MINUS_FIVE, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.MINUS_FIVE, pageIndex, biome, glowLevel, glowCost));
 			panelBuilder.item(24,
-				this.createAdvancedButton(AdvancedButtons.MINUS_FIFTY, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.MINUS_FIFTY, pageIndex, biome, glowLevel, glowCost));
 			panelBuilder.item(33,
-				this.createAdvancedButton(AdvancedButtons.MINUS_HUNDRED, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.MINUS_HUNDRED, pageIndex, biome, glowLevel, glowCost));
 
 			// Savers
 			if (glowLevel)
@@ -794,7 +817,17 @@ public class BiomesPanel
 			name(this.player.getTranslation("biomes.gui.buttons.back")).
 			icon(Material.OAK_DOOR).
 			clickHandler((panel, user, clickType, slot) -> {
-				this.createBiomesPanel(pageIndex);
+				// Page INDEX -2 means that it should return to AdminPanel from biomeEditPanel.
+				if (pageIndex == -2)
+				{
+					// Return to admin main panel.
+					new AdminMainPanel(this.addon, this.world, this.player);
+				}
+				else
+				{
+					// Return to biomes list panel.
+					this.createBiomesPanel(pageIndex);
+				}
 				return true;
 			}).build());
 
@@ -841,9 +874,29 @@ public class BiomesPanel
 				clickHandler((panel, user, clickType, slot) -> {
 					biomesObject.setBiomeName(biome.name());
 					biomesObject.setBiomeID(biome.ordinal());
-					this.biomesManager.saveBiome(biomesObject);
-					this.player.sendMessage("biomes.admin.saved");
-					this.createBiomeEditPanel(returnPageIndex, biomesObject, glowLevel, glowCost);
+
+					if (biomesObject.getUniqueId() == null || biomesObject.getUniqueId().isEmpty())
+					{
+						biomesObject.setFriendlyName(biome.name());
+						biomesObject.setUniqueId(biome.name().toLowerCase());
+
+						// Process issues when biomes overlapps.
+
+						if (!this.biomesManager.storeBiome(biomesObject, false, user, false))
+						{
+							// Error will be thrown in chat, so just open choose window again.
+							this.createBiomesChoosePanel(-3, 0, new BiomesObject(), glowLevel, glowCost);
+						}
+					}
+					else
+					{
+						this.biomesManager.saveBiome(biomesObject);
+						this.player.sendMessage("biomes.admin.saved");
+					}
+
+					// Page INDEX -3 means that it should return to AdminPanel from biomeChoosePanel.
+					// Page INDEX -2 means that it should return to AdminPanel from biomeEditPanel.
+					this.createBiomeEditPanel(returnPageIndex == -3 ? -2 : returnPageIndex, biomesObject, glowLevel, glowCost);
 					return true;
 				}).build());
 			itemIndex++;
@@ -882,7 +935,16 @@ public class BiomesPanel
 			name(this.player.getTranslation("biomes.gui.buttons.back")).
 			icon(new ItemStack(Material.OAK_DOOR)).
 			clickHandler((panel, clicker, click, slot) -> {
-				this.createBiomeEditPanel(returnPageIndex, biomesObject, glowLevel, glowCost);
+				// Page INDEX -2 means that it should return to AdminPanel from biomeChoosePanel.
+				if (returnPageIndex == -3)
+				{
+					// Return to admin main panel.
+					new AdminMainPanel(this.addon, this.world, this.player);
+				}
+				else
+				{
+					this.createBiomeEditPanel(returnPageIndex, biomesObject, glowLevel, glowCost);
+				}
 				return true;
 			}).build());
 

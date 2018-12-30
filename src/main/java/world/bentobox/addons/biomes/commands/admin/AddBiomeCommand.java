@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import world.bentobox.addons.biomes.commands.ExpandedCompositeCommand;
 import world.bentobox.addons.biomes.objects.BiomesObject;
+import world.bentobox.addons.biomes.panel.BiomesPanel;
 import world.bentobox.addons.biomes.utils.Utils;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
@@ -39,6 +40,19 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 	@Override
 	public boolean execute(User user, String label, List<String> args)
 	{
+		if (user.isPlayer() && args.isEmpty())
+		{
+			// Shows BiomesPanel in Edit mode.
+			new BiomesPanel(this.addon,
+				user,
+				new BiomesObject(),
+				this.getWorld(),
+				"",
+				BiomesPanel.Mode.EDIT);
+
+			return true;
+		}
+		else
 		if (args.isEmpty())
 		{
 			this.showHelp(this, user);
@@ -63,11 +77,15 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 			{
 				BiomesObject biomesObject = new BiomesObject(newBiome);
 				biomesObject.setFriendlyName(newBiome.name());
-				biomesObject.setUniqueId(newBiome.name() + "-" + user.getUniqueId());
-				this.addon.getAddonManager().storeBiome(new BiomesObject(newBiome), false, user, false);
-				user.sendMessage("biomes.command.success.biome-created", "[biome]", args.get(0));
+				biomesObject.setUniqueId(newBiome.name().toLowerCase());
 
-				return true;
+				if (this.addon.getAddonManager().storeBiome(biomesObject, false, user, false))
+				{
+					user.sendMessage("biomes.command.success.biome-created", "[biome]", args.get(0));
+					return true;
+				}
+
+				return false;
 			}
 		}
 	}

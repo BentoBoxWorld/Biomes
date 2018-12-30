@@ -4,6 +4,7 @@ biomes:
     parameters: ""
     gui-title: "Admin Menu"
     edit-gui-title: "Edit Biomes Menu"
+    ad-gui-title: "Add Biomes Menu"
     settings-title: "Edit Settings Menu"
     import:
       parameters: "Adding 'overwrite' at the end allows to rewrite stored biomes from biomes.yml"
@@ -66,6 +67,7 @@ biomes:
       increase: "Increase value by [number]"
       reduce: "Reduce value by [number]"
       back: "Return to previous menu"
+      back: "Add new Biome"
   help:
     description: "Biomes Addon command. It opens GUI for changing biome on island."
     parameters: ""
