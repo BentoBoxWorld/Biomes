@@ -44,7 +44,10 @@ biomes:
     set:
       description: "Biomes Addon set command."
       parameters: "<player> <biome> [<type>] [<size>]"
-    edit:
+    add:
+      description: "Biomes Addon add command. This command adds new biome."
+      parameters: "<biome>"
+     edit:
       description: "Biomes Addon Edit command that allows to change Biome property."
       parameters: "<biome> <property> <new_value>"
     settings:
@@ -81,6 +84,8 @@ biomes:
     description: "Biomes Addon set command."
     parameters: "<biome> [<type>] [<size>]"
   command:
+    success:
+      biome-created: "Biome [biome] is created. To edit its properties use EDIT command."
     error:
       incorrect-size: "Size [number] is not valid"
       wrong-mode-name: "Cannot parse [mode] to valid UpdateMode"
