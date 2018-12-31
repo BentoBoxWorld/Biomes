@@ -17,6 +17,7 @@ The *config.yml* has following sections:
 * Default Type: this allows to choose default selected type that will be available when users opens Biome GUI.
 	Valid values are *'ISLAND', 'CHUNK' and 'SQUARE'*
 * Default Size: this allows to set default value that will be set when Biome GUI is opened. It must be integer larger then 0.
+* Reset Biomes:  if this is *true*, on owner change, addon will reset biome on whole island to default biome, if user does not have biomes.set permission. 
 * Timeout: this allows to set some delay before user can change biome on his island again. **NOT IMPLEMENTED**
 
 ## Biomes.yml
