@@ -28,6 +28,7 @@ biomes:
         advancedmenu: "Advanced Menu is [value]"
         type: "Default type is [value]"
         size: "Default size is [number]"
+        resetBiomes: "Reset Biomes is [value]"
         timeout: "Timeout is [number]"
         # Common GUI buttons
         cancel: "Cancel"
@@ -41,6 +42,7 @@ biomes:
         advancedmenu: "This enables or disables advanced menu when choosing biomes. It shows all possible biome changing options."
         type: "This changes default update type when opening biomes menu. It can be 'ISLAND', 'CHUNK' or 'SQUARE'"
         size: "This changes default size that is set when opening biomes menu."
+        resetBiomes: "This enables or disables resetting to default biome whole island on owner change if new owner does not have biome.set permission."
         timeout: "This changes timeout between changing biomes. NOT IMPLEMENTED YET."
         # this will be added into biomes.gui.admin.buttons.advancedmenu [value]
         enabled: "enabled"

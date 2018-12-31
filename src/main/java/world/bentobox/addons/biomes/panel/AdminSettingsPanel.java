@@ -60,14 +60,15 @@ public class AdminSettingsPanel
 		String defaultType = this.addon.getConfig().getString("defaulttype", "ISLAND");
 		int defaultSize = this.addon.getConfig().getInt("defaultsize", 1);
 		int timeout = this.addon.getConfig().getInt("timeout", 1);
+		boolean resetBiomes = this.addon.getConfig().getBoolean("resetBiomes", false);
 
 		panelBuilder.item(0, new PanelItemBuilder().
 			icon(Material.COMMAND_BLOCK).
 			name(this.user.getTranslation("biomes.gui.admin.buttons.advancedmenu",
 				"[value]",
 				advancedMenu ?
-					this.user.getTranslation("biomes.gui.admin.description.enabled") :
-					this.user.getTranslation("biomes.gui.admin.description.disabled") )).
+					this.user.getTranslation("biomes.gui.admin.descriptions.enabled") :
+					this.user.getTranslation("biomes.gui.admin.descriptions.disabled") )).
 			description(this.user.getTranslation("biomes.admin.descriptions.advancedmenu")).
 			clickHandler((panel, user1, clickType, slot) -> {
 				this.mode = Mode.MENU;
@@ -103,6 +104,22 @@ public class AdminSettingsPanel
 			build());
 
 		panelBuilder.item(27, new PanelItemBuilder().
+			icon(Material.DROPPER).
+			name(this.user.getTranslation("biomes.gui.admin.buttons.resetBiomes",
+				"[value]",
+				advancedMenu ?
+					this.user.getTranslation("biomes.gui.admin.descriptions.enabled") :
+					this.user.getTranslation("biomes.gui.admin.descriptions.disabled"))).
+			description(this.user.getTranslation("biomes.admin.descriptions.resetBiomes")).
+			clickHandler((panel, user1, clickType, slot) -> {
+				this.mode = Mode.RESET_BIOME;
+				this.newValue = resetBiomes;
+				this.createSettingPanel();
+				return true;
+			}).glow(this.mode == Mode.RESET_BIOME).
+			build());
+
+		panelBuilder.item(36, new PanelItemBuilder().
 			icon(Material.DAYLIGHT_DETECTOR).
 			name(this.user.getTranslation("biomes.gui.admin.buttons.timeout", "[number]", Integer.toString(timeout))).
 			description(this.user.getTranslation("biomes.gui.admin.descriptions.timeout")).
@@ -245,8 +262,48 @@ public class AdminSettingsPanel
 				this.addNumberButtons(panelBuilder);
 
 				break;
-			case TIMEOUT:
+			case RESET_BIOME:
 				panelBuilder.item(28, new PanelItemBuilder().
+					icon(Material.PAPER).
+					name(this.user.getTranslation("biomes.gui.admin.buttons.save")).
+					clickHandler((panel, user1, clickType, slot) -> {
+						this.mode = Mode.RETURN;
+						this.addon.getConfig().set("resetBiomes", this.newValue);
+						this.addon.saveConfig();
+						this.createSettingPanel();
+						return true;
+					}).build());
+				panelBuilder.item(29, new PanelItemBuilder().
+					icon(Material.BARRIER).
+					name(this.user.getTranslation("biomes.gui.admin.buttons.cancel")).
+					clickHandler((panel, user1, clickType, slot) -> {
+						this.mode = Mode.RETURN;
+						this.createSettingPanel();
+						return true;
+					}).build());
+
+				panelBuilder.item(31, new PanelItemBuilder().
+					icon(Material.GREEN_CONCRETE).
+					name(this.user.getTranslation("biomes.gui.admin.buttons.enabled")).
+					clickHandler((panel, user1, clickType, slot) -> {
+						this.newValue = true;
+						this.createSettingPanel();
+						return true;
+					}).glow((boolean) this.newValue)
+					.build());
+				panelBuilder.item(32, new PanelItemBuilder().
+					icon(Material.RED_CONCRETE).
+					name(this.user.getTranslation("biomes.gui.admin.buttons.disabled")).
+					clickHandler((panel, user1, clickType, slot) -> {
+						this.newValue = false;
+						this.createSettingPanel();
+						return true;
+					}).glow(!((boolean) this.newValue)).
+					build());
+
+				break;
+			case TIMEOUT:
+				panelBuilder.item(37, new PanelItemBuilder().
 					icon(Material.PAPER).
 					name(this.user.getTranslation("biomes.gui.admin.buttons.save")).
 					clickHandler((panel, user1, clickType, slot) -> {
@@ -262,7 +319,7 @@ public class AdminSettingsPanel
 						this.createSettingPanel();
 						return true;
 					}).build());
-				panelBuilder.item(29, new PanelItemBuilder().
+				panelBuilder.item(38, new PanelItemBuilder().
 					icon(Material.BARRIER).
 					name(this.user.getTranslation("biomes.gui.admin.buttons.cancel")).
 					clickHandler((panel, user1, clickType, slot) -> {
@@ -272,8 +329,6 @@ public class AdminSettingsPanel
 					}).build());
 
 				this.addNumberButtons(panelBuilder);
-
-				break;
 		}
 
 		// Create Reload Config un Reload Lang buttons.
@@ -389,7 +444,8 @@ public class AdminSettingsPanel
 		MENU,
 		TYPE,
 		SIZE,
-		TIMEOUT
+		TIMEOUT,
+		RESET_BIOME
 	}
 
 
