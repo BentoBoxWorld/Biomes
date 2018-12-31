@@ -32,8 +32,8 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 	public void setup()
 	{
 		this.setPermission("admin.biomes.add");
-		this.setParametersHelp("biomes.admin.add.parameters");
-		this.setDescription("biomes.admin.add.description");
+		this.setParametersHelp("biomes.commands.admin.add.parameters");
+		this.setDescription("biomes.commands.admin.add.description");
 	}
 
 
@@ -60,7 +60,7 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 		}
 		else if (args.size() > 1)
 		{
-			user.sendMessage("biomes.command.error.too-many-arguments");
+			user.sendMessage("biomes.messages.errors.too-many-arguments");
 			this.showHelp(this, user);
 			return false;
 		}
@@ -70,7 +70,9 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 
 			if (newBiome == null)
 			{
-				user.sendMessage("biomes.command.error.wrong-biome-name", "[biome]", args.get(0));
+				user.sendMessage("biomes.messages.errors.incorrect-biome",
+					"[biome]",
+					args.get(0));
 				return false;
 			}
 			else
@@ -81,7 +83,9 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 
 				if (this.addon.getAddonManager().storeBiome(biomesObject, false, user, false))
 				{
-					user.sendMessage("biomes.command.success.biome-created", "[biome]", args.get(0));
+					user.sendMessage("biomes.messages.information.biome-created",
+						"[biome]",
+						args.get(0));
 					return true;
 				}
 

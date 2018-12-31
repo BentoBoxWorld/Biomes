@@ -24,20 +24,20 @@ public class ImportCommand extends CompositeCommand
 
 
 	@Override
+	public void setup()
+	{
+		this.setPermission("admin.biomes.import");
+		this.setParametersHelp("biomes.commands.admin.import.parameters");
+		this.setDescription("biomes.commands.admin.import.description");
+	}
+
+
+	@Override
 	public boolean execute(User user, String label, List<String> args)
 	{
 		return ((BiomesAddon) this.getAddon()).getAddonManager().importBiomes(user,
 			this.getWorld(),
 			!args.isEmpty() && args.get(0).equalsIgnoreCase("overwrite"));
-	}
-
-
-	@Override
-	public void setup()
-	{
-		this.setPermission("admin.biomes.import");
-		this.setParametersHelp("biomes.admin.import.parameters");
-		this.setDescription("biomes.admin.import.description");
 	}
 
 

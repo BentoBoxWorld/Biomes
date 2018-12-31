@@ -43,7 +43,7 @@ public abstract class ExpandedCompositeCommand extends CompositeCommand
 
 			if (biome == null)
 			{
-				user.sendMessage(user.getTranslation("biomes.command.error.wrong-biome-name",
+				user.sendMessage(user.getTranslation("biomes.messages.errors.incorrect-biome",
 					"[biome]",
 					args.get(index)));
 			}
@@ -52,7 +52,7 @@ public abstract class ExpandedCompositeCommand extends CompositeCommand
 		}
 		else
 		{
-			user.sendMessage(user.getTranslation("biomes.command.error.biome-not-defined"));
+			user.sendMessage(user.getTranslation("biomes.messages.errors.missing-biome"));
 			return null;
 		}
 	}
@@ -73,7 +73,7 @@ public abstract class ExpandedCompositeCommand extends CompositeCommand
 
 			if (mode == null)
 			{
-				user.sendMessage(user.getTranslation("biomes.command.error.wrong-mode-name",
+				user.sendMessage(user.getTranslation("biomes.messages.errors.incorrect-mode",
 					"[mode]",
 					args.get(index)));
 			}
@@ -112,7 +112,7 @@ public abstract class ExpandedCompositeCommand extends CompositeCommand
 
 			if (range < 1)
 			{
-				user.sendMessage(user.getTranslation("biomes.command.error.incorrect-size",
+				user.sendMessage(user.getTranslation("biomes.messages.errors.incorrect-range",
 					TextVariables.NUMBER,
 					args.get(index)));
 			}
@@ -158,7 +158,7 @@ public abstract class ExpandedCompositeCommand extends CompositeCommand
 		}
 		else
 		{
-			user.sendMessage(user.getTranslation("biomes.command.error.user-not-defined"));
+			user.sendMessage(user.getTranslation("biomes.messages.errors.missing-user"));
 			return null;
 		}
 	}

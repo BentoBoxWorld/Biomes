@@ -54,7 +54,7 @@ public class BiomeUpdateHelper
 			{
 				// Cannot update negative numbers.
 
-				this.callerUser.sendMessage("biomes.error.negative-number",
+				this.callerUser.sendMessage("biomes.messages.errors.incorrect-range",
 					TextVariables.NUMBER,
 					Integer.toString(this.updateNumber));
 				return false;
@@ -65,8 +65,7 @@ public class BiomeUpdateHelper
 			if (island == null)
 			{
 				// User has no island.
-
-				this.callerUser.sendMessage("biomes.error.no-island");
+				this.callerUser.sendMessage("biomes.messages.errors.missing-island");
 				return false;
 			}
 
@@ -77,7 +76,7 @@ public class BiomeUpdateHelper
 			{
 				// User is not on his island.
 
-				this.callerUser.sendMessage("biomes.error.not-on-island");
+				this.callerUser.sendMessage("biomes.messages.errors.not-on-island");
 				return false;
 			}
 
@@ -89,7 +88,7 @@ public class BiomeUpdateHelper
 				{
 					// Not enough money.
 
-					this.callerUser.sendMessage("biomes.error.not-enough-money",
+					this.callerUser.sendMessage("biomes.messages.errors.not-enough-money",
 						TextVariables.NUMBER,
 						Double.toString(this.biome.getRequiredCost()));
 					return false;
@@ -112,7 +111,7 @@ public class BiomeUpdateHelper
 				{
 					// Not enough level
 
-					this.callerUser.sendMessage("biomes.error.island-level",
+					this.callerUser.sendMessage("biomes.messages.errors.not-enough-level",
 						TextVariables.NUMBER,
 						String.valueOf(this.biome.getRequiredLevel()));
 					return false;
@@ -130,8 +129,9 @@ public class BiomeUpdateHelper
 				(!onIsland.isPresent() || onIsland.get() != island))
 			{
 				// Admin is not on user island.
-
-				this.callerUser.sendMessage("biomes.error.admin-not-on-island");
+				this.callerUser.sendMessage("biomes.messages.errors.missing-admin-island",
+					"[user]",
+					this.targetUser.getName());
 				return false;
 			}
 		}

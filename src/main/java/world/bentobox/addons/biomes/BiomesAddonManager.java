@@ -142,7 +142,7 @@ public class BiomesAddonManager
 			{
 				if (!silent)
 				{
-					user.sendMessage("biomes.admin.import.skipping",
+					user.sendMessage("biomes.messages.warnings.skipping",
 						"[biome]",
 						biome.getFriendlyName());
 				}
@@ -153,7 +153,7 @@ public class BiomesAddonManager
 			{
 				if (!silent)
 				{
-					user.sendMessage("biomes.admin.import.overwriting",
+					user.sendMessage("biomes.messages.warnings.overwriting",
 						"[biome]",
 						biome.getFriendlyName());
 				}
@@ -167,7 +167,7 @@ public class BiomesAddonManager
 
 		if (!silent)
 		{
-			user.sendMessage("biomes.admin.import.imported",
+			user.sendMessage("biomes.messages.information.imported",
 				"[biome]",
 				biome.getFriendlyName());
 		}
@@ -257,7 +257,7 @@ public class BiomesAddonManager
 	{
 		if (!this.biomesFile.exists())
 		{
-			user.sendMessage("biomes.admin.import.no-file");
+			user.sendMessage("biomes.messages.errors.no-file");
 			return false;
 		}
 
@@ -269,7 +269,7 @@ public class BiomesAddonManager
 		}
 		catch (IOException | InvalidConfigurationException e)
 		{
-			user.sendMessage("biomes.admin.import.no-load",
+			user.sendMessage("biomes.messages.errors.no-load",
 				"[message]",
 				e.getMessage());
 			return false;
@@ -327,13 +327,13 @@ public class BiomesAddonManager
 			}
 			else
 			{
-				user.sendMessage("biomes.admin.import.wrong",
+				user.sendMessage("biomes.messages.errors.load-biome",
 					"[biome]",
 					biome);
 			}
 		}
 
-		user.sendMessage("biomes.admin.import.number",
+		user.sendMessage("biomes.messages.information.import-count",
 			"[number]",
 			String.valueOf(size));
 	}

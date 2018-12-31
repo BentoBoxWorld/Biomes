@@ -116,6 +116,33 @@ public class Utils
 
 
 	/**
+	 * This method combines input string array in single string.
+	 * @param args String list that must be combined.
+	 * @return Combined string.
+	 */
+	public static String mergeStringList(List<String> args)
+	{
+		if (args.isEmpty())
+		{
+			return "";
+		}
+
+		Iterator<String> iterator = args.iterator();
+
+		StringBuilder builder = new StringBuilder();
+		builder.append(iterator.next());
+
+		while (iterator.hasNext())
+		{
+			builder.append(" ");
+			builder.append(iterator.next());
+		}
+
+		return builder.toString();
+	}
+
+
+	/**
 	 * This method parses BiomesObject to necessary Biome.
 	 * @param biomesObject BiomesObject.
 	 * @return Biome that is represented by BiomesObject.

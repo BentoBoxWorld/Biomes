@@ -28,8 +28,8 @@ public class BiomesSetCommand extends ExpandedCompositeCommand
 	public void setup()
 	{
 		this.setPermission("biomes.set");
-		this.setParametersHelp("biomes.set.parameters");
-		this.setDescription("biomes.set.description");
+		this.setParametersHelp("biomes.commands.set.parameters");
+		this.setDescription("biomes.commands.set.description");
 
 		this.setOnlyPlayer(true);
 	}

@@ -32,8 +32,8 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 	public void setup()
 	{
 		this.setPermission("admin.biomes.edit");
-		this.setParametersHelp("biomes.admin.edit.parameters");
-		this.setDescription("biomes.admin.edit.description");
+		this.setParametersHelp("biomes.commands.admin.edit.parameters");
+		this.setDescription("biomes.commands.admin.edit.description");
 	}
 
 
@@ -53,7 +53,7 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 		}
 		else if (args.size() < 3)
 		{
-			user.sendMessage("biomes.command.error.missing-arguments");
+			user.sendMessage("biomes.messages.errors.missing-arguments");
 			this.showHelp(this, user);
 			return false;
 		}
@@ -73,12 +73,17 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 				case BIOME:
 					String newBiomeString = args.get(2);
 
-					user.sendMessage("biomes.command.warning.may-break-others", "[biome]", newBiomeString);
+					user.sendMessage("biomes.messages.warnings.may-break-others",
+						"[biome]",
+						newBiomeString);
+
 					Biome newBiome = Utils.getBiomeNameMap().getOrDefault(newBiomeString.toUpperCase(), null);
 
 					if (newBiome == null)
 					{
-						user.sendMessage("biomes.command.error.wrong-biome-name", "[biome]", newBiomeString);
+						user.sendMessage("biomes.messages.errors.incorrect-biome",
+							"[biome]",
+							newBiomeString);
 						return false;
 					}
 					else
@@ -99,7 +104,9 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 
 					if (newIcon == null)
 					{
-						user.sendMessage("biomes.command.error.icon-parse");
+						user.sendMessage("biomes.messages.errors.incorrect-icon",
+							"[icon]",
+							args.get(2));
 						return false;
 					}
 					else
@@ -122,7 +129,9 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 					}
 					else
 					{
-						user.sendMessage("biomes.command.error.wrong-parameter-boolean");
+						user.sendMessage("biomes.messages.errors.incorrect-boolean",
+							"[boolean]",
+							args.get(2));
 						return false;
 					}
 
@@ -135,7 +144,9 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 					}
 					catch (Exception e)
 					{
-						user.sendMessage("biomes.command.error.wrong-parameter-integer");
+						user.sendMessage("biomes.messages.errors.incorrect-range",
+							"[number]",
+							args.get(2));
 						return false;
 					}
 
@@ -147,17 +158,23 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 					}
 					catch (Exception e)
 					{
-						user.sendMessage("biomes.command.error.wrong-parameter-integer");
+						user.sendMessage("biomes.messages.errors.incorrect-range",
+							"[number]",
+							args.get(2));
 						return false;
 					}
 				default:
-					user.sendMessage("biomes.command.error.property-not-defined", "[property]", args.get(1));
+					user.sendMessage("biomes.messages.errors.incorrect-parameter",
+						"[property]",
+						args.get(1));
 					return false;
 			}
 
 
 			this.addon.getAddonManager().saveBiome(biomesObject);
-			user.sendMessage("biomes.admin.saved");
+			user.sendMessage("biomes.messages.information.saved",
+				"[biome]",
+				biomesObject.getFriendlyName());
 			return true;
 		}
 	}
@@ -223,10 +240,10 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 						returnList.add("<boolean>");
 						break;
 					case REQUIRED_COST:
-						returnList.add("[0-9999999999]");
+						returnList.add("<number>");
 						break;
 					case REQUIRED_LEVEL:
-						returnList.add("[0-9999999999]");
+						returnList.add("<number>");
 						break;
 				}
 

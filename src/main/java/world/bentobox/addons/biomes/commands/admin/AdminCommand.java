@@ -25,8 +25,8 @@ public class AdminCommand extends CompositeCommand
 	public void setup()
 	{
 		this.setPermission("admin.biomes");
-		this.setParametersHelp("biomes.admin.parameters");
-		this.setDescription("biomes.admin.description");
+		this.setParametersHelp("biomes.commands.admin.help.parameters");
+		this.setDescription("biomes.commands.admin.help.description");
 
 		// Register sub commands
 

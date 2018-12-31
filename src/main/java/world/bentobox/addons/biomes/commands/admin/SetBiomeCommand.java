@@ -31,8 +31,8 @@ public class SetBiomeCommand extends ExpandedCompositeCommand
 	public void setup()
 	{
 		this.setPermission("admin.biomes.set");
-		this.setParametersHelp("biomes.admin.set.parameters");
-		this.setDescription("biomes.admin.set.description");
+		this.setParametersHelp("biomes.commands.admin.set.parameters");
+		this.setDescription("biomes.commands.admin.set.description");
 	}
 
 

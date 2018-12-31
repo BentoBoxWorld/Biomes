@@ -1,113 +1,156 @@
 biomes:
-  admin:
-    description: "Biomes Addon Admin Command"
-    parameters: ""
-    gui-title: "Admin Menu"
-    edit-gui-title: "Edit Biomes Menu"
-    ad-gui-title: "Add Biomes Menu"
-    settings-title: "Edit Settings Menu"
-    import:
-      parameters: "Adding 'overwrite' at the end allows to rewrite stored biomes from biomes.yml"
-      description: "Import method allows to import biomes from biomes.yml in server storage."
-      skipping: "Skipping [biome] importing"
-      overwriting: "Overwriting [biome]"
-      imported: "[biome] is imported"
-      no-file: "biomes.yml not found"
-      no-load: "An error occure while importing biomes: [message]"
-      wrong: "Cannot import [biome]. There are no biome with name [biome] in game!"
-      number: "Biomes importing ended. Imported [number] biomes."
-    buttons:
-      change: "Set island Biomes"
-      edit: "Edit Biome Settings"
-      import: "Import Biomes"
-      icon: "Biome Icon"
-      level: "Required island Level"
-      cost: "Required money"
-      save: "Save new value"
-      settings: "Edit Addon Settings"
-      advancedmenu: "Advanced Menu is [value]"
-      type: "Default type is [value]"
-      size: "Default size is [number]"
-      timeout: "Timeout is [number]"
-      cancel: "Cancel"
-    descriptions:
-      advancedmenu: "This enables or disables advanced menu when choosing biomes. It shows all possible biome changing options."
-      type: "This changes default update type when opening biomes menu. It can be 'ISLAND', 'CHUNK' or 'SQUARE'"
-      size: "This changes default size that is set when opening biomes menu."
-      timeout: "This changes timeout between changing biomes. NOT IMPLEMENTED YET."
-    change-value: "Store [number] as new value."
-    saved: "Biome is saved."
-    enabled: "enabled"
-    disabled: "disabled"
-    editpanel:
-      name: "Minecraft Original Biome Name"
-      description: "Description"
-    set:
-      description: "Biomes Addon set command."
-      parameters: "<player> <biome> [<type>] [<size>]"
-    add:
-      description: "Biomes Addon add command. This command adds new biome."
-      parameters: "<biome>"
-     edit:
-      description: "Biomes Addon Edit command that allows to change Biome property."
-      parameters: "<biome> <property> <new_value>"
-    settings:
-      description: "Biomes Addon Settings command allows to change BiomesAddon settings."
-      parameters: "<property> <new_value>"
+  # Translation for GUI elements.
   gui:
-    title: "Biomes Menu"
+    # Admin GUI translations.
+    admin:
+      # Titles for different admin GUIs
+      gui-title: "Admin Menu"
+      edit-title: "Edit Biome"
+      add-title: "Add Biome Menu"
+      settings-title: "Edit Settings Menu"
+      choose-biome-title: "Choose new biome type"
+      choose-user-title: "Choose user"
+
+      buttons:
+        # Main admin GUI related buttons.
+        change: "Change biome in island"
+        add: "Add new biome"
+        edit: "Edit biome properties"
+        import: "Import biomes"
+        settings: "Edit addon settings"
+        # Biome edit GUI related buttons
+        icon: "Biome icon"
+        level: "Required island level"
+        cost: "Required money"
+        biome: "Change biome"
+        name: "Edit friendly name"
+        # Addon settings edit related buttons
+        advancedmenu: "Advanced Menu is [value]"
+        type: "Default type is [value]"
+        size: "Default size is [number]"
+        timeout: "Timeout is [number]"
+        # Common GUI buttons
+        cancel: "Cancel"
+        save: "Save"
+        enabled: "Enable"
+        disabled: "Disable"
+
+      # Admin GUI button description translations.
+      descriptions:
+        # GUI edit settings buttons:
+        advancedmenu: "This enables or disables advanced menu when choosing biomes. It shows all possible biome changing options."
+        type: "This changes default update type when opening biomes menu. It can be 'ISLAND', 'CHUNK' or 'SQUARE'"
+        size: "This changes default size that is set when opening biomes menu."
+        timeout: "This changes timeout between changing biomes. NOT IMPLEMENTED YET."
+        # this will be added into biomes.gui.admin.buttons.advancedmenu [value]
+        enabled: "enabled"
+        disabled: "disabled"
+        # Biome edit panel
+        current: "Current value: [value]"
+        change: "This will set [number] as new value."
+
+    # User GUI translations.
+    title: "Biome change menu"
+    choose-title: "Choose biome"
     buttons:
+      # Buttons in multi-page menu
       next: "Next page"
       previous: "Previous page"
-      island: "Whole island"
+      back: "Return to previous menu"
+
+      # Buttons in advanced menu that indicate biome change mode.
+      island: "On whole island"
       chunk: "Per chunk"
-      region: "In region"
-      counter: "New Size: [number]"
+      region: "On region"
+
+      # Button in advanced menu that indicate how large region will be updated.
+      value: "New value: [number]"
+
+      # Buttons in advanced menu that allows to change update region size.
       set: "Set value to [number]"
       increase: "Increase value by [number]"
       reduce: "Reduce value by [number]"
-      back: "Return to previous menu"
-      back: "Add new Biome"
-  help:
-    description: "Biomes Addon command. It opens GUI for changing biome on island."
-    parameters: ""
-  error:
-    negative-number: "New Size cannot be negative"
-    no-island: "You do not have island!"
-    not-on-island: "You are not on island!"
-    not-enough-money: "You do not have enough money. Changing biome requires $[number]"
-    island-level: "Your island level is too small. Biome requires [number] level"
-    admin-not-on-island: "You are not on target island!"
-    disabled: "Current biome is disabled by admin."
-  update:
-    start: "Start Biome changing on island."
-    done: "[label] is set on island successfully"
-  set:
-    description: "Biomes Addon set command."
-    parameters: "<biome> [<type>] [<size>]"
-  command:
-    success:
-      biome-created: "Biome [biome] is created. To edit its properties use EDIT command."
-    error:
-      incorrect-size: "Size [number] is not valid"
-      wrong-mode-name: "Cannot parse [mode] to valid UpdateMode"
-      wrong-biome-name: "Biome [biome] is not accessible"
-      biome-not-defined: "Biome is not defined"
-      user-not-defined: "User is not defined"
-      missing-arguments: "Command is missing some arguments."
-      property-not-defined: "Property [property] is not defined for Biomes Object."
-      wrong-parameter-boolean: "Given parameter is not a boolean. Expects only 'true' or 'false'"
-      wrong-parameter-integer: "Given parameter is not an integer."
-      wrong-parameter-type: "Given parameter value is not Island, Chunk or Square."
-      icon-parse: "Given icon cannot be parsed to Minecraft ItemStack. Try different."
-    warning:
-      may-break-others: "Changing biome type to [biome] may break other biomes with the same type!!"
-  info:
-    description: "Biomes Addon info command. It shows information about given Biome"
-    parameters: "<biome>"
-    message:
+  # Translations for addon commands.
+  commands:
+    # Translations for addon admin commands.
+    admin:
+      help:
+        description: "Main biome addon admin command. Opens Admin GUI for players."
+        parameters: ""
+      set:
+        description: "Admin SET command allows to change biome for <player> island. <type> and <size> is not required."
+        parameters: "<player> <biome> [<type>] [<size>]"
+      add:
+        description: "Admin ADD command allows to add new biome, if it does not exist. Will not override!"
+        parameters: "<biome>"
+      edit:
+        description: "Admin EDIT command allows to change given <biome> property. Allows to edit only existing properties."
+        parameters: "<biome> <property> <new_value>"
+      import:
+        description: "Admin IMPORT command allows to import biomes from biomes.yml file. Adding 'overwrite' at the end will overwrite existing biomes."
+        parameters: "[overwrite]"
+      settings:
+        description: "Admin SETTINGS command allows to edit addon default settings via simple command. It allows to edit only existing settings."
+        parameters: "<property> <new_value>"
+
+    # User commands
+    help:
+      description: "Main biome addon command that opens biome change GUI."
+      parameters: ""
+    info:
+      description: "INFO command displays information about given biome."
+      parameters: "<biome>"
+    set:
+      description: "SET command allows to change biome without opening GUI. <type> and <size> is not required."
+      parameters: "<biome> [<type>] [<size>]"
+
+  # Translations for addon messages.
+  messages:
+    # Information contains all 5 lines that will be displayed on /biomes INFO command.
+    biome-information:
       header: "Biome: [name]"
       type: "  Type: [type]"
       description: "  Description: [description]"
       level: "  Level: [level]"
       cost: "  Cost: [cost]"
+    information:
+      biome-created: "Biome [biome] is created. To edit its properties use EDIT command."
+      update-start: "Start Biome changing on island."
+      update-done: "[biome] is set on island successfully."
+
+      imported: "[biome] is imported."
+      import-count: "Biomes importing ended. Imported [number] biomes."
+
+      saved: "Biome [biome] is saved."
+      saved-config: "Addon settings is updated."
+      saved-value: "New [property] for [biome] is stored as [value]."
+    warnings:
+      may-break-others: "Changing biome type to [biome] may break other biomes with the same type!"
+
+      skipping: "Skipping [biome] importing."
+      overwriting: "Overwriting [biome]."
+    errors:
+      incorrect-range: "Given number '[number]' is not valid. Valid are only positive integers."
+      incorrect-mode: "Given value '[mode]' is not valid. Valid values are 'ISLAND', 'CHUNK' or 'SQUARE'."
+      incorrect-icon: "Given icon '[icon]' cannot be parsed. Try different."
+      incorrect-biome: "Given biome '[biome]' is not find in Minecraft. Use correct biome name."
+      incorrect-parameter: "Given property '[property]' is not defined for biome."
+      incorrect-boolean: "Given value '[boolean]' is not a boolean. Valid values are 'true' or 'false'."
+
+      missing-user: "User is not defined."
+      missing-biome: "Biome is not defined."
+      missing-arguments: "Command is missing some arguments."
+      too-many-arguments: "Too many arguments for this command."
+
+      missing-island: "You do not have an island!"
+      missing-admin-island: "User [user] does not have an island!"
+
+      not-on-island: "You are not on island."
+      not-enough-money: "You do not have enough money. Changing biome requires $[number]"
+      not-enough-level:  "Your island level is too small. Biome requires [number] level"
+      admin-not-on-island: "You are not on [user] island."
+      disabled: "Currently this biome is disabled."
+
+      no-file: "biomes.yml not found."
+      no-load: "An error occur while importing biomes: [message]!"
+      load-biome: "Cannot load biome '[biome]' as it is not defined in Minecraft. Use correct biome name."
