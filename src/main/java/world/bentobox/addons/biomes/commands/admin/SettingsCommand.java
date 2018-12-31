@@ -54,7 +54,7 @@ public class SettingsCommand extends ExpandedCompositeCommand
 		}
 		else
 		{
-			switch (args.get(0))
+			switch (args.get(0).toLowerCase())
 			{
 				case MENU:
 					if (args.get(1).equalsIgnoreCase("true"))
@@ -110,7 +110,24 @@ public class SettingsCommand extends ExpandedCompositeCommand
 							args.get(1));
 						return false;
 					}
-
+				case RESET_BIOME:
+					if (args.get(1).equalsIgnoreCase("true"))
+					{
+						this.addon.getConfig().set(RESET_BIOME, true);
+						break;
+					}
+					else if (args.get(1).equalsIgnoreCase("false"))
+					{
+						this.addon.getConfig().set(RESET_BIOME, false);
+						break;
+					}
+					else
+					{
+						user.sendMessage("biomes.messages.errors.incorrect-boolean",
+							"[boolean]",
+							args.get(1));
+						return false;
+					}
 				case TIMEOUT:
 					try
 					{
@@ -155,6 +172,7 @@ public class SettingsCommand extends ExpandedCompositeCommand
 				returnList.add(MENU);
 				returnList.add(TYPE);
 				returnList.add(SIZE);
+				returnList.add(RESET_BIOME);
 				returnList.add(TIMEOUT);
 
 				break;
@@ -164,6 +182,7 @@ public class SettingsCommand extends ExpandedCompositeCommand
 				switch (args.get(3))
 				{
 					case MENU:
+					case RESET_BIOME:
 						returnList.add("<boolean>");
 						break;
 					case TYPE:
@@ -172,10 +191,8 @@ public class SettingsCommand extends ExpandedCompositeCommand
 						returnList.add("square");
 						break;
 					case SIZE:
-						returnList.add("[0-200]");
-						break;
 					case TIMEOUT:
-						returnList.add("[0-9999999999]");
+						returnList.add("<number>");
 						break;
 				}
 
@@ -202,4 +219,6 @@ public class SettingsCommand extends ExpandedCompositeCommand
 	private static final String SIZE = "defaultsize";
 
 	private static final String TIMEOUT = "timeout";
+
+	private static final String RESET_BIOME = "resetbiomes";
 }
