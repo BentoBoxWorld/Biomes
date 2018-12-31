@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import world.bentobox.addons.biomes.BiomesAddon;
+import world.bentobox.addons.biomes.objects.BiomesObject;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
@@ -38,11 +39,11 @@ public class AdminMainPanel
 	private void createAdminMainMenu(boolean glow)
 	{
 		PanelBuilder panelBuilder = new PanelBuilder().user(this.player).name(
-			this.player.getTranslation("biomes.admin.gui-title"));
+			this.player.getTranslation("biomes.gui.admin.gui-title"));
 
 		// Change Other players Biome
 		panelBuilder.item(1, new PanelItemBuilder().
-			name(this.player.getTranslation("biomes.admin.buttons.change")).
+			name(this.player.getTranslation("biomes.gui.admin.buttons.change")).
 			icon(Material.LEVER).
 			clickHandler((panel, user, clickType, slot) -> {
 				new AdminUserPanel(this.addon,
@@ -52,11 +53,25 @@ public class AdminMainPanel
 			}).build());
 
 		// Add New Biome
-//		panelBuilder.item(3, new PanelItemBuilder().build());
+		panelBuilder.item(3, new PanelItemBuilder().
+			name(this.player.getTranslation("biomes.gui.admin.buttons.add")).
+			icon(Material.BOOK).
+			clickHandler((panel, clicker, click, slot) -> {
+				this.player.closeInventory();
+
+				new BiomesPanel(
+					this.addon,
+					this.player,
+					new BiomesObject(),
+					this.world,
+					"",
+					BiomesPanel.Mode.EDIT);
+				return true;
+			}).build());
 
 		// Edit Biome
 		panelBuilder.item(4, new PanelItemBuilder().
-			name(this.player.getTranslation("biomes.admin.buttons.edit")).
+			name(this.player.getTranslation("biomes.gui.admin.buttons.edit")).
 			icon(Material.ANVIL).
 			clickHandler((panel, clicker, click, slot) -> {
 				this.player.closeInventory();
@@ -76,7 +91,7 @@ public class AdminMainPanel
 
 		// Import Biomes
 		panelBuilder.item(7, new PanelItemBuilder().
-			name(this.player.getTranslation("biomes.admin.buttons.import")).
+			name(this.player.getTranslation("biomes.gui.admin.buttons.import")).
 			icon(Material.HOPPER).
 			clickHandler((panel, user, clickType, slot) -> {
 				if (clickType.isRightClick())
@@ -95,7 +110,7 @@ public class AdminMainPanel
 
 		// Edit Addon Settings
 		panelBuilder.item(8, new PanelItemBuilder().
-			name(this.player.getTranslation("biomes.admin.buttons.settings")).
+			name(this.player.getTranslation("biomes.gui.admin.buttons.settings")).
 			icon(Material.ENCHANTING_TABLE).
 			clickHandler((panel, user, clickType, slot) -> {
 				new AdminSettingsPanel(this.addon,

@@ -54,7 +54,7 @@ public class AdminSettingsPanel
 	private void createSettingPanel()
 	{
 		PanelBuilder panelBuilder = new PanelBuilder().user(this.user).name(
-			this.user.getTranslation("biomes.admin.settings-title"));
+			this.user.getTranslation("biomes.gui.admin.settings-title"));
 
 		boolean advancedMenu = this.addon.getConfig().getBoolean("advancedmenu", false);
 		String defaultType = this.addon.getConfig().getString("defaulttype", "ISLAND");
@@ -63,11 +63,11 @@ public class AdminSettingsPanel
 
 		panelBuilder.item(0, new PanelItemBuilder().
 			icon(Material.COMMAND_BLOCK).
-			name(this.user.getTranslation("biomes.admin.buttons.advancedmenu",
+			name(this.user.getTranslation("biomes.gui.admin.buttons.advancedmenu",
 				"[value]",
 				advancedMenu ?
-					this.user.getTranslation("biomes.admin.enabled") :
-					this.user.getTranslation("biomes.admin.disabled") )).
+					this.user.getTranslation("biomes.gui.admin.description.enabled") :
+					this.user.getTranslation("biomes.gui.admin.description.disabled") )).
 			description(this.user.getTranslation("biomes.admin.descriptions.advancedmenu")).
 			clickHandler((panel, user1, clickType, slot) -> {
 				this.mode = Mode.MENU;
@@ -80,8 +80,8 @@ public class AdminSettingsPanel
 		panelBuilder.item(9, new PanelItemBuilder().
 			icon(defaultType.equals("ISLAND") ? Material.GRASS_BLOCK :
 				defaultType.equals("CHUNK") ? Material.DIRT : Material.GLASS).
-			name(this.user.getTranslation("biomes.admin.buttons.type", "[value]", defaultType)).
-			description(this.user.getTranslation("biomes.admin.descriptions.type")).
+			name(this.user.getTranslation("biomes.gui.admin.buttons.type", "[value]", defaultType)).
+			description(this.user.getTranslation("biomes.gui.admin.descriptions.type")).
 			clickHandler((panel, user1, clickType, slot) -> {
 				this.mode = Mode.TYPE;
 				this.newValue = defaultType;
@@ -92,8 +92,8 @@ public class AdminSettingsPanel
 
 		panelBuilder.item(18, new PanelItemBuilder().
 			icon(Material.PISTON).
-			name(this.user.getTranslation("biomes.admin.buttons.size", "[number]", Integer.toString(defaultSize))).
-			description(this.user.getTranslation("biomes.admin.descriptions.size")).
+			name(this.user.getTranslation("biomes.gui.admin.buttons.size", "[number]", Integer.toString(defaultSize))).
+			description(this.user.getTranslation("biomes.gui.admin.descriptions.size")).
 			clickHandler((panel, user1, clickType, slot) -> {
 				this.mode = Mode.SIZE;
 				this.newValue = defaultSize;
@@ -104,8 +104,8 @@ public class AdminSettingsPanel
 
 		panelBuilder.item(27, new PanelItemBuilder().
 			icon(Material.DAYLIGHT_DETECTOR).
-			name(this.user.getTranslation("biomes.admin.buttons.timeout", "[number]", Integer.toString(timeout))).
-			description(this.user.getTranslation("biomes.admin.descriptions.timeout")).
+			name(this.user.getTranslation("biomes.gui.admin.buttons.timeout", "[number]", Integer.toString(timeout))).
+			description(this.user.getTranslation("biomes.gui.admin.descriptions.timeout")).
 			clickHandler((panel, user1, clickType, slot) -> {
 				this.mode = Mode.TIMEOUT;
 				this.newValue = timeout;
@@ -132,7 +132,7 @@ public class AdminSettingsPanel
 			case MENU:
 				panelBuilder.item(1, new PanelItemBuilder().
 					icon(Material.PAPER).
-					name(this.user.getTranslation("biomes.admin.buttons.save")).
+					name(this.user.getTranslation("biomes.gui.admin.buttons.save")).
 					clickHandler((panel, user1, clickType, slot) -> {
 						this.mode = Mode.RETURN;
 						this.addon.getConfig().set("advancedmenu", this.newValue);
@@ -142,7 +142,7 @@ public class AdminSettingsPanel
 					}).build());
 				panelBuilder.item(2, new PanelItemBuilder().
 					icon(Material.BARRIER).
-					name(this.user.getTranslation("biomes.admin.buttons.cancel")).
+					name(this.user.getTranslation("biomes.gui.admin.buttons.cancel")).
 					clickHandler((panel, user1, clickType, slot) -> {
 						this.mode = Mode.RETURN;
 						this.createSettingPanel();
@@ -150,7 +150,7 @@ public class AdminSettingsPanel
 					}).build());
 				panelBuilder.item(4, new PanelItemBuilder().
 					icon(Material.GREEN_CONCRETE).
-					name(this.user.getTranslation("biomes.admin.enabled")).
+					name(this.user.getTranslation("biomes.gui.admin.buttons.enabled")).
 					clickHandler((panel, user1, clickType, slot) -> {
 						this.newValue = true;
 						this.createSettingPanel();
@@ -159,7 +159,7 @@ public class AdminSettingsPanel
 					.build());
 				panelBuilder.item(13, new PanelItemBuilder().
 					icon(Material.RED_CONCRETE).
-					name(this.user.getTranslation("biomes.admin.disabled")).
+					name(this.user.getTranslation("biomes.gui.admin.buttons.disabled")).
 					clickHandler((panel, user1, clickType, slot) -> {
 						this.newValue = false;
 						this.createSettingPanel();
@@ -171,7 +171,7 @@ public class AdminSettingsPanel
 			case TYPE:
 				panelBuilder.item(10, new PanelItemBuilder().
 					icon(Material.PAPER).
-					name(this.user.getTranslation("biomes.admin.buttons.save")).
+					name(this.user.getTranslation("biomes.gui.admin.buttons.save")).
 					clickHandler((panel, user1, clickType, slot) -> {
 						this.mode = Mode.RETURN;
 						this.addon.getConfig().set("defaulttype", this.newValue);
@@ -181,7 +181,7 @@ public class AdminSettingsPanel
 					}).build());
 				panelBuilder.item(11, new PanelItemBuilder().
 					icon(Material.BARRIER).
-					name(this.user.getTranslation("biomes.admin.buttons.cancel")).
+					name(this.user.getTranslation("biomes.gui.admin.buttons.cancel")).
 					clickHandler((panel, user1, clickType, slot) -> {
 						this.mode = Mode.RETURN;
 						this.createSettingPanel();
@@ -219,7 +219,7 @@ public class AdminSettingsPanel
 			case SIZE:
 				panelBuilder.item(19, new PanelItemBuilder().
 					icon(Material.PAPER).
-					name(this.user.getTranslation("biomes.admin.buttons.save")).
+					name(this.user.getTranslation("biomes.gui.admin.buttons.save")).
 					clickHandler((panel, user1, clickType, slot) -> {
 						this.mode = Mode.RETURN;
 
@@ -235,7 +235,7 @@ public class AdminSettingsPanel
 					}).build());
 				panelBuilder.item(20, new PanelItemBuilder().
 					icon(Material.BARRIER).
-					name(this.user.getTranslation("biomes.admin.buttons.cancel")).
+					name(this.user.getTranslation("biomes.gui.admin.buttons.cancel")).
 					clickHandler((panel, user1, clickType, slot) -> {
 						this.mode = Mode.RETURN;
 						this.createSettingPanel();
@@ -248,7 +248,7 @@ public class AdminSettingsPanel
 			case TIMEOUT:
 				panelBuilder.item(28, new PanelItemBuilder().
 					icon(Material.PAPER).
-					name(this.user.getTranslation("biomes.admin.buttons.save")).
+					name(this.user.getTranslation("biomes.gui.admin.buttons.save")).
 					clickHandler((panel, user1, clickType, slot) -> {
 						this.mode = Mode.RETURN;
 
@@ -264,7 +264,7 @@ public class AdminSettingsPanel
 					}).build());
 				panelBuilder.item(29, new PanelItemBuilder().
 					icon(Material.BARRIER).
-					name(this.user.getTranslation("biomes.admin.buttons.cancel")).
+					name(this.user.getTranslation("biomes.gui.admin.buttons.cancel")).
 					clickHandler((panel, user1, clickType, slot) -> {
 						this.mode = Mode.RETURN;
 						this.createSettingPanel();
@@ -290,7 +290,7 @@ public class AdminSettingsPanel
 	{
 		panelBuilder.item(22, new PanelItemBuilder().
 			icon(Material.PAPER).
-			name(this.user.getTranslation("biomes.gui.buttons.counter",
+			name(this.user.getTranslation("biomes.gui.buttons.value",
 				TextVariables.NUMBER, Integer.toString((int) this.newValue))).
 			build());
 

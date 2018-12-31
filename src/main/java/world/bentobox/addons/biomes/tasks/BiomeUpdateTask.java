@@ -27,7 +27,7 @@ public class BiomeUpdateTask extends BukkitRunnable
 	@Override
 	public void run()
 	{
-		this.user.sendMessage("biomes.update.start");
+		this.user.sendMessage("biomes.messages.information.update-start");
 
 		// Update world coordinates with new biomes.
 
@@ -41,8 +41,8 @@ public class BiomeUpdateTask extends BukkitRunnable
 			}
 		}
 
-		this.user.sendMessage("biomes.update.done",
-			TextVariables.LABEL,
+		this.user.sendMessage("biomes.messages.information.update-done",
+			"[biome]",
 			this.biome.getFriendlyName());
 	}
 

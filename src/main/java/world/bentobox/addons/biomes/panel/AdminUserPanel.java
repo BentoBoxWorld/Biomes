@@ -57,7 +57,7 @@ public class AdminUserPanel
 	private void createPlayerListMenu(int pageIndex)
 	{
 		PanelBuilder panelBuilder = new PanelBuilder().user(this.player).name(
-			this.player.getTranslation("biomes.admin.gui-title"));
+			this.player.getTranslation("biomes.gui.admin.choose-user-title"));
 
 		List<User> activeUsers = new ArrayList<>(this.world.getPlayers().size());
 

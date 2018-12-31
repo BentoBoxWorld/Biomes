@@ -26,9 +26,9 @@ public class SettingsCommand extends ExpandedCompositeCommand
 	@Override
 	public void setup()
 	{
-		this.setPermission("admin.biomes");
-		this.setParametersHelp("biomes.admin.settings.parameters");
-		this.setDescription("biomes.admin.settings.description");
+		this.setPermission("admin.biomes.settings");
+		this.setParametersHelp("biomes.commands.admin.settings.parameters");
+		this.setDescription("biomes.commands.admin.settings.description");
 	}
 
 
@@ -48,7 +48,7 @@ public class SettingsCommand extends ExpandedCompositeCommand
 		}
 		else if (args.size() < 2)
 		{
-			user.sendMessage("biomes.command.error.missing-arguments");
+			user.sendMessage("biomes.messages.errors.missing-arguments");
 			this.showHelp(this, user);
 			return false;
 		}
@@ -69,7 +69,9 @@ public class SettingsCommand extends ExpandedCompositeCommand
 					}
 					else
 					{
-						user.sendMessage("biomes.command.error.wrong-parameter-boolean");
+						user.sendMessage("biomes.messages.errors.incorrect-boolean",
+							"[boolean]",
+							args.get(1));
 						return false;
 					}
 				case TYPE:
@@ -90,7 +92,9 @@ public class SettingsCommand extends ExpandedCompositeCommand
 					}
 					else
 					{
-						user.sendMessage("biomes.command.error.wrong-parameter-type");
+						user.sendMessage("biomes.messages.errors.incorrect-mode",
+							"[mode]",
+							args.get(1));
 						return false;
 					}
 				case SIZE:
@@ -101,7 +105,9 @@ public class SettingsCommand extends ExpandedCompositeCommand
 					}
 					catch (Exception e)
 					{
-						user.sendMessage("biomes.command.error.wrong-parameter-integer");
+						user.sendMessage("biomes.messages.errors.incorrect-range",
+							"[number]",
+							args.get(1));
 						return false;
 					}
 
@@ -113,16 +119,20 @@ public class SettingsCommand extends ExpandedCompositeCommand
 					}
 					catch (Exception e)
 					{
-						user.sendMessage("biomes.command.error.wrong-parameter-integer");
+						user.sendMessage("biomes.messages.errors.incorrect-range",
+							"[number]",
+							args.get(1));
 						return false;
 					}
 				default:
-					user.sendMessage("biomes.command.error.property-not-defined", "[property]", args.get(0));
+					user.sendMessage("biomes.messages.errors.incorrect-parameter",
+						"[property]",
+						args.get(0));
 					return false;
 			}
 
 			this.addon.saveConfig();
-			user.sendMessage("biomes.admin.saved");
+			user.sendMessage("biomes.messages.information.saved-config");
 			return true;
 		}
 	}

@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
+import net.wesjd.anvilgui.AnvilGUI;
 import world.bentobox.addons.biomes.BiomesAddon;
 import world.bentobox.addons.biomes.BiomesAddonManager;
 import world.bentobox.addons.biomes.objects.BiomesObject;
@@ -42,11 +43,11 @@ public class BiomesPanel
 		switch (workingMode)
 		{
 			case ADMIN:
-				this.panelTitle = this.player.getTranslation("biomes.admin.gui-title");
+				this.panelTitle = this.player.getTranslation("biomes.gui.admin.gui-title");
 				PANEL_MAX_SIZE = 18;
 				break;
 			case EDIT:
-				this.panelTitle = this.player.getTranslation("biomes.admin.edit-gui-title");
+				this.panelTitle = this.player.getTranslation("biomes.gui.admin.edit-title");
 				PANEL_MAX_SIZE = 36;
 				break;
 			case PLAYER:
@@ -66,6 +67,29 @@ public class BiomesPanel
 	}
 
 
+	public BiomesPanel(BiomesAddon addon,
+		User player,
+		BiomesObject biomesObject,
+		World world,
+		String permissionPrefix,
+		Mode workingMode)
+	{
+		this.addon = addon;
+		this.biomesManager = addon.getAddonManager();
+		this.player = player;
+		this.permissionPrefix = permissionPrefix;
+		this.workingMode = workingMode;
+		this.world = world;
+
+		this.panelTitle = this.player.getTranslation("biomes.gui.admin.add-title");
+		PANEL_MAX_SIZE = 36;
+
+		this.updateNumber = 1;
+
+		this.createBiomesChoosePanel(-3, -0, biomesObject, false, false);
+	}
+
+
 // ---------------------------------------------------------------------
 // Section: Panel creating methods
 // ---------------------------------------------------------------------
@@ -77,6 +101,8 @@ public class BiomesPanel
 	 */
 	private void createBiomesPanel(int pageIndex)
 	{
+		this.panelTitle = this.player.getTranslation("biomes.gui.choose-title");
+
 		// normalize updatenumber
 		if (this.updateNumber > 200)
 		{
@@ -279,7 +305,7 @@ public class BiomesPanel
 
 			case COUNTER:
 				item = new PanelItemBuilder().
-					name(this.player.getTranslation("biomes.gui.buttons.counter",
+					name(this.player.getTranslation("biomes.gui.buttons.value",
 						TextVariables.NUMBER,
 						Integer.toString(this.updateNumber))).
 					icon(new ItemStack(Material.PAPER)).
@@ -616,7 +642,8 @@ public class BiomesPanel
 			itemBuilder.clickHandler((panel, player, click, slot) -> {
 				if (this.workingMode.equals(Mode.PLAYER) && !biome.isDeployed())
 				{
-					this.player.sendMessage(this.player.getTranslation("biomes.error.disabled"));
+					this.player.sendMessage(this.player.getTranslation("biomes.messages.errors.disabled"));
+					return false;
 				}
 				else
 				{
@@ -660,39 +687,71 @@ public class BiomesPanel
 	 */
 	private void createBiomeEditPanel(int pageIndex, BiomesObject biome, boolean glowLevel, boolean glowCost)
 	{
-		PanelBuilder panelBuilder = new PanelBuilder().user(this.player).
-			name(this.panelTitle + " " + biome.getFriendlyName());
+		this.panelTitle = this.player.getTranslation("biomes.gui.admin.edit-title");
+		PanelBuilder panelBuilder =
+			new PanelBuilder().user(this.player).name(this.panelTitle + " " + biome.getFriendlyName());
 
 		panelBuilder.item(0, new PanelItemBuilder().
-			name(biome.getFriendlyName()).
-			icon(Material.BOOK).
+			name(this.player.getTranslation("biomes.gui.admin.buttons.name")).
+			description(this.player.getTranslation("biomes.gui.admin.descriptions.current",
+				"[value]",
+				biome.getFriendlyName())).
+			icon(Material.BARRIER).
 			clickHandler((panel, user, clickType, slot) -> {
-				// TODO: Implement ability to change friendly name
-				// if user add renamed paper via listener.
-				// TODO: Implement ability to choose biome from all menu.
+				new AnvilGUI(
+					this.addon.getPlugin(),
+					this.player.getPlayer(),
+					biome.getFriendlyName(),
+					(player, reply) ->
+					{
+						biome.setFriendlyName(reply);
+						this.biomesManager.saveBiome(biome);
+						this.createBiomeEditPanel(pageIndex, biome, false, false);
+						user.sendMessage("biomes.messages.information.saved-value",
+							"[property]", "friendlyName",
+							"[biome]", biome.getFriendlyName(),
+							"[value]", reply);
+						return reply;
+					});
+
 				return true;
 			}).build());
 		panelBuilder.item(1, new PanelItemBuilder().
-			name(this.player.getTranslation("biomes.admin.editpanel.name")).
-			description(biome.getBiomeName()).
+			name(this.player.getTranslation("biomes.gui.admin.buttons.biome")).
+			description(this.player.getTranslation("biomes.gui.admin.descriptions.current",
+				"[value]",
+				biome.getBiomeName())).
 			icon(Material.BOOK).
 			clickHandler((panel, user, clickType, slot) -> {
 				this.createBiomesChoosePanel(pageIndex, 0, biome, glowLevel, glowCost);
 				return true;
 			}).build());
 		panelBuilder.item(2, new PanelItemBuilder().
-			name(this.player.getTranslation("biomes.admin.editpanel.description")).
-			description(biome.getDescription()).
-			icon(Material.BOOK).
+			name(this.player.getTranslation("biomes.gui.admin.buttons.biome")).
+			description(Utils.splitString(this.player.getTranslation("biomes.gui.admin.descriptions.current",
+				"[value]",
+				Utils.mergeStringList(biome.getDescription())))).
+			icon(Material.BARRIER).
 			clickHandler((panel, user, clickType, slot) -> {
-				// TODO: Implement ability to change friendly name
-				// if user add renamed paper via listener.
-				// TODO: Implement ability to choose biome from all menu.
+				new AnvilGUI(this.addon.getPlugin(),
+					this.player.getPlayer(),
+					Utils.mergeStringList(biome.getDescription()),
+					(player, reply) ->
+					{
+						biome.setDescription(Utils.splitString(reply));
+						this.biomesManager.saveBiome(biome);
+						this.createBiomeEditPanel(pageIndex, biome, false, false);
+						user.sendMessage("biomes.messages.information.saved-value",
+							"[property]", "description",
+							"[biome]", biome.getFriendlyName(),
+							"[value]", reply);
+						return reply;
+					});
 				return true;
 			}).build());
 
 		panelBuilder.item(9, new PanelItemBuilder().
-			name(this.player.getTranslation("biomes.admin.buttons.icon")).
+			name(this.player.getTranslation("biomes.gui.admin.buttons.icon")).
 			icon(biome.getIcon()).
 			clickHandler((panel, user, clickType, slot) -> {
 				// TODO: Implement ability to change icon name if user add item in inventory.
@@ -700,8 +759,10 @@ public class BiomesPanel
 			}).build());
 
 		panelBuilder.item(18, new PanelItemBuilder().
-			name(Long.toString(biome.getRequiredLevel())).
-			description(this.player.getTranslation("biomes.admin.buttons.level")).
+			name(this.player.getTranslation("biomes.gui.admin.buttons.level")).
+			description(this.player.getTranslation("biomes.gui.admin.descriptions.current",
+				"[value]",
+				Long.toString(biome.getRequiredLevel()))).
 			icon(Material.BOOK).
 			clickHandler((panel, user, clickType, slot) -> {
 				this.updateNumber = (int) biome.getRequiredLevel();
@@ -712,8 +773,10 @@ public class BiomesPanel
 			build());
 
 		panelBuilder.item(27, new PanelItemBuilder().
-			name(Integer.toString(biome.getRequiredCost())).
-			description(this.player.getTranslation("biomes.admin.buttons.cost")).
+				name(this.player.getTranslation("biomes.gui.admin.buttons.cost")).
+				description(this.player.getTranslation("biomes.gui.admin.descriptions.current",
+					"[value]",
+					Long.toString(biome.getRequiredCost()))).
 			icon(Material.BOOK).
 			clickHandler((panel, user, clickType, slot) -> {
 				this.updateNumber = (int) biome.getRequiredCost();
@@ -726,48 +789,51 @@ public class BiomesPanel
 		{
 			// Setters
 			panelBuilder.item(3,
-				this.createAdvancedButton(AdvancedButtons.ONE, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.ONE, pageIndex, biome, glowLevel, glowCost));
 			panelBuilder.item(12,
-				this.createAdvancedButton(AdvancedButtons.FIVE, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.FIVE, pageIndex, biome, glowLevel, glowCost));
 			panelBuilder.item(21,
-				this.createAdvancedButton(AdvancedButtons.TEN, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.TEN, pageIndex, biome, glowLevel, glowCost));
 			panelBuilder.item(30,
-				this.createAdvancedButton(AdvancedButtons.HUNDRED, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.HUNDRED, pageIndex, biome, glowLevel, glowCost));
 
 			// Increasers
 			panelBuilder.item(5,
-				this.createAdvancedButton(AdvancedButtons.PLUS_ONE, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.PLUS_ONE, pageIndex, biome, glowLevel, glowCost));
 			panelBuilder.item(14,
-				this.createAdvancedButton(AdvancedButtons.PLUS_FIVE, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.PLUS_FIVE, pageIndex, biome, glowLevel, glowCost));
 			panelBuilder.item(23,
-				this.createAdvancedButton(AdvancedButtons.PLUS_FIFTY, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.PLUS_FIFTY, pageIndex, biome, glowLevel, glowCost));
 			panelBuilder.item(32,
-				this.createAdvancedButton(AdvancedButtons.PLUS_HUNDRED, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.PLUS_HUNDRED, pageIndex, biome, glowLevel, glowCost));
 
 			// Reducers
 			panelBuilder.item(6,
-				this.createAdvancedButton(AdvancedButtons.MINUS_ONE, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.MINUS_ONE, pageIndex, biome, glowLevel, glowCost));
 			panelBuilder.item(15,
-				this.createAdvancedButton(AdvancedButtons.MINUS_FIVE, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.MINUS_FIVE, pageIndex, biome, glowLevel, glowCost));
 			panelBuilder.item(24,
-				this.createAdvancedButton(AdvancedButtons.MINUS_FIFTY, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.MINUS_FIFTY, pageIndex, biome, glowLevel, glowCost));
 			panelBuilder.item(33,
-				this.createAdvancedButton(AdvancedButtons.MINUS_HUNDRED, biome, glowLevel, glowCost));
+				this.createAdvancedButton(AdvancedButtons.MINUS_HUNDRED, pageIndex, biome, glowLevel, glowCost));
 
 			// Savers
 			if (glowLevel)
 			{
 				panelBuilder.item(19, new PanelItemBuilder().
 					icon(Material.PAPER).
-					name(this.player.getTranslation("biomes.admin.buttons.save")).
-					description(this.player.getTranslation("biomes.admin.change-value",
-						TextVariables.NUMBER,
+					name(this.player.getTranslation("biomes.gui.admin.buttons.save")).
+					description(this.player.getTranslation("biomes.gui.admin.descriptions.change",
+						"[value]",
 						Integer.toString(this.updateNumber))).
 					clickHandler((panel, user, clickType, slot) -> {
 						biome.setRequiredLevel(this.updateNumber);
 						this.biomesManager.saveBiome(biome);
 						this.createBiomeEditPanel(pageIndex, biome, false, false);
-						user.sendMessage("biomes.admin.saved");
+						user.sendMessage("biomes.messages.information.saved-value",
+							"[property]", "requiredLevel",
+							"[biome]", biome.getFriendlyName(),
+							"[value]", Integer.toString(this.updateNumber));
 						return true;
 					}).build());
 			}
@@ -775,15 +841,18 @@ public class BiomesPanel
 			{
 				panelBuilder.item(28, new PanelItemBuilder().
 					icon(Material.PAPER).
-					name(this.player.getTranslation("biomes.admin.buttons.save")).
-					description(this.player.getTranslation("biomes.admin.change-value",
-						TextVariables.NUMBER,
+					name(this.player.getTranslation("biomes.gui.admin.buttons.save")).
+					description(this.player.getTranslation("biomes.gui.admin.descriptions.change",
+						"[value]",
 						Integer.toString(this.updateNumber))).
 					clickHandler((panel, user, clickType, slot) -> {
 						biome.setRequiredCost(this.updateNumber);
 						this.biomesManager.saveBiome(biome);
 						this.createBiomeEditPanel(pageIndex, biome, false, false);
-						user.sendMessage("challenges.admin.saved");
+						user.sendMessage("biomes.messages.information.saved-value",
+							"[property]", "requiredCost",
+							"[biome]", biome.getFriendlyName(),
+							"[value]", Integer.toString(this.updateNumber));
 						return true;
 					}).build());
 			}
@@ -794,7 +863,17 @@ public class BiomesPanel
 			name(this.player.getTranslation("biomes.gui.buttons.back")).
 			icon(Material.OAK_DOOR).
 			clickHandler((panel, user, clickType, slot) -> {
-				this.createBiomesPanel(pageIndex);
+				// Page INDEX -2 means that it should return to AdminPanel from biomeEditPanel.
+				if (pageIndex == -2)
+				{
+					// Return to admin main panel.
+					new AdminMainPanel(this.addon, this.world, this.player);
+				}
+				else
+				{
+					// Return to biomes list panel.
+					this.createBiomesPanel(pageIndex);
+				}
 				return true;
 			}).build());
 
@@ -812,6 +891,7 @@ public class BiomesPanel
 	 */
 	private void createBiomesChoosePanel(int returnPageIndex, int pageIndex, BiomesObject biomesObject, boolean glowLevel, boolean glowCost)
 	{
+		this.panelTitle = this.player.getTranslation("biomes.gui.admin.choose-biome-title");
 		final int maxIndex = 45;
 		Biome[] biomes = Biome.values();
 
@@ -841,9 +921,29 @@ public class BiomesPanel
 				clickHandler((panel, user, clickType, slot) -> {
 					biomesObject.setBiomeName(biome.name());
 					biomesObject.setBiomeID(biome.ordinal());
-					this.biomesManager.saveBiome(biomesObject);
-					this.player.sendMessage("biomes.admin.saved");
-					this.createBiomeEditPanel(returnPageIndex, biomesObject, glowLevel, glowCost);
+
+					if (biomesObject.getUniqueId() == null || biomesObject.getUniqueId().isEmpty())
+					{
+						biomesObject.setFriendlyName(biome.name());
+						biomesObject.setUniqueId(biome.name().toLowerCase());
+
+						// Process issues when biomes overlapps.
+
+						if (!this.biomesManager.storeBiome(biomesObject, false, user, false))
+						{
+							// Error will be thrown in chat, so just open choose window again.
+							this.createBiomesChoosePanel(-3, 0, new BiomesObject(), glowLevel, glowCost);
+						}
+					}
+					else
+					{
+						this.biomesManager.saveBiome(biomesObject);
+						this.player.sendMessage("biomes.messages.information.saved");
+					}
+
+					// Page INDEX -3 means that it should return to AdminPanel from biomeChoosePanel.
+					// Page INDEX -2 means that it should return to AdminPanel from biomeEditPanel.
+					this.createBiomeEditPanel(returnPageIndex == -3 ? -2 : returnPageIndex, biomesObject, glowLevel, glowCost);
 					return true;
 				}).build());
 			itemIndex++;
@@ -882,7 +982,16 @@ public class BiomesPanel
 			name(this.player.getTranslation("biomes.gui.buttons.back")).
 			icon(new ItemStack(Material.OAK_DOOR)).
 			clickHandler((panel, clicker, click, slot) -> {
-				this.createBiomeEditPanel(returnPageIndex, biomesObject, glowLevel, glowCost);
+				// Page INDEX -2 means that it should return to AdminPanel from biomeChoosePanel.
+				if (returnPageIndex == -3)
+				{
+					// Return to admin main panel.
+					new AdminMainPanel(this.addon, this.world, this.player);
+				}
+				else
+				{
+					this.createBiomeEditPanel(returnPageIndex, biomesObject, glowLevel, glowCost);
+				}
 				return true;
 			}).build());
 

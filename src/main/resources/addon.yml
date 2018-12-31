@@ -7,9 +7,62 @@ softdepend: AcidIsland, BSkyBlock
 
 
 permissions:
-  bskyblock.island.biomes:
-    description: Player can use biomes commands
+  bskyblock.biomes:
+    description: Player can use biomes command that opens GUI.
     default: true
-  acidisland.island.biomes:
-    description: Player can use biomes commands
+  bskyblock.biomes.info:
+    description: Player can use biomes info command.
     default: true
+  bskyblock.biomes.set:
+    description: Player can use biomes set command.
+    default: true
+
+  bskyblock.admin.biomes:
+    description: Player can use admin biomes command that opens GUI.
+    default: op
+  bskyblock.admin.biomes.add:
+    description: Player can use admin biomes add command that adds new biome.
+    default: op
+  bskyblock.admin.biomes.edit:
+    description: Player can use admin biomes edit command that edits existing biomes parameters.
+    default: op
+  bskyblock.admin.biomes.set:
+    description: Player can use admin biomes set command that allows to change other player biomes.
+    default: op
+
+  bskyblock.admin.biomes.import:
+    description: Player can use admin biomes import command allows to import biomes in world.
+    default: op
+  bskyblock.admin.biomes.settings:
+    description: Player can use admin biomes settings command that allows to change addon settings.
+    default: op
+
+  acidisland.biomes:
+    description: Player can use biomes command that opens GUI
+    default: true
+  acidisland.biomes.info:
+    description: Player can use biomes info command.
+    default: true
+  acidisland.biomes.set:
+    description: Player can use biomes set command.
+    default: true
+
+  acidisland.admin.biomes:
+    description: Player can use admin biomes command that opens GUI.
+    default: op
+  acidisland.admin.biomes.add:
+    description: Player can use admin biomes add command that adds new biome.
+    default: op
+  acidisland.admin.biomes.edit:
+    description: Player can use admin biomes edit command that edits existing biomes parameters.
+    default: op
+  acidisland.admin.biomes.set:
+    description: Player can use admin biomes set command that allows to change other player biomes.
+    default: op
+
+  acidisland.admin.biomes.import:
+    description: Player can use admin biomes import command allows to import biomes in world.
+    default: op
+  acidisland.admin.biomes.settings:
+    description: Player can use admin biomes settings command that allows to change addon settings.
+    default: op

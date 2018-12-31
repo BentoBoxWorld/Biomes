@@ -23,9 +23,9 @@ public class BiomesInfoCommand extends ExpandedCompositeCommand
 	@Override
 	public void setup()
 	{
-		this.setPermission("island.biomes");
-		this.setParametersHelp("biomes.info.parameters");
-		this.setDescription("biomes.info.description");
+		this.setPermission("biomes.info");
+		this.setParametersHelp("biomes.commands.info.parameters");
+		this.setDescription("biomes.commands.info.description");
 
 		this.setOnlyPlayer(true);
 	}
@@ -38,11 +38,11 @@ public class BiomesInfoCommand extends ExpandedCompositeCommand
 
 		if (biomesObject != null)
 		{
-			user.sendMessage("biomes.info.message.header", "[name]", biomesObject.getFriendlyName());
-			user.sendMessage("biomes.info.message.type", "[type]", biomesObject.getBiomeName());
-			user.sendMessage("biomes.info.message.description", "[description]", this.getSingleLineDescription(biomesObject.getDescription()));
-			user.sendMessage("biomes.info.message.level", "[level]", Long.toString(biomesObject.getRequiredLevel()));
-			user.sendMessage("biomes.info.message.cost","[cost]", Integer.toString(biomesObject.getRequiredCost()));
+			user.sendMessage("biomes.messages.biome-information.header", "[name]", biomesObject.getFriendlyName());
+			user.sendMessage("biomes.messages.biome-information.type", "[type]", biomesObject.getBiomeName());
+			user.sendMessage("biomes.messages.biome-information.description", "[description]", this.getSingleLineDescription(biomesObject.getDescription()));
+			user.sendMessage("biomes.messages.biome-information.level", "[level]", Long.toString(biomesObject.getRequiredLevel()));
+			user.sendMessage("biomes.messages.biome-information.cost","[cost]", Integer.toString(biomesObject.getRequiredCost()));
 
 			return true;
 		}
