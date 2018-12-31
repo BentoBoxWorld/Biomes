@@ -14,7 +14,7 @@ defaultsize: 3
 
 # This indicate if biome on island must be restored on owner change, if new owner does not have permissions to
 # change biomes.
-resetBiomes: false
+resetbiomes: false
 
 # Timeout in minuted between changing biomes.
 timeout: 1

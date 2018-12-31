@@ -34,7 +34,7 @@ public class ChangeOwnerListener implements Listener
 	public void onTeamSetOwnerEvent(TeamSetownerEvent event)
 	{
 		// Do nothing if biome reset is diabled.
-		if (!this.addon.getConfig().getBoolean("resetBiomes", false))
+		if (!this.addon.getConfig().getBoolean("resetbiomes", false))
 		{
 			return;
 		}

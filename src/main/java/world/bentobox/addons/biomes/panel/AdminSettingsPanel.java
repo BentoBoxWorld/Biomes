@@ -268,7 +268,7 @@ public class AdminSettingsPanel
 					name(this.user.getTranslation("biomes.gui.admin.buttons.save")).
 					clickHandler((panel, user1, clickType, slot) -> {
 						this.mode = Mode.RETURN;
-						this.addon.getConfig().set("resetBiomes", this.newValue);
+						this.addon.getConfig().set("resetbiomes", this.newValue);
 						this.addon.saveConfig();
 						this.createSettingPanel();
 						return true;
