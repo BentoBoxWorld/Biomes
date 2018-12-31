@@ -13,16 +13,17 @@ This page contains plans for each Addon version.
 	- [ ] By permission
 	- [ ] By chance
 	- [ ] By items
+- [ ] Clean Up GUI Panel Hierarchy
+- [ ] Create Biomes Per GameMode addon.
 
 ## Release 0.3.0
-- [ ] Improve Admin panel
-	- [ ] Add icon changing through ingame menu.
-	- [ ] Add description changing through ingame menu.
-	- [ ] Allow to add new biome through ingame menu.
+- [x] Improve Admin panel
+	- [x] Add description changing through ingame menu.
+	- [x] Allow to add new biome through ingame menu.
 - [x] Add extra admin commands.
 	- [x] Implement new Biome command.
-- [ ] Clean Up lang file.
-- [ ] Populate permissions file.
+- [x] Clean Up lang file.
+- [x] Populate permissions file.
 
 ## Release 0.2.0
 - [x] Improve Admin panel
