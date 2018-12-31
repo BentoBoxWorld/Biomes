@@ -4,7 +4,7 @@ This page contains plans for each Addon version.
 ## For Future Releases:
 - [ ] Issue #3
 	- [ ] Store Biome per Island.
-		- [ ] On owner change, reset biomes that is not available for new owner.
+		- [x] On owner change, reset biomes that is not available for new owner.
 
 ## Release 0.4.0
 - [ ] Create unlockable biomes:
@@ -13,7 +13,7 @@ This page contains plans for each Addon version.
 	- [ ] By permission
 	- [ ] By chance
 	- [ ] By items
-- [ ] Clean Up GUI Panel Hierarchy
+- [ ] Clean Up GUI Panel Hierarchy - Delayed till Oblique project.
 - [ ] Create Biomes Per GameMode addon.
 
 ## Release 0.3.0
