@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
+import net.wesjd.anvilgui.AnvilGUI;
 import world.bentobox.addons.biomes.BiomesAddon;
 import world.bentobox.addons.biomes.BiomesAddonManager;
 import world.bentobox.addons.biomes.objects.BiomesObject;
@@ -697,9 +698,22 @@ public class BiomesPanel
 				biome.getFriendlyName())).
 			icon(Material.BARRIER).
 			clickHandler((panel, user, clickType, slot) -> {
-				// TODO: Implement ability to change friendly name
-				// if user add renamed paper via listener.
-				// TODO: Implement ability to choose biome from all menu.
+				new AnvilGUI(
+					this.addon.getPlugin(),
+					this.player.getPlayer(),
+					biome.getFriendlyName(),
+					(player, reply) ->
+					{
+						biome.setFriendlyName(reply);
+						this.biomesManager.saveBiome(biome);
+						this.createBiomeEditPanel(pageIndex, biome, false, false);
+						user.sendMessage("biomes.messages.information.saved-value",
+							"[property]", "friendlyName",
+							"[biome]", biome.getFriendlyName(),
+							"[value]", reply);
+						return reply;
+					});
+
 				return true;
 			}).build());
 		panelBuilder.item(1, new PanelItemBuilder().
@@ -714,14 +728,25 @@ public class BiomesPanel
 			}).build());
 		panelBuilder.item(2, new PanelItemBuilder().
 			name(this.player.getTranslation("biomes.gui.admin.buttons.biome")).
-			description(this.player.getTranslation("biomes.gui.admin.descriptions.current",
+			description(Utils.splitString(this.player.getTranslation("biomes.gui.admin.descriptions.current",
 				"[value]",
-				Utils.mergeStringList(biome.getDescription()))).
+				Utils.mergeStringList(biome.getDescription())))).
 			icon(Material.BARRIER).
 			clickHandler((panel, user, clickType, slot) -> {
-				// TODO: Implement ability to change friendly name
-				// if user add renamed paper via listener.
-				// TODO: Implement ability to choose biome from all menu.
+				new AnvilGUI(this.addon.getPlugin(),
+					this.player.getPlayer(),
+					Utils.mergeStringList(biome.getDescription()),
+					(player, reply) ->
+					{
+						biome.setDescription(Utils.splitString(reply));
+						this.biomesManager.saveBiome(biome);
+						this.createBiomeEditPanel(pageIndex, biome, false, false);
+						user.sendMessage("biomes.messages.information.saved-value",
+							"[property]", "description",
+							"[biome]", biome.getFriendlyName(),
+							"[value]", reply);
+						return reply;
+					});
 				return true;
 			}).build());
 
