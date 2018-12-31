@@ -30,7 +30,7 @@ public class SetBiomeCommand extends ExpandedCompositeCommand
 	@Override
 	public void setup()
 	{
-		this.setPermission("admin.biomes");
+		this.setPermission("admin.biomes.set");
 		this.setParametersHelp("biomes.admin.set.parameters");
 		this.setDescription("biomes.admin.set.description");
 	}

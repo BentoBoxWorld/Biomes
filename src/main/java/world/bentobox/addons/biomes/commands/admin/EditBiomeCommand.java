@@ -31,7 +31,7 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 	@Override
 	public void setup()
 	{
-		this.setPermission("admin.biomes");
+		this.setPermission("admin.biomes.edit");
 		this.setParametersHelp("biomes.admin.edit.parameters");
 		this.setDescription("biomes.admin.edit.description");
 	}

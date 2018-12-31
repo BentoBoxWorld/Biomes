@@ -24,7 +24,7 @@ public class BiomesCommand extends CompositeCommand
 	@Override
 	public void setup()
 	{
-		this.setPermission("island.biomes");
+		this.setPermission("biomes");
 		this.setOnlyPlayer(true);
 		this.setParametersHelp("biomes.help.parameters");
 		this.setDescription("biomes.help.description");

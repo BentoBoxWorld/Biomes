@@ -23,7 +23,7 @@ public class BiomesInfoCommand extends ExpandedCompositeCommand
 	@Override
 	public void setup()
 	{
-		this.setPermission("island.biomes");
+		this.setPermission("biomes.info");
 		this.setParametersHelp("biomes.info.parameters");
 		this.setDescription("biomes.info.description");
 

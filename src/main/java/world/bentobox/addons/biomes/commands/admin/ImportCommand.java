@@ -35,7 +35,7 @@ public class ImportCommand extends CompositeCommand
 	@Override
 	public void setup()
 	{
-		this.setPermission("biomes.admin");
+		this.setPermission("admin.biomes.import");
 		this.setParametersHelp("biomes.admin.import.parameters");
 		this.setDescription("biomes.admin.import.description");
 	}
