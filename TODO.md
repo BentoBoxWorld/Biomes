@@ -13,8 +13,8 @@ This page contains plans for each Addon version.
 	- [ ] By permission
 	- [ ] By chance
 	- [ ] By items
-- [ ] Clean Up GUI Panel Hierarchy - Delayed till Oblique project.
-- [ ] Create Biomes Per GameMode addon.
+- [ ] ~~Clean Up GUI Panel Hierarchy~~
+- [x] Create Biomes Per GameMode addon.
 
 ## Release 0.3.0
 - [x] Improve Admin panel
