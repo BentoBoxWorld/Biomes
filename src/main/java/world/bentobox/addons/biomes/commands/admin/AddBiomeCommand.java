@@ -77,9 +77,8 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 			}
 			else
 			{
-				BiomesObject biomesObject = new BiomesObject(newBiome);
+				BiomesObject biomesObject = new BiomesObject(newBiome, this.getWorld());
 				biomesObject.setFriendlyName(newBiome.name());
-				biomesObject.setUniqueId(newBiome.name().toLowerCase());
 
 				if (this.addon.getAddonManager().storeBiome(biomesObject, false, user, false))
 				{
@@ -110,7 +109,7 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 				returnList.addAll(Utils.getBiomeNameMap().keySet());
 
 				// Remove biomes that is already added, to avoid overlaps.
-				List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes();
+				List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes(this.getWorld());
 				biomes.forEach(biomesObject -> {
 					returnList.remove(biomesObject.getBiomeName());
 				});

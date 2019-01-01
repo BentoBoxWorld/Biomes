@@ -14,6 +14,7 @@ import world.bentobox.addons.biomes.objects.BiomesObject;
 import world.bentobox.addons.biomes.utils.Utils;
 import world.bentobox.bentobox.api.configuration.Config;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.bentobox.util.Util;
 
 
 /**
@@ -31,8 +32,10 @@ public class BiomesAddonManager
 		this.addon = addon;
 
 		this.biomesConfig = new Config<>(addon, BiomesObject.class);
-		this.biomesList = new ArrayList<>(Biome.values().length);
-		this.biomesMap = new HashMap<>(Biome.values().length);
+
+		// Currently only 2 game modes.
+		this.worldBiomeList = new HashMap<>(2);
+		this.biomesMap = new HashMap<>(Biome.values().length * 2);
 
 		this.biomesFile = new File(this.addon.getDataFolder(), "biomes.yml");
 
@@ -55,19 +58,15 @@ public class BiomesAddonManager
 	 */
 	private void initBiomes()
 	{
-
-		this.biomesList.clear();
+		this.worldBiomeList.clear();
 		this.addon.getLogger().info("Loading biomes...");
 
 		this.biomesConfig.loadConfigObjects().forEach(this::storeBiome);
 
-		// No biomes loaded. Try to import them.
-		if (this.biomesList.isEmpty())
+		for (Map.Entry<String, List<BiomesObject>> entry : this.worldBiomeList.entrySet())
 		{
-			this.importBiomes();
+			entry.getValue().sort(Comparator.comparingInt(BiomesObject::getBiomeID));
 		}
-
-		this.biomesList.sort(Comparator.comparingInt(BiomesObject::getBiomeID));
 	}
 
 
@@ -91,7 +90,10 @@ public class BiomesAddonManager
 	 */
 	private void save()
 	{
-		this.biomesList.forEach(this.biomesConfig::saveConfigObject);
+		for (Map.Entry<String, List<BiomesObject>> entry : this.worldBiomeList.entrySet())
+		{
+			entry.getValue().forEach(this.biomesConfig::saveConfigObject);
+		}
 	}
 
 
@@ -136,7 +138,7 @@ public class BiomesAddonManager
 	{
 		// Contains in array list is not fast.. but list is not so large, so it is ok there.
 
-		if (this.biomesList.contains(biome))
+		if (this.biomesMap.containsKey(biome.getUniqueId()))
 		{
 			if (!overwrite)
 			{
@@ -158,8 +160,10 @@ public class BiomesAddonManager
 						biome.getFriendlyName());
 				}
 
-				this.biomesList.set(this.biomesList.indexOf(biome), biome);
-				this.biomesMap.put(biome.getBiomeName(), biome);
+				this.biomesMap.replace(biome.getUniqueId(), biome);
+				List<BiomesObject> biomesList = this.worldBiomeList.get(biome.getWorld());
+				// Assert INDEX out of bounds. If happens then issue is in biome loading not here!
+				biomesList.set(biomesList.indexOf(biome), biome);
 
 				return true;
 			}
@@ -172,8 +176,9 @@ public class BiomesAddonManager
 				biome.getFriendlyName());
 		}
 
-		this.biomesList.add(biome);
-		this.biomesMap.put(biome.getBiomeName(), biome);
+		this.biomesMap.put(biome.getUniqueId(), biome);
+		this.worldBiomeList.computeIfAbsent(biome.getWorld(),
+			s -> new ArrayList<>(Biome.values().length)).add(biome);
 
 		return true;
 	}
@@ -186,8 +191,9 @@ public class BiomesAddonManager
 
 	/**
 	 * This method imports biomes on first run.
+	 * @param world World name in which biome must be imported.
 	 */
-	private void importBiomes()
+	public void importBiomes(String world)
 	{
 		if (!this.biomesFile.exists())
 		{
@@ -215,10 +221,7 @@ public class BiomesAddonManager
 		{
 			if (biomeNameMap.containsKey(biome.toUpperCase()))
 			{
-				BiomesObject newBiomeObject = new BiomesObject(
-					biomeNameMap.get(biome.toUpperCase()));
-
-				newBiomeObject.setUniqueId(biome);
+				BiomesObject newBiomeObject = new BiomesObject(biomeNameMap.get(biome.toUpperCase()), world);
 				newBiomeObject.setDeployed(true);
 
 				ConfigurationSection details = reader.getConfigurationSection(biome);
@@ -233,14 +236,15 @@ public class BiomesAddonManager
 				newBiomeObject.setRequiredLevel(details.getInt("islandLevel", 0));
 				newBiomeObject.setRequiredCost(details.getInt("cost", 0));
 
-				this.biomesList.add(newBiomeObject);
-				this.biomesMap.put(newBiomeObject.getBiomeName(), newBiomeObject);
+				this.biomesMap.put(newBiomeObject.getUniqueId(), newBiomeObject);
+				this.worldBiomeList.computeIfAbsent(newBiomeObject.getWorld(),
+					s -> new ArrayList<>(Biome.values().length)).add(newBiomeObject);
 			}
 		}
 
-		this.addon.log("Imported " + this.biomesList.size() + " Biomes.");
+		this.addon.log("Imported " + this.worldBiomeList.get(world).size() + " biomes into " + world);
 
-		this.biomesList.sort(Comparator.comparingInt(BiomesObject::getBiomeID));
+		this.worldBiomeList.get(world).sort(Comparator.comparingInt(BiomesObject::getBiomeID));
 		this.save();
 	}
 
@@ -254,6 +258,20 @@ public class BiomesAddonManager
 	 * @return true if successful
 	 */
 	public boolean importBiomes(User user, World world, boolean overwrite)
+	{
+		return this.importBiomes(user, Util.getWorld(world).getName(), overwrite);
+	}
+
+
+	/**
+	 * This method imports biomes
+	 *
+	 * @param user - user
+	 * @param world - world to import into
+	 * @param overwrite - true if previous ones should be overwritten
+	 * @return true if successful
+	 */
+	public boolean importBiomes(User user, String world, boolean overwrite)
 	{
 		if (!this.biomesFile.exists())
 		{
@@ -276,7 +294,9 @@ public class BiomesAddonManager
 		}
 
 		this.readBiomes(config, user, world, overwrite);
-		this.biomesList.sort(Comparator.comparingInt(BiomesObject::getBiomeID));
+
+		// Update biome order.
+		this.worldBiomeList.get(world).sort(Comparator.comparingInt(BiomesObject::getBiomeID));
 		this.addon.getAddonManager().save(false);
 		return true;
 	}
@@ -286,10 +306,10 @@ public class BiomesAddonManager
 	 * This method creates biomes object from config file.
 	 * @param config YamlConfiguration that contains all biomes.
 	 * @param user User who calls reading.
-	 * @param world World in which method is called.
+	 * @param world World in which biomes must be imported
 	 * @param overwrite Boolean that indicate if biomes should be overwritted.
 	 */
-	private void readBiomes(YamlConfiguration config, User user, World world, boolean overwrite)
+	private void readBiomes(YamlConfiguration config, User user, String world, boolean overwrite)
 	{
 		int size = 0;
 
@@ -301,10 +321,7 @@ public class BiomesAddonManager
 		{
 			if (biomeNameMap.containsKey(biome.toUpperCase()))
 			{
-				BiomesObject newBiomeObject = new BiomesObject(
-					biomeNameMap.get(biome.toUpperCase()));
-
-				newBiomeObject.setUniqueId(biome);
+				BiomesObject newBiomeObject = new BiomesObject(biomeNameMap.get(biome.toUpperCase()), world);
 				newBiomeObject.setDeployed(true);
 
 				ConfigurationSection details = reader.getConfigurationSection(biome);
@@ -345,12 +362,24 @@ public class BiomesAddonManager
 
 
 	/**
-	 * This method returns list with loaded biomes.
+	 * This method returns list with loaded biomes for given world.
+	 * @param world World where biome operates.
 	 * @return list with loaded biomes.
 	 */
-	public List<BiomesObject> getBiomes()
+	public List<BiomesObject> getBiomes(World world)
 	{
-		return this.biomesList;
+		return this.getBiomes(Util.getWorld(world).getName());
+	}
+
+
+	/**
+	 * This method returns list with loaded biomes for given world.
+	 * @param worldName Name of world where biome operates.
+	 * @return list with loaded biomes.
+	 */
+	public List<BiomesObject> getBiomes(String worldName)
+	{
+		return this.worldBiomeList.getOrDefault(worldName, Collections.emptyList());
 	}
 
 
@@ -376,9 +405,9 @@ public class BiomesAddonManager
 	private BiomesAddon addon;
 
 	/**
-	 * Variable stores list of loaded biomes.
+	 * Variable stores map that links worlds to their biomes.
 	 */
-	private List<BiomesObject> biomesList;
+	private Map<String, List<BiomesObject>> worldBiomeList;
 
 	/**
 	 * Variable stores map that links String to loaded biomes object.

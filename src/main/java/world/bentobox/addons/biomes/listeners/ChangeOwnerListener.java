@@ -84,7 +84,9 @@ public class ChangeOwnerListener implements Listener
 				}
 				else
 				{
-					defaultBiomeObject = new BiomesObject(biome);
+					defaultBiomeObject = new BiomesObject();
+					defaultBiomeObject.setBiomeName(biome.name().toUpperCase());
+					defaultBiomeObject.setBiomeID(biome.ordinal());
 					defaultBiomeObject.setRequiredCost(0);
 					defaultBiomeObject.setRequiredLevel(0);
 				}

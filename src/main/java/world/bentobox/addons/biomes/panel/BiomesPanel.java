@@ -19,6 +19,8 @@ import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.bentobox.util.Util;
+
 
 /**
  * This class implements Biomes Panel for all users.
@@ -113,7 +115,7 @@ public class BiomesPanel
 			this.updateNumber = 0;
 		}
 
-		List<BiomesObject> biomes = this.biomesManager.getBiomes();
+		List<BiomesObject> biomes = this.biomesManager.getBiomes(this.world);
 
 		final int biomeCount = biomes.size();
 
@@ -925,7 +927,8 @@ public class BiomesPanel
 					if (biomesObject.getUniqueId() == null || biomesObject.getUniqueId().isEmpty())
 					{
 						biomesObject.setFriendlyName(biome.name());
-						biomesObject.setUniqueId(biome.name().toLowerCase());
+						biomesObject.setWorld(Util.getWorld(this.world).getName());
+						biomesObject.setUniqueId(biomesObject.getWorld() + "-" + biome.name().toLowerCase());
 
 						// Process issues when biomes overlapps.
 
@@ -933,6 +936,7 @@ public class BiomesPanel
 						{
 							// Error will be thrown in chat, so just open choose window again.
 							this.createBiomesChoosePanel(-3, 0, new BiomesObject(), glowLevel, glowCost);
+							return false;
 						}
 					}
 					else

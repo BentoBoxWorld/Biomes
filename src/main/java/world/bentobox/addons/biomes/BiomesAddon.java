@@ -37,6 +37,13 @@ public class BiomesAddon extends Addon
 
 				new AdminCommand(this, acidCmd);
 			}
+
+			String currentWorld = a.getConfig().getString("world.world-name");
+
+			if (this.addonManager.getBiomes(currentWorld).isEmpty())
+			{
+				this.addonManager.importBiomes(currentWorld);
+			}
 		});
 
 		// BSkyBlock hook in
@@ -52,6 +59,13 @@ public class BiomesAddon extends Addon
 					commandsManager.getCommand(this.getConfig().getString("bskyblock.admin-command", "bsbadmin"));
 
 				new AdminCommand(this, bsbAdminCmd);
+			}
+
+			String currentWorld = a.getConfig().getString("world.world-name");
+
+			if (this.addonManager.getBiomes(currentWorld).isEmpty())
+			{
+				this.addonManager.importBiomes(currentWorld);
 			}
 		});
 

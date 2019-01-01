@@ -67,7 +67,7 @@ public class BiomesInfoCommand extends ExpandedCompositeCommand
 
 		final List<String> returnList = new ArrayList<>();
 
-		List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes();
+		List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes(this.getWorld());
 
 		// Create suggestions with all biomes that is available for users.
 

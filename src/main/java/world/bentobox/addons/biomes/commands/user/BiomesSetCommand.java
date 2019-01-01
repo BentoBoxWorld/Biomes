@@ -82,7 +82,7 @@ public class BiomesSetCommand extends ExpandedCompositeCommand
 		switch (size)
 		{
 			case 3:
-				List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes();
+				List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes(this.getWorld());
 
 				// Create suggestions with all biomes that is available for users.
 

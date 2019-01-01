@@ -6,17 +6,15 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import world.bentobox.bentobox.api.configuration.ConfigComment;
 import world.bentobox.bentobox.database.objects.DataObject;
+import world.bentobox.bentobox.util.Util;
 
 
 /**
  * This class stores necessary information for each Biomes object.
- * TODO: Fix naming / Review parameters
  */
 public class BiomesObject implements DataObject
 {
@@ -32,10 +30,21 @@ public class BiomesObject implements DataObject
 	/**
 	 * Default constructor.
 	 */
-	public BiomesObject(Biome biome)
+	public BiomesObject(Biome biome, World world)
+	{
+		this(biome, Util.getWorld(world).getName());
+	}
+
+
+	/**
+	 * Default constructor.
+	 */
+	public BiomesObject(Biome biome, String world)
 	{
 		this.biomeName = biome.name();
 		this.biomeID = biome.ordinal();
+		this.world = world;
+		this.setUniqueId(world + "-" + this.biomeName.toLowerCase());
 	}
 
 
@@ -211,6 +220,25 @@ public class BiomesObject implements DataObject
 
 
 	/**
+	 *
+	 * @return world in which biome operates
+	 */
+	public String getWorld()
+	{
+		return this.world;
+	}
+
+
+	/**
+	 * @param world where biome must operate.
+	 */
+	public void setWorld(String world)
+	{
+		this.world = world;
+	}
+
+
+	/**
 	 * @return the uniqueId
 	 */
 	@Override
@@ -241,7 +269,7 @@ public class BiomesObject implements DataObject
 	@Override
 	public int hashCode()
 	{
-		return this.biomeID;
+		return 31 + ((this.uniqueId == null) ? 0 : this.uniqueId.hashCode());
 	}
 
 
@@ -263,7 +291,18 @@ public class BiomesObject implements DataObject
 
 		BiomesObject other = (BiomesObject) obj;
 
-		return this.biomeID == other.getBiomeID();
+		if (this.uniqueId == null && other.getUniqueId() == null)
+		{
+			return this.biomeID == other.getBiomeID();
+		}
+		else if (this.uniqueId == null || other.getUniqueId() == null)
+		{
+			return false;
+		}
+		else
+		{
+			return this.uniqueId.equals(other.getUniqueId());
+		}
 	}
 
 
@@ -299,6 +338,9 @@ public class BiomesObject implements DataObject
 	@ConfigComment("Cost of changing biome.")
 	private int requiredCost;
 
+	@ConfigComment("World where this biome operates. List only NORMAL. NETHER and THE_END are automatically covered.")
+	private String world;
+
 	@ConfigComment("Unique StringName of the biome")
-	private String uniqueId = "";
+	private String uniqueId;
 }
