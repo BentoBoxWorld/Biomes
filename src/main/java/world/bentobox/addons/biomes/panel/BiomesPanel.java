@@ -706,6 +706,12 @@ public class BiomesPanel
 					biome.getFriendlyName(),
 					(player, reply) ->
 					{
+						if (reply.equalsIgnoreCase(Material.PAPER.name()))
+						{
+							// Weird anvilGui glitch. Does not allow empty values.
+							reply = "";
+						}
+
 						biome.setFriendlyName(reply);
 						this.biomesManager.saveBiome(biome);
 						this.createBiomeEditPanel(pageIndex, biome, false, false);
@@ -740,6 +746,12 @@ public class BiomesPanel
 					Utils.mergeStringList(biome.getDescription()),
 					(player, reply) ->
 					{
+						if (reply.equalsIgnoreCase(Material.PAPER.name()))
+						{
+							// Weird anvilGui glitch. Does not allow empty values.
+							reply = "";
+						}
+
 						biome.setDescription(Utils.splitString(reply));
 						this.biomesManager.saveBiome(biome);
 						this.createBiomeEditPanel(pageIndex, biome, false, false);
@@ -800,6 +812,15 @@ public class BiomesPanel
 					biome.getPermission().isEmpty() ? " " : biome.getPermission(),
 					(player, reply) ->
 					{
+						if (reply.equalsIgnoreCase(Material.PAPER.name()))
+						{
+							// Weird anvilGui glitch. Does not allow empty values.
+							reply = "";
+						}
+
+						// empty spaces is not allowed.
+						reply = reply.trim();
+
 						biome.setPermission(reply);
 						this.biomesManager.saveBiome(biome);
 						this.createBiomeEditPanel(pageIndex, biome, false, false);
