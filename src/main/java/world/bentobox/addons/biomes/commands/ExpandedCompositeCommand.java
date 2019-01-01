@@ -13,6 +13,7 @@ import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.bentobox.util.Util;
 
 
 /**
@@ -39,7 +40,8 @@ public abstract class ExpandedCompositeCommand extends CompositeCommand
 	{
 		if (args.size() > index)
 		{
-			BiomesObject biome = this.addon.getAddonManager().getBiomeFromString(args.get(index));
+			BiomesObject biome = this.addon.getAddonManager().getBiomeFromString(
+				Util.getWorld(this.getWorld()).getName() + "-" + args.get(index).toLowerCase());
 
 			if (biome == null)
 			{
