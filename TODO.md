@@ -8,13 +8,15 @@ This page contains plans for each Addon version.
 
 ## Release 0.4.0
 - [ ] Create unlockable biomes:
-	- [ ] By challenge
-	- [ ] By level
-	- [ ] By permission
-	- [ ] By chance
-	- [ ] By items
+	- [ ] By challenge #11
+	- [ ] By level #10
+	- [x] By permission #8
+	- [ ] By chance #12
+	- [ ] By items #9
 - [ ] ~~Clean Up GUI Panel Hierarchy~~
 - [x] Create Biomes Per GameMode addon.
+- [ ] Delete biome from memory.
+- [ ] Hide unavailable biomes from users. #13
 
 ## Release 0.3.0
 - [x] Improve Admin panel
