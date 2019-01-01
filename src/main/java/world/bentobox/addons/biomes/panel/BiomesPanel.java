@@ -787,6 +787,33 @@ public class BiomesPanel
 			}).glow(glowCost).
 			build());
 
+		panelBuilder.item(36, new PanelItemBuilder().
+			name(this.player.getTranslation("biomes.gui.admin.buttons.permission")).
+			description(this.player.getTranslation("biomes.gui.admin.descriptions.current",
+				"[value]",
+				biome.getPermission())).
+			icon(Material.LEVER).
+			clickHandler((panel, user, clickType, slot) -> {
+				new AnvilGUI(
+					this.addon.getPlugin(),
+					this.player.getPlayer(),
+					biome.getPermission().isEmpty() ? " " : biome.getPermission(),
+					(player, reply) ->
+					{
+						biome.setPermission(reply);
+						this.biomesManager.saveBiome(biome);
+						this.createBiomeEditPanel(pageIndex, biome, false, false);
+						user.sendMessage("biomes.messages.information.saved-value",
+							"[property]", "permission",
+							"[biome]", biome.getFriendlyName(),
+							"[value]", reply);
+						return reply;
+					});
+
+				return true;
+			}).glow(glowCost).
+			build());
+
 		if (glowCost || glowLevel)
 		{
 			// Setters
@@ -861,7 +888,7 @@ public class BiomesPanel
 		}
 
 		// back button
-		panelBuilder.item(35, new PanelItemBuilder().
+		panelBuilder.item(44, new PanelItemBuilder().
 			name(this.player.getTranslation("biomes.gui.buttons.back")).
 			icon(Material.OAK_DOOR).
 			clickHandler((panel, user, clickType, slot) -> {

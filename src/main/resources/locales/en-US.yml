@@ -24,6 +24,7 @@ biomes:
         cost: "Required money"
         biome: "Change biome"
         name: "Edit friendly name"
+        permission: "Edit required permission"
         # Addon settings edit related buttons
         advancedmenu: "Advanced Menu is [value]"
         type: "Default type is [value]"
@@ -115,6 +116,7 @@ biomes:
       description: "  Description: [description]"
       level: "  Level: [level]"
       cost: "  Cost: [cost]"
+      permission: "  Permission: [permission]"
     information:
       biome-created: "Biome [biome] is created. To edit its properties use EDIT command."
       update-start: "Start Biome changing on island."
@@ -152,6 +154,7 @@ biomes:
       not-enough-level:  "Your island level is too small. Biome requires [number] level"
       admin-not-on-island: "You are not on [user] island."
       disabled: "Currently this biome is disabled."
+      missing-permission: "This biome requires [permission] permission. You do not have it."
 
       no-file: "biomes.yml not found."
       no-load: "An error occur while importing biomes: [message]!"

@@ -239,6 +239,25 @@ public class BiomesObject implements DataObject
 
 
 	/**
+	 *
+	 * @return permission that allows biome to operate.
+	 */
+	public String getPermission()
+	{
+		return this.permission;
+	}
+
+
+	/**
+	 * @param permission which allows biome to operate.
+	 */
+	public void setPermission(String permission)
+	{
+		this.permission = permission;
+	}
+
+
+	/**
 	 * @return the uniqueId
 	 */
 	@Override
@@ -340,6 +359,9 @@ public class BiomesObject implements DataObject
 
 	@ConfigComment("World where this biome operates. List only NORMAL. NETHER and THE_END are automatically covered.")
 	private String world;
+
+	@ConfigComment("String of permission that is required for this biome to be activated.")
+	private String permission = "";
 
 	@ConfigComment("Unique StringName of the biome")
 	private String uniqueId;

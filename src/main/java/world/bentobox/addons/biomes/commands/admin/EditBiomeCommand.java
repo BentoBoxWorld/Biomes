@@ -163,6 +163,10 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 							args.get(2));
 						return false;
 					}
+				case PERMISSION:
+					// TODO: probably validation?
+					biomesObject.setPermission(args.get(2));
+					break;
 				default:
 					user.sendMessage("biomes.messages.errors.incorrect-parameter",
 						"[property]",
@@ -212,6 +216,7 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 
 				returnList.add(REQUIRED_COST);
 				returnList.add(REQUIRED_LEVEL);
+				returnList.add(PERMISSION);
 
 				break;
 			case 5:
@@ -244,6 +249,9 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 						break;
 					case REQUIRED_LEVEL:
 						returnList.add("<number>");
+						break;
+					case PERMISSION:
+						returnList.add("<permission>");
 						break;
 				}
 
@@ -295,4 +303,6 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 	private static final String REQUIRED_COST = "requiredCost";
 
 	private static final String REQUIRED_LEVEL = "requiredLevel";
+
+	private static final String PERMISSION = "permission";
 }

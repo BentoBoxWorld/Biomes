@@ -50,6 +50,14 @@ public class BiomeUpdateHelper
 	{
 		if (this.callerUser == this.targetUser)
 		{
+			if (!this.callerUser.hasPermission(this.biome.getPermission()))
+			{
+				this.callerUser.sendMessage("biomes.messages.errors.missing-permission",
+					"[permission]",
+					this.biome.getPermission());
+				return false;
+			}
+
 			if (!this.updateMode.equals(UpdateMode.ISLAND) && this.updateNumber <= 0)
 			{
 				// Cannot update negative numbers.

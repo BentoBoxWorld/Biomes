@@ -235,6 +235,7 @@ public class BiomesAddonManager
 
 				newBiomeObject.setRequiredLevel(details.getInt("islandLevel", 0));
 				newBiomeObject.setRequiredCost(details.getInt("cost", 0));
+				newBiomeObject.setPermission(details.getString("permission", ""));
 
 				this.biomesMap.put(newBiomeObject.getUniqueId(), newBiomeObject);
 				this.worldBiomeList.computeIfAbsent(newBiomeObject.getWorld(),
@@ -335,6 +336,7 @@ public class BiomesAddonManager
 
 				newBiomeObject.setRequiredLevel(details.getInt("islandLevel", 0));
 				newBiomeObject.setRequiredCost(details.getInt("cost", 0));
+				newBiomeObject.setPermission(details.getString("permission", ""));
 
 				if (this.addon.getAddonManager().storeBiome(
 					newBiomeObject, overwrite, user, false))
