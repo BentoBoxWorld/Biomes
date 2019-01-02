@@ -84,7 +84,7 @@ public abstract class ExpandedCompositeCommand extends CompositeCommand
 		}
 		else
 		{
-			return Utils.parseStringToUpdateMode(this.addon.getConfig().getString("defaulttype"));
+			return this.addon.getSettings().getDefaultMode();
 		}
 	}
 
@@ -123,7 +123,7 @@ public abstract class ExpandedCompositeCommand extends CompositeCommand
 		}
 		else
 		{
-			return this.addon.getConfig().getInt("defaultsize", 1);
+			return this.addon.getSettings().getDefaultSize();
 		}
 	}
 
