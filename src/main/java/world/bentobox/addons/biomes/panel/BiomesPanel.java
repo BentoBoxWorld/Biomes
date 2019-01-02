@@ -62,8 +62,8 @@ public class BiomesPanel
 				break;
 		}
 
-		this.updateMode = Utils.parseStringToUpdateMode(this.addon.getConfig().getString("defaulttype", ""));
-		this.updateNumber = this.addon.getConfig().getInt("defaultsize", 3);
+		this.updateMode = this.addon.getSettings().getDefaultMode();
+		this.updateNumber = this.addon.getSettings().getDefaultSize();
 
 		this.createBiomesPanel(0);
 	}
@@ -142,8 +142,7 @@ public class BiomesPanel
 			itemIndex++;
 		}
 
-		if (this.workingMode != Mode.EDIT &&
-			this.addon.getConfig().getBoolean("advancedmenu", false))
+		if (this.workingMode != Mode.EDIT && this.addon.getSettings().isAdvancedMenu())
 		{
 			// Create advanced menu.
 
