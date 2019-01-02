@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import world.bentobox.addons.biomes.commands.ExpandedCompositeCommand;
 import world.bentobox.addons.biomes.panel.AdminSettingsPanel;
+import world.bentobox.addons.biomes.utils.Utils;
+import world.bentobox.addons.biomes.utils.Utils.UpdateMode;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.user.User;
@@ -59,12 +61,12 @@ public class SettingsCommand extends ExpandedCompositeCommand
 				case MENU:
 					if (args.get(1).equalsIgnoreCase("true"))
 					{
-						this.addon.getConfig().set(MENU, true);
+						this.addon.getSettings().setAdvancedMenu(true);
 						break;
 					}
 					else if (args.get(1).equalsIgnoreCase("false"))
 					{
-						this.addon.getConfig().set(MENU, false);
+						this.addon.getSettings().setAdvancedMenu(false);
 						break;
 					}
 					else
@@ -75,32 +77,21 @@ public class SettingsCommand extends ExpandedCompositeCommand
 						return false;
 					}
 				case TYPE:
-					if (args.get(1).equalsIgnoreCase("island"))
-					{
-						this.addon.getConfig().set(TYPE, "ISLAND");
-						break;
-					}
-					else if (args.get(1).equalsIgnoreCase("chunk"))
-					{
-						this.addon.getConfig().set(TYPE, "CHUNK");
-						break;
-					}
-					else if (args.get(1).equalsIgnoreCase("square"))
-					{
-						this.addon.getConfig().set(TYPE, "SQUARE");
-						break;
-					}
-					else
+					UpdateMode mode = Utils.parseStrictToUpdateMode(args.get(1).toUpperCase());
+
+					if (mode == null)
 					{
 						user.sendMessage("biomes.messages.errors.incorrect-mode",
 							"[mode]",
 							args.get(1));
 						return false;
 					}
+					this.addon.getSettings().setDefaultMode(mode);
+					break;
 				case SIZE:
 					try
 					{
-						this.addon.getConfig().set(SIZE, Integer.parseInt(args.get(1)));
+						this.addon.getSettings().setDefaultSize(Integer.parseInt(args.get(1)));
 						break;
 					}
 					catch (Exception e)
@@ -113,12 +104,12 @@ public class SettingsCommand extends ExpandedCompositeCommand
 				case RESET_BIOME:
 					if (args.get(1).equalsIgnoreCase("true"))
 					{
-						this.addon.getConfig().set(RESET_BIOME, true);
+						this.addon.getSettings().setResetBiomes(true);
 						break;
 					}
 					else if (args.get(1).equalsIgnoreCase("false"))
 					{
-						this.addon.getConfig().set(RESET_BIOME, false);
+						this.addon.getSettings().setResetBiomes(false);
 						break;
 					}
 					else
@@ -131,7 +122,7 @@ public class SettingsCommand extends ExpandedCompositeCommand
 				case TIMEOUT:
 					try
 					{
-						this.addon.getConfig().set(TIMEOUT, Integer.parseInt(args.get(1)));
+						this.addon.getSettings().setCoolDown(Integer.parseInt(args.get(1)));
 						break;
 					}
 					catch (Exception e)
@@ -148,7 +139,6 @@ public class SettingsCommand extends ExpandedCompositeCommand
 					return false;
 			}
 
-			this.addon.saveConfig();
 			user.sendMessage("biomes.messages.information.saved-config");
 			return true;
 		}
