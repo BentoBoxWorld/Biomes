@@ -34,7 +34,7 @@ public class ChangeOwnerListener implements Listener
 	public void onTeamSetOwnerEvent(TeamSetownerEvent event)
 	{
 		// Do nothing if biome reset is diabled.
-		if (!this.addon.getConfig().getBoolean("resetbiomes", false))
+		if (!this.addon.getSettings().isResetBiomes())
 		{
 			return;
 		}
@@ -48,6 +48,8 @@ public class ChangeOwnerListener implements Listener
 
 		String defaultBiome;
 
+		// TODO: The same issue as with BiomesAddon class. It gets values but better would be to add them as
+		// dependencies.
 		if (skyBlock.isPresent() &&
 			skyBlock.get().getConfig().getString("world.world-name").
 				equalsIgnoreCase(Util.getWorld(event.getIsland().getWorld()).getName()))
