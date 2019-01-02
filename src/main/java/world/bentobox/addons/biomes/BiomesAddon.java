@@ -4,8 +4,10 @@ package world.bentobox.addons.biomes;
 import world.bentobox.addons.biomes.commands.admin.AdminCommand;
 import world.bentobox.addons.biomes.commands.user.BiomesCommand;
 import world.bentobox.addons.biomes.listeners.ChangeOwnerListener;
+import world.bentobox.addons.biomes.objects.Settings;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
+import world.bentobox.bentobox.api.configuration.Config;
 import world.bentobox.bentobox.managers.CommandsManager;
 
 
@@ -15,11 +17,19 @@ import world.bentobox.bentobox.managers.CommandsManager;
 public class BiomesAddon extends Addon
 {
 	@Override
-	public void onEnable()
+	public void onLoad()
 	{
 		// Load the plugin's config
 		this.saveDefaultConfig();
 
+		// Load settings from config.yml. This will check if there are any issues with it too.
+		this.settings = new Config<>(this, Settings.class).loadConfigObject();
+	}
+
+
+	@Override
+	public void onEnable()
+	{
 		this.addonManager = new BiomesAddonManager(this);
 
 		CommandsManager commandsManager = this.getPlugin().getCommandsManager();
@@ -38,6 +48,8 @@ public class BiomesAddon extends Addon
 				new AdminCommand(this, acidCmd);
 			}
 
+			// Probably better would be casting and getting from settings, but then it should be added as
+			// dependency.
 			String currentWorld = a.getConfig().getString("world.world-name");
 
 			if (this.addonManager.getBiomes(currentWorld).isEmpty())
@@ -61,6 +73,8 @@ public class BiomesAddon extends Addon
 				new AdminCommand(this, bsbAdminCmd);
 			}
 
+			// Probably better would be casting and getting from settings, but then it should be added as
+			// dependency.
 			String currentWorld = a.getConfig().getString("world.world-name");
 
 			if (this.addonManager.getBiomes(currentWorld).isEmpty())
@@ -77,6 +91,10 @@ public class BiomesAddon extends Addon
 	@Override
 	public void onDisable()
 	{
+		if (this.settings != null)
+		{
+			new Config<>(this, Settings.class).saveConfigObject(this.settings);
+		}
 	}
 
 
@@ -90,6 +108,16 @@ public class BiomesAddon extends Addon
 	}
 
 
+	/**
+	 * This method returns addon settings.
+	 * @return Addon settings object.
+	 */
+	public Settings getSettings()
+	{
+		return this.settings;
+	}
+
+
 // ---------------------------------------------------------------------
 // Section: Variables
 // ---------------------------------------------------------------------
@@ -98,4 +126,9 @@ public class BiomesAddon extends Addon
 	 * This variable stores biomes manager.
 	 */
 	private BiomesAddonManager addonManager;
+
+	/**
+	 * This variable stores biomes addon settings.
+	 */
+	private Settings settings;
 }

@@ -1,20 +1,32 @@
-# Biomes Config
-
-# This indicates if advanced menu should be showed. If advanced menu is disabled, then
-# default type and default size will be active.
-advancedmenu: true
-
-# Default type shows which update mode will be active when Biomes Panel is opened.
-# Valid values 'ISLAND', 'CHUNK' or 'SQUARE'
-defaulttype: 'ISLAND'
-
-# Default size which will be enabled when Biomes panel is opened.
-# Indicate how much chunks or how large square will be updated with ne biome.
-defaultsize: 3
-
-# This indicate if biome on island must be restored on owner change, if new owner does not have permissions to
-# change biomes.
-resetbiomes: false
-
-# Timeout in minuted between changing biomes.
-timeout: 1
+# Biomes Configuration [version]
+# This config file is dynamic and saved when the server is shutdown.
+# You cannot edit it while the server is running because changes will
+# be lost! Use in-game settings GUI or edit when server is offline.
+#
+# This indicates if advanced menu will be enabled in Biomes GUI when users choose
+# biome or not. Advanced menu contains extra buttons that allows to choose biome
+# change mode and range.
+advanced-menu: true
+#
+# For advanced menu this indicate which mode will be active.
+# If advanced menu is disabled or in biome set command update mode is not passed
+# then update algorithm will use this value as update mode.
+# Valid values are:
+#     'ISLAND' - updates biome on whole island
+#     'CHUNK' - updates biome on whole chunks around player
+#     'SQUARE' - updates biome by block in given range
+default-mode: ISLAND
+#
+# For advanced menu this indicate how large range will be set on GUI opening.
+# If advanced menu is disabled or in biome set command update range is not set
+# then update algorithm will use this value as update range.
+default-size: 3
+#
+# This indicates if biome on island must be restored to default biome, if
+# island changes owner and it does not have biome set ability.
+# 'true' means that biome will be reset.
+reset-biomes: false
+#
+# This indicates cool down in seconds between users can change biomes on their island.
+cooldown: 60
+uniqueId: config
