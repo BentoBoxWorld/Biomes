@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 
 import world.bentobox.addons.biomes.BiomesAddon;
+import world.bentobox.addons.biomes.utils.Utils.UpdateMode;
 import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
@@ -56,11 +57,11 @@ public class AdminSettingsPanel
 		PanelBuilder panelBuilder = new PanelBuilder().user(this.user).name(
 			this.user.getTranslation("biomes.gui.admin.settings-title"));
 
-		boolean advancedMenu = this.addon.getConfig().getBoolean("advancedmenu", false);
-		String defaultType = this.addon.getConfig().getString("defaulttype", "ISLAND");
-		int defaultSize = this.addon.getConfig().getInt("defaultsize", 1);
-		int timeout = this.addon.getConfig().getInt("timeout", 1);
-		boolean resetBiomes = this.addon.getConfig().getBoolean("resetBiomes", false);
+		boolean advancedMenu = this.addon.getSettings().isAdvancedMenu();
+		UpdateMode defaultType = this.addon.getSettings().getDefaultMode();
+		int defaultSize = this.addon.getSettings().getDefaultSize();
+		int timeout = this.addon.getSettings().getCoolDown();
+		boolean resetBiomes = this.addon.getSettings().isResetBiomes();
 
 		panelBuilder.item(0, new PanelItemBuilder().
 			icon(Material.COMMAND_BLOCK).
@@ -79,9 +80,9 @@ public class AdminSettingsPanel
 			build());
 
 		panelBuilder.item(9, new PanelItemBuilder().
-			icon(defaultType.equals("ISLAND") ? Material.GRASS_BLOCK :
-				defaultType.equals("CHUNK") ? Material.DIRT : Material.GLASS).
-			name(this.user.getTranslation("biomes.gui.admin.buttons.type", "[value]", defaultType)).
+			icon(defaultType.equals(UpdateMode.ISLAND) ? Material.GRASS_BLOCK :
+				defaultType.equals(UpdateMode.CHUNK) ? Material.DIRT : Material.GLASS).
+			name(this.user.getTranslation("biomes.gui.admin.buttons.type", "[value]", defaultType.name())).
 			description(this.user.getTranslation("biomes.gui.admin.descriptions.type")).
 			clickHandler((panel, user1, clickType, slot) -> {
 				this.mode = Mode.TYPE;
@@ -152,8 +153,7 @@ public class AdminSettingsPanel
 					name(this.user.getTranslation("biomes.gui.admin.buttons.save")).
 					clickHandler((panel, user1, clickType, slot) -> {
 						this.mode = Mode.RETURN;
-						this.addon.getConfig().set("advancedmenu", this.newValue);
-						this.addon.saveConfig();
+						this.addon.getSettings().setAdvancedMenu((boolean) this.newValue);
 						this.createSettingPanel();
 						return true;
 					}).build());
@@ -191,8 +191,7 @@ public class AdminSettingsPanel
 					name(this.user.getTranslation("biomes.gui.admin.buttons.save")).
 					clickHandler((panel, user1, clickType, slot) -> {
 						this.mode = Mode.RETURN;
-						this.addon.getConfig().set("defaulttype", this.newValue);
-						this.addon.saveConfig();
+						this.addon.getSettings().setDefaultMode((UpdateMode) this.newValue);
 						this.createSettingPanel();
 						return true;
 					}).build());
@@ -208,28 +207,28 @@ public class AdminSettingsPanel
 					icon(Material.GRASS_BLOCK).
 					name(this.user.getTranslation("biomes.gui.buttons.island")).
 					clickHandler((panel, user1, clickType, slot) -> {
-						this.newValue = "ISLAND";
+						this.newValue = UpdateMode.ISLAND;
 						this.createSettingPanel();
 						return true;
-					}).glow(this.newValue.equals("ISLAND")).
+					}).glow(this.newValue.equals(UpdateMode.ISLAND)).
 					build());
 				panelBuilder.item(13, new PanelItemBuilder().
 					icon(Material.DIRT).
 					name(this.user.getTranslation("biomes.gui.buttons.chunk")).
 					clickHandler((panel, user1, clickType, slot) -> {
-						this.newValue = "CHUNK";
+						this.newValue = UpdateMode.CHUNK;
 						this.createSettingPanel();
 						return true;
-					}).glow(this.newValue.equals("CHUNK")).
+					}).glow(this.newValue.equals(UpdateMode.CHUNK)).
 					build());
 				panelBuilder.item(22, new PanelItemBuilder().
 					icon(Material.GLASS).
 					name(this.user.getTranslation("biomes.gui.buttons.region")).
 					clickHandler((panel, user1, clickType, slot) -> {
-						this.newValue = "SQUARE";
+						this.newValue = UpdateMode.SQUARE;
 						this.createSettingPanel();
 						return true;
-					}).glow(this.newValue.equals("SQUARE")).
+					}).glow(this.newValue.equals(UpdateMode.SQUARE)).
 					build());
 
 				break;
@@ -239,14 +238,7 @@ public class AdminSettingsPanel
 					name(this.user.getTranslation("biomes.gui.admin.buttons.save")).
 					clickHandler((panel, user1, clickType, slot) -> {
 						this.mode = Mode.RETURN;
-
-						if (((int) this.newValue) < 0)
-						{
-							this.newValue = 0;
-						}
-
-						this.addon.getConfig().set("defaultsize", this.newValue);
-						this.addon.saveConfig();
+						this.addon.getSettings().setDefaultSize(Math.max(0, (int) this.newValue));
 						this.createSettingPanel();
 						return true;
 					}).build());
@@ -268,8 +260,7 @@ public class AdminSettingsPanel
 					name(this.user.getTranslation("biomes.gui.admin.buttons.save")).
 					clickHandler((panel, user1, clickType, slot) -> {
 						this.mode = Mode.RETURN;
-						this.addon.getConfig().set("resetbiomes", this.newValue);
-						this.addon.saveConfig();
+						this.addon.getSettings().setResetBiomes((boolean) this.newValue);
 						this.createSettingPanel();
 						return true;
 					}).build());
@@ -308,14 +299,7 @@ public class AdminSettingsPanel
 					name(this.user.getTranslation("biomes.gui.admin.buttons.save")).
 					clickHandler((panel, user1, clickType, slot) -> {
 						this.mode = Mode.RETURN;
-
-						if (((int) this.newValue) < 0)
-						{
-							this.newValue = 0;
-						}
-
-						this.addon.getConfig().set("timeout", this.newValue);
-						this.addon.saveConfig();
+						this.addon.getSettings().setCoolDown(Math.max(0, (int) this.newValue));
 						this.createSettingPanel();
 						return true;
 					}).build());
