@@ -24,7 +24,9 @@ import world.bentobox.bentobox.util.Util;
 
 /**
  * This class implements Biomes Panel for all users.
+ * @deprecated Biomes Panel is Deprecated. Panels will be recreated by using CommonPanel.
  */
+@Deprecated
 public class BiomesPanel
 {
 	public BiomesPanel(BiomesAddon addon,

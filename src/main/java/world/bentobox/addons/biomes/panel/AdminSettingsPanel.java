@@ -15,7 +15,9 @@ import world.bentobox.bentobox.api.user.User;
 /**
  * This class contains everything that is necessary for changing Biomes Addon settings via
  * GUI.
+ * @deprecated Biomes Panel is Deprecated. Panels will be recreated by using CommonPanel.
  */
+@Deprecated
 public class AdminSettingsPanel
 {
 	/**

@@ -16,7 +16,9 @@ import world.bentobox.bentobox.api.user.User;
 
 /**
  * This Admin panel will show list with users and it allows to select user, whoes biome admin want to change.
+ * @deprecated Biomes Panel is Deprecated. Panels will be recreated by using CommonPanel.
  */
+@Deprecated
 public class AdminUserPanel
 {
 	/**

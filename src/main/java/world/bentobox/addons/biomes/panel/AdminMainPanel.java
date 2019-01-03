@@ -19,7 +19,9 @@ import world.bentobox.bentobox.api.user.User;
 /**
  * This class creates AdminPanel GUI that allows to change user biome, edit, add or remove biome and import
  * biomes.
+ * @deprecated Biomes Panel is Deprecated. Panels will be recreated by using CommonPanel.
  */
+@Deprecated
 public class AdminMainPanel
 {
 	public AdminMainPanel(BiomesAddon addon, World world, User user)
