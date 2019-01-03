@@ -210,10 +210,11 @@ public class Settings implements DataObject
 	@ConfigComment("This variable allows to choose which biomes users can see in Biomes GUI.")
 	@ConfigComment("Valid values are:")
 	@ConfigComment("    'ALL' - there will be no hidden biomes. All biomes will be viewable in GUI.")
+	@ConfigComment("    'DEPLOYED' - shows all biomes that are deployed.")
 	@ConfigComment("    'ACCESSIBLE' - only biomes that is unlocked via permission or other unlock type will be visible in GUI.")
 	@ConfigComment("    'TOGGLEABLE' - there will be button in GUI that allows users to switch from ALL to ACCESSIBLE modes.")
 	@ConfigEntry(path = "biomes-visibility")
-	private VisibilityMode visibilityMode = VisibilityMode.ALL;
+	private VisibilityMode visibilityMode = VisibilityMode.DEPLOYED;
 
 	/**
 	 * Default variable.

@@ -276,6 +276,7 @@ public class Utils
 	{
 		ALL,
 		ACCESSIBLE,
+		DEPLOYED,
 		TOGGLEABLE
 	}
 }

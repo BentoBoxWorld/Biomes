@@ -33,7 +33,8 @@ cooldown: 60
 # This variable allows to choose which biomes users can see in Biomes GUI.
 # Valid values are:
 #     'ALL' - there will be no hidden biomes. All biomes will be viewable in GUI.
+#     'DEPLOYED' - shows all biomes that are deployed.
 #     'ACCESSIBLE' - only biomes that is unlocked via permission or other unlock type will be visible in GUI.
 #     'TOGGLEABLE' - there will be button in GUI that allows users to switch from ALL to ACCESSIBLE modes.
-biomes-visibility: ALL
+biomes-visibility: DEPLOYED
 uniqueId: config

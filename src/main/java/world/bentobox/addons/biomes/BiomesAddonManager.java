@@ -397,8 +397,10 @@ public class BiomesAddonManager
 	 * This method returns biomes that is visible for user in given world.
 	 * @param world World in which biomes must be returned.
 	 * @param user User who will see biomes.
-	 * @param visibilityMode active visibilityMode. Only ALL will return all biomes. TOGGLEABLE and ACCESSIBLE
-	 * will return biomes that user has permission to see.
+	 * @param visibilityMode active visibilityMode. Only ALL will return all biomes.
+	 * DEPLOYED will show biomes that has deployedFlag enabled.
+	 * ACCESSIBLE will show biomes that are deployed and user has permission that unlocks biome.
+	 * TOGGLEABLE will work as ACCESSIBLE.
 	 * @return Visible biome list.
 	 */
 	public List<BiomesObject> getBiomes(World world, User user, VisibilityMode visibilityMode)
@@ -413,7 +415,9 @@ public class BiomesAddonManager
 		List<BiomesObject> returnBiomesList = new ArrayList<>(allBiomeList.size());
 
 		allBiomeList.forEach(biomesObject -> {
-			if (user.hasPermission(biomesObject.getPermission()))
+			if (biomesObject.isDeployed() &&
+				(visibilityMode.equals(VisibilityMode.DEPLOYED) ||
+					user.hasPermission(biomesObject.getPermission())))
 			{
 				returnBiomesList.add(biomesObject);
 			}
