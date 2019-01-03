@@ -1,14 +1,14 @@
-package world.bentobox.addons.biomes.commands.admin;
+package world.bentobox.biomes.commands.admin;
 
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import world.bentobox.addons.biomes.commands.ExpandedCompositeCommand;
-import world.bentobox.addons.biomes.panel.AdminSettingsPanel;
-import world.bentobox.addons.biomes.utils.Utils;
-import world.bentobox.addons.biomes.utils.Utils.UpdateMode;
+import world.bentobox.biomes.commands.ExpandedCompositeCommand;
+import world.bentobox.biomes.panel.AdminSettingsPanel;
+import world.bentobox.biomes.utils.Utils;
+import world.bentobox.biomes.utils.Utils.UpdateMode;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.user.User;

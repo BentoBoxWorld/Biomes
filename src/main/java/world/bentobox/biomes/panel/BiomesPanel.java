@@ -1,4 +1,4 @@
-package world.bentobox.addons.biomes.panel;
+package world.bentobox.biomes.panel;
 
 
 import org.bukkit.*;
@@ -8,12 +8,12 @@ import org.bukkit.inventory.ItemStack;
 import java.util.*;
 
 import net.wesjd.anvilgui.AnvilGUI;
-import world.bentobox.addons.biomes.BiomesAddon;
-import world.bentobox.addons.biomes.BiomesAddonManager;
-import world.bentobox.addons.biomes.objects.BiomesObject;
-import world.bentobox.addons.biomes.tasks.BiomeUpdateHelper;
-import world.bentobox.addons.biomes.utils.Utils;
-import world.bentobox.addons.biomes.utils.Utils.UpdateMode;
+import world.bentobox.biomes.BiomesAddon;
+import world.bentobox.biomes.BiomesAddonManager;
+import world.bentobox.biomes.objects.BiomesObject;
+import world.bentobox.biomes.tasks.BiomeUpdateHelper;
+import world.bentobox.biomes.utils.Utils;
+import world.bentobox.biomes.utils.Utils.UpdateMode;
 import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;

@@ -1,14 +1,14 @@
-package world.bentobox.addons.biomes.commands;
+package world.bentobox.biomes.commands;
 
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
-import world.bentobox.addons.biomes.BiomesAddon;
-import world.bentobox.addons.biomes.objects.BiomesObject;
-import world.bentobox.addons.biomes.utils.Utils;
-import world.bentobox.addons.biomes.utils.Utils.UpdateMode;
+import world.bentobox.biomes.BiomesAddon;
+import world.bentobox.biomes.objects.BiomesObject;
+import world.bentobox.biomes.utils.Utils;
+import world.bentobox.biomes.utils.Utils.UpdateMode;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.localization.TextVariables;

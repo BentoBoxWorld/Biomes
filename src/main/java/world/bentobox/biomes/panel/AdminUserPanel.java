@@ -1,4 +1,4 @@
-package world.bentobox.addons.biomes.panel;
+package world.bentobox.biomes.panel;
 
 
 import org.bukkit.Material;
@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-import world.bentobox.addons.biomes.BiomesAddon;
+import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;

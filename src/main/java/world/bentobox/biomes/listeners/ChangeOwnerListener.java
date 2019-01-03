@@ -1,4 +1,4 @@
-package world.bentobox.addons.biomes.listeners;
+package world.bentobox.biomes.listeners;
 
 
 import org.bukkit.block.Biome;
@@ -8,10 +8,10 @@ import org.bukkit.event.Listener;
 
 import java.util.Optional;
 
-import world.bentobox.addons.biomes.BiomesAddon;
-import world.bentobox.addons.biomes.objects.BiomesObject;
-import world.bentobox.addons.biomes.tasks.BiomeUpdateHelper;
-import world.bentobox.addons.biomes.utils.Utils;
+import world.bentobox.biomes.BiomesAddon;
+import world.bentobox.biomes.objects.BiomesObject;
+import world.bentobox.biomes.tasks.BiomeUpdateHelper;
+import world.bentobox.biomes.utils.Utils;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.events.team.TeamEvent.TeamSetownerEvent;
 import world.bentobox.bentobox.api.user.User;

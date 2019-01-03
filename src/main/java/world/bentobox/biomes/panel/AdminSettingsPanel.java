@@ -1,11 +1,11 @@
-package world.bentobox.addons.biomes.panel;
+package world.bentobox.biomes.panel;
 
 
 import org.bukkit.Material;
 import org.bukkit.World;
 
-import world.bentobox.addons.biomes.BiomesAddon;
-import world.bentobox.addons.biomes.utils.Utils.UpdateMode;
+import world.bentobox.biomes.BiomesAddon;
+import world.bentobox.biomes.utils.Utils.UpdateMode;
 import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;

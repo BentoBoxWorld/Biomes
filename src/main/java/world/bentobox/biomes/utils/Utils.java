@@ -1,4 +1,4 @@
-package world.bentobox.addons.biomes.utils;
+package world.bentobox.biomes.utils;
 
 
 import org.apache.commons.lang.WordUtils;
@@ -10,9 +10,8 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
-import world.bentobox.addons.biomes.BiomesAddon;
-import world.bentobox.addons.biomes.objects.BiomesObject;
-import world.bentobox.bentobox.api.addons.Addon;
+import world.bentobox.biomes.BiomesAddon;
+import world.bentobox.biomes.objects.BiomesObject;
 
 
 /**
