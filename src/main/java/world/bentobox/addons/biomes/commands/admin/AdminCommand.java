@@ -6,6 +6,7 @@ import java.util.List;
 import world.bentobox.addons.biomes.BiomesAddon;
 import world.bentobox.addons.biomes.panel.AdminMainPanel;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
+import world.bentobox.bentobox.api.commands.admin.AdminReloadCommand;
 import world.bentobox.bentobox.api.user.User;
 
 
@@ -38,6 +39,9 @@ public class AdminCommand extends CompositeCommand
 		// Addon related
 		new ImportCommand(this.getAddon(), this);
 		new SettingsCommand(this.getAddon(), this);
+
+		// Addon reload command
+		new AdminReloadCommand(this);
 	}
 
 

@@ -22,8 +22,7 @@ public class BiomesAddon extends Addon
 		// Load the plugin's config
 		this.saveDefaultConfig();
 
-		// Load settings from config.yml. This will check if there are any issues with it too.
-		this.settings = new Config<>(this, Settings.class).loadConfigObject();
+		this.loadSettings();
 	}
 
 
@@ -94,6 +93,33 @@ public class BiomesAddon extends Addon
 		if (this.settings != null)
 		{
 			new Config<>(this, Settings.class).saveConfigObject(this.settings);
+		}
+	}
+
+
+	@Override
+	public void onReload()
+	{
+		this.loadSettings();
+		// Reload biomes manager.
+		this.addonManager.reloadManager();
+
+		this.getLogger().info("Biomes addon reloaded.");
+	}
+
+
+	/**
+	 * Load addon settings.
+	 */
+	private void loadSettings()
+	{
+		this.settings = new Config<>(this, Settings.class).loadConfigObject();
+
+		if (this.settings == null)
+		{
+			// Disable
+			this.logError("Biomes settings could not load! Addon disabled.");
+			this.setState(State.DISABLED);
 		}
 	}
 

@@ -70,6 +70,23 @@ public class BiomesAddonManager
 	}
 
 
+	/**
+	 * This class reload
+	 */
+	public void reloadManager()
+	{
+		this.addon.getLogger().info("Reloading biomes...");
+
+		this.biomesConfig = new Config<>(this.addon, BiomesObject.class);
+		this.biomesConfig.loadConfigObjects().forEach(this::storeBiome);
+
+		for (Map.Entry<String, List<BiomesObject>> entry : this.worldBiomeList.entrySet())
+		{
+			entry.getValue().sort(Comparator.comparingInt(BiomesObject::getBiomeID));
+		}
+	}
+
+
 // ---------------------------------------------------------------------
 // Section: Storing
 // ---------------------------------------------------------------------
