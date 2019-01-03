@@ -2,6 +2,7 @@ package world.bentobox.addons.biomes.objects;
 
 
 import world.bentobox.addons.biomes.utils.Utils.UpdateMode;
+import world.bentobox.addons.biomes.utils.Utils.VisibilityMode;
 import world.bentobox.bentobox.api.configuration.ConfigComment;
 import world.bentobox.bentobox.api.configuration.ConfigEntry;
 import world.bentobox.bentobox.api.configuration.StoreAt;
@@ -82,6 +83,21 @@ public class Settings implements DataObject
 	}
 
 
+	/**
+	 * This method returns active biomes visibilityMode.
+	 * @return Enum that represents biomes visibility.
+	 */
+	public VisibilityMode getVisibilityMode()
+	{
+		return visibilityMode;
+	}
+
+
+// ---------------------------------------------------------------------
+// Section: Setters
+// ---------------------------------------------------------------------
+
+
 	@Override
 	public void setUniqueId(String uniqueId)
 	{
@@ -139,6 +155,16 @@ public class Settings implements DataObject
 	}
 
 
+	/**
+	 * This method sets value of visibilityMode variable.
+	 * @param visibilityMode new value.
+	 */
+	public void setVisibilityMode(VisibilityMode visibilityMode)
+	{
+		this.visibilityMode = visibilityMode;
+	}
+
+
 // ---------------------------------------------------------------------
 // Section: Variables
 // ---------------------------------------------------------------------
@@ -179,6 +205,15 @@ public class Settings implements DataObject
 	@ConfigComment("This indicates cool down in seconds between users can change biomes on their island.")
 	@ConfigEntry(path = "cooldown")
 	private int coolDown = 60;
+
+	@ConfigComment("")
+	@ConfigComment("This variable allows to choose which biomes users can see in Biomes GUI.")
+	@ConfigComment("Valid values are:")
+	@ConfigComment("    'ALL' - there will be no hidden biomes. All biomes will be viewable in GUI.")
+	@ConfigComment("    'ACCESSIBLE' - only biomes that is unlocked via permission or other unlock type will be visible in GUI.")
+	@ConfigComment("    'TOGGLEABLE' - there will be button in GUI that allows users to switch from ALL to ACCESSIBLE modes.")
+	@ConfigEntry(path = "biomes-visibility")
+	private VisibilityMode visibilityMode = VisibilityMode.ALL;
 
 	/**
 	 * Default variable.

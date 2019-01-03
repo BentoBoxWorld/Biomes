@@ -1,4 +1,4 @@
-# Biomes Configuration [version]
+# Biomes Configuration ${project.version}
 # This config file is dynamic and saved when the server is shutdown.
 # You cannot edit it while the server is running because changes will
 # be lost! Use in-game settings GUI or edit when server is offline.
@@ -29,4 +29,11 @@ reset-biomes: false
 #
 # This indicates cool down in seconds between users can change biomes on their island.
 cooldown: 60
+#
+# This variable allows to choose which biomes users can see in Biomes GUI.
+# Valid values are:
+#     'ALL' - there will be no hidden biomes. All biomes will be viewable in GUI.
+#     'ACCESSIBLE' - only biomes that is unlocked via permission or other unlock type will be visible in GUI.
+#     'TOGGLEABLE' - there will be button in GUI that allows users to switch from ALL to ACCESSIBLE modes.
+biomes-visibility: ALL
 uniqueId: config

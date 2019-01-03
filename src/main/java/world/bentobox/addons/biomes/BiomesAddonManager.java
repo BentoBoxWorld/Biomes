@@ -12,6 +12,7 @@ import java.util.*;
 
 import world.bentobox.addons.biomes.objects.BiomesObject;
 import world.bentobox.addons.biomes.utils.Utils;
+import world.bentobox.addons.biomes.utils.Utils.VisibilityMode;
 import world.bentobox.bentobox.api.configuration.Config;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.util.Util;
@@ -378,6 +379,48 @@ public class BiomesAddonManager
 // ---------------------------------------------------------------------
 // Section: Getters / Setters
 // ---------------------------------------------------------------------
+
+
+	/**
+	 * This method returns biomes that is visible for user by using default visibility mode.
+	 * @param world World in which biomes must be returned.
+	 * @param user User who will see biomes.
+	 * @return Visible biome list.
+	 */
+	public List<BiomesObject> getBiomes(World world, User user)
+	{
+		return this.getBiomes(world, user, this.addon.getSettings().getVisibilityMode());
+	}
+
+
+	/**
+	 * This method returns biomes that is visible for user in given world.
+	 * @param world World in which biomes must be returned.
+	 * @param user User who will see biomes.
+	 * @param visibilityMode active visibilityMode. Only ALL will return all biomes. TOGGLEABLE and ACCESSIBLE
+	 * will return biomes that user has permission to see.
+	 * @return Visible biome list.
+	 */
+	public List<BiomesObject> getBiomes(World world, User user, VisibilityMode visibilityMode)
+	{
+		List<BiomesObject> allBiomeList = this.getBiomes(world);
+
+		if (visibilityMode.equals(VisibilityMode.ALL))
+		{
+			return allBiomeList;
+		}
+
+		List<BiomesObject> returnBiomesList = new ArrayList<>(allBiomeList.size());
+
+		allBiomeList.forEach(biomesObject -> {
+			if (user.hasPermission(biomesObject.getPermission()))
+			{
+				returnBiomesList.add(biomesObject);
+			}
+		});
+
+		return returnBiomesList;
+	}
 
 
 	/**

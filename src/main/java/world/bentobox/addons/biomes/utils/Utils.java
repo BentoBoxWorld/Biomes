@@ -267,4 +267,15 @@ public class Utils
 		CHUNK,
 		SQUARE
 	}
+
+
+	/**
+	 * This enum describes all possible variants which biomes users should see
+	 */
+	public enum VisibilityMode
+	{
+		ALL,
+		ACCESSIBLE,
+		TOGGLEABLE
+	}
 }
