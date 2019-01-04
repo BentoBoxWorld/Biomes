@@ -8,7 +8,7 @@ Biomes addon for SkyBlock and AcidIsland. It allows to change biome on Island.
 Currently Biomes Addon is in **Alpha stage**, so it may or may not contain bugs... a lot of bugs. Also it means, that some features are not working or implemented. 
 Latest official **Alpha Release is 0.3.0**, and you can download it from [Release tab](https://github.com/BentoBoxWorld/Biomes/releases)
 
-Or you can try **nightly builds** where you can check and test new features that will be implemented in next release from [Jenkins Server](https://ci.codemc.org/job/BentoBoxWorld/job/Biomes/lastBuild/).
+Or you can try **nightly builds** where you can check and test new features that will be implemented in next release from [Jenkins Server](https://ci.codemc.org/job/BentoBoxWorld/job/Biomes/lastStableBuild/).
 
 If you like this addon but something is missing or is not working as you want, you can always submit an [Issue request](https://github.com/BentoBoxWorld/Biomes/issues) or get a support in Discord [BentoBox ![icon](https://avatars2.githubusercontent.com/u/41555324?s=15&v=4)](https://discord.gg/JgWKvR)
 
