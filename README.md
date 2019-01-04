@@ -1,5 +1,16 @@
-# addon-biomes
-Biomes addon for BSkyBlock and AcidIsland. It allows to change biome on Island.
+# Biomes Addon
+[![Build Status](https://ci.codemc.org/buildStatus/icon?job=BentoBoxWorld/Biomes)](https://ci.codemc.org/job/BentoBoxWorld/job/Biomes/)
+
+Biomes addon for SkyBlock and AcidIsland. It allows to change biome on Island.
+
+## Where to find
+
+Currently Biomes Addon is in **Alpha stage**, so it may or may not contain bugs... a lot of bugs. Also it means, that some features are not working or implemented. 
+Latest official **Alpha Release is 0.3.0**, and you can download it from [Release tab](https://github.com/BentoBoxWorld/Biomes/releases)
+
+Or you can try **nightly builds** where you can check and test new features that will be implemented in next release from [Jenkins Server](https://ci.codemc.org/job/BentoBoxWorld/job/Biomes/lastBuild/).
+
+If you like this addon but something is missing or is not working as you want, you can always submit an [Issue request](https://github.com/BentoBoxWorld/Biomes/issues) or get a support in Discord [BentoBox ![icon](https://avatars2.githubusercontent.com/u/41555324?s=15&v=4)](https://discord.gg/JgWKvR)
 
 ## How to use
 
@@ -41,6 +52,7 @@ There are a few admin commands and more being written. The main biomes admin com
 * `/bsbadmin biomes`: To open Admin GUI. 
 * `/bsbadmin biomes help` : Show help for all the commands
 * `/bsbadmin biomes import [overwrite]`: import biomes from biomes.yml
+* `/bsbadmin biomes add <biome>`: add a new biome what can be edited via GUI or `biomes edit` command. Biome will not be deployed. To do it, you should enable it in GUI or via `biomes edit <biome> deployed true` command.
 * `/bsbadmin biomes set <player> <biome> [<type>] [<size>]`: This command works the same as user biome set command, but it is necessary to provide also player, which island biome will be updated.
 * `/bsbadmin biomes edit <biome> <property> <new_value>`: This command allows to edit provided biome property to new value. 
 * `/bsbadmin biomes settings <property> <new_value>`: This command allows to edit current addon settings via command. 
