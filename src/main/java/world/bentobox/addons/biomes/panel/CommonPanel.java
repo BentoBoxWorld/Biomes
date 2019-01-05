@@ -65,6 +65,8 @@ public abstract class CommonPanel
 		this.permissionPrefix = permissionPrefix;
 
 		this.parentPanel = parentPanel;
+
+		this.pageIndex = 0;
 	}
 
 
@@ -119,6 +121,34 @@ public abstract class CommonPanel
 					}
 
 					this.parentPanel.build();
+					return true;
+				};
+				glow = false;
+
+				break;
+			}
+			case NEXT:
+			{
+				name = this.user.getTranslation("biomes.gui.buttons.next");
+				description = Collections.emptyList();
+				icon = new ItemStack(Material.SIGN);
+				clickHandler = (panel, user, clickType, slot) -> {
+					this.pageIndex++;
+					this.build();
+					return true;
+				};
+				glow = false;
+
+				break;
+			}
+			case PREVIOUS:
+			{
+				name = this.user.getTranslation("biomes.gui.buttons.previous");
+				description = Collections.emptyList();
+				icon = new ItemStack(Material.SIGN);
+				clickHandler = (panel, user, clickType, slot) -> {
+					this.pageIndex--;
+					this.build();
 					return true;
 				};
 				glow = false;
@@ -439,6 +469,9 @@ public abstract class CommonPanel
 	protected enum CommonButtons
 	{
 		RETURN,
+		NEXT,
+		PREVIOUS,
+
 		SAVE,
 		CANCEL,
 
@@ -527,6 +560,11 @@ public abstract class CommonPanel
 	 * Variable stores any value.
 	 */
 	protected Object valueObject;
+
+	/**
+	 * This object holds current page index.
+	 */
+	protected int pageIndex;
 
 
 // ---------------------------------------------------------------------
