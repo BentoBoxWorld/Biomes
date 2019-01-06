@@ -94,6 +94,11 @@ public class BiomesAddon extends Addon
 		{
 			new Config<>(this, Settings.class).saveConfigObject(this.settings);
 		}
+
+		if (this.addonManager != null)
+		{
+			this.addonManager.save(false);
+		}
 	}
 
 

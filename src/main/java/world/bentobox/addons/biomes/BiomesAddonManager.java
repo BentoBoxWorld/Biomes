@@ -13,8 +13,8 @@ import java.util.*;
 import world.bentobox.addons.biomes.objects.BiomesObject;
 import world.bentobox.addons.biomes.utils.Utils;
 import world.bentobox.addons.biomes.utils.Utils.VisibilityMode;
-import world.bentobox.bentobox.api.configuration.Config;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.bentobox.database.Database;
 import world.bentobox.bentobox.util.Util;
 
 
@@ -32,7 +32,7 @@ public class BiomesAddonManager
 	{
 		this.addon = addon;
 
-		this.biomesConfig = new Config<>(addon, BiomesObject.class);
+		this.biomesDatabase = new Database<>(addon, BiomesObject.class);
 
 		// Currently only 2 game modes.
 		this.worldBiomeList = new HashMap<>(2);
@@ -62,7 +62,7 @@ public class BiomesAddonManager
 		this.worldBiomeList.clear();
 		this.addon.getLogger().info("Loading biomes...");
 
-		this.biomesConfig.loadConfigObjects().forEach(this::storeBiome);
+		this.biomesDatabase.loadObjects().forEach(this::storeBiome);
 
 		for (Map.Entry<String, List<BiomesObject>> entry : this.worldBiomeList.entrySet())
 		{
@@ -78,8 +78,8 @@ public class BiomesAddonManager
 	{
 		this.addon.getLogger().info("Reloading biomes...");
 
-		this.biomesConfig = new Config<>(this.addon, BiomesObject.class);
-		this.biomesConfig.loadConfigObjects().forEach(this::storeBiome);
+		this.biomesDatabase = new Database<>(this.addon, BiomesObject.class);
+		this.biomesDatabase.loadObjects().forEach(this::storeBiome);
 
 		for (Map.Entry<String, List<BiomesObject>> entry : this.worldBiomeList.entrySet())
 		{
@@ -99,7 +99,7 @@ public class BiomesAddonManager
 	 */
 	public void saveBiome(BiomesObject biome)
 	{
-		this.biomesConfig.saveConfigObject(biome);
+		this.biomesDatabase.saveObject(biome);
 	}
 
 
@@ -110,7 +110,7 @@ public class BiomesAddonManager
 	{
 		for (Map.Entry<String, List<BiomesObject>> entry : this.worldBiomeList.entrySet())
 		{
-			entry.getValue().forEach(this.biomesConfig::saveConfigObject);
+			entry.getValue().forEach(this.biomesDatabase::saveObject);
 		}
 	}
 
@@ -452,12 +452,27 @@ public class BiomesAddonManager
 	/**
 	 * This method returns biome object that hides behind biome name or null, if biome
 	 * with name does not exist.
-	 * @param biome Biome's name.
+	 * @param biomeUniqueID Biome's name.
 	 * @return BiomesObject that is represented by biome string.
 	 */
-	public BiomesObject getBiomeFromString(String biome)
+	public BiomesObject getBiomeFromString(String biomeUniqueID)
 	{
-		return this.biomesMap.getOrDefault(biome, null);
+		return this.biomesMap.getOrDefault(biomeUniqueID, null);
+	}
+
+
+	/**
+	 * Given method removes biome from database and cache.
+	 * @param biome Biome that must be removed.
+	 */
+	public void removeBiome(BiomesObject biome)
+	{
+		if (this.biomesMap.containsKey(biome.getUniqueId()))
+		{
+			this.biomesMap.remove(biome.getUniqueId());
+			this.worldBiomeList.get(biome.getWorld()).remove(biome);
+			this.biomesDatabase.deleteObject(biome);
+		}
 	}
 
 
@@ -481,9 +496,9 @@ public class BiomesAddonManager
 	private Map<String, BiomesObject> biomesMap;
 
 	/**
-	 * Variable stores biomes object configuration.
+	 * Variable stores database of biomes objects.
 	 */
-	private Config<BiomesObject> biomesConfig;
+	private Database<BiomesObject> biomesDatabase;
 
 	/**
 	 * Variable stores biomes.yml location
