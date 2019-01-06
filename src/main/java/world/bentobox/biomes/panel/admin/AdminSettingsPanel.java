@@ -314,7 +314,7 @@ public class AdminSettingsPanel extends CommonPanel
 					this.user.getTranslation("biomes.gui.admin.descriptions.disabled");
 
 				name = this.user.getTranslation("biomes.gui.admin.buttons.advancedmenu", "[value]", valueString);
-				description = Utils.splitString(this.user.getTranslation("biomes.admin.descriptions.advancedmenu"));
+				description = Utils.splitString(this.user.getTranslation("biomes.gui.admin.descriptions.advancedmenu"));
 				icon = new ItemStack(Material.COMMAND_BLOCK);
 				clickHandler = (panel, user, clickType, slot) -> {
 					this.valueObject = advancedMenu;
@@ -379,7 +379,7 @@ public class AdminSettingsPanel extends CommonPanel
 					this.user.getTranslation("biomes.gui.admin.descriptions.disabled");
 
 				name = this.user.getTranslation("biomes.gui.admin.buttons.resetBiomes", "[value]", valueString);
-				description = Utils.splitString(this.user.getTranslation("biomes.admin.descriptions.resetBiomes"));
+				description = Utils.splitString(this.user.getTranslation("biomes.gui.admin.descriptions.resetbiomes"));
 				icon = new ItemStack(Material.DROPPER);
 				clickHandler = (panel, user, clickType, slot) -> {
 					this.valueObject = resetBiomes;

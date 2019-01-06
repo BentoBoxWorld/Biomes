@@ -54,8 +54,16 @@ public class AdminBiomeListPanel extends CommonPanel
 	@Override
 	public void build()
 	{
-		PanelBuilder panelBuilder = new PanelBuilder().user(this.user).name(
-			this.user.getTranslation("biomes.gui.admin.edit-title"));
+		PanelBuilder panelBuilder = new PanelBuilder().user(this.user);
+
+		if (this.editPanel)
+		{
+			panelBuilder.name(this.user.getTranslation("biomes.gui.admin.edit-title"));
+		}
+		else
+		{
+			panelBuilder.name(this.user.getTranslation("biomes.gui.admin.remove-title"));
+		}
 
 		List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes(this.world);
 

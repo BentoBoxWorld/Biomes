@@ -656,7 +656,7 @@ public class AdminBiomeEditPanel extends CommonPanel
 	private PanelItem reopenAnvilGui()
 	{
 		ItemStack icon = new ItemStack(Material.ANVIL);
-		String name = this.user.getTranslation("biomes.gui.admin.buttons.change");
+		String name = this.user.getTranslation("biomes.gui.admin.buttons.change-value");
 		List<String> description = Utils.splitString(
 			this.user.getTranslation("biomes.gui.admin.descriptions.current", "[value]", (String) this.valueObject));
 

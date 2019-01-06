@@ -294,9 +294,22 @@ public class ChangeBiomePanel extends CommonPanel
 	 */
 	private PanelItem createToggleButton()
 	{
+		List<String> values = new ArrayList<>(3);
+
+		for (int i = 0; i < VisibilityMode.values().length; i++)
+		{
+			// Toggle is not mode.
+			if (!VisibilityMode.values()[i].equals(VisibilityMode.TOGGLEABLE))
+			{
+				values.add((VisibilityMode.values()[i].equals(this.currentVisibilityMode) ? "§2" : "§c")
+					+ this.user.getTranslation("biomes.gui.descriptions." + VisibilityMode.values()[i].name().toLowerCase())
+				);
+			}
+		}
+
 		return new PanelItemBuilder().
 			name(this.user.getTranslation("biomes.gui.buttons.visibility", "[value]", this.currentVisibilityMode.name())).
-			description(this.user.getTranslation("biomes.gui.admin.descriptions.visibility")).
+			description(values).
 			icon(Material.BIRCH_BUTTON).
 			clickHandler((panel, user1, clickType, slot) -> {
 				switch (this.currentVisibilityMode)
