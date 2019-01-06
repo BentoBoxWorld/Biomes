@@ -120,7 +120,7 @@ public class AdminBiomeTypePanel extends CommonPanel
 			name(biome.name()).
 			icon(Material.MAP).
 			clickHandler((panel, user, clickType, slot) -> {
-				this.targetPanel.setValueObject(biome.name());
+				this.targetPanel.setValueObject(biome);
 				this.targetPanel.build();
 				return true;
 			}).build();
