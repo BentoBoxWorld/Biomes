@@ -6,6 +6,7 @@ import org.bukkit.block.Biome;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.objects.BiomesObject;
 import world.bentobox.biomes.utils.Utils;
 
@@ -15,8 +16,9 @@ import world.bentobox.biomes.utils.Utils;
  */
 public class BiomeUpdateTask extends BukkitRunnable
 {
-	public BiomeUpdateTask(User user, World world, BiomesObject biome)
+	public BiomeUpdateTask(BiomesAddon addon, User user, World world, BiomesObject biome)
 	{
+		this.addon = addon;
 		this.user = user;
 		this.world = world;
 		this.biome = biome;
@@ -43,6 +45,9 @@ public class BiomeUpdateTask extends BukkitRunnable
 		this.user.sendMessage("biomes.messages.information.update-done",
 			"[biome]",
 			this.biome.getFriendlyName());
+
+		this.addon.log(this.user.getName() + " changes biome to " +
+			this.biome.getBiomeName() + " from x=" + this.minX + ":" + this.maxX + " z=" + this.minZ + ":" + this.maxZ);
 	}
 
 
@@ -94,6 +99,8 @@ public class BiomeUpdateTask extends BukkitRunnable
 // ---------------------------------------------------------------------
 // Section: Variables
 // ---------------------------------------------------------------------
+
+	private BiomesAddon addon;
 
 	private User user;
 
