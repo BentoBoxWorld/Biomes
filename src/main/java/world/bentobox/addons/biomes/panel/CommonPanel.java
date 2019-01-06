@@ -304,7 +304,7 @@ public abstract class CommonPanel
 				return null;
 		}
 
-		return new PanelItem(icon, name, description, glow, clickHandler, false);
+		return new PanelItem(icon, name, description, glow, handler == null ? clickHandler : handler, false);
 	}
 
 
@@ -314,6 +314,18 @@ public abstract class CommonPanel
 	 * @return new PanelItem button.
 	 */
 	protected PanelItem createCommonButton(NumberButtons button)
+	{
+		return this.createCommonButton(button, null);
+	}
+
+
+	/**
+	 * This method returns button from NumberButtons enum.
+	 * @param button Necessary button.
+	 * @param handler Custom Click handling.
+	 * @return new PanelItem button.
+	 */
+	protected PanelItem createCommonButton(NumberButtons button, PanelItem.ClickHandler handler)
 	{
 		int number;
 
@@ -417,11 +429,7 @@ public abstract class CommonPanel
 		{
 			icon = new ItemStack(Material.PAPER);
 			name = this.user.getTranslation("biomes.gui.buttons.value","[number]", Integer.toString(number));
-			clickHandler = (panel, user1, clickType, slot) -> {
-				this.valueObject = (int) this.valueObject + number;
-				this.build();
-				return true;
-			};
+			clickHandler = (panel, user1, clickType, slot) -> true;
 		}
 		else if (increase)
 		{
@@ -454,7 +462,7 @@ public abstract class CommonPanel
 			};
 		}
 
-		return new PanelItem(icon, name, Collections.emptyList(), false, clickHandler, false);
+		return new PanelItem(icon, name, Collections.emptyList(), false, handler == null ? clickHandler : handler, false);
 	}
 
 
