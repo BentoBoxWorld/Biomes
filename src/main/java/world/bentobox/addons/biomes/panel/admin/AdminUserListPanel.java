@@ -12,6 +12,7 @@ import java.util.List;
 
 import world.bentobox.addons.biomes.BiomesAddon;
 import world.bentobox.addons.biomes.panel.CommonPanel;
+import world.bentobox.addons.biomes.panel.user.ChangeBiomePanel;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
@@ -113,8 +114,14 @@ public class AdminUserListPanel extends CommonPanel
 		{
 			return new PanelItemBuilder().name(player.getName()).icon(player.getName()).clickHandler(
 				(panel, user1, clickType, slot) -> {
-					// TODO: Create Biome Chooose Panel
 					// Open Biome Choose panel.
+					new ChangeBiomePanel(this.addon,
+						this.world,
+						this.user,
+						User.getInstance(player),
+						this.topLabel,
+						this.permissionPrefix,
+						this).build();
 					return true;
 				}).build();
 		}

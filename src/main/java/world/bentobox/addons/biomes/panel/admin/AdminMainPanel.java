@@ -86,8 +86,12 @@ public class AdminMainPanel extends CommonPanel
 				description = Collections.emptyList();
 				icon = new ItemStack(Material.LEVER);
 				clickHandler = (panel, user, clickType, slot) -> {
-					// TODO: Open panel with user list.
-					// Choose which user should be targeted.
+					new AdminUserListPanel(this.addon,
+						this.world,
+						this.user,
+						this.topLabel,
+						this.permissionPrefix,
+						this).build();
 					return true;
 				};
 				glow = false;
@@ -102,8 +106,14 @@ public class AdminMainPanel extends CommonPanel
 				description = Collections.emptyList();
 				icon = new ItemStack(Material.BOOK);
 				clickHandler = (panel, user, clickType, slot) -> {
-					// TODO: Open panel with new biome list.
-					// Choose which biome should be added.
+					new AdminBiomeEditPanel(this.addon,
+						this.world,
+						this.user,
+						null,
+						this.topLabel,
+						this.permissionPrefix,
+						this).build();
+
 					return true;
 				};
 				glow = false;
@@ -118,8 +128,13 @@ public class AdminMainPanel extends CommonPanel
 				description = Collections.emptyList();
 				icon = new ItemStack(Material.ANVIL);
 				clickHandler = (panel, user, clickType, slot) -> {
-					// TODO: Open panel with existing biome list.
-					// Choose which biome should be edited.
+					new AdminBiomeListPanel(this.addon,
+						this.world,
+						this.user,
+						true,
+						this.topLabel,
+						this.permissionPrefix,
+						this).build();
 					return true;
 				};
 				glow = false;
@@ -134,8 +149,13 @@ public class AdminMainPanel extends CommonPanel
 				description = Collections.emptyList();
 				icon = new ItemStack(Material.LAVA_BUCKET);
 				clickHandler = (panel, user, clickType, slot) -> {
-					// TODO: Open panel with existing biome list.
-					// Choose which biome should be deleted.
+					new AdminBiomeListPanel(this.addon,
+						this.world,
+						this.user,
+						false,
+						this.topLabel,
+						this.permissionPrefix,
+						this).build();
 					return true;
 				};
 				glow = false;
@@ -175,8 +195,12 @@ public class AdminMainPanel extends CommonPanel
 				description = Collections.emptyList();
 				icon = new ItemStack(Material.CRAFTING_TABLE);
 				clickHandler = (panel, user, clickType, slot) -> {
-					// TODO: Open panel with biome settings.
-					// Choose which biome settings should be changed.
+					new AdminSettingsPanel(this.addon,
+						this.world,
+						this.user,
+						this.topLabel,
+						this.permissionPrefix,
+						this).build();
 					return true;
 				};
 				glow = false;
