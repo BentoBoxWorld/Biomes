@@ -18,7 +18,9 @@ The *config.yml* has following sections:
 	Valid values are *'ISLAND', 'CHUNK' and 'SQUARE'*
 * Default Size: this allows to set default value that will be set when Biome GUI is opened. It must be integer larger then 0.
 * Reset Biomes:  if this is *true*, on owner change, addon will reset biome on whole island to default biome, if user does not have biomes.set permission. 
-* Timeout: this allows to set some delay before user can change biome on his island again. **NOT IMPLEMENTED**
+* Timeout: this allows to set some delay before user can change biome on his island again.
+* biomes-visibility: this variable allows to choose which biomes users can see in Biomes GUI.
+    Valid values are *'ALL', 'DEPLOYED' , 'ACCESSIBLE' and 'TOGGLEABLE'*
 
 ## Biomes.yml
 
@@ -46,4 +48,19 @@ There are a few admin commands and more being written. The main biomes admin com
 * `/bsbadmin biomes edit <biome> <property> <new_value>`: This command allows to edit provided biome property to new value. 
 * `/bsbadmin biomes settings <property> <new_value>`: This command allows to edit current addon settings via command. 
 
+## Permissions
 
+`{GameModePrefix}` is permission prefix for each Game Mode addon. F.e. BSkyBlock addon permission prefix is 'bskyblock' but AcidIsland permission prefix is 'acidisland'.
+
+###### User permissions:
+- `{GameModePrefix}.biomes`: player can use biomes command that opens GUI.
+- `{GameModePrefix}.biomes.info`: player can use biomes info command.
+- `{GameModePrefix}.biomes.set`: player can use biomes set command.
+
+###### Admin permissions:
+- `{GameModePrefix}.admin.biomes`: player can use admin biomes command that opens GUI.
+- `{GameModePrefix}.admin.biomes.add`: player can use admin biomes add command that adds new biome.
+- `{GameModePrefix}.admin.biomes.edit`: player can use admin biomes edit command that edits existing biomes parameters.
+- `{GameModePrefix}.admin.biomes.set`: player can use admin biomes set command that allows to change other player biomes.
+- `{GameModePrefix}.admin.biomes.import`: player can use admin biomes import command allows to import biomes in world.
+- `{GameModePrefix}.admin.biomes.settings`: player can use admin biomes settings command that allows to change addon settings.
