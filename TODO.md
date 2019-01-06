@@ -13,10 +13,10 @@ This page contains plans for each Addon version.
 	- [x] By permission #8
 	- [ ] By chance #12
 	- [ ] By items #9
-- [ ] ~~Clean Up GUI Panel Hierarchy~~
+- [x] ~~Clean Up GUI Panel Hierarchy~~
 - [x] Create Biomes Per GameMode addon.
-- [ ] Delete biome from memory.
-- [ ] Hide unavailable biomes from users. #13
+- [x] Delete biome from memory.
+- [x] Hide unavailable biomes from users. #13
 
 ## Release 0.3.0
 - [x] Improve Admin panel
