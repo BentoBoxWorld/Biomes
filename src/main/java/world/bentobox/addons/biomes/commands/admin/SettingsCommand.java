@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import world.bentobox.addons.biomes.commands.ExpandedCompositeCommand;
-import world.bentobox.addons.biomes.panel.AdminSettingsPanel;
+import world.bentobox.addons.biomes.panel.admin.AdminSettingsPanel;
 import world.bentobox.addons.biomes.utils.Utils;
 import world.bentobox.addons.biomes.utils.Utils.UpdateMode;
 import world.bentobox.bentobox.api.addons.Addon;
@@ -40,7 +40,11 @@ public class SettingsCommand extends ExpandedCompositeCommand
 		if (user.isPlayer() && args.isEmpty())
 		{
 			// Shows admin panel
-			new AdminSettingsPanel(this.addon, this.getWorld(), user, false);
+			new AdminSettingsPanel(this.addon,
+				this.getWorld(),
+				user,
+				this.getTopLabel(),
+				this.getPermissionPrefix()).build();
 			return true;
 		}
 		else if (args.isEmpty())

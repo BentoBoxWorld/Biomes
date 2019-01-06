@@ -8,7 +8,7 @@ import java.util.Optional;
 
 import world.bentobox.addons.biomes.commands.ExpandedCompositeCommand;
 import world.bentobox.addons.biomes.objects.BiomesObject;
-import world.bentobox.addons.biomes.panel.AdminUserPanel;
+import world.bentobox.addons.biomes.panel.admin.AdminUserListPanel;
 import world.bentobox.addons.biomes.tasks.BiomeUpdateHelper;
 import world.bentobox.addons.biomes.utils.Utils.UpdateMode;
 import world.bentobox.bentobox.api.addons.Addon;
@@ -42,7 +42,11 @@ public class SetBiomeCommand extends ExpandedCompositeCommand
 		if (user.isPlayer() && args.isEmpty())
 		{
 			// Shows admin panel
-			new AdminUserPanel(this.addon, this.getWorld(), user, false);
+			new AdminUserListPanel(this.addon,
+				this.getWorld(),
+				user,
+				this.getTopLabel(),
+				this.getPermissionPrefix()).build();
 			return true;
 		}
 		else if (args.isEmpty())
@@ -79,9 +83,10 @@ public class SetBiomeCommand extends ExpandedCompositeCommand
 				if (helper.canChangeBiome())
 				{
 					helper.updateIslandBiome();
+					return true;
 				}
 
-				return true;
+				return false;
 			}
 		}
 	}

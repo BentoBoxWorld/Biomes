@@ -64,9 +64,11 @@ public class BiomesSetCommand extends ExpandedCompositeCommand
 			if (helper.canChangeBiome())
 			{
 				helper.updateIslandBiome();
+
+				return true;
 			}
 
-			return true;
+			return false;
 		}
 	}
 

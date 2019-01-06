@@ -10,7 +10,7 @@ import java.util.Optional;
 
 import world.bentobox.addons.biomes.commands.ExpandedCompositeCommand;
 import world.bentobox.addons.biomes.objects.BiomesObject;
-import world.bentobox.addons.biomes.panel.BiomesPanel;
+import world.bentobox.addons.biomes.panel.admin.AdminBiomeListPanel;
 import world.bentobox.addons.biomes.utils.Utils;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
@@ -43,7 +43,12 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 		if (user.isPlayer() && args.isEmpty())
 		{
 			// Shows BiomesPanel in Edit mode.
-			new BiomesPanel(this.addon, user, user, this.getWorld(), "", BiomesPanel.Mode.EDIT);
+			new AdminBiomeListPanel(this.addon,
+				this.getWorld(),
+				user,
+				true,
+				this.getTopLabel(),
+				this.getPermissionPrefix()).build();
 			return true;
 		}
 		else if (args.isEmpty())
