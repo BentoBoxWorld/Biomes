@@ -458,6 +458,16 @@ public abstract class CommonPanel
 	}
 
 
+	/**
+	 * This method sets new value for ValueObject.
+	 * @param newValue new value of valueObject.
+	 */
+	public void setValueObject(Object newValue)
+	{
+		this.valueObject = newValue;
+	}
+
+
 // ---------------------------------------------------------------------
 // Section: Enums
 // ---------------------------------------------------------------------
