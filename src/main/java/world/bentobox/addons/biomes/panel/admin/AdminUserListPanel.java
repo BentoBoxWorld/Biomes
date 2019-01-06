@@ -73,11 +73,13 @@ public class AdminUserListPanel extends CommonPanel
 		while (playerIndex < ((this.pageIndex + 1) * MAX_ELEMENTS) &&
 			playerIndex < this.onlineUsers.size())
 		{
-			panelBuilder.item(this.createPlayerIcon(this.onlineUsers.get(playerIndex))).build();
+			panelBuilder.item(this.createPlayerIcon(this.onlineUsers.get(playerIndex)));
 			playerIndex++;
 		}
 
-		int nextIndex = playerIndex + 9 - (playerIndex % 9);
+		int nextIndex = playerIndex % MAX_ELEMENTS == 0 ?
+			MAX_ELEMENTS :
+			(((playerIndex % MAX_ELEMENTS) - 1) / 9 + 1) * 9;
 
 		if (playerIndex > MAX_ELEMENTS)
 		{
