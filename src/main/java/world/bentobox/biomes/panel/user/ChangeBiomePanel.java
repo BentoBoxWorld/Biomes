@@ -1,23 +1,22 @@
-package world.bentobox.addons.biomes.panel.user;
+package world.bentobox.biomes.panel.user;
 
 
 import org.bukkit.Material;
 import org.bukkit.World;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import world.bentobox.addons.biomes.BiomesAddon;
-import world.bentobox.addons.biomes.objects.BiomesObject;
-import world.bentobox.addons.biomes.panel.CommonPanel;
-import world.bentobox.addons.biomes.utils.Utils.UpdateMode;
-import world.bentobox.addons.biomes.utils.Utils.VisibilityMode;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.biomes.BiomesAddon;
+import world.bentobox.biomes.objects.BiomesObject;
+import world.bentobox.biomes.panel.CommonPanel;
+import world.bentobox.biomes.utils.Utils.UpdateMode;
+import world.bentobox.biomes.utils.Utils.VisibilityMode;
 
 
 /**

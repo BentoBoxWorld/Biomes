@@ -5,9 +5,9 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import world.bentobox.bentobox.api.user.User;
 import world.bentobox.biomes.objects.BiomesObject;
 import world.bentobox.biomes.utils.Utils;
-import world.bentobox.bentobox.api.user.User;
 
 
 /**

@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import world.bentobox.biomes.commands.ExpandedCompositeCommand;
-import world.bentobox.biomes.objects.BiomesObject;
-import world.bentobox.biomes.panel.admin.AdminBiomeListPanel;
-import world.bentobox.biomes.utils.Utils;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.util.Util;
+import world.bentobox.biomes.commands.ExpandedCompositeCommand;
+import world.bentobox.biomes.objects.BiomesObject;
+import world.bentobox.biomes.panel.admin.AdminBiomeListPanel;
+import world.bentobox.biomes.utils.Utils;
 
 
 /**

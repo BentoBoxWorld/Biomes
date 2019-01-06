@@ -5,17 +5,16 @@ import org.bukkit.block.Biome;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-
 import java.util.Optional;
 
-import world.bentobox.biomes.BiomesAddon;
-import world.bentobox.biomes.objects.BiomesObject;
-import world.bentobox.biomes.tasks.BiomeUpdateHelper;
-import world.bentobox.biomes.utils.Utils;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.events.team.TeamEvent.TeamSetownerEvent;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.util.Util;
+import world.bentobox.biomes.BiomesAddon;
+import world.bentobox.biomes.objects.BiomesObject;
+import world.bentobox.biomes.tasks.BiomeUpdateHelper;
+import world.bentobox.biomes.utils.Utils;
 
 
 /**

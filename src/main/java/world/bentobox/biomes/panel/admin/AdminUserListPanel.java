@@ -1,4 +1,4 @@
-package world.bentobox.addons.biomes.panel.admin;
+package world.bentobox.biomes.panel.admin;
 
 
 import org.bukkit.Bukkit;
@@ -6,17 +6,16 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import world.bentobox.addons.biomes.BiomesAddon;
-import world.bentobox.addons.biomes.panel.CommonPanel;
-import world.bentobox.addons.biomes.panel.user.ChangeBiomePanel;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.biomes.BiomesAddon;
+import world.bentobox.biomes.panel.CommonPanel;
+import world.bentobox.biomes.panel.user.ChangeBiomePanel;
 
 
 /**

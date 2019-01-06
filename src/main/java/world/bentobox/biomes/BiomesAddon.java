@@ -1,14 +1,14 @@
 package world.bentobox.biomes;
 
 
-import world.bentobox.biomes.commands.admin.AdminCommand;
-import world.bentobox.biomes.commands.user.BiomesCommand;
-import world.bentobox.biomes.listeners.ChangeOwnerListener;
-import world.bentobox.biomes.objects.Settings;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.configuration.Config;
 import world.bentobox.bentobox.managers.CommandsManager;
+import world.bentobox.biomes.commands.admin.AdminCommand;
+import world.bentobox.biomes.commands.user.BiomesCommand;
+import world.bentobox.biomes.listeners.ChangeOwnerListener;
+import world.bentobox.biomes.objects.Settings;
 
 
 /**

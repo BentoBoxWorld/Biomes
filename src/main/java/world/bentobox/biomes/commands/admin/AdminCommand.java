@@ -3,11 +3,11 @@ package world.bentobox.biomes.commands.admin;
 
 import java.util.List;
 
-import world.bentobox.biomes.BiomesAddon;
-import world.bentobox.biomes.panel.admin.AdminMainPanel;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.commands.admin.AdminReloadCommand;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.biomes.BiomesAddon;
+import world.bentobox.biomes.panel.admin.AdminMainPanel;
 
 
 /**

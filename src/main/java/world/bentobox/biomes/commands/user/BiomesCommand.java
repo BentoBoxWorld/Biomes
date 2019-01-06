@@ -3,10 +3,10 @@ package world.bentobox.biomes.commands.user;
 
 import java.util.List;
 
-import world.bentobox.biomes.BiomesAddon;
-import world.bentobox.biomes.panel.user.ChangeBiomePanel;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.biomes.BiomesAddon;
+import world.bentobox.biomes.panel.user.ChangeBiomePanel;
 
 
 /**

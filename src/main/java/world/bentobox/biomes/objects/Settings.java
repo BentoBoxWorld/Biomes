@@ -1,12 +1,12 @@
 package world.bentobox.biomes.objects;
 
 
-import world.bentobox.biomes.utils.Utils.UpdateMode;
-import world.bentobox.biomes.utils.Utils.VisibilityMode;
 import world.bentobox.bentobox.api.configuration.ConfigComment;
 import world.bentobox.bentobox.api.configuration.ConfigEntry;
 import world.bentobox.bentobox.api.configuration.StoreAt;
 import world.bentobox.bentobox.database.objects.DataObject;
+import world.bentobox.biomes.utils.Utils.UpdateMode;
+import world.bentobox.biomes.utils.Utils.VisibilityMode;
 
 
 /**
