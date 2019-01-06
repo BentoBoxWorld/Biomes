@@ -6,15 +6,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import world.bentobox.biomes.commands.ExpandedCompositeCommand;
-import world.bentobox.biomes.objects.BiomesObject;
-import world.bentobox.biomes.panel.AdminUserPanel;
-import world.bentobox.biomes.tasks.BiomeUpdateHelper;
-import world.bentobox.biomes.utils.Utils.UpdateMode;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.util.Util;
+import world.bentobox.biomes.commands.ExpandedCompositeCommand;
+import world.bentobox.biomes.objects.BiomesObject;
+import world.bentobox.biomes.panel.admin.AdminUserListPanel;
+import world.bentobox.biomes.tasks.BiomeUpdateHelper;
+import world.bentobox.biomes.utils.Utils.UpdateMode;
 
 
 /**
@@ -42,7 +42,11 @@ public class SetBiomeCommand extends ExpandedCompositeCommand
 		if (user.isPlayer() && args.isEmpty())
 		{
 			// Shows admin panel
-			new AdminUserPanel(this.addon, this.getWorld(), user, false);
+			new AdminUserListPanel(this.addon,
+				this.getWorld(),
+				user,
+				this.getTopLabel(),
+				this.getPermissionPrefix()).build();
 			return true;
 		}
 		else if (args.isEmpty())
@@ -79,9 +83,10 @@ public class SetBiomeCommand extends ExpandedCompositeCommand
 				if (helper.canChangeBiome())
 				{
 					helper.updateIslandBiome();
+					return true;
 				}
 
-				return true;
+				return false;
 			}
 		}
 	}

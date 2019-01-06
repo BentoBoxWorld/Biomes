@@ -6,14 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import world.bentobox.biomes.commands.ExpandedCompositeCommand;
-import world.bentobox.biomes.objects.BiomesObject;
-import world.bentobox.biomes.panel.BiomesPanel;
-import world.bentobox.biomes.utils.Utils;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.util.Util;
+import world.bentobox.biomes.commands.ExpandedCompositeCommand;
+import world.bentobox.biomes.objects.BiomesObject;
+import world.bentobox.biomes.panel.admin.AdminBiomeEditPanel;
+import world.bentobox.biomes.utils.Utils;
 
 
 /**
@@ -43,12 +43,12 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 		if (user.isPlayer() && args.isEmpty())
 		{
 			// Shows BiomesPanel in Edit mode.
-			new BiomesPanel(this.addon,
-				user,
-				new BiomesObject(),
+			new AdminBiomeEditPanel(this.addon,
 				this.getWorld(),
-				"",
-				BiomesPanel.Mode.EDIT);
+				user,
+				null,
+				this.getTopLabel(),
+				this.getPermissionPrefix()).build();
 
 			return true;
 		}

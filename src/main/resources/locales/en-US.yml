@@ -6,6 +6,7 @@ biomes:
       # Titles for different admin GUIs
       gui-title: "Admin Menu"
       edit-title: "Edit Biome"
+      remove-title: "Remove Biome"
       add-title: "Add Biome Menu"
       settings-title: "Edit Settings Menu"
       choose-biome-title: "Choose new biome type"
@@ -18,6 +19,7 @@ biomes:
         edit: "Edit biome properties"
         import: "Import biomes"
         settings: "Edit addon settings"
+        remove: "Remove biome from memory"
         # Biome edit GUI related buttons
         icon: "Biome icon"
         level: "Required island level"
@@ -25,17 +27,26 @@ biomes:
         biome: "Change biome"
         name: "Edit friendly name"
         permission: "Edit required permission"
+        deployed: "Set biome deployment"
+        description: "Change description"
         # Addon settings edit related buttons
         advancedmenu: "Advanced Menu is [value]"
         type: "Default type is [value]"
         size: "Default size is [number]"
         resetBiomes: "Reset Biomes is [value]"
         timeout: "Timeout is [number]"
+        visibility: "Biomes Visibility settings is [value]"
         # Common GUI buttons
         cancel: "Cancel"
         save: "Save"
         enabled: "Enable"
         disabled: "Disable"
+        toggle-users: "Change Users in list"
+        visible-all: "All biomes are visible."
+        visible-active: "All deployed biomes are visible."
+        visible-accessible: "Only if user has permission."
+        visible-toggle: "Users can choose visibility mode in GUI."
+        change-value: "Change value."
 
       # Admin GUI button description translations.
       descriptions:
@@ -43,14 +54,19 @@ biomes:
         advancedmenu: "This enables or disables advanced menu when choosing biomes. It shows all possible biome changing options."
         type: "This changes default update type when opening biomes menu. It can be 'ISLAND', 'CHUNK' or 'SQUARE'"
         size: "This changes default size that is set when opening biomes menu."
-        resetBiomes: "This enables or disables resetting to default biome whole island on owner change if new owner does not have biome.set permission."
-        timeout: "This changes timeout between changing biomes. NOT IMPLEMENTED YET."
+        resetbiomes: "This enables or disables resetting to default biome whole island on owner change if new owner does not have biome.set permission."
+        timeout: "This changes timeout between changing biomes."
+        visibility: "This allows to change which biomes users can see. It can be 'ALL', 'DEPLOYED', 'ACCESSIBLE' or 'TOGGLEABLE'."
         # this will be added into biomes.gui.admin.buttons.advancedmenu [value]
         enabled: "enabled"
         disabled: "disabled"
         # Biome edit panel
         current: "Current value: [value]"
         change: "This will set [number] as new value."
+        # For Toggle Users button
+        online: "Online"
+        offline: "Offline"
+        in_world: "In current World"
 
     # User GUI translations.
     title: "Biome change menu"
@@ -66,6 +82,9 @@ biomes:
       chunk: "Per chunk"
       region: "On region"
 
+      # Visibility button for biomes.
+      visibility: "Biomes Visibility"
+
       # Button in advanced menu that indicate how large region will be updated.
       value: "New value: [number]"
 
@@ -73,6 +92,11 @@ biomes:
       set: "Set value to [number]"
       increase: "Increase value by [number]"
       reduce: "Reduce value by [number]"
+    descriptions:
+      # Used for biome visibility toggle button
+      all: "Show all biomes"
+      accessible: "Show all accessible biomes (by permission)"
+      deployed: "Show all deployed biomes"
   # Translations for addon commands.
   commands:
     # Translations for addon admin commands.
@@ -124,6 +148,8 @@ biomes:
 
       imported: "[biome] is imported."
       import-count: "Biomes importing ended. Imported [number] biomes."
+
+      biome-removed: "Biome with type = '[biome]' is removed from memory."
 
       saved: "Biome [biome] is saved."
       saved-config: "Addon settings is updated."

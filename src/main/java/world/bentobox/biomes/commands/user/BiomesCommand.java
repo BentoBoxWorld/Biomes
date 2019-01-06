@@ -3,10 +3,10 @@ package world.bentobox.biomes.commands.user;
 
 import java.util.List;
 
-import world.bentobox.biomes.BiomesAddon;
-import world.bentobox.biomes.panel.BiomesPanel;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.biomes.BiomesAddon;
+import world.bentobox.biomes.panel.user.ChangeBiomePanel;
 
 
 /**
@@ -40,13 +40,12 @@ public class BiomesCommand extends CompositeCommand
 		// Open up the biomes GUI
 		if (user.isPlayer())
 		{
-			new BiomesPanel(
-				this.addon,
-				user,
-				user,
+			new ChangeBiomePanel(this.addon,
 				this.getWorld(),
-				this.getPermissionPrefix(),
-				BiomesPanel.Mode.PLAYER);
+				user,
+				null,
+				this.getTopLabel(),
+				this.getPermissionPrefix()).build();
 
 			return true;
 		}
