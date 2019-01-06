@@ -1,10 +1,10 @@
-package world.bentobox.addons.biomes.commands.admin;
+package world.bentobox.biomes.commands.admin;
 
 
 import java.util.List;
 
-import world.bentobox.addons.biomes.BiomesAddon;
-import world.bentobox.addons.biomes.panel.admin.AdminMainPanel;
+import world.bentobox.biomes.BiomesAddon;
+import world.bentobox.biomes.panel.admin.AdminMainPanel;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.commands.admin.AdminReloadCommand;
 import world.bentobox.bentobox.api.user.User;

@@ -1,13 +1,12 @@
-package world.bentobox.addons.biomes.tasks;
+package world.bentobox.biomes.tasks;
 
 
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import world.bentobox.addons.biomes.objects.BiomesObject;
-import world.bentobox.addons.biomes.utils.Utils;
-import world.bentobox.bentobox.api.localization.TextVariables;
+import world.bentobox.biomes.objects.BiomesObject;
+import world.bentobox.biomes.utils.Utils;
 import world.bentobox.bentobox.api.user.User;
 
 

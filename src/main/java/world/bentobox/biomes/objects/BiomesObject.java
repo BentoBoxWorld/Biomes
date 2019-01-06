@@ -1,4 +1,4 @@
-package world.bentobox.addons.biomes.objects;
+package world.bentobox.biomes.objects;
 
 
 import org.bukkit.Material;

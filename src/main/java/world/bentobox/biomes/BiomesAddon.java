@@ -1,10 +1,10 @@
-package world.bentobox.addons.biomes;
+package world.bentobox.biomes;
 
 
-import world.bentobox.addons.biomes.commands.admin.AdminCommand;
-import world.bentobox.addons.biomes.commands.user.BiomesCommand;
-import world.bentobox.addons.biomes.listeners.ChangeOwnerListener;
-import world.bentobox.addons.biomes.objects.Settings;
+import world.bentobox.biomes.commands.admin.AdminCommand;
+import world.bentobox.biomes.commands.user.BiomesCommand;
+import world.bentobox.biomes.listeners.ChangeOwnerListener;
+import world.bentobox.biomes.objects.Settings;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.configuration.Config;

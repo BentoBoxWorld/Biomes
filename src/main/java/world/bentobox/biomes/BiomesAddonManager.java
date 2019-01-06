@@ -1,5 +1,4 @@
-package world.bentobox.addons.biomes;
-
+package world.bentobox.biomes;
 
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -10,9 +9,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-import world.bentobox.addons.biomes.objects.BiomesObject;
-import world.bentobox.addons.biomes.utils.Utils;
-import world.bentobox.addons.biomes.utils.Utils.VisibilityMode;
+import world.bentobox.biomes.objects.BiomesObject;
+import world.bentobox.biomes.utils.Utils;
+import world.bentobox.biomes.utils.Utils.VisibilityMode;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.Database;
 import world.bentobox.bentobox.util.Util;

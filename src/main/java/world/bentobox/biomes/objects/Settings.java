@@ -1,8 +1,8 @@
-package world.bentobox.addons.biomes.objects;
+package world.bentobox.biomes.objects;
 
 
-import world.bentobox.addons.biomes.utils.Utils.UpdateMode;
-import world.bentobox.addons.biomes.utils.Utils.VisibilityMode;
+import world.bentobox.biomes.utils.Utils.UpdateMode;
+import world.bentobox.biomes.utils.Utils.VisibilityMode;
 import world.bentobox.bentobox.api.configuration.ConfigComment;
 import world.bentobox.bentobox.api.configuration.ConfigEntry;
 import world.bentobox.bentobox.api.configuration.StoreAt;

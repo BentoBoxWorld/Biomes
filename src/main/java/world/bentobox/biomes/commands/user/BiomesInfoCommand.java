@@ -1,10 +1,10 @@
-package world.bentobox.addons.biomes.commands.user;
+package world.bentobox.biomes.commands.user;
 
 
 import java.util.*;
 
-import world.bentobox.addons.biomes.commands.ExpandedCompositeCommand;
-import world.bentobox.addons.biomes.objects.BiomesObject;
+import world.bentobox.biomes.commands.ExpandedCompositeCommand;
+import world.bentobox.biomes.objects.BiomesObject;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.util.Util;
