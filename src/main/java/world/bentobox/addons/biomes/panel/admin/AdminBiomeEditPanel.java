@@ -51,19 +51,43 @@ public class AdminBiomeEditPanel extends CommonPanel
 		CommonPanel parentPanel)
 	{
 		super(addon, world, user, topLabel, permissionPrefix, parentPanel);
-		this.biome = biome;
 		this.currentEditMode = PropertyButtons.NULL;
 		this.returnButton = this.parentPanel == null ? null : this.createCommonButton(CommonButtons.RETURN);
 
-		this.commandHeader = topLabel + " " + BIOMES + " " + EDIT + " " + biome.getBiomeName() + " ";
+		if (biome == null)
+		{
+			this.biome = new BiomesObject();
+			this.biome.setFriendlyName("New Biome");
+			this.disableButtons = true;
+		}
+		else
+		{
+			this.biome = biome;
+		}
+
+		this.commandHeader = topLabel + " " + BIOMES + " " + EDIT + " ";
 	}
+
+
+// ---------------------------------------------------------------------
+// Section: Methods
+// ---------------------------------------------------------------------
 
 
 	@Override
 	public void build()
 	{
-		PanelBuilder panelBuilder = new PanelBuilder().user(this.user).name(
-			this.user.getTranslation("biomes.gui.admin.edit-title", "[biome]", this.biome.getFriendlyName()));
+		PanelBuilder panelBuilder = new PanelBuilder().user(this.user);
+
+		if (this.disableButtons)
+		{
+			this.disableButtons = this.biome.getBiomeName() == null;
+			panelBuilder.name(this.user.getTranslation("biomes.gui.admin.add-title"));
+		}
+		else
+		{
+			panelBuilder.name(this.user.getTranslation("biomes.gui.admin.edit-title", "[biome]", this.biome.getFriendlyName()));
+		}
 
 		// If current edit mode is name, then shift biome and description 4 blocks to right.
 		int biomeSlot = this.currentEditMode.equals(PropertyButtons.NAME) ? 5 : 1;
@@ -87,10 +111,34 @@ public class AdminBiomeEditPanel extends CommonPanel
 				// Create save button with custom handler
 				panelBuilder.item(2, this.createCommonButton(CommonButtons.SAVE,
 					(panel, user1, clickType, slot) -> {
-						if (this.user.performCommand(this.commandHeader + "biomeName " + this.valueObject))
+						if (this.disableButtons)
 						{
-							this.currentEditMode = PropertyButtons.NULL;
-							this.valueObject = null;
+							BiomesObject biomesObject =
+								new BiomesObject(Utils.getBiomeNameMap().get(this.valueObject), this.world);
+							biomesObject.setFriendlyName("New Biome");
+
+							if (this.addon.getAddonManager().storeBiome(biomesObject, false, this.user, true))
+							{
+								this.user.sendMessage("biomes.messages.information.saved", "[biome]", biomesObject.getFriendlyName());
+								this.currentEditMode = PropertyButtons.NULL;
+								this.biome = biomesObject;
+								this.valueObject = null;
+							}
+							else
+							{
+								this.user.sendMessage("biomes.messages.errors.exist-biome");
+								this.valueObject = null;
+							}
+						}
+						else
+						{
+							if (this.user.performCommand(
+								this.commandHeader + this.biome.getBiomeName() + " biomeName " +
+									this.valueObject))
+							{
+								this.currentEditMode = PropertyButtons.NULL;
+								this.valueObject = null;
+							}
 						}
 
 						this.build();
@@ -116,7 +164,7 @@ public class AdminBiomeEditPanel extends CommonPanel
 				// Create save button with custom handler
 				panelBuilder.item(1, this.createCommonButton(CommonButtons.SAVE,
 					(panel, user1, clickType, slot) -> {
-						if (this.user.performCommand(this.commandHeader + "friendlyName " + this.valueObject))
+						if (this.user.performCommand(this.commandHeader + this.biome.getBiomeName() + " friendlyName " + this.valueObject))
 						{
 							this.currentEditMode = PropertyButtons.NULL;
 							this.valueObject = null;
@@ -144,7 +192,7 @@ public class AdminBiomeEditPanel extends CommonPanel
 				// Create save button with custom handler
 				panelBuilder.item(10, this.createCommonButton(CommonButtons.SAVE,
 					(panel, user1, clickType, slot) -> {
-						if (this.user.performCommand(this.commandHeader + "deployed " + this.valueObject))
+						if (this.user.performCommand(this.commandHeader + this.biome.getBiomeName() + " deployed " + this.valueObject))
 						{
 							this.currentEditMode = PropertyButtons.NULL;
 							this.valueObject = null;
@@ -173,7 +221,7 @@ public class AdminBiomeEditPanel extends CommonPanel
 				// Create save button with custom handler
 				panelBuilder.item(3, this.createCommonButton(CommonButtons.SAVE,
 					(panel, user1, clickType, slot) -> {
-						if (this.user.performCommand(this.commandHeader + "description " + this.valueObject))
+						if (this.user.performCommand(this.commandHeader + this.biome.getBiomeName() + " description " + this.valueObject))
 						{
 							this.currentEditMode = PropertyButtons.NULL;
 							this.valueObject = null;
@@ -201,7 +249,7 @@ public class AdminBiomeEditPanel extends CommonPanel
 				// Create save button with custom handler
 				panelBuilder.item(19, this.createCommonButton(CommonButtons.SAVE,
 					(panel, user1, clickType, slot) -> {
-						if (this.user.performCommand(this.commandHeader + "icon " + this.valueObject))
+						if (this.user.performCommand(this.commandHeader + this.biome.getBiomeName() + " icon " + this.valueObject))
 						{
 							this.currentEditMode = PropertyButtons.NULL;
 							this.valueObject = null;
@@ -230,7 +278,7 @@ public class AdminBiomeEditPanel extends CommonPanel
 				// Create save button with custom handler
 				panelBuilder.item(19, this.createCommonButton(CommonButtons.SAVE,
 					(panel, user1, clickType, slot) -> {
-						if (this.user.performCommand(this.commandHeader + "requiredLevel " + this.valueObject))
+						if (this.user.performCommand(this.commandHeader + this.biome.getBiomeName() + " requiredLevel " + this.valueObject))
 						{
 							this.currentEditMode = PropertyButtons.NULL;
 							this.valueObject = null;
@@ -276,7 +324,7 @@ public class AdminBiomeEditPanel extends CommonPanel
 				// Create save button with custom handler
 				panelBuilder.item(37, this.createCommonButton(CommonButtons.SAVE,
 					(panel, user1, clickType, slot) -> {
-						if (this.user.performCommand(this.commandHeader + "requiredCost " + this.valueObject))
+						if (this.user.performCommand(this.commandHeader + this.biome.getBiomeName() + " requiredCost " + this.valueObject))
 						{
 							this.currentEditMode = PropertyButtons.NULL;
 							this.valueObject = null;
@@ -322,7 +370,7 @@ public class AdminBiomeEditPanel extends CommonPanel
 				// Create save button with custom handler
 				panelBuilder.item(46, this.createCommonButton(CommonButtons.SAVE,
 					(panel, user1, clickType, slot) -> {
-						if (this.user.performCommand(this.commandHeader + "permission " + this.valueObject))
+						if (this.user.performCommand(this.commandHeader + this.biome.getBiomeName() + " permission " + this.valueObject))
 						{
 							this.currentEditMode = PropertyButtons.NULL;
 							this.valueObject = null;
@@ -375,14 +423,22 @@ public class AdminBiomeEditPanel extends CommonPanel
 				icon = new ItemStack(Material.BOOK);
 				name = this.user.getTranslation("biomes.gui.admin.buttons.biome");
 				description = Utils.splitString(
-					this.user.getTranslation("biomes.gui.admin.descriptions.current", "[value]", this.biome.getBiomeName()));
+					this.user.getTranslation("biomes.gui.admin.descriptions.current", "[value]",
+						this.biome.getBiomeName() == null ? "" : this.biome.getBiomeName()));
 
 				clickHandler = (panel, user1, clickType, slot) -> {
-					// TODO IMPLEMENT BIOMES GUI
-					// Open Biome Choose GUI
-					this.currentEditMode = PropertyButtons.BIOME;
 					this.valueObject = this.biome.getBiomeName();
-					this.build();
+					this.currentEditMode = PropertyButtons.BIOME;
+
+					// Open Biome Choose GUI
+					new AdminBiomeTypePanel(this.addon,
+						this.world,
+						this.user,
+						this.topLabel,
+						this.permissionPrefix,
+						this,
+						this).build();
+
 					return true;
 				};
 
@@ -561,6 +617,12 @@ public class AdminBiomeEditPanel extends CommonPanel
 				return null;
 		}
 
+		if (this.disableButtons && !button.equals(PropertyButtons.BIOME))
+		{
+			icon = new ItemStack(Material.BARRIER);
+			clickHandler = (panel, user1, clickType, slot) -> true;
+		}
+
 		return new PanelItem(icon, name, description, this.currentEditMode.equals(button), clickHandler, false);
 	}
 
@@ -627,6 +689,12 @@ public class AdminBiomeEditPanel extends CommonPanel
 // Section: Variables
 // ---------------------------------------------------------------------
 
+
+	/**
+	 * This boolean will be true only when adding new Biome. It will disable other buttons until biome is
+	 * selected and added.
+	 */
+	private boolean disableButtons;
 
 	private BiomesObject biome;
 
