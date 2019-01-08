@@ -10,10 +10,10 @@ import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.biomes.BiomesAddon;
+import world.bentobox.biomes.objects.Settings.UpdateMode;
+import world.bentobox.biomes.objects.Settings.VisibilityMode;
 import world.bentobox.biomes.panel.CommonPanel;
 import world.bentobox.biomes.utils.Utils;
-import world.bentobox.biomes.utils.Utils.UpdateMode;
-import world.bentobox.biomes.utils.Utils.VisibilityMode;
 
 
 /**

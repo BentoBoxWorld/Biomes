@@ -14,7 +14,7 @@ import world.bentobox.bentobox.database.objects.Island;
 import world.bentobox.bentobox.hooks.VaultHook;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.objects.BiomesObject;
-import world.bentobox.biomes.utils.Utils.UpdateMode;
+import world.bentobox.biomes.objects.Settings.UpdateMode;
 
 
 /**

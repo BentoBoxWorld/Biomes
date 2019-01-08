@@ -13,6 +13,7 @@ import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.objects.BiomesObject;
+import world.bentobox.biomes.objects.Settings.UpdateMode;
 import world.bentobox.biomes.tasks.BiomeUpdateHelper;
 import world.bentobox.biomes.utils.Utils;
 
@@ -99,7 +100,7 @@ public class ChangeOwnerListener implements Listener
 				newUser,
 				defaultBiomeObject,
 				event.getIsland().getWorld(),
-				Utils.UpdateMode.ISLAND,
+				UpdateMode.ISLAND,
 				1,
 				false).updateIslandBiome();
 		}

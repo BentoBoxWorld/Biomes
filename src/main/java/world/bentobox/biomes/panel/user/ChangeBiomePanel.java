@@ -14,9 +14,9 @@ import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.objects.BiomesObject;
+import world.bentobox.biomes.objects.Settings.UpdateMode;
+import world.bentobox.biomes.objects.Settings.VisibilityMode;
 import world.bentobox.biomes.panel.CommonPanel;
-import world.bentobox.biomes.utils.Utils.UpdateMode;
-import world.bentobox.biomes.utils.Utils.VisibilityMode;
 
 
 /**

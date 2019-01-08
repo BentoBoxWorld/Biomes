@@ -10,10 +10,9 @@ import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.commands.ExpandedCompositeCommand;
+import world.bentobox.biomes.objects.Settings.UpdateMode;
 import world.bentobox.biomes.panel.admin.AdminSettingsPanel;
 import world.bentobox.biomes.utils.Utils;
-import world.bentobox.biomes.utils.Utils.UpdateMode;
-
 
 /**
  * This command allows to edit biomes addon settings.

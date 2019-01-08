@@ -5,8 +5,6 @@ import world.bentobox.bentobox.api.configuration.ConfigComment;
 import world.bentobox.bentobox.api.configuration.ConfigEntry;
 import world.bentobox.bentobox.api.configuration.StoreAt;
 import world.bentobox.bentobox.database.objects.DataObject;
-import world.bentobox.biomes.utils.Utils.UpdateMode;
-import world.bentobox.biomes.utils.Utils.VisibilityMode;
 
 
 /**
@@ -89,7 +87,7 @@ public class Settings implements DataObject
 	 */
 	public VisibilityMode getVisibilityMode()
 	{
-		return visibilityMode;
+		return this.visibilityMode;
 	}
 
 
@@ -162,6 +160,34 @@ public class Settings implements DataObject
 	public void setVisibilityMode(VisibilityMode visibilityMode)
 	{
 		this.visibilityMode = visibilityMode;
+	}
+
+
+// ---------------------------------------------------------------------
+// Section: Enums used for Settings.
+// ---------------------------------------------------------------------
+
+
+	/**
+	 * This enum describes all possible variants how to calculate new biome location.
+	 */
+	public enum UpdateMode
+	{
+		ISLAND,
+		CHUNK,
+		SQUARE
+	}
+
+
+	/**
+	 * This enum describes all possible variants which biomes users should see
+	 */
+	public enum VisibilityMode
+	{
+		ALL,
+		ACCESSIBLE,
+		DEPLOYED,
+		TOGGLEABLE
 	}
 
 

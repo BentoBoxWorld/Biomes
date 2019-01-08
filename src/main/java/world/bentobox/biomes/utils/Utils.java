@@ -11,6 +11,7 @@ import java.util.*;
 
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.objects.BiomesObject;
+import world.bentobox.biomes.objects.Settings.UpdateMode;
 
 
 /**
@@ -247,34 +248,5 @@ public class Utils
 			default:
 				return null;
 		}
-	}
-
-
-
-// ---------------------------------------------------------------------
-// Section: Public Enums
-// ---------------------------------------------------------------------
-
-
-	/**
-	 * This enum describes all possible variants how to calculate new biome location.
-	 */
-	public enum UpdateMode
-	{
-		ISLAND,
-		CHUNK,
-		SQUARE
-	}
-
-
-	/**
-	 * This enum describes all possible variants which biomes users should see
-	 */
-	public enum VisibilityMode
-	{
-		ALL,
-		ACCESSIBLE,
-		DEPLOYED,
-		TOGGLEABLE
 	}
 }
