@@ -35,47 +35,53 @@ public class BiomesAddon extends Addon
 
 		CommandsManager commandsManager = this.getPlugin().getCommandsManager();
 
-		this.getPlugin().getAddonsManager().getAddonByName("AcidIsland").ifPresent(addon -> {
-			AcidIsland acidIsland = (AcidIsland) addon;
+		// AcidIsland hook in
+		if (this.settings.getDisabledGameModes().isEmpty() ||
+			!this.settings.getDisabledGameModes().contains("AcidIsland"))
+		{
+			this.getPlugin().getAddonsManager().getAddonByName("AcidIsland").ifPresent(
+				addon -> {
+					AcidIsland acidIsland = (AcidIsland) addon;
 
-			new AdminCommand(this,
-				commandsManager.getCommand(acidIsland.getSettings().getAdminCommand()));
-			new BiomesCommand(this,
-				commandsManager.getCommand(acidIsland.getSettings().getIslandCommand()));
+					new AdminCommand(this,
+						commandsManager.getCommand(acidIsland.getSettings().getAdminCommand()));
+					new BiomesCommand(this,
+						commandsManager.getCommand(acidIsland.getSettings().getIslandCommand()));
 
-			// Probably better would be casting and getting from settings, but then it should be added as
-			// dependency.
-			String currentWorld = acidIsland.getWorldSettings().getWorldName();
+					String currentWorld = acidIsland.getWorldSettings().getWorldName();
 
-			if (this.addonManager.getBiomes(currentWorld).isEmpty())
-			{
-				this.addonManager.importBiomes(currentWorld);
-			}
+					if (this.addonManager.getBiomes(currentWorld).isEmpty())
+					{
+						this.addonManager.importBiomes(currentWorld);
+					}
 
-			this.hooked = true;
-		});
+					this.hooked = true;
+				});
+		}
 
 		// BSkyBlock hook in
-		this.getPlugin().getAddonsManager().getAddonByName("BSkyBlock").ifPresent(addon -> {
+		if (this.settings.getDisabledGameModes().isEmpty() ||
+			!this.settings.getDisabledGameModes().contains("BSkyBlock"))
+		{
+			this.getPlugin().getAddonsManager().getAddonByName("BSkyBlock").ifPresent(
+				addon -> {
+					BSkyBlock skyBlock = (BSkyBlock) addon;
 
-			BSkyBlock skyBlock = (BSkyBlock) addon;
+					new AdminCommand(this,
+						commandsManager.getCommand("bsbadmin"));
+					new BiomesCommand(this,
+						commandsManager.getCommand("island"));
 
-			new AdminCommand(this,
-				commandsManager.getCommand("bsbadmin"));
-			new BiomesCommand(this,
-				commandsManager.getCommand("island"));
+					String currentWorld = skyBlock.getWorldSettings().getWorldName();
 
-			// Probably better would be casting and getting from settings, but then it should be added as
-			// dependency.
-			String currentWorld = skyBlock.getWorldSettings().getWorldName();
+					if (this.addonManager.getBiomes(currentWorld).isEmpty())
+					{
+						this.addonManager.importBiomes(currentWorld);
+					}
 
-			if (this.addonManager.getBiomes(currentWorld).isEmpty())
-			{
-				this.addonManager.importBiomes(currentWorld);
-			}
-
-			this.hooked = true;
-		});
+					this.hooked = true;
+				});
+		}
 
 		if (this.hooked)
 		{
@@ -85,7 +91,7 @@ public class BiomesAddon extends Addon
 		}
 		else
 		{
-			this.logError("Biomes addon is not loaded, as bSkyBlock or AcidIsland is missing.");
+			this.logError("Biomes addon is not loaded, as it does not find valid GameModes.");
 			this.setState(State.DISABLED);
 		}
 	}

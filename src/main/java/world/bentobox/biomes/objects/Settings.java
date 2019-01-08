@@ -1,6 +1,9 @@
 package world.bentobox.biomes.objects;
 
 
+import java.util.HashSet;
+import java.util.Set;
+
 import world.bentobox.bentobox.api.configuration.ConfigComment;
 import world.bentobox.bentobox.api.configuration.ConfigEntry;
 import world.bentobox.bentobox.api.configuration.StoreAt;
@@ -91,6 +94,16 @@ public class Settings implements DataObject
 	}
 
 
+	/**
+	 * This method returns disabled game modes.
+	 * @return Set with disabled game modes.
+	 */
+	public Set<String> getDisabledGameModes()
+	{
+		return this.disabledGameModes;
+	}
+
+
 // ---------------------------------------------------------------------
 // Section: Setters
 // ---------------------------------------------------------------------
@@ -160,6 +173,16 @@ public class Settings implements DataObject
 	public void setVisibilityMode(VisibilityMode visibilityMode)
 	{
 		this.visibilityMode = visibilityMode;
+	}
+
+
+	/**
+	 * This method sets value for disabledGameModes variable.
+	 * @param disabledGameModes new value.
+	 */
+	public void setDisabledGameModes(Set<String> disabledGameModes)
+	{
+		this.disabledGameModes = disabledGameModes;
 	}
 
 
@@ -242,8 +265,17 @@ public class Settings implements DataObject
 	@ConfigEntry(path = "biomes-visibility")
 	private VisibilityMode visibilityMode = VisibilityMode.DEPLOYED;
 
+	@ConfigComment("")
+	@ConfigComment("This list stores GameModes in which Biomes addon should not work.")
+	@ConfigComment("To disable addon it is necessary to write its name in new line that starts with -. Example:")
+	@ConfigComment("disabled-gamemodes:")
+	@ConfigComment(" - BSkyBlock")
+	@ConfigEntry(path = "disabled-gamemodes")
+	private Set<String> disabledGameModes = new HashSet<>();
+
 	/**
 	 * Default variable.
 	 */
+	@ConfigComment("")
 	private String uniqueId = "config";
 }

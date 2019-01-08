@@ -37,4 +37,11 @@ cooldown: 60
 #     'ACCESSIBLE' - only biomes that is unlocked via permission or other unlock type will be visible in GUI.
 #     'TOGGLEABLE' - there will be button in GUI that allows users to switch from ALL to ACCESSIBLE modes.
 biomes-visibility: DEPLOYED
+#
+# This list stores GameModes in which Biomes addon should not work.
+# To disable addon it is necessary to write its name in new line that starts with -. Example:
+# disabled-gamemodes:
+#  - BSkyBlock
+disabled-gamemodes: []
+#
 uniqueId: config
