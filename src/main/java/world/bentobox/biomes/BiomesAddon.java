@@ -1,14 +1,15 @@
 package world.bentobox.biomes;
 
 
+import world.bentobox.acidisland.AcidIsland;
 import world.bentobox.bentobox.api.addons.Addon;
-import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.configuration.Config;
 import world.bentobox.bentobox.managers.CommandsManager;
 import world.bentobox.biomes.commands.admin.AdminCommand;
 import world.bentobox.biomes.commands.user.BiomesCommand;
 import world.bentobox.biomes.listeners.ChangeOwnerListener;
 import world.bentobox.biomes.objects.Settings;
+import world.bentobox.bskyblock.BSkyBlock;
 
 
 /**
@@ -29,75 +30,81 @@ public class BiomesAddon extends Addon
 	@Override
 	public void onEnable()
 	{
+		this.hooked = false;
 		this.addonManager = new BiomesAddonManager(this);
 
 		CommandsManager commandsManager = this.getPlugin().getCommandsManager();
 
-		this.getPlugin().getAddonsManager().getAddonByName("AcidIsland").ifPresent(a -> {
-			CompositeCommand acidIslandCmd =
-				commandsManager.getCommand(this.getConfig().getString("acidisland.user-command", "ai"));
+		this.getPlugin().getAddonsManager().getAddonByName("AcidIsland").ifPresent(addon -> {
+			AcidIsland acidIsland = (AcidIsland) addon;
 
-			if (acidIslandCmd != null)
-			{
-				new BiomesCommand(this, acidIslandCmd);
-
-				CompositeCommand acidCmd =
-					commandsManager.getCommand(this.getConfig().getString("acidisland.admin-command", "acid"));
-
-				new AdminCommand(this, acidCmd);
-			}
+			new AdminCommand(this,
+				commandsManager.getCommand(acidIsland.getSettings().getAdminCommand()));
+			new BiomesCommand(this,
+				commandsManager.getCommand(acidIsland.getSettings().getIslandCommand()));
 
 			// Probably better would be casting and getting from settings, but then it should be added as
 			// dependency.
-			String currentWorld = a.getConfig().getString("world.world-name");
+			String currentWorld = acidIsland.getWorldSettings().getWorldName();
 
 			if (this.addonManager.getBiomes(currentWorld).isEmpty())
 			{
 				this.addonManager.importBiomes(currentWorld);
 			}
+
+			this.hooked = true;
 		});
 
 		// BSkyBlock hook in
-		this.getPlugin().getAddonsManager().getAddonByName("BSkyBlock").ifPresent(a -> {
-			CompositeCommand bsbIslandCmd =
-				commandsManager.getCommand(this.getConfig().getString("bskyblock.user-command", "island"));
+		this.getPlugin().getAddonsManager().getAddonByName("BSkyBlock").ifPresent(addon -> {
 
-			if (bsbIslandCmd != null)
-			{
-				new BiomesCommand(this, bsbIslandCmd);
+			BSkyBlock skyBlock = (BSkyBlock) addon;
 
-				CompositeCommand bsbAdminCmd =
-					commandsManager.getCommand(this.getConfig().getString("bskyblock.admin-command", "bsbadmin"));
-
-				new AdminCommand(this, bsbAdminCmd);
-			}
+			new AdminCommand(this,
+				commandsManager.getCommand("bsbadmin"));
+			new BiomesCommand(this,
+				commandsManager.getCommand("island"));
 
 			// Probably better would be casting and getting from settings, but then it should be added as
 			// dependency.
-			String currentWorld = a.getConfig().getString("world.world-name");
+			String currentWorld = skyBlock.getWorldSettings().getWorldName();
 
 			if (this.addonManager.getBiomes(currentWorld).isEmpty())
 			{
 				this.addonManager.importBiomes(currentWorld);
 			}
+
+			this.hooked = true;
 		});
 
-		// This listener fires on each owner change.
-		this.getServer().getPluginManager().registerEvents(new ChangeOwnerListener(this), this.getPlugin());
+		if (this.hooked)
+		{
+			// This listener fires on each owner change.
+			this.getServer().getPluginManager().registerEvents(
+				new ChangeOwnerListener(this), this.getPlugin());
+		}
+		else
+		{
+			this.logError("Biomes addon is not loaded, as bSkyBlock or AcidIsland is missing.");
+			this.setState(State.DISABLED);
+		}
 	}
 
 
 	@Override
 	public void onDisable()
 	{
-		if (this.settings != null)
+		if (this.hooked)
 		{
-			new Config<>(this, Settings.class).saveConfigObject(this.settings);
-		}
+			if (this.settings != null)
+			{
+				new Config<>(this, Settings.class).saveConfigObject(this.settings);
+			}
 
-		if (this.addonManager != null)
-		{
-			this.addonManager.save(false);
+			if (this.addonManager != null)
+			{
+				this.addonManager.save(false);
+			}
 		}
 	}
 
@@ -105,11 +112,14 @@ public class BiomesAddon extends Addon
 	@Override
 	public void onReload()
 	{
-		this.loadSettings();
-		// Reload biomes manager.
-		this.addonManager.reloadManager();
+		if (this.hooked)
+		{
+			this.loadSettings();
+			// Reload biomes manager.
+			this.addonManager.reloadManager();
 
-		this.getLogger().info("Biomes addon reloaded.");
+			this.getLogger().info("Biomes addon reloaded.");
+		}
 	}
 
 
@@ -152,6 +162,12 @@ public class BiomesAddon extends Addon
 // ---------------------------------------------------------------------
 // Section: Variables
 // ---------------------------------------------------------------------
+
+
+	/**
+	 * This variable stores if current addon is hooked or not.
+	 */
+	private boolean hooked;
 
 	/**
 	 * This variable stores biomes manager.
