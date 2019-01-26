@@ -1,7 +1,6 @@
 package world.bentobox.biomes;
 
 
-import world.bentobox.acidisland.AcidIsland;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.configuration.Config;
 import world.bentobox.bentobox.managers.CommandsManager;
@@ -9,7 +8,6 @@ import world.bentobox.biomes.commands.admin.AdminCommand;
 import world.bentobox.biomes.commands.user.BiomesCommand;
 import world.bentobox.biomes.listeners.ChangeOwnerListener;
 import world.bentobox.biomes.objects.Settings;
-import world.bentobox.bskyblock.BSkyBlock;
 
 
 /**
@@ -36,52 +34,22 @@ public class BiomesAddon extends Addon
 		CommandsManager commandsManager = this.getPlugin().getCommandsManager();
 
 		// AcidIsland hook in
-		if (this.settings.getDisabledGameModes().isEmpty() ||
-			!this.settings.getDisabledGameModes().contains("AcidIsland"))
-		{
-			this.getPlugin().getAddonsManager().getAddonByName("AcidIsland").ifPresent(
-				addon -> {
-					AcidIsland acidIsland = (AcidIsland) addon;
-
-					new AdminCommand(this,
-						commandsManager.getCommand(acidIsland.getSettings().getAdminCommand()));
-					new BiomesCommand(this,
-						commandsManager.getCommand(acidIsland.getSettings().getIslandCommand()));
-
-					String currentWorld = acidIsland.getWorldSettings().getWorldName();
-
-					if (this.addonManager.getBiomes(currentWorld).isEmpty())
-					{
-						this.addonManager.importBiomes(currentWorld);
-					}
-
+		this.getPlugin().getAddonsManager().getGameModeAddons().forEach(gameModeAddon -> {
+			if (!this.settings.getDisabledGameModes().contains(gameModeAddon.getDescription().getName()))
+			{
+				if (gameModeAddon.getPlayerCommand().isPresent())
+				{
+					new BiomesCommand(this, gameModeAddon.getPlayerCommand().get());
 					this.hooked = true;
-				});
-		}
+				}
 
-		// BSkyBlock hook in
-		if (this.settings.getDisabledGameModes().isEmpty() ||
-			!this.settings.getDisabledGameModes().contains("BSkyBlock"))
-		{
-			this.getPlugin().getAddonsManager().getAddonByName("BSkyBlock").ifPresent(
-				addon -> {
-					BSkyBlock skyBlock = (BSkyBlock) addon;
-
-					new AdminCommand(this,
-						commandsManager.getCommand("bsbadmin"));
-					new BiomesCommand(this,
-						commandsManager.getCommand("island"));
-
-					String currentWorld = skyBlock.getWorldSettings().getWorldName();
-
-					if (this.addonManager.getBiomes(currentWorld).isEmpty())
-					{
-						this.addonManager.importBiomes(currentWorld);
-					}
-
+				if (gameModeAddon.getAdminCommand().isPresent())
+				{
+					new AdminCommand(this, gameModeAddon.getAdminCommand().get());
 					this.hooked = true;
-				});
-		}
+				}
+			}
+		});
 
 		if (this.hooked)
 		{
