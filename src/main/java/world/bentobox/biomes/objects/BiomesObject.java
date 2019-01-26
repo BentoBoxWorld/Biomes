@@ -1,6 +1,7 @@
 package world.bentobox.biomes.objects;
 
 
+import com.google.gson.annotations.Expose;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -331,38 +332,50 @@ public class BiomesObject implements DataObject
 
 
 	@ConfigComment("Official minecraft biome name.")
+	@Expose
 	private String biomeName;
 
 	@ConfigComment("Unique biome ID.")
+	@Expose
 	private int biomeID;
 
 	@ConfigComment("Whether this biome is deployed or not")
+	@Expose
 	private boolean deployed;
 
 	@ConfigComment("Name of the icon and biomes. May include color codes. Single line.")
+	@Expose
 	private String friendlyName = "";
 
 	@ConfigComment("Description of the biomes. Will become the lore on the icon. Can include & color codes. String List.")
+	@Expose
 	private List<String> description = new ArrayList<>();
 
 	@ConfigComment("The icon in the GUI for this biome. ItemStack.")
+	@Expose
 	private ItemStack icon = new ItemStack(Material.PAPER);
 
 	@ConfigComment("Icon slot where this biomes should be placed. 0 to 49. A negative value means any slot")
+	@Expose
 	private int slot = -1;
 
 	@ConfigComment("Required island level for this biome. Only works if Level Addon is being used.")
+	@Expose
 	private long requiredLevel;
 
 	@ConfigComment("Cost of changing biome.")
+	@Expose
 	private int requiredCost;
 
 	@ConfigComment("World where this biome operates. List only NORMAL. NETHER and THE_END are automatically covered.")
+	@Expose
 	private String world;
 
 	@ConfigComment("String of permission that is required for this biome to be activated.")
+	@Expose
 	private String permission = "";
 
 	@ConfigComment("Unique StringName of the biome")
+	@Expose
 	private String uniqueId;
 }
