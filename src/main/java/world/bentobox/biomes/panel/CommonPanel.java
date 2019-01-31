@@ -508,6 +508,7 @@ public abstract class CommonPanel
 	/**
 	 * This enum contains buttons that is made of numbers.
 	 */
+	@Deprecated
 	protected enum NumberButtons
 	{
 		SET_1,
