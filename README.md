@@ -1,12 +1,12 @@
 # Biomes Addon
 [![Build Status](https://ci.codemc.org/buildStatus/icon?job=BentoBoxWorld/Biomes)](https://ci.codemc.org/job/BentoBoxWorld/job/Biomes/)
 
-Biomes addon for SkyBlock and AcidIsland. It allows to change biome on Island.
+Biomes addon for SkyBlock, SkyGrid, CaveBlock and AcidIsland. It allows to change biome on Island.
 
 ## Where to find
 
 Currently Biomes Addon is in **Alpha stage**, so it may or may not contain bugs... a lot of bugs. Also it means, that some features are not working or implemented. 
-Latest official **Alpha Release is 0.4.0**, and you can download it from [Release tab](https://github.com/BentoBoxWorld/Biomes/releases)
+Latest official **Alpha Release is 0.4.1**, and you can download it from [Release tab](https://github.com/BentoBoxWorld/Biomes/releases)
 
 Or you can try **nightly builds** where you can check and test new features that will be implemented in next release from [Jenkins Server](https://ci.codemc.org/job/BentoBoxWorld/job/Biomes/lastStableBuild/).
 
@@ -55,7 +55,7 @@ Note that you must import biomes into both BSkyBlock and AcidIsland separately.
 
 ## Admin commands
 
-There are a few admin commands and more being written. The main biomes admin command is **/bsb biomes** or **/acid biomes**. Use 
+There are a few admin commands and more being written. The main biomes admin command is **/bsb biomes**, **/cba biomes**, **/sgadmin biomes** & **/acid biomes**. Use 
 
 * `/bsbadmin biomes`: To open Admin GUI. 
 * `/bsbadmin biomes help` : Show help for all the commands
