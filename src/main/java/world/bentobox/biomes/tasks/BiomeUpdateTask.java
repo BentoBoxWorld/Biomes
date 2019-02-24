@@ -47,7 +47,8 @@ public class BiomeUpdateTask extends BukkitRunnable
 			this.biome.getFriendlyName());
 
 		this.addon.log(this.user.getName() + " changes biome to " +
-			this.biome.getBiomeName() + " from x=" + this.minX + ":" + this.maxX + " z=" + this.minZ + ":" + this.maxZ);
+			this.biome.getBiomeName() + " from x=" + this.minX + ":" + this.maxX + " z=" + this.minZ + ":" + this.maxZ +
+			" while standing on x=" + this.user.getLocation().getBlockX() + " z=" + this.user.getLocation().getBlockZ());
 	}
 
 

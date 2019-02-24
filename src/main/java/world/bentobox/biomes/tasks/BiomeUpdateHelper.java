@@ -181,27 +181,11 @@ public class BiomeUpdateHelper
 			case CHUNK:
 				Chunk chunk = playerLocation.getChunk();
 
-				if (chunk.getX() < 0)
-				{
-					task.setMaxX(Math.max(minX, chunk.getX() + 16 * (this.updateNumber - 1)));
-					task.setMinX(Math.min(maxX, minX - 16 * this.updateNumber + 1));
-				}
-				else
-				{
-					task.setMinX(Math.max(minX, chunk.getX() - 16 * (this.updateNumber - 1)));
-					task.setMaxX(Math.min(maxX, minX + 16 * this.updateNumber - 1));
-				}
+				task.setMinX(Math.max(minX, (chunk.getX() - (this.updateNumber - 1)) << 4));
+				task.setMaxX(Math.min(maxX, (chunk.getX() + this.updateNumber) << 4) - 1);
 
-				if (chunk.getZ() < 0)
-				{
-					task.setMaxZ(Math.max(minZ, chunk.getZ() + 16 * (this.updateNumber - 1)));
-					task.setMinZ(Math.min(maxZ, minZ - 16 * this.updateNumber + 1));
-				}
-				else
-				{
-					task.setMinZ(Math.max(minZ, chunk.getZ() - 16 * (this.updateNumber - 1)));
-					task.setMaxZ(Math.min(maxZ, minZ + 16 * this.updateNumber - 1));
-				}
+				task.setMinZ(Math.max(minZ, (chunk.getZ() - (this.updateNumber - 1)) << 4));
+				task.setMaxZ(Math.min(maxZ, (chunk.getZ() + this.updateNumber) << 4) - 1);
 
 				break;
 			case SQUARE:
