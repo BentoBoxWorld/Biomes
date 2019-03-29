@@ -6,7 +6,7 @@ Biomes addon for SkyBlock, SkyGrid, CaveBlock and AcidIsland. It allows to chang
 ## Where to find
 
 Currently Biomes Addon is in **Alpha stage**, so it may or may not contain bugs... a lot of bugs. Also it means, that some features are not working or implemented. 
-Latest official **Alpha Release is 0.4.2**, and you can download it from [Release tab](https://github.com/BentoBoxWorld/Biomes/releases)
+Latest official **Alpha Release is 0.4.5**, and you can download it from [Release tab](https://github.com/BentoBoxWorld/Biomes/releases)
 
 Or you can try **nightly builds** where you can check and test new features that will be implemented in next release from [Jenkins Server](https://ci.codemc.org/job/BentoBoxWorld/job/Biomes/lastStableBuild/).
 
