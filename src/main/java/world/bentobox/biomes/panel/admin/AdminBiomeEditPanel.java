@@ -11,6 +11,7 @@ import java.util.List;
 import net.wesjd.anvilgui.AnvilGUI;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
+import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.objects.BiomesObject;
@@ -645,7 +646,13 @@ public class AdminBiomeEditPanel extends CommonPanel
 			clickHandler = (panel, user1, clickType, slot) -> true;
 		}
 
-		return new PanelItem(icon, name, description, this.currentEditMode.equals(button), clickHandler, false);
+		return new PanelItemBuilder().
+			icon(icon).
+			name(name).
+			description(description).
+			glow(this.currentEditMode.equals(button)).
+			clickHandler(clickHandler).
+			build();
 	}
 
 
@@ -680,7 +687,13 @@ public class AdminBiomeEditPanel extends CommonPanel
 			return true;
 		};
 
-		return new PanelItem(icon, name, description, false, clickHandler, false);
+		return new PanelItemBuilder().
+			icon(icon).
+			name(name).
+			description(description).
+			glow(false).
+			clickHandler(clickHandler).
+			build();
 	}
 
 
