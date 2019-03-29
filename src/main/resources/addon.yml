@@ -1,9 +1,12 @@
-name: Biomes
-version: ${project.version}
+name: ${project.name}
 main: world.bentobox.biomes.BiomesAddon
+version: ${project.version}${build.number}
+
+repository: 'BentoBoxWorld/Biomes'
 authors: [BONNe]
-description: Allow players to change biomes on their island
-softdepend: AcidIsland, BSkyBlock
+
+softdepend: AcidIsland, BSkyBlock, CaveBlock, SkyGrid, Level
+description: ${project.description}
 
 permissions:
   bskyblock.biomes:
