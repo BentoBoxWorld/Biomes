@@ -8,6 +8,7 @@ import java.util.List;
 
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
+import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.objects.Settings.UpdateMode;
@@ -444,7 +445,13 @@ public class AdminSettingsPanel extends CommonPanel
 				return null;
 		}
 
-		return new PanelItem(icon, name, description, glow, clickHandler, false);
+		return new PanelItemBuilder().
+			icon(icon).
+			name(name).
+			description(description).
+			glow(glow).
+			clickHandler(clickHandler).
+			build();
 	}
 
 

@@ -23,7 +23,10 @@ public class Utils
 	 * Thus method parses input string to ItemStack.
 	 * @param inputString Splitted string.
 	 * @return ItemStack that represents input string.
+	 * @deprecated
+	 * @see world.bentobox.bentobox.util.ItemParser#parse(String)
 	 */
+	@Deprecated
 	private static ItemStack parse2ArrayString(String[] inputString)
 	{
 		int reqAmount;
@@ -57,7 +60,10 @@ public class Utils
 	 * Create ItemStack from 3 string parts.
 	 * @param inputString Splitted string.
 	 * @return ItemStack that is created from input string.
+	 * @deprecated
+	 * @see world.bentobox.bentobox.util.ItemParser#parse(String)
 	 */
+	@Deprecated
 	private static ItemStack parse3ArrayString(String[] inputString)
 	{
 		String[] twoArrayString = {inputString[0], inputString[2]};
@@ -68,7 +74,10 @@ public class Utils
 	/**
 	 * This method parse given string to ItemStack element.
 	 * @return the parsed ItemStack element.
+	 * @deprecated
+	 * @see world.bentobox.bentobox.util.ItemParser#parse(String)
 	 */
+	@Deprecated
 	public static ItemStack parseItem(BiomesAddon addon, String inputString)
 	{
 		String[] part = inputString.split(":");
@@ -118,7 +127,9 @@ public class Utils
 	 * This method combines input string array in single string.
 	 * @param args String list that must be combined.
 	 * @return Combined string.
+	 * @deprecated
 	 */
+	@Deprecated
 	public static String mergeStringList(List<String> args)
 	{
 		if (args.isEmpty())

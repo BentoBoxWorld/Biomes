@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 import world.bentobox.bentobox.api.panels.PanelItem;
+import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.objects.Settings.UpdateMode;
@@ -299,10 +300,16 @@ public abstract class CommonPanel
 			}
 			default:
 				// All buttons should be in switch case.
-				return null;
+				return new PanelItemBuilder().build();
 		}
 
-		return new PanelItem(icon, name, description, glow, handler == null ? clickHandler : handler, false);
+		return new PanelItemBuilder().
+			icon(icon).
+			name(name).
+			description(description).
+			glow(glow).
+			clickHandler(handler == null ? clickHandler : handler).
+			build();
 	}
 
 
@@ -460,7 +467,13 @@ public abstract class CommonPanel
 			};
 		}
 
-		return new PanelItem(icon, name, Collections.emptyList(), false, handler == null ? clickHandler : handler, false);
+		return new PanelItemBuilder().
+			icon(icon).
+			name(name).
+			description(Collections.emptyList()).
+			glow(false).
+			clickHandler(handler == null ? clickHandler : handler).
+			build();
 	}
 
 
@@ -508,6 +521,7 @@ public abstract class CommonPanel
 	/**
 	 * This enum contains buttons that is made of numbers.
 	 */
+	@Deprecated
 	protected enum NumberButtons
 	{
 		SET_1,

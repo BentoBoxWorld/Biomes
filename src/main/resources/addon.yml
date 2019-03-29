@@ -1,9 +1,12 @@
-name: Biomes
-version: ${project.version}
+name: ${project.name}
 main: world.bentobox.biomes.BiomesAddon
+version: ${project.version}${build.number}
+
+repository: 'BentoBoxWorld/Biomes'
 authors: [BONNe]
-description: Allow players to change biomes on their island
-softdepend: AcidIsland, BSkyBlock
+
+softdepend: AcidIsland, BSkyBlock, CaveBlock, SkyGrid, Level
+description: ${project.description}
 
 permissions:
   bskyblock.biomes:
@@ -63,5 +66,65 @@ permissions:
     description: Player can use admin biomes import command allows to import biomes in world.
     default: op
   acidisland.admin.biomes.settings:
+    description: Player can use admin biomes settings command that allows to change addon settings.
+    default: op
+
+  caveblock.biomes:
+    description: Player can use biomes command that opens GUI
+    default: true
+  caveblock.biomes.info:
+    description: Player can use biomes info command.
+    default: true
+  caveblock.biomes.set:
+    description: Player can use biomes set command.
+    default: true
+
+  caveblock.admin.biomes:
+    description: Player can use admin biomes command that opens GUI.
+    default: op
+  caveblock.admin.biomes.add:
+    description: Player can use admin biomes add command that adds new biome.
+    default: op
+  caveblock.admin.biomes.edit:
+    description: Player can use admin biomes edit command that edits existing biomes parameters.
+    default: op
+  caveblock.admin.biomes.set:
+    description: Player can use admin biomes set command that allows to change other player biomes.
+    default: op
+
+  caveblock.admin.biomes.import:
+    description: Player can use admin biomes import command allows to import biomes in world.
+    default: op
+  caveblock.admin.biomes.settings:
+    description: Player can use admin biomes settings command that allows to change addon settings.
+    default: op
+
+  skygrid.biomes:
+    description: Player can use biomes command that opens GUI
+    default: true
+  skygrid.biomes.info:
+    description: Player can use biomes info command.
+    default: true
+  skygrid.biomes.set:
+    description: Player can use biomes set command.
+    default: true
+
+  skygrid.admin.biomes:
+    description: Player can use admin biomes command that opens GUI.
+    default: op
+  skygrid.admin.biomes.add:
+    description: Player can use admin biomes add command that adds new biome.
+    default: op
+  skygrid.admin.biomes.edit:
+    description: Player can use admin biomes edit command that edits existing biomes parameters.
+    default: op
+  skygrid.admin.biomes.set:
+    description: Player can use admin biomes set command that allows to change other player biomes.
+    default: op
+
+  skygrid.admin.biomes.import:
+    description: Player can use admin biomes import command allows to import biomes in world.
+    default: op
+  skygrid.admin.biomes.settings:
     description: Player can use admin biomes settings command that allows to change addon settings.
     default: op
