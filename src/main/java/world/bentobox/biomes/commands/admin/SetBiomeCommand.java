@@ -21,121 +21,121 @@ import world.bentobox.biomes.tasks.BiomeUpdateHelper;
  */
 public class SetBiomeCommand extends ExpandedCompositeCommand
 {
-	public SetBiomeCommand(Addon addon, CompositeCommand parent)
-	{
-		super(addon, parent, "set");
-	}
+    public SetBiomeCommand(Addon addon, CompositeCommand parent)
+    {
+        super(addon, parent, "set");
+    }
 
-	@Override
-	public void setup()
-	{
-		this.setPermission("admin.biomes.set");
-		this.setParametersHelp("biomes.commands.admin.set.parameters");
-		this.setDescription("biomes.commands.admin.set.description");
-	}
-
-
-	@Override
-	public boolean execute(User user, String label, List<String> args)
-	{
-		if (user.isPlayer() && args.isEmpty())
-		{
-			// Shows admin panel
-			new AdminUserListPanel(this.addon,
-				this.getWorld(),
-				user,
-				this.getTopLabel(),
-				this.getPermissionPrefix()).build();
-			return true;
-		}
-		else if (args.isEmpty())
-		{
-			this.showHelp(this, user);
-			return false;
-		}
-		else
-		{
-			User targetUser = this.getPlayer(args, 0, user);
-			BiomesObject biome = this.getBiomeObject(args, 1, user);
-			UpdateMode updateMode = this.getUpdateMode(args, 2, user);
-			int size = this.getUpdateRange(args, 3, user);
-
-			if (targetUser == null || biome == null || updateMode == null || size < 1)
-			{
-				// Show help if something fails.
-				this.showHelp(this, user);
-				return false;
-			}
-			else
-			{
-				// Use BiomeUpdateHelper to change biome for user.
-
-				BiomeUpdateHelper helper = new BiomeUpdateHelper(this.addon,
-					user,
-					targetUser,
-					biome,
-					user.getWorld(),
-					updateMode,
-					size,
-					false);
-
-				if (helper.canChangeBiome())
-				{
-					helper.updateIslandBiome();
-					return true;
-				}
-
-				return false;
-			}
-		}
-	}
+    @Override
+    public void setup()
+    {
+        this.setPermission("admin.biomes.set");
+        this.setParametersHelp("biomes.commands.admin.set.parameters");
+        this.setDescription("biomes.commands.admin.set.description");
+    }
 
 
-	@Override
-	public Optional<List<String>> tabComplete(User user, String alias, List<String> args)
-	{
-		String lastString = args.get(args.size() - 1);
+    @Override
+    public boolean execute(User user, String label, List<String> args)
+    {
+        if (user.isPlayer() && args.isEmpty())
+        {
+            // Shows admin panel
+            new AdminUserListPanel(this.addon,
+                    this.getWorld(),
+                    user,
+                    this.getTopLabel(),
+                    this.getPermissionPrefix()).build();
+            return true;
+        }
+        else if (args.isEmpty())
+        {
+            this.showHelp(this, user);
+            return false;
+        }
+        else
+        {
+            User targetUser = this.getPlayer(args, 0, user);
+            BiomesObject biome = this.getBiomeObject(args, 1, user);
+            UpdateMode updateMode = this.getUpdateMode(args, 2, user);
+            int size = this.getUpdateRange(args, 3, user);
 
-		final List<String> returnList = new ArrayList<>();
-		final int size = args.size();
+            if (targetUser == null || biome == null || updateMode == null || size < 1)
+            {
+                // Show help if something fails.
+                this.showHelp(this, user);
+                return false;
+            }
+            else
+            {
+                // Use BiomeUpdateHelper to change biome for user.
 
-		switch (size)
-		{
-			case 3:
-				returnList.addAll(Util.tabLimit(new ArrayList<>(Util.getOnlinePlayerList(user)), lastString));
-				break;
-			case 4:
-				List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes(this.getWorld());
+                BiomeUpdateHelper helper = new BiomeUpdateHelper(this.addon,
+                        user,
+                        targetUser,
+                        biome,
+                        getWorld(),
+                        updateMode,
+                        size,
+                        false);
 
-				// Create suggestions with all biomes that is available for users.
+                if (helper.canChangeBiome())
+                {
+                    helper.updateIslandBiome();
+                    return true;
+                }
 
-				biomes.forEach(biomesObject -> {
-					returnList.addAll(Util.tabLimit(
-						Collections.singletonList(biomesObject.getBiomeName()), lastString));
-				});
+                return false;
+            }
+        }
+    }
 
-				break;
-			case 5:
-				// Create suggestions with all biomes that is available for users.
 
-				returnList.addAll(Util.tabLimit(Collections.singletonList("ISLAND"), lastString));
-				returnList.addAll(Util.tabLimit(Collections.singletonList("CHUNK"), lastString));
-				returnList.addAll(Util.tabLimit(Collections.singletonList("SQUARE"), lastString));
+    @Override
+    public Optional<List<String>> tabComplete(User user, String alias, List<String> args)
+    {
+        String lastString = args.get(args.size() - 1);
 
-				break;
-			case 6:
-				if (lastString.isEmpty() || lastString.matches("[0-9]*"))
-				{
-					returnList.addAll(Util.tabLimit(Collections.singletonList("<number>"), lastString));
-				}
+        final List<String> returnList = new ArrayList<>();
+        final int size = args.size();
 
-				break;
-			default:
-			{
-				break;
-			}
-		}
+        switch (size)
+        {
+        case 3:
+            returnList.addAll(Util.tabLimit(new ArrayList<>(Util.getOnlinePlayerList(user)), lastString));
+            break;
+        case 4:
+            List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes(this.getWorld());
 
-		return Optional.of(returnList);
-	}
+            // Create suggestions with all biomes that is available for users.
+
+            biomes.forEach(biomesObject -> {
+                returnList.addAll(Util.tabLimit(
+                        Collections.singletonList(biomesObject.getBiomeName()), lastString));
+            });
+
+            break;
+        case 5:
+            // Create suggestions with all biomes that is available for users.
+
+            returnList.addAll(Util.tabLimit(Collections.singletonList("ISLAND"), lastString));
+            returnList.addAll(Util.tabLimit(Collections.singletonList("CHUNK"), lastString));
+            returnList.addAll(Util.tabLimit(Collections.singletonList("SQUARE"), lastString));
+
+            break;
+        case 6:
+            if (lastString.isEmpty() || lastString.matches("[0-9]*"))
+            {
+                returnList.addAll(Util.tabLimit(Collections.singletonList("<number>"), lastString));
+            }
+
+            break;
+        default:
+        {
+            break;
+        }
+        }
+
+        return Optional.of(returnList);
+    }
 }
