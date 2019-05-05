@@ -130,7 +130,7 @@ public abstract class CommonPanel
 			{
 				name = this.user.getTranslation("biomes.gui.buttons.next");
 				description = Collections.emptyList();
-				icon = new ItemStack(Material.SIGN);
+				icon = new ItemStack(Material.OAK_SIGN);
 				clickHandler = (panel, user, clickType, slot) -> {
 					this.pageIndex++;
 					this.build();
@@ -144,7 +144,7 @@ public abstract class CommonPanel
 			{
 				name = this.user.getTranslation("biomes.gui.buttons.previous");
 				description = Collections.emptyList();
-				icon = new ItemStack(Material.SIGN);
+				icon = new ItemStack(Material.OAK_SIGN);
 				clickHandler = (panel, user, clickType, slot) -> {
 					this.pageIndex--;
 					this.build();
