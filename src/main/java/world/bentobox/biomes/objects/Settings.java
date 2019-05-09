@@ -6,8 +6,8 @@ import java.util.Set;
 
 import world.bentobox.bentobox.api.configuration.ConfigComment;
 import world.bentobox.bentobox.api.configuration.ConfigEntry;
+import world.bentobox.bentobox.api.configuration.ConfigObject;
 import world.bentobox.bentobox.api.configuration.StoreAt;
-import world.bentobox.bentobox.database.objects.DataObject;
 
 
 /**
@@ -20,18 +20,11 @@ import world.bentobox.bentobox.database.objects.DataObject;
 @ConfigComment("You cannot edit it while the server is running because changes will")
 @ConfigComment("be lost! Use in-game settings GUI or edit when server is offline.")
 @ConfigComment("")
-public class Settings implements DataObject
+public class Settings implements ConfigObject
 {
 // ---------------------------------------------------------------------
 // Section: Getters
 // ---------------------------------------------------------------------
-
-
-	@Override
-	public String getUniqueId()
-	{
-		return this.uniqueId;
-	}
 
 
 	/**
@@ -107,13 +100,6 @@ public class Settings implements DataObject
 // ---------------------------------------------------------------------
 // Section: Setters
 // ---------------------------------------------------------------------
-
-
-	@Override
-	public void setUniqueId(String uniqueId)
-	{
-		this.uniqueId = uniqueId;
-	}
 
 
 	/**
@@ -272,10 +258,4 @@ public class Settings implements DataObject
 	@ConfigComment(" - BSkyBlock")
 	@ConfigEntry(path = "disabled-gamemodes")
 	private Set<String> disabledGameModes = new HashSet<>();
-
-	/**
-	 * Default variable.
-	 */
-	@ConfigComment("")
-	private String uniqueId = "config";
 }

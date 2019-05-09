@@ -47,8 +47,8 @@
         <powermock.version>1.7.4</powermock.version>
         <!-- More visible way how to change dependency versions -->
         <spigot.version>1.13.2-R0.1-SNAPSHOT</spigot.version>
-        <bentobox.version>1.4.0</bentobox.version>
-        <level.version>1.3.0</level.version>
+        <bentobox.version>1.5.0-SNAPSHOT</bentobox.version>
+        <level.version>1.4.0</level.version>
         <vault.version>1.7</vault.version>
         <anvilgui.version>1.2.1-SNAPSHOT</anvilgui.version>
         <!-- Revision variable removes warning about dynamic version -->
