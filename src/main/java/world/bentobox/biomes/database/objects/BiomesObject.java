@@ -1,4 +1,4 @@
-package world.bentobox.biomes.objects;
+package world.bentobox.biomes.database.objects;
 
 
 import com.google.gson.annotations.Expose;
@@ -7,7 +7,9 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import world.bentobox.bentobox.api.configuration.ConfigComment;
 import world.bentobox.bentobox.database.objects.DataObject;
@@ -17,7 +19,7 @@ import world.bentobox.bentobox.util.Util;
 /**
  * This class stores necessary information for each Biomes object.
  */
-public class BiomesObject implements DataObject
+public class BiomesObject implements DataObject, Comparable<BiomesObject>
 {
 	/**
 	 * Empty constructor for loader.
@@ -42,10 +44,9 @@ public class BiomesObject implements DataObject
 	 */
 	public BiomesObject(Biome biome, String world)
 	{
-		this.biomeName = biome.name();
-		this.biomeID = biome.ordinal();
+		this.biome = biome;
 		this.world = world;
-		this.setUniqueId(world + "-" + this.biomeName.toLowerCase());
+		this.setUniqueId(world + "-" + this.biome.toString().toLowerCase());
 	}
 
 
@@ -58,39 +59,19 @@ public class BiomesObject implements DataObject
 	 * This method returns biomes name.
 	 * @return Biomes name.
 	 */
-	public String getBiomeName()
+	public Biome getBiome()
 	{
-		return this.biomeName;
+		return this.biome;
 	}
 
 
 	/**
 	 * This method sets biomes name.
-	 * @param biomeName Biomes name.
+	 * @param biome Biomes name.
 	 */
-	public void setBiomeName(String biomeName)
+	public void setBiome(Biome biome)
 	{
-		this.biomeName = biomeName;
-	}
-
-
-	/**
-	 * This method returns biomes ID.
-	 * @return Biomes ID.b
-	 */
-	public int getBiomeID()
-	{
-		return this.biomeID;
-	}
-
-
-	/**
-	 * This method sets biomes ID.
-	 * @param biomeID biomes ID.
-	 */
-	public void setBiomeID(int biomeID)
-	{
-		this.biomeID = biomeID;
+		this.biome = biome;
 	}
 
 
@@ -203,24 +184,6 @@ public class BiomesObject implements DataObject
 
 
 	/**
-	 * @return the slot
-	 */
-	public int getSlot()
-	{
-		return slot;
-	}
-
-
-	/**
-	 * @param slot the slot to set
-	 */
-	public void setSlot(int slot)
-	{
-		this.slot = slot;
-	}
-
-
-	/**
 	 *
 	 * @return world in which biome operates
 	 */
@@ -236,25 +199,6 @@ public class BiomesObject implements DataObject
 	public void setWorld(String world)
 	{
 		this.world = world;
-	}
-
-
-	/**
-	 *
-	 * @return permission that allows biome to operate.
-	 */
-	public String getPermission()
-	{
-		return this.permission;
-	}
-
-
-	/**
-	 * @param permission which allows biome to operate.
-	 */
-	public void setPermission(String permission)
-	{
-		this.permission = permission;
 	}
 
 
@@ -278,12 +222,55 @@ public class BiomesObject implements DataObject
 	}
 
 
+	/**
+	 * This method returns the order object.
+	 * @return the order object.
+	 */
+	public int getOrder()
+	{
+		return order;
+	}
+
+
+	/**
+	 * This method sets the order object value.
+	 * @param order the order object new value.
+	 *
+	 */
+	public void setOrder(int order)
+	{
+		this.order = order;
+	}
+
+
+	/**
+	 * This method returns the permissions object.
+	 * @return the permissions object.
+	 */
+	public Set<String> getRequiredPermissions()
+	{
+		return requiredPermissions;
+	}
+
+
+	/**
+	 * This method sets the permissions object value.
+	 * @param requiredPermissions the permissions object new value.
+	 *
+	 */
+	public void setRequiredPermissions(Set<String> requiredPermissions)
+	{
+		this.requiredPermissions = requiredPermissions;
+	}
+
+
 // ---------------------------------------------------------------------
 // Section: Other methods
 // ---------------------------------------------------------------------
 
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -293,7 +280,8 @@ public class BiomesObject implements DataObject
 	}
 
 
-	/* (non-Javadoc)
+	/*
+	 *(non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -313,7 +301,7 @@ public class BiomesObject implements DataObject
 
 		if (this.uniqueId == null && other.getUniqueId() == null)
 		{
-			return this.biomeID == other.getBiomeID();
+			return this.biome == other.getBiome();
 		}
 		else if (this.uniqueId == null || other.getUniqueId() == null)
 		{
@@ -326,6 +314,19 @@ public class BiomesObject implements DataObject
 	}
 
 
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(BiomesObject object)
+	{
+		int rc = Integer.compare(this.order, object.getOrder());
+
+		return rc == 0 ? this.biome.compareTo(object.getBiome()) : rc;
+	}
+
+
 // ---------------------------------------------------------------------
 // Section: Variables
 // ---------------------------------------------------------------------
@@ -333,11 +334,7 @@ public class BiomesObject implements DataObject
 
 	@ConfigComment("Official minecraft biome name.")
 	@Expose
-	private String biomeName;
-
-	@ConfigComment("Unique biome ID.")
-	@Expose
-	private int biomeID;
+	private Biome biome;
 
 	@ConfigComment("Whether this biome is deployed or not")
 	@Expose
@@ -355,9 +352,9 @@ public class BiomesObject implements DataObject
 	@Expose
 	private ItemStack icon = new ItemStack(Material.PAPER);
 
-	@ConfigComment("Icon slot where this biomes should be placed. 0 to 49. A negative value means any slot")
+	@ConfigComment("Order of biome. Biomes will be ordered in ascending order.")
 	@Expose
-	private int slot = -1;
+	private int order = -1;
 
 	@ConfigComment("Required island level for this biome. Only works if Level Addon is being used.")
 	@Expose
@@ -367,13 +364,13 @@ public class BiomesObject implements DataObject
 	@Expose
 	private int requiredCost;
 
+	@ConfigComment("Set of String permission that is required for this biome to be activated.")
+	@Expose
+	private Set<String> requiredPermissions = new HashSet<>();
+
 	@ConfigComment("World where this biome operates. List only NORMAL. NETHER and THE_END are automatically covered.")
 	@Expose
 	private String world;
-
-	@ConfigComment("String of permission that is required for this biome to be activated.")
-	@Expose
-	private String permission = "";
 
 	@ConfigComment("Unique StringName of the biome")
 	@Expose

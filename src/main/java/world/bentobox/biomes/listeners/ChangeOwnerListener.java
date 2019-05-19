@@ -12,10 +12,10 @@ import world.bentobox.bentobox.api.events.team.TeamEvent.TeamSetownerEvent;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
-import world.bentobox.biomes.objects.BiomesObject;
-import world.bentobox.biomes.objects.Settings.UpdateMode;
+import world.bentobox.biomes.BiomesAddonManager;
+import world.bentobox.biomes.database.objects.BiomesObject;
+import world.bentobox.biomes.config.Settings.UpdateMode;
 import world.bentobox.biomes.tasks.BiomeUpdateHelper;
-import world.bentobox.biomes.utils.Utils;
 
 
 /**
@@ -77,7 +77,7 @@ public class ChangeOwnerListener implements Listener
 
 			if (!defaultBiome.isEmpty() && defaultBiomeObject == null)
 			{
-				Biome biome = Utils.getBiomeNameMap().getOrDefault(defaultBiome.toUpperCase(), null);
+				Biome biome = BiomesAddonManager.getBiomeNameMap().getOrDefault(defaultBiome.toUpperCase(), null);
 
 				if (biome == null)
 				{
@@ -87,8 +87,7 @@ public class ChangeOwnerListener implements Listener
 				else
 				{
 					defaultBiomeObject = new BiomesObject();
-					defaultBiomeObject.setBiomeName(biome.name().toUpperCase());
-					defaultBiomeObject.setBiomeID(biome.ordinal());
+					defaultBiomeObject.setBiome(biome);
 					defaultBiomeObject.setRequiredCost(0);
 					defaultBiomeObject.setRequiredLevel(0);
 				}

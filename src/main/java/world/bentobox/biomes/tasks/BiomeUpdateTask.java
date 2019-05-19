@@ -7,8 +7,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.biomes.BiomesAddon;
-import world.bentobox.biomes.objects.BiomesObject;
-import world.bentobox.biomes.utils.Utils;
+import world.bentobox.biomes.database.objects.BiomesObject;
 
 
 /**
@@ -28,11 +27,11 @@ public class BiomeUpdateTask extends BukkitRunnable
     @Override
     public void run()
     {
-        this.user.sendMessage("biomes.messages.information.update-start");
+        this.user.sendMessage("biomes.messages.update-start");
 
         // Update world coordinates with new biomes.
 
-        Biome newBiome = Utils.parseBiome(this.biome);
+        Biome newBiome = this.biome.getBiome();
 
         for (int x = this.minX; x <= this.maxX; x++)
         {
@@ -42,17 +41,17 @@ public class BiomeUpdateTask extends BukkitRunnable
             }
         }
 
-        this.user.sendMessage("biomes.messages.information.update-done",
+        this.user.sendMessage("biomes.messages.update-done",
                 "[biome]",
                 this.biome.getFriendlyName());
 
         if (user.isPlayer()) {
             this.addon.log(this.user.getName() + " change biome to " +
-                    this.biome.getBiomeName() + " from x=" + this.minX + ":" + this.maxX + " z=" + this.minZ + ":" + this.maxZ +
+                    this.biome.getBiome() + " from x=" + this.minX + ":" + this.maxX + " z=" + this.minZ + ":" + this.maxZ +
                     " while standing on x=" + this.user.getLocation().getBlockX() + " z=" + this.user.getLocation().getBlockZ());
         } else {
             this.addon.log("Console changed biome to " +
-                    this.biome.getBiomeName() + " from x=" + this.minX + ":" + this.maxX + " z=" + this.minZ + ":" + this.maxZ);
+                    this.biome.getBiome() + " from x=" + this.minX + ":" + this.maxX + " z=" + this.minZ + ":" + this.maxZ);
         }
     }
 

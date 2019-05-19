@@ -1,18 +1,15 @@
 package world.bentobox.biomes.commands.user;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.commands.ExpandedCompositeCommand;
-import world.bentobox.biomes.objects.BiomesObject;
-import world.bentobox.biomes.objects.Settings.UpdateMode;
+import world.bentobox.biomes.database.objects.BiomesObject;
+import world.bentobox.biomes.config.Settings.UpdateMode;
 import world.bentobox.biomes.tasks.BiomeUpdateHelper;
 
 
@@ -87,38 +84,38 @@ public class BiomesSetCommand extends ExpandedCompositeCommand
 		switch (size)
 		{
 			case 3:
-				List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes(this.getWorld());
+				String worldName = this.getWorld() != null && Util.getWorld(this.getWorld()) != null ?
+					Util.getWorld(this.getWorld()).getName() : "";
+
+				List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes(worldName);
 
 				// Create suggestions with all biomes that is available for users.
-
 				biomes.forEach(biomesObject -> {
-					returnList.addAll(Util.tabLimit(
-						Collections.singletonList(biomesObject.getBiomeName()), lastString));
+					returnList.add(biomesObject.getUniqueId().replaceFirst(worldName, ""));
 				});
 
 				break;
 			case 4:
 				// Create suggestions with all biomes that is available for users.
-
-				returnList.addAll(Util.tabLimit(Collections.singletonList("ISLAND"), lastString));
-				returnList.addAll(Util.tabLimit(Collections.singletonList("CHUNK"), lastString));
-				returnList.addAll(Util.tabLimit(Collections.singletonList("SQUARE"), lastString));
+				Arrays.stream(UpdateMode.values()).
+					map(Enum::name).
+					forEach(returnList::add);
 
 				break;
 			case 5:
 				if (lastString.isEmpty() || lastString.matches("[0-9]*"))
 				{
-					returnList.addAll(Util.tabLimit(Collections.singletonList("<number>"), lastString));
+					returnList.add("<number>");
 				}
 
 				break;
 			default:
 			{
-				returnList.addAll(Util.tabLimit(Collections.singletonList("help"), lastString));
+				returnList.add("help");
 				break;
 			}
 		}
 
-		return Optional.of(returnList);
+		return Optional.of(Util.tabLimit(returnList, lastString));
 	}
 }
