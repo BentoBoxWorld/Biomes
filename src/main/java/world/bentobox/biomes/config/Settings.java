@@ -10,7 +10,6 @@ import world.bentobox.bentobox.api.configuration.ConfigComment;
 import world.bentobox.bentobox.api.configuration.ConfigEntry;
 import world.bentobox.bentobox.api.configuration.ConfigObject;
 import world.bentobox.bentobox.api.configuration.StoreAt;
-import world.bentobox.bentobox.database.objects.DataObject;
 
 
 /**

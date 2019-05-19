@@ -119,22 +119,60 @@ public class BiomeUpdateHelper
 					return false;
 				}
 			}
+
+			// Init starting location.
+			this.standingLocation = this.targetUser.getLocation();
 		}
 		else
 		{
-			Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
-
-			Optional<Island> onIsland =
-				this.addon.getIslands().getIslandAt(this.callerUser.getLocation());
-
-			if (this.updateMode != UpdateMode.ISLAND &&
-				(!onIsland.isPresent() || onIsland.get() != island))
+			if (this.updateMode.equals(UpdateMode.ISLAND))
 			{
-				// Admin is not on user island.
-				this.callerUser.sendMessage("biomes.errors.admin-not-on-island",
-					"[user]",
-					this.targetUser.getName());
-				return false;
+				this.standingLocation = this.targetUser.getLocation();
+
+				// Return false if targeted user has no island.
+				return this.addon.getIslands().getIsland(this.world, this.targetUser) != null;
+			}
+			else if (this.callerUser.isPlayer())
+			{
+				// Chunk and square based update modes can be called only by player.
+
+				Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
+
+				Optional<Island> onIsland =
+					this.addon.getIslands().getIslandAt(this.callerUser.getLocation());
+
+				if (this.updateMode != UpdateMode.ISLAND &&
+					(!onIsland.isPresent() || onIsland.get() != island))
+				{
+					// Admin is not on user island.
+					this.callerUser.sendMessage("biomes.errors.admin-not-on-island",
+						"[user]",
+						this.targetUser.getName());
+
+					return false;
+				}
+
+				// Admin must be located on island to change biome, as his location will be
+				// taken for update.
+				this.standingLocation = this.callerUser.getLocation();
+			}
+			else
+			{
+				// Check if target user is his island.
+				Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
+
+				Optional<Island> onIsland =
+					this.addon.getIslands().getIslandAt(this.targetUser.getLocation());
+
+				if (!onIsland.isPresent() || onIsland.get() != island)
+				{
+					// Admin is not on user island.
+					this.addon.logWarning("Biome change for player " + this.targetUser.getName() + " is not possible as he is not on his island!");
+					return false;
+				}
+
+				// Init start location
+				this.standingLocation = this.targetUser.getLocation();
 			}
 		}
 
@@ -150,13 +188,11 @@ public class BiomeUpdateHelper
 		Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
 		int range = island.getRange();
 
-		int minX = island.getMinX();
-		int minZ = island.getMinZ();
+		int minX = island.getCenter().getBlockX() - range;
+		int minZ = island.getCenter().getBlockZ() - range;
 
-		int maxX = minX + 2 * range;
-		int maxZ = minZ + 2 * range;
-
-		Location playerLocation = this.callerUser.getLocation();
+		int maxX = island.getCenter().getBlockX() + range;
+		int maxZ = island.getCenter().getBlockZ() + range;
 
 		// Calculate minimal and maximal coordinate based on update mode.
 
@@ -165,14 +201,14 @@ public class BiomeUpdateHelper
 		switch (this.updateMode)
 		{
 			case ISLAND:
-				task.setMinX(minX > maxX ? maxX : minX);
-				task.setMaxX(minX < maxX ? maxX : minX);
-				task.setMinZ(minZ > maxZ ? maxZ : minZ);
-				task.setMaxZ(minZ < maxZ ? maxZ : minZ);
+				task.setMinX(minX);
+				task.setMaxX(maxX);
+				task.setMinZ(minZ);
+				task.setMaxZ(maxZ);
 
 				break;
 			case CHUNK:
-				Chunk chunk = playerLocation.getChunk();
+				Chunk chunk = this.standingLocation.getChunk();
 
 				task.setMinX(Math.max(minX, (chunk.getX() - (this.updateNumber - 1)) << 4));
 				task.setMaxX(Math.min(maxX, (chunk.getX() + this.updateNumber) << 4) - 1);
@@ -184,7 +220,7 @@ public class BiomeUpdateHelper
 			case SQUARE:
 				int halfDiameter = this.updateNumber / 2;
 
-				int x = playerLocation.getBlockX();
+				int x = this.standingLocation.getBlockX();
 
 				if (x < 0)
 				{
@@ -197,7 +233,7 @@ public class BiomeUpdateHelper
 					task.setMaxX(Math.min(maxX, x + halfDiameter));
 				}
 
-				int z = playerLocation.getBlockZ();
+				int z = this.standingLocation.getBlockZ();
 
 				if (z < 0)
 				{
@@ -258,6 +294,11 @@ public class BiomeUpdateHelper
 	 * This variable stores User that is targeted by update.
 	 */
 	private User targetUser;
+
+	/**
+	 * This variable holds from which location Update process should start.
+	 */
+	private Location standingLocation;
 
 	/**
 	 * This variable stores BiomesObject that must be applied.
