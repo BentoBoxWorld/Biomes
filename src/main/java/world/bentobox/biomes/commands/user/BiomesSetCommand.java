@@ -7,6 +7,7 @@ import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.util.Util;
+import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.commands.ExpandedCompositeCommand;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.config.Settings.UpdateMode;
@@ -96,10 +97,16 @@ public class BiomesSetCommand extends ExpandedCompositeCommand
 
 				break;
 			case 4:
-				// Create suggestions with all biomes that is available for users.
+				// Create suggestions with all update modes that is available for users.
 				Arrays.stream(UpdateMode.values()).
 					map(Enum::name).
 					forEach(returnList::add);
+
+				if (!BiomesAddon.BIOMES_WORLD_PROTECTION.isSetForWorld(this.getWorld()))
+				{
+					// Do not suggest island as it is not valid option
+					returnList.remove(UpdateMode.ISLAND.name());
+				}
 
 				break;
 			case 5:

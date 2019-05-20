@@ -42,6 +42,8 @@ public class BiomeUpdateHelper
 		this.updateMode = updateMode;
 		this.updateNumber = updateNumber;
 		this.canWithdraw = canWithdraw;
+
+		this.worldProtectionFlag = BiomesAddon.BIOMES_WORLD_PROTECTION.isSetForWorld(this.world);
 	}
 
 
@@ -69,25 +71,65 @@ public class BiomeUpdateHelper
 				return false;
 			}
 
-			Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
+			if (this.worldProtectionFlag)
+			{
+				Island island =
+					this.addon.getIslands().getIsland(this.world, this.targetUser);
 
-			if (island == null)
+				if (island == null)
+				{
+					// User has no island.
+					this.callerUser.sendMessage("general.errors.player-has-no-island");
+					return false;
+				}
+
+				Optional<Island> onIsland =
+					this.addon.getIslands().getIslandAt(this.callerUser.getLocation());
+
+				if (!onIsland.isPresent() || onIsland.get() != island)
+				{
+					// User is not on his island.
+
+					this.callerUser.sendMessage("biomes.errors.not-on-island");
+					return false;
+				}
+
+				if (!island.isAllowed(this.callerUser, BiomesAddon.BIOMES_ISLAND_PROTECTION))
+				{
+					// This can be checked only if island exists.
+
+					this.callerUser.sendMessage("biomes.errors.no-rank");
+					return false;
+				}
+
+				if (this.addon.isLevelProvided())
+				{
+					// This is here as I am not sure if Level addon can calculate island level
+					// if players can build anywhere.
+
+					LevelsData data = this.addon.getLevelAddon().getLevelsData(this.targetUser.getUniqueId());
+
+					if (data == null ||
+						!data.getLevels().containsKey(Util.getWorld(this.world).getName()) ||
+						this.biome.getRequiredLevel() > 0 &&
+							data.getLevel(Util.getWorld(this.world)) <= this.biome.getRequiredLevel())
+					{
+						// Not enough level
+
+						this.callerUser.sendMessage("biomes.errors.not-enough-level",
+							TextVariables.NUMBER,
+							String.valueOf(this.biome.getRequiredLevel()));
+						return false;
+					}
+				}
+			}
+			else if (this.updateMode.equals(UpdateMode.ISLAND))
 			{
 				// User has no island.
-				this.callerUser.sendMessage("general.errors.player-has-no-island");
+				this.callerUser.sendMessage(BiomesAddon.BIOMES_WORLD_PROTECTION.getHintReference());
 				return false;
 			}
 
-			Optional<Island> onIsland =
-				this.addon.getIslands().getIslandAt(this.callerUser.getLocation());
-
-			if (!onIsland.isPresent() || onIsland.get() != island)
-			{
-				// User is not on his island.
-
-				this.callerUser.sendMessage("biomes.errors.not-on-island");
-				return false;
-			}
 
 			if (this.addon.isEconomyProvided())
 			{
@@ -102,30 +144,46 @@ public class BiomeUpdateHelper
 				}
 			}
 
-			if (this.addon.isLevelProvided())
-			{
-				LevelsData data = this.addon.getLevelAddon().getLevelsData(this.targetUser.getUniqueId());
-
-				if (data == null ||
-					!data.getLevels().containsKey(Util.getWorld(this.world).getName()) ||
-					this.biome.getRequiredLevel() > 0 &&
-						data.getLevel(Util.getWorld(this.world)) <= this.biome.getRequiredLevel())
-				{
-					// Not enough level
-
-					this.callerUser.sendMessage("biomes.errors.not-enough-level",
-						TextVariables.NUMBER,
-						String.valueOf(this.biome.getRequiredLevel()));
-					return false;
-				}
-			}
-
 			// Init starting location.
 			this.standingLocation = this.targetUser.getLocation();
 		}
 		else
 		{
-			if (this.updateMode.equals(UpdateMode.ISLAND))
+			if (!this.worldProtectionFlag)
+			{
+				if (this.updateMode.equals(UpdateMode.ISLAND))
+				{
+					// Island option is not possible for worlds without world protection.
+					if (this.callerUser.isPlayer())
+					{
+						this.callerUser.sendMessage(BiomesAddon.BIOMES_WORLD_PROTECTION.getHintReference());
+					}
+					else
+					{
+						this.addon.logWarning("Biome change is not possible with Island mode " +
+							"for this world as BIOMES_WORLD_PROTECTION is disabled!");
+					}
+
+					return false;
+				}
+				else
+				{
+					if (this.targetUser.isOnline())
+					{
+						this.standingLocation = this.targetUser.getLocation();
+					}
+					else if (this.callerUser.isPlayer())
+					{
+						this.standingLocation = this.callerUser.getLocation();
+					}
+					else
+					{
+						this.addon.logWarning("Target Player is not online. Cannot find biome change location!");
+						return false;
+					}
+				}
+			}
+			else if (this.updateMode.equals(UpdateMode.ISLAND))
 			{
 				this.standingLocation = this.targetUser.getLocation();
 
@@ -185,18 +243,38 @@ public class BiomeUpdateHelper
 	 */
 	public void updateIslandBiome()
 	{
-		Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
-		int range = island.getRange();
+		int minX;
+		int minZ;
+		int maxX;
+		int maxZ;
 
-		int minX = island.getCenter().getBlockX() - range;
-		int minZ = island.getCenter().getBlockZ() - range;
+		// Limit island update range
+		if (this.worldProtectionFlag)
+		{
+			Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
+			int range = island.getRange();
 
-		int maxX = island.getCenter().getBlockX() + range;
-		int maxZ = island.getCenter().getBlockZ() + range;
+			minX = island.getCenter().getBlockX() - range;
+			minZ = island.getCenter().getBlockZ() - range;
+
+			maxX = island.getCenter().getBlockX() + range;
+			maxZ = island.getCenter().getBlockZ() + range;
+		}
+		else
+		{
+			// limit by island distance to avoid issues with long updating.
+			int range = this.addon.getPlugin().getIWM().getIslandDistance(this.world);
+
+			minX = this.standingLocation.getBlockX() - range;
+			minZ = this.standingLocation.getBlockZ() - range;
+
+			maxX = this.standingLocation.getBlockX() + range;
+			maxZ = this.standingLocation.getBlockZ() + range;
+		}
 
 		// Calculate minimal and maximal coordinate based on update mode.
 
-		BiomeUpdateTask task = new BiomeUpdateTask((BiomesAddon) this.addon, this.callerUser, this.world, this.biome);
+		BiomeUpdateTask task = new BiomeUpdateTask(this.addon, this.callerUser, this.world, this.biome);
 
 		switch (this.updateMode)
 		{
@@ -324,4 +402,10 @@ public class BiomeUpdateHelper
 	 * This variable stores if money from caller can be withdrawn.
 	 */
 	private boolean canWithdraw;
+
+	/**
+	 * This variable stores if world protection flag is enabled. Avoids checking it each
+	 * time as flag will not change its value while updating.
+	 */
+	private final boolean worldProtectionFlag;
 }

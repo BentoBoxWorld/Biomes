@@ -13,6 +13,7 @@ import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.database.objects.BiomesObject;
 
 import world.bentobox.biomes.panel.CommonGUI;
@@ -41,6 +42,14 @@ public class UpdateModeGUI extends CommonGUI
 
 		this.updateMode = this.addon.getSettings().getDefaultMode();
 		this.distanceValue = this.addon.getSettings().getDefaultSize();
+
+		if (this.updateMode.equals(UpdateMode.ISLAND) &&
+			!BiomesAddon.BIOMES_WORLD_PROTECTION.isSetForWorld(this.world))
+		{
+			// Fix default mode and size if WORLD flag is disabled.
+			this.updateMode = UpdateMode.SQUARE;
+			this.distanceValue = this.addon.getPlugin().getIWM().getIslandDistance(this.world);
+		}
 	}
 
 
@@ -57,8 +66,14 @@ public class UpdateModeGUI extends CommonGUI
 
 		// Map at the top of the GUI
 		panelBuilder.item(4, this.createButton(Button.HEADER));
+
 		// Choose Update Mode Type
-		panelBuilder.item(12, this.createButton(Button.ISLAND));
+		if (BiomesAddon.BIOMES_WORLD_PROTECTION.isSetForWorld(this.world))
+		{
+			// Island mode should be available only if world protection is enabled.
+			panelBuilder.item(12, this.createButton(Button.ISLAND));
+		}
+
 		panelBuilder.item(13, this.createButton(Button.CHUNK));
 		panelBuilder.item(14, this.createButton(Button.SQUARE));
 

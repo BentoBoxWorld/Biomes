@@ -7,9 +7,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
@@ -20,6 +18,7 @@ import world.bentobox.biomes.database.objects.BiomesObject;
 
 import world.bentobox.biomes.panel.CommonGUI;
 
+import world.bentobox.biomes.config.Settings.UpdateMode;
 import world.bentobox.biomes.config.Settings.VisibilityMode;
 import world.bentobox.biomes.utils.GuiUtils;
 
@@ -184,11 +183,32 @@ public class BiomesChooseGUI extends CommonGUI
 					}
 
 					arguments.add(biome.getUniqueId());
-					arguments.add(settings.getDefaultMode().name());
-					arguments.add(Integer.toString(settings.getDefaultSize()));
+
+					if (BiomesAddon.BIOMES_WORLD_PROTECTION.isSetForWorld(this.world))
+					{
+						arguments.add(settings.getDefaultMode().name());
+						arguments.add(Integer.toString(settings.getDefaultSize()));
+					}
+					else
+					{
+						// This fix issues when admin disables Advanced GUI and sets
+						// incompatible options
+
+						if (settings.getDefaultMode().equals(UpdateMode.ISLAND))
+						{
+							arguments.add(UpdateMode.SQUARE.name());
+							arguments.add(Integer.toString(this.addon.getPlugin().getIWM().getIslandDistance(this.world)));
+						}
+						else
+						{
+							arguments.add(settings.getDefaultMode().name());
+							arguments.add(Integer.toString(settings.getDefaultSize()));
+						}
+					}
 
 					this.callCommand(SET, arguments);
 
+					this.user.closeInventory();
 					return true;
 				}
 

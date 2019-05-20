@@ -10,7 +10,9 @@ import java.util.Optional;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.addons.GameModeAddon;
 import world.bentobox.bentobox.api.configuration.Config;
+import world.bentobox.bentobox.api.flags.Flag;
 import world.bentobox.bentobox.hooks.VaultHook;
+import world.bentobox.bentobox.managers.RanksManager;
 import world.bentobox.biomes.commands.admin.AdminCommand;
 import world.bentobox.biomes.commands.user.BiomesCommand;
 import world.bentobox.biomes.listeners.ChangeOwnerListener;
@@ -59,8 +61,6 @@ public class BiomesAddon extends Addon
 
 		this.hooked = false;
 
-		List<GameModeAddon> hookedGameModes = new ArrayList<>();
-
 		this.getPlugin().getAddonsManager().getGameModeAddons().forEach(gameModeAddon -> {
 			if (!this.settings.getDisabledGameModes().contains(gameModeAddon.getDescription().getName()))
 			{
@@ -76,8 +76,8 @@ public class BiomesAddon extends Addon
 				}
 
 				// Add FLAGS
-				//BIOMES_WORLD_PROTECTION.addGameModeAddon(gameModeAddon);
-				//BIOMES_ISLAND_PROTECTION.addGameModeAddon(gameModeAddon);
+				BIOMES_WORLD_PROTECTION.addGameModeAddon(gameModeAddon);
+				BIOMES_ISLAND_PROTECTION.addGameModeAddon(gameModeAddon);
 			}
 		});
 
@@ -120,8 +120,8 @@ public class BiomesAddon extends Addon
 			this.registerListener(new ChangeOwnerListener(this));
 
 			// Register Flags
-			//this.getPlugin().getFlagsManager().registerFlag(BIOMES_WORLD_PROTECTION);
-			//this.getPlugin().getFlagsManager().registerFlag(BIOMES_ISLAND_PROTECTION);
+			this.getPlugin().getFlagsManager().registerFlag(BIOMES_WORLD_PROTECTION);
+			this.getPlugin().getFlagsManager().registerFlag(BIOMES_ISLAND_PROTECTION);
 
 			// Register Request Handlers
 			//this.registerRequestHandler(YOUR_REQUEST_HANDLER);
@@ -297,6 +297,27 @@ public class BiomesAddon extends Addon
 	 * This indicate if level addon exists.
 	 */
 	private boolean levelProvided;
+
+
+// ---------------------------------------------------------------------
+// Section: Flags
+// ---------------------------------------------------------------------
+
+
+	/**
+	 * This flag allows to change biomes in any part of the world. It will not limit
+	 * player to their island. Useful for skygrid without protection flags.
+	 */
+	public static Flag BIOMES_WORLD_PROTECTION =
+		new Flag.Builder("BIOMES_WORLD_PROTECTION", Material.GRASS_BLOCK).type(Flag.Type.WORLD_SETTING).defaultSetting(true).build();
+
+	/**
+	 * This flag allows to define which users can change biomes. F.e. it can be set
+	 * that only Island owner can change biomes.
+	 * By default it is set to Visitor.
+	 */
+	public static Flag BIOMES_ISLAND_PROTECTION =
+		new Flag.Builder("BIOMES_ISLAND_PROTECTION", Material.GRASS_BLOCK).defaultRank(RanksManager.VISITOR_RANK).build();
 
 
 // ---------------------------------------------------------------------
