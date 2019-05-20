@@ -46,6 +46,7 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
 	{
 		this.biome = biome;
 		this.world = world;
+		this.friendlyName = biome.name();
 		this.setUniqueId(world + "-" + this.biome.toString().toLowerCase());
 	}
 
