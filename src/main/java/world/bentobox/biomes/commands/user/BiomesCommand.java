@@ -8,7 +8,7 @@ import world.bentobox.bentobox.api.addons.GameModeAddon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.biomes.BiomesAddon;
-import world.bentobox.biomes.panel.user.BiomesChooseGUI;
+import world.bentobox.biomes.panels.user.BiomesChooseGUI;
 
 
 /**

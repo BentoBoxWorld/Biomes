@@ -1,4 +1,4 @@
-package world.bentobox.biomes.panel.util;
+package world.bentobox.biomes.panels.util;
 
 
 import org.bukkit.Material;
@@ -10,7 +10,7 @@ import java.util.function.BiConsumer;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
-import world.bentobox.biomes.utils.GuiUtils;
+import world.bentobox.biomes.panels.GuiUtils;
 
 
 /**

@@ -7,7 +7,7 @@ import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.commands.admin.AdminReloadCommand;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.biomes.BiomesAddon;
-import world.bentobox.biomes.panel.admin.AdminGUI;
+import world.bentobox.biomes.panels.admin.AdminGUI;
 
 
 /**

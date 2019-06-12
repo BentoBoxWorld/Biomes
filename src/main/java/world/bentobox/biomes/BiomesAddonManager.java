@@ -17,7 +17,7 @@ import world.bentobox.bentobox.util.ItemParser;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.config.Settings.VisibilityMode;
-import world.bentobox.biomes.utils.GuiUtils;
+import world.bentobox.biomes.panels.GuiUtils;
 
 
 /**

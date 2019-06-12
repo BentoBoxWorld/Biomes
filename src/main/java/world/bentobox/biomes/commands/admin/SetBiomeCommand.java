@@ -11,7 +11,7 @@ import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.commands.ExpandedCompositeCommand;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.config.Settings.UpdateMode;
-import world.bentobox.biomes.panel.admin.ListUsersGUI;
+import world.bentobox.biomes.panels.admin.ListUsersGUI;
 import world.bentobox.biomes.tasks.BiomeUpdateHelper;
 
 /**

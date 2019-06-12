@@ -1,4 +1,4 @@
-package world.bentobox.biomes.panel.user;
+package world.bentobox.biomes.panels.user;
 
 
 import org.bukkit.Material;
@@ -16,11 +16,11 @@ import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.config.Settings;
 import world.bentobox.biomes.database.objects.BiomesObject;
 
-import world.bentobox.biomes.panel.CommonGUI;
+import world.bentobox.biomes.panels.CommonGUI;
 
 import world.bentobox.biomes.config.Settings.UpdateMode;
 import world.bentobox.biomes.config.Settings.VisibilityMode;
-import world.bentobox.biomes.utils.GuiUtils;
+import world.bentobox.biomes.panels.GuiUtils;
 
 
 /**

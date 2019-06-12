@@ -13,8 +13,8 @@ import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddonManager;
 import world.bentobox.biomes.commands.ExpandedCompositeCommand;
 import world.bentobox.biomes.database.objects.BiomesObject;
-import world.bentobox.biomes.panel.admin.ListBiomesGUI;
-import world.bentobox.biomes.utils.GuiUtils;
+import world.bentobox.biomes.panels.admin.ListBiomesGUI;
+import world.bentobox.biomes.panels.GuiUtils;
 
 
 /**

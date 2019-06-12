@@ -1,4 +1,4 @@
-package world.bentobox.biomes.panel.admin;
+package world.bentobox.biomes.panels.admin;
 
 
 import org.bukkit.Material;
@@ -11,8 +11,8 @@ import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.database.objects.BiomesObject;
-import world.bentobox.biomes.panel.CommonGUI;
-import world.bentobox.biomes.utils.GuiUtils;
+import world.bentobox.biomes.panels.CommonGUI;
+import world.bentobox.biomes.panels.GuiUtils;
 
 
 public class ListBiomesGUI extends CommonGUI

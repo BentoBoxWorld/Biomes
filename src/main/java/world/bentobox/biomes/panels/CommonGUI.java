@@ -1,4 +1,4 @@
-package world.bentobox.biomes.panel;
+package world.bentobox.biomes.panels;
 
 
 import org.bukkit.Material;
