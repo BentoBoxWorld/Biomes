@@ -27,7 +27,10 @@ public class BiomeUpdateTask extends BukkitRunnable
     @Override
     public void run()
     {
-        this.user.sendMessage("biomes.messages.update-start");
+        if (this.user.isPlayer())
+        {
+            this.user.sendMessage("biomes.messages.update-start");
+        }
 
         // Update world coordinates with new biomes.
 
@@ -41,17 +44,20 @@ public class BiomeUpdateTask extends BukkitRunnable
             }
         }
 
-        this.user.sendMessage("biomes.messages.update-done",
+        if (this.user.isPlayer())
+        {
+            this.user.sendMessage("biomes.messages.update-done",
                 "[biome]",
                 this.biome.getFriendlyName());
 
-        if (user.isPlayer()) {
             this.addon.log(this.user.getName() + " change biome to " +
-                    this.biome.getBiome() + " from x=" + this.minX + ":" + this.maxX + " z=" + this.minZ + ":" + this.maxZ +
-                    " while standing on x=" + this.user.getLocation().getBlockX() + " z=" + this.user.getLocation().getBlockZ());
-        } else {
+                this.biome.getBiome() + " from x=" + this.minX + ":" + this.maxX + " z=" + this.minZ + ":" + this.maxZ +
+                " while standing on x=" + this.user.getLocation().getBlockX() + " z=" + this.user.getLocation().getBlockZ());
+        }
+        else
+        {
             this.addon.log("Console changed biome to " +
-                    this.biome.getBiome() + " from x=" + this.minX + ":" + this.maxX + " z=" + this.minZ + ":" + this.maxZ);
+                this.biome.getBiome() + " from x=" + this.minX + ":" + this.maxX + " z=" + this.minZ + ":" + this.maxZ);
         }
     }
 
