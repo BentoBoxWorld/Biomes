@@ -1,6 +1,7 @@
 package world.bentobox.biomes.tasks;
 
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -8,6 +9,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.database.objects.BiomesObject;
+import world.bentobox.biomes.events.BiomeChangedEvent;
 
 
 /**
@@ -59,6 +61,16 @@ public class BiomeUpdateTask extends BukkitRunnable
             this.addon.log("Console changed biome to " +
                 this.biome.getBiome() + " from x=" + this.minX + ":" + this.maxX + " z=" + this.minZ + ":" + this.maxZ);
         }
+
+        // Fire event that biome is changed.
+        Bukkit.getPluginManager().callEvent(
+            new BiomeChangedEvent(this.biome.getUniqueId(),
+                this.biome.getBiome(),
+                this.user.getUniqueId(),
+                this.minX,
+                this.minZ,
+                this.maxX,
+                this.maxZ));
     }
 
 
