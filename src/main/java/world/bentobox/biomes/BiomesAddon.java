@@ -15,6 +15,9 @@ import world.bentobox.bentobox.hooks.VaultHook;
 import world.bentobox.bentobox.managers.RanksManager;
 import world.bentobox.biomes.commands.admin.AdminCommand;
 import world.bentobox.biomes.commands.user.BiomesCommand;
+import world.bentobox.biomes.handlers.BiomeDataRequestHandler;
+import world.bentobox.biomes.handlers.BiomeListRequestHandler;
+import world.bentobox.biomes.handlers.ChangeBiomeRequestHandler;
 import world.bentobox.biomes.listeners.ChangeOwnerListener;
 import world.bentobox.biomes.config.Settings;
 import world.bentobox.level.Level;
@@ -120,11 +123,14 @@ public class BiomesAddon extends Addon
 			this.registerListener(new ChangeOwnerListener(this));
 
 			// Register Flags
-			this.getPlugin().getFlagsManager().registerFlag(BIOMES_WORLD_PROTECTION);
-			this.getPlugin().getFlagsManager().registerFlag(BIOMES_ISLAND_PROTECTION);
+			this.registerFlag(BIOMES_WORLD_PROTECTION);
+			this.registerFlag(BIOMES_ISLAND_PROTECTION);
 
 			// Register Request Handlers
-			//this.registerRequestHandler(YOUR_REQUEST_HANDLER);
+			this.registerRequestHandler(new BiomeDataRequestHandler(this));
+			this.registerRequestHandler(new BiomeListRequestHandler(this));
+
+			this.registerRequestHandler(new ChangeBiomeRequestHandler(this));
 		}
 		else
 		{
