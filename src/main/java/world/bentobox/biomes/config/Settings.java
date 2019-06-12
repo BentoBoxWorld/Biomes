@@ -227,7 +227,7 @@ public class Settings implements ConfigObject
 	{
 		ISLAND,
 		CHUNK,
-		SQUARE;
+		RANGE;
 
 		/**
 		 * This method returns stored parameter from string.
@@ -314,7 +314,7 @@ public class Settings implements ConfigObject
 	@ConfigComment("Valid values are:")
 	@ConfigComment("    'ISLAND' - updates biome on whole island")
 	@ConfigComment("    'CHUNK' - updates biome on whole chunks around player")
-	@ConfigComment("    'SQUARE' - updates biome by block in given range")
+	@ConfigComment("    'RANGE' - updates biome by block in given range")
 	@ConfigEntry(path = "default-mode")
 	private UpdateMode defaultMode = UpdateMode.ISLAND;
 

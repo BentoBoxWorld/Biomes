@@ -6,9 +6,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
@@ -47,7 +45,7 @@ public class UpdateModeGUI extends CommonGUI
 			!BiomesAddon.BIOMES_WORLD_PROTECTION.isSetForWorld(this.world))
 		{
 			// Fix default mode and size if WORLD flag is disabled.
-			this.updateMode = UpdateMode.SQUARE;
+			this.updateMode = UpdateMode.RANGE;
 			this.distanceValue = this.addon.getPlugin().getIWM().getIslandDistance(this.world);
 		}
 	}
@@ -271,11 +269,11 @@ public class UpdateModeGUI extends CommonGUI
 				itemBuilder.name(this.user.getTranslation("biomes.gui.descriptions.update-mode.square"));
 				itemBuilder.icon(new ItemStack(Material.GLASS, number));
 				itemBuilder.clickHandler((panel, user1, clickType, i) -> {
-					this.updateMode = UpdateMode.SQUARE;
+					this.updateMode = UpdateMode.RANGE;
 					this.build();
 					return true;
 				});
-				itemBuilder.glow(this.updateMode.equals(UpdateMode.SQUARE));
+				itemBuilder.glow(this.updateMode.equals(UpdateMode.RANGE));
 
 				break;
 			}

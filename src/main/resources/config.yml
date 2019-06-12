@@ -14,7 +14,7 @@ advanced-menu: true
 # Valid values are:
 #     'ISLAND' - updates biome on whole island
 #     'CHUNK' - updates biome on whole chunks around player
-#     'SQUARE' - updates biome by block in given range
+#     'RANGE' - updates biome by block in given range
 default-mode: ISLAND
 #
 # For advanced menu this indicate how large range will be set on GUI opening.

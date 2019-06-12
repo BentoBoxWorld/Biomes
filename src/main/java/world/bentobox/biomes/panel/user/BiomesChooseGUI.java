@@ -196,7 +196,7 @@ public class BiomesChooseGUI extends CommonGUI
 
 						if (settings.getDefaultMode().equals(UpdateMode.ISLAND))
 						{
-							arguments.add(UpdateMode.SQUARE.name());
+							arguments.add(UpdateMode.RANGE.name());
 							arguments.add(Integer.toString(this.addon.getPlugin().getIWM().getIslandDistance(this.world)));
 						}
 						else

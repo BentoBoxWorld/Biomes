@@ -6,12 +6,9 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import java.util.Optional;
 
-import world.bentobox.bentobox.api.addons.Addon;
-import world.bentobox.bentobox.api.addons.request.AddonRequestBuilder;
 import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.objects.Island;
-import world.bentobox.bentobox.hooks.VaultHook;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.database.objects.BiomesObject;
@@ -297,7 +294,7 @@ public class BiomeUpdateHelper
 				task.setMaxZ(Math.min(maxZ, (chunk.getZ() + this.updateNumber) << 4) - 1);
 
 				break;
-			case SQUARE:
+			case RANGE:
 				int halfDiameter = this.updateNumber / 2;
 
 				int x = this.standingLocation.getBlockX();

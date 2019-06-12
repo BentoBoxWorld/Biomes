@@ -117,7 +117,7 @@ public class EditSettingsGUI extends CommonGUI
 					this.user.getTranslation("biomes.gui.descriptions.update-mode.island"));
 				values.add((this.settings.getDefaultMode().equals(Settings.UpdateMode.CHUNK) ? "&2" : "&c") +
 					this.user.getTranslation("biomes.gui.descriptions.update-mode.chunk"));
-				values.add((this.settings.getDefaultMode().equals(Settings.UpdateMode.SQUARE) ? "&2" : "&c") +
+				values.add((this.settings.getDefaultMode().equals(Settings.UpdateMode.RANGE) ? "&2" : "&c") +
 					this.user.getTranslation("biomes.gui.descriptions.update-mode.square"));
 				description = values;
 
@@ -129,7 +129,7 @@ public class EditSettingsGUI extends CommonGUI
 				{
 					icon = new ItemStack(Material.DIRT);
 				}
-				else if (this.settings.getDefaultMode().equals(Settings.UpdateMode.SQUARE))
+				else if (this.settings.getDefaultMode().equals(Settings.UpdateMode.RANGE))
 				{
 					icon = new ItemStack(Material.GLASS);
 				}
