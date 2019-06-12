@@ -7,10 +7,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import java.util.Optional;
 
-import world.bentobox.bentobox.api.addons.Addon;
+import world.bentobox.bentobox.api.addons.GameModeAddon;
 import world.bentobox.bentobox.api.events.team.TeamEvent.TeamSetownerEvent;
 import world.bentobox.bentobox.api.user.User;
-import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.BiomesAddonManager;
 import world.bentobox.biomes.database.objects.BiomesObject;
@@ -39,30 +38,19 @@ public class ChangeOwnerListener implements Listener
 			return;
 		}
 
-		boolean hasPermissions;
-
 		User newUser = User.getInstance(event.getNewOwner());
 
-		Optional<Addon> skyBlock = this.addon.getPlugin().getAddonsManager().getAddonByName("BSkyBlock");
-		Optional<Addon> acidIsland = this.addon.getPlugin().getAddonsManager().getAddonByName("AcidIsland");
+		Optional<GameModeAddon> gameModeAddon =
+			this.addon.getPlugin().getIWM().getAddon(event.getIsland().getWorld());
 
-		String defaultBiome;
+		final boolean hasPermissions;
+		final String defaultBiome;
 
-		// TODO: The same issue as with BiomesAddon class. It gets values but better would be to add them as
-		// dependencies.
-		if (skyBlock.isPresent() &&
-			skyBlock.get().getConfig().getString("world.world-name").
-				equalsIgnoreCase(Util.getWorld(event.getIsland().getWorld()).getName()))
+		if (gameModeAddon.isPresent())
 		{
-			hasPermissions = newUser.hasPermission("bskyblock.biomes.set");
-			defaultBiome = skyBlock.get().getConfig().getString("world.default-biome");
-		}
-		else if (acidIsland.isPresent() &&
-			acidIsland.get().getConfig().getString("world.world-name").
-				equalsIgnoreCase(Util.getWorld(event.getIsland().getWorld()).getName()))
-		{
-			hasPermissions = newUser.hasPermission("acidisland.biomes.set");
-			defaultBiome = acidIsland.get().getConfig().getString("world.default-biome");
+			GameModeAddon addon = gameModeAddon.get();
+			hasPermissions = newUser.hasPermission(addon.getPermissionPrefix() + ".biomes.set");
+			defaultBiome = addon.getConfig().getString("world.default-biome", "PLAINS");
 		}
 		else
 		{
