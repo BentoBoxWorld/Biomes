@@ -254,11 +254,13 @@ public class BiomeUpdateHelper
 			Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
 			int range = island.getRange();
 
-			minX = island.getCenter().getBlockX() - range;
-			minZ = island.getCenter().getBlockZ() - range;
+			minX = island.getMinX();
+			minZ = island.getMinZ();
 
-			maxX = island.getCenter().getBlockX() + range;
-			maxZ = island.getCenter().getBlockZ() + range;
+			// That's how it is in Island#inIslandSpace
+
+			maxX = island.getMinX() + range * 2 - 1;
+			maxZ = island.getMinZ() + range * 2 - 1;
 		}
 		else
 		{
