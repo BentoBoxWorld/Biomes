@@ -7,7 +7,7 @@ import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.commands.admin.AdminReloadCommand;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.biomes.BiomesAddon;
-import world.bentobox.biomes.panel.admin.AdminMainPanel;
+import world.bentobox.biomes.panels.admin.AdminGUI;
 
 
 /**
@@ -52,7 +52,7 @@ public class AdminCommand extends CompositeCommand
 		if (user.isPlayer())
 		{
 			// Create GUI
-			new AdminMainPanel(this.addon,
+			new AdminGUI(this.addon,
 				this.getWorld(),
 				user,
 				this.getTopLabel(),

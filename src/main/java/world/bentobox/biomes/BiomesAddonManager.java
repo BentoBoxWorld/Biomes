@@ -9,13 +9,15 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.Database;
+import world.bentobox.bentobox.util.ItemParser;
 import world.bentobox.bentobox.util.Util;
-import world.bentobox.biomes.objects.BiomesObject;
-import world.bentobox.biomes.objects.Settings.VisibilityMode;
-import world.bentobox.biomes.utils.Utils;
+import world.bentobox.biomes.database.objects.BiomesObject;
+import world.bentobox.biomes.config.Settings.VisibilityMode;
+import world.bentobox.biomes.panels.GuiUtils;
 
 
 /**
@@ -33,10 +35,7 @@ public class BiomesAddonManager
 		this.addon = addon;
 
 		this.biomesDatabase = new Database<>(addon, BiomesObject.class);
-
-		// Currently only 2 game modes.
-		this.worldBiomeList = new HashMap<>(2);
-		this.biomesMap = new HashMap<>(Biome.values().length * 2);
+		this.biomesCacheData = new HashMap<>(Biome.values().length * 2);
 
 		this.biomesFile = new File(this.addon.getDataFolder(), "biomes.yml");
 
@@ -45,7 +44,7 @@ public class BiomesAddonManager
 			this.addon.saveResource("biomes.yml", false);
 		}
 
-		this.initBiomes();
+		this.load();
 	}
 
 
@@ -57,34 +56,24 @@ public class BiomesAddonManager
 	/**
 	 * Creates biomes cache.
 	 */
-	private void initBiomes()
+	private void load()
 	{
-		this.worldBiomeList.clear();
+		this.biomesCacheData.clear();
 		this.addon.getLogger().info("Loading biomes...");
 
-		this.biomesDatabase.loadObjects().forEach(this::storeBiome);
-
-		for (Map.Entry<String, List<BiomesObject>> entry : this.worldBiomeList.entrySet())
-		{
-			entry.getValue().sort(Comparator.comparingInt(BiomesObject::getBiomeID));
-		}
+		this.biomesDatabase.loadObjects().forEach(this::loadBiomes);
 	}
 
 
 	/**
 	 * This class reload
 	 */
-	public void reloadManager()
+	public void reload()
 	{
 		this.addon.getLogger().info("Reloading biomes...");
 
 		this.biomesDatabase = new Database<>(this.addon, BiomesObject.class);
-		this.biomesDatabase.loadObjects().forEach(this::storeBiome);
-
-		for (Map.Entry<String, List<BiomesObject>> entry : this.worldBiomeList.entrySet())
-		{
-			entry.getValue().sort(Comparator.comparingInt(BiomesObject::getBiomeID));
-		}
+		this.biomesDatabase.loadObjects().forEach(this::loadBiomes);
 	}
 
 
@@ -95,7 +84,7 @@ public class BiomesAddonManager
 
 	/**
 	 * This method allows to store single biome object.
-	 * @param biome Biome that must be stored.
+	 * @param biome Biome that must be saved in database.
 	 */
 	public void saveBiome(BiomesObject biome)
 	{
@@ -104,65 +93,43 @@ public class BiomesAddonManager
 
 
 	/**
-	 * Save configs and biomes data
+	 * Save biomes from cache into database
 	 */
-	private void save()
+	public void save()
 	{
-		for (Map.Entry<String, List<BiomesObject>> entry : this.worldBiomeList.entrySet())
-		{
-			entry.getValue().forEach(this.biomesDatabase::saveObject);
-		}
+		this.biomesCacheData.values().forEach(this.biomesDatabase::saveObject);
 	}
 
-
 	/**
-	 * Save to the database
-	 * @param async - if true, saving will be done async
-	 */
-	public void save(boolean async)
-	{
-		if (async)
-		{
-			this.addon.getServer().getScheduler().
-				runTaskAsynchronously(this.addon.getPlugin(), bukkitTask -> BiomesAddonManager.this.save());
-		}
-		else
-		{
-			this.save();
-		}
-	}
-
-
-	/**
-	 * Store biomes silently. Used when loading.
+	 * Loads biomes in cache silently. Used when loading.
 	 * @param biome that must be stored.
 	 * @return true if successful
 	 */
-	private boolean storeBiome(BiomesObject biome)
+	private boolean loadBiomes(BiomesObject biome)
 	{
-		return this.storeBiome(biome, true, null, true);
+		return this.loadBiomes(biome, true, null, true);
 	}
 
 
 	/**
-	 * Stores the biomes.
+	 * Load biomes in the cache.
 	 * @param biome - biome that must be stored.
 	 * @param overwrite - true if previous biomes should be overwritten
 	 * @param user - user making the request
 	 * @param silent - if true, no messages are sent to user
 	 * @return - true if imported
 	 */
-	public boolean storeBiome(BiomesObject biome, boolean overwrite, User user, boolean silent)
+	public boolean loadBiomes(BiomesObject biome, boolean overwrite, User user, boolean silent)
 	{
 		// Contains in array list is not fast.. but list is not so large, so it is ok there.
 
-		if (this.biomesMap.containsKey(biome.getUniqueId()))
+		if (this.biomesCacheData.containsKey(biome.getUniqueId()))
 		{
 			if (!overwrite)
 			{
 				if (!silent)
 				{
-					user.sendMessage("biomes.messages.warnings.skipping",
+					user.sendMessage("biomes.messages.skipping",
 						"[biome]",
 						biome.getFriendlyName());
 				}
@@ -173,31 +140,24 @@ public class BiomesAddonManager
 			{
 				if (!silent)
 				{
-					user.sendMessage("biomes.messages.warnings.overwriting",
+					user.sendMessage("biomes.messages.overwriting",
 						"[biome]",
 						biome.getFriendlyName());
 				}
 
-				this.biomesMap.replace(biome.getUniqueId(), biome);
-				List<BiomesObject> biomesList = this.worldBiomeList.get(biome.getWorld());
-				// Assert INDEX out of bounds. If happens then issue is in biome loading not here!
-				biomesList.set(biomesList.indexOf(biome), biome);
-
+				this.biomesCacheData.replace(biome.getUniqueId(), biome);
 				return true;
 			}
 		}
 
 		if (!silent)
 		{
-			user.sendMessage("biomes.messages.information.imported",
+			user.sendMessage("biomes.messages.imported",
 				"[biome]",
 				biome.getFriendlyName());
 		}
 
-		this.biomesMap.put(biome.getUniqueId(), biome);
-		this.worldBiomeList.computeIfAbsent(biome.getWorld(),
-			s -> new ArrayList<>(Biome.values().length)).add(biome);
-
+		this.biomesCacheData.put(biome.getUniqueId(), biome);
 		return true;
 	}
 
@@ -233,7 +193,9 @@ public class BiomesAddonManager
 
 		ConfigurationSection reader = config.getConfigurationSection("biomes.biomesList");
 
-		Map<String, Biome> biomeNameMap = Utils.getBiomeNameMap();
+		Map<String, Biome> biomeNameMap = BiomesAddonManager.getBiomeNameMap();
+
+		int counter = 0;
 
 		for (String biome : reader.getKeys(false))
 		{
@@ -247,23 +209,30 @@ public class BiomesAddonManager
 				newBiomeObject.setFriendlyName(details.getString("friendlyName", biome));
 
 				newBiomeObject.setDescription(
-					Utils.splitString(details.getString("description", "")));
-				newBiomeObject.setIcon(
-					Utils.parseItem(this.addon, details.getString("icon") + ":1"));
+					GuiUtils.stringSplit(details.getString("description", ""),
+						this.addon.getSettings().getLoreLineLength()));
+				newBiomeObject.setIcon(ItemParser.parse(details.getString("icon") + ":1"));
 
 				newBiomeObject.setRequiredLevel(details.getInt("islandLevel", 0));
 				newBiomeObject.setRequiredCost(details.getInt("cost", 0));
-				newBiomeObject.setPermission(details.getString("permission", ""));
 
-				this.biomesMap.put(newBiomeObject.getUniqueId(), newBiomeObject);
-				this.worldBiomeList.computeIfAbsent(newBiomeObject.getWorld(),
-					s -> new ArrayList<>(Biome.values().length)).add(newBiomeObject);
+				List<String> permissions = details.getStringList("permission");
+
+				if (permissions == null || permissions.isEmpty())
+				{
+					newBiomeObject.setRequiredPermissions(Collections.emptySet());
+				}
+				else
+				{
+					newBiomeObject.setRequiredPermissions(new HashSet<>(permissions));
+				}
+
+				this.biomesCacheData.put(newBiomeObject.getUniqueId(), newBiomeObject);
+				counter++;
 			}
 		}
 
-		this.addon.log("Imported " + this.worldBiomeList.get(world).size() + " biomes into " + world);
-
-		this.worldBiomeList.get(world).sort(Comparator.comparingInt(BiomesObject::getBiomeID));
+		this.addon.log("Imported " + counter + " biomes into " + world);
 		this.save();
 	}
 
@@ -294,7 +263,7 @@ public class BiomesAddonManager
 	{
 		if (!this.biomesFile.exists())
 		{
-			user.sendMessage("biomes.messages.errors.no-file");
+			user.sendMessage("biomes.errors.no-file");
 			return false;
 		}
 
@@ -306,7 +275,7 @@ public class BiomesAddonManager
 		}
 		catch (IOException | InvalidConfigurationException e)
 		{
-			user.sendMessage("biomes.messages.errors.no-load",
+			user.sendMessage("biomes.errors.no-load",
 				"[message]",
 				e.getMessage());
 			return false;
@@ -315,8 +284,7 @@ public class BiomesAddonManager
 		this.readBiomes(config, user, world, overwrite);
 
 		// Update biome order.
-		this.worldBiomeList.get(world).sort(Comparator.comparingInt(BiomesObject::getBiomeID));
-		this.addon.getAddonManager().save(false);
+		this.addon.getAddonManager().save();
 		return true;
 	}
 
@@ -334,13 +302,13 @@ public class BiomesAddonManager
 
 		ConfigurationSection reader = config.getConfigurationSection("biomes.biomesList");
 
-		Map<String, Biome> biomeNameMap = Utils.getBiomeNameMap();
+		Map<String, Biome> biomeNameMap = BiomesAddonManager.getBiomeNameMap();
 
 		for (String biome : reader.getKeys(false))
 		{
 			if (biomeNameMap.containsKey(biome.toUpperCase()))
 			{
-				BiomesObject newBiomeObject = new BiomesObject(biomeNameMap.get(biome.toUpperCase()), world);
+				BiomesObject newBiomeObject = new BiomesObject(Biome.valueOf(biome.toUpperCase()), world);
 				newBiomeObject.setDeployed(true);
 
 				ConfigurationSection details = reader.getConfigurationSection(biome);
@@ -348,15 +316,25 @@ public class BiomesAddonManager
 				newBiomeObject.setFriendlyName(details.getString("friendlyName", biome));
 
 				newBiomeObject.setDescription(
-					Utils.splitString(details.getString("description", "")));
-				newBiomeObject.setIcon(
-					Utils.parseItem(this.addon, details.getString("icon") + ":1"));
+					GuiUtils.stringSplit(details.getString("description", ""),
+						this.addon.getSettings().getLoreLineLength()));
+				newBiomeObject.setIcon(ItemParser.parse(details.getString("icon") + ":1"));
 
 				newBiomeObject.setRequiredLevel(details.getInt("islandLevel", 0));
 				newBiomeObject.setRequiredCost(details.getInt("cost", 0));
-				newBiomeObject.setPermission(details.getString("permission", ""));
 
-				if (this.addon.getAddonManager().storeBiome(
+				List<String> permissions = details.getStringList("permission");
+
+				if (permissions == null || permissions.isEmpty())
+				{
+					newBiomeObject.setRequiredPermissions(Collections.emptySet());
+				}
+				else
+				{
+					newBiomeObject.setRequiredPermissions(new HashSet<>(permissions));
+				}
+
+				if (this.addon.getAddonManager().loadBiomes(
 					newBiomeObject, overwrite, user, false))
 				{
 					size++;
@@ -364,15 +342,47 @@ public class BiomesAddonManager
 			}
 			else
 			{
-				user.sendMessage("biomes.messages.errors.load-biome",
+				user.sendMessage("biomes.errors.load-biome",
 					"[biome]",
 					biome);
 			}
 		}
 
-		user.sendMessage("biomes.messages.information.import-count",
+		user.sendMessage("biomes.messages.import-count",
 			"[number]",
 			String.valueOf(size));
+	}
+
+
+// ---------------------------------------------------------------------
+// Section: Creating
+// ---------------------------------------------------------------------
+
+
+	/**
+	 * This method creates and returns new biome with given uniqueID.
+	 * @param uniqueID - new ID for challenge.
+	 * @return biome that is currently created.
+	 */
+	public BiomesObject createBiome(String uniqueID)
+	{
+		if (!this.containsBiome(uniqueID))
+		{
+			BiomesObject biome = new BiomesObject();
+			biome.setUniqueId(uniqueID);
+
+			// Sets default biome as VOID.
+			biome.setBiome(Biome.THE_VOID);
+
+			this.saveBiome(biome);
+			this.loadBiomes(biome);
+
+			return biome;
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 
@@ -417,7 +427,8 @@ public class BiomesAddonManager
 		allBiomeList.forEach(biomesObject -> {
 			if (biomesObject.isDeployed() &&
 				(visibilityMode.equals(VisibilityMode.DEPLOYED) ||
-					user.hasPermission(biomesObject.getPermission())))
+					biomesObject.getRequiredPermissions().isEmpty() ||
+					biomesObject.getRequiredPermissions().stream().allMatch(user::hasPermission)))
 			{
 				returnBiomesList.add(biomesObject);
 			}
@@ -434,7 +445,9 @@ public class BiomesAddonManager
 	 */
 	public List<BiomesObject> getBiomes(World world)
 	{
-		return this.getBiomes(Util.getWorld(world).getName());
+		world = Util.getWorld(world);
+
+		return world == null ? Collections.emptyList() : this.getBiomes(world.getName());
 	}
 
 
@@ -445,7 +458,10 @@ public class BiomesAddonManager
 	 */
 	public List<BiomesObject> getBiomes(String worldName)
 	{
-		return this.worldBiomeList.getOrDefault(worldName, Collections.emptyList());
+		return this.biomesCacheData.values().stream().
+			sorted(BiomesObject::compareTo).
+			filter(biome -> biome.getUniqueId().startsWith(worldName)).
+			collect(Collectors.toList());
 	}
 
 
@@ -457,7 +473,34 @@ public class BiomesAddonManager
 	 */
 	public BiomesObject getBiomeFromString(String biomeUniqueID)
 	{
-		return this.biomesMap.getOrDefault(biomeUniqueID, null);
+		return this.biomesCacheData.getOrDefault(biomeUniqueID, null);
+	}
+
+
+	/**
+	 * Check if a biome exists - case insensitive
+	 *
+	 * @param name - name of biome
+	 * @return true if it exists, otherwise false
+	 */
+	public boolean containsBiome(String name)
+	{
+		if (this.biomesCacheData.containsKey(name))
+		{
+			return true;
+		}
+		else
+		{
+			// check database.
+			if (this.biomesDatabase.objectExists(name))
+			{
+				BiomesObject biome = this.biomesDatabase.loadObject(name);
+				this.biomesCacheData.put(name, biome);
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 
@@ -467,12 +510,44 @@ public class BiomesAddonManager
 	 */
 	public void removeBiome(BiomesObject biome)
 	{
-		if (this.biomesMap.containsKey(biome.getUniqueId()))
+		if (this.biomesCacheData.containsKey(biome.getUniqueId()))
 		{
-			this.biomesMap.remove(biome.getUniqueId());
-			this.worldBiomeList.get(biome.getWorld()).remove(biome);
+			this.biomesCacheData.remove(biome.getUniqueId());
 			this.biomesDatabase.deleteObject(biome);
 		}
+	}
+
+
+	/**
+	 * This method returns map that contains biomes name as key and biome as value.
+	 * @return Map that contains relation from biome name to biome.
+	 */
+	public static Map<String, Biome> getBiomeNameMap()
+	{
+		Biome[] biomes = Biome.values();
+
+		Map<String, Biome> returnMap = new HashMap<>(biomes.length);
+
+		for (Biome biome : biomes)
+		{
+			returnMap.put(biome.name(), biome);
+		}
+
+		return returnMap;
+	}
+
+
+	/**
+	 * This method returns if in given world biomes are setup.
+	 * @param world World that must be checked.
+	 * @return True if in given world exist biomes.
+	 */
+	public boolean hasAnyBiome(World world)
+	{
+		String worldName = Util.getWorld(world) == null ? "" : Util.getWorld(world).getName();
+
+		return !worldName.isEmpty() &&
+			this.biomesCacheData.values().stream().anyMatch(biome -> biome.getUniqueId().startsWith(worldName));
 	}
 
 
@@ -486,14 +561,9 @@ public class BiomesAddonManager
 	private BiomesAddon addon;
 
 	/**
-	 * Variable stores map that links worlds to their biomes.
-	 */
-	private Map<String, List<BiomesObject>> worldBiomeList;
-
-	/**
 	 * Variable stores map that links String to loaded biomes object.
 	 */
-	private Map<String, BiomesObject> biomesMap;
+	private Map<String, BiomesObject> biomesCacheData;
 
 	/**
 	 * Variable stores database of biomes objects.

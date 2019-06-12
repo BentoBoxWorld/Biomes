@@ -6,15 +6,14 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import java.util.Optional;
 
-import world.bentobox.bentobox.api.addons.Addon;
-import world.bentobox.bentobox.api.addons.request.AddonRequestBuilder;
 import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.objects.Island;
-import world.bentobox.bentobox.hooks.VaultHook;
+import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
-import world.bentobox.biomes.objects.BiomesObject;
-import world.bentobox.biomes.objects.Settings.UpdateMode;
+import world.bentobox.biomes.database.objects.BiomesObject;
+import world.bentobox.biomes.config.Settings.UpdateMode;
+import world.bentobox.level.objects.LevelsData;
 
 
 /**
@@ -23,7 +22,7 @@ import world.bentobox.biomes.objects.Settings.UpdateMode;
  */
 public class BiomeUpdateHelper
 {
-	public BiomeUpdateHelper(Addon addon,
+	public BiomeUpdateHelper(BiomesAddon addon,
 		User callerUser,
 		User targetUser,
 		BiomesObject biome,
@@ -40,6 +39,8 @@ public class BiomeUpdateHelper
 		this.updateMode = updateMode;
 		this.updateNumber = updateNumber;
 		this.canWithdraw = canWithdraw;
+
+		this.worldProtectionFlag = BiomesAddon.BIOMES_WORLD_PROTECTION.isSetForWorld(this.world);
 	}
 
 
@@ -51,11 +52,9 @@ public class BiomeUpdateHelper
 	{
 		if (this.callerUser == this.targetUser)
 		{
-			if (!this.callerUser.hasPermission(this.biome.getPermission()))
+			if (!this.checkPermissions())
 			{
-				this.callerUser.sendMessage("biomes.messages.errors.missing-permission",
-					"[permission]",
-					this.biome.getPermission());
+				this.callerUser.sendMessage("general.errors.no-permission");
 				return false;
 			}
 
@@ -63,85 +62,172 @@ public class BiomeUpdateHelper
 			{
 				// Cannot update negative numbers.
 
-				this.callerUser.sendMessage("biomes.messages.errors.incorrect-range",
+				this.callerUser.sendMessage("biomes.errors.incorrect-range",
 					TextVariables.NUMBER,
 					Integer.toString(this.updateNumber));
 				return false;
 			}
 
-			Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
+			if (this.worldProtectionFlag)
+			{
+				Island island =
+					this.addon.getIslands().getIsland(this.world, this.targetUser);
 
-			if (island == null)
+				if (island == null)
+				{
+					// User has no island.
+					this.callerUser.sendMessage("general.errors.player-has-no-island");
+					return false;
+				}
+
+				Optional<Island> onIsland =
+					this.addon.getIslands().getIslandAt(this.callerUser.getLocation());
+
+				if (!onIsland.isPresent() || onIsland.get() != island)
+				{
+					// User is not on his island.
+
+					this.callerUser.sendMessage("biomes.errors.not-on-island");
+					return false;
+				}
+
+				if (!island.isAllowed(this.callerUser, BiomesAddon.BIOMES_ISLAND_PROTECTION))
+				{
+					// This can be checked only if island exists.
+
+					this.callerUser.sendMessage("biomes.errors.no-rank");
+					return false;
+				}
+
+				if (this.addon.isLevelProvided())
+				{
+					// This is here as I am not sure if Level addon can calculate island level
+					// if players can build anywhere.
+
+					LevelsData data = this.addon.getLevelAddon().getLevelsData(this.targetUser.getUniqueId());
+
+					if (data == null ||
+						!data.getLevels().containsKey(Util.getWorld(this.world).getName()) ||
+						this.biome.getRequiredLevel() > 0 &&
+							data.getLevel(Util.getWorld(this.world)) <= this.biome.getRequiredLevel())
+					{
+						// Not enough level
+
+						this.callerUser.sendMessage("biomes.errors.not-enough-level",
+							TextVariables.NUMBER,
+							String.valueOf(this.biome.getRequiredLevel()));
+						return false;
+					}
+				}
+			}
+			else if (this.updateMode.equals(UpdateMode.ISLAND))
 			{
 				// User has no island.
-				this.callerUser.sendMessage("biomes.messages.errors.missing-island");
+				this.callerUser.sendMessage(BiomesAddon.BIOMES_WORLD_PROTECTION.getHintReference());
 				return false;
 			}
 
-			Optional<Island> onIsland =
-				this.addon.getIslands().getIslandAt(this.callerUser.getLocation());
 
-			if (!onIsland.isPresent() || onIsland.get() != island)
+			if (this.addon.isEconomyProvided())
 			{
-				// User is not on his island.
-
-				this.callerUser.sendMessage("biomes.messages.errors.not-on-island");
-				return false;
-			}
-
-			Optional<VaultHook> vaultHook = this.addon.getPlugin().getVault();
-
-			if (vaultHook.isPresent())
-			{
-				if (!vaultHook.get().has(this.callerUser, this.biome.getRequiredCost()))
+				if (!this.addon.getVaultHook().has(this.callerUser, this.biome.getRequiredCost()))
 				{
 					// Not enough money.
 
-					this.callerUser.sendMessage("biomes.messages.errors.not-enough-money",
+					this.callerUser.sendMessage("biomes.errors.not-enough-money",
 						TextVariables.NUMBER,
 						Double.toString(this.biome.getRequiredCost()));
 					return false;
 				}
 			}
 
-			Optional<Addon> levelHook = this.addon.getAddonByName("Level");
-
-			if (levelHook.isPresent())
-			{
-				Object levelObject = new AddonRequestBuilder().addon("Level").
-					label("island-level").
-					addMetaData("player", this.targetUser.getUniqueId()).
-					addMetaData("world-name", this.world.getName()).
-					request();
-
-				if (levelObject != null &&
-					this.biome.getRequiredLevel() > 0 &&
-					(long) levelObject <= this.biome.getRequiredLevel())
-				{
-					// Not enough level
-
-					this.callerUser.sendMessage("biomes.messages.errors.not-enough-level",
-						TextVariables.NUMBER,
-						String.valueOf(this.biome.getRequiredLevel()));
-					return false;
-				}
-			}
+			// Init starting location.
+			this.standingLocation = this.targetUser.getLocation();
 		}
 		else
 		{
-			Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
-
-			Optional<Island> onIsland =
-				this.addon.getIslands().getIslandAt(this.callerUser.getLocation());
-
-			if (this.updateMode != UpdateMode.ISLAND &&
-				(!onIsland.isPresent() || onIsland.get() != island))
+			if (!this.worldProtectionFlag)
 			{
-				// Admin is not on user island.
-				this.callerUser.sendMessage("biomes.messages.errors.missing-admin-island",
-					"[user]",
-					this.targetUser.getName());
-				return false;
+				if (this.updateMode.equals(UpdateMode.ISLAND))
+				{
+					// Island option is not possible for worlds without world protection.
+					if (this.callerUser.isPlayer())
+					{
+						this.callerUser.sendMessage(BiomesAddon.BIOMES_WORLD_PROTECTION.getHintReference());
+					}
+					else
+					{
+						this.addon.logWarning("Biome change is not possible with Island mode " +
+							"for this world as BIOMES_WORLD_PROTECTION is disabled!");
+					}
+
+					return false;
+				}
+				else
+				{
+					if (this.targetUser.isOnline())
+					{
+						this.standingLocation = this.targetUser.getLocation();
+					}
+					else if (this.callerUser.isPlayer())
+					{
+						this.standingLocation = this.callerUser.getLocation();
+					}
+					else
+					{
+						this.addon.logWarning("Target Player is not online. Cannot find biome change location!");
+						return false;
+					}
+				}
+			}
+			else if (this.updateMode.equals(UpdateMode.ISLAND))
+			{
+				this.standingLocation = this.targetUser.getLocation();
+
+				// Return false if targeted user has no island.
+				return this.addon.getIslands().getIsland(this.world, this.targetUser) != null;
+			}
+			else if (this.callerUser.isPlayer())
+			{
+				// Chunk and square based update modes can be called only by player.
+
+				Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
+
+				Optional<Island> onIsland =
+					this.addon.getIslands().getIslandAt(this.callerUser.getLocation());
+
+				if (this.updateMode != UpdateMode.ISLAND &&
+					(!onIsland.isPresent() || onIsland.get() != island))
+				{
+					// Admin is not on user island.
+					this.callerUser.sendMessage("biomes.errors.admin-not-on-island",
+						"[user]",
+						this.targetUser.getName());
+
+					return false;
+				}
+
+				// Admin must be located on island to change biome, as his location will be
+				// taken for update.
+				this.standingLocation = this.callerUser.getLocation();
+			}
+			else
+			{
+				// Check if target user is his island.
+				Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
+
+				Optional<Island> onIsland =
+					this.addon.getIslands().getIslandAt(this.targetUser.getLocation());
+
+				if (!onIsland.isPresent() || onIsland.get() != island)
+				{
+					// Admin is not on user island.
+					this.addon.logWarning("Biome change for player " + this.targetUser.getName() + " is not possible as he is not on his island!");
+					return false;
+				}
+
+				// Init start location
+				this.standingLocation = this.targetUser.getLocation();
 			}
 		}
 
@@ -154,32 +240,52 @@ public class BiomeUpdateHelper
 	 */
 	public void updateIslandBiome()
 	{
-		Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
-		int range = island.getRange();
+		int minX;
+		int minZ;
+		int maxX;
+		int maxZ;
 
-		int minX = island.getMinX();
-		int minZ = island.getMinZ();
+		// Limit island update range
+		if (this.worldProtectionFlag)
+		{
+			Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
+			int range = island.getRange();
 
-		int maxX = minX + 2 * range;
-		int maxZ = minZ + 2 * range;
+			minX = island.getMinX();
+			minZ = island.getMinZ();
 
-		Location playerLocation = this.callerUser.getLocation();
+			// That's how it is in Island#inIslandSpace
+
+			maxX = island.getMinX() + range * 2 - 1;
+			maxZ = island.getMinZ() + range * 2 - 1;
+		}
+		else
+		{
+			// limit by island distance to avoid issues with long updating.
+			int range = this.addon.getPlugin().getIWM().getIslandDistance(this.world);
+
+			minX = this.standingLocation.getBlockX() - range;
+			minZ = this.standingLocation.getBlockZ() - range;
+
+			maxX = this.standingLocation.getBlockX() + range;
+			maxZ = this.standingLocation.getBlockZ() + range;
+		}
 
 		// Calculate minimal and maximal coordinate based on update mode.
 
-		BiomeUpdateTask task = new BiomeUpdateTask((BiomesAddon) this.addon, this.callerUser, this.world, this.biome);
+		BiomeUpdateTask task = new BiomeUpdateTask(this.addon, this.callerUser, this.world, this.biome);
 
 		switch (this.updateMode)
 		{
 			case ISLAND:
-				task.setMinX(minX > maxX ? maxX : minX);
-				task.setMaxX(minX < maxX ? maxX : minX);
-				task.setMinZ(minZ > maxZ ? maxZ : minZ);
-				task.setMaxZ(minZ < maxZ ? maxZ : minZ);
+				task.setMinX(minX);
+				task.setMaxX(maxX);
+				task.setMinZ(minZ);
+				task.setMaxZ(maxZ);
 
 				break;
 			case CHUNK:
-				Chunk chunk = playerLocation.getChunk();
+				Chunk chunk = this.standingLocation.getChunk();
 
 				task.setMinX(Math.max(minX, (chunk.getX() - (this.updateNumber - 1)) << 4));
 				task.setMaxX(Math.min(maxX, (chunk.getX() + this.updateNumber) << 4) - 1);
@@ -188,10 +294,10 @@ public class BiomeUpdateHelper
 				task.setMaxZ(Math.min(maxZ, (chunk.getZ() + this.updateNumber) << 4) - 1);
 
 				break;
-			case SQUARE:
+			case RANGE:
 				int halfDiameter = this.updateNumber / 2;
 
-				int x = playerLocation.getBlockX();
+				int x = this.standingLocation.getBlockX();
 
 				if (x < 0)
 				{
@@ -204,7 +310,7 @@ public class BiomeUpdateHelper
 					task.setMaxX(Math.min(maxX, x + halfDiameter));
 				}
 
-				int z = playerLocation.getBlockZ();
+				int z = this.standingLocation.getBlockZ();
 
 				if (z < 0)
 				{
@@ -235,6 +341,17 @@ public class BiomeUpdateHelper
 	}
 
 
+	/**
+	 * This method checks if user has all required permissions.
+	 * @return true if user has all required permissions, otherwise false.
+	 */
+	private boolean checkPermissions()
+	{
+		return this.biome.getRequiredPermissions().isEmpty() ||
+			this.biome.getRequiredPermissions().stream().allMatch(this.callerUser::hasPermission);
+	}
+
+
 // ---------------------------------------------------------------------
 // Section: Variables
 // ---------------------------------------------------------------------
@@ -243,7 +360,7 @@ public class BiomeUpdateHelper
 	/**
 	 * This variable stores caller addon.
 	 */
-	private Addon addon;
+	private BiomesAddon addon;
 
 	/**
 	 * This variable stores User that calls update.
@@ -254,6 +371,11 @@ public class BiomeUpdateHelper
 	 * This variable stores User that is targeted by update.
 	 */
 	private User targetUser;
+
+	/**
+	 * This variable holds from which location Update process should start.
+	 */
+	private Location standingLocation;
 
 	/**
 	 * This variable stores BiomesObject that must be applied.
@@ -279,4 +401,10 @@ public class BiomeUpdateHelper
 	 * This variable stores if money from caller can be withdrawn.
 	 */
 	private boolean canWithdraw;
+
+	/**
+	 * This variable stores if world protection flag is enabled. Avoids checking it each
+	 * time as flag will not change its value while updating.
+	 */
+	private final boolean worldProtectionFlag;
 }

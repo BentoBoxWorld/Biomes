@@ -10,7 +10,7 @@ import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.commands.ExpandedCompositeCommand;
-import world.bentobox.biomes.objects.BiomesObject;
+import world.bentobox.biomes.database.objects.BiomesObject;
 
 
 /**
@@ -27,8 +27,8 @@ public class BiomesInfoCommand extends ExpandedCompositeCommand
 	public void setup()
 	{
 		this.setPermission("biomes.info");
-		this.setParametersHelp("biomes.commands.info.parameters");
-		this.setDescription("biomes.commands.info.description");
+		this.setParametersHelp("biomes.commands.user.info.parameters");
+		this.setDescription("biomes.commands.user.info.description");
 
 		this.setOnlyPlayer(true);
 	}
@@ -41,12 +41,15 @@ public class BiomesInfoCommand extends ExpandedCompositeCommand
 
 		if (biomesObject != null)
 		{
-			user.sendMessage("biomes.messages.biome-information.header", "[name]", biomesObject.getFriendlyName());
-			user.sendMessage("biomes.messages.biome-information.type", "[type]", biomesObject.getBiomeName());
-			user.sendMessage("biomes.messages.biome-information.description", "[description]", this.getSingleLineDescription(biomesObject.getDescription()));
-			user.sendMessage("biomes.messages.biome-information.level", "[level]", Long.toString(biomesObject.getRequiredLevel()));
-			user.sendMessage("biomes.messages.biome-information.cost","[cost]", Integer.toString(biomesObject.getRequiredCost()));
-			user.sendMessage("biomes.messages.biome-information.permission","[permission]", biomesObject.getPermission());
+			user.sendMessage("biomes.information.header", "[name]", biomesObject.getFriendlyName());
+			user.sendMessage("biomes.information.type", "[type]", biomesObject.getBiome().name());
+			user.sendMessage("biomes.information.description", "[description]", this.getSingleLineDescription(biomesObject.getDescription()));
+			user.sendMessage("biomes.information.level", "[level]", Long.toString(biomesObject.getRequiredLevel()));
+			user.sendMessage("biomes.information.cost","[cost]", Integer.toString(biomesObject.getRequiredCost()));
+
+			biomesObject.getRequiredPermissions().forEach(s -> {
+				user.sendMessage("biomes.information.permission","[permission]", s);
+			});
 
 			return true;
 		}
@@ -67,19 +70,17 @@ public class BiomesInfoCommand extends ExpandedCompositeCommand
 			return Optional.of(new ArrayList<>());
 		}
 
-		String lastString = args.get(args.size() - 1);
-
 		final List<String> returnList = new ArrayList<>();
 
-		List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes(this.getWorld());
+		String worldName = this.getWorld() != null && Util.getWorld(this.getWorld()) != null ?
+			Util.getWorld(this.getWorld()).getName() : "";
 
 		// Create suggestions with all biomes that is available for users.
 
-		biomes.forEach(biomesObject -> {
-			returnList.addAll(Util.tabLimit(
-				Collections.singletonList(biomesObject.getBiomeName()), lastString));
+		this.addon.getAddonManager().getBiomes(worldName).forEach(biomesObject -> {
+			returnList.add(biomesObject.getUniqueId().replaceFirst(worldName + "-", ""));
 		});
 
-		return Optional.of(returnList);
+		return Optional.of(Util.tabLimit(returnList, args.get(args.size() - 1)));
 	}
 }

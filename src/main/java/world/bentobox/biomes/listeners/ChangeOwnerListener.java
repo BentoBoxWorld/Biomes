@@ -7,15 +7,14 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import java.util.Optional;
 
-import world.bentobox.bentobox.api.addons.Addon;
+import world.bentobox.bentobox.api.addons.GameModeAddon;
 import world.bentobox.bentobox.api.events.team.TeamEvent.TeamSetownerEvent;
 import world.bentobox.bentobox.api.user.User;
-import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
-import world.bentobox.biomes.objects.BiomesObject;
-import world.bentobox.biomes.objects.Settings.UpdateMode;
+import world.bentobox.biomes.BiomesAddonManager;
+import world.bentobox.biomes.database.objects.BiomesObject;
+import world.bentobox.biomes.config.Settings.UpdateMode;
 import world.bentobox.biomes.tasks.BiomeUpdateHelper;
-import world.bentobox.biomes.utils.Utils;
 
 
 /**
@@ -39,30 +38,19 @@ public class ChangeOwnerListener implements Listener
 			return;
 		}
 
-		boolean hasPermissions;
-
 		User newUser = User.getInstance(event.getNewOwner());
 
-		Optional<Addon> skyBlock = this.addon.getPlugin().getAddonsManager().getAddonByName("BSkyBlock");
-		Optional<Addon> acidIsland = this.addon.getPlugin().getAddonsManager().getAddonByName("AcidIsland");
+		Optional<GameModeAddon> gameModeAddon =
+			this.addon.getPlugin().getIWM().getAddon(event.getIsland().getWorld());
 
-		String defaultBiome;
+		final boolean hasPermissions;
+		final String defaultBiome;
 
-		// TODO: The same issue as with BiomesAddon class. It gets values but better would be to add them as
-		// dependencies.
-		if (skyBlock.isPresent() &&
-			skyBlock.get().getConfig().getString("world.world-name").
-				equalsIgnoreCase(Util.getWorld(event.getIsland().getWorld()).getName()))
+		if (gameModeAddon.isPresent())
 		{
-			hasPermissions = newUser.hasPermission("bskyblock.biomes.set");
-			defaultBiome = skyBlock.get().getConfig().getString("world.default-biome");
-		}
-		else if (acidIsland.isPresent() &&
-			acidIsland.get().getConfig().getString("world.world-name").
-				equalsIgnoreCase(Util.getWorld(event.getIsland().getWorld()).getName()))
-		{
-			hasPermissions = newUser.hasPermission("acidisland.biomes.set");
-			defaultBiome = acidIsland.get().getConfig().getString("world.default-biome");
+			GameModeAddon addon = gameModeAddon.get();
+			hasPermissions = newUser.hasPermission(addon.getPermissionPrefix() + ".biomes.set");
+			defaultBiome = addon.getConfig().getString("world.default-biome", "PLAINS");
 		}
 		else
 		{
@@ -71,27 +59,24 @@ public class ChangeOwnerListener implements Listener
 			defaultBiome = "";
 		}
 
+		// It is assumed that biomes.set permission is required to change biome.
 		if (!hasPermissions)
 		{
-			BiomesObject defaultBiomeObject = this.addon.getAddonManager().getBiomeFromString(defaultBiome);
+			BiomesObject defaultBiomeObject;
 
-			if (!defaultBiome.isEmpty() && defaultBiomeObject == null)
+			Biome biome = BiomesAddonManager.getBiomeNameMap().getOrDefault(defaultBiome.toUpperCase(), null);
+
+			if (biome == null)
 			{
-				Biome biome = Utils.getBiomeNameMap().getOrDefault(defaultBiome.toUpperCase(), null);
-
-				if (biome == null)
-				{
-					this.addon.logError("Biome defined in GameMode addon is not valid!!!");
-					return;
-				}
-				else
-				{
-					defaultBiomeObject = new BiomesObject();
-					defaultBiomeObject.setBiomeName(biome.name().toUpperCase());
-					defaultBiomeObject.setBiomeID(biome.ordinal());
-					defaultBiomeObject.setRequiredCost(0);
-					defaultBiomeObject.setRequiredLevel(0);
-				}
+				this.addon.logError("Biome defined in GameMode addon is not valid!!!");
+				return;
+			}
+			else
+			{
+				defaultBiomeObject = new BiomesObject();
+				defaultBiomeObject.setBiome(biome);
+				defaultBiomeObject.setRequiredCost(0);
+				defaultBiomeObject.setRequiredLevel(0);
 			}
 
 			// Forcefully update biome on whole user island.

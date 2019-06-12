@@ -1,14 +1,15 @@
 package world.bentobox.biomes.tasks;
 
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.biomes.BiomesAddon;
-import world.bentobox.biomes.objects.BiomesObject;
-import world.bentobox.biomes.utils.Utils;
+import world.bentobox.biomes.database.objects.BiomesObject;
+import world.bentobox.biomes.events.BiomeChangedEvent;
 
 
 /**
@@ -16,104 +17,125 @@ import world.bentobox.biomes.utils.Utils;
  */
 public class BiomeUpdateTask extends BukkitRunnable
 {
-	public BiomeUpdateTask(BiomesAddon addon, User user, World world, BiomesObject biome)
-	{
-		this.addon = addon;
-		this.user = user;
-		this.world = world;
-		this.biome = biome;
-	}
+    public BiomeUpdateTask(BiomesAddon addon, User user, World world, BiomesObject biome)
+    {
+        this.addon = addon;
+        this.user = user;
+        this.world = world;
+        this.biome = biome;
+    }
 
 
-	@Override
-	public void run()
-	{
-		this.user.sendMessage("biomes.messages.information.update-start");
+    @Override
+    public void run()
+    {
+        if (this.user.isPlayer())
+        {
+            this.user.sendMessage("biomes.messages.update-start");
+        }
 
-		// Update world coordinates with new biomes.
+        // Update world coordinates with new biomes.
 
-		Biome newBiome = Utils.parseBiome(this.biome);
+        Biome newBiome = this.biome.getBiome();
 
-		for (int x = this.minX; x <= this.maxX; x++)
-		{
-			for (int z = this.minZ; z <= this.maxZ; z++)
-			{
-				this.world.setBiome(x, z, newBiome);
-			}
-		}
+        for (int x = this.minX; x <= this.maxX; x++)
+        {
+            for (int z = this.minZ; z <= this.maxZ; z++)
+            {
+                this.world.setBiome(x, z, newBiome);
+            }
+        }
 
-		this.user.sendMessage("biomes.messages.information.update-done",
-			"[biome]",
-			this.biome.getFriendlyName());
+        if (this.user.isPlayer())
+        {
+            this.user.sendMessage("biomes.messages.update-done",
+                "[biome]",
+                this.biome.getFriendlyName());
 
-		this.addon.log(this.user.getName() + " changes biome to " +
-			this.biome.getBiomeName() + " from x=" + this.minX + ":" + this.maxX + " z=" + this.minZ + ":" + this.maxZ +
-			" while standing on x=" + this.user.getLocation().getBlockX() + " z=" + this.user.getLocation().getBlockZ());
-	}
+            this.addon.log(this.user.getName() + " change biome to " +
+                this.biome.getBiome() + " from x=" + this.minX + ":" + this.maxX + " z=" + this.minZ + ":" + this.maxZ +
+                " while standing on x=" + this.user.getLocation().getBlockX() + " z=" + this.user.getLocation().getBlockZ());
+        }
+        else
+        {
+            this.addon.log("Console changed biome to " +
+                this.biome.getBiome() + " from x=" + this.minX + ":" + this.maxX + " z=" + this.minZ + ":" + this.maxZ);
+        }
 
-
-// ---------------------------------------------------------------------
-// Section: Setters
-// ---------------------------------------------------------------------
-
-
-	/**
-	 * Default Setter.
-	 * @param minX Integer.
-	 */
-	public void setMinX(int minX)
-	{
-		this.minX = minX;
-	}
-
-
-	/**
-	 * Default Setter.
-	 * @param maxX Integer.
-	 */
-	public void setMaxX(int maxX)
-	{
-		this.maxX = maxX;
-	}
+        // Fire event that biome is changed.
+        Bukkit.getPluginManager().callEvent(
+            new BiomeChangedEvent(this.biome.getUniqueId(),
+                this.biome.getBiome(),
+                this.user.getUniqueId(),
+                this.minX,
+                this.minZ,
+                this.maxX,
+                this.maxZ));
+    }
 
 
-	/**
-	 * Default Setter.
-	 * @param minZ Integer.
-	 */
-	public void setMinZ(int minZ)
-	{
-		this.minZ = minZ;
-	}
+    // ---------------------------------------------------------------------
+    // Section: Setters
+    // ---------------------------------------------------------------------
 
 
-	/**
-	 * Default Setter.
-	 * @param maxZ Integer.
-	 */
-	public void setMaxZ(int maxZ)
-	{
-		this.maxZ = maxZ;
-	}
+    /**
+     * Default Setter.
+     * @param minX Integer.
+     */
+    public void setMinX(int minX)
+    {
+        this.minX = minX;
+    }
 
 
-// ---------------------------------------------------------------------
-// Section: Variables
-// ---------------------------------------------------------------------
+    /**
+     * Default Setter.
+     * @param maxX Integer.
+     */
+    public void setMaxX(int maxX)
+    {
+        this.maxX = maxX;
+    }
 
-	private BiomesAddon addon;
 
-	private User user;
+    /**
+     * Default Setter.
+     * @param minZ Integer.
+     */
+    public void setMinZ(int minZ)
+    {
+        this.minZ = minZ;
+    }
 
-	private World world;
 
-	private int minX;
+    /**
+     * Default Setter.
+     * @param maxZ Integer.
+     */
+    public void setMaxZ(int maxZ)
+    {
+        this.maxZ = maxZ;
+    }
 
-	private int maxX;
 
-	private int minZ;
+    // ---------------------------------------------------------------------
+    // Section: Variables
+    // ---------------------------------------------------------------------
 
-	private int maxZ;
+    private BiomesAddon addon;
 
-	private BiomesObject biome;
+    private User user;
+
+    private World world;
+
+    private int minX;
+
+    private int maxX;
+
+    private int minZ;
+
+    private int maxZ;
+
+    private BiomesObject biome;
 }

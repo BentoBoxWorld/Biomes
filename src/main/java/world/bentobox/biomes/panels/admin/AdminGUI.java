@@ -1,26 +1,33 @@
-package world.bentobox.biomes.panel.admin;
+package world.bentobox.biomes.panels.admin;
 
 
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
+
 import java.util.Collections;
 import java.util.List;
 
+import net.wesjd.anvilgui.AnvilGUI;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
-import world.bentobox.biomes.panel.CommonPanel;
+import world.bentobox.biomes.panels.CommonGUI;
+import world.bentobox.biomes.panels.GuiUtils;
 
 
 /**
- * This is Admin Main Panel. It contains all abilities that admin has available.
+ * This is main Admin GUI that is opened with admin command.
  */
-public class AdminMainPanel extends CommonPanel
+public class AdminGUI extends CommonGUI
 {
-	public AdminMainPanel(BiomesAddon addon,
+	/**
+	 * {@inheritDoc}
+	 */
+	public AdminGUI(BiomesAddon addon,
 		World world,
 		User user,
 		String topLabel,
@@ -30,6 +37,7 @@ public class AdminMainPanel extends CommonPanel
 	}
 
 
+
 	/**
 	 * This method construct admin panel with predefined button placements.
 	 */
@@ -37,25 +45,24 @@ public class AdminMainPanel extends CommonPanel
 	public void build()
 	{
 		PanelBuilder panelBuilder = new PanelBuilder().user(this.user).name(
-			this.user.getTranslation("biomes.gui.admin.gui-title"));
+			this.user.getTranslation("biomes.gui.title.admin.main-gui"));
+
+		GuiUtils.fillBorder(panelBuilder, Material.ORANGE_STAINED_GLASS_PANE);
 
 		// Change Other players Biome
-		panelBuilder.item(1, this.createButton(ButtonType.CHANGE_USER_BIOME));
+		panelBuilder.item(20, this.createButton(Button.CHANGE_USER_BIOME));
 
 		// Add New Biome
-		panelBuilder.item(3, this.createButton(ButtonType.ADD_BIOME));
-
+		panelBuilder.item(13, this.createButton(Button.ADD_BIOME));
 		// Edit Biome
-		panelBuilder.item(4, this.createButton(ButtonType.EDIT_BIOME));
-
+		panelBuilder.item(22, this.createButton(Button.EDIT_BIOME));
 		// Remove Biome
-		panelBuilder.item(5, this.createButton(ButtonType.DELETE_BIOME));
+		panelBuilder.item(31, this.createButton(Button.DELETE_BIOME));
 
 		// Import Biomes
-		panelBuilder.item(7, this.createButton(ButtonType.IMPORT_BIOMES));
-
+		panelBuilder.item(24, this.createButton(Button.IMPORT_BIOMES));
 		// Edit Addon Settings
-		panelBuilder.item(8, this.createButton(ButtonType.EDIT_SETTINGS));
+		panelBuilder.item(25, this.createButton(Button.EDIT_SETTINGS));
 
 		panelBuilder.build();
 	}
@@ -63,10 +70,10 @@ public class AdminMainPanel extends CommonPanel
 
 	/**
 	 * This method returns button for admin panel of given type.
-	 * @param buttonType Type of button.
+	 * @param button Type of button.
 	 * @return new panel button with requested type.
 	 */
-	private PanelItem createButton(ButtonType buttonType)
+	private PanelItem createButton(Button button)
 	{
 		ItemStack icon;
 		String name;
@@ -76,22 +83,17 @@ public class AdminMainPanel extends CommonPanel
 
 		String permissionSuffix;
 
-		switch (buttonType)
+		switch (button)
 		{
 			case CHANGE_USER_BIOME:
 			{
 				permissionSuffix = SET;
 
-				name = this.user.getTranslation("biomes.gui.admin.buttons.change");
-				description = Collections.emptyList();
+				name = this.user.getTranslation("biomes.gui.buttons.admin.change");
+				description = Collections.singletonList(this.user.getTranslation("biomes.gui.descriptions.admin.change"));
 				icon = new ItemStack(Material.LEVER);
 				clickHandler = (panel, user, clickType, slot) -> {
-					new AdminUserListPanel(this.addon,
-						this.world,
-						this.user,
-						this.topLabel,
-						this.permissionPrefix,
-						this).build();
+					new ListUsersGUI(this).build();
 					return true;
 				};
 				glow = false;
@@ -102,17 +104,27 @@ public class AdminMainPanel extends CommonPanel
 			{
 				permissionSuffix = ADD;
 
-				name = this.user.getTranslation("biomes.gui.admin.buttons.add");
-				description = Collections.emptyList();
+				name = this.user.getTranslation("biomes.gui.buttons.admin.add");
+				description = Collections.singletonList(this.user.getTranslation("biomes.gui.descriptions.admin.add"));
 				icon = new ItemStack(Material.BOOK);
 				clickHandler = (panel, user, clickType, slot) -> {
-					new AdminBiomeEditPanel(this.addon,
-						this.world,
-						this.user,
-						null,
-						this.topLabel,
-						this.permissionPrefix,
-						this).build();
+					new AnvilGUI(this.addon.getPlugin(),
+						this.user.getPlayer(),
+						"unique_id",
+						(player, reply) -> {
+							String newName = Util.getWorld(this.world).getName() + "-" + reply.toLowerCase();
+
+							if (!this.addon.getAddonManager().containsBiome(newName))
+							{
+								new EditBiomeGUI(AdminGUI.this, this.addon.getAddonManager().createBiome(newName)).build();
+							}
+							else
+							{
+								this.user.sendMessage("biomes.errors.unique-id", "[id]", reply);
+							}
+
+							return reply;
+						});
 
 					return true;
 				};
@@ -124,17 +136,11 @@ public class AdminMainPanel extends CommonPanel
 			{
 				permissionSuffix = EDIT;
 
-				name = this.user.getTranslation("biomes.gui.admin.buttons.edit");
-				description = Collections.emptyList();
+				name = this.user.getTranslation("biomes.gui.buttons.admin.edit");
+				description = Collections.singletonList(this.user.getTranslation("biomes.gui.descriptions.admin.edit"));
 				icon = new ItemStack(Material.ANVIL);
 				clickHandler = (panel, user, clickType, slot) -> {
-					new AdminBiomeListPanel(this.addon,
-						this.world,
-						this.user,
-						true,
-						this.topLabel,
-						this.permissionPrefix,
-						this).build();
+					new ListBiomesGUI(this, true).build();
 					return true;
 				};
 				glow = false;
@@ -145,17 +151,11 @@ public class AdminMainPanel extends CommonPanel
 			{
 				permissionSuffix = DELETE;
 
-				name = this.user.getTranslation("biomes.gui.admin.buttons.remove");
-				description = Collections.emptyList();
+				name = this.user.getTranslation("biomes.gui.buttons.admin.remove");
+				description = Collections.singletonList(this.user.getTranslation("biomes.gui.descriptions.admin.remove"));
 				icon = new ItemStack(Material.LAVA_BUCKET);
 				clickHandler = (panel, user, clickType, slot) -> {
-					new AdminBiomeListPanel(this.addon,
-						this.world,
-						this.user,
-						false,
-						this.topLabel,
-						this.permissionPrefix,
-						this).build();
+					new ListBiomesGUI(this, false).build();
 					return true;
 				};
 				glow = false;
@@ -166,8 +166,8 @@ public class AdminMainPanel extends CommonPanel
 			{
 				permissionSuffix = IMPORT;
 
-				name = this.user.getTranslation("biomes.gui.admin.buttons.import");
-				description = Collections.emptyList();
+				name = this.user.getTranslation("biomes.gui.buttons.admin.import");
+				description = Collections.singletonList(this.user.getTranslation("biomes.gui.descriptions.admin.import"));
 				icon = new ItemStack(Material.HOPPER);
 				clickHandler = (panel, user, clickType, slot) -> {
 					if (clickType.isRightClick())
@@ -191,16 +191,11 @@ public class AdminMainPanel extends CommonPanel
 			{
 				permissionSuffix = SETTINGS;
 
-				name = this.user.getTranslation("biomes.gui.admin.buttons.settings");
-				description = Collections.emptyList();
+				name = this.user.getTranslation("biomes.gui.buttons.admin.settings");
+				description = Collections.singletonList(this.user.getTranslation("biomes.gui.descriptions.admin.settings"));
 				icon = new ItemStack(Material.CRAFTING_TABLE);
 				clickHandler = (panel, user, clickType, slot) -> {
-					new AdminSettingsPanel(this.addon,
-						this.world,
-						this.user,
-						this.topLabel,
-						this.permissionPrefix,
-						this).build();
+					new EditSettingsGUI(this).build();
 					return true;
 				};
 				glow = false;
@@ -227,7 +222,7 @@ public class AdminMainPanel extends CommonPanel
 		return new PanelItemBuilder().
 			icon(icon).
 			name(name).
-			description(description).
+			description(GuiUtils.stringSplit(description, this.addon.getSettings().getLoreLineLength())).
 			glow(glow).
 			clickHandler(clickHandler).
 			build();
@@ -242,7 +237,7 @@ public class AdminMainPanel extends CommonPanel
 	/**
 	 * This enum shows which button should be created.
 	 */
-	private enum ButtonType
+	private enum Button
 	{
 		CHANGE_USER_BIOME,
 		ADD_BIOME,
@@ -257,6 +252,8 @@ public class AdminMainPanel extends CommonPanel
 // Section: Variables
 // ---------------------------------------------------------------------
 
-
+	/**
+	 * Overwrite mode for import manager.
+	 */
 	private boolean overwriteMode;
 }

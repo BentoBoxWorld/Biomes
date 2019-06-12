@@ -11,9 +11,8 @@ import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
-import world.bentobox.biomes.objects.BiomesObject;
-import world.bentobox.biomes.objects.Settings.UpdateMode;
-import world.bentobox.biomes.utils.Utils;
+import world.bentobox.biomes.database.objects.BiomesObject;
+import world.bentobox.biomes.config.Settings.UpdateMode;
 
 
 /**
@@ -40,12 +39,19 @@ public abstract class ExpandedCompositeCommand extends CompositeCommand
 	{
 		if (args.size() > index)
 		{
-			BiomesObject biome = this.addon.getAddonManager().getBiomeFromString(
-				Util.getWorld(this.getWorld()).getName() + "-" + args.get(index).toLowerCase());
+			String uniqueID = args.get(index).toLowerCase();
+			String worldName = Util.getWorld(this.getWorld()).getName();
+
+			if (!uniqueID.startsWith(worldName))
+			{
+				uniqueID = worldName  + "-" + uniqueID;
+			}
+
+			BiomesObject biome = this.addon.getAddonManager().getBiomeFromString(uniqueID);
 
 			if (biome == null)
 			{
-				user.sendMessage(user.getTranslation("biomes.messages.errors.incorrect-biome",
+				user.sendMessage(user.getTranslation("biomes.errors.incorrect-object",
 					"[biome]",
 					args.get(index)));
 			}
@@ -54,7 +60,7 @@ public abstract class ExpandedCompositeCommand extends CompositeCommand
 		}
 		else
 		{
-			user.sendMessage(user.getTranslation("biomes.messages.errors.missing-biome"));
+			user.sendMessage(user.getTranslation("biomes.errors.missing-biome"));
 			return null;
 		}
 	}
@@ -71,11 +77,11 @@ public abstract class ExpandedCompositeCommand extends CompositeCommand
 	{
 		if (args.size() > index)
 		{
-			UpdateMode mode = Utils.parseStrictToUpdateMode(args.get(index));
+			UpdateMode mode = UpdateMode.getMode(args.get(index));
 
 			if (mode == null)
 			{
-				user.sendMessage(user.getTranslation("biomes.messages.errors.incorrect-mode",
+				user.sendMessage(user.getTranslation("biomes.errors.incorrect-mode",
 					"[mode]",
 					args.get(index)));
 			}
@@ -114,7 +120,7 @@ public abstract class ExpandedCompositeCommand extends CompositeCommand
 
 			if (range < 1)
 			{
-				user.sendMessage(user.getTranslation("biomes.messages.errors.incorrect-range",
+				user.sendMessage(user.getTranslation("biomes.errors.incorrect-range",
 					TextVariables.NUMBER,
 					args.get(index)));
 			}
@@ -160,7 +166,7 @@ public abstract class ExpandedCompositeCommand extends CompositeCommand
 		}
 		else
 		{
-			user.sendMessage(user.getTranslation("biomes.messages.errors.missing-user"));
+			user.sendMessage(user.getTranslation("biomes.errors.missing-user"));
 			return null;
 		}
 	}

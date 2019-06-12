@@ -1,13 +1,15 @@
-package world.bentobox.biomes.objects;
+package world.bentobox.biomes.config;
 
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import world.bentobox.bentobox.api.configuration.ConfigComment;
 import world.bentobox.bentobox.api.configuration.ConfigEntry;
+import world.bentobox.bentobox.api.configuration.ConfigObject;
 import world.bentobox.bentobox.api.configuration.StoreAt;
-import world.bentobox.bentobox.database.objects.DataObject;
 
 
 /**
@@ -20,18 +22,11 @@ import world.bentobox.bentobox.database.objects.DataObject;
 @ConfigComment("You cannot edit it while the server is running because changes will")
 @ConfigComment("be lost! Use in-game settings GUI or edit when server is offline.")
 @ConfigComment("")
-public class Settings implements DataObject
+public class Settings implements ConfigObject
 {
 // ---------------------------------------------------------------------
 // Section: Getters
 // ---------------------------------------------------------------------
-
-
-	@Override
-	public String getUniqueId()
-	{
-		return this.uniqueId;
-	}
 
 
 	/**
@@ -104,16 +99,29 @@ public class Settings implements DataObject
 	}
 
 
+	/**
+	 * This method returns the loreMessage value.
+	 * @return the value of loreMessage.
+	 */
+	public String getLoreMessage()
+	{
+		return loreMessage;
+	}
+
+
+	/**
+	 * This method returns the loreLineLength value.
+	 * @return the loreLineLength value.
+	 */
+	public int getLoreLineLength()
+	{
+		return this.loreLineLength;
+	}
+
+
 // ---------------------------------------------------------------------
 // Section: Setters
 // ---------------------------------------------------------------------
-
-
-	@Override
-	public void setUniqueId(String uniqueId)
-	{
-		this.uniqueId = uniqueId;
-	}
 
 
 	/**
@@ -186,6 +194,27 @@ public class Settings implements DataObject
 	}
 
 
+	/**
+	 * This method sets the loreMessage value.
+	 * @param loreMessage the loreMessage new value.
+	 */
+	public void setLoreMessage(String loreMessage)
+	{
+		this.loreMessage = loreMessage;
+	}
+
+
+	/**
+	 * This method sets the loreLineLength object value.
+	 * @param loreLineLength the loreLineLength object new value.
+	 *
+	 */
+	public void setLoreLineLength(int loreLineLength)
+	{
+		this.loreLineLength = loreLineLength;
+	}
+
+
 // ---------------------------------------------------------------------
 // Section: Enums used for Settings.
 // ---------------------------------------------------------------------
@@ -198,7 +227,33 @@ public class Settings implements DataObject
 	{
 		ISLAND,
 		CHUNK,
-		SQUARE
+		RANGE;
+
+		/**
+		 * This method returns stored parameter from string.
+		 * @param parameter String of object that must be returned
+		 * @return CommandParameters object or null.
+		 */
+		public static UpdateMode getMode(String parameter)
+		{
+			return BY_NAME.get(parameter);
+		}
+
+		/**
+		 * This map allows to access all enum values via their string.
+		 */
+		private final static Map<String, UpdateMode> BY_NAME = new HashMap<>();
+
+		/**
+		 * This static method populated BY_NAME map.
+		 */
+		static
+		{
+			for (UpdateMode mode : UpdateMode.values())
+			{
+				BY_NAME.put(mode.name(), mode);
+			}
+		}
 	}
 
 
@@ -208,9 +263,36 @@ public class Settings implements DataObject
 	public enum VisibilityMode
 	{
 		ALL,
-		ACCESSIBLE,
 		DEPLOYED,
-		TOGGLEABLE
+		ACCESSIBLE,
+		TOGGLEABLE;
+
+
+		/**
+		 * This method returns stored parameter from string.
+		 * @param parameter String of object that must be returned
+		 * @return CommandParameters object or null.
+		 */
+		public static VisibilityMode getMode(String parameter)
+		{
+			return BY_NAME.get(parameter);
+		}
+
+		/**
+		 * This map allows to access all enum values via their string.
+		 */
+		private final static Map<String, VisibilityMode> BY_NAME = new HashMap<>();
+
+		/**
+		 * This static method populated BY_NAME map.
+		 */
+		static
+		{
+			for (VisibilityMode visibility : VisibilityMode.values())
+			{
+				BY_NAME.put(visibility.name(), visibility);
+			}
+		}
 	}
 
 
@@ -232,7 +314,7 @@ public class Settings implements DataObject
 	@ConfigComment("Valid values are:")
 	@ConfigComment("    'ISLAND' - updates biome on whole island")
 	@ConfigComment("    'CHUNK' - updates biome on whole chunks around player")
-	@ConfigComment("    'SQUARE' - updates biome by block in given range")
+	@ConfigComment("    'RANGE' - updates biome by block in given range")
 	@ConfigEntry(path = "default-mode")
 	private UpdateMode defaultMode = UpdateMode.ISLAND;
 
@@ -266,16 +348,28 @@ public class Settings implements DataObject
 	private VisibilityMode visibilityMode = VisibilityMode.DEPLOYED;
 
 	@ConfigComment("")
+	@ConfigComment("This string allows to change element order in Biomes description. Each letter represents")
+	@ConfigComment("one object from Biomes description. If letter is not used, then its represented part")
+	@ConfigComment("will not be in description. If use any letter that is not recognized, then it will be")
+	@ConfigComment("ignored. Some strings can be customized via lang file under 'viomes.gui.biomes-description'.")
+	@ConfigComment("List of letters and their meaning: ")
+	@ConfigComment(" - D - description from biomes object")
+	@ConfigComment(" - N - defined minecraft biomes name: '*.biome-name'")
+	@ConfigComment(" - R - requirements for biome change: '*.required-money', '*.required-island-level' and '*.required-permission'")
+	@ConfigEntry(path = "lore-message")
+	private String loreMessage = "DNR";
+
+	@ConfigComment("")
+	@ConfigComment("This allows to change lore description line length. By default it is 25, but some server")
+	@ConfigComment("owners may like it to be larger.")
+	@ConfigEntry(path = "lore-length")
+	private int loreLineLength = 25;
+
+	@ConfigComment("")
 	@ConfigComment("This list stores GameModes in which Biomes addon should not work.")
 	@ConfigComment("To disable addon it is necessary to write its name in new line that starts with -. Example:")
 	@ConfigComment("disabled-gamemodes:")
 	@ConfigComment(" - BSkyBlock")
 	@ConfigEntry(path = "disabled-gamemodes")
 	private Set<String> disabledGameModes = new HashSet<>();
-
-	/**
-	 * Default variable.
-	 */
-	@ConfigComment("")
-	private String uniqueId = "config";
 }

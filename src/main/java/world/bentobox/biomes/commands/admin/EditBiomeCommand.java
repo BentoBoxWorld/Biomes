@@ -4,18 +4,17 @@ package world.bentobox.biomes.commands.admin;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.inventory.ItemStack;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.util.Util;
+import world.bentobox.biomes.BiomesAddonManager;
 import world.bentobox.biomes.commands.ExpandedCompositeCommand;
-import world.bentobox.biomes.objects.BiomesObject;
-import world.bentobox.biomes.panel.admin.AdminBiomeListPanel;
-import world.bentobox.biomes.utils.Utils;
+import world.bentobox.biomes.database.objects.BiomesObject;
+import world.bentobox.biomes.panels.admin.ListBiomesGUI;
+import world.bentobox.biomes.panels.GuiUtils;
 
 
 /**
@@ -37,64 +36,76 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 	}
 
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean canExecute(User user, String label, List<String> args)
+	{
+		if (user.isPlayer() && args.isEmpty())
+		{
+			return true;
+		}
+		else if (args.size() < 3)
+		{
+			user.sendMessage("biomes.errors.missing-arguments");
+		}
+		else if (args.size() > 3)
+		{
+			user.sendMessage("biomes.errors.too-many-arguments");
+		}
+		else if (this.getBiomeObject(args, 0, user) != null)
+		{
+			if (CommandParameters.getParameter(args.get(1)) == null)
+			{
+				user.sendMessage("biomes.errors.unknown-argument");
+			}
+			else
+			{
+				return true;
+			}
+		}
+
+		this.showHelp(this, user);
+		return false;
+	}
+
+
 	@Override
 	public boolean execute(User user, String label, List<String> args)
 	{
 		if (user.isPlayer() && args.isEmpty())
 		{
 			// Shows BiomesPanel in Edit mode.
-			new AdminBiomeListPanel(this.addon,
+			new ListBiomesGUI(this.addon,
 				this.getWorld(),
 				user,
-				true,
 				this.getTopLabel(),
-				this.getPermissionPrefix()).build();
+				this.getPermissionPrefix(),
+				true).build();
 			return true;
-		}
-		else if (args.isEmpty())
-		{
-			this.showHelp(this, user);
-			return false;
-		}
-		else if (args.size() < 3)
-		{
-			user.sendMessage("biomes.messages.errors.missing-arguments");
-			this.showHelp(this, user);
-			return false;
 		}
 		else
 		{
 			BiomesObject biomesObject = this.getBiomeObject(args, 0, user);
 
-			if (biomesObject == null)
-			{
-				return false;
-			}
-
 			// Use proper setter based on 2. argument.
-
-			switch (args.get(1))
+			switch (CommandParameters.getParameter(args.get(1)))
 			{
 				case BIOME:
 					String newBiomeString = args.get(2);
-
-					user.sendMessage("biomes.messages.warnings.may-break-others",
-						"[biome]",
-						newBiomeString);
-
-					Biome newBiome = Utils.getBiomeNameMap().getOrDefault(newBiomeString.toUpperCase(), null);
+					Biome newBiome = BiomesAddonManager.getBiomeNameMap().getOrDefault(newBiomeString.toUpperCase(), null);
 
 					if (newBiome == null)
 					{
-						user.sendMessage("biomes.messages.errors.incorrect-biome",
+						user.sendMessage("biomes.errors.incorrect-biome",
 							"[biome]",
 							newBiomeString);
 						return false;
 					}
 					else
 					{
-						biomesObject.setBiomeName(newBiome.name());
-						biomesObject.setBiomeID(newBiome.ordinal());
+						biomesObject.setBiome(newBiome);
 					}
 
 					break;
@@ -102,14 +113,14 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 					biomesObject.setFriendlyName(this.buildStringFromValue(args));
 					break;
 				case DESCRIPTION:
-					biomesObject.setDescription(Utils.splitString(this.buildStringFromValue(args)));
+					biomesObject.setDescription(GuiUtils.stringSplit(this.buildStringFromValue(args), this.addon.getSettings().getLoreLineLength()));
 					break;
 				case ICON:
 					Material newIcon = Material.getMaterial(args.get(2).toUpperCase());
 
 					if (newIcon == null)
 					{
-						user.sendMessage("biomes.messages.errors.incorrect-icon",
+						user.sendMessage("biomes.errors.incorrect-icon",
 							"[icon]",
 							args.get(2));
 						return false;
@@ -134,7 +145,7 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 					}
 					else
 					{
-						user.sendMessage("biomes.messages.errors.incorrect-boolean",
+						user.sendMessage("biomes.errors.incorrect-boolean",
 							"[boolean]",
 							args.get(2));
 						return false;
@@ -149,12 +160,26 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 					}
 					catch (Exception e)
 					{
-						user.sendMessage("biomes.messages.errors.incorrect-range",
+						user.sendMessage("biomes.errors.incorrect-range",
 							"[number]",
 							args.get(2));
 						return false;
 					}
-
+				case ORDER:
+				{
+					try
+					{
+						biomesObject.setOrder(Integer.parseUnsignedInt(args.get(2)));
+						break;
+					}
+					catch (Exception e)
+					{
+						user.sendMessage("biomes.errors.incorrect-range",
+							"[number]",
+							args.get(2));
+						return false;
+					}
+				}
 				case REQUIRED_LEVEL:
 					try
 					{
@@ -163,25 +188,18 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 					}
 					catch (Exception e)
 					{
-						user.sendMessage("biomes.messages.errors.incorrect-range",
+						user.sendMessage("biomes.errors.incorrect-range",
 							"[number]",
 							args.get(2));
 						return false;
 					}
-				case PERMISSION:
-					// TODO: probably validation?
-					biomesObject.setPermission(args.get(2));
+				case PERMISSIONS:
+					biomesObject.setRequiredPermissions(new HashSet<>(Arrays.asList(args.get(2).split(";"))));
 					break;
-				default:
-					user.sendMessage("biomes.messages.errors.incorrect-parameter",
-						"[property]",
-						args.get(1));
-					return false;
 			}
 
-
 			this.addon.getAddonManager().saveBiome(biomesObject);
-			user.sendMessage("biomes.messages.information.saved",
+			user.sendMessage("biomes.messages.saved",
 				"[biome]",
 				biomesObject.getFriendlyName());
 			return true;
@@ -189,6 +207,9 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 	}
 
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Optional<List<String>> tabComplete(User user, String alias, List<String> args)
 	{
@@ -200,37 +221,30 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 		switch (size)
 		{
 			case 3:
-				List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes(this.getWorld());
+				String worldName = this.getWorld() != null && Util.getWorld(this.getWorld()) != null ?
+					Util.getWorld(this.getWorld()).getName() : "";
 
 				// Create suggestions with all biomes that is available for users.
-
-				biomes.forEach(biomesObject -> {
-					returnList.add(biomesObject.getBiomeName());
+				this.addon.getAddonManager().getBiomes(worldName).forEach(biomesObject -> {
+					returnList.add(biomesObject.getUniqueId().replaceFirst(worldName + "-", ""));
 				});
 
 				break;
 			case 4:
 				// Create list with all biome properties values.
 
-				returnList.add(BIOME);
-				returnList.add(FRIENDLY_NAME);
-				returnList.add(DESCRIPTION);
-				returnList.add(ICON);
-
-				returnList.add(DEPLOYED);
-
-				returnList.add(REQUIRED_COST);
-				returnList.add(REQUIRED_LEVEL);
-				returnList.add(PERMISSION);
+				Arrays.stream(CommandParameters.values()).
+					map(properties -> properties.parameter).
+					forEach(returnList::add);
 
 				break;
 			case 5:
 				// Change last variable depending on previous value.
 
-				switch (args.get(3))
+				switch (CommandParameters.getParameter(args.get(3)))
 				{
 					case BIOME:
-						returnList.addAll(Utils.getBiomeNameMap().keySet());
+						returnList.addAll(BiomesAddonManager.getBiomeNameMap().keySet());
 						break;
 					case FRIENDLY_NAME:
 						returnList.add("<name>");
@@ -250,13 +264,12 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 						returnList.add("<boolean>");
 						break;
 					case REQUIRED_COST:
-						returnList.add("<number>");
-						break;
+					case ORDER:
 					case REQUIRED_LEVEL:
 						returnList.add("<number>");
 						break;
-					case PERMISSION:
-						returnList.add("<permission>");
+					case PERMISSIONS:
+						returnList.add("<permissions>");
 						break;
 				}
 
@@ -295,19 +308,62 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 // ---------------------------------------------------------------------
 
 
-	private static final String BIOME = "biomeName";
+	/**
+	 * This enum contains all values that can be changed in BiomeObject.
+	 */
+	private enum CommandParameters
+	{
+		BIOME("biomeName"),
+		DEPLOYED("deployed"),
+		FRIENDLY_NAME("friendlyName"),
+		DESCRIPTION("description"),
+		ICON("icon"),
+		REQUIRED_COST("requiredCost"),
+		REQUIRED_LEVEL("requiredLevel"),
+		PERMISSIONS("requiredPermissions"),
+		ORDER("order");
 
-	private static final String DEPLOYED = "deployed";
 
-	private static final String FRIENDLY_NAME = "friendlyName";
+		/**
+		 * Constructor.
+		 * @param parameter of the command.
+		 */
+		CommandParameters(String parameter)
+		{
+			this.parameter = parameter;
+		}
 
-	private static final String DESCRIPTION = "description";
 
-	private static final String ICON = "icon";
+		/**
+		 * This method returns stored parameter from string.
+		 * @param parameter String of object that must be returned
+		 * @return CommandParameters object or null.
+		 */
+		public static CommandParameters getParameter(String parameter)
+		{
+			return BY_NAME.get(parameter);
+		}
 
-	private static final String REQUIRED_COST = "requiredCost";
 
-	private static final String REQUIRED_LEVEL = "requiredLevel";
+		/**
+		 * Parameter name.
+		 */
+		private String parameter;
 
-	private static final String PERMISSION = "permission";
+		/**
+		 * This map allows to access all enum values via their string.
+		 */
+		private final static Map<String, CommandParameters> BY_NAME = new HashMap<>();
+
+		/**
+		 * This static method populated BY_NAME map.
+		 */
+		static
+		{
+			for (CommandParameters command : CommandParameters.values())
+			{
+				BY_NAME.put(command.parameter, command);
+			}
+		}
+	}
 }
