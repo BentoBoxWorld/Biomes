@@ -44,7 +44,7 @@ public abstract class ExpandedCompositeCommand extends CompositeCommand
 
 			if (!uniqueID.startsWith(worldName))
 			{
-				uniqueID = worldName  + "_" + uniqueID;
+				uniqueID = worldName  + "-" + uniqueID;
 			}
 
 			BiomesObject biome = this.addon.getAddonManager().getBiomeFromString(uniqueID);

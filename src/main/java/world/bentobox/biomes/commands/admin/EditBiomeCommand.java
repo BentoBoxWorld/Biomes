@@ -224,11 +224,9 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 				String worldName = this.getWorld() != null && Util.getWorld(this.getWorld()) != null ?
 					Util.getWorld(this.getWorld()).getName() : "";
 
-				List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes(worldName);
-
 				// Create suggestions with all biomes that is available for users.
-				biomes.forEach(biomesObject -> {
-					returnList.add(biomesObject.getUniqueId().replaceFirst(worldName, ""));
+				this.addon.getAddonManager().getBiomes(worldName).forEach(biomesObject -> {
+					returnList.add(biomesObject.getUniqueId().replaceFirst(worldName + "-", ""));
 				});
 
 				break;
