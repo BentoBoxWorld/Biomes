@@ -59,26 +59,24 @@ public class ChangeOwnerListener implements Listener
 			defaultBiome = "";
 		}
 
+		// It is assumed that biomes.set permission is required to change biome.
 		if (!hasPermissions)
 		{
-			BiomesObject defaultBiomeObject = this.addon.getAddonManager().getBiomeFromString(defaultBiome);
+			BiomesObject defaultBiomeObject;
 
-			if (!defaultBiome.isEmpty() && defaultBiomeObject == null)
+			Biome biome = BiomesAddonManager.getBiomeNameMap().getOrDefault(defaultBiome.toUpperCase(), null);
+
+			if (biome == null)
 			{
-				Biome biome = BiomesAddonManager.getBiomeNameMap().getOrDefault(defaultBiome.toUpperCase(), null);
-
-				if (biome == null)
-				{
-					this.addon.logError("Biome defined in GameMode addon is not valid!!!");
-					return;
-				}
-				else
-				{
-					defaultBiomeObject = new BiomesObject();
-					defaultBiomeObject.setBiome(biome);
-					defaultBiomeObject.setRequiredCost(0);
-					defaultBiomeObject.setRequiredLevel(0);
-				}
+				this.addon.logError("Biome defined in GameMode addon is not valid!!!");
+				return;
+			}
+			else
+			{
+				defaultBiomeObject = new BiomesObject();
+				defaultBiomeObject.setBiome(biome);
+				defaultBiomeObject.setRequiredCost(0);
+				defaultBiomeObject.setRequiredLevel(0);
 			}
 
 			// Forcefully update biome on whole user island.
