@@ -1,6 +1,7 @@
 package world.bentobox.biomes;
 
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.ConfigurationSection;
@@ -45,6 +46,20 @@ public class BiomesAddonManager
 		}
 
 		this.load();
+
+		// TODO: Remove this code after some time, as this is just a protective code against invalid world names.
+		if (Bukkit.getBukkitVersion().startsWith("1.14"))
+		{
+			this.biomesCacheData.values().forEach(biomesObject -> {
+				if (biomesObject.getWorld().matches(".*[A-Z]+.*"))
+				{
+					biomesObject.setWorld(biomesObject.getWorld().toLowerCase());
+					biomesObject.setUniqueId(biomesObject.getUniqueId().toLowerCase());
+
+					this.addon.logWarning("Biomes addon fixed your data for biome " + biomesObject.getUniqueId() + ". 1.14 does not allow to use capital letters in world names.");
+				}
+			});
+		}
 	}
 
 
@@ -460,7 +475,7 @@ public class BiomesAddonManager
 	{
 		return this.biomesCacheData.values().stream().
 			sorted(BiomesObject::compareTo).
-			filter(biome -> biome.getUniqueId().startsWith(worldName)).
+			filter(biome -> biome.getWorld().equals(worldName)).
 			collect(Collectors.toList());
 	}
 
@@ -547,7 +562,7 @@ public class BiomesAddonManager
 		String worldName = Util.getWorld(world) == null ? "" : Util.getWorld(world).getName();
 
 		return !worldName.isEmpty() &&
-			this.biomesCacheData.values().stream().anyMatch(biome -> biome.getUniqueId().startsWith(worldName));
+			this.biomesCacheData.values().stream().anyMatch(biome -> biome.getWorld().equals(worldName));
 	}
 
 
