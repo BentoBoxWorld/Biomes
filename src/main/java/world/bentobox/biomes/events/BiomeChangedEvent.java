@@ -33,6 +33,7 @@ public class BiomeChangedEvent extends PremadeEvent
 		int maxX,
 		int maxZ)
 	{
+		super(true);
 		this.biomeID = biomeID;
 		this.biome = biome;
 		this.playerUUID = playerUUID;
