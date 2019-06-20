@@ -324,7 +324,8 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
 	{
 		int rc = Integer.compare(this.order, object.getOrder());
 
-		return rc == 0 ? this.biome.compareTo(object.getBiome()) : rc;
+		return this.biome != null && object.getBiome() != null && rc == 0 ?
+				this.biome.compareTo(object.getBiome()) : rc;
 	}
 
 
