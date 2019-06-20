@@ -119,6 +119,16 @@ public class Settings implements ConfigObject
 	}
 
 
+	/**
+	 * This method returns the useProtectionRange value
+	 * @return the useProtectionRange value.
+	 */
+	public boolean isUseProtectionRange()
+	{
+		return this.useProtectionRange;
+	}
+
+
 // ---------------------------------------------------------------------
 // Section: Setters
 // ---------------------------------------------------------------------
@@ -212,6 +222,16 @@ public class Settings implements ConfigObject
 	public void setLoreLineLength(int loreLineLength)
 	{
 		this.loreLineLength = loreLineLength;
+	}
+
+
+	/**
+	 * This method sets the useProtectionRange object value.
+	 * @param useProtectionRange the useProtectionRange object new value.
+	 */
+	public void setUseProtectionRange(boolean useProtectionRange)
+	{
+		this.useProtectionRange = useProtectionRange;
 	}
 
 
@@ -324,6 +344,12 @@ public class Settings implements ConfigObject
 	@ConfigComment("then update algorithm will use this value as update range.")
 	@ConfigEntry(path = "default-size")
 	private int defaultSize = 3;
+
+	@ConfigComment("")
+	@ConfigComment("This indicates if changing biome will affect whole island or just protection range.")
+	@ConfigComment("Allows to fix issues when biome is changed in space between islands.")
+	@ConfigEntry(path = "use-protection-range")
+	private boolean useProtectionRange = false;
 
 	@ConfigComment("")
 	@ConfigComment("This indicates if biome on island must be restored to default biome, if")

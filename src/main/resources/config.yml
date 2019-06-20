@@ -22,6 +22,10 @@ default-mode: ISLAND
 # then update algorithm will use this value as update range.
 default-size: 3
 #
+# This indicates if changing biome will affect whole island or just protection range.
+# Allows to fix issues when biome is changed in space between islands.
+use-protection-range: false
+#
 # This indicates if biome on island must be restored to default biome, if
 # island changes owner and it does not have biome set ability.
 # 'true' means that biome will be reset.

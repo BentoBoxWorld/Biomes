@@ -43,6 +43,7 @@ biomes:
         biomes-lore: "Biome Lore"
         cooldown: "Cooldown"
         reset-biomes: "Reset Event"
+        use-protection-range: "Use Protection Range"
 
         toggle-user-list: "Toggle Player List"
 
@@ -101,6 +102,7 @@ biomes:
         biomes-lore: "Allows to modify which elements in lore message will be displayed.|Check config for more infromation."
         cooldown: "Allows to change cooldown in seconds between player can change biome again."
         reset-biomes: "Allows to enable/disable biomes resetting if player with biome permission leave island."
+        use-protection-range: "Allows to enable/disable biome update to be limited by island protection range. If this is disabled, then it will use whole island range."
 
         toggle-user-list: "Allows to switch which players should be displayed in current Menu."
 

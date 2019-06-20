@@ -43,6 +43,7 @@ biomes:
         biomes-lore: "Biomu Apraksts"
         cooldown: "Atlikšanas Laiks"
         reset-biomes: "Noņemt Biomus"
+        use-protection-range: "Aizsardzības Distance"
 
         toggle-user-list: "Pārslēgs Sarakstu"
 
@@ -101,6 +102,7 @@ biomes:
         biomes-lore: "Ļauj mainīt kādus elementus bioma aprakstā rādīs.|Skatīt konfigurācijas failu, lai redzētu aprakstu."
         cooldown: "Ļauj mainīt cik ilgi spēlētājam jāgaida pirms tiek ļauts nomainīt biomu vēlreiz."
         reset-biomes: "Ļauj ieslēgt/izslēgt biomu noņemšanu, ja spēlētājs, kam bija bioma atļauja pamet salu, un pārējiem spēlētājiem nav atļauja lietot šo biomu."
+        use-protection-range: "Ļauj ieslēgt/izslēgt bioma mainīšanas distances ierobežojumu uz aizsardzības distanci. Ļauj ierobežot bioma mainīšanu starpsalu reģionā."
 
         toggle-user-list: "Ļauj pārslēgt spēlētāja sarakstus."
 
