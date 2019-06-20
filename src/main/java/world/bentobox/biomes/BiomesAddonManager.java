@@ -136,6 +136,19 @@ public class BiomesAddonManager
 	 */
 	public boolean loadBiomes(BiomesObject biome, boolean overwrite, User user, boolean silent)
 	{
+		// If biome is null, the skip this biome!
+		if (biome.getBiome() == null)
+		{
+			if (!silent)
+			{
+				user.sendMessage("biomes.messages.skipping",
+					"[biome]",
+					biome.toString());
+			}
+
+			return false;
+		}
+
 		// Contains in array list is not fast.. but list is not so large, so it is ok there.
 
 		if (this.biomesCacheData.containsKey(biome.getUniqueId()))
