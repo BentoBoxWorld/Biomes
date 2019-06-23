@@ -62,7 +62,7 @@ public class BiomesCommand extends CompositeCommand
 			if (user.isOp() || user.hasPermission(this.getPermissionPrefix() + ".admin.biomes"))
 			{
 				String topLabel = optionalAddon.get().getAdminCommand().orElseGet(this::getParent).getTopLabel();
-				user.sendMessage("biomes.errors.no-biomes-admin", "[label]", topLabel);
+				user.sendMessage("biomes.errors.no-biomes-admin", "[command]", topLabel + " biomes");
 			}
 			else
 			{
