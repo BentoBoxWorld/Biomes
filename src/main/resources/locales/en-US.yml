@@ -99,7 +99,7 @@ biomes:
         default-size: "Allows to change default biome update size.|Will be used if Advanced Menu is disabled and as default values in this menu."
         visibility-mode: "Allows to modify which biomes players can see."
         line-length: "Allows to automatically edit description lore line character length."
-        biomes-lore: "Allows to modify which elements in lore message will be displayed.|Check config for more infromation."
+        biomes-lore: "Allows to modify which elements in lore message will be displayed.|Check config for more information."
         cooldown: "Allows to change cooldown in seconds between player can change biome again."
         reset-biomes: "Allows to enable/disable biomes resetting if player with biome permission leave island."
         use-protection-range: "Allows to enable/disable biome update to be limited by island protection range. If this is disabled, then it will use whole island range."
