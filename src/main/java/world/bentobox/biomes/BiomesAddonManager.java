@@ -390,9 +390,10 @@ public class BiomesAddonManager
 	/**
 	 * This method creates and returns new biome with given uniqueID.
 	 * @param uniqueID - new ID for challenge.
+	 * @param worldName - world name where biome operates.
 	 * @return biome that is currently created.
 	 */
-	public BiomesObject createBiome(String uniqueID)
+	public BiomesObject createBiome(String uniqueID, String worldName)
 	{
 		if (!this.containsBiome(uniqueID))
 		{
@@ -401,6 +402,7 @@ public class BiomesAddonManager
 
 			// Sets default biome as VOID.
 			biome.setBiome(Biome.THE_VOID);
+			biome.setWorld(worldName);
 
 			this.saveBiome(biome);
 			this.loadBiomes(biome);

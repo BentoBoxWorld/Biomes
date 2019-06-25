@@ -88,7 +88,8 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 				user.getPlayer(),
 				"unique_id",
 				(player, reply) -> {
-					String newName = Util.getWorld(this.getWorld()).getName() + "-" + reply.toLowerCase();
+					String worldName = Util.getWorld(this.getWorld()).getName();
+					String newName = worldName + "-" + reply.toLowerCase();
 
 					if (!this.addon.getAddonManager().containsBiome(newName))
 					{
@@ -97,7 +98,7 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 							user,
 							this.getTopLabel(),
 							this.getPermissionPrefix(),
-							this.addon.getAddonManager().createBiome(newName)).build();
+							this.addon.getAddonManager().createBiome(newName, worldName)).build();
 					}
 					else
 					{
@@ -111,8 +112,10 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 		}
 		else
 		{
+			String worldName = Util.getWorld(this.getWorld()).getName();
+
 			BiomesObject biome = this.addon.getAddonManager().createBiome(
-				Util.getWorld(this.getWorld()).getName() + "-" + args.get(0).toLowerCase());
+				worldName + "-" + args.get(0).toLowerCase(), worldName);
 
 			if (user.isPlayer())
 			{

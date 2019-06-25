@@ -112,11 +112,12 @@ public class AdminGUI extends CommonGUI
 						this.user.getPlayer(),
 						"unique_id",
 						(player, reply) -> {
-							String newName = Util.getWorld(this.world).getName() + "-" + reply.toLowerCase();
+							String worldName = Util.getWorld(this.world).getName();
+							String newName = worldName + "-" + reply.toLowerCase();
 
 							if (!this.addon.getAddonManager().containsBiome(newName))
 							{
-								new EditBiomeGUI(AdminGUI.this, this.addon.getAddonManager().createBiome(newName)).build();
+								new EditBiomeGUI(AdminGUI.this, this.addon.getAddonManager().createBiome(newName, worldName)).build();
 							}
 							else
 							{
