@@ -1,0 +1,251 @@
+﻿biomes:
+  gui:
+    title:
+      admin:
+        main-gui: "&6管理員菜單"
+        edit: "&6編輯地形 [biome]"
+        settings: "&6組件設置"
+        edit-list: "&6可編輯的地形菜單"
+        remove-list: "&6可删除的地形菜單"
+        user-list: "&6選擇玩家"
+        confirm-title: "&6確認操作"
+        manage-numbers: "&6管理號碼"
+        select-biome: "&6選擇地形"
+        toggle-environment: "&6切換地形"
+        edit-text-fields: "&6編輯介紹"
+      biomes-choose: "&6選擇地形"
+      mode-choose: "&6選擇更新模式"
+
+    buttons:
+      admin:
+        settings: "設定"
+        import: "導入"
+        remove: "删除地形"
+        edit: "編輯地形"
+        add: "添加地形"
+        change: "修改用戶地形"
+
+        change-biome: "地形"
+        name: "顯示名稱"
+        icon: "圖標"
+        order: "順序"
+        description: "介紹"
+        deployment: "允許運行"
+        required-permissions: "所需權限"
+        required-level: "所需等級"
+        required-money: "所需金錢"
+
+        advanced-menu: "地形菜單"
+        default-mode: "默認更新模式"
+        default-size: "默認大小"
+        visibility-mode: "地形的可見性"
+        line-length: "Lore的長度"
+        biomes-lore: "地形Lore"
+        cooldown: "冷却"
+        reset-biomes: "重置事件"
+        use-protection-range: "使用保護範圍"
+
+        toggle-user-list: "切換玩家列表"
+
+        save: "保存"
+        cancel: "取消"
+        input: "輸入"
+
+        set-mode: "="
+        increase-mode: "+"
+        reduce-mode: "-"
+        multiply-mode: "*"
+        number: "[number]"
+
+        add-string: "添加字符串"
+        clear: "清除"
+        remove-empty: "删除空欄"
+        input-mode: "輸入模式"
+        value: "值"
+
+      value: "當前值: [number]"
+      increase: "增加 [number]"
+      decrease: "减少 [number]"
+      set: "設置值爲 [number]"
+      accept: "接受"
+      decline: "拒絕"
+
+      information: "信息"
+
+      return: "返回"
+      previous: "上一頁"
+      next: "下一頁"
+    descriptions:
+      admin:
+        settings: "編輯插件設置"
+        import: "從配置文件的biomes.yml中導入地形。右鍵單擊啓用/取消覆蓋模式"
+        remove: "删除某個地形"
+        edit: "編輯某個地形"
+        add: "添加一個地形選項"
+        change: "修改某個玩家的地形"
+
+        change-biome: "修改該項目所生成的地形"
+        required-permissions: "修改生成該地形所需要的權限組，如果玩家沒有權限組將不能使用該地形!"
+        required-level: "需要島嶼達到幾級才可以使用該地形.|&c需要 Level 組件."
+        required-money: "需要多少金錢才可以使用該地形.|&c需要經濟插件."
+        name: "設置該地形的名稱"
+        deployment: "允許/不允許玩家使用這個地形(如果不允許玩家將無法在地形菜單中看到該地形項目)"
+        icon: "設置該地形的圖標"
+        description: "修改該地形的介紹"
+        order: "修改該地形的順序."
+
+        advanced-menu: "允許玩家打開地形菜單幷對島嶼地形進行修改"
+        default-mode: "允許玩家修改島嶼地形的更新模式(如果不允許玩家使用島嶼菜單將啓動菜單中的默認設定)"
+        default-size: "允許玩家修改島嶼地形的更新大小(如果不允許玩家使用島嶼菜單將啓動菜單中的默認設定)"
+        visibility-mode: "允許玩家修改地形可見性"
+        line-length: "允許自動編輯介紹lore長度"
+        biomes-lore: "允許修改lore消息中的哪些元素將被顯示。|檢查config以獲得更多信息。"
+        cooldown: "允許開啓地形修改冷却系統，玩家將會在冷却時間過後才可以再次修改地形"
+        reset-biomes: "如果有具有地形許可的玩家離開島嶼，將允許/不允許地形重置"
+        use-protection-range: "允許修改地形更新後受島嶼保護範圍的限制(如果不允許則使用島嶼大小上限作爲範圍)"
+
+        toggle-user-list: "可以在此菜單中修改玩家的地形"
+
+        save: "保存當前設定幷且返回上一級菜單"
+        cancel: "取消修改幷且返回上一級菜單"
+        input: "允許在AnvilGUI中寫入數字"
+
+        set-mode: "切換到設置模式，將當前值設置爲單擊的數字。"
+        increase-mode: "切換到增加模式，通過點擊的數字增加當前值。"
+        reduce-mode: "切換到减少模式，該模式將通過單擊的數字减少當前值。"
+        multiply-mode: "切換到乘法模式，該模式將當前值乘以點擊的數字。"
+
+        click-to-edit: '&4單擊此處編輯輸入。'
+        edit-text-line: '&6 編輯信息!'
+        add-text-line: '&6 添加新的信息!'
+        input-mode: '在聊天和鐵砧輸入模式之間切換。'
+
+      update-mode:
+        island: "島嶼"
+        chunk: "區塊"
+        square: "範圍"
+        undefined: "未定義"
+      visibility-mode:
+        info: "修改你可以看到的地形"
+        all: "All &r- 列出所有地形"
+        deployed: "Deployed - 列出已部署的地形"
+        accessible: "Accessible - 列出可以訪問的地形"
+        toggleable: "Toggleable - 地形菜單中的可切換按鈕"
+      view-mode:
+        online: "在綫"
+        in-world: "在這個世界"
+        with-island: "以及島嶼"
+
+      current-value: "當前值: [value]"
+      enabled: "允許"
+      disabled: "不允許"
+      permission: " - [permission]"
+
+      information: "如果您接受此更改，我們將使用[mode]模式將您的島嶼地形更改爲[biome]，範圍爲[range]。"
+
+    biomes-description:
+      biome-name: "MineCraft地形: [value]"
+      required-money: "價格: [value]"
+      required-island-level: "最低島嶼等級: [value]"
+      required-permissions: "權限:"
+
+  commands:
+    admin:
+      add:
+        description: "你可以通過該指令創建一個島嶼地形(該地形將以島嶼默認設置作爲基礎)"
+        parameters: "[id]"
+      edit:
+        description: "你可以通過該指令修改<id> 的屬性. 僅允許編輯現有屬性."
+        parameters: "<id> <property> <new_value>"
+      help:
+        description: "你可以通過該指令查詢更多關于插件的指令"
+        parameters: ""
+      import:
+        description: "你可以通過該指令導入biomes.yml文件中的地形設置"
+        parameters: "[overwrite]"
+      set:
+        description: "你可以通過該指令修改玩家 <player> 的島嶼地形. <type> 和 <size> 可以選擇不輸入."
+        parameters: "<player> <biome> [<type>] [<size>]"
+      settings:
+        description: "你可以通過該指令修改地形組件的基礎設置"
+        parameters: "<property> <new_value>"
+    user:
+      help:
+        description: "你可以通過該菜單修改地形"
+        parameters: ""
+      info:
+        description: "你可以通過該指令查看島嶼地形的信息"
+        parameters: "<biome>"
+      set:
+        description: "你可以通過該指令設置<biome>于自己的島嶼. <type> 和 <size> 可以選擇不輸入."
+        parameters: "<biome> [<type>] [<size>]"
+
+  errors:
+    unique-id: "&唯一ID &d[id]&c 無效"
+    too-many-arguments: "&c參數過多。請檢查幫助!"
+    missing-arguments: "&c缺少命令參數。 請檢查幫助!"
+    unknown-argument: "&c未知的命令參數。 請檢查幫助！"
+
+    incorrect-range: "&c給定的數字 &d'[number]'&c 無效. 該數字必須是整數."
+    incorrect-mode: "&c給定的值 &d'[mode]'&c 無效. 有效值必須爲 'ISLAND', 'CHUNK' 或者 'SQUARE'."
+    incorrect-icon: "&c給定圖標 &d'[icon]'&c 無法分析. 請嘗試其他圖標"
+    incorrect-biome: "&c給定地形 &d'[biome]'&c 無法在minecraft中查找. 請使用正確的地形名稱."
+    incorrect-parameter: "&c給定屬性 &d'[property]'&c 爲未定義地形."
+    incorrect-boolean: "&c給定的值 &d'[boolean]'&c 不是布爾值. 改值必須是 'true' 或者 'false'."
+    incorrect-visibility: "&c給定值 &d'[mode]'&c 無效."
+    incorrect-object: "&c無法找到具體給定ID的地形 &d'[biome]'."
+
+    no-biomes: '&c該世界不允許使用地形'
+    no-biomes-admin: '&c該世界不允許使用地形! 你需要使用 &5/[command] &c加入地形!'
+    missing-user: "&c用戶未定義."
+    missing-biome: "&c地形未定義"
+    wrong-icon: "&c給定材料 &6[value]&c 無法分析爲ItemStack."
+    no-biomes-for-you: "&c不幸的是，找不到任何可以使用的生物群系。"
+
+    not-valid-integer: '&c給定整數 "[value]" 無效!|該數值必須在 [min] 和 [max]之間.'
+    not-a-integer: '&c給定值 "[value]" 不是整數!'
+
+    not-on-island: "&c你不在島上。"
+    not-enough-money: "&c你沒有足够的金錢，修改該地形需要金錢 $[number]"
+    not-enough-level:  "&c你的島嶼等級過低，修改該地形需要島嶼等級爲 [number]"
+    admin-not-on-island: "&c你不在 [user] 的島上."
+    disabled: "&c目前這個地形已被禁用."
+    missing-permission: "&c使用此地形需要 &6[permission]&c 權限. 不過你幷沒有該權限."
+
+    no-file: "&c無法找到biomes.yml"
+    no-load: "&c導入地形時出現錯誤: [message]!"
+    load-biome: "&c無法加載地形 '[biome]' 因爲它沒有在Minecraft中定義。使用正確的生物群系名稱。"
+
+    no-rank: "&c你沒有足够等級做到這一點"
+
+  information:
+    header: "地形: [name]"
+    type: "  類別: [type]"
+    description: "  介紹: [description]"
+    level: "  等級: [level]"
+    cost: "  價格: [cost]"
+    permission: "  權限組: [permission]"
+
+  messages:
+    saved: "&d地形 [biome] 已保存."
+    biome-created: "&d使用uniqueID創建的新Biome對象: [id]"
+    saved-config: "組件設定已更新"
+    biome-removed: "删除島嶼地形 = '[biome]'"
+
+    update-start: "&e地形更新開始..."
+    update-done: "&6[biome]&r&e 成功更新"
+
+    skipping: "跳過[biome] 導入."
+    overwriting: "覆蓋 [biome]."
+    imported: "[biome] 成功島嶼."
+    import-count: "島嶼地形導入結束. 成功導入 [number] 個地形."
+
+protection:
+    flags:
+        BIOMES_ISLAND_PROTECTION:
+            description: "&5&o切換到誰可以\n&5&o改變島嶼地形"
+            name: "地形保護"
+        BIOMES_WORLD_PROTECTION:
+            description: "&5&o这将允许/禁止\n&5&o玩家在岛屿\n&5&o修改地形\n&5&o的需求."
+            name: "地形限制"
+            hint: "島外不允許改變島嶼地形！"
