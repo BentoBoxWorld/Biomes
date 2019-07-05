@@ -46,8 +46,8 @@
         <java.version>1.8</java.version>
         <powermock.version>1.7.4</powermock.version>
         <!-- More visible way how to change dependency versions -->
-        <spigot.version>1.13.2-R0.1-SNAPSHOT</spigot.version>
-        <bentobox.version>1.5.2</bentobox.version>
+        <spigot.version>1.14.3-R0.1-SNAPSHOT</spigot.version>
+        <bentobox.version>1.5.3</bentobox.version>
         <level.version>1.5.0</level.version>
         <vault.version>1.7</vault.version>
         <anvilgui.version>a07c9b64f7</anvilgui.version>
