@@ -1,7 +1,6 @@
 package world.bentobox.biomes;
 
 
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.ConfigurationSection;
@@ -37,7 +36,7 @@ public class BiomesAddonManager
 		this.addon = addon;
 
 		this.biomesDatabase = new Database<>(addon, BiomesObject.class);
-		this.biomesCacheData = new HashMap<>(Biome.values().length * 2);
+		this.biomesCacheData = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
 		this.biomesFile = new File(this.addon.getDataFolder(), "biomes.yml");
 
@@ -47,25 +46,9 @@ public class BiomesAddonManager
 		}
 
 		this.biomePendingChunkUpdateDatabase = new Database<>(addon, BiomeChunkUpdateObject.class);
-		this.biomePendingChunkUpdateMap = new HashMap<>();
+		this.biomePendingChunkUpdateMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
 		this.load();
-
-		// TODO: Remove this code after some time, as this is just a protective code against invalid world names.
-		if (Bukkit.getBukkitVersion().startsWith("1.14"))
-		{
-			this.biomesCacheData.values().forEach(biomesObject -> {
-				if (biomesObject.getWorld().matches(".*[A-Z]+.*"))
-				{
-					biomesObject.setWorld(biomesObject.getWorld().toLowerCase());
-					biomesObject.setUniqueId(biomesObject.getUniqueId().toLowerCase());
-
-					this.addon.logWarning("Biomes addon fixed your data for biome "
-						+ biomesObject.getUniqueId() +
-						". 1.14 does not allow to use capital letters in world names.");
-				}
-			});
-		}
 	}
 
 
@@ -515,7 +498,7 @@ public class BiomesAddonManager
 	{
 		return this.biomesCacheData.values().stream().
 			sorted(BiomesObject::compareTo).
-			filter(biome -> biome.getWorld().equals(worldName)).
+			filter(biome -> biome.getWorld().equalsIgnoreCase(worldName)).
 			collect(Collectors.toList());
 	}
 
@@ -602,7 +585,7 @@ public class BiomesAddonManager
 		String worldName = Util.getWorld(world) == null ? "" : Util.getWorld(world).getName();
 
 		return !worldName.isEmpty() &&
-			this.biomesCacheData.values().stream().anyMatch(biome -> biome.getWorld().equals(worldName));
+			this.biomesCacheData.values().stream().anyMatch(biome -> biome.getWorld().equalsIgnoreCase(worldName));
 	}
 
 

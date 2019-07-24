@@ -39,7 +39,7 @@ public abstract class ExpandedCompositeCommand extends CompositeCommand
 	{
 		if (args.size() > index)
 		{
-			String uniqueID = args.get(index).toLowerCase();
+			String uniqueID = args.get(index);
 			String worldName = Util.getWorld(this.getWorld()).getName();
 
 			if (!uniqueID.startsWith(worldName))

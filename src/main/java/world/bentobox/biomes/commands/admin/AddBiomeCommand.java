@@ -58,13 +58,13 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 		else if (args.size() == 1)
 		{
 			// If biome with given ID already exist, then show error. Otherwise process command.
-			if (!this.addon.getAddonManager().containsBiome(Util.getWorld(this.getWorld()).getName() + "-" + args.get(0).toLowerCase()))
+			if (!this.addon.getAddonManager().containsBiome(Util.getWorld(this.getWorld()).getName() + "-" + args.get(0)))
 			{
 				return true;
 			}
 			else
 			{
-				user.sendMessage("biomes.errors.unique-id", "[id]", args.get(0).toLowerCase());
+				user.sendMessage("biomes.errors.unique-id", "[id]", args.get(0));
 				return false;
 			}
 		}
@@ -89,7 +89,7 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 				"unique_id",
 				(player, reply) -> {
 					String worldName = Util.getWorld(this.getWorld()).getName();
-					String newName = worldName + "-" + reply.toLowerCase();
+					String newName = worldName + "-" + reply;
 
 					if (!this.addon.getAddonManager().containsBiome(newName))
 					{
@@ -115,7 +115,7 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 			String worldName = Util.getWorld(this.getWorld()).getName();
 
 			BiomesObject biome = this.addon.getAddonManager().createBiome(
-				worldName + "-" + args.get(0).toLowerCase(), worldName);
+				worldName + "-" + args.get(0), worldName);
 
 			if (user.isPlayer())
 			{
@@ -130,7 +130,7 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 			{
 				user.sendMessage("biomes.messages.biome-created",
 					"[id]",
-					args.get(0).toLowerCase());
+					args.get(0));
 			}
 
 			return true;

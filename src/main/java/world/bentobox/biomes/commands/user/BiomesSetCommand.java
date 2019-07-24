@@ -92,7 +92,7 @@ public class BiomesSetCommand extends ExpandedCompositeCommand
 
 				// Create suggestions with all biomes that is available for users.
 				biomes.forEach(biomesObject -> {
-					returnList.add(biomesObject.getUniqueId().replaceFirst(worldName + "-", ""));
+					returnList.add(biomesObject.getUniqueId().substring(worldName.length() + 1));
 				});
 
 				break;
