@@ -72,13 +72,7 @@ public class ChunkLoadListener implements Listener
 
 			// If process is completed, then remove force-load status and unload
 			// chunk.
-			if (updateObject.isForceLoaded())
-			{
-				updateObject.getWorld().setChunkForceLoaded(updateObject.getChunkX(),
-					updateObject.getChunkZ(),
-					false);
-				chunk.unload(true);
-			}
+			chunk.unload(true);
 
 			// Remove ChunkUpdateObject.
 			this.addon.getAddonManager().removeUpdateObject(updateObject);

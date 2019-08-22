@@ -161,7 +161,6 @@ public class BiomesAddon extends Addon
 					updater.setForceLoaded(true);
 
 					// force-load chunk.
-					world.setChunkForceLoaded(updater.getChunkX(), updater.getChunkZ(), true);
 					world.loadChunk(updater.getChunkX(), updater.getChunkZ());
 				}
 			}, 5L, 5L);
