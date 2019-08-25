@@ -361,7 +361,6 @@ public class BiomesAddon extends Addon
 	 */
 	public static Flag BIOMES_ISLAND_PROTECTION =
 		new Flag.Builder("BIOMES_ISLAND_PROTECTION", Material.GRASS_BLOCK).
-			defaultRank(RanksManager.VISITOR_RANK).
 			mode(Flag.Mode.ADVANCED).
 			build();
 
