@@ -179,6 +179,11 @@ biomes:
       settings:
         description: "Administratora SETTINGS komanda ļauj mainīt noklusētās papildinājuma iestatījuma vērtības."
         parameters: "<property> <new_value>"
+
+      migrate:
+        description: 'Šī metode ļauj migrēt papildinājuma vecā formāta datus uz jauno formātu.'
+        parameters: ''
+
     user:
       help:
         description: "Galvenā komanda, kas atver Biomu Izvēlni."
@@ -237,6 +242,11 @@ biomes:
     permission: "  Atļaujas: [permission]"
 
   messages:
+    admin:
+      migrate-start: '&2Sāk migrāciju uz jauno formātu.'
+      migrate-end: '&2Biomes papildinājums veiksmīgi pārmigrēts.'
+      migrate-not: '&2Visi objekti jau ir derīgi.'
+
     saved: "&dBioms [biome] ir saglabāts."
     biome-created: "&dIzveidots jauns Bioms ar id: [id]"
     saved-config: "Papildinājuma iestatījumi saglabāti."

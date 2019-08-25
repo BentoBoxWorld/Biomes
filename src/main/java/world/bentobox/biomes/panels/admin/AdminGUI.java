@@ -23,6 +23,7 @@ import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.panels.CommonGUI;
 import world.bentobox.biomes.panels.GuiUtils;
+import world.bentobox.biomes.utils.Utils;
 
 
 /**
@@ -117,7 +118,7 @@ public class AdminGUI extends CommonGUI
 					this.getNewUniqueID(uniqueID ->
 						{
 							String worldName = Util.getWorld(this.world).getName();
-							String newName = worldName + "-" + uniqueID.toLowerCase();
+							String newName = Utils.getGameMode(this.world) + "_" + uniqueID.toLowerCase();
 
 							new EditBiomeGUI(AdminGUI.this, this.addon.getAddonManager().createBiome(newName, worldName)).build();
 						},

@@ -181,6 +181,11 @@
       settings:
         description: "你可以通過該指令修改地形組件的基礎設置"
         parameters: "<property> <new_value>"
+
+      migrate:
+        description: 'This method allows to migrate biomes data that refers to current game mode world to storage format.'
+        parameters: ''
+
     user:
       help:
         description: "你可以通過該菜單修改地形"
@@ -239,6 +244,11 @@
     permission: "  權限組: [permission]"
 
   messages:
+    admin:
+      migrate-start: '&2Start migrating biomes addon data.'
+      migrate-end: '&2Biomes addon data is updated to new format.'
+      migrate-not: '&2All data is valid.'
+
     saved: "&d地形 [biome] 已保存."
     biome-created: "&d使用uniqueID創建的新Biome對象: [id]"
     saved-config: "組件設定已更新"

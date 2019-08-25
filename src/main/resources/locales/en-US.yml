@@ -180,6 +180,11 @@ biomes:
       settings:
         description: "Admin SETTINGS command allows to edit addon default settings via simple command. It allows to edit only existing settings."
         parameters: "<property> <new_value>"
+
+      migrate:
+        description: 'This method allows to migrate biomes data that refers to current game mode world to storage format.'
+        parameters: ''
+
     user:
       help:
         description: "Main biome addon command that opens biome change GUI."
@@ -238,6 +243,11 @@ biomes:
     permission: "  Permission: [permission]"
 
   messages:
+    admin:
+      migrate-start: '&2Start migrating biomes addon data.'
+      migrate-end: '&2Biomes addon data is updated to new format.'
+      migrate-not: '&2All data is valid.'
+
     saved: "&dBiome [biome] is saved."
     biome-created: "&dNew Biome object created with uniqueID: [id]"
     saved-config: "Addon settings is updated."

@@ -15,6 +15,7 @@ import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.commands.ExpandedCompositeCommand;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.panels.admin.EditBiomeGUI;
+import world.bentobox.biomes.utils.Utils;
 
 
 /**
@@ -92,7 +93,7 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 			this.getNewUniqueID(uniqueID ->
 				{
 					String worldName = Util.getWorld(this.getWorld()).getName();
-					String newName = worldName + "-" + uniqueID.toLowerCase();
+					String newName = Utils.getGameMode(this.getWorld()) + "_" + uniqueID.toLowerCase();
 
 					new EditBiomeGUI(this.addon,
 						this.getWorld(),
@@ -110,9 +111,9 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 		else
 		{
 			String worldName = Util.getWorld(this.getWorld()).getName();
+			String newName = Utils.getGameMode(this.getWorld()) + "_" + args.get(0).toLowerCase();
 
-			BiomesObject biome = this.addon.getAddonManager().createBiome(
-				worldName + "-" + args.get(0), worldName);
+			BiomesObject biome = this.addon.getAddonManager().createBiome(newName, worldName);
 
 			if (user.isPlayer())
 			{
@@ -184,8 +185,7 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 					@Override
 					protected boolean isInputValid(ConversationContext context, String input)
 					{
-						String worldName = Util.getWorld(world).getName();
-						String newName = worldName + "-" + input.toLowerCase();
+						String newName = Utils.getGameMode(world) + "_" + input.toLowerCase();
 
 						return !AddBiomeCommand.this.addon.getAddonManager().containsBiome(newName);
 					}

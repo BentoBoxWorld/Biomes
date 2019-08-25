@@ -13,6 +13,7 @@ import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.database.objects.BiomeChunkUpdateObject;
 import world.bentobox.biomes.events.BiomeChangedEvent;
+import world.bentobox.biomes.utils.Utils;
 
 
 /**
@@ -147,7 +148,7 @@ public class BiomeUpdateTask extends BukkitRunnable
     private BiomeChunkUpdateObject createChunkUpdateObject(int chunkX, int chunkZ)
     {
         BiomeChunkUpdateObject chunkUpdateObject = new BiomeChunkUpdateObject();
-        chunkUpdateObject.setUniqueId(this.world.getName() + "-" + chunkX + "-" + chunkZ);
+        chunkUpdateObject.setUniqueId(Utils.getGameMode(this.world) + "_" + chunkX + "-" + chunkZ);
         chunkUpdateObject.setWorld(this.world);
         chunkUpdateObject.setBiome(this.biome.getBiome());
 
