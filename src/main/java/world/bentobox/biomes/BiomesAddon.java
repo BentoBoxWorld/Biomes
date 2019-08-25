@@ -348,7 +348,11 @@ public class BiomesAddon extends Addon
 	 * player to their island. Useful for skygrid without protection flags.
 	 */
 	public static Flag BIOMES_WORLD_PROTECTION =
-		new Flag.Builder("BIOMES_WORLD_PROTECTION", Material.GRASS_BLOCK).type(Flag.Type.WORLD_SETTING).defaultSetting(true).build();
+		new Flag.Builder("BIOMES_WORLD_PROTECTION", Material.GRASS_BLOCK).
+			type(Flag.Type.WORLD_SETTING).
+			mode(Flag.Mode.ADVANCED).
+			defaultSetting(true).
+			build();
 
 	/**
 	 * This flag allows to define which users can change biomes. F.e. it can be set
@@ -356,7 +360,10 @@ public class BiomesAddon extends Addon
 	 * By default it is set to Visitor.
 	 */
 	public static Flag BIOMES_ISLAND_PROTECTION =
-		new Flag.Builder("BIOMES_ISLAND_PROTECTION", Material.GRASS_BLOCK).defaultRank(RanksManager.VISITOR_RANK).build();
+		new Flag.Builder("BIOMES_ISLAND_PROTECTION", Material.GRASS_BLOCK).
+			defaultRank(RanksManager.VISITOR_RANK).
+			mode(Flag.Mode.ADVANCED).
+			build();
 
 
 // ---------------------------------------------------------------------
