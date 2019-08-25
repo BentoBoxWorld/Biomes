@@ -1,9 +1,13 @@
 package world.bentobox.biomes.commands.admin;
 
 
+import org.bukkit.World;
+import org.bukkit.conversations.*;
+import org.eclipse.jdt.annotation.NonNull;
 import java.util.List;
+import java.util.function.Consumer;
 
-import net.wesjd.anvilgui.AnvilGUI;
+import world.bentobox.bentobox.BentoBox;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.user.User;
@@ -84,29 +88,22 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 		if (user.isPlayer() && args.isEmpty())
 		{
 			// Shows BiomesPanel in Edit mode.
-			new AnvilGUI(this.addon.getPlugin(),
-				user.getPlayer(),
-				"unique_id",
-				(player, reply) -> {
+
+			this.getNewUniqueID(uniqueID ->
+				{
 					String worldName = Util.getWorld(this.getWorld()).getName();
-					String newName = worldName + "-" + reply;
+					String newName = worldName + "-" + uniqueID.toLowerCase();
 
-					if (!this.addon.getAddonManager().containsBiome(newName))
-					{
-						new EditBiomeGUI(this.addon,
-							this.getWorld(),
-							user,
-							this.getTopLabel(),
-							this.getPermissionPrefix(),
-							this.addon.getAddonManager().createBiome(newName, worldName)).build();
-					}
-					else
-					{
-						user.sendMessage("biomes.errors.unique-id", "[id]", reply);
-					}
-
-					return reply;
-				});
+					new EditBiomeGUI(this.addon,
+						this.getWorld(),
+						user,
+						this.getTopLabel(),
+						this.getPermissionPrefix(),
+						this.addon.getAddonManager().createBiome(newName, worldName)).build();
+				},
+				user.getTranslation("biomes.gui.questions.admin.uniqueID"),
+				user,
+				this.getWorld());
 
 			return true;
 		}
@@ -135,5 +132,90 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 
 			return true;
 		}
+	}
+
+
+// ---------------------------------------------------------------------
+// Section: Conversation
+// ---------------------------------------------------------------------
+
+	/**
+	 * This method will close opened gui and writes inputText in chat. After players answers on inputText in
+	 * chat, message will trigger consumer and gui will reopen.
+	 * @param consumer Consumer that accepts player output text.
+	 * @param question Message that will be displayed in chat when player triggers conversion.
+	 */
+	private void getNewUniqueID(Consumer<String> consumer,
+		@NonNull String question,
+		@NonNull User user,
+		@NonNull World world)
+	{
+		Conversation conversation =
+			new ConversationFactory(BentoBox.getInstance()).withFirstPrompt(
+				new ValidatingPrompt()
+				{
+
+					/**
+					 * Gets the text to display to the user when
+					 * this prompt is first presented.
+					 *
+					 * @param context Context information about the
+					 * conversation.
+					 * @return The text to display.
+					 */
+					@Override
+					public String getPromptText(ConversationContext context)
+					{
+						// There are no editable message. Just return question.
+						return question;
+					}
+
+
+					/**
+					 * Override this method to check the validity of
+					 * the player's input.
+					 *
+					 * @param context Context information about the
+					 * conversation.
+					 * @param input The player's raw console input.
+					 * @return True or false depending on the
+					 * validity of the input.
+					 */
+					@Override
+					protected boolean isInputValid(ConversationContext context, String input)
+					{
+						String worldName = Util.getWorld(world).getName();
+						String newName = worldName + "-" + input.toLowerCase();
+
+						return !AddBiomeCommand.this.addon.getAddonManager().containsBiome(newName);
+					}
+
+
+					/**
+					 * Override this method to accept and processes
+					 * the validated input from the user. Using the
+					 * input, the next Prompt in the prompt graph
+					 * should be returned.
+					 *
+					 * @param context Context information about the
+					 * conversation.
+					 * @param input The validated input text from
+					 * the user.
+					 * @return The next Prompt in the prompt graph.
+					 */
+					@Override
+					protected Prompt acceptValidatedInput(ConversationContext context, String input)
+					{
+						// Add answer to consumer.
+						consumer.accept(input);
+						// End conversation
+						return Prompt.END_OF_CONVERSATION;
+					}
+				}).
+				withLocalEcho(false).
+				withPrefix(context -> user.getTranslation("biomes.gui.questions.prefix")).
+				buildConversation(user.getPlayer());
+
+		conversation.begin();
 	}
 }

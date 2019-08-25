@@ -9,7 +9,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.wesjd.anvilgui.AnvilGUI;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
@@ -282,14 +281,14 @@ public class EditSettingsGUI extends CommonGUI
 				name = this.user.getTranslation("biomes.gui.buttons.admin.biomes-lore");
 				icon = new ItemStack(Material.MAP);
 				clickHandler = (panel, user1, clickType, i) -> {
-					new AnvilGUI(this.addon.getPlugin(),
-						this.user.getPlayer(),
-						this.settings.getLoreMessage(),
-						(player, reply) -> {
-							this.settings.setLoreMessage(reply);
-							EditSettingsGUI.this.build();
-							return reply;
-						});
+//					new AnvilGUI(this.addon.getPlugin(),
+//						this.user.getPlayer(),
+//						this.settings.getLoreMessage(),
+//						(player, reply) -> {
+//							this.settings.setLoreMessage(reply);
+//							EditSettingsGUI.this.build();
+//							return reply;
+//						});
 
 					return true;
 				};

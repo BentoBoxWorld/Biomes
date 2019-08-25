@@ -13,6 +13,7 @@ biomes:
         select-biome: "&6Select Biome"
         toggle-environment: "&6Toggle Environment"
         edit-text-fields: "&6Edit Text Fields"
+        select-block: "&6Select A Material"
       biomes-choose: "&6Choose Biome"
       mode-choose: "&6Choose Update Mode"
 
@@ -50,6 +51,7 @@ biomes:
         save: "Save"
         cancel: "Cancel"
         input: "Input"
+        accept: "Accept"
 
         set-mode: "="
         increase-mode: "+"
@@ -108,7 +110,7 @@ biomes:
 
         save: "Allows to save current value and return to previous Menu."
         cancel: "Allows to return to previous Menu without changes."
-        input: "Allows to write number in AnvilGUI"
+        input: "Allows to write number in Chat"
 
         set-mode: "Allows to switch to set mode that will set current value to clicked number."
         increase-mode: "Allows to switch to increase mode that will increase current value by clicked number."
@@ -118,7 +120,8 @@ biomes:
         click-to-edit: '&4Click here to edit input.'
         edit-text-line: '&6 Edit text message!'
         add-text-line: '&6 Add new text message!'
-        input-mode: 'Switch between chat and anvil input modes.'
+
+        selected: "&6Material is Selected"
 
       update-mode:
         island: "Island"
@@ -142,6 +145,14 @@ biomes:
       permission: " - [permission]"
 
       information: "If you accept this changes, we will try to change your island biome to [biome] in update mode [mode] with range [range]."
+
+    questions:
+      prefix: "&2[SERVER]: "
+
+      admin:
+        number: "Write a number in chat and press enter to accept it and press enter."
+        name: "Write a friendly name for given biome."
+        uniqueID: "Write object unique name and press enter."
 
     biomes-description:
       biome-name: "Minecraft Biome: [value]"

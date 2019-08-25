@@ -13,6 +13,7 @@
         select-biome: "&6選擇地形"
         toggle-environment: "&6切換地形"
         edit-text-fields: "&6編輯介紹"
+        select-block: "&6Select A Material"
       biomes-choose: "&6選擇地形"
       mode-choose: "&6選擇更新模式"
 
@@ -50,6 +51,7 @@
         save: "保存"
         cancel: "取消"
         input: "輸入"
+        accept: "Accept"
 
         set-mode: "="
         increase-mode: "+"
@@ -120,6 +122,8 @@
         add-text-line: '&6 添加新的信息!'
         input-mode: '在聊天和鐵砧輸入模式之間切換。'
 
+        selected: "&6Material is Selected"
+
       update-mode:
         island: "島嶼"
         chunk: "區塊"
@@ -142,6 +146,14 @@
       permission: " - [permission]"
 
       information: "如果您接受此更改，我們將使用[mode]模式將您的島嶼地形更改爲[biome]，範圍爲[range]。"
+
+    questions:
+      prefix: "&2[SERVER]: "
+
+      admin:
+        number: "Write a number in chat and press enter to accept it and press enter."
+        name: "Write a friendly name for given biome."
+        uniqueID: "Write object unique name and press enter."
 
     biomes-description:
       biome-name: "MineCraft地形: [value]"

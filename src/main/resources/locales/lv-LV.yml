@@ -13,6 +13,7 @@ biomes:
         select-biome: "&6Izvēlēties Biomu"
         toggle-environment: "&6Pārslēgt Vidi"
         edit-text-fields: "&6Labot teksta laukus"
+        select-block: "&6Izvēlies Materiālu"
       biomes-choose: "&6Izvēlēties Biomu"
       mode-choose: "&6Izvēlēties Mainīšanas Metodi"
 
@@ -50,6 +51,7 @@ biomes:
         save: "Saglabāt"
         cancel: "Atcelt"
         input: "Ievadīt"
+        accept: "Apstiprināt"
 
         set-mode: "="
         increase-mode: "+"
@@ -142,6 +144,14 @@ biomes:
       permission: " - [permission]"
 
       information: "Ja apstiprināsi, tad tiks mainīts biomes uz [biome] ar atjaunošanas metodi [mode] un distanci [range]."
+
+    questions:
+      prefix: "&2[SERVERIS]: "
+
+      admin:
+        number: "Ieraksti ciparu sarakstē."
+        name: "Ieraksti nosaukumu biomam sarakstē."
+        uniqueID: "Ieraksti unikālu objekta id sarakstē."
 
     biomes-description:
       biome-name: "Minecraft Bioms: [value]"
