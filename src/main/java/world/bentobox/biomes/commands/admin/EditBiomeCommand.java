@@ -15,6 +15,7 @@ import world.bentobox.biomes.commands.ExpandedCompositeCommand;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.panels.admin.ListBiomesGUI;
 import world.bentobox.biomes.panels.GuiUtils;
+import world.bentobox.biomes.utils.Utils;
 
 
 /**
@@ -221,8 +222,9 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 		switch (size)
 		{
 			case 3:
-				String worldName = this.getWorld() != null && Util.getWorld(this.getWorld()) != null ?
-					Util.getWorld(this.getWorld()).getName() : "";
+				String worldName = this.getWorld() != null &&
+					Utils.getGameMode(this.getWorld()) != null ?
+					Utils.getGameMode(this.getWorld()) : "";
 
 				// Create suggestions with all biomes that is available for users.
 				this.addon.getAddonManager().getBiomes(worldName).forEach(biomesObject -> {

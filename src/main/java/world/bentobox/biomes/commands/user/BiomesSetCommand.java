@@ -12,6 +12,7 @@ import world.bentobox.biomes.commands.ExpandedCompositeCommand;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.config.Settings.UpdateMode;
 import world.bentobox.biomes.tasks.BiomeUpdateHelper;
+import world.bentobox.biomes.utils.Utils;
 
 
 /**
@@ -85,8 +86,9 @@ public class BiomesSetCommand extends ExpandedCompositeCommand
 		switch (size)
 		{
 			case 3:
-				String worldName = this.getWorld() != null && Util.getWorld(this.getWorld()) != null ?
-					Util.getWorld(this.getWorld()).getName() : "";
+				String worldName = this.getWorld() != null &&
+					Utils.getGameMode(this.getWorld()) != null ?
+					Utils.getGameMode(this.getWorld()) : "";
 
 				List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes(worldName);
 

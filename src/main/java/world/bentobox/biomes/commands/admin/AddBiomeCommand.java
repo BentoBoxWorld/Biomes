@@ -63,7 +63,7 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 		else if (args.size() == 1)
 		{
 			// If biome with given ID already exist, then show error. Otherwise process command.
-			if (!this.addon.getAddonManager().containsBiome(Util.getWorld(this.getWorld()).getName() + "-" + args.get(0)))
+			if (!this.addon.getAddonManager().containsBiome(Utils.getGameMode(this.getWorld()) + "_" + args.get(0)))
 			{
 				return true;
 			}
