@@ -40,11 +40,11 @@ public abstract class ExpandedCompositeCommand extends CompositeCommand
 		if (args.size() > index)
 		{
 			String uniqueID = args.get(index);
-			String worldName = Utils.getGameMode(this.getWorld());
+			String addonName = Utils.getGameMode(this.getWorld());
 
-			if (!uniqueID.startsWith(worldName))
+			if (!uniqueID.startsWith(addonName))
 			{
-				uniqueID = worldName  + "_" + uniqueID;
+				uniqueID = addonName  + "_" + uniqueID;
 			}
 
 			BiomesObject biome = this.addon.getAddonManager().getBiomeFromString(uniqueID);

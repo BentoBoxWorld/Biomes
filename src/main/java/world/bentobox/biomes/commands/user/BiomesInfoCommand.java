@@ -73,14 +73,10 @@ public class BiomesInfoCommand extends ExpandedCompositeCommand
 
 		final List<String> returnList = new ArrayList<>();
 
-		String worldName = this.getWorld() != null &&
-			Utils.getGameMode(this.getWorld()) != null ?
-			Utils.getGameMode(this.getWorld()) : "";
-
 		// Create suggestions with all biomes that is available for users.
 
-		this.addon.getAddonManager().getBiomes(worldName).forEach(biomesObject -> {
-			returnList.add(biomesObject.getUniqueId().replaceFirst(worldName + "_", ""));
+		this.addon.getAddonManager().getBiomes(this.getWorld()).forEach(biomesObject -> {
+			returnList.add(biomesObject.getUniqueId().substring(Utils.getGameMode(this.getWorld()).length() + 1));
 		});
 
 		return Optional.of(Util.tabLimit(returnList, args.get(args.size() - 1)));

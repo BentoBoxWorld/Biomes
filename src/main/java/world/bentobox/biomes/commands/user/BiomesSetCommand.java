@@ -86,15 +86,11 @@ public class BiomesSetCommand extends ExpandedCompositeCommand
 		switch (size)
 		{
 			case 3:
-				String worldName = this.getWorld() != null &&
-					Utils.getGameMode(this.getWorld()) != null ?
-					Utils.getGameMode(this.getWorld()) : "";
-
-				List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes(worldName);
+				List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes(this.getWorld());
 
 				// Create suggestions with all biomes that is available for users.
 				biomes.forEach(biomesObject -> {
-					returnList.add(biomesObject.getUniqueId().substring(worldName.length() + 1));
+					returnList.add(biomesObject.getUniqueId().substring(Utils.getGameMode(this.getWorld()).length() + 1));
 				});
 
 				break;
