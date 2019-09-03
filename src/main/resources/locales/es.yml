@@ -1,0 +1,115 @@
+---
+biomes:
+  gui:
+    title:
+      admin:
+        main-gui: "&6 Menú de administración"
+        edit: "&6Editar [biome]"
+        settings: "&6 Configuración de Addon"
+        edit-list: "&6 Lista de Bioma Editable"
+        remove-list: "&6 Lista de biomas extraíble"
+        user-list: "&6Elegir jugador"
+        confirm-title: "&6 Confirmar acción previa"
+        manage-numbers: "&6Números de gestión"
+        select-biome: "&6 Seleccione Bioma"
+        toggle-environment: "&6 Cambiar ambiente"
+        edit-text-fields: "&6 Editar campos de texto"
+        select-block: "&6 Seleccione un material"
+      biomes-choose: "&6Elija Bioma"
+      mode-choose: "&6 Elija el modo de actualización"
+    buttons:
+      admin:
+        number: "[number]"
+    descriptions:
+      admin:
+        click-to-edit: "&4Haga clic aquí para editar la entrada."
+        edit-text-line: "& ¡Editar mensaje de texto!"
+        add-text-line: "&6 ¡Agregue un nuevo mensaje de texto!"
+        selected: "&6Material seleccionado"
+      visibility-mode:
+        all: All &r- enumera todos los biomas
+      current-value: 'Valor actual: [value]'
+      permission: "- [permission]"
+    questions:
+      prefix: "&2 [SERVER]:"
+    biomes-description:
+      biome-name: 'Bioma de Minecraft: [value]'
+      required-money: 'Valor: [value]'
+      required-island-level: 'Nivel mínimo de isla: [value]'
+  commands:
+    admin:
+      add:
+        parameters: "[id] "
+      import:
+        parameters: "[overwrite]"
+  errors:
+    unique-id: "&cUnique id &d [id] &c no es válido!"
+    too-many-arguments: "&cDemasiados parámetros. Por favor, consulte la ayuda!"
+    missing-arguments: Parámetros de comando &cPerdido. Por favor, consulte la ayuda!
+    unknown-argument: "&c Parámetros de comando desconocidos. Por favor, consulte
+      la ayuda!"
+    incorrect-range: "&c Número dado &d '[number]' &c no es válido. Válidos son solo
+      enteros positivos."
+    incorrect-mode: "&c El valor dado &d'[mode]' &c no es válido. Los valores válidos
+      son 'ISLAND', 'CHUNK'  o 'SQUARE'."
+    incorrect-icon: "&c El icono dado &d '[icon]' &c no se puede analizar. Intenta
+      diferente."
+    incorrect-biome: "&cDado bioma &amp; d &#39;[bioma]&#39; &amp; c no se encuentra
+      en Minecraft. Use el nombre correcto del bioma."
+    incorrect-parameter: "&c Propiedad dada &d '[property]' &c no está definida para
+      bioma."
+    incorrect-boolean: "&c Valor dado &d '[boolean]' &c no es un booleano. Los valores
+      válidos son 'verdadero' o 'falso'"
+    incorrect-visibility: "&c El valor dado &d '[mode]' &c no es válido."
+    incorrect-object: "&cNo se puede encontrar el bioma con la identificación dada
+      &d '[biome]'."
+    no-biomes: "&cBiomas no se implementan en el mundo actual!"
+    missing-user: "&cUser no está definido."
+    missing-biome: "&cBioma no está definido."
+    wrong-icon: "&El material proporcionado &6 [value] &c no se puede analizar en
+      ItemStack."
+    no-biomes-for-you: "&c Desafortunadamente, no puedo encontrar ningún bioma que
+      pueda usar."
+    not-valid-integer: '&cEl número entero "[value]" no es válido | El valor debe
+      estar entre [min] y [max].'
+    not-a-integer: '& c ¡El valor dado "[value]" no es entero!'
+    not-on-island: "&cNo estás en la isla."
+    not-enough-money: "&cNo tiene suficiente dinero. Cambiar el bioma requiere $[number]"
+    not-enough-level: "&cEl nivel de tu isla es demasiado pequeño. Bioma requiere
+      nivel [number]"
+    admin-not-on-island: "&cNo estás en la isla [user]."
+    disabled: "&c Actualmente este bioma está desactivado."
+    missing-permission: "&cEste bioma requiere &6 [permission] &cpermiso. No lo tienes."
+    no-file: "&cbiomes.yml no encontrado."
+    no-load: "&cSe produce un error al importar biomas: [message]!."
+    load-biome: "&cNo se puede cargar el bioma '[biome]' ya que no está definido en
+      Minecraft. Use el nombre correcto del bioma."
+    no-rank: "&cNo tienes rango para hacer eso."
+  information:
+    header: 'Bioma: [name]'
+    type: 'Tipo: [type]'
+    description: 'Descripción: [description]'
+    level: 'Nivel: [level]'
+    cost: Costo [cost]
+    permission: 'Permiso: [permission]'
+  messages:
+    admin:
+      migrate-start: "&2 Inicie la migración de datos de complemento de biomas."
+      migrate-end: Los datos del complemento &2Biomas se actualizan a un nuevo formato.
+      migrate-not: "&2 Todos los datos son válidos."
+    saved: "&dBioma [biome] se guarda."
+    biome-created: "&d Nuevo objeto Biome creado con uniqueID: [id]"
+    biome-removed: Bioma con id único = '[biome]' se elimina de la memoria.
+    update-start: "&eComenzó la actualización de Bioma"
+    update-done: "&6 [biome] &r&e está configurado en la isla con éxito."
+    skipping: Omitiendo la importación [biome].
+    overwriting: Sobreescritura [biome].
+    imported: "[biome] es importado."
+    import-count: La importación de biomas terminó. Importados [number] biomas.
+protection:
+  flags:
+    BIOMES_ISLAND_PROTECTION:
+      description: "&5&o Alternar quién puede \n &5&oCambia el bioma en la isla"
+    BIOMES_WORLD_PROTECTION:
+      description: "&5&o Esto permite habilitar / deshabilitar \n &5 &orequerimientos
+        para que los jugadores \n &5 &oVe a su isla para \n&5&oCambia el biom."
