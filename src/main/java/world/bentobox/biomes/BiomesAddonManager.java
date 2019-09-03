@@ -385,6 +385,9 @@ public class BiomesAddonManager
 				biomesObject.setUniqueId(
 					addonName + "_" + biomesObject.getUniqueId().substring(world.getName().length() + 1));
 
+				// Update world, as in some situations it was not set.
+				biomesObject.setWorld(Util.getWorld(world).getName());
+
 				this.biomesDatabase.saveObject(biomesObject);
 				this.biomesCacheData.put(biomesObject.getUniqueId(), biomesObject);
 
