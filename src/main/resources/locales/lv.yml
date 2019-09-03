@@ -13,6 +13,7 @@ biomes:
         select-biome: "&6Izvēlēties Biomu"
         toggle-environment: "&6Pārslēgt Vidi"
         edit-text-fields: "&6Labot teksta laukus"
+        select-block: "&6Izvēlies Materiālu"
       biomes-choose: "&6Izvēlēties Biomu"
       mode-choose: "&6Izvēlēties Mainīšanas Metodi"
 
@@ -43,12 +44,14 @@ biomes:
         biomes-lore: "Biomu Apraksts"
         cooldown: "Atlikšanas Laiks"
         reset-biomes: "Noņemt Biomus"
+        use-protection-range: "Aizsardzības Distance"
 
         toggle-user-list: "Pārslēgs Sarakstu"
 
         save: "Saglabāt"
         cancel: "Atcelt"
         input: "Ievadīt"
+        accept: "Apstiprināt"
 
         set-mode: "="
         increase-mode: "+"
@@ -101,6 +104,7 @@ biomes:
         biomes-lore: "Ļauj mainīt kādus elementus bioma aprakstā rādīs.|Skatīt konfigurācijas failu, lai redzētu aprakstu."
         cooldown: "Ļauj mainīt cik ilgi spēlētājam jāgaida pirms tiek ļauts nomainīt biomu vēlreiz."
         reset-biomes: "Ļauj ieslēgt/izslēgt biomu noņemšanu, ja spēlētājs, kam bija bioma atļauja pamet salu, un pārējiem spēlētājiem nav atļauja lietot šo biomu."
+        use-protection-range: "Ļauj ieslēgt/izslēgt bioma mainīšanas distances ierobežojumu uz aizsardzības distanci. Ļauj ierobežot bioma mainīšanu starpsalu reģionā."
 
         toggle-user-list: "Ļauj pārslēgt spēlētāja sarakstus."
 
@@ -141,6 +145,14 @@ biomes:
 
       information: "Ja apstiprināsi, tad tiks mainīts biomes uz [biome] ar atjaunošanas metodi [mode] un distanci [range]."
 
+    questions:
+      prefix: "&2[SERVERIS]: "
+
+      admin:
+        number: "Ieraksti ciparu sarakstē."
+        name: "Ieraksti nosaukumu biomam sarakstē."
+        uniqueID: "Ieraksti unikālu objekta id sarakstē."
+
     biomes-description:
       biome-name: "Minecraft Bioms: [value]"
       required-money: "Maksa: [value]"
@@ -167,6 +179,11 @@ biomes:
       settings:
         description: "Administratora SETTINGS komanda ļauj mainīt noklusētās papildinājuma iestatījuma vērtības."
         parameters: "<property> <new_value>"
+
+      migrate:
+        description: 'Šī metode ļauj migrēt papildinājuma vecā formāta datus uz jauno formātu.'
+        parameters: ''
+
     user:
       help:
         description: "Galvenā komanda, kas atver Biomu Izvēlni."
@@ -225,6 +242,11 @@ biomes:
     permission: "  Atļaujas: [permission]"
 
   messages:
+    admin:
+      migrate-start: '&2Sāk migrāciju uz jauno formātu.'
+      migrate-end: '&2Biomes papildinājums veiksmīgi pārmigrēts.'
+      migrate-not: '&2Visi objekti jau ir derīgi.'
+
     saved: "&dBioms [biome] ir saglabāts."
     biome-created: "&dIzveidots jauns Bioms ar id: [id]"
     saved-config: "Papildinājuma iestatījumi saglabāti."

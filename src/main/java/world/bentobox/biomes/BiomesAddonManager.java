@@ -15,9 +15,11 @@ import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.Database;
 import world.bentobox.bentobox.util.ItemParser;
 import world.bentobox.bentobox.util.Util;
+import world.bentobox.biomes.database.objects.BiomeChunkUpdateObject;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.config.Settings.VisibilityMode;
 import world.bentobox.biomes.panels.GuiUtils;
+import world.bentobox.biomes.utils.Utils;
 
 
 /**
@@ -35,7 +37,7 @@ public class BiomesAddonManager
 		this.addon = addon;
 
 		this.biomesDatabase = new Database<>(addon, BiomesObject.class);
-		this.biomesCacheData = new HashMap<>(Biome.values().length * 2);
+		this.biomesCacheData = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
 		this.biomesFile = new File(this.addon.getDataFolder(), "biomes.yml");
 
@@ -43,6 +45,9 @@ public class BiomesAddonManager
 		{
 			this.addon.saveResource("biomes.yml", false);
 		}
+
+		this.biomePendingChunkUpdateDatabase = new Database<>(addon, BiomeChunkUpdateObject.class);
+		this.biomePendingChunkUpdateMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
 		this.load();
 	}
@@ -59,9 +64,12 @@ public class BiomesAddonManager
 	private void load()
 	{
 		this.biomesCacheData.clear();
+		this.biomePendingChunkUpdateMap.clear();
+
 		this.addon.getLogger().info("Loading biomes...");
 
 		this.biomesDatabase.loadObjects().forEach(this::loadBiomes);
+		this.biomePendingChunkUpdateDatabase.loadObjects().forEach(this::addChunkUpdateObject);
 	}
 
 
@@ -74,6 +82,9 @@ public class BiomesAddonManager
 
 		this.biomesDatabase = new Database<>(this.addon, BiomesObject.class);
 		this.biomesDatabase.loadObjects().forEach(this::loadBiomes);
+
+		this.biomePendingChunkUpdateDatabase = new Database<>(this.addon, BiomeChunkUpdateObject.class);
+		this.biomePendingChunkUpdateDatabase.loadObjects().forEach(this::addChunkUpdateObject);
 	}
 
 
@@ -98,6 +109,19 @@ public class BiomesAddonManager
 	public void save()
 	{
 		this.biomesCacheData.values().forEach(this.biomesDatabase::saveObject);
+
+		// Clear Database.
+		List<BiomeChunkUpdateObject> objectList =
+			this.biomePendingChunkUpdateDatabase.loadObjects();
+		objectList.forEach(object -> this.biomePendingChunkUpdateDatabase.
+			deleteID(object.getUniqueId()));
+
+		// Save cache into database.
+		if (!this.biomePendingChunkUpdateMap.isEmpty())
+		{
+			this.biomePendingChunkUpdateMap.values().forEach(
+				this.biomePendingChunkUpdateDatabase::saveObject);
+		}
 	}
 
 	/**
@@ -121,6 +145,19 @@ public class BiomesAddonManager
 	 */
 	public boolean loadBiomes(BiomesObject biome, boolean overwrite, User user, boolean silent)
 	{
+		// If biome is null, the skip this biome!
+		if (biome.getBiome() == null)
+		{
+			if (!silent)
+			{
+				user.sendMessage("biomes.messages.skipping",
+					"[biome]",
+					biome.toString());
+			}
+
+			return false;
+		}
+
 		// Contains in array list is not fast.. but list is not so large, so it is ok there.
 
 		if (this.biomesCacheData.containsKey(biome.getUniqueId()))
@@ -168,76 +205,6 @@ public class BiomesAddonManager
 
 
 	/**
-	 * This method imports biomes on first run.
-	 * @param world World name in which biome must be imported.
-	 */
-	public void importBiomes(String world)
-	{
-		if (!this.biomesFile.exists())
-		{
-			this.addon.logError("Missing biomes.yml file!");
-			return;
-		}
-
-		YamlConfiguration config = new YamlConfiguration();
-
-		try
-		{
-			config.load(this.biomesFile);
-		}
-		catch (IOException | InvalidConfigurationException e)
-		{
-			this.addon.logError("Error on parsing biomes.yml file!");
-			return;
-		}
-
-		ConfigurationSection reader = config.getConfigurationSection("biomes.biomesList");
-
-		Map<String, Biome> biomeNameMap = BiomesAddonManager.getBiomeNameMap();
-
-		int counter = 0;
-
-		for (String biome : reader.getKeys(false))
-		{
-			if (biomeNameMap.containsKey(biome.toUpperCase()))
-			{
-				BiomesObject newBiomeObject = new BiomesObject(biomeNameMap.get(biome.toUpperCase()), world);
-				newBiomeObject.setDeployed(true);
-
-				ConfigurationSection details = reader.getConfigurationSection(biome);
-
-				newBiomeObject.setFriendlyName(details.getString("friendlyName", biome));
-
-				newBiomeObject.setDescription(
-					GuiUtils.stringSplit(details.getString("description", ""),
-						this.addon.getSettings().getLoreLineLength()));
-				newBiomeObject.setIcon(ItemParser.parse(details.getString("icon") + ":1"));
-
-				newBiomeObject.setRequiredLevel(details.getInt("islandLevel", 0));
-				newBiomeObject.setRequiredCost(details.getInt("cost", 0));
-
-				List<String> permissions = details.getStringList("permission");
-
-				if (permissions == null || permissions.isEmpty())
-				{
-					newBiomeObject.setRequiredPermissions(Collections.emptySet());
-				}
-				else
-				{
-					newBiomeObject.setRequiredPermissions(new HashSet<>(permissions));
-				}
-
-				this.biomesCacheData.put(newBiomeObject.getUniqueId(), newBiomeObject);
-				counter++;
-			}
-		}
-
-		this.addon.log("Imported " + counter + " biomes into " + world);
-		this.save();
-	}
-
-
-	/**
 	 * This method imports biomes
 	 *
 	 * @param user - user
@@ -247,20 +214,8 @@ public class BiomesAddonManager
 	 */
 	public boolean importBiomes(User user, World world, boolean overwrite)
 	{
-		return this.importBiomes(user, Util.getWorld(world).getName(), overwrite);
-	}
+		world = Util.getWorld(world);
 
-
-	/**
-	 * This method imports biomes
-	 *
-	 * @param user - user
-	 * @param world - world to import into
-	 * @param overwrite - true if previous ones should be overwritten
-	 * @return true if successful
-	 */
-	public boolean importBiomes(User user, String world, boolean overwrite)
-	{
 		if (!this.biomesFile.exists())
 		{
 			user.sendMessage("biomes.errors.no-file");
@@ -296,7 +251,7 @@ public class BiomesAddonManager
 	 * @param world World in which biomes must be imported
 	 * @param overwrite Boolean that indicate if biomes should be overwritted.
 	 */
-	private void readBiomes(YamlConfiguration config, User user, String world, boolean overwrite)
+	private void readBiomes(YamlConfiguration config, User user, World world, boolean overwrite)
 	{
 		int size = 0;
 
@@ -355,6 +310,96 @@ public class BiomesAddonManager
 
 
 // ---------------------------------------------------------------------
+// Section: Migrate
+// ---------------------------------------------------------------------
+
+
+	/**
+	 * This method migrated all biomes addon data from worldName to addonID format.
+	 */
+	public void migrateDatabase(User user, World world)
+	{
+		world = Util.getWorld(world);
+
+		if (user.isPlayer())
+		{
+			user.sendMessage("biomes.messages.admin.migrate-start");
+		}
+		else
+		{
+			this.addon.log("Starting migration to new data format.");
+		}
+
+		boolean biomes = this.migrateBiomes(world);
+
+		if (biomes)
+		{
+			if (user.isPlayer())
+			{
+				user.sendMessage("biomes.messages.admin.migrate-end");
+			}
+			else
+			{
+				this.addon.log("Migration to new data format completed.");
+			}
+		}
+		else
+		{
+			if (user.isPlayer())
+			{
+				user.sendMessage("biomes.messages.admin.migrate-not");
+			}
+			else
+			{
+				this.addon.log("All data is valid. Migration is not necessary.");
+			}
+		}
+	}
+
+
+	/**
+	 * This method migrates biomes object to new id format.
+	 * @param world World which biomes must be updated.
+	 * @return {@code true} if any biome is updated,
+	 * 			{@code false} otherwise.
+	 */
+	private boolean migrateBiomes(World world)
+	{
+		String addonName = Utils.getGameMode(world);
+
+		if (addonName == null || addonName.equalsIgnoreCase(world.getName()))
+		{
+			return false;
+		}
+
+		boolean updated = false;
+		List<BiomesObject> objectList = this.biomesDatabase.loadObjects();
+
+		for (BiomesObject biomesObject : objectList)
+		{
+			if (biomesObject.getUniqueId().regionMatches(true, 0, world.getName() + "-", 0, world.getName().length() + 1))
+			{
+				this.biomesDatabase.deleteID(biomesObject.getUniqueId());
+				this.biomesCacheData.remove(biomesObject.getUniqueId());
+
+				biomesObject.setUniqueId(
+					addonName + "_" + biomesObject.getUniqueId().substring(world.getName().length() + 1));
+
+				// Update world, as in some situations it was not set.
+				biomesObject.setWorld(Util.getWorld(world).getName());
+
+				this.biomesDatabase.saveObject(biomesObject);
+				this.biomesCacheData.put(biomesObject.getUniqueId(), biomesObject);
+
+				updated = true;
+			}
+		}
+
+		return updated;
+	}
+
+
+// ---------------------------------------------------------------------
 // Section: Creating
 // ---------------------------------------------------------------------
 
@@ -362,9 +407,10 @@ public class BiomesAddonManager
 	/**
 	 * This method creates and returns new biome with given uniqueID.
 	 * @param uniqueID - new ID for challenge.
+	 * @param worldName - world name where biome operates.
 	 * @return biome that is currently created.
 	 */
-	public BiomesObject createBiome(String uniqueID)
+	public BiomesObject createBiome(String uniqueID, String worldName)
 	{
 		if (!this.containsBiome(uniqueID))
 		{
@@ -373,6 +419,7 @@ public class BiomesAddonManager
 
 			// Sets default biome as VOID.
 			biome.setBiome(Biome.THE_VOID);
+			biome.setWorld(worldName);
 
 			this.saveBiome(biome);
 			this.loadBiomes(biome);
@@ -460,7 +507,7 @@ public class BiomesAddonManager
 	{
 		return this.biomesCacheData.values().stream().
 			sorted(BiomesObject::compareTo).
-			filter(biome -> biome.getUniqueId().startsWith(worldName)).
+			filter(biome -> biome.getWorld().equalsIgnoreCase(worldName)).
 			collect(Collectors.toList());
 	}
 
@@ -547,7 +594,61 @@ public class BiomesAddonManager
 		String worldName = Util.getWorld(world) == null ? "" : Util.getWorld(world).getName();
 
 		return !worldName.isEmpty() &&
-			this.biomesCacheData.values().stream().anyMatch(biome -> biome.getUniqueId().startsWith(worldName));
+			this.biomesCacheData.values().stream().anyMatch(biome -> biome.getWorld().equalsIgnoreCase(worldName));
+	}
+
+
+// ---------------------------------------------------------------------
+// Section: Later Biome Updater
+// ---------------------------------------------------------------------
+
+
+	/**
+	 * This method finds and returns BiomeChunkUpdaterObject in given world with given
+	 * chunk X and Z coordinates.
+	 * @param world World where process will happen.
+	 * @param x Chunk X coordinate.
+	 * @param z Chunk Z coordinate.
+	 * @return BiomeChunkUpdateObject where update is pending or null.
+	 */
+	public BiomeChunkUpdateObject getPendingChunkUpdateObject(World world, int x, int z)
+	{
+		return this.biomePendingChunkUpdateMap.get(Utils.getGameMode(world) + "_" + x + "-" + z);
+	}
+
+
+	/**
+	 * This method returns collection with all objects that contains information about
+	 * chunks where biome update is still not completed.
+	 * @return Collection of BiomeCHunkUpdateObjects.
+	 */
+	public Collection<BiomeChunkUpdateObject> getBiomeUpdaterCollection()
+	{
+		return this.biomePendingChunkUpdateMap.values();
+	}
+
+
+	/**
+	 * This method adds BiomeChunkUpdateObject to cache.
+	 * @param updateObject Object that must be added to cache.
+	 */
+	public void addChunkUpdateObject(BiomeChunkUpdateObject updateObject)
+	{
+		this.biomePendingChunkUpdateMap.put(updateObject.getUniqueId(), updateObject);
+	}
+
+
+	/**
+	 * This method removes given element form cache and database.
+	 * @param element Element that should be removed.
+	 */
+	public void removeUpdateObject(BiomeChunkUpdateObject element)
+	{
+		if (this.biomePendingChunkUpdateMap.containsKey(element.getUniqueId()))
+		{
+			this.biomePendingChunkUpdateMap.remove(element.getUniqueId());
+			this.biomePendingChunkUpdateDatabase.deleteObject(element);
+		}
 	}
 
 
@@ -574,4 +675,15 @@ public class BiomesAddonManager
 	 * Variable stores biomes.yml location
 	 */
 	private File biomesFile;
+
+	/**
+	 * Variable stores BiomeChunkUpdateObject objects that contains information about
+	 * chunk that is not updated yet.
+	 */
+	private Map<String, BiomeChunkUpdateObject> biomePendingChunkUpdateMap;
+
+	/**
+	 * Variable stores database of BiomeChunkUpdateObject.
+	 */
+	private Database<BiomeChunkUpdateObject> biomePendingChunkUpdateDatabase;
 }

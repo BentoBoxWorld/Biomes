@@ -3,12 +3,18 @@ package world.bentobox.biomes.panels.admin;
 
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.conversations.*;
 import org.bukkit.inventory.ItemStack;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
-import net.wesjd.anvilgui.AnvilGUI;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import world.bentobox.bentobox.BentoBox;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
@@ -17,6 +23,7 @@ import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.panels.CommonGUI;
 import world.bentobox.biomes.panels.GuiUtils;
+import world.bentobox.biomes.utils.Utils;
 
 
 /**
@@ -108,23 +115,15 @@ public class AdminGUI extends CommonGUI
 				description = Collections.singletonList(this.user.getTranslation("biomes.gui.descriptions.admin.add"));
 				icon = new ItemStack(Material.BOOK);
 				clickHandler = (panel, user, clickType, slot) -> {
-					new AnvilGUI(this.addon.getPlugin(),
-						this.user.getPlayer(),
-						"unique_id",
-						(player, reply) -> {
-							String newName = Util.getWorld(this.world).getName() + "-" + reply.toLowerCase();
+					this.getNewUniqueID(uniqueID ->
+						{
+							String worldName = Util.getWorld(this.world).getName();
+							String newName = Utils.getGameMode(this.world) + "_" + uniqueID.toLowerCase();
 
-							if (!this.addon.getAddonManager().containsBiome(newName))
-							{
-								new EditBiomeGUI(AdminGUI.this, this.addon.getAddonManager().createBiome(newName)).build();
-							}
-							else
-							{
-								this.user.sendMessage("biomes.errors.unique-id", "[id]", reply);
-							}
-
-							return reply;
-						});
+							new EditBiomeGUI(AdminGUI.this, this.addon.getAddonManager().createBiome(newName, worldName)).build();
+						},
+						this.user.getTranslation("biomes.gui.questions.admin.uniqueID"),
+						null);
 
 					return true;
 				};
@@ -228,6 +227,124 @@ public class AdminGUI extends CommonGUI
 			build();
 	}
 
+
+// ---------------------------------------------------------------------
+// Section: Conversation
+// ---------------------------------------------------------------------
+
+	/**
+	 * This method will close opened gui and writes inputText in chat. After players answers on inputText in
+	 * chat, message will trigger consumer and gui will reopen.
+	 * @param consumer Consumer that accepts player output text.
+	 * @param question Message that will be displayed in chat when player triggers conversion.
+	 * @param message Message that will be set in player text field when clicked on question.
+	 */
+	private void getNewUniqueID(Consumer<String> consumer,
+		@NonNull String question,
+		@Nullable String message)
+	{
+		final User user = this.user;
+
+		Conversation conversation =
+			new ConversationFactory(BentoBox.getInstance()).withFirstPrompt(
+				new ValidatingPrompt()
+				{
+
+					/**
+					 * Gets the text to display to the user when
+					 * this prompt is first presented.
+					 *
+					 * @param context Context information about the
+					 * conversation.
+					 * @return The text to display.
+					 */
+					@Override
+					public String getPromptText(ConversationContext context)
+					{
+						// Close input GUI.
+						user.closeInventory();
+
+						if (message != null)
+						{
+							// Create Edit Text message.
+							TextComponent component = new TextComponent(user.getTranslation("biomes.gui.descriptions.admin.click-to-edit"));
+							component.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, message));
+							// Send question and message to player.
+							user.getPlayer().spigot().sendMessage(component);
+						}
+
+						// There are no editable message. Just return question.
+						return question;
+					}
+
+
+					/**
+					 * Override this method to check the validity of
+					 * the player's input.
+					 *
+					 * @param context Context information about the
+					 * conversation.
+					 * @param input The player's raw console input.
+					 * @return True or false depending on the
+					 * validity of the input.
+					 */
+					@Override
+					protected boolean isInputValid(ConversationContext context, String input)
+					{
+						String worldName = Util.getWorld(AdminGUI.this.world).getName();
+						String newName = worldName + "-" + input.toLowerCase();
+
+						return !AdminGUI.this.addon.getAddonManager().containsBiome(newName);
+					}
+
+
+					/**
+					 * Optionally override this method to
+					 * display an additional message if the
+					 * user enters an invalid input.
+					 *
+					 * @param context Context information
+					 * about the conversation.
+					 * @param invalidInput The invalid input
+					 * provided by the user.
+					 * @return A message explaining how to
+					 * correct the input.
+					 */
+					@Override
+					protected String getFailedValidationText(ConversationContext context,
+						String invalidInput)
+					{
+						return user.getTranslation("biomes.errors.unique-id", "[id]", invalidInput);
+					}
+
+
+					/**
+					 * Override this method to accept and processes
+					 * the validated input from the user. Using the
+					 * input, the next Prompt in the prompt graph
+					 * should be returned.
+					 *
+					 * @param context Context information about the
+					 * conversation.
+					 * @param input The validated input text from
+					 * the user.
+					 * @return The next Prompt in the prompt graph.
+					 */
+					@Override
+					protected Prompt acceptValidatedInput(ConversationContext context, String input)
+					{
+						// Add answer to consumer.
+						consumer.accept(input);
+						// End conversation
+						return Prompt.END_OF_CONVERSATION;
+					}
+				}).
+				withLocalEcho(false).
+				withPrefix(context -> user.getTranslation("biomes.gui.questions.prefix")).
+				buildConversation(user.getPlayer());
+
+		conversation.begin();
+	}
 
 // ---------------------------------------------------------------------
 // Section: Enums

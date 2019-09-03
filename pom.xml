@@ -47,14 +47,13 @@
         <powermock.version>1.7.4</powermock.version>
         <!-- More visible way how to change dependency versions -->
         <spigot.version>1.13.2-R0.1-SNAPSHOT</spigot.version>
-        <bentobox.version>1.5.0</bentobox.version>
-        <level.version>1.4.0</level.version>
+        <bentobox.version>1.6.0</bentobox.version>
+        <level.version>1.6.0</level.version>
         <vault.version>1.7</vault.version>
-        <anvilgui.version>1.2.1-SNAPSHOT</anvilgui.version>
         <!-- Revision variable removes warning about dynamic version -->
         <revision>${build.version}-SNAPSHOT</revision>
         <!-- This allows to change between versions and snapshots. -->
-        <build.version>1.5.0.0</build.version>
+        <build.version>1.6.0.1</build.version>
         <build.number>-LOCAL</build.number>
     </properties>
 
@@ -108,8 +107,8 @@
 			<url>http://nexus.hc.to/content/repositories/pub_releases</url>
 		</repository>
         <repository>
-            <id>wesjd-repo</id>
-            <url>https://nexus.wesjd.net/repository/thirdparty/</url>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
 
@@ -132,18 +131,13 @@
             <version>${level.version}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>net.wesjd</groupId>
-            <artifactId>anvilgui</artifactId>
-            <version>${anvilgui.version}</version>
-        </dependency>
 		<dependency>
 			<groupId>net.milkbowl.vault</groupId>
 			<artifactId>VaultAPI</artifactId>
 			<version>${vault.version}</version>
 			<scope>provided</scope>
 		</dependency>
-    </dependencies>
+	</dependencies>
 
     <build>
         <!-- By default ${revision} is ${build.version}-SNAPSHOT -->

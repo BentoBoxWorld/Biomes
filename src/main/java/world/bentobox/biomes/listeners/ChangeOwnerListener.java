@@ -23,79 +23,79 @@ import world.bentobox.biomes.tasks.BiomeUpdateHelper;
  */
 public class ChangeOwnerListener implements Listener
 {
-	public  ChangeOwnerListener(BiomesAddon addon)
-	{
-		this.addon = addon;
-	}
+    public  ChangeOwnerListener(BiomesAddon addon)
+    {
+        this.addon = addon;
+    }
 
 
-	@EventHandler(priority = EventPriority.LOW)
-	public void onTeamSetOwnerEvent(TeamSetownerEvent event)
-	{
-		// Do nothing if biome reset is diabled.
-		if (!this.addon.getSettings().isResetBiomes())
-		{
-			return;
-		}
+    @EventHandler(priority = EventPriority.LOW)
+    public void onTeamSetOwnerEvent(TeamSetownerEvent event)
+    {
+        // Do nothing if biome reset is diabled.
+        if (!this.addon.getSettings().isResetBiomes())
+        {
+            return;
+        }
 
-		User newUser = User.getInstance(event.getNewOwner());
+        User newUser = User.getInstance(event.getNewOwner());
 
-		Optional<GameModeAddon> gameModeAddon =
-			this.addon.getPlugin().getIWM().getAddon(event.getIsland().getWorld());
+        Optional<GameModeAddon> gameModeAddon =
+                this.addon.getPlugin().getIWM().getAddon(event.getIsland().getWorld());
 
-		final boolean hasPermissions;
-		final String defaultBiome;
+        final boolean hasPermissions;
+        final String defaultBiome;
 
-		if (gameModeAddon.isPresent())
-		{
-			GameModeAddon addon = gameModeAddon.get();
-			hasPermissions = newUser.hasPermission(addon.getPermissionPrefix() + ".biomes.set");
-			defaultBiome = addon.getConfig().getString("world.default-biome", "PLAINS");
-		}
-		else
-		{
-			// Do nothing if failed to get correct world permission.
-			hasPermissions = true;
-			defaultBiome = "";
-		}
+        if (gameModeAddon.isPresent())
+        {
+            GameModeAddon addon = gameModeAddon.get();
+            hasPermissions = newUser.hasPermission(addon.getPermissionPrefix() + "biomes.set");
+            defaultBiome = addon.getConfig().getString("world.default-biome", "PLAINS");
+        }
+        else
+        {
+            // Do nothing if failed to get correct world permission.
+            hasPermissions = true;
+            defaultBiome = "";
+        }
 
-		// It is assumed that biomes.set permission is required to change biome.
-		if (!hasPermissions)
-		{
-			BiomesObject defaultBiomeObject;
+        // It is assumed that biomes.set permission is required to change biome.
+        if (!hasPermissions)
+        {
+            BiomesObject defaultBiomeObject;
 
-			Biome biome = BiomesAddonManager.getBiomeNameMap().getOrDefault(defaultBiome.toUpperCase(), null);
+            Biome biome = BiomesAddonManager.getBiomeNameMap().getOrDefault(defaultBiome.toUpperCase(), null);
 
-			if (biome == null)
-			{
-				this.addon.logError("Biome defined in GameMode addon is not valid!!!");
-				return;
-			}
-			else
-			{
-				defaultBiomeObject = new BiomesObject();
-				defaultBiomeObject.setBiome(biome);
-				defaultBiomeObject.setRequiredCost(0);
-				defaultBiomeObject.setRequiredLevel(0);
-			}
+            if (biome == null)
+            {
+                this.addon.logError("Biome defined in GameMode addon is not valid!!!");
+                return;
+            }
+            else
+            {
+                defaultBiomeObject = new BiomesObject();
+                defaultBiomeObject.setBiome(biome);
+                defaultBiomeObject.setRequiredCost(0);
+                defaultBiomeObject.setRequiredLevel(0);
+            }
 
-			// Forcefully update biome on whole user island.
-			new BiomeUpdateHelper(this.addon,
-				newUser,
-				newUser,
-				defaultBiomeObject,
-				event.getIsland().getWorld(),
-				UpdateMode.ISLAND,
-				1,
-				false).updateIslandBiome();
-		}
-	}
-
-
-// ---------------------------------------------------------------------
-// Section: Variables
-// ---------------------------------------------------------------------
+            // Forcefully update biome on whole user island.
+            new BiomeUpdateHelper(this.addon,
+                    newUser,
+                    newUser,
+                    defaultBiomeObject,
+                    event.getIsland().getWorld(),
+                    UpdateMode.ISLAND,
+                    1,
+                    false).updateIslandBiome();
+        }
+    }
 
 
-	private BiomesAddon addon;
+    // ---------------------------------------------------------------------
+    // Section: Variables
+    // ---------------------------------------------------------------------
+
+
+    private BiomesAddon addon;
 }

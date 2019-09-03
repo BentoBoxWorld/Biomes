@@ -9,7 +9,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.wesjd.anvilgui.AnvilGUI;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
@@ -65,6 +64,7 @@ public class EditSettingsGUI extends CommonGUI
 		panelBuilder.item(30, this.createButton(Button.LORE_LENGTH));
 
 		panelBuilder.item(23, this.createButton(Button.COOLDOWN));
+		panelBuilder.item(24, this.createButton(Button.PROTECTION_RANGE));
 		panelBuilder.item(25, this.createButton(Button.RESET));
 
 		panelBuilder.item(44, this.returnButton);
@@ -276,19 +276,11 @@ public class EditSettingsGUI extends CommonGUI
 			{
 				description = new ArrayList<>(2);
 				description.add(this.user.getTranslation("biomes.gui.descriptions.admin.biomes-lore"));
-				description.add(this.user.getTranslation("biomes.gui.descriptions.current-value",
-					"[value]", this.settings.getLoreMessage()));
 				name = this.user.getTranslation("biomes.gui.buttons.admin.biomes-lore");
 				icon = new ItemStack(Material.MAP);
 				clickHandler = (panel, user1, clickType, i) -> {
-					new AnvilGUI(this.addon.getPlugin(),
-						this.user.getPlayer(),
-						this.settings.getLoreMessage(),
-						(player, reply) -> {
-							this.settings.setLoreMessage(reply);
-							EditSettingsGUI.this.build();
-							return reply;
-						});
+
+					EditLoreGUI.open(this);
 
 					return true;
 				};
@@ -343,6 +335,29 @@ public class EditSettingsGUI extends CommonGUI
 				};
 
 				glow = this.settings.isResetBiomes();
+				break;
+			}
+			case PROTECTION_RANGE:
+			{
+				description = new ArrayList<>(2);
+				description.add(this.user.getTranslation("biomes.gui.descriptions.admin.use-protection-range"));
+				description.add(this.user.getTranslation("biomes.gui.descriptions.current-value",
+					"[value]",
+					this.settings.isUseProtectionRange() ?
+						this.user.getTranslation("biomes.gui.descriptions.enabled") :
+						this.user.getTranslation("biomes.gui.descriptions.disabled")));
+				name = this.user.getTranslation("biomes.gui.buttons.admin.use-protection-range");
+				icon = new ItemStack(Material.FILLED_MAP);
+
+				clickHandler = (panel, user1, clickType, i) -> {
+					this.settings.setUseProtectionRange(
+						!this.settings.isUseProtectionRange());
+
+					panel.getInventory().setItem(i, this.createButton(button).getItem());
+					return true;
+				};
+
+				glow = this.settings.isUseProtectionRange();
 				break;
 			}
 			default:
@@ -429,6 +444,7 @@ public class EditSettingsGUI extends CommonGUI
 		LORE_LENGTH,
 		LORE_MESSAGE,
 		COOLDOWN,
+		PROTECTION_RANGE,
 		RESET
 	}
 

@@ -3,11 +3,17 @@ package world.bentobox.biomes.panels.admin;
 
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.conversations.*;
 import org.bukkit.inventory.ItemStack;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.*;
+import java.util.function.Consumer;
 
-import net.wesjd.anvilgui.AnvilGUI;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import world.bentobox.bentobox.BentoBox;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
@@ -17,6 +23,7 @@ import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.panels.CommonGUI;
 import world.bentobox.biomes.panels.util.NumberGUI;
 import world.bentobox.biomes.panels.util.SelectBiomeGUI;
+import world.bentobox.biomes.panels.util.SelectBlocksGUI;
 import world.bentobox.biomes.panels.util.StringListGUI;
 import world.bentobox.biomes.panels.GuiUtils;
 
@@ -213,14 +220,13 @@ public class EditBiomeGUI extends CommonGUI
 
 				itemBuilder.icon(Material.BOOK);
 				itemBuilder.clickHandler((panel, user, clickType, slot) -> {
-					new AnvilGUI(this.addon.getPlugin(),
-						this.user.getPlayer(),
-						this.biome.getFriendlyName(),
-						(player, reply) -> {
-							this.biome.setFriendlyName(reply);
-							this.build();
-							return reply;
-						});
+
+					this.startConversation(reply -> {
+						this.biome.setFriendlyName(reply);
+						this.build();
+						},
+						this.user.getTranslation("biomes.gui.questions.admin.name"),
+						this.biome.getFriendlyName());
 
 					return true;
 				});
@@ -257,24 +263,16 @@ public class EditBiomeGUI extends CommonGUI
 
 				itemBuilder.icon(this.biome.getIcon());
 				itemBuilder.clickHandler((panel, user, clickType, slot) -> {
-					new AnvilGUI(this.addon.getPlugin(),
-						this.user.getPlayer(),
-						this.biome.getIcon().getType().name(),
-						(player, reply) -> {
-							Material material = Material.getMaterial(reply);
 
-							if (material != null)
-							{
-								this.biome.setIcon(new ItemStack(material));
-								this.build();
-							}
-							else
-							{
-								this.user.sendMessage("biomes.errors.wrong-icon", "[value]", reply);
-							}
+					new SelectBlocksGUI(this.user, true, (status, materials) -> {
+						if (status)
+						{
+							materials.forEach(material ->
+								this.biome.setIcon(new ItemStack(material)));
+						}
 
-							return reply;
-						});
+						this.build();
+					});
 
 					return true;
 				});
@@ -333,6 +331,69 @@ public class EditBiomeGUI extends CommonGUI
 		}
 
 		return itemBuilder.build();
+	}
+
+
+// ---------------------------------------------------------------------
+// Section: Conversation
+// ---------------------------------------------------------------------
+
+
+	/**
+	 * This method will close opened gui and writes inputText in chat. After players answers on inputText in
+	 * chat, message will trigger consumer and gui will reopen.
+	 * @param consumer Consumer that accepts player output text.
+	 * @param question Message that will be displayed in chat when player triggers conversion.
+	 * @param message Message that will be set in player text field when clicked on question.
+	 */
+	private void startConversation(Consumer<String> consumer, @NonNull String question, @Nullable String message)
+	{
+		final User user = this.user;
+
+		Conversation conversation =
+			new ConversationFactory(BentoBox.getInstance()).withFirstPrompt(
+				new StringPrompt()
+				{
+					/**
+					 * @see Prompt#getPromptText(ConversationContext)
+					 */
+					@Override
+					public String getPromptText(ConversationContext conversationContext)
+					{
+						// Close input GUI.
+						user.closeInventory();
+
+						if (message != null)
+						{
+							// Create Edit Text message.
+							TextComponent component = new TextComponent(user.getTranslation("biomes.gui.descriptions.admin.click-to-edit"));
+							component.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, message));
+							// Send question and message to player.
+							user.getPlayer().spigot().sendMessage(component);
+						}
+
+						// There are no editable message. Just return question.
+						return question;
+					}
+
+
+					/**
+					 * @see Prompt#acceptInput(ConversationContext, String)
+					 */
+					@Override
+					public Prompt acceptInput(ConversationContext conversationContext, String answer)
+					{
+						// Add answer to consumer.
+						consumer.accept(answer);
+						// End conversation
+						return Prompt.END_OF_CONVERSATION;
+					}
+				}).
+				withLocalEcho(false).
+				withPrefix(context -> user.getTranslation("biomes.gui.questions.prefix")).
+				buildConversation(user.getPlayer());
+
+		conversation.begin();
 	}
 
 

@@ -9,10 +9,10 @@ import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.user.User;
-import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.config.Settings.UpdateMode;
+import world.bentobox.biomes.utils.Utils;
 
 
 /**
@@ -39,12 +39,12 @@ public abstract class ExpandedCompositeCommand extends CompositeCommand
 	{
 		if (args.size() > index)
 		{
-			String uniqueID = args.get(index).toLowerCase();
-			String worldName = Util.getWorld(this.getWorld()).getName();
+			String uniqueID = args.get(index);
+			String addonName = Utils.getGameMode(this.getWorld());
 
-			if (!uniqueID.startsWith(worldName))
+			if (!uniqueID.startsWith(addonName))
 			{
-				uniqueID = worldName  + "-" + uniqueID;
+				uniqueID = addonName  + "_" + uniqueID;
 			}
 
 			BiomesObject biome = this.addon.getAddonManager().getBiomeFromString(uniqueID);

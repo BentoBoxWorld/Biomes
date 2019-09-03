@@ -13,6 +13,12 @@ biomes:
         select-biome: "&6Select Biome"
         toggle-environment: "&6Toggle Environment"
         edit-text-fields: "&6Edit Text Fields"
+        select-block: "&6Select A Material"
+
+        lore-edit: "&6Lore Message"
+        lore-add: "&6Add Lore Element"
+        lore-remove: "&6Remove Lore Element"
+
       biomes-choose: "&6Choose Biome"
       mode-choose: "&6Choose Update Mode"
 
@@ -43,12 +49,14 @@ biomes:
         biomes-lore: "Biome Lore"
         cooldown: "Cooldown"
         reset-biomes: "Reset Event"
+        use-protection-range: "Use Protection Range"
 
         toggle-user-list: "Toggle Player List"
 
         save: "Save"
         cancel: "Cancel"
         input: "Input"
+        accept: "Accept"
 
         set-mode: "="
         increase-mode: "+"
@@ -61,6 +69,9 @@ biomes:
         remove-empty: "Remove Empty"
         input-mode: "Input Mode"
         value: "Value"
+
+        add-element: "Add Element"
+        remove-element: "Remove Element"
 
       value: "Current Value: [number]"
       increase: "Increase by [number]"
@@ -98,15 +109,16 @@ biomes:
         default-size: "Allows to change default biome update size.|Will be used if Advanced Menu is disabled and as default values in this menu."
         visibility-mode: "Allows to modify which biomes players can see."
         line-length: "Allows to automatically edit description lore line character length."
-        biomes-lore: "Allows to modify which elements in lore message will be displayed.|Check config for more infromation."
+        biomes-lore: "Allows to modify which elements in lore message will be displayed.|Check config for more information."
         cooldown: "Allows to change cooldown in seconds between player can change biome again."
         reset-biomes: "Allows to enable/disable biomes resetting if player with biome permission leave island."
+        use-protection-range: "Allows to enable/disable biome update to be limited by island protection range. If this is disabled, then it will use whole island range."
 
         toggle-user-list: "Allows to switch which players should be displayed in current Menu."
 
         save: "Allows to save current value and return to previous Menu."
         cancel: "Allows to return to previous Menu without changes."
-        input: "Allows to write number in AnvilGUI"
+        input: "Allows to write number in Chat"
 
         set-mode: "Allows to switch to set mode that will set current value to clicked number."
         increase-mode: "Allows to switch to increase mode that will increase current value by clicked number."
@@ -116,7 +128,15 @@ biomes:
         click-to-edit: '&4Click here to edit input.'
         edit-text-line: '&6 Edit text message!'
         add-text-line: '&6 Add new text message!'
-        input-mode: 'Switch between chat and anvil input modes.'
+
+        selected: "&6Material is Selected"
+
+        lore:
+          description: "Description string. | Defined in biomes object - biomeObject.description."
+          original_biome: "Original Minecraft Biome String. | Represents translation for 'biomes.gui.biome-description.biome-name'."
+          required_level: "Required island level String. | Represents translation for 'biomes.gui.biome-description.required-island-level'."
+          required_money: "Cost for changing biome String. | Represents translation for 'biomes.gui.biome-description.required-money'."
+          required_permission: "Required permission String. | Represents translation for 'biomes.gui.biome-description.equired-permissions'."
 
       update-mode:
         island: "Island"
@@ -140,6 +160,14 @@ biomes:
       permission: " - [permission]"
 
       information: "If you accept this changes, we will try to change your island biome to [biome] in update mode [mode] with range [range]."
+
+    questions:
+      prefix: "&2[SERVER]: "
+
+      admin:
+        number: "Write a number in chat and press enter to accept it and press enter."
+        name: "Write a friendly name for given biome."
+        uniqueID: "Write object unique name and press enter."
 
     biomes-description:
       biome-name: "Minecraft Biome: [value]"
@@ -167,6 +195,11 @@ biomes:
       settings:
         description: "Admin SETTINGS command allows to edit addon default settings via simple command. It allows to edit only existing settings."
         parameters: "<property> <new_value>"
+
+      migrate:
+        description: 'This method allows to migrate biomes data that refers to current game mode world to storage format.'
+        parameters: ''
+
     user:
       help:
         description: "Main biome addon command that opens biome change GUI."
@@ -225,6 +258,11 @@ biomes:
     permission: "  Permission: [permission]"
 
   messages:
+    admin:
+      migrate-start: '&2Start migrating biomes addon data.'
+      migrate-end: '&2Biomes addon data is updated to new format.'
+      migrate-not: '&2All data is valid.'
+
     saved: "&dBiome [biome] is saved."
     biome-created: "&dNew Biome object created with uniqueID: [id]"
     saved-config: "Addon settings is updated."

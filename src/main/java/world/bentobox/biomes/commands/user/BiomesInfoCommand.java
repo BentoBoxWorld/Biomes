@@ -11,6 +11,7 @@ import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.commands.ExpandedCompositeCommand;
 import world.bentobox.biomes.database.objects.BiomesObject;
+import world.bentobox.biomes.utils.Utils;
 
 
 /**
@@ -72,13 +73,10 @@ public class BiomesInfoCommand extends ExpandedCompositeCommand
 
 		final List<String> returnList = new ArrayList<>();
 
-		String worldName = this.getWorld() != null && Util.getWorld(this.getWorld()) != null ?
-			Util.getWorld(this.getWorld()).getName() : "";
-
 		// Create suggestions with all biomes that is available for users.
 
-		this.addon.getAddonManager().getBiomes(worldName).forEach(biomesObject -> {
-			returnList.add(biomesObject.getUniqueId().replaceFirst(worldName + "-", ""));
+		this.addon.getAddonManager().getBiomes(this.getWorld()).forEach(biomesObject -> {
+			returnList.add(biomesObject.getUniqueId().substring(Utils.getGameMode(this.getWorld()).length() + 1));
 		});
 
 		return Optional.of(Util.tabLimit(returnList, args.get(args.size() - 1)));

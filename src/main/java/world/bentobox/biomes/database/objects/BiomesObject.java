@@ -14,6 +14,7 @@ import java.util.Set;
 import world.bentobox.bentobox.api.configuration.ConfigComment;
 import world.bentobox.bentobox.database.objects.DataObject;
 import world.bentobox.bentobox.util.Util;
+import world.bentobox.biomes.utils.Utils;
 
 
 /**
@@ -35,19 +36,10 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
 	 */
 	public BiomesObject(Biome biome, World world)
 	{
-		this(biome, Util.getWorld(world).getName());
-	}
-
-
-	/**
-	 * Default constructor.
-	 */
-	public BiomesObject(Biome biome, String world)
-	{
 		this.biome = biome;
-		this.world = world;
+		this.world = world.getName();
 		this.friendlyName = biome.name();
-		this.setUniqueId(world + "-" + this.biome.toString().toLowerCase());
+		this.setUniqueId(Utils.getGameMode(world) + "_" + this.biome.toString().toLowerCase());
 	}
 
 
@@ -324,7 +316,8 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
 	{
 		int rc = Integer.compare(this.order, object.getOrder());
 
-		return rc == 0 ? this.biome.compareTo(object.getBiome()) : rc;
+		return this.biome != null && object.getBiome() != null && rc == 0 ?
+				this.biome.compareTo(object.getBiome()) : rc;
 	}
 
 

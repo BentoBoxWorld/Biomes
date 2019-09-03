@@ -15,7 +15,6 @@ import java.util.function.Consumer;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.wesjd.anvilgui.AnvilGUI;
 import world.bentobox.bentobox.BentoBox;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
@@ -77,8 +76,6 @@ public class StringListGUI
 		panelBuilder.item(4, this.getButton(Button.ADD));
 		panelBuilder.item(5, this.getButton(Button.REMOVE));
 		panelBuilder.item(6, this.getButton(Button.CLEAR));
-
-		panelBuilder.item(8, this.getButton(Button.MODE));
 
 		panelBuilder.item(44, this.getButton(Button.CANCEL));
 
@@ -154,23 +151,8 @@ public class StringListGUI
 				icon = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
 				clickHandler = (panel, user, clickType, slot) -> {
 
-					if (this.useAnvil)
-					{
-						new AnvilGUI(BentoBox.getInstance(),
-							this.user.getPlayer(),
-							" ",
-							(player, reply) -> {
-								this.value.add(reply);
-								this.build();
-								return reply;
-							});
-					}
-					else
-					{
-						this.startConversion(value ->
-								this.value.add(value),
-							this.user.getTranslation("biomes.gui.descriptions.admin.add-text-line"));
-					}
+					this.startConversion(value -> this.value.add(value),
+						this.user.getTranslation("biomes.gui.descriptions.admin.add-text-line"));
 
 					return true;
 				};
@@ -201,18 +183,6 @@ public class StringListGUI
 				};
 				break;
 			}
-			case MODE:
-			{
-				name = this.user.getTranslation("biomes.gui.buttons.admin.input-mode");
-				description = Collections.singletonList(this.user.getTranslation("biomes.gui.descriptions.admin.input-mode"));
-				icon = this.useAnvil ? new ItemStack(Material.ANVIL) : new ItemStack(Material.MAP);
-				clickHandler = (panel, user, clickType, slot) -> {
-					this.useAnvil = !this.useAnvil;
-					panel.getInventory().setItem(slot, this.getButton(button).getItem());
-					return true;
-				};
-				break;
-			}
 			default:
 				return null;
 		}
@@ -239,24 +209,10 @@ public class StringListGUI
 			icon(Material.PAPER).
 			clickHandler((panel, user1, clickType, i) -> {
 
-				if (this.useAnvil)
-				{
-					new AnvilGUI(BentoBox.getInstance(),
-						this.user.getPlayer(),
-						element,
-						(player, reply) -> {
-							this.value.set(stringIndex, reply);
-							this.build();
-							return reply;
-						});
-				}
-				else
-				{
-					this.startConversion(
-						value -> this.value.set(stringIndex, value),
-						this.user.getTranslation("biomes.gui.descriptions.admin.edit-text-line"),
-						element);
-				}
+				this.startConversion(
+					value -> this.value.set(stringIndex, value),
+					this.user.getTranslation("biomes.gui.descriptions.admin.edit-text-line"),
+					element);
 
 				return true;
 			}).build();
@@ -276,62 +232,64 @@ public class StringListGUI
 
 
 	/**
-	 * This method will close opened gui and writes inputText in chat. After players answers on inputText in
-	 * chat, message will trigger consumer and gui will reopen.
-	 * @param consumer Consumer that accepts player output text.
-	 * @param question Message that will be displayed in chat when player triggers conversion.
-	 * @param message Message that will be set in player text field when clicked on question.
-	 */
-	private void startConversion(Consumer<String> consumer, @NonNull String question, @Nullable String message)
-	{
-		final User user = this.user;
+ * This method will close opened gui and writes inputText in chat. After players answers on inputText in
+ * chat, message will trigger consumer and gui will reopen.
+ * @param consumer Consumer that accepts player output text.
+ * @param question Message that will be displayed in chat when player triggers conversion.
+ * @param message Message that will be set in player text field when clicked on question.
+ */
+private void startConversion(Consumer<String> consumer, @NonNull String question, @Nullable String message)
+{
+	final User user = this.user;
 
-		Conversation conversation =
-			new ConversationFactory(BentoBox.getInstance()).withFirstPrompt(
-				new StringPrompt()
+	Conversation conversation =
+		new ConversationFactory(BentoBox.getInstance()).withFirstPrompt(
+			new StringPrompt()
+			{
+				/**
+				 * @see Prompt#getPromptText(ConversationContext)
+				 */
+				@Override
+				public String getPromptText(ConversationContext conversationContext)
 				{
-					/**
-					 * @see Prompt#getPromptText(ConversationContext)
-					 */
-					@Override
-					public String getPromptText(ConversationContext conversationContext)
+					// Close input GUI.
+					user.closeInventory();
+
+					if (message != null)
 					{
-						// Close input GUI.
-						user.closeInventory();
-
-						if (message != null)
-						{
-							// Create Edit Text message.
-							TextComponent component = new TextComponent(user.getTranslation("biomes.gui.descriptions.admin.click-to-edit"));
-							component.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, message));
-							// Send question and message to player.
-							user.getPlayer().spigot().sendMessage(component);
-						}
-
-						// There are no editable message. Just return question.
-						return question;
+						// Create Edit Text message.
+						TextComponent component = new TextComponent(user.getTranslation("biomes.gui.descriptions.admin.click-to-edit"));
+						component.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, message));
+						// Send question and message to player.
+						user.getPlayer().spigot().sendMessage(component);
 					}
 
+					// There are no editable message. Just return question.
+					return question;
+				}
 
-					/**
-					 * @see Prompt#acceptInput(ConversationContext, String)
-					 */
-					@Override
-					public Prompt acceptInput(ConversationContext conversationContext, String answer)
-					{
-						// Add answer to consumer.
-						consumer.accept(answer);
-						// Reopen GUI
-						StringListGUI.this.build();
-						// End conversation
-						return Prompt.END_OF_CONVERSATION;
-					}
-				}).
-				withLocalEcho(false).
-				buildConversation(user.getPlayer());
 
-		conversation.begin();
-	}
+				/**
+				 * @see Prompt#acceptInput(ConversationContext, String)
+				 */
+				@Override
+				public Prompt acceptInput(ConversationContext conversationContext, String answer)
+				{
+					// Add answer to consumer.
+					consumer.accept(answer);
+					// Reopen GUI
+					StringListGUI.this.build();
+					// End conversation
+					return Prompt.END_OF_CONVERSATION;
+				}
+			}).
+			withLocalEcho(false).
+			withPrefix(context ->
+				StringListGUI.this.user.getTranslation("biomes.gui.questions.prefix")).
+			buildConversation(user.getPlayer());
+
+	conversation.begin();
+}
 
 
 // ---------------------------------------------------------------------
@@ -349,8 +307,7 @@ public class StringListGUI
 		REMOVE,
 		CANCEL,
 		CLEAR,
-		SAVE,
-		MODE
+		SAVE
 	}
 
 
@@ -368,11 +325,6 @@ public class StringListGUI
 	 * User who runs GUI.
 	 */
 	private User user;
-
-	/**
-	 * Boolean that indicate if editing should happen in anvil.
-	 */
-	private boolean useAnvil;
 
 	/**
 	 * Current value.

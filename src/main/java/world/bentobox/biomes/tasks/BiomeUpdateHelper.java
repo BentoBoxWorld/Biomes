@@ -249,15 +249,25 @@ public class BiomeUpdateHelper
 		if (this.worldProtectionFlag)
 		{
 			Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
-			int range = island.getRange();
 
-			minX = island.getMinX();
-			minZ = island.getMinZ();
+			// This is implemented to fix issue when biome is changed in space between islands. #34
 
-			// That's how it is in Island#inIslandSpace
+			if (this.addon.getSettings().isUseProtectionRange())
+			{
+				minX = island.getMinProtectedX();
+				minZ = island.getMinProtectedZ();
 
-			maxX = island.getMinX() + range * 2 - 1;
-			maxZ = island.getMinZ() + range * 2 - 1;
+				maxX = island.getMaxProtectedX() - 1;
+				maxZ = island.getMaxProtectedZ() - 1;
+			}
+			else
+			{
+				minX = island.getMinX();
+				minZ = island.getMinZ();
+
+				maxX = island.getMaxX() - 1;
+				maxZ = island.getMaxZ() - 1;
+			}
 		}
 		else
 		{

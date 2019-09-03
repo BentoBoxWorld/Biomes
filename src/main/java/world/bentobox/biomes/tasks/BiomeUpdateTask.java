@@ -6,10 +6,14 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.*;
+
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.database.objects.BiomesObject;
+import world.bentobox.biomes.database.objects.BiomeChunkUpdateObject;
 import world.bentobox.biomes.events.BiomeChangedEvent;
+import world.bentobox.biomes.utils.Utils;
 
 
 /**
@@ -17,6 +21,13 @@ import world.bentobox.biomes.events.BiomeChangedEvent;
  */
 public class BiomeUpdateTask extends BukkitRunnable
 {
+    /**
+     * Default Update task constructor.
+     * @param addon BiomeAddon object.
+     * @param user Player who calls biome update.
+     * @param world World where biome update will happen.
+     * @param biome BiomeObject that will changed.
+     */
     public BiomeUpdateTask(BiomesAddon addon, User user, World world, BiomesObject biome)
     {
         this.addon = addon;
@@ -26,6 +37,9 @@ public class BiomeUpdateTask extends BukkitRunnable
     }
 
 
+    /**
+     * Default RunTask.
+     */
     @Override
     public void run()
     {
@@ -34,15 +48,59 @@ public class BiomeUpdateTask extends BukkitRunnable
             this.user.sendMessage("biomes.messages.update-start");
         }
 
-        // Update world coordinates with new biomes.
+        // Create and populate ChunkObjectObjects where biome change should occur.
+        List<BiomeChunkUpdateObject> chunkUpdateObjectList = new ArrayList<>();
+
+        for (int x = this.minX >> 4, maxX = this.maxX >> 4; x <= maxX; x++)
+        {
+            for (int z = this.minZ >> 4, maxZ = this.maxZ >> 4; z <= maxZ; z++)
+            {
+                chunkUpdateObjectList.add(this.createChunkUpdateObject(x, z));
+            }
+        }
 
         Biome newBiome = this.biome.getBiome();
 
-        for (int x = this.minX; x <= this.maxX; x++)
+        // After everything is created update biome where it is possible.
+        // Use iterator as it will allow to remove element from list.
+        Iterator<BiomeChunkUpdateObject> iterator = chunkUpdateObjectList.iterator();
+
+        while (iterator.hasNext())
         {
-            for (int z = this.minZ; z <= this.maxZ; z++)
+            BiomeChunkUpdateObject updateObject = iterator.next();
+
+            boolean completlyChanged = true;
+
+            for (int x = updateObject.getMinX();
+                completlyChanged && x <= updateObject.getMaxX();
+                x++)
             {
-                this.world.setBiome(x, z, newBiome);
+                for (int z = updateObject.getMinZ();
+                    completlyChanged && z <= updateObject.getMaxZ();
+                    z++)
+                {
+                    if (!this.world.isChunkLoaded(updateObject.getChunkX(), updateObject.getChunkZ()))
+                    {
+                        // If chunk is unloaded then skip change.
+                        completlyChanged = false;
+                    }
+                    else
+                    {
+                        // Change Biome
+                        updateObject.getWorld().setBiome(x, z, newBiome);
+                    }
+                }
+            }
+
+            if (completlyChanged)
+            {
+                // If biome is changed completely, then remove object.
+                iterator.remove();
+            }
+            else
+            {
+                // Otherwise add it to manager.
+                this.addon.getAddonManager().addChunkUpdateObject(updateObject);
             }
         }
 
@@ -52,14 +110,20 @@ public class BiomeUpdateTask extends BukkitRunnable
                 "[biome]",
                 this.biome.getFriendlyName());
 
-            this.addon.log(this.user.getName() + " change biome to " +
+            this.addon.log(this.user.getName() + " change biome in loaded chunks to " +
                 this.biome.getBiome() + " from x=" + this.minX + ":" + this.maxX + " z=" + this.minZ + ":" + this.maxZ +
                 " while standing on x=" + this.user.getLocation().getBlockX() + " z=" + this.user.getLocation().getBlockZ());
         }
         else
         {
-            this.addon.log("Console changed biome to " +
+            this.addon.log("Console changed biome in loaded chunks to " +
                 this.biome.getBiome() + " from x=" + this.minX + ":" + this.maxX + " z=" + this.minZ + ":" + this.maxZ);
+        }
+
+        // Log information about unloaded chunk cound.
+        if (!chunkUpdateObjectList.isEmpty())
+        {
+            this.addon.log("Populated offline updater with " + chunkUpdateObjectList.size() + " chunks.");
         }
 
         // Fire event that biome is changed.
@@ -71,6 +135,66 @@ public class BiomeUpdateTask extends BukkitRunnable
                 this.minZ,
                 this.maxX,
                 this.maxZ));
+    }
+
+
+    /**
+     * This method create object that contains information where biome must be changed.
+     * @param chunkX Chunk X coordinate.
+     * @param chunkZ Chunk Z coordinate.
+     * @return ChunkUpdateObject that contains all necessary information about pending
+     * biome updating.
+     */
+    private BiomeChunkUpdateObject createChunkUpdateObject(int chunkX, int chunkZ)
+    {
+        BiomeChunkUpdateObject chunkUpdateObject = new BiomeChunkUpdateObject();
+        chunkUpdateObject.setUniqueId(Utils.getGameMode(this.world) + "_" + chunkX + "-" + chunkZ);
+        chunkUpdateObject.setWorld(this.world);
+        chunkUpdateObject.setBiome(this.biome.getBiome());
+
+        chunkUpdateObject.setChunkX(chunkX);
+        chunkUpdateObject.setChunkZ(chunkZ);
+
+        // transform to chunk coordinates
+        if (this.minX >> 4 == chunkX)
+        {
+            chunkUpdateObject.setMinX(this.minX);
+        }
+        else
+        {
+            chunkUpdateObject.setMinX(chunkX << 4);
+        }
+
+        if (this.maxX >> 4 == chunkX)
+        {
+            chunkUpdateObject.setMaxX(this.maxX);
+
+        }
+        else
+        {
+            chunkUpdateObject.setMaxX((chunkX << 4) + 15);
+        }
+
+        if (this.minZ >> 4 == chunkZ)
+        {
+            chunkUpdateObject.setMinZ(this.minZ);
+        }
+        else
+        {
+            chunkUpdateObject.setMinZ(chunkZ << 4);
+        }
+
+        if (this.maxZ >> 4 == chunkZ)
+        {
+            chunkUpdateObject.setMaxZ(this.maxZ);
+
+        }
+        else
+        {
+            chunkUpdateObject.setMaxZ((chunkZ << 4) + 15);
+        }
+
+        return chunkUpdateObject;
     }
 
 

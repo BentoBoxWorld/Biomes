@@ -42,6 +42,9 @@ public class AdminCommand extends CompositeCommand
 
 		// Addon reload command
 		new AdminReloadCommand(this);
+
+		// Migrate Command
+		new MigrateCommand(this.getAddon(), this);
 	}
 
 

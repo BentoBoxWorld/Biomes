@@ -4,14 +4,14 @@ package world.bentobox.biomes.events;
 import org.bukkit.block.Biome;
 import java.util.UUID;
 
-import world.bentobox.bentobox.api.events.PremadeEvent;
+import world.bentobox.bentobox.api.events.BentoBoxEvent;
 
 
 /**
  * This event is fired when player changed biome.
  * It is just informative and is fired when everything is done already.
  */
-public class BiomeChangedEvent extends PremadeEvent
+public class BiomeChangedEvent extends BentoBoxEvent
 {
 	/**
 	 * Constructor BiomeChangeEvent creates a new BiomeChangeEvent instance.
@@ -33,6 +33,7 @@ public class BiomeChangedEvent extends PremadeEvent
 		int maxX,
 		int maxZ)
 	{
+		super(true);
 		this.biomeID = biomeID;
 		this.biome = biome;
 		this.playerUUID = playerUUID;

@@ -12,6 +12,7 @@ import world.bentobox.biomes.commands.ExpandedCompositeCommand;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.config.Settings.UpdateMode;
 import world.bentobox.biomes.tasks.BiomeUpdateHelper;
+import world.bentobox.biomes.utils.Utils;
 
 
 /**
@@ -65,6 +66,7 @@ public class BiomesSetCommand extends ExpandedCompositeCommand
 			if (helper.canChangeBiome())
 			{
 				helper.updateIslandBiome();
+				this.setCooldown(user.getUniqueId(), this.addon.getSettings().getCoolDown());
 
 				return true;
 			}
@@ -85,14 +87,11 @@ public class BiomesSetCommand extends ExpandedCompositeCommand
 		switch (size)
 		{
 			case 3:
-				String worldName = this.getWorld() != null && Util.getWorld(this.getWorld()) != null ?
-					Util.getWorld(this.getWorld()).getName() : "";
-
-				List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes(worldName);
+				List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes(this.getWorld());
 
 				// Create suggestions with all biomes that is available for users.
 				biomes.forEach(biomesObject -> {
-					returnList.add(biomesObject.getUniqueId().replaceFirst(worldName + "-", ""));
+					returnList.add(biomesObject.getUniqueId().substring(Utils.getGameMode(this.getWorld()).length() + 1));
 				});
 
 				break;
