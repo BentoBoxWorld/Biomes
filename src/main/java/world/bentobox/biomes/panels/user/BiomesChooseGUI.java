@@ -226,7 +226,7 @@ public class BiomesChooseGUI extends CommonGUI
 	private PanelItem createVisibilityModeButton()
 	{
 		List<String> values = new ArrayList<>(4);
-		values.add(this.user.getTranslation("biomes.gui.descriptions.admin.visibility-mode.info"));
+		values.add(this.user.getTranslation("biomes.gui.descriptions.visibility-mode.info"));
 
 		values.add((this.visibilityMode.equals(Settings.VisibilityMode.ALL) ? "&2" : "&c") +
 			this.user.getTranslation("biomes.gui.descriptions.visibility-mode.all"));
