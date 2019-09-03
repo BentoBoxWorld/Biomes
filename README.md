@@ -7,11 +7,16 @@ Biomes addon for SkyBlock, SkyGrid, CaveBlock and AcidIsland. It allows to chang
 ## Where to find
 
 Currently Biomes Addon is in **Beta stage**, so it may or may not contain bugs... a lot of bugs. Also it means, that some features are not working or implemented. 
-Latest official **Beta Release is 1.5.0.0**, and you can download it from [Release tab](https://github.com/BentoBoxWorld/Biomes/releases)
+Latest official **Beta Release is 1.6.0.1**, and you can download it from [Release tab](https://github.com/BentoBoxWorld/Biomes/releases)
 
 Or you can try **nightly builds** where you can check and test new features that will be implemented in next release from [Jenkins Server](https://ci.codemc.org/job/BentoBoxWorld/job/Biomes/lastStableBuild/).
 
 If you like this addon but something is missing or is not working as you want, you can always submit an [Issue request](https://github.com/BentoBoxWorld/Biomes/issues) or get a support in Discord [BentoBox ![icon](https://avatars2.githubusercontent.com/u/41555324?s=15&v=4)](https://discord.gg/JgWKvR)
+
+## Translations
+
+As most of BentoBox projects, Biomes Addon is translatable in any language. Everyone can contribute, and translate some parts of the addon in their language via [GitLocalize](https://gitlocalize.com/repo/2894).
+If your language is not in the list, please contact to developers via Discord and it will be added there.
 
 ## How to use
 
@@ -23,21 +28,8 @@ If you like this addon but something is missing or is not working as you want, y
 
 ## Config.yml
 
-The *config.yml* has following sections:
-
-* Advanced Menu: if this is *true*, users will be able to choose all options how the biome can be updated.
-* Default Type: this allows to choose default selected type that will be available when users opens Biome GUI.
-	Valid values are *'ISLAND', 'CHUNK' and 'SQUARE'*
-* Default Size: this allows to set default value that will be set when Biome GUI is opened. It must be integer larger then 0.
-* Reset Biomes:  if this is *true*, on owner change, addon will reset biome on whole island to default biome, if user does not have biomes.set permission. 
-* Timeout: this allows to set some delay before user can change biome on his island again.
-* biomes-visibility: this variable allows to choose which biomes users can see in Biomes GUI.
-    Valid values are *'ALL', 'DEPLOYED' , 'ACCESSIBLE' and 'TOGGLEABLE'*
-* disabled-gamemodes: this allows to disable Biomes Addon in certain GameModes. To disable GameMode just need to add new line with "-" in front of GameMode name, f.e.:
-```
-disabled-gamemodes:
-  - BSkyBlock
-```
+After addon is successful installed, it will create config.yml file. Every option in this file comes with comments about them. Please check file for more information.
+Most of options are also editable admin via commands.
 
 ## Biomes.yml
 
@@ -48,6 +40,8 @@ If you want to force an overwrite of biomes via an import, add the **overwrite**
 Note that you must import biomes into both BSkyBlock and AcidIsland separately.
 
 ## User commands
+
+Users can access to biomes addon commands with `/[gamemode] biomes` command. By default for BSkyBlock it is **/island biomes**, for AcidIsland - **/ai biomes**, for CaveBlock - **/cave biomes**, for SkyGrid - **/sg biomes**.
 
 * `/is biomes`: This method opens GUI that allows to change biome on User island.
 * `/is biomes help`: Show help for all the commands
