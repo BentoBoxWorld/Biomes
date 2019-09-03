@@ -66,6 +66,7 @@ public class BiomesSetCommand extends ExpandedCompositeCommand
 			if (helper.canChangeBiome())
 			{
 				helper.updateIslandBiome();
+				this.setCooldown(user.getUniqueId(), this.addon.getSettings().getCoolDown());
 
 				return true;
 			}
