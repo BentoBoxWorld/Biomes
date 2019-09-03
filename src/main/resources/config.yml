@@ -45,12 +45,19 @@ biomes-visibility: TOGGLEABLE
 # This string allows to change element order in Biomes description. Each letter represents
 # one object from Biomes description. If letter is not used, then its represented part
 # will not be in description. If use any letter that is not recognized, then it will be
-# ignored. Some strings can be customized via lang file under 'viomes.gui.biomes-description'.
-# List of letters and their meaning:
-#  - D - description from biomes object
-#  - N - defined minecraft biomes name: '*.biome-name'
-#  - R - requirements for biome change: '*.required-money', '*.required-island-level' and '*.required-permission'
-lore-message: DNR
+# ignored. Some strings can be customized via lang file under 'biomes.gui.biomes-description'.
+# List of strings and their meaning:
+#  - DESCRIPTION - description from biomes object
+#  - ORIGINAL_BIOME - defined minecraft biomes name: '*.biome-name'
+#  - REQUIRED_MONEY - requirements for biome change: '*.required-money'
+#  - REQUIRED_LEVEL - requirements for biome change: '*.required-island-level'
+#  - REQUIRED_PERMISSION - requirements for biome change: '*.required-permission'
+lore:
+  - DESCRIPTION
+  - ORIGINAL_BIOME
+  - REQUIRED_MONEY
+  - REQUIRED_LEVEL
+  - REQUIRED_PERMISSION
 #
 # This allows to change lore description line length. By default it is 25, but some server
 # owners may like it to be larger.

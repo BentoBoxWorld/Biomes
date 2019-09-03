@@ -231,40 +231,48 @@ public abstract class CommonGUI
 	{
 		List<String> result = new ArrayList<>();
 
-		for (char c : this.addon.getSettings().getLoreMessage().toLowerCase().toCharArray())
+		this.addon.getSettings().getLore().forEach(lore ->
 		{
-			switch (c)
+			switch (lore)
 			{
-				case 'd':
+				case DESCRIPTION:
 				{
 					// This adds biomes description
 					result.addAll(biomesObject.getDescription());
 					break;
 				}
-				case 'n':
-				{
-					// This adds biomes original name.
-					result.add(this.user.getTranslation("biomes.gui.biomes-description.biome-name",
-						"[value]", biomesObject.getBiome().name()));
-
+				case ORIGINAL_BIOME:
+				{    // This adds biomes original name.
+					result.add(this.user
+						.getTranslation("biomes.gui.biomes-description.biome-name",
+							"[value]", biomesObject.getBiome().name()));
 					break;
 				}
-				case 'r':
-				{
-					// Add message about required money
-					if (this.addon.isEconomyProvided() && biomesObject.getRequiredCost() > 0)
+				case REQUIRED_MONEY:
+				{    // Add message about required money
+					if (this.addon.isEconomyProvided() &&
+						biomesObject.getRequiredCost() > 0)
 					{
-						result.add(this.user.getTranslation("biomes.gui.biomes-description.required-money",
-							"[value]", Integer.toString(biomesObject.getRequiredCost())));
+						result.add(this.user
+							.getTranslation("biomes.gui.biomes-description.required-money",
+								"[value]",
+								Integer.toString(biomesObject.getRequiredCost())));
 					}
-
+					break;
+				}
+				case REQUIRED_LEVEL:
+				{
 					// Add message about required island level
 					if (this.addon.isLevelProvided() && biomesObject.getRequiredLevel() > 0)
 					{
 						result.add(this.user.getTranslation("biomes.gui.biomes-description.required-island-level",
 							"[value]", Long.toString(biomesObject.getRequiredLevel())));
 					}
-
+					break;
+				}
+				case REQUIRED_PERMISSION:
+				{
+					// Add message about required permissions
 					if (!biomesObject.getRequiredPermissions().isEmpty())
 					{
 						result.add(this.user.getTranslation("biomes.gui.biomes-description.required-permissions"));
@@ -275,15 +283,10 @@ public abstract class CommonGUI
 								"[permission]", permission));
 						});
 					}
-
-					break;
-				}
-				default:
-				{
 					break;
 				}
 			}
-		}
+		});
 
 		result.replaceAll(x -> x.replace("[label]", this.topLabel));
 
@@ -298,7 +301,7 @@ public abstract class CommonGUI
 	/**
 	 * This variable stores parent gui.
 	 */
-	private CommonGUI parentGUI;
+	protected CommonGUI parentGUI;
 
 	/**
 	 * Variable stores Biomes addon.

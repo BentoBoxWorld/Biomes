@@ -276,19 +276,11 @@ public class EditSettingsGUI extends CommonGUI
 			{
 				description = new ArrayList<>(2);
 				description.add(this.user.getTranslation("biomes.gui.descriptions.admin.biomes-lore"));
-				description.add(this.user.getTranslation("biomes.gui.descriptions.current-value",
-					"[value]", this.settings.getLoreMessage()));
 				name = this.user.getTranslation("biomes.gui.buttons.admin.biomes-lore");
 				icon = new ItemStack(Material.MAP);
 				clickHandler = (panel, user1, clickType, i) -> {
-//					new AnvilGUI(this.addon.getPlugin(),
-//						this.user.getPlayer(),
-//						this.settings.getLoreMessage(),
-//						(player, reply) -> {
-//							this.settings.setLoreMessage(reply);
-//							EditSettingsGUI.this.build();
-//							return reply;
-//						});
+
+					EditLoreGUI.open(this);
 
 					return true;
 				};

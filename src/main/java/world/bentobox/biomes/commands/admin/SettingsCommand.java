@@ -189,11 +189,6 @@ public class SettingsCommand extends ExpandedCompositeCommand
 						return false;
 					}
 				}
-				case LORE_MESSAGE:
-				{
-					this.addon.getSettings().setLoreMessage(args.get(1));
-					break;
-				}
 			}
 
 			user.sendMessage("biomes.messages.saved-config");
@@ -243,9 +238,6 @@ public class SettingsCommand extends ExpandedCompositeCommand
 							map(Enum::name).
 							forEach(returnList::add);
 						break;
-					case LORE_MESSAGE:
-						returnList.add("<char>");
-						break;
 					case SIZE:
 					case LORE_LENGTH:
 					case TIMEOUT:
@@ -280,8 +272,7 @@ public class SettingsCommand extends ExpandedCompositeCommand
 		TIMEOUT("timeout"),
 		RESET_BIOME("resetbiomes"),
 		VISIBILITY("visibilitymode"),
-		LORE_LENGTH("lorelength"),
-		LORE_MESSAGE("loremessage");
+		LORE_LENGTH("lorelength");
 
 
 		/**

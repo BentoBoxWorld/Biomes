@@ -14,6 +14,11 @@ biomes:
         toggle-environment: "&6Toggle Environment"
         edit-text-fields: "&6Edit Text Fields"
         select-block: "&6Select A Material"
+
+        lore-edit: "&6Lore Message"
+        lore-add: "&6Add Lore Element"
+        lore-remove: "&6Remove Lore Element"
+
       biomes-choose: "&6Choose Biome"
       mode-choose: "&6Choose Update Mode"
 
@@ -64,6 +69,9 @@ biomes:
         remove-empty: "Remove Empty"
         input-mode: "Input Mode"
         value: "Value"
+
+        add-element: "Add Element"
+        remove-element: "Remove Element"
 
       value: "Current Value: [number]"
       increase: "Increase by [number]"
@@ -122,6 +130,13 @@ biomes:
         add-text-line: '&6 Add new text message!'
 
         selected: "&6Material is Selected"
+
+        lore:
+          description: "Description string. | Defined in biomes object - biomeObject.description."
+          original_biome: "Original Minecraft Biome String. | Represents translation for 'biomes.gui.biome-description.biome-name'."
+          required_level: "Required island level String. | Represents translation for 'biomes.gui.biome-description.required-island-level'."
+          required_money: "Cost for changing biome String. | Represents translation for 'biomes.gui.biome-description.required-money'."
+          required_permission: "Required permission String. | Represents translation for 'biomes.gui.biome-description.equired-permissions'."
 
       update-mode:
         island: "Island"
