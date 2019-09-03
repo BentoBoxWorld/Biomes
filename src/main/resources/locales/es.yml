@@ -20,28 +20,187 @@ biomes:
     buttons:
       admin:
         number: "[number]"
+        settings: Configuraciones
+        import: Importar
+        remove: Eliminar bioma
+        edit: Editar bioma
+        add: Añadir bioma
+        change: Cambiar bioma de usuario
+        change-biome: Bioma
+        name: Nombre para mostrar
+        icon: Icono
+        order: Orden
+        description: Descripción
+        deployment: Despliegue
+        required-permissions: Permisos requeridos
+        required-level: Nivel requerido
+        required-money: Dinero requerido
+        advanced-menu: Menú avanzado
+        default-mode: Modo de actualización predeterminado
+        default-size: Tamaño predeterminado
+        visibility-mode: Visibilidad de biomas
+        line-length: Longitud de línea de Lore
+        biomes-lore: Biome Lore
+        cooldown: Enfriarse
+        reset-biomes: Restablecer evento
+        use-protection-range: Usar rango de protección
+        toggle-user-list: Alternar lista de jugadores
+        save: Salvar
+        cancel: Cancelar
+        input: Entrada
+        accept: Aceptar
+        set-mode: "="
+        increase-mode: "+"
+        reduce-mode: "-"
+        multiply-mode: "* *"
+        add-string: Añadir cadena
+        clear: Claro
+        remove-empty: Eliminar vacío
+        input-mode: Modo de entrada
+        value: Valor
+      value: 'Valor actual: [número]'
+      increase: Aumentar en [número]
+      decrease: Disminuir en [número]
+      set: Establecer valor en [número]
+      accept: Aceptar
+      decline: Disminución
+      information: Información
+      return: Regreso
+      previous: Anterior
+      next: próximo
     descriptions:
       admin:
         click-to-edit: "&4Haga clic aquí para editar la entrada."
         edit-text-line: "& ¡Editar mensaje de texto!"
         add-text-line: "&6 ¡Agregue un nuevo mensaje de texto!"
         selected: "&6Material seleccionado"
+        settings: Permite editar la configuración del complemento
+        import: Permite importar biomas desde el archivo biomes.yml. | El clic derecho
+          habilitará / deshabilitará el modo de sobrescritura.
+        remove: Permite eliminar el bioma de la memoria
+        edit: Permite editar las propiedades del bioma
+        add: Permite agregar un nuevo bioma en el mundo actual
+        change: Permite cambiar el bioma de los jugadores en su isla
+        change-biome: Permite cambiar qué Minecraft Biome se utilizará.
+        required-permissions: Permite cambiar los permisos requeridos para este bioma.
+          Sin estos permisos, ¡los jugadores no podrán aplicarlo!
+        required-level: Permite cambiar el nivel mínimo de la isla. | &amp; C Requiere
+          el complemento de nivel.
+        required-money: Permite cambiar cuánto cuesta cambiar a este bioma. | &amp;
+          C Requiere Economy Addon / Plugin.
+        name: Permite cambiar el nombre para mostrar de este bioma.
+        deployment: Permite deshabilitar / habilitar la capacidad de los jugadores
+          para usar este bioma.
+        icon: Permite establecer diferentes iconos de visualización para este bioma.
+        description: Permite modificar la descripción de este bioma.
+        order: Permite modificar el orden de este bioma.
+        advanced-menu: Permite habilitar / deshabilitar el menú avanzado con todas
+          las opciones de cambio para los jugadores.
+        default-mode: Permite cambiar el modo predeterminado de actualización del
+          bioma. Se utilizará si el Menú avanzado está deshabilitado y como valores
+          predeterminados en este menú.
+        default-size: Permite cambiar el tamaño predeterminado de actualización del
+          bioma. Se utilizará si el Menú avanzado está deshabilitado y como valores
+          predeterminados en este menú.
+        visibility-mode: Permite modificar qué biomas pueden ver los jugadores.
+        line-length: Permite editar automáticamente la longitud de los caracteres
+          de la línea descriptiva.
+        biomes-lore: Permite modificar qué elementos en el mensaje de lore se mostrarán.
+          | Verifique la configuración para obtener más información.
+        cooldown: Permite cambiar el tiempo de reutilización en segundos entre jugadores
+          y puede cambiar el bioma nuevamente.
+        reset-biomes: Permite habilitar / deshabilitar el restablecimiento de biomas
+          si el jugador con permiso de bioma abandona la isla.
+        use-protection-range: Permite habilitar / deshabilitar la actualización del
+          bioma al estar limitado por el rango de protección de la isla. Si está deshabilitado,
+          usará todo el rango de islas.
+        toggle-user-list: Permite cambiar qué jugadores deberían mostrarse en el menú
+          actual.
+        save: Permite guardar el valor actual y volver al menú anterior.
+        cancel: Permite volver al menú anterior sin cambios.
+        input: Permite escribir números en el chat
+        set-mode: Permite cambiar al modo de configuración que establecerá el valor
+          actual en el número seleccionado.
+        increase-mode: Permite cambiar al modo de aumento que aumentará el valor actual
+          por número de clics.
+        reduce-mode: Permite cambiar al modo de reducción que reducirá el valor actual
+          por número de clics.
+        multiply-mode: Permite cambiar al modo de multiplicación que multiplicará
+          el valor actual por el número seleccionado.
       visibility-mode:
         all: All &r- enumera todos los biomas
+        info: Permite modificar qué biomas puedes ver.
+        deployed: 'Desplegado: enumera los biomas desplegados'
+        accessible: 'Accesible: enumera los biomas accesibles'
+        toggleable: 'Alternar: botón que se puede alternar en el menú de biomas'
       current-value: 'Valor actual: [value]'
       permission: "- [permission]"
+      update-mode:
+        island: Isla
+        chunk: Pedazo
+        square: Distancia
+        undefined: Indefinido
+      view-mode:
+        online: En línea
+        in-world: En este mundo
+        with-island: Con isla
+      enabled: habilitado
+      disabled: discapacitado
+      information: Si acepta estos cambios, intentaremos cambiar su bioma de isla
+        a [bioma] en modo de actualización [modo] con rango [rango].
     questions:
       prefix: "&2 [SERVER]:"
+      admin:
+        number: Escriba un número en el chat y presione enter para aceptarlo y presione
+          enter.
+        name: Escribe un nombre descriptivo para un bioma dado.
+        uniqueID: Escriba el nombre único del objeto y presione Intro.
     biomes-description:
       biome-name: 'Bioma de Minecraft: [value]'
       required-money: 'Valor: [value]'
       required-island-level: 'Nivel mínimo de isla: [value]'
+      required-permissions: 'Permisos:'
   commands:
     admin:
       add:
         parameters: "[id] "
+        description: El comando ADD del administrador permite agregar un nuevo bioma.
+          Crea un objeto de bioma vacío con la configuración predeterminada.
       import:
         parameters: "[overwrite]"
+        description: El comando Admin IMPORT permite importar biomas desde el archivo
+          biomes.yml. Agregar &#39;sobrescribir&#39; al final sobrescribirá los biomas
+          existentes.
+      edit:
+        description: El comando Admin EDIT permite cambiar dado <id> propiedad. Permite
+          editar solo las propiedades existentes.
+        parameters: "<id> <property> <new_value>"
+      help:
+        description: Comando principal del complemento de bioma. Abre Admin GUI para
+          jugadores.
+      set:
+        description: El comando Admin SET permite cambiar el bioma para <player> isla.
+          <type> y <size> no es requerido.
+        parameters: "<player><biome> [ <type> ] [ <size> ]"
+      settings:
+        description: El comando Admin SETTINGS permite editar la configuración predeterminada
+          del complemento mediante un comando simple. Permite editar solo las configuraciones
+          existentes.
+        parameters: "<property> <new_value>"
+      migrate:
+        description: Este método permite migrar datos de biomas que se refieren al
+          mundo del modo de juego actual al formato de almacenamiento.
+    user:
+      help:
+        description: Comando principal de complemento de bioma que abre la interfaz
+          gráfica de usuario de cambio de bioma.
+      info:
+        description: El comando INFO muestra información sobre un bioma dado.
+        parameters: "<biome>"
+      set:
+        description: El comando SET permite cambiar el bioma <biome> en la isla <type>
+          y <size> no es requerido.
+        parameters: "<biome> [ <type> ] [ <size> ]"
   errors:
     unique-id: "&cUnique id &d [id] &c no es válido!"
     too-many-arguments: "&cDemasiados parámetros. Por favor, consulte la ayuda!"
@@ -85,6 +244,8 @@ biomes:
     load-biome: "&cNo se puede cargar el bioma '[biome]' ya que no está definido en
       Minecraft. Use el nombre correcto del bioma."
     no-rank: "&cNo tienes rango para hacer eso."
+    no-biomes-admin: "&amp; cBiomes no se implementan en el mundo actual! ¡Debe usar
+      &amp; 5 / [comando] &amp; c para agregarlos!"
   information:
     header: 'Bioma: [name]'
     type: 'Tipo: [type]'
@@ -106,10 +267,14 @@ biomes:
     overwriting: Sobreescritura [biome].
     imported: "[biome] es importado."
     import-count: La importación de biomas terminó. Importados [number] biomas.
+    saved-config: La configuración del complemento se actualiza.
 protection:
   flags:
     BIOMES_ISLAND_PROTECTION:
       description: "&5&o Alternar quién puede \n &5&oCambia el bioma en la isla"
+      name: Protección de los biomas
     BIOMES_WORLD_PROTECTION:
       description: "&5&o Esto permite habilitar / deshabilitar \n &5 &orequerimientos
         para que los jugadores \n &5 &oVe a su isla para \n&5&oCambia el biom."
+      name: Limitación de la isla del bioma
+      hint: "¡El cambio de bioma no está permitido fuera de la isla!"
