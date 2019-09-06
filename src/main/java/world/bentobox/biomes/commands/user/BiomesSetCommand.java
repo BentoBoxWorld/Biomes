@@ -38,6 +38,13 @@ public class BiomesSetCommand extends ExpandedCompositeCommand
 
 
 	@Override
+	public boolean canExecute(User user, String label, List<String> args)
+	{
+		return this.addon.getSettings().getCoolDown() > 0 && this.checkCooldown(user);
+	}
+
+
+	@Override
 	public boolean execute(User user, String label, List<String> args)
 	{
 		BiomesObject biome = this.getBiomeObject(args, 0, user);
