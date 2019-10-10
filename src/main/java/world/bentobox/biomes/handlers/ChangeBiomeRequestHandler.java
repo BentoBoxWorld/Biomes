@@ -1,11 +1,12 @@
 package world.bentobox.biomes.handlers;
 
 
-import org.bukkit.Bukkit;
-import org.bukkit.World;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 
 import world.bentobox.bentobox.api.addons.request.AddonRequestHandler;
 import world.bentobox.bentobox.api.user.User;

@@ -1,10 +1,17 @@
 package world.bentobox.biomes.commands.admin;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.inventory.ItemStack;
-import java.util.*;
 
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
@@ -13,8 +20,8 @@ import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddonManager;
 import world.bentobox.biomes.commands.ExpandedCompositeCommand;
 import world.bentobox.biomes.database.objects.BiomesObject;
-import world.bentobox.biomes.panels.admin.ListBiomesGUI;
 import world.bentobox.biomes.panels.GuiUtils;
+import world.bentobox.biomes.panels.admin.ListBiomesGUI;
 import world.bentobox.biomes.utils.Utils;
 
 

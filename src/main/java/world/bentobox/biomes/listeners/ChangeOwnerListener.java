@@ -1,19 +1,20 @@
 package world.bentobox.biomes.listeners;
 
 
+import java.util.Optional;
+
 import org.bukkit.block.Biome;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import java.util.Optional;
 
 import world.bentobox.bentobox.api.addons.GameModeAddon;
 import world.bentobox.bentobox.api.events.team.TeamEvent.TeamSetownerEvent;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.BiomesAddonManager;
-import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.config.Settings.UpdateMode;
+import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.tasks.BiomeUpdateHelper;
 
 

@@ -1,25 +1,25 @@
 package world.bentobox.biomes;
 
 
+import java.util.Iterator;
+import java.util.Optional;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
-import java.util.Iterator;
-import java.util.Optional;
 
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.configuration.Config;
 import world.bentobox.bentobox.api.flags.Flag;
 import world.bentobox.bentobox.hooks.VaultHook;
-import world.bentobox.bentobox.managers.RanksManager;
 import world.bentobox.biomes.commands.admin.AdminCommand;
 import world.bentobox.biomes.commands.user.BiomesCommand;
+import world.bentobox.biomes.config.Settings;
 import world.bentobox.biomes.database.objects.BiomeChunkUpdateObject;
 import world.bentobox.biomes.handlers.BiomeDataRequestHandler;
 import world.bentobox.biomes.handlers.BiomeListRequestHandler;
 import world.bentobox.biomes.handlers.ChangeBiomeRequestHandler;
 import world.bentobox.biomes.listeners.ChangeOwnerListener;
-import world.bentobox.biomes.config.Settings;
 import world.bentobox.biomes.listeners.ChunkLoadListener;
 import world.bentobox.level.Level;
 

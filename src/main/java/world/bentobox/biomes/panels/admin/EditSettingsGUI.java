@@ -1,13 +1,13 @@
 package world.bentobox.biomes.panels.admin;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.NonNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
@@ -16,8 +16,8 @@ import world.bentobox.bentobox.api.user.User;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.config.Settings;
 import world.bentobox.biomes.panels.CommonGUI;
-import world.bentobox.biomes.panels.util.NumberGUI;
 import world.bentobox.biomes.panels.GuiUtils;
+import world.bentobox.biomes.panels.util.NumberGUI;
 
 
 public class EditSettingsGUI extends CommonGUI

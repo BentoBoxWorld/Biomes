@@ -10,8 +10,8 @@ import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.biomes.BiomesAddon;
-import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.config.Settings.UpdateMode;
+import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.utils.Utils;
 
 

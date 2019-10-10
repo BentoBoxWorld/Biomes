@@ -1,10 +1,11 @@
 package world.bentobox.biomes.panels.util;
 
 
-import org.bukkit.Material;
-import org.bukkit.block.Biome;
 import java.util.Collections;
 import java.util.function.BiConsumer;
+
+import org.bukkit.Material;
+import org.bukkit.block.Biome;
 
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;

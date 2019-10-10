@@ -1,24 +1,22 @@
 package world.bentobox.biomes.panels.user;
 
 
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.biomes.BiomesAddon;
-import world.bentobox.biomes.database.objects.BiomesObject;
-
-import world.bentobox.biomes.panels.CommonGUI;
-
 import world.bentobox.biomes.config.Settings.UpdateMode;
-import world.bentobox.biomes.panels.util.NumberGUI;
+import world.bentobox.biomes.database.objects.BiomesObject;
+import world.bentobox.biomes.panels.CommonGUI;
 import world.bentobox.biomes.panels.GuiUtils;
+import world.bentobox.biomes.panels.util.NumberGUI;
 
 
 /**

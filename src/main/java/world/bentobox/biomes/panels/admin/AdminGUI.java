@@ -1,16 +1,20 @@
 package world.bentobox.biomes.panels.admin;
 
 
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.conversations.*;
-import org.bukkit.inventory.ItemStack;
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
+
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.conversations.Conversation;
+import org.bukkit.conversations.ConversationContext;
+import org.bukkit.conversations.ConversationFactory;
+import org.bukkit.conversations.Prompt;
+import org.bukkit.conversations.ValidatingPrompt;
+import org.bukkit.inventory.ItemStack;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
