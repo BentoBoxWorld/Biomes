@@ -7,17 +7,17 @@ This page contains plans for each Addon version.
 		- [x] On owner change, reset biomes that is not available for new owner.
 
 ## Release 0.5.0
-- [ ] Rework GUI again:
-	- [ ] Do the same tricks as in Challenges GUI.
-	- [ ] Add proper Biomes Description #18
-	- [ ] Simplify user GUI
+- [x] Rework GUI again:
+	- [x] Do the same tricks as in Challenges GUI.
+	- [x] Add proper Biomes Description #18
+	- [x] Simplify user GUI
 - [ ] Store Biome change information per:
 	- [ ] Player
 	- [ ] Island
 - [ ] Implement more cost options:
 	- [ ] Cost per biome change (linear / exponential)
 	- [ ] Cost per block
-- [ ] Remove deprecated code.	
+- [x] Remove deprecated code.	
 
 ## Release 0.4.0
 - [ ] Create unlockable biomes:
