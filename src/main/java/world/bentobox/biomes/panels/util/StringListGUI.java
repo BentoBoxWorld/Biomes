@@ -86,7 +86,7 @@ public class StringListGUI
 
 		int slot = 10;
 
-		for (int stringIndex = 0; stringIndex < this.value.size() && slot < 36; stringIndex++)
+		for (int stringIndex = 0; stringIndex < this.value.size() && slot < 36; stringIndex++, slot++)
 		{
 			if (!panelBuilder.slotOccupied(slot))
 			{
@@ -94,7 +94,6 @@ public class StringListGUI
 					this.createStringElement(this.value.get(stringIndex), stringIndex));
 			}
 
-			slot++;
 		}
 
 		panelBuilder.build();
