@@ -100,9 +100,8 @@ public class BiomesSetCommand extends ExpandedCompositeCommand
 				List<BiomesObject> biomes = this.addon.getAddonManager().getBiomes(this.getWorld());
 
 				// Create suggestions with all biomes that is available for users.
-				biomes.forEach(biomesObject -> {
-					returnList.add(biomesObject.getUniqueId().substring(Utils.getGameMode(this.getWorld()).length() + 1));
-				});
+				biomes.forEach(biomesObject -> 
+					returnList.add(biomesObject.getUniqueId().substring(Utils.getGameMode(this.getWorld()).length() + 1)));
 
 				break;
 			case 4:
@@ -126,10 +125,8 @@ public class BiomesSetCommand extends ExpandedCompositeCommand
 
 				break;
 			default:
-			{
 				returnList.add("help");
 				break;
-			}
 		}
 
 		return Optional.of(Util.tabLimit(returnList, lastString));

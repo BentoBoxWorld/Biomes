@@ -21,7 +21,17 @@ import world.bentobox.biomes.tasks.BiomeUpdateHelper;
  */
 public class ChangeBiomeRequestHandler extends AddonRequestHandler
 {
-	/**
+	private static final String STATUS = "status";
+    private static final String REASON = "status";
+    private static final String WORLD_NAME = "world-name";
+    private static final String PLAYER = "player";
+    private static final String BIOME_ID = "biomeId";
+    private static final String UPDATE_MODE = "updateMode";
+    private static final String RANGE = "range";
+    private static final String CHECK_REQ = "checkRequirements";
+    private static final String WITHDRAW = "withdraw";
+    
+    /**
 	 * Constructor creates a new ChangeBiomeRequestHandler instance.
 	 *
 	 * @param addon of type ChallengesAddon
@@ -62,61 +72,61 @@ public class ChangeBiomeRequestHandler extends AddonRequestHandler
 
 		if (metaData == null || metaData.isEmpty())
 		{
-			returnMap.put("status", false);
-			returnMap.put("reason", "Given MetaData map is not defined!");
+			returnMap.put(STATUS, false);
+			returnMap.put(REASON, "Given MetaData map is not defined!");
 		}
-		else if (!metaData.containsKey("world-name") ||
-			!(metaData.get("world-name") instanceof String) ||
-			Bukkit.getWorld((String) metaData.get("world-name")) == null)
+		else if (!metaData.containsKey(WORLD_NAME) ||
+			!(metaData.get(WORLD_NAME) instanceof String) ||
+			Bukkit.getWorld((String) metaData.get(WORLD_NAME)) == null)
 		{
-			returnMap.put("status", false);
-			returnMap.put("reason", "Missing 'world-name' or it is not valid!");
+			returnMap.put(STATUS, false);
+			returnMap.put(REASON, "Missing 'world-name' or it is not valid!");
 		}
-		else if (!metaData.containsKey("player") ||
-			!(metaData.get("player") instanceof UUID))
+		else if (!metaData.containsKey(PLAYER) ||
+			!(metaData.get(PLAYER) instanceof UUID))
 		{
-			returnMap.put("status", false);
-			returnMap.put("reason", "Missing 'player' or it is not valid!");
+			returnMap.put(STATUS, false);
+			returnMap.put(REASON, "Missing 'player' or it is not valid!");
 		}
-		else if (!metaData.containsKey("biomeId") ||
-			!(metaData.get("biomeId") instanceof String) ||
-			this.addon.getAddonManager().getBiomeFromString((String) metaData.get("biomeId")) == null)
+		else if (!metaData.containsKey(BIOME_ID) ||
+			!(metaData.get(BIOME_ID) instanceof String) ||
+			this.addon.getAddonManager().getBiomeFromString((String) metaData.get(BIOME_ID)) == null)
 		{
-			returnMap.put("status", false);
-			returnMap.put("reason", "Missing 'biomeId' or it is not valid!");
+			returnMap.put(STATUS, false);
+			returnMap.put(REASON, "Missing 'biomeId' or it is not valid!");
 		}
 		else
 		{
-			World world = Bukkit.getWorld((String) metaData.get("world-name"));
-			UUID player = (UUID) metaData.get("player");
+			World world = Bukkit.getWorld((String) metaData.get(WORLD_NAME));
+			UUID player = (UUID) metaData.get(PLAYER);
 			BiomesObject biome = this.addon.getAddonManager().
-				getBiomeFromString((String) metaData.get("biomeId"));
+				getBiomeFromString((String) metaData.get(BIOME_ID));
 
 			// Get Update Mode.
 
-			Settings.UpdateMode mode = metaData.containsKey("updateMode") &&
-				metaData.get("updateMode") instanceof String &&
-				Settings.UpdateMode.getMode((String) metaData.get("updateMode")) != null ?
-				Settings.UpdateMode.getMode((String) metaData.get("updateMode")) :
+			Settings.UpdateMode mode = metaData.containsKey(UPDATE_MODE) &&
+				metaData.get(UPDATE_MODE) instanceof String &&
+				Settings.UpdateMode.getMode((String) metaData.get(UPDATE_MODE)) != null ?
+				Settings.UpdateMode.getMode((String) metaData.get(UPDATE_MODE)) :
 				this.addon.getSettings().getDefaultMode();
 
 			// Get Update Range.
 
-			int range = metaData.containsKey("range") &&
-				metaData.get("range") instanceof Integer ? (int) metaData.get("range") :
+			int range = metaData.containsKey(RANGE) &&
+				metaData.get(RANGE) instanceof Integer ? (int) metaData.get(RANGE) :
 				this.addon.getSettings().getDefaultSize();
 
 			// Get Requirement Checking
 
-			boolean checkRequirements = !metaData.containsKey("checkRequirements") ||
-				!(metaData.get("checkRequirements") instanceof Boolean) ||
-				(boolean) metaData.get("checkRequirements");
+			boolean checkRequirements = !metaData.containsKey(CHECK_REQ) ||
+				!(metaData.get(CHECK_REQ) instanceof Boolean) ||
+				(boolean) metaData.get(CHECK_REQ);
 
 			// Get Withdraw value
 
-			boolean withdraw = !metaData.containsKey("withdraw") ||
-				!(metaData.get("withdraw") instanceof Boolean) ||
-				(boolean) metaData.get("withdraw");
+			boolean withdraw = !metaData.containsKey(WITHDRAW) ||
+				!(metaData.get(WITHDRAW) instanceof Boolean) ||
+				(boolean) metaData.get(WITHDRAW);
 
 			BiomeUpdateHelper helper = new BiomeUpdateHelper(this.addon,
 				User.getInstance(player),
@@ -133,21 +143,21 @@ public class ChangeBiomeRequestHandler extends AddonRequestHandler
 				{
 					helper.updateIslandBiome();
 
-					returnMap.put("status", true);
-					returnMap.put("reason", "Biome is updated by checking all requirements!");
+					returnMap.put(STATUS, true);
+					returnMap.put(REASON, "Biome is updated by checking all requirements!");
 				}
 				else
 				{
-					returnMap.put("status", false);
-					returnMap.put("reason", "Player does not met requirements for biome changing!");
+					returnMap.put(STATUS, false);
+					returnMap.put(REASON, "Player does not met requirements for biome changing!");
 				}
 			}
 			else
 			{
 				helper.updateIslandBiome();
 
-				returnMap.put("status", true);
-				returnMap.put("reason", "Biome is updated by skipping all requirements!");
+				returnMap.put(STATUS, true);
+				returnMap.put(REASON, "Biome is updated by skipping all requirements!");
 			}
 		}
 

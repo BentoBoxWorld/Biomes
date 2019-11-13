@@ -19,6 +19,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.Database;
 import world.bentobox.bentobox.util.ItemParser;
@@ -36,7 +37,9 @@ import world.bentobox.biomes.utils.Utils;
  */
 public class BiomesAddonManager
 {
-	/**
+	private static final String BIOME = "[biome]";
+
+    /**
 	 * This is default constructor for Addon Manager.
 	 * @param addon Inits addon manager.
 	 */
@@ -159,7 +162,7 @@ public class BiomesAddonManager
 			if (!silent)
 			{
 				user.sendMessage("biomes.messages.skipping",
-					"[biome]",
+					BIOME,
 					biome.toString());
 			}
 
@@ -175,7 +178,7 @@ public class BiomesAddonManager
 				if (!silent)
 				{
 					user.sendMessage("biomes.messages.skipping",
-						"[biome]",
+						BIOME,
 						biome.getFriendlyName());
 				}
 
@@ -186,7 +189,7 @@ public class BiomesAddonManager
 				if (!silent)
 				{
 					user.sendMessage("biomes.messages.overwriting",
-						"[biome]",
+						BIOME,
 						biome.getFriendlyName());
 				}
 
@@ -198,7 +201,7 @@ public class BiomesAddonManager
 		if (!silent)
 		{
 			user.sendMessage("biomes.messages.imported",
-				"[biome]",
+				BIOME,
 				biome.getFriendlyName());
 		}
 
@@ -288,7 +291,7 @@ public class BiomesAddonManager
 
 				List<String> permissions = details.getStringList("permission");
 
-				if (permissions == null || permissions.isEmpty())
+				if (permissions.isEmpty())
 				{
 					newBiomeObject.setRequiredPermissions(Collections.emptySet());
 				}
@@ -306,13 +309,13 @@ public class BiomesAddonManager
 			else
 			{
 				user.sendMessage("biomes.errors.load-biome",
-					"[biome]",
+					BIOME,
 					biome);
 			}
 		}
 
 		user.sendMessage("biomes.messages.import-count",
-			"[number]",
+			TextVariables.NUMBER,
 			String.valueOf(size));
 	}
 

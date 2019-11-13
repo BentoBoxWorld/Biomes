@@ -47,9 +47,7 @@ public class BiomesInfoCommand extends ExpandedCompositeCommand
 			user.sendMessage("biomes.information.level", "[level]", Long.toString(biomesObject.getRequiredLevel()));
 			user.sendMessage("biomes.information.cost","[cost]", Integer.toString(biomesObject.getRequiredCost()));
 
-			biomesObject.getRequiredPermissions().forEach(s -> {
-				user.sendMessage("biomes.information.permission","[permission]", s);
-			});
+			biomesObject.getRequiredPermissions().forEach(s -> user.sendMessage("biomes.information.permission","[permission]", s));
 
 			return true;
 		}
@@ -74,9 +72,8 @@ public class BiomesInfoCommand extends ExpandedCompositeCommand
 
 		// Create suggestions with all biomes that is available for users.
 
-		this.addon.getAddonManager().getBiomes(this.getWorld()).forEach(biomesObject -> {
-			returnList.add(biomesObject.getUniqueId().substring(Utils.getGameMode(this.getWorld()).length() + 1));
-		});
+		this.addon.getAddonManager().getBiomes(this.getWorld()).forEach(biomesObject -> 
+			returnList.add(biomesObject.getUniqueId().substring(Utils.getGameMode(this.getWorld()).length() + 1)));
 
 		return Optional.of(Util.tabLimit(returnList, args.get(args.size() - 1)));
 	}

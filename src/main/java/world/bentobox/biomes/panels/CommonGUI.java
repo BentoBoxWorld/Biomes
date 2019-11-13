@@ -135,31 +135,27 @@ public abstract class CommonGUI
 		switch (button)
 		{
 			case NEXT:
-			{
 				name = this.user.getTranslation("biomes.gui.buttons.next");
 				description = Collections.emptyList();
 				icon = new ItemStack(BiomesAddon.SIGN_MATERIAL);
-				clickHandler = (panel, user, clickType, slot) -> {
+				clickHandler = (panel, u, clickType, slot) -> {
 					this.pageIndex++;
 					this.build();
 					return true;
 				};
 
 				break;
-			}
 			case PREVIOUS:
-			{
 				name = this.user.getTranslation("biomes.gui.buttons.previous");
 				description = Collections.emptyList();
 				icon = new ItemStack(BiomesAddon.SIGN_MATERIAL);
-				clickHandler = (panel, user, clickType, slot) -> {
+				clickHandler = (panel, u, clickType, slot) -> {
 					this.pageIndex--;
 					this.build();
 					return true;
 				};
 
 				break;
-			}
 			case RETURN:
 				return this.returnButton;
 			default:
@@ -185,25 +181,24 @@ public abstract class CommonGUI
 	 * This method finds and try to execute given sub command with given arguments.
 	 * @param subCommand Sub Command that need to be called.
 	 * @param arguments List of arguments for current command.
-	 * @return true;
 	 */
-	protected boolean callCommand(String subCommand, List<String> arguments)
+	protected void callCommand(String subCommand, List<String> arguments)
 	{
 		CompositeCommand command = this.addon.getPlugin().getCommandsManager().getCommand(this.topLabel);
 		Optional<CompositeCommand> commandOptional = command.getSubCommand(BIOMES);
 
 		if (!commandOptional.isPresent())
 		{
-			// Throw error that biomes command not found.
-			return true;
+			// TODO: Throw error that biomes command not found.
+			return;
 		}
 
 		commandOptional = commandOptional.get().getSubCommand(subCommand);
 
 		if (!commandOptional.isPresent())
 		{
-			// Throw error that biomes sub-command not found.
-			return true;
+			// TODO: Throw error that biomes sub-command not found.
+			return;
 		}
 
 		command = commandOptional.get();
@@ -214,7 +209,6 @@ public abstract class CommonGUI
 		}
 
 		this.user.closeInventory();
-		return true;
 	}
 
 // ---------------------------------------------------------------------
@@ -356,21 +350,21 @@ public abstract class CommonGUI
 // ---------------------------------------------------------------------
 
 
-	protected final static String BIOMES = "biomes";
+	protected static final String BIOMES = "biomes";
 
-	protected final static String ADMIN = "admin";
+	protected static final String ADMIN = "admin";
 
-	protected final static String SET = "set";
+	protected static final String SET = "set";
 
-	protected final static String ADD = "add";
+	protected static final String ADD = "add";
 
-	protected final static String EDIT = "edit";
+	protected static final String EDIT = "edit";
 
-	protected final static String DELETE = "remove";
+	protected static final String DELETE = "remove";
 
-	protected final static String SETTINGS = "settings";
+	protected static final String SETTINGS = "settings";
 
-	protected final static String IMPORT = "import";
+	protected static final String IMPORT = "import";
 
-	protected final static String INFO = "info";
+	protected static final String INFO = "info";
 }
