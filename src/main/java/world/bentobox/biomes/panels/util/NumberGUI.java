@@ -27,7 +27,7 @@ import world.bentobox.biomes.panels.GuiUtils;
  */
 public class NumberGUI
 {
-    protected static final String VALUE = "[value]";
+    protected static final String VALUE_TAG = "[value]";
 
     protected static final String MIN = "[min]";
 
@@ -172,7 +172,7 @@ public class NumberGUI
         case VALUE:
         {
             name = this.user.getTranslation("biomes.gui.buttons.value", TextVariables.NUMBER, Integer.toString(this.value));
-            description = this.user.getTranslation("biomes.gui.descriptions.current-value", VALUE, Integer.toString(this.value));
+            description = this.user.getTranslation("biomes.gui.descriptions.current-value", VALUE_TAG, Integer.toString(this.value));
             icon = new ItemStack(Material.PAPER);
             clickHandler = (panel, user, clickType, slot) -> true;
             glow = false;
@@ -265,7 +265,7 @@ public class NumberGUI
                 if (this.value > this.maxValue)
                 {
                     this.user.sendMessage(INVALID_INT,
-                            VALUE, Integer.toString(this.value),
+                            VALUE_TAG, Integer.toString(this.value),
                             MIN, Integer.toString(this.minValue),
                             MAX, Integer.toString(this.maxValue));
 
@@ -275,7 +275,7 @@ public class NumberGUI
                 if (this.value < this.minValue)
                 {
                     this.user.sendMessage(INVALID_INT,
-                            VALUE, Integer.toString(this.value),
+                            VALUE_TAG, Integer.toString(this.value),
                             MIN, Integer.toString(this.minValue),
                             MAX, Integer.toString(this.maxValue));
 
@@ -298,7 +298,7 @@ public class NumberGUI
                 if (this.value > this.maxValue)
                 {
                     this.user.sendMessage(INVALID_INT,
-                            VALUE, Integer.toString(this.value),
+                            VALUE_TAG, Integer.toString(this.value),
                             MIN, Integer.toString(this.minValue),
                             MAX, Integer.toString(this.maxValue));
 
@@ -321,7 +321,7 @@ public class NumberGUI
                 if (this.value < this.minValue)
                 {
                     this.user.sendMessage(INVALID_INT,
-                            VALUE, Integer.toString(this.value),
+                            VALUE_TAG, Integer.toString(this.value),
                             MIN, Integer.toString(this.minValue),
                             MAX, Integer.toString(this.maxValue));
 
@@ -344,7 +344,7 @@ public class NumberGUI
                 if (this.value > this.maxValue)
                 {
                     this.user.sendMessage(INVALID_INT,
-                            VALUE, Integer.toString(this.value),
+                            VALUE_TAG, Integer.toString(this.value),
                             MIN, Integer.toString(this.minValue),
                             MAX, Integer.toString(this.maxValue));
 
@@ -435,7 +435,7 @@ public class NumberGUI
                             protected String getInputNotNumericText(ConversationContext context,
                                     String invalidInput)
                             {
-                                return NumberGUI.this.user.getTranslation("biomes.errors.not-a-integer", VALUE, invalidInput);
+                                return NumberGUI.this.user.getTranslation("biomes.errors.not-a-integer", VALUE_TAG, invalidInput);
                             }
 
 
@@ -452,7 +452,7 @@ public class NumberGUI
                                     Number invalidInput)
                             {
                                 return NumberGUI.this.user.getTranslation(INVALID_INT,
-                                        VALUE, invalidInput.toString(),
+                                        VALUE_TAG, invalidInput.toString(),
                                         MIN, Integer.toString(NumberGUI.this.minValue),
                                         MAX, Integer.toString(NumberGUI.this.maxValue));
                             }

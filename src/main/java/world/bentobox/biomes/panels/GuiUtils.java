@@ -4,7 +4,7 @@ package world.bentobox.biomes.panels;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -233,7 +233,7 @@ public class GuiUtils
 
     private static final Map<Material, Material> M2M;
     static {
-        Map<Material, Material> aMap = new HashMap<>();
+        Map<Material, Material> aMap = new EnumMap<>(Material.class);
         aMap.put(Material.MELON_STEM, Material.MELON_SEEDS);
         aMap.put(Material.ATTACHED_MELON_STEM, Material.MELON_SEEDS);
         aMap.put(Material.PUMPKIN_STEM, Material.PUMPKIN_SEEDS);

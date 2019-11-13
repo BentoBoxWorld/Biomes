@@ -240,7 +240,7 @@ public abstract class CommonGUI
 				{    // This adds biomes original name.
 					result.add(this.user
 						.getTranslation("biomes.gui.biomes-description.biome-name",
-							"[value]", biomesObject.getBiome().name()));
+							VALUE_TAG, biomesObject.getBiome().name()));
 					break;
 				}
 				case REQUIRED_MONEY:
@@ -250,7 +250,7 @@ public abstract class CommonGUI
 					{
 						result.add(this.user
 							.getTranslation("biomes.gui.biomes-description.required-money",
-								"[value]",
+								VALUE_TAG,
 								Integer.toString(biomesObject.getRequiredCost())));
 					}
 					break;
@@ -261,7 +261,7 @@ public abstract class CommonGUI
 					if (this.addon.isLevelProvided() && biomesObject.getRequiredLevel() > 0)
 					{
 						result.add(this.user.getTranslation("biomes.gui.biomes-description.required-island-level",
-							"[value]", Long.toString(biomesObject.getRequiredLevel())));
+							VALUE_TAG, Long.toString(biomesObject.getRequiredLevel())));
 					}
 					break;
 				}
@@ -367,4 +367,6 @@ public abstract class CommonGUI
 	protected static final String IMPORT = "import";
 
 	protected static final String INFO = "info";
+	
+	protected static final String VALUE_TAG = "[value]";
 }

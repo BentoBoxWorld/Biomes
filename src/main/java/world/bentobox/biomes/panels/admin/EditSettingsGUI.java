@@ -22,13 +22,18 @@ import world.bentobox.biomes.panels.util.NumberGUI;
 
 public class EditSettingsGUI extends CommonGUI
 {
-	/**
+	private static final String CURRENT_VALUE = "biomes.gui.descriptions.current-value";
+    private static final String ENABLED_REF = "biomes.gui.descriptions.enabled";
+    private static final String DISABLED_REF = "biomes.gui.descriptions.disabled";
+
+
+    /**
 	 * {@inheritDoc}
 	 */
 	public EditSettingsGUI(@NonNull CommonGUI parentGUI)
 	{
 		super(parentGUI);
-		this.settings = this.addon.getSettings();
+		this.config = this.addon.getSettings();
 	}
 
 
@@ -39,7 +44,7 @@ public class EditSettingsGUI extends CommonGUI
 		String permissionPrefix)
 	{
 		super(addon, world, user, topLabel, permissionPrefix);
-		this.settings = this.addon.getSettings();
+		this.config = this.addon.getSettings();
 	}
 
 
@@ -87,23 +92,23 @@ public class EditSettingsGUI extends CommonGUI
 			{
 				description = new ArrayList<>(2);
 				description.add(this.user.getTranslation("biomes.gui.descriptions.admin.advanced-menu"));
-				description.add(this.user.getTranslation("biomes.gui.descriptions.current-value",
-					"[value]",
-					this.settings.isAdvancedMenu() ?
-						this.user.getTranslation("biomes.gui.descriptions.enabled") :
-						this.user.getTranslation("biomes.gui.descriptions.disabled")));
+				description.add(this.user.getTranslation(CURRENT_VALUE,
+					VALUE_TAG,
+					this.config.isAdvancedMenu() ?
+						this.user.getTranslation(ENABLED_REF) :
+						this.user.getTranslation(DISABLED_REF)));
 				name = this.user.getTranslation("biomes.gui.buttons.admin.advanced-menu");
 				icon = new ItemStack(Material.COMMAND_BLOCK);
 
 				clickHandler = (panel, user1, clickType, i) -> {
-					this.settings.setAdvancedMenu(
-						!this.settings.isAdvancedMenu());
+					this.config.setAdvancedMenu(
+						!this.config.isAdvancedMenu());
 
 					panel.getInventory().setItem(i, this.createButton(button).getItem());
 					return true;
 				};
 
-				glow = this.settings.isAdvancedMenu();
+				glow = this.config.isAdvancedMenu();
 				break;
 			}
 			case DEFAULT_MODE:
@@ -113,23 +118,23 @@ public class EditSettingsGUI extends CommonGUI
 				List<String> values = new ArrayList<>(5);
 				values.add(this.user.getTranslation("biomes.gui.descriptions.admin.default-mode"));
 
-				values.add((this.settings.getDefaultMode().equals(Settings.UpdateMode.ISLAND) ? "&2" : "&c") +
+				values.add((this.config.getDefaultMode().equals(Settings.UpdateMode.ISLAND) ? "&2" : "&c") +
 					this.user.getTranslation("biomes.gui.descriptions.update-mode.island"));
-				values.add((this.settings.getDefaultMode().equals(Settings.UpdateMode.CHUNK) ? "&2" : "&c") +
+				values.add((this.config.getDefaultMode().equals(Settings.UpdateMode.CHUNK) ? "&2" : "&c") +
 					this.user.getTranslation("biomes.gui.descriptions.update-mode.chunk"));
-				values.add((this.settings.getDefaultMode().equals(Settings.UpdateMode.RANGE) ? "&2" : "&c") +
+				values.add((this.config.getDefaultMode().equals(Settings.UpdateMode.RANGE) ? "&2" : "&c") +
 					this.user.getTranslation("biomes.gui.descriptions.update-mode.square"));
 				description = values;
 
-				if (this.settings.getDefaultMode().equals(Settings.UpdateMode.ISLAND))
+				if (this.config.getDefaultMode().equals(Settings.UpdateMode.ISLAND))
 				{
 					icon = new ItemStack(Material.GRASS_BLOCK);
 				}
-				else if (this.settings.getDefaultMode().equals(Settings.UpdateMode.CHUNK))
+				else if (this.config.getDefaultMode().equals(Settings.UpdateMode.CHUNK))
 				{
 					icon = new ItemStack(Material.DIRT);
 				}
-				else if (this.settings.getDefaultMode().equals(Settings.UpdateMode.RANGE))
+				else if (this.config.getDefaultMode().equals(Settings.UpdateMode.RANGE))
 				{
 					icon = new ItemStack(Material.GLASS);
 				}
@@ -141,16 +146,16 @@ public class EditSettingsGUI extends CommonGUI
 				clickHandler = (panel, user, clickType, slot) -> {
 					if (clickType.isRightClick())
 					{
-						this.settings.setDefaultMode(
+						this.config.setDefaultMode(
 							Settings.UpdateMode.values()[
-								this.getPreviousMode(this.settings.getDefaultMode(),
+								this.getPreviousMode(this.config.getDefaultMode(),
 									Settings.UpdateMode.values())]);
 					}
 					else
 					{
-						this.settings.setDefaultMode(
+						this.config.setDefaultMode(
 							Settings.UpdateMode.values()[
-								this.getNextMode(this.settings.getDefaultMode(),
+								this.getNextMode(this.config.getDefaultMode(),
 									Settings.UpdateMode.values())]);
 					}
 
@@ -165,19 +170,19 @@ public class EditSettingsGUI extends CommonGUI
 			{
 				description = new ArrayList<>(2);
 				description.add(this.user.getTranslation("biomes.gui.descriptions.admin.default-size"));
-				description.add(this.user.getTranslation("biomes.gui.descriptions.current-value",
-					"[value]", Integer.toString(this.settings.getDefaultSize())));
+				description.add(this.user.getTranslation(CURRENT_VALUE,
+					VALUE_TAG, Integer.toString(this.config.getDefaultSize())));
 				name = this.user.getTranslation("biomes.gui.buttons.admin.default-size");
 				icon = new ItemStack(Material.PISTON);
 				clickHandler = (panel, user1, clickType, i) -> {
 					new NumberGUI(this.user,
-						this.settings.getDefaultSize(),
+						this.config.getDefaultSize(),
 						0,
-						this.settings.getLoreLineLength(),
+						this.config.getLoreLineLength(),
 						(status, value) -> {
 							if (status)
 							{
-								this.settings.setDefaultSize(value);
+								this.config.setDefaultSize(value);
 							}
 
 							EditSettingsGUI.this.build();
@@ -195,25 +200,25 @@ public class EditSettingsGUI extends CommonGUI
 				List<String> values = new ArrayList<>(5);
 				values.add(this.user.getTranslation("biomes.gui.descriptions.admin.visibility-mode"));
 
-				values.add((this.settings.getVisibilityMode().equals(Settings.VisibilityMode.ALL) ? "&2" : "&c") +
+				values.add((this.config.getVisibilityMode().equals(Settings.VisibilityMode.ALL) ? "&2" : "&c") +
 					this.user.getTranslation("biomes.gui.descriptions.visibility-mode.all"));
-				values.add((this.settings.getVisibilityMode().equals(Settings.VisibilityMode.DEPLOYED) ? "&2" : "&c") +
+				values.add((this.config.getVisibilityMode().equals(Settings.VisibilityMode.DEPLOYED) ? "&2" : "&c") +
 					this.user.getTranslation("biomes.gui.descriptions.visibility-mode.deployed"));
-				values.add((this.settings.getVisibilityMode().equals(Settings.VisibilityMode.ACCESSIBLE) ? "&2" : "&c") +
+				values.add((this.config.getVisibilityMode().equals(Settings.VisibilityMode.ACCESSIBLE) ? "&2" : "&c") +
 					this.user.getTranslation("biomes.gui.descriptions.visibility-mode.accessible"));
-				values.add((this.settings.getVisibilityMode().equals(Settings.VisibilityMode.TOGGLEABLE) ? "&2" : "&c") +
+				values.add((this.config.getVisibilityMode().equals(Settings.VisibilityMode.TOGGLEABLE) ? "&2" : "&c") +
 					this.user.getTranslation("biomes.gui.descriptions.visibility-mode.toggleable"));
 				description = values;
 
-				if (this.settings.getVisibilityMode().equals(Settings.VisibilityMode.ALL))
+				if (this.config.getVisibilityMode().equals(Settings.VisibilityMode.ALL))
 				{
 					icon = new ItemStack(Material.BIRCH_PLANKS);
 				}
-				else if (this.settings.getVisibilityMode().equals(Settings.VisibilityMode.DEPLOYED))
+				else if (this.config.getVisibilityMode().equals(Settings.VisibilityMode.DEPLOYED))
 				{
 					icon = new ItemStack(Material.BIRCH_STAIRS);
 				}
-				else if (this.settings.getVisibilityMode().equals(Settings.VisibilityMode.ACCESSIBLE))
+				else if (this.config.getVisibilityMode().equals(Settings.VisibilityMode.ACCESSIBLE))
 				{
 					icon = new ItemStack(Material.BIRCH_SLAB);
 				}
@@ -225,16 +230,16 @@ public class EditSettingsGUI extends CommonGUI
 				clickHandler = (panel, user, clickType, slot) -> {
 					if (clickType.isRightClick())
 					{
-						this.settings.setVisibilityMode(
+						this.config.setVisibilityMode(
 							Settings.VisibilityMode.values()[
-								this.getPreviousMode(this.settings.getVisibilityMode(),
+								this.getPreviousMode(this.config.getVisibilityMode(),
 									Settings.VisibilityMode.values())]);
 					}
 					else
 					{
-						this.settings.setVisibilityMode(
+						this.config.setVisibilityMode(
 							Settings.VisibilityMode.values()[
-								this.getNextMode(this.settings.getVisibilityMode(),
+								this.getNextMode(this.config.getVisibilityMode(),
 									Settings.VisibilityMode.values())]);
 					}
 
@@ -249,19 +254,19 @@ public class EditSettingsGUI extends CommonGUI
 			{
 				description = new ArrayList<>(2);
 				description.add(this.user.getTranslation("biomes.gui.descriptions.admin.line-length"));
-				description.add(this.user.getTranslation("biomes.gui.descriptions.current-value",
-					"[value]", Integer.toString(this.settings.getLoreLineLength())));
+				description.add(this.user.getTranslation(CURRENT_VALUE,
+					VALUE_TAG, Integer.toString(this.config.getLoreLineLength())));
 				name = this.user.getTranslation("biomes.gui.buttons.admin.line-length");
 				icon = new ItemStack(Material.ANVIL);
 				clickHandler = (panel, user1, clickType, i) -> {
 					new NumberGUI(this.user,
-						this.settings.getLoreLineLength(),
+						this.config.getLoreLineLength(),
 						0,
-						this.settings.getLoreLineLength(),
+						this.config.getLoreLineLength(),
 						(status, value) -> {
 							if (status)
 							{
-								this.settings.setLoreLineLength(value);
+								this.config.setLoreLineLength(value);
 							}
 
 							EditSettingsGUI.this.build();
@@ -291,19 +296,19 @@ public class EditSettingsGUI extends CommonGUI
 			{
 				description = new ArrayList<>(2);
 				description.add(this.user.getTranslation("biomes.gui.descriptions.admin.cooldown"));
-				description.add(this.user.getTranslation("biomes.gui.descriptions.current-value",
-					"[value]", Integer.toString(this.settings.getCoolDown())));
+				description.add(this.user.getTranslation(CURRENT_VALUE,
+					VALUE_TAG, Integer.toString(this.config.getCoolDown())));
 				name = this.user.getTranslation("biomes.gui.buttons.admin.cooldown");
 				icon = new ItemStack(Material.DAYLIGHT_DETECTOR);
 				clickHandler = (panel, user1, clickType, i) -> {
 					new NumberGUI(this.user,
-						this.settings.getCoolDown(),
+						this.config.getCoolDown(),
 						-1,
-						this.settings.getLoreLineLength(),
+						this.config.getLoreLineLength(),
 						(status, value) -> {
 							if (status)
 							{
-								this.settings.setCoolDown(value);
+								this.config.setCoolDown(value);
 							}
 
 							EditSettingsGUI.this.build();
@@ -318,46 +323,46 @@ public class EditSettingsGUI extends CommonGUI
 			{
 				description = new ArrayList<>(2);
 				description.add(this.user.getTranslation("biomes.gui.descriptions.admin.reset-biomes"));
-				description.add(this.user.getTranslation("biomes.gui.descriptions.current-value",
-					"[value]",
-					this.settings.isResetBiomes() ?
-						this.user.getTranslation("biomes.gui.descriptions.enabled") :
-						this.user.getTranslation("biomes.gui.descriptions.disabled")));
+				description.add(this.user.getTranslation(CURRENT_VALUE,
+					VALUE_TAG,
+					this.config.isResetBiomes() ?
+						this.user.getTranslation(ENABLED_REF) :
+						this.user.getTranslation(DISABLED_REF)));
 				name = this.user.getTranslation("biomes.gui.buttons.admin.reset-biomes");
 				icon = new ItemStack(Material.DROPPER);
 
 				clickHandler = (panel, user1, clickType, i) -> {
-					this.settings.setResetBiomes(
-						!this.settings.isResetBiomes());
+					this.config.setResetBiomes(
+						!this.config.isResetBiomes());
 
 					panel.getInventory().setItem(i, this.createButton(button).getItem());
 					return true;
 				};
 
-				glow = this.settings.isResetBiomes();
+				glow = this.config.isResetBiomes();
 				break;
 			}
 			case PROTECTION_RANGE:
 			{
 				description = new ArrayList<>(2);
 				description.add(this.user.getTranslation("biomes.gui.descriptions.admin.use-protection-range"));
-				description.add(this.user.getTranslation("biomes.gui.descriptions.current-value",
-					"[value]",
-					this.settings.isUseProtectionRange() ?
-						this.user.getTranslation("biomes.gui.descriptions.enabled") :
-						this.user.getTranslation("biomes.gui.descriptions.disabled")));
+				description.add(this.user.getTranslation(CURRENT_VALUE,
+					VALUE_TAG,
+					this.config.isUseProtectionRange() ?
+						this.user.getTranslation(ENABLED_REF) :
+						this.user.getTranslation(DISABLED_REF)));
 				name = this.user.getTranslation("biomes.gui.buttons.admin.use-protection-range");
 				icon = new ItemStack(Material.FILLED_MAP);
 
 				clickHandler = (panel, user1, clickType, i) -> {
-					this.settings.setUseProtectionRange(
-						!this.settings.isUseProtectionRange());
+					this.config.setUseProtectionRange(
+						!this.config.isUseProtectionRange());
 
 					panel.getInventory().setItem(i, this.createButton(button).getItem());
 					return true;
 				};
 
-				glow = this.settings.isUseProtectionRange();
+				glow = this.config.isUseProtectionRange();
 				break;
 			}
 			default:
@@ -369,7 +374,7 @@ public class EditSettingsGUI extends CommonGUI
 		return new PanelItemBuilder().
 			icon(icon).
 			name(name).
-			description(GuiUtils.stringSplit(description, this.settings.getLoreLineLength())).
+			description(GuiUtils.stringSplit(description, this.config.getLoreLineLength())).
 			glow(glow).
 			clickHandler(clickHandler).
 			build();
@@ -449,5 +454,5 @@ public class EditSettingsGUI extends CommonGUI
 	}
 
 
-	private Settings settings;
+	private Settings config;
 }
