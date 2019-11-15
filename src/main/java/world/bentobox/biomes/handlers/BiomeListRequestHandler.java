@@ -17,7 +17,10 @@ import world.bentobox.biomes.database.objects.BiomesObject;
  */
 public class BiomeListRequestHandler extends AddonRequestHandler
 {
-	/**
+	private static final String WORLD_NAME = "world-name";
+
+
+    /**
 	 * Constructor creates a new BiomeListRequestHandler instance.
 	 *
 	 * @param addon of type BiomesAddon
@@ -46,9 +49,9 @@ public class BiomeListRequestHandler extends AddonRequestHandler
 
 		if (metaData == null ||
 			metaData.isEmpty() ||
-			metaData.get("world-name") == null ||
-			!(metaData.get("world-name") instanceof String) ||
-			Bukkit.getWorld((String) metaData.get("world-name")) == null)
+			metaData.get(WORLD_NAME) == null ||
+			!(metaData.get(WORLD_NAME) instanceof String) ||
+			Bukkit.getWorld((String) metaData.get(WORLD_NAME)) == null)
 		{
 			return Collections.emptyList();
 		}
@@ -56,7 +59,7 @@ public class BiomeListRequestHandler extends AddonRequestHandler
 		// Return list of biomes unique IDs from given world.
 
 		return this.addon.getAddonManager().
-			getBiomes(Bukkit.getWorld((String) metaData.get("world-name"))).
+			getBiomes(Bukkit.getWorld((String) metaData.get(WORLD_NAME))).
 			stream().map(BiomesObject::getUniqueId).collect(Collectors.toList());
 	}
 

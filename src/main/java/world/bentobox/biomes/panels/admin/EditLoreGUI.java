@@ -391,12 +391,14 @@ public class EditLoreGUI extends CommonGUI
 		@Override
 		public void setup()
 		{
+		    // No setup required
 		}
 
 
 		@Override
 		public void onInventoryClose(InventoryCloseEvent inventoryCloseEvent)
 		{
+		    // No action on close
 		}
 
 

@@ -347,7 +347,7 @@ public class BiomesAddon extends Addon
 	 * This flag allows to change biomes in any part of the world. It will not limit
 	 * player to their island. Useful for skygrid without protection flags.
 	 */
-	public static Flag BIOMES_WORLD_PROTECTION =
+	public static final Flag BIOMES_WORLD_PROTECTION =
 		new Flag.Builder("BIOMES_WORLD_PROTECTION", Material.GRASS_BLOCK).
 			type(Flag.Type.WORLD_SETTING).
 			mode(Flag.Mode.ADVANCED).
@@ -359,7 +359,7 @@ public class BiomesAddon extends Addon
 	 * that only Island owner can change biomes.
 	 * By default it is set to Visitor.
 	 */
-	public static Flag BIOMES_ISLAND_PROTECTION =
+	public static final Flag BIOMES_ISLAND_PROTECTION =
 		new Flag.Builder("BIOMES_ISLAND_PROTECTION", Material.GRASS_BLOCK).
 			mode(Flag.Mode.ADVANCED).
 			build();

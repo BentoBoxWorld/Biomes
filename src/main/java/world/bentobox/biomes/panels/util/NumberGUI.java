@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.NonNull;
 
 import world.bentobox.bentobox.BentoBox;
+import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
@@ -26,6 +27,16 @@ import world.bentobox.biomes.panels.GuiUtils;
  */
 public class NumberGUI
 {
+    protected static final String VALUE_TAG = "[value]";
+
+    protected static final String MIN = "[min]";
+
+    protected static final String MAX = "[max]";
+
+    private static final String NUMBER_REF = "biomes.gui.buttons.admin.number";
+
+    protected static final String INVALID_INT = "biomes.errors.not-valid-integer";
+
     public NumberGUI(User user, int value, int lineLength, BiConsumer<Boolean, Integer> consumer)
     {
         this(user, value, Integer.MIN_VALUE, Integer.MAX_VALUE, lineLength, consumer);
@@ -160,8 +171,8 @@ public class NumberGUI
         }
         case VALUE:
         {
-            name = this.user.getTranslation("biomes.gui.buttons.value", "[number]", Integer.toString(this.value));
-            description = this.user.getTranslation("biomes.gui.descriptions.current-value", "[value]", Integer.toString(this.value));
+            name = this.user.getTranslation("biomes.gui.buttons.value", TextVariables.NUMBER, Integer.toString(this.value));
+            description = this.user.getTranslation("biomes.gui.descriptions.current-value", VALUE_TAG, Integer.toString(this.value));
             icon = new ItemStack(Material.PAPER);
             clickHandler = (panel, user, clickType, slot) -> true;
             glow = false;
@@ -246,27 +257,27 @@ public class NumberGUI
         {
         case SET:
         {
-            itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.admin.number","[number]", Integer.toString(number)));
+            itemBuilder.name(this.user.getTranslation(NUMBER_REF,TextVariables.NUMBER, Integer.toString(number)));
             itemBuilder.icon(Material.WHITE_STAINED_GLASS_PANE);
             itemBuilder.clickHandler((panel, user1, clickType, i) -> {
                 this.value = number;
 
                 if (this.value > this.maxValue)
                 {
-                    this.user.sendMessage("biomes.errors.not-valid-integer",
-                            "[value]", Integer.toString(this.value),
-                            "[min]", Integer.toString(this.minValue),
-                            "[max]", Integer.toString(this.maxValue));
+                    this.user.sendMessage(INVALID_INT,
+                            VALUE_TAG, Integer.toString(this.value),
+                            MIN, Integer.toString(this.minValue),
+                            MAX, Integer.toString(this.maxValue));
 
                     this.value = this.maxValue;
                 }
 
                 if (this.value < this.minValue)
                 {
-                    this.user.sendMessage("biomes.errors.not-valid-integer",
-                            "[value]", Integer.toString(this.value),
-                            "[min]", Integer.toString(this.minValue),
-                            "[max]", Integer.toString(this.maxValue));
+                    this.user.sendMessage(INVALID_INT,
+                            VALUE_TAG, Integer.toString(this.value),
+                            MIN, Integer.toString(this.minValue),
+                            MAX, Integer.toString(this.maxValue));
 
                     this.value = this.minValue;
                 }
@@ -279,17 +290,17 @@ public class NumberGUI
         }
         case INCREASE:
         {
-            itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.admin.number","[number]", Integer.toString(number)));
+            itemBuilder.name(this.user.getTranslation(NUMBER_REF,TextVariables.NUMBER, Integer.toString(number)));
             itemBuilder.icon(Material.GREEN_STAINED_GLASS_PANE);
             itemBuilder.clickHandler((panel, user1, clickType, i) -> {
                 this.value += number;
 
                 if (this.value > this.maxValue)
                 {
-                    this.user.sendMessage("biomes.errors.not-valid-integer",
-                            "[value]", Integer.toString(this.value),
-                            "[min]", Integer.toString(this.minValue),
-                            "[max]", Integer.toString(this.maxValue));
+                    this.user.sendMessage(INVALID_INT,
+                            VALUE_TAG, Integer.toString(this.value),
+                            MIN, Integer.toString(this.minValue),
+                            MAX, Integer.toString(this.maxValue));
 
                     this.value = this.maxValue;
                 }
@@ -302,17 +313,17 @@ public class NumberGUI
         }
         case REDUCE:
         {
-            itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.admin.number","[number]", Integer.toString(number)));
+            itemBuilder.name(this.user.getTranslation(NUMBER_REF,TextVariables.NUMBER, Integer.toString(number)));
             itemBuilder.icon(Material.RED_STAINED_GLASS_PANE);
             itemBuilder.clickHandler((panel, user1, clickType, i) -> {
                 this.value -= number;
 
                 if (this.value < this.minValue)
                 {
-                    this.user.sendMessage("biomes.errors.not-valid-integer",
-                            "[value]", Integer.toString(this.value),
-                            "[min]", Integer.toString(this.minValue),
-                            "[max]", Integer.toString(this.maxValue));
+                    this.user.sendMessage(INVALID_INT,
+                            VALUE_TAG, Integer.toString(this.value),
+                            MIN, Integer.toString(this.minValue),
+                            MAX, Integer.toString(this.maxValue));
 
                     this.value = this.minValue;
                 }
@@ -325,17 +336,17 @@ public class NumberGUI
         }
         case MULTIPLY:
         {
-            itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.admin.number","[number]", Integer.toString(number)));
+            itemBuilder.name(this.user.getTranslation(NUMBER_REF,TextVariables.NUMBER, Integer.toString(number)));
             itemBuilder.icon(Material.BLUE_STAINED_GLASS_PANE);
             itemBuilder.clickHandler((panel, user1, clickType, i) -> {
                 this.value *= number;
 
                 if (this.value > this.maxValue)
                 {
-                    this.user.sendMessage("biomes.errors.not-valid-integer",
-                            "[value]", Integer.toString(this.value),
-                            "[min]", Integer.toString(this.minValue),
-                            "[max]", Integer.toString(this.maxValue));
+                    this.user.sendMessage(INVALID_INT,
+                            VALUE_TAG, Integer.toString(this.value),
+                            MIN, Integer.toString(this.minValue),
+                            MAX, Integer.toString(this.maxValue));
 
                     this.value = this.maxValue;
                 }
@@ -424,7 +435,7 @@ public class NumberGUI
                             protected String getInputNotNumericText(ConversationContext context,
                                     String invalidInput)
                             {
-                                return NumberGUI.this.user.getTranslation("biomes.errors.not-a-integer", "[value]", invalidInput);
+                                return NumberGUI.this.user.getTranslation("biomes.errors.not-a-integer", VALUE_TAG, invalidInput);
                             }
 
 
@@ -440,10 +451,10 @@ public class NumberGUI
                             protected String getFailedValidationText(ConversationContext context,
                                     Number invalidInput)
                             {
-                                return NumberGUI.this.user.getTranslation("biomes.errors.not-valid-integer",
-                                        "[value]", invalidInput.toString(),
-                                        "[min]", Integer.toString(NumberGUI.this.minValue),
-                                        "[max]", Integer.toString(NumberGUI.this.maxValue));
+                                return NumberGUI.this.user.getTranslation(INVALID_INT,
+                                        VALUE_TAG, invalidInput.toString(),
+                                        MIN, Integer.toString(NumberGUI.this.minValue),
+                                        MAX, Integer.toString(NumberGUI.this.maxValue));
                             }
 
 

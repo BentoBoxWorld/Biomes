@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
+import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddonManager;
@@ -30,7 +31,10 @@ import world.bentobox.biomes.utils.Utils;
  */
 public class EditBiomeCommand extends ExpandedCompositeCommand
 {
-	public EditBiomeCommand(Addon addon, CompositeCommand parent)
+	private static final String INCORRECT_RANGE_ERROR = "biomes.errors.incorrect-range";
+
+
+    public EditBiomeCommand(Addon addon, CompositeCommand parent)
 	{
 		super(addon, parent, "edit");
 	}
@@ -168,13 +172,12 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 					}
 					catch (Exception e)
 					{
-						user.sendMessage("biomes.errors.incorrect-range",
-							"[number]",
+						user.sendMessage(INCORRECT_RANGE_ERROR,
+							TextVariables.NUMBER,
 							args.get(2));
 						return false;
 					}
 				case ORDER:
-				{
 					try
 					{
 						biomesObject.setOrder(Integer.parseUnsignedInt(args.get(2)));
@@ -182,12 +185,11 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 					}
 					catch (Exception e)
 					{
-						user.sendMessage("biomes.errors.incorrect-range",
-							"[number]",
+						user.sendMessage(INCORRECT_RANGE_ERROR,
+							TextVariables.NUMBER,
 							args.get(2));
 						return false;
 					}
-				}
 				case REQUIRED_LEVEL:
 					try
 					{
@@ -196,8 +198,8 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 					}
 					catch (Exception e)
 					{
-						user.sendMessage("biomes.errors.incorrect-range",
-							"[number]",
+						user.sendMessage(INCORRECT_RANGE_ERROR,
+							TextVariables.NUMBER,
 							args.get(2));
 						return false;
 					}
@@ -359,7 +361,7 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 		/**
 		 * This map allows to access all enum values via their string.
 		 */
-		private final static Map<String, CommandParameters> BY_NAME = new HashMap<>();
+		private static final Map<String, CommandParameters> BY_NAME = new HashMap<>();
 
 		/**
 		 * This static method populated BY_NAME map.

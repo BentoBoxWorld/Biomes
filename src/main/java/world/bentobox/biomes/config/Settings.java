@@ -266,7 +266,7 @@ public class Settings implements ConfigObject
 		/**
 		 * This map allows to access all enum values via their string.
 		 */
-		private final static Map<String, UpdateMode> BY_NAME = new HashMap<>();
+		private static final Map<String, UpdateMode> BY_NAME = new HashMap<>();
 
 		/**
 		 * This static method populated BY_NAME map.
@@ -305,7 +305,7 @@ public class Settings implements ConfigObject
 		/**
 		 * This map allows to access all enum values via their string.
 		 */
-		private final static Map<String, VisibilityMode> BY_NAME = new HashMap<>();
+		private static final Map<String, VisibilityMode> BY_NAME = new HashMap<>();
 
 		/**
 		 * This static method populated BY_NAME map.
@@ -369,7 +369,7 @@ public class Settings implements ConfigObject
 		/**
 		 * This map allows to access all enum values via their string.
 		 */
-		private final static Map<String, Lore> BY_NAME = new HashMap<>();
+		private static final Map<String, Lore> BY_NAME = new HashMap<>();
 
 
 		/**

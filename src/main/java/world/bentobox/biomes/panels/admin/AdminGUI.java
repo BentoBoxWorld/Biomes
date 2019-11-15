@@ -97,7 +97,6 @@ public class AdminGUI extends CommonGUI
 		switch (button)
 		{
 			case CHANGE_USER_BIOME:
-			{
 				permissionSuffix = SET;
 
 				name = this.user.getTranslation("biomes.gui.buttons.admin.change");
@@ -110,9 +109,7 @@ public class AdminGUI extends CommonGUI
 				glow = false;
 
 				break;
-			}
 			case ADD_BIOME:
-			{
 				permissionSuffix = ADD;
 
 				name = this.user.getTranslation("biomes.gui.buttons.admin.add");
@@ -134,9 +131,7 @@ public class AdminGUI extends CommonGUI
 				glow = false;
 
 				break;
-			}
 			case EDIT_BIOME:
-			{
 				permissionSuffix = EDIT;
 
 				name = this.user.getTranslation("biomes.gui.buttons.admin.edit");
@@ -149,9 +144,7 @@ public class AdminGUI extends CommonGUI
 				glow = false;
 
 				break;
-			}
 			case DELETE_BIOME:
-			{
 				permissionSuffix = DELETE;
 
 				name = this.user.getTranslation("biomes.gui.buttons.admin.remove");
@@ -164,9 +157,7 @@ public class AdminGUI extends CommonGUI
 				glow = false;
 
 				break;
-			}
 			case IMPORT_BIOMES:
-			{
 				permissionSuffix = IMPORT;
 
 				name = this.user.getTranslation("biomes.gui.buttons.admin.import");
@@ -189,9 +180,8 @@ public class AdminGUI extends CommonGUI
 				glow = this.overwriteMode;
 
 				break;
-			}
+
 			case EDIT_SETTINGS:
-			{
 				permissionSuffix = SETTINGS;
 
 				name = this.user.getTranslation("biomes.gui.buttons.admin.settings");
@@ -204,7 +194,7 @@ public class AdminGUI extends CommonGUI
 				glow = false;
 
 				break;
-			}
+
 			default:
 				// This should never happen.
 				return null;

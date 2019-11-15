@@ -4,7 +4,9 @@ package world.bentobox.biomes.panels;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
@@ -21,6 +23,10 @@ import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
  */
 public class GuiUtils
 {
+    private GuiUtils() {
+        // Private constructor to hide the implicit public one
+    }
+
     // ---------------------------------------------------------------------
     // Section: Border around GUIs
     // ---------------------------------------------------------------------
@@ -213,73 +219,8 @@ public class GuiUtils
             // Materials Potted elements cannot be in inventory.
             itemStack = new ItemStack(Material.getMaterial(material.name().replace("POTTED_", "")));
         }
-        else if (material.equals(Material.MELON_STEM) || material.equals(Material.ATTACHED_MELON_STEM))
-        {
-            itemStack = new ItemStack(Material.MELON_SEEDS);
-        }
-        else if (material.equals(Material.PUMPKIN_STEM) || material.equals(Material.ATTACHED_PUMPKIN_STEM))
-        {
-            itemStack = new ItemStack(Material.PUMPKIN_SEEDS);
-        }
-        else if (material.equals(Material.TALL_SEAGRASS))
-        {
-            itemStack = new ItemStack(Material.SEAGRASS);
-        }
-        else if (material.equals(Material.CARROTS))
-        {
-            itemStack = new ItemStack(Material.CARROT);
-        }
-        else if (material.equals(Material.BEETROOTS))
-        {
-            itemStack = new ItemStack(Material.BEETROOT);
-        }
-        else if (material.equals(Material.POTATOES))
-        {
-            itemStack = new ItemStack(Material.POTATO);
-        }
-        else if (material.equals(Material.COCOA))
-        {
-            itemStack = new ItemStack(Material.COCOA_BEANS);
-        }
-        else if (material.equals(Material.KELP_PLANT))
-        {
-            itemStack = new ItemStack(Material.KELP);
-        }
-        else if (material.equals(Material.REDSTONE_WIRE))
-        {
-            itemStack = new ItemStack(Material.REDSTONE);
-        }
-        else if (material.equals(Material.TRIPWIRE))
-        {
-            itemStack = new ItemStack(Material.STRING);
-        }
-        else if (material.equals(Material.FROSTED_ICE))
-        {
-            itemStack = new ItemStack(Material.ICE);
-        }
-        else if (material.equals(Material.END_PORTAL) || material.equals(Material.END_GATEWAY) || material.equals(Material.NETHER_PORTAL))
-        {
-            itemStack = new ItemStack(Material.PAPER);
-        }
-        else if (material.equals(Material.BUBBLE_COLUMN) || material.equals(Material.WATER))
-        {
-            itemStack = new ItemStack(Material.WATER_BUCKET);
-        }
-        else if (material.equals(Material.LAVA))
-        {
-            itemStack = new ItemStack(Material.LAVA_BUCKET);
-        }
-        else if (material.equals(Material.FIRE))
-        {
-            itemStack = new ItemStack(Material.FIRE_CHARGE);
-        }
-        else if (material.equals(Material.AIR) || material.equals(Material.CAVE_AIR) || material.equals(Material.VOID_AIR))
-        {
-            itemStack = new ItemStack(Material.GLASS_BOTTLE);
-        }
-        else if (material.equals(Material.PISTON_HEAD) || material.equals(Material.MOVING_PISTON))
-        {
-            itemStack = new ItemStack(Material.PISTON);
+        else if (M2M.containsKey(material)) {
+            itemStack = new ItemStack(M2M.get(material));
         }
         else
         {
@@ -289,5 +230,36 @@ public class GuiUtils
         itemStack.setAmount(amount);
 
         return itemStack;
+    }
+
+    private static final Map<Material, Material> M2M;
+    static {
+        Map<Material, Material> aMap = new EnumMap<>(Material.class);
+        aMap.put(Material.MELON_STEM, Material.MELON_SEEDS);
+        aMap.put(Material.ATTACHED_MELON_STEM, Material.MELON_SEEDS);
+        aMap.put(Material.PUMPKIN_STEM, Material.PUMPKIN_SEEDS);
+        aMap.put(Material.ATTACHED_PUMPKIN_STEM, Material.PUMPKIN_SEEDS);
+        aMap.put(Material.TALL_SEAGRASS, Material.SEAGRASS);
+        aMap.put(Material.CARROTS, Material.CARROT);
+        aMap.put(Material.BEETROOTS, Material.BEETROOT);
+        aMap.put(Material.POTATOES, Material.POTATO);
+        aMap.put(Material.COCOA, Material.COCOA_BEANS);
+        aMap.put(Material.KELP_PLANT, Material.KELP);
+        aMap.put(Material.REDSTONE_WIRE, Material.REDSTONE);
+        aMap.put(Material.TRIPWIRE, Material.STRING);
+        aMap.put(Material.FROSTED_ICE, Material.ICE);
+        aMap.put(Material.END_PORTAL, Material.PAPER);
+        aMap.put(Material.END_GATEWAY, Material.PAPER);
+        aMap.put(Material.NETHER_PORTAL, Material.PAPER);
+        aMap.put(Material.BUBBLE_COLUMN,Material.WATER_BUCKET);
+        aMap.put(Material.WATER, Material.WATER_BUCKET);
+        aMap.put(Material.LAVA, Material.LAVA_BUCKET);
+        aMap.put(Material.FIRE, Material.FIRE_CHARGE);
+        aMap.put(Material.AIR, Material.GLASS_BOTTLE);
+        aMap.put(Material.CAVE_AIR, Material.GLASS_BOTTLE);
+        aMap.put(Material.VOID_AIR, Material.GLASS_BOTTLE);
+        aMap.put(Material.PISTON_HEAD, Material.PISTON);
+        aMap.put(Material.MOVING_PISTON, Material.PISTON);
+        M2M = Collections.unmodifiableMap(aMap);
     }
 }

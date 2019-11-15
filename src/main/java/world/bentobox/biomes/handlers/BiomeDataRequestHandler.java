@@ -16,7 +16,10 @@ import world.bentobox.biomes.database.objects.BiomesObject;
 public class BiomeDataRequestHandler extends AddonRequestHandler
 {
 
-	/**
+	private static final String BIOME_ID = "biomeId";
+
+
+    /**
 	 * Constructor creates a new BiomeDataRequestHandler instance.
 	 *
 	 * @param addon of type BiomesAddon
@@ -60,14 +63,14 @@ public class BiomeDataRequestHandler extends AddonRequestHandler
 
 		if (metaData == null ||
 			metaData.isEmpty() ||
-			metaData.get("biomeId") == null ||
-			!(metaData.get("biomeId") instanceof String))
+			metaData.get(BIOME_ID) == null ||
+			!(metaData.get(BIOME_ID) instanceof String))
 		{
 			return Collections.emptyMap();
 		}
 
 		BiomesObject biome =
-			this.addon.getAddonManager().getBiomeFromString((String) metaData.get("biomeId"));
+			this.addon.getAddonManager().getBiomeFromString((String) metaData.get(BIOME_ID));
 
 		Map<String, Object> biomesDataMap;
 

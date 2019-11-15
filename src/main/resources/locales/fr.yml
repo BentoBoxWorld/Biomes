@@ -1,0 +1,258 @@
+###########################################################################################
+# This is a YML file. Be careful when editing. Check your edits in a YAML checker like    #
+# the one at http://yaml-online-parser.appspot.com                                        #
+###########################################################################################
+
+meta:
+  authors:
+  - AFGAME
+
+biomes:
+  gui:
+    title:
+      admin:
+        main-gui: "&6Menu Admin"
+        edit: "&6Modification [biome]"
+        settings: "&6Paramètres de l'addon"
+        edit-list: "&6Liste de biomes modifiable"
+        remove-list: "&6Liste de biomes amovibles"
+        user-list: "&6Choisissez un joueur"
+        confirm-title: "&6Confirmer l'action précédente"
+        manage-numbers: "&6Gérer les numéros"
+        select-biome: "&6Sélectionnez le biome"
+        toggle-environment: "&6Basculer l'environnement"
+        edit-text-fields: "&6Modifier les champs de texte"
+      biomes-choose: "&6Choisissez le biome"
+      mode-choose: "&6Choisissez le mode de mise à jour"
+
+    buttons:
+      admin:
+        settings: "Paramètres"
+        import: "Importer"
+        remove: "Retirer le biome"
+        edit: "Editer le biome"
+        add: "Ajouter un biome"
+        change: "Changer d'utilisateur du bome"
+
+        change-biome: "Biome"
+        name: "Afficher un nom"
+        icon: "Icon"
+        order: "Ordre"
+        description: "Description"
+        deployment: "Déploiement"
+        required-permissions: "Autorisations requises"
+        required-level: "Niveau requis"
+        required-money: "Argent requis"
+
+        advanced-menu: "Menu avancé"
+        default-mode: "Mode de mise à jour par défaut"
+        default-size: "Taille par défaut"
+        visibility-mode: "Visibilité des biomes"
+        line-length: "Lore Line Length"
+        biomes-lore: "Biome Lore"
+        cooldown: "Refroidir"
+        reset-biomes: "Réinitialiser l'événement"
+
+        toggle-user-list: "Basculer la liste des joueurs"
+
+        save: "Sauver"
+        cancel: "Annuler"
+        input: "Contribution"
+
+        set-mode: "="
+        increase-mode: "+"
+        reduce-mode: "-"
+        multiply-mode: "*"
+        number: "[number]"
+
+        add-string: "Ajouter une chaîne"
+        clear: "Nettoyer"
+        remove-empty: "Supprimer vide"
+        input-mode: "Mode d'entrée"
+        value: "Valeur"
+
+      value: "Valeur actuelle: [number]"
+      increase: "Augmenté de [number]"
+      decrease: "Diminué de [number]"
+      set: "Définir la valeur sur [number]"
+      accept: "Accepte"
+      decline: "Déclin"
+
+      information: "Information"
+
+      return: "Retour"
+      previous: "Précédent"
+      next: "Suivant"
+    descriptions:
+      admin:
+        settings: "Permet de modifier les paramètres de l'addon."
+        import: "Permet d'importer des biomes à partir du fichier biomes.yml. | Un clic droit activera / désactivera le mode remplacement."
+        remove: "Permet de supprimer le biome de la mémoire."
+        edit: "Permet d'éditer les propriétés du biome."
+        add: "Permet d'ajouter un nouveau biome dans le monde actuel."
+        change: "Permet de changer le biome des joueurs sur leur île."
+
+        change-biome: "Permet de changer le biome de Minecraft qui sera utilisé."
+        required-permissions: "Permet de modifier les autorisations requises pour ce biome. | Sans ces autorisations, les joueurs ne pourront pas l'appliquer!"
+        required-level: "Permet de changer le niveau minimal de l'île.|&cAddon level requis."
+        required-money: "Permet de modifier le coût de la modification de ce biome.|&cAddon Economy/Plugin requis."
+        name: "Permet de changer le nom d'affichage de ce biome."
+        deployment: "Permet de désactiver / activer la capacité des joueurs à utiliser ce biome."
+        icon: "Permet de définir une icône d'affichage différente pour ce biome."
+        description: "Permet de modifier la description de ce biome."
+        order: "Permet de modifier l'ordre de ce biome."
+
+        advanced-menu: "Permet d'activer / désactiver le menu avancé avec toutes les options de modification pour les joueurs."
+        default-mode: "Permet de changer le mode de mise à jour du biome par défaut.|Sera utilisé si Advanced Menu est désactivé et comme valeurs par défaut dans ce menu."
+        default-size: "Permet de changer la taille de mise à jour par défaut du biome.|Sera utilisé si Advanced Menu est désactivé et comme valeurs par défaut dans ce menu."
+        visibility-mode: "Permet de modifier quels biomes les joueurs peuvent voir."
+        line-length: "Permet de modifier automatiquement la longueur des caractères de la ligne de description."
+        biomes-lore: "Permet de modifier quels éléments du message seront affichés.|Vérifiez la configuration pour plus d'informations."
+        cooldown: "Permet de changer le temps entre chaque changement de biome pour un joueur."
+        reset-biomes: "Permet d'activer / désactiver la réinitialisation des biomes si le joueur avec l'autorisation du biome quitte l'île."
+
+        toggle-user-list: "Permet de changer les joueurs à afficher dans le menu actuel."
+
+        save: "Permet de sauvegarder la valeur actuelle et de revenir au menu précédent."
+        cancel: "Permet de revenir au menu précédent sans modifications."
+        input: "Permet d'écrire un numéro dans AnvilGUI"
+
+        set-mode: "Permet de passer en mode de réglage qui définira la valeur actuelle sur le nombre choisi."
+        increase-mode: "Permet de passer en mode augmentation, qui augmentera la valeur actuelle par le nombre choisi."
+        reduce-mode: "Permet de passer en mode réduction, qui réduira la valeur actuelle du nombre choisi."
+        multiply-mode: "Permet de passer en mode multiplicatif, qui multipliera la valeur actuelle par le nombre choisi."
+
+        click-to-edit: "&4Cliquez ici pour éditer l'entrée."
+        edit-text-line: "&6 Modifier le message texte!"
+        add-text-line: "&6 Ajouter un nouveau message texte!"
+        input-mode: "Basculer entre les modes de conversation et d'enclume."
+
+      update-mode:
+        island: "Île"
+        chunk: "Chunk"
+        square: "Gamme"
+        undefined: "Indéfinie"
+      visibility-mode:
+        info: "Permet de modifier quels biomes vous pouvez voir."
+        all: "&r- lister tous les biomes"
+        deployed: "Déployée - liste les biomes déployés"
+        accessible: "Accessible - liste des biomes accessibles"
+        toggleable: "Bascule - bouton à bascule dans le menu Biomes"
+      view-mode:
+        online: "En ligne"
+        in-world: "Dans ce monde"
+        with-island: "Avec l'île"
+
+      current-value: "Valeur actuelle: [value]"
+      enabled: "activée"
+      disabled: "désactivée"
+      permission: " - [permission]"
+
+      information: "Si vous acceptez ces modifications, nous essayerons de modifier le biome de votre île en [biome] en mode de mise à jour [mode] avec portée [range]."
+
+    biomes-description:
+      biome-name: "Biome Minecraft: [value]"
+      required-money: "Coût: [value]"
+      required-island-level: "Niveau de l'île minimum: [value]"
+      required-permissions: "Permissions:"
+
+  commands:
+    admin:
+      add:
+        description: "La commande Admin ADD permet d’ajouter un nouveau biome. Il crée un objet biome vide avec les paramètres par défaut."
+        parameters: "[id]"
+      edit:
+        description: "La commande Admin EDIT permet de changer la propriété <id> donnée. Permet de modifier uniquement les propriétés existantes."
+        parameters: "<id> <property> <new_value>"
+      help:
+        description: "Commande d'admin principale du biome. Ouvre l'interface graphique pour les joueurs."
+        parameters: ""
+      import:
+        description: "La commande Admin IMPORT permet d'importer des biomes à partir de biomes.yml file. Ajouter «écraser» à la fin écrasera les biomes existants."
+        parameters: "[overwrite]"
+      set:
+        description: "La commande Admin SET permet de changer le biome de l’île de <player>. <type> et <size> n'est pas requis."
+        parameters: "<player> <biome> [<type>] [<size>]"
+      settings:
+        description: "La commande Admin SETTINGS permet d’éditer les paramètres par défaut de l’addon via une simple commande. Il permet de modifier uniquement les paramètres existants."
+        parameters: "<property> <new_value>"
+    user:
+      help:
+        description: "Commande du complément du biome principale qui ouvre l'interface graphique de changement de biome."
+        parameters: ""
+      info:
+        description: "La commande INFO affiche des informations sur un biome donné."
+        parameters: "<biome>"
+      set:
+        description: "La commande SET permet de changer le biome <biome> sur l’île. <type> et <size> n'est pas requis."
+        parameters: "<biome> [<type>] [<size>]"
+
+  errors:
+    unique-id: "&cL''identifiant unique &d[id]&c n''est pas valide!"
+    too-many-arguments: "&cTrop de paramètres. S'il vous plaît vérifier l'aide!"
+    missing-arguments: "&cParamètres de commande manquants. S'il vous plaît vérifier l'aide!"
+    unknown-argument: "&cParamètres de commande inconnus. S'il vous plaît vérifier l'aide!"
+
+    incorrect-range: "&cLe numéro &d'[number]'&c n'est pas valide. Les entiers positifs sont valides."
+    incorrect-mode: "&cLa valeur &d'[mode]'&c n'est pas valide. Les valeurs valides sont 'ISLAND', 'CHUNK' ou 'SQUARE'."
+    incorrect-icon: "&cLes icônes &d'[icon]'&c ne peuvent pas être analysées. Essayez-en d'autres."
+    incorrect-biome: "&cGiven biome &d'[biome]'&c is not find in Minecraft. Use correct biome name."
+    incorrect-parameter: "&cÉtant donné la propriété &d'[property]'&c n'est pas défini pour le biome."
+    incorrect-boolean: "&cVu la valeur &d'[boolean]'&c n'est pas un boolean. Les valeurs valides sont 'true' ou 'false'."
+    incorrect-visibility: "La valeur &d'[mode]'&c n'est pas valide."
+    incorrect-object: "&cImpossible de trouver un biome avec un ID donné &d'[biome]'."
+
+    no-biomes: '&cLes biomes ne sont pas mis en œuvre dans le monde actuel!'
+    no-biomes-admin: '&cLes biomes ne sont pas mis en œuvre dans le monde actuel! Vous devriez utiliser &5/[commande]&c pour les ajouter!'
+    missing-user: "&cL'utilisateur n'est pas défini."
+    missing-biome: "&cLe biome n'est pas défini."
+    wrong-icon: "&cLes données &6[value]&c ne peuvent pas être analysées avec ItemStack."
+    no-biomes-for-you: "&cMalheureusement, impossible de trouver un biome que vous pourriez utiliser."
+
+    not-valid-integer: '&cGiven integer "[value]" is not valid!|Value should be between [min] and [max].'
+    not-a-integer: '&cLa valeur donnée "[value]" n''est pas un entier!'
+
+    not-on-island: "&cVous n'êtes pas sur l'île."
+    not-enough-money: "&cVous n'avez pas assez d'argent. Changer le biome nécessite [number] Pièces d'or"
+    not-enough-level:  "&cVotre niveau d'île est trop petit. Biome nécessite le niveau [number]"
+    admin-not-on-island: "&cVous n'êtes pas sur l'île [user]."
+    disabled: "&cActuellement ce biome est désactivé."
+    missing-permission: "&cThis biome requires &6[permission]&c permission. You do not have it."
+
+    no-file: "&cbiomes.yml n'est pas trouvé."
+    no-load: "&cUne erreur est survenue lors de l'importation de biomes: [message]!"
+    load-biome: "&cImpossible de charger le biome '[biome]' car il n'est pas défini dans Minecraft. Utilisez le nom de biome correct."
+
+    no-rank: "&cVous n'avez pas le rang pour le faire."
+
+  information:
+    header: "Biome: [name]"
+    type: "  Type: [type]"
+    description: "  Description: [description]"
+    level: "  Niveau: [level]"
+    cost: "  Coût: [cost]"
+    permission: "  Permission: [permission]"
+
+  messages:
+    saved: "&dLe Biome [biome] & été sauvegardé."
+    biome-created: "&dNouvel objet Biome créé avec uniqueID: [id]"
+    saved-config: "Les paramètres de l'addon sont mis à jour."
+    biome-removed: "Biome avec identifiant unique = '[biome]' est supprimé de la mémoire."
+
+    update-start: "&eMise à Jour du Biome commencée"
+    update-done: "&6[biome]&r&e est mis sur l'île avec succès."
+
+    skipping: "Le [biome] est bien importé."
+    overwriting: "Écrasement [biome]."
+    imported: "[biome] est importé."
+    import-count: "Importation de biomes terminée. Importation de [number] biomes."
+
+protection:
+    flags:
+        BIOMES_ISLAND_PROTECTION:
+            description: "&5&oActiver / Désactiver qui peut \n&5&ochanger le biome sur l’île"
+            name: "Biomes protection"
+        BIOMES_WORLD_PROTECTION:
+            description: "&5&oCela permet d’activer / désactiver\n&5&ol'obligation pour les joueurs d'être\n&5&o sur leur île pour\n&5&ochanger de biome."
+            name: "Limite du Biome d'île"
+            hint: "Les changements de biomes ne sont pas autorisés en dehors de l'île!"

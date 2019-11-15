@@ -39,7 +39,11 @@ import world.bentobox.biomes.panels.util.StringListGUI;
  */
 public class EditBiomeGUI extends CommonGUI
 {
-	/**
+	private static final String CURRENT_VALUE = "biomes.gui.descriptions.current-value";
+    private static final String VALUE = "[value]";
+
+
+    /**
 	 * {@inheritDoc}
 	 * @param biome Object that must be edited.
 	 */
@@ -107,17 +111,14 @@ public class EditBiomeGUI extends CommonGUI
 	{
 		PanelItemBuilder itemBuilder = new PanelItemBuilder();
 		final int lineLength = this.addon.getSettings().getLoreLineLength();
-
+		List<String> description = new ArrayList<>(2);
 		switch (button)
 		{
 			case BIOME:
-			{
 				itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.admin.change-biome"));
-
-				List<String> description = new ArrayList<>(2);
 				description.add(this.user.getTranslation("biomes.gui.descriptions.admin.change-biome"));
-				description.add(this.user.getTranslation("biomes.gui.descriptions.current-value",
-					"[value]", this.biome.getBiome().name()));
+				description.add(this.user.getTranslation(CURRENT_VALUE,
+					VALUE, this.biome.getBiome().name()));
 				itemBuilder.description(GuiUtils.stringSplit(description, this.addon.getSettings().getLoreLineLength()));
 
 				itemBuilder.icon(Material.WATER_BUCKET);
@@ -131,22 +132,20 @@ public class EditBiomeGUI extends CommonGUI
 					return true;
 				});
 				break;
-			}
 			case PERMISSION:
-			{
 				itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.admin.required-permissions"));
 
-				List<String> description = new ArrayList<>(this.biome.getRequiredPermissions().size() + 1);
-				description.add(this.user.getTranslation(
+				List<String> desc = new ArrayList<>(this.biome.getRequiredPermissions().size() + 1);
+				desc.add(this.user.getTranslation(
 					"biomes.gui.descriptions.admin.required-permissions"));
 
 				for (String permission : this.biome.getRequiredPermissions())
 				{
-					description.add(this.user.getTranslation("biomes.gui.descriptions.permission",
+					desc.add(this.user.getTranslation("biomes.gui.descriptions.permission",
 						"[permission]", permission));
 				}
 
-				itemBuilder.description(GuiUtils.stringSplit(description, this.addon.getSettings().getLoreLineLength()));
+				itemBuilder.description(GuiUtils.stringSplit(desc, this.addon.getSettings().getLoreLineLength()));
 
 				itemBuilder.icon(Material.REDSTONE_LAMP);
 				itemBuilder.clickHandler((panel, user, clickType, slot) -> {
@@ -162,15 +161,11 @@ public class EditBiomeGUI extends CommonGUI
 					return true;
 				});
 				break;
-			}
 			case LEVEL:
-			{
 				itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.admin.required-level"));
-
-				List<String> description = new ArrayList<>(2);
 				description.add(this.user.getTranslation("biomes.gui.descriptions.admin.required-level"));
-				description.add(this.user.getTranslation("biomes.gui.descriptions.current-value",
-					"[value]", Long.toString(this.biome.getRequiredLevel())));
+				description.add(this.user.getTranslation(CURRENT_VALUE,
+					VALUE, Long.toString(this.biome.getRequiredLevel())));
 				itemBuilder.description(GuiUtils.stringSplit(description, this.addon.getSettings().getLoreLineLength()));
 
 				itemBuilder.icon(this.addon.isLevelProvided() ? Material.BEACON : Material.BARRIER);
@@ -188,15 +183,12 @@ public class EditBiomeGUI extends CommonGUI
 				});
 
 				break;
-			}
 			case COST:
 			{
 				itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.admin.required-money"));
-
-				List<String> description = new ArrayList<>(2);
 				description.add(this.user.getTranslation("biomes.gui.descriptions.admin.required-money"));
-				description.add(this.user.getTranslation("biomes.gui.descriptions.current-value",
-					"[value]", Long.toString(this.biome.getRequiredCost())));
+				description.add(this.user.getTranslation(CURRENT_VALUE,
+					VALUE, Long.toString(this.biome.getRequiredCost())));
 				itemBuilder.description(GuiUtils.stringSplit(description, this.addon.getSettings().getLoreLineLength()));
 
 				itemBuilder.icon(this.addon.isEconomyProvided() ? Material.GOLD_INGOT : Material.BARRIER);
@@ -217,11 +209,9 @@ public class EditBiomeGUI extends CommonGUI
 			case NAME:
 			{
 				itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.admin.name"));
-
-				List<String> description = new ArrayList<>(2);
 				description.add(this.user.getTranslation("biomes.gui.descriptions.admin.name"));
-				description.add(this.user.getTranslation("biomes.gui.descriptions.current-value",
-					"[value]", this.biome.getFriendlyName()));
+				description.add(this.user.getTranslation(CURRENT_VALUE,
+					VALUE, this.biome.getFriendlyName()));
 				itemBuilder.description(GuiUtils.stringSplit(description, this.addon.getSettings().getLoreLineLength()));
 
 				itemBuilder.icon(Material.BOOK);
@@ -239,13 +229,10 @@ public class EditBiomeGUI extends CommonGUI
 				break;
 			}
 			case DEPLOYED:
-			{
 				itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.admin.deployment"));
-
-				List<String> description = new ArrayList<>(2);
 				description.add(this.user.getTranslation("biomes.gui.descriptions.admin.deployment"));
-				description.add(this.user.getTranslation("biomes.gui.descriptions.current-value",
-					"[value]",
+				description.add(this.user.getTranslation(CURRENT_VALUE,
+					VALUE,
 					this.biome.isDeployed() ?
 						this.user.getTranslation("biomes.gui.descriptions.enabled") :
 						this.user.getTranslation("biomes.gui.descriptions.disabled")));
@@ -258,9 +245,7 @@ public class EditBiomeGUI extends CommonGUI
 				});
 				itemBuilder.glow(this.biome.isDeployed());
 				break;
-			}
 			case ICON:
-			{
 				itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.admin.icon"));
 
 				itemBuilder.description(GuiUtils.stringSplit(
@@ -283,14 +268,12 @@ public class EditBiomeGUI extends CommonGUI
 					return true;
 				});
 				break;
-			}
 			case DESCRIPTION:
-			{
 				itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.admin.description"));
 
 				List<String> values = new ArrayList<>();
 				values.add(this.user.getTranslation("biomes.gui.descriptions.admin.description"));
-				values.add(this.user.getTranslation("biomes.gui.descriptions.current-value", "[value]", ""));
+				values.add(this.user.getTranslation(CURRENT_VALUE, VALUE, ""));
 				values.addAll(this.generateBiomesDescription(this.biome));
 
 				itemBuilder.description(GuiUtils.stringSplit(values, this.addon.getSettings().getLoreLineLength()));
@@ -308,15 +291,11 @@ public class EditBiomeGUI extends CommonGUI
 					return true;
 				});
 				break;
-			}
 			case ORDER:
-			{
 				itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.admin.order"));
-
-				List<String> description = new ArrayList<>(2);
 				description.add(this.user.getTranslation("biomes.gui.descriptions.admin.order"));
-				description.add(this.user.getTranslation("biomes.gui.descriptions.current-value",
-					"[value]", Integer.toString(this.biome.getOrder())));
+				description.add(this.user.getTranslation(CURRENT_VALUE,
+					VALUE, Integer.toString(this.biome.getOrder())));
 				itemBuilder.description(description);
 
 				itemBuilder.icon(Material.DROPPER);
@@ -333,7 +312,6 @@ public class EditBiomeGUI extends CommonGUI
 					return true;
 				});
 				break;
-			}
 		}
 
 		return itemBuilder.build();

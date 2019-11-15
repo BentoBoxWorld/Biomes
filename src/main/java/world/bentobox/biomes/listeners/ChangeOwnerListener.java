@@ -49,9 +49,9 @@ public class ChangeOwnerListener implements Listener
 
         if (gameModeAddon.isPresent())
         {
-            GameModeAddon addon = gameModeAddon.get();
-            hasPermissions = newUser.hasPermission(addon.getPermissionPrefix() + "biomes.set");
-            defaultBiome = addon.getConfig().getString("world.default-biome", "PLAINS");
+            GameModeAddon addon2 = gameModeAddon.get();
+            hasPermissions = newUser.hasPermission(addon2.getPermissionPrefix() + "biomes.set");
+            defaultBiome = addon2.getConfig().getString("world.default-biome", "PLAINS");
         }
         else
         {
