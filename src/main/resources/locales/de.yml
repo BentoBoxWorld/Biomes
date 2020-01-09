@@ -41,12 +41,38 @@ biomes:
         remove-empty: Leere entfernen
         add-element: Element hinzufügen
         remove-element: Element entfernen
+        add: Füge Biome hinzu
+        name: Anzeigename
+        icon: Symbol
+        order: Auftrag
+        description: Beschreibung
+        required-permissions: Erforderliche Berechtigungen
+        required-level: Benötigtes Level
+        required-money: Benötigtes Geld
+        advanced-menu: Erweitertes Menü
+        default-mode: Standardaktualisierungsmodus
+        visibility-mode: Sichtbarkeit der Biomes
+        use-protection-range: Schutzbereich verwenden
+        toggle-user-list: Spielerliste umschalten
+        accept: Akzeptieren
+        set-mode: "="
+        increase-mode: "+"
+        reduce-mode: "-"
+        multiply-mode: "*"
+        number: "[Nummer]"
+        add-string: Zeichenfolge hinzufügen
+        input-mode: Eingabemodus
+        value: Wert
       value: 'Aktueller Wert: [number]'
       increase: Erhöhen um [number]
       decrease: Abnahme um [number]
       return: Zurück
       previous: Vorheriges
       next: Nächstes
+      set: Setze den Wert auf [number]
+      accept: Akzeptieren
+      decline: Ablehnen
+      information: Information
     descriptions:
       admin:
         edit-text-line: "&6Textnachricht bearbeiten"
@@ -108,6 +134,8 @@ biomes:
       update-mode:
         square: Bereich
         undefined: undefiniert
+        island: Insel
+        chunk: Chunk
       visibility-mode:
         all: Alle &r- Alle Biome auflisten
         deployed: Benutzbar- Liste der bereitgestellten Biome
@@ -118,6 +146,12 @@ biomes:
       permission: "- [Berechtigung]"
       information: Wenn diese Änderungen angenommen werden, wird versucht, Das Biom
         der Insel auf [biom] im Update-Modus [mode] mit Reichweite [range] zu ändern.
+      view-mode:
+        online: Online
+        in-world: In dieser Welt
+        with-island: Mit Insel
+      enabled: aktiviert
+      disabled: deaktiviert
     questions:
       prefix: "&2[SERVER]:"
       admin:
@@ -128,6 +162,7 @@ biomes:
       biome-name: 'Minecraft-Biom: [value]'
       required-money: 'Kosten: [value]'
       required-island-level: 'Min. Insel-Level: [value]'
+      required-permissions: 'Berechtigungen:'
   commands:
     admin:
       add:
@@ -141,6 +176,7 @@ biomes:
       edit:
         description: Gegebene Eigenschaft <id> ändern. Es können nur vorhandene Eigenschaften
           geändert werden.
+        parameters: "<id> <property> <new_value>"
       help:
         description: 'Admin-GUI für Spieler öffnen. '
       set:
@@ -150,6 +186,7 @@ biomes:
       settings:
         description: Standardeinstellungen per einfachen Befehl verändern. Nur vorhandene
           Einstellungen können geändert werden.
+        parameters: "<property> <new_value>"
       migrate:
         description: Biomdaten der aktuellen Spielwelt in Speicher-Format migrieren.
     user:
@@ -157,6 +194,7 @@ biomes:
         description: GUI zum Ändern des Bioms öffnen.
       info:
         description: Informationen zum angegebenen Biom anzeigen.
+        parameters: "<biome>"
       set:
         description: Biom für die Insel auf <biome> setzen. [type] und [size] sind
           optional.
@@ -207,6 +245,8 @@ biomes:
     type: 'Typ: [type]'
     level: 'Level: [level]'
     cost: 'Kosten: [cost]'
+    description: 'Beschreibung: [description]'
+    permission: 'Erlaubnis: [Erlaubnis]'
   messages:
     admin:
       migrate-start: "&2Migrieren von Biom-Daten starten."
@@ -221,6 +261,7 @@ biomes:
     update-start: "&eBiom-Änderung gestartet"
     imported: "[biome] importiert."
     import-count: Biom-Import abgeschlossen. Es wurden [number] Biome importiert.
+    saved: "&amp; dBiome [Biome] wird gespeichert."
 protection:
   flags:
     BIOMES_WORLD_PROTECTION:
