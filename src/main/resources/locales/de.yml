@@ -1,0 +1,235 @@
+---
+biomes:
+  gui:
+    title:
+      admin:
+        main-gui: "&6Admin-Menü"
+        edit: "&6[biome] bearbeiten"
+        settings: "&6Addon-Einstellungen"
+        edit-list: "&6Biom zum Bearbeiten auswählen"
+        remove-list: "&6Biom zum Löschen auswählen"
+        user-list: "&6Wählen Sie einen Spieler"
+        confirm-title: "&6Vorherige Aktion bestätigen"
+        manage-numbers: "&6Wertoptionen verwalten"
+        select-biome: "&6Biom auswählen"
+        toggle-environment: "&6Dimension umschalten"
+        edit-text-fields: "&6Textfelder bearbeiten"
+        select-block: "&6Material auswählen"
+        lore-edit: "&6Beschreibung"
+        lore-add: "&6Element zur Beschreibung hinzufügen"
+        lore-remove: "&6Element der Beschreibung entfernen"
+      biomes-choose: "&6Biom auswählen"
+      mode-choose: "&6Aktualisierungsmodus auswählen"
+    buttons:
+      admin:
+        settings: Einstellungen
+        import: Importieren
+        remove: Biom entfernen
+        edit: Biom bearbeiten
+        change: Spieler-Biom ändern
+        change-biome: Biom
+        deployment: Benutzbarkeit
+        default-size: Standard-Größe
+        line-length: Zeilenlänge der Beschreibung
+        biomes-lore: Biom-Beschreibung
+        cooldown: Sperrzeit
+        reset-biomes: Biom zurücksetzen
+        save: Speichern
+        cancel: Abbrechen
+        input: Eingabe
+        clear: Löschen
+        remove-empty: Leere entfernen
+        add-element: Element hinzufügen
+        remove-element: Element entfernen
+      value: 'Aktueller Wert: [number]'
+      increase: Erhöhen um [number]
+      decrease: Abnahme um [number]
+      return: Zurück
+      previous: Vorheriges
+      next: Nächstes
+    descriptions:
+      admin:
+        edit-text-line: "&6Textnachricht bearbeiten"
+        add-text-line: "&6Neue Nachricht hinzufügen"
+        settings: Einstellungen bearbeiten
+        import: Biome aus biomes.yml importieren.|Rechtsklick, um Überschreib-Modus
+          umzuschalten.
+        remove: Biom aus dem Speicher entfernen
+        edit: Biom-Eigenschaften bearbeiten
+        add: Neues Biom zur aktuellen Welt hinzufügen
+        change: Biom einer Spielerinsel ändern
+        change-biome: Ändern, welches Minecraft-Biom verwendet wird.
+        required-permissions: Benötigte Berechtigungen für dieses Biom ändern.|Nur
+          Spieler mit diesen Berechtigungen werden das Biom verwenden können!
+        required-level: Benötigtes Mindest-Level ändern.|&cErfordert das Addon "Level".
+        required-money: BiomKosten ändern.|&cBenötigt ein Wirtschafts-Plugin/-Addon.
+        name: Anzeigename für dieses Biom ändern.
+        deployment: Verfürgbarkeit des Bioms für Spieler ändern.
+        icon: Menü-Symbol für das Biom ändern.
+        description: Beschreibung des Bioms ändern.
+        order: Sortierreihenfolge des Bioms ändern
+        advanced-menu: Erweitertes Menü mit Änderungs-Optionen für Spieler aktivieren/deaktivieren.
+        default-mode: Voreingestellten Modus für Biom-Änderungen festlegen.|Wird verwendet,
+          wenn das erweiterte Menü deaktiviert ist, sowie als Voreinstellung für dieses.
+        default-size: Voreingestellte Größe für Biom-Änderungen festlegen.|Wird verwendet,
+          wenn das erweiterte Menü deaktiviert ist, sowie als Voreinstellung für dieses.
+        visibility-mode: Angezeigte Biome festlegen
+        line-length: Maximale Zeilenlänge für Biom-Beschreibungen festlegen
+        biomes-lore: Festlegen, welche Elemente in Beschreibungen angezeigt werden.|Für
+          weitere Information die Config lesen.
+        cooldown: Sperrzeit in Sekunden für die Biom-Änderung festlegen.
+        reset-biomes: Aktiviert/deaktiviert das Zurücksetzen des Bioms, wenn alle
+          Spieler mit der Erlaubnis zum Ändern die Insel verlassen.
+        use-protection-range: Festlegen, ob Biom-Änderungen auf den Schutzradius der
+          Insel beschränkt sind. Fall deaktiviert wird das Biom im gesamten Bereich
+          der Insel geändert.
+        toggle-user-list: Andern, welche Spieler hier angezeigt werden sollen.
+        save: Aktuellen Wert speichern und zum vorherigen Menü zurückkehren.
+        cancel: Ohne Änderungen zum vorherigen Menü zurückkehren.
+        input: Bitte Zahl im Chat eingeben.
+        set-mode: 'Modus umschalten, wie der aktuelle Wert mit der geklickten Zahl
+          verrechnet wird. '
+        increase-mode: Zu Inkrement-Modus wechseln; der aktuelle Wert wird um die
+          geklickte Zahl erhöht.
+        reduce-mode: Zu Dekrement-Modus wechseln; der aktuelle Wert wird um die geklickte
+          Zahl verringert.
+        multiply-mode: Zu Multiplikations-Modus wechseln; der aktuelle Wert wird mit
+          die geklickten Zahl malgenommen.
+        click-to-edit: "&4Hier klicken um Eingabe zu bearbeiten"
+        selected: "&6Material ist ausgewählt"
+        lore:
+          description: Beschreibungstext. | Definiert in Biom-Objekt - biomeObject.description.
+          original_biome: Originaler Minecraft-Biomname. | Steht für die Übersetzung
+            von "biomes.gui.biomes-description.biome-name".
+          required_level: Min.-Insel-Level.|Steht für die Übersetzung von "biomes.gui.biomes-description.required-island-level".
+          required_money: Änderungskosten.| Steht für die Übersetzung von "biomes.gui.biomes-description.required-money".
+          required_permission: Benötigte Berechtigungen. | Steht für die Übersetzung
+            von "biomes.gui.biomes-description.equired-permissions".
+      update-mode:
+        square: Bereich
+        undefined: undefiniert
+      visibility-mode:
+        all: Alle &r- Alle Biome auflisten
+        deployed: Benutzbar- Liste der bereitgestellten Biome
+        accessible: Verfügbar - Liste verfügbarer Biome
+        toggleable: Umschaltbar - umschaltbare Schaltfläche im Biomes-Menü
+        info: Sichtbare Biome festlegen
+      current-value: 'Aktueller Wert: [value]'
+      permission: "- [Berechtigung]"
+      information: Wenn diese Änderungen angenommen werden, wird versucht, Das Biom
+        der Insel auf [biom] im Update-Modus [mode] mit Reichweite [range] zu ändern.
+    questions:
+      prefix: "&2[SERVER]:"
+      admin:
+        number: Nummer in den Chat schreiben und Eingabetaste drücken, um zu akzeptieren.
+        name: Anzeigename für dieses Biom eingeben.
+        uniqueID: Den eindeutigen Namen des Bioms eingeben und Eingabetaste drücken.
+    biomes-description:
+      biome-name: 'Minecraft-Biom: [value]'
+      required-money: 'Kosten: [value]'
+      required-island-level: 'Min. Insel-Level: [value]'
+  commands:
+    admin:
+      add:
+        parameters: "[id]"
+        description: Neues Biom hinzufügen. Es wird ein leeres Biom-Objekt mit Standard-Einstellungen
+          angelegt.
+      import:
+        parameters: "[overwrite]"
+        description: Biome aus biomes.yml Importieren. Wird "overwrite" angehängt,
+          so werden vorhandene Biome überschrieben.
+      edit:
+        description: Gegebene Eigenschaft <id> ändern. Es können nur vorhandene Eigenschaften
+          geändert werden.
+      help:
+        description: 'Admin-GUI für Spieler öffnen. '
+      set:
+        description: Biom für die Insel von <player> auf <biome> setzen. [type] und
+          [size] sind optional.
+        parameters: "<player> <biome> [type] [size]"
+      settings:
+        description: Standardeinstellungen per einfachen Befehl verändern. Nur vorhandene
+          Einstellungen können geändert werden.
+      migrate:
+        description: Biomdaten der aktuellen Spielwelt in Speicher-Format migrieren.
+    user:
+      help:
+        description: GUI zum Ändern des Bioms öffnen.
+      info:
+        description: Informationen zum angegebenen Biom anzeigen.
+      set:
+        description: Biom für die Insel auf <biome> setzen. [type] und [size] sind
+          optional.
+        parameters: "<biome> [type] [size]"
+  errors:
+    unique-id: "&cEindeutige ID &d[id] &c ist ungültig!"
+    too-many-arguments: "&cZu viele Parameter. Bitte Hilfe konsultieren!"
+    missing-arguments: "&cFehlende Parameter. Bitte Hilfe konsultieren!"
+    unknown-argument: "&cUnbekannte Parameter. Bitte Hilfe konsultieren!"
+    incorrect-mode: '&cGegebener Wert &d"[mode]" &cist ungültig. Gültige Werte sind
+      "ISLAND", "CHUNK" oder "SQUARE".'
+    incorrect-parameter: '&cGegebene Eigenschaft &d"[property]" &cist für Biom nicht
+      definiert.'
+    incorrect-boolean: '&cGegebener Wert &d "[boolean]" &cist kein Boolescher Wert.
+      Gültige Werte sind "true" oder "false".'
+    incorrect-visibility: '&cGegebener Wert &d"[mode]" &cist ungültig. '
+    incorrect-object: '&cKann kein Biom mit der ID &d "[biome]" &cfinden.'
+    missing-user: "&cKein Spieler angegeben."
+    missing-biome: "&cKein Biom angegeben."
+    wrong-icon: "&6[value] &c is kein gültiges Material."
+    not-valid-integer: '&cGegebene Ganzzahl "[value]" ist ungültig!|Der Wert sollte
+      zwischen [min] und [max] liegen.'
+    not-enough-money: "&cNicht genug Geld! Das Ändern des Bioms erfordert $[number]."
+    missing-permission: "&cDieses Biom erfordert die Berechtigung &6 [permission]&c."
+    no-file: "&cbiomes.yml nicht gefunden."
+    no-load: "&cFehler beim Importieren von Biomes: [message]!"
+    load-biome: '&cKann Biome "[biome]" nicht laden, da es in Minecraft nicht definiert
+      ist. Es muss der korrekte Name verwendet werden.'
+    incorrect-range: '&cDie Eingabe &d"[number]"&c ist ungültig. Nur positive Ganzzahlen
+      sind erlaubt.'
+    incorrect-icon: '&cDas angegebene Symbol &d"[icon]"&c kann nicht geparst werden.
+      Bitte etwas anders versuchen.'
+    incorrect-biome: '&cDas angegebene Biom &d"[biome]"&c ist in Minecraft nicht vorhanden.
+      Bitte einen gültigen Biom-Namen verwenden.'
+    no-biomes: "&cBiome sind in der aktuellen Welt noch nicht eingeführt!"
+    no-biomes-admin: "&cBiome sind in der aktuellen Welt noch nicht eingeführt! &5/[command]
+      &ceingeben um sie hinzuzufügen!"
+    no-biomes-for-you: "&cLeider wurden keine verwendbaren Biome gefunden."
+    not-a-integer: '&cder angegebene Wert "[value]" ist keine Ganzzahl.'
+    not-on-island: "&cDu befindest dich nicht auf einer Insel."
+    not-enough-level: "&cDeine Insel ist zu klein! Dieses Biom erfordert einen Level
+      von [number] oder mehr."
+    admin-not-on-island: "&cDu befindest dich nicht auf der Insel von [user]."
+    disabled: "&cDieses Biom ist aktuell deaktiviert."
+    no-rank: "&cDein rang ist nicht hoch genug um dies zu machen."
+  information:
+    header: 'Biom: [name]'
+    type: 'Typ: [type]'
+    level: 'Level: [level]'
+    cost: 'Kosten: [cost]'
+  messages:
+    admin:
+      migrate-start: "&2Migrieren von Biom-Daten starten."
+      migrate-end: "&2Biom-Daten wurden auf neues Format aktualisiert."
+      migrate-not: "&2Alle Daten sind gültig."
+    biome-created: "&dNeues Biom-Objekt erstellt mit ID [id]"
+    update-done: "&eDas Biom der Insel wurde erfolgreich auf &6[biome] &r&e gesetzt."
+    skipping: Import von [biome] übersprungen.
+    overwriting: Überschreibe [biome].
+    saved-config: Addon-Einstellungen aktualisiert.
+    biome-removed: Biom mit eindeutiger ID "[biome]" aus dem Speicher entfernt.
+    update-start: "&eBiom-Änderung gestartet"
+    imported: "[biome] importiert."
+    import-count: Biom-Import abgeschlossen. Es wurden [number] Biome importiert.
+protection:
+  flags:
+    BIOMES_WORLD_PROTECTION:
+      name: Biom-Beschränkung
+      description: "&5&oUmschalten, ob\n&5&oSpieler sich auf ihren \n&5&oInseln befinden
+        müssen\n&5&oum das Biomn zu ändern."
+      hint: Du musst dich auf deiner Insel befinden, um das Biom zu ändern.
+    BIOMES_ISLAND_PROTECTION:
+      description: |-
+        &5&oUmsdchalten, wer das Biom
+        &5&odieser Insel ändern darf.
+      name: Biom-Steuerung
