@@ -1,6 +1,5 @@
 package world.bentobox.biomes.panels.util;
 
-
 import java.util.Collections;
 import java.util.function.BiConsumer;
 
@@ -11,9 +10,7 @@ import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
-import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.panels.GuiUtils;
-
 
 public class SelectBiomeGUI
 {
@@ -70,7 +67,7 @@ public class SelectBiomeGUI
 
 			panelBuilder.item(18,
 				new PanelItemBuilder().
-					icon(BiomesAddon.SIGN_MATERIAL).
+					icon(Material.OAK_SIGN).
 					name(this.user.getTranslation("biomes.gui.buttons.previous")).
 					clickHandler((panel, user1, clickType, slot) -> {
 						this.build(correctPage - 1);
@@ -79,7 +76,7 @@ public class SelectBiomeGUI
 
 			panelBuilder.item(26,
 				new PanelItemBuilder().
-					icon(BiomesAddon.SIGN_MATERIAL).
+					icon(Material.OAK_SIGN).
 					name(this.user.getTranslation("biomes.gui.buttons.next")).
 					clickHandler((panel, user1, clickType, slot) -> {
 						this.build(correctPage + 1);

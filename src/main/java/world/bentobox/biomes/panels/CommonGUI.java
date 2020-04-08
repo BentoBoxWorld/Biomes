@@ -137,7 +137,7 @@ public abstract class CommonGUI
 			case NEXT:
 				name = this.user.getTranslation("biomes.gui.buttons.next");
 				description = Collections.emptyList();
-				icon = new ItemStack(BiomesAddon.SIGN_MATERIAL);
+				icon = new ItemStack(Material.OAK_SIGN);
 				clickHandler = (panel, u, clickType, slot) -> {
 					this.pageIndex++;
 					this.build();
@@ -148,7 +148,7 @@ public abstract class CommonGUI
 			case PREVIOUS:
 				name = this.user.getTranslation("biomes.gui.buttons.previous");
 				description = Collections.emptyList();
-				icon = new ItemStack(BiomesAddon.SIGN_MATERIAL);
+				icon = new ItemStack(Material.OAK_SIGN);
 				clickHandler = (panel, u, clickType, slot) -> {
 					this.pageIndex--;
 					this.build();

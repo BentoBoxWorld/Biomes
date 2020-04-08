@@ -364,16 +364,4 @@ public class BiomesAddon extends Addon
 		new Flag.Builder("BIOMES_ISLAND_PROTECTION", Material.GRASS_BLOCK).
 			mode(Flag.Mode.ADVANCED).
 			build();
-
-
-// ---------------------------------------------------------------------
-// Section: Constants
-// ---------------------------------------------------------------------
-
-	/**
-	 * This ir ugly way how to fix comparability issues between 1.13 and 1.14 versions.
-	 * @deprecated Should be removed as soon as 1.13 support are dropped down.
-	 */
-	@Deprecated
-	public static final Material SIGN_MATERIAL = Bukkit.getBukkitVersion().startsWith("1.13") ? Material.valueOf("SIGN") : Material.valueOf("OAK_SIGN");
 }

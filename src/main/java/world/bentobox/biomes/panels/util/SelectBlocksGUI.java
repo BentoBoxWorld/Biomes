@@ -1,6 +1,5 @@
 package world.bentobox.biomes.panels.util;
 
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -15,9 +14,7 @@ import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
-import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.panels.GuiUtils;
-
 
 /**
  * This class contains all necessary things that allows to select single block from all ingame blocks. Selected
@@ -149,7 +146,7 @@ public class SelectBlocksGUI
 
 			panelBuilder.item(18,
 				new PanelItemBuilder().
-					icon(BiomesAddon.SIGN_MATERIAL).
+					icon(Material.OAK_SIGN).
 					name(this.user.getTranslation("biomes.gui.buttons.previous")).
 					clickHandler((panel, user1, clickType, slot) -> {
 						this.build(correctPage - 1);
@@ -158,7 +155,7 @@ public class SelectBlocksGUI
 
 			panelBuilder.item(26,
 				new PanelItemBuilder().
-					icon(BiomesAddon.SIGN_MATERIAL).
+					icon(Material.OAK_SIGN).
 					name(this.user.getTranslation("biomes.gui.buttons.next")).
 					clickHandler((panel, user1, clickType, slot) -> {
 						this.build(correctPage + 1);
