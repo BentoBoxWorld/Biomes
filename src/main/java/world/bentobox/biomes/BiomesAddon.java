@@ -12,6 +12,7 @@ import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.configuration.Config;
 import world.bentobox.bentobox.api.flags.Flag;
 import world.bentobox.bentobox.hooks.VaultHook;
+import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.commands.admin.AdminCommand;
 import world.bentobox.biomes.commands.user.BiomesCommand;
 import world.bentobox.biomes.config.Settings;
@@ -160,8 +161,8 @@ public class BiomesAddon extends Addon
 					// Set flag as force-loaded.
 					updater.setForceLoaded(true);
 
-					// force-load chunk.
-					world.loadChunk(updater.getChunkX(), updater.getChunkZ());
+					// force-load chunk asynchronously
+					Util.getChunkAtAsync(world, updater.getChunkX(), updater.getChunkZ());
 				}
 			}, 5L, 5L);
 		}
