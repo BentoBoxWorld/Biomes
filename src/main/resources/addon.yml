@@ -1,6 +1,7 @@
 name: Biomes
 main: world.bentobox.biomes.BiomesAddon
 version: ${project.version}${build.number}
+api-version: 1.12
 
 repository: 'BentoBoxWorld/Biomes'
 metrics: true
