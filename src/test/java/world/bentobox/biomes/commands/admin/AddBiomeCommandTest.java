@@ -62,7 +62,7 @@ import world.bentobox.biomes.utils.Utils;
  *
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Bukkit.class, BentoBox.class, Utils.class, Util.class})
+@PrepareForTest({Bukkit.class, BentoBox.class, Utils.class, Util.class, User.class})
 public class AddBiomeCommandTest {
 
     @Mock
@@ -95,14 +95,6 @@ public class AddBiomeCommandTest {
     private BiomesAddonManager am;
     @Mock
     private Inventory top;
-
-
-    @BeforeClass
-    public static void beforeClass() throws Exception {
-        PowerMockito.mockStatic(Bukkit.class);
-        // version - has to be 1.13 because code is only built to 1.13
-        when(Bukkit.getBukkitVersion()).thenReturn("1.13");
-    }
 
     /**
      * @throws java.lang.Exception
@@ -142,6 +134,7 @@ public class AddBiomeCommandTest {
         when(world.getName()).thenReturn("BSkyBlock_world");
 
         // Player
+		PowerMockito.mockStatic(User.class);
         // Sometimes use Mockito.withSettings().verboseLogging()
         when(user.isOp()).thenReturn(false);
         uuid = UUID.randomUUID();
@@ -247,10 +240,8 @@ public class AddBiomeCommandTest {
      */
     @Test
     public void testCanExecuteConsoleNoArgs() {
-        CommandSender sender = mock(CommandSender.class);
-        User console = User.getInstance(sender);
-        assertFalse(abc.canExecute(console, "add", Collections.emptyList()));
-        verify(lm).get(eq(console), eq("commands.help.header"));
+        when(user.isPlayer()).thenReturn(false);
+        assertFalse(abc.canExecute(user, "add", Collections.emptyList()));
     }
 
     /**
