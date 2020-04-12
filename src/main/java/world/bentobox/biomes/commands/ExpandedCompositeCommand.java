@@ -179,7 +179,11 @@ public abstract class ExpandedCompositeCommand extends CompositeCommand
 	 */
 	protected String getSingleLineDescription(List<String> stringList)
 	{
-		if (stringList.size() > 1)
+		if (stringList.isEmpty())
+		{
+			return "";
+		}
+		else if (stringList.size() > 1)
 		{
 			Iterator<String> iter = stringList.iterator();
 
