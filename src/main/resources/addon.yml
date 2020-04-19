@@ -132,3 +132,23 @@ permissions:
   skygrid.admin.biomes.settings:
     description: Player can use admin biomes settings command that allows to change addon settings.
     default: op
+
+  aoneblock.admin.biomes:
+    description: Player can use admin biomes command that opens GUI.
+    default: op
+  aoneblock.admin.biomes.add:
+    description: Player can use admin biomes add command that adds new biome.
+    default: op
+  aoneblock.admin.biomes.edit:
+    description: Player can use admin biomes edit command that edits existing biomes parameters.
+    default: op
+  aoneblock.admin.biomes.set:
+    description: Player can use admin biomes set command that allows to change other player biomes.
+    default: op
+
+  aoneblock.admin.biomes.import:
+    description: Player can use admin biomes import command allows to import biomes in world.
+    default: op
+  aoneblock.admin.biomes.settings:
+    description: Player can use admin biomes settings command that allows to change addon settings.
+    default: op
