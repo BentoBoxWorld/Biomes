@@ -132,7 +132,7 @@ biomes:
           required_permission: Benötigte Berechtigungen. | Steht für die Übersetzung
             von "biomes.gui.biomes-description.equired-permissions".
       update-mode:
-        square: Bereich
+        range: Bereich
         undefined: undefiniert
         island: Insel
         chunk: Chunk

@@ -125,7 +125,7 @@ biomes:
       update-mode:
         island: "Sala"
         chunk: "Gabals"
-        square: "Distance"
+        range: "Distance"
         undefined: "Neuzstādīts"
       visibility-mode:
         info: "Ļauj pārslēgt kādus biomus spēlētājs var redzēt."

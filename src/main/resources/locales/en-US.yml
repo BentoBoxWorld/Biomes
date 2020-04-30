@@ -141,7 +141,7 @@ biomes:
       update-mode:
         island: "Island"
         chunk: "Chunk"
-        square: "Range"
+        range: "Range"
         undefined: "Undefined"
       visibility-mode:
         info: "Modify visible biomes."

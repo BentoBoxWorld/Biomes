@@ -143,7 +143,7 @@ biomes:
       update-mode:
         island: "Ostrov"
         chunk: "Chunk"
-        square: "Vzdálenost"
+        range: "Vzdálenost"
         undefined: "Neuvedeno"
       visibility-mode:
         info: "Povolí modifikovat, které biomy můžeš vidět."
