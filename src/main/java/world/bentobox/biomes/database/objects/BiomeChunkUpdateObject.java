@@ -141,6 +141,48 @@ public class BiomeChunkUpdateObject implements DataObject
 
 
     /**
+     * This method returns the minY value.
+     * @return the value of minY.
+     */
+    public int getMinY()
+    {
+        return minY;
+    }
+
+
+    /**
+     * This method sets the minY value.
+     * @param minY the minY new value.
+     *
+     */
+    public void setMinY(int minY)
+    {
+        this.minY = minY;
+    }
+
+
+    /**
+     * This method returns the maxY value.
+     * @return the value of maxY.
+     */
+    public int getMaxY()
+    {
+        return maxY;
+    }
+
+
+    /**
+     * This method sets the maxY value.
+     * @param maxY the maxY new value.
+     *
+     */
+    public void setMaxY(int maxY)
+    {
+        this.maxY = maxY;
+    }
+
+
+    /**
      * This method returns the chunkX value.
      * @return the value of chunkX.
      */
@@ -279,6 +321,18 @@ public class BiomeChunkUpdateObject implements DataObject
      */
     @Expose
     private int maxZ;
+
+    /**
+     * Minimal Y coordinate of biome update.
+     */
+    @Expose
+    private int minY;
+
+    /**
+     * Maximal Y coordinate of biome update.
+     */
+    @Expose
+    private int maxY;
 
     /**
      * Chunk X coordinate.

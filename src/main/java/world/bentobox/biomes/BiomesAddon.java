@@ -135,36 +135,45 @@ public class BiomesAddon extends Addon
 
 			this.registerRequestHandler(new ChangeBiomeRequestHandler(this));
 
-			// This task will force-load chunk every 5th tick if its biome is not updated.
-			Bukkit.getScheduler().runTaskTimer(this.getPlugin(), () -> {
-				Iterator<BiomeChunkUpdateObject> iterator = this.addonManager.getBiomeUpdaterCollection().iterator();
+			if (this.settings.getUpdateTickCounter() > 0)
+			{
+				// This task will force-load chunk every update tick if its biome is not updated.
+				Bukkit.getScheduler().runTaskTimer(this.getPlugin(),
+					() -> {
+						Iterator<BiomeChunkUpdateObject> iterator =
+							this.addonManager.getBiomeUpdaterCollection().iterator();
 
-				// if there is nothing to load, then skip.
-				if (!iterator.hasNext())
-				{
-					return;
-				}
+						// if there is nothing to load, then skip.
+						if (!iterator.hasNext())
+						{
+							return;
+						}
 
-				BiomeChunkUpdateObject updater = iterator.next();
+						BiomeChunkUpdateObject updater = iterator.next();
 
-				// if chunk is already force-loaded, then skip.
-				while (iterator.hasNext() && updater.isForceLoaded())
-				{
-					updater = iterator.next();
-				}
+						// if chunk is already force-loaded, then skip.
+						while (iterator.hasNext() && updater.isForceLoaded())
+						{
+							updater = iterator.next();
+						}
 
-				World world = updater.getWorld();
+						World world = updater.getWorld();
 
-				// if chunk is loaded then skip.
-				if (!world.isChunkLoaded(updater.getChunkX(), updater.getChunkZ()))
-				{
-					// Set flag as force-loaded.
-					updater.setForceLoaded(true);
+						// if chunk is loaded then skip.
+						if (!world.isChunkLoaded(updater.getChunkX(), updater.getChunkZ()))
+						{
+							// Set flag as force-loaded.
+							updater.setForceLoaded(true);
 
-					// force-load chunk asynchronously
-					Util.getChunkAtAsync(world, updater.getChunkX(), updater.getChunkZ());
-				}
-			}, 5L, 5L);
+							// force-load chunk asynchronously
+							Util.getChunkAtAsync(world,
+								updater.getChunkX(),
+								updater.getChunkZ());
+						}
+					},
+					this.settings.getUpdateTickCounter(),
+					this.settings.getUpdateTickCounter());
+			}
 		}
 		else
 		{

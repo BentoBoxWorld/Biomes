@@ -23,4 +23,16 @@ public class Utils
 			map(gameModeAddon -> gameModeAddon.getDescription().getName()).
 			orElse(null);
 	}
+
+
+	/**
+	 * This method normalizes given coordinate to factor 4.
+	 * In Minecraft 1.15 and 1.16, biomes are stored in 4x4x4 blocks.
+	 * @param coordinate Input coordinate.
+	 * @return Normalized coordinate.
+	 */
+	public static int normalizeBy4(int coordinate)
+	{
+		return (coordinate >> 2) << 2;
+	}
 }

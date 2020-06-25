@@ -10,6 +10,7 @@ import org.bukkit.World;
 
 import world.bentobox.bentobox.api.addons.request.AddonRequestHandler;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.config.Settings;
 import world.bentobox.biomes.database.objects.BiomesObject;
@@ -97,7 +98,8 @@ public class ChangeBiomeRequestHandler extends AddonRequestHandler
 		}
 		else
 		{
-			World world = Bukkit.getWorld((String) metaData.get(WORLD_NAME));
+			World world = Util.getWorld(Bukkit.getWorld((String) metaData.get(WORLD_NAME)));
+
 			UUID player = (UUID) metaData.get(PLAYER);
 			BiomesObject biome = this.addon.getAddonManager().
 				getBiomeFromString((String) metaData.get(BIOME_ID));

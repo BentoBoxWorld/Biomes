@@ -169,6 +169,13 @@ public class BiomesAddonManager
             return false;
         }
 
+        // Compatibility fix from older versions.
+        if (biome.getEnvironment() == null)
+        {
+            // If not specified, use over world.
+            biome.setEnvironment(World.Environment.NORMAL);
+        }
+
         // Contains in array list is not fast.. but list is not so large, so it is ok there.
 
         if (this.biomesCacheData.containsKey(biome.getUniqueId()))
@@ -282,12 +289,29 @@ public class BiomesAddonManager
                 newBiomeObject.setFriendlyName(details.getString("friendlyName", biome));
 
                 newBiomeObject.setDescription(
-                        GuiUtils.stringSplit(details.getString("description", ""),
-                                this.addon.getSettings().getLoreLineLength()));
+                    GuiUtils.stringSplit(details.getString("description", ""),
+                        this.addon.getSettings().getLoreLineLength()));
                 newBiomeObject.setIcon(ItemParser.parse(details.getString("icon") + ":1"));
 
                 newBiomeObject.setRequiredLevel(details.getInt("islandLevel", 0));
                 newBiomeObject.setRequiredCost(details.getInt("cost", 0));
+
+                String environmentValue = details.getString("environment", "normal").toUpperCase();
+
+                switch (environmentValue)
+                {
+                    case "NETHER":
+                        newBiomeObject.setEnvironment(World.Environment.NETHER);
+                        break;
+                    case "THE_END":
+                        newBiomeObject.setEnvironment(World.Environment.THE_END);
+                        break;
+                    default:
+                        newBiomeObject.setEnvironment(World.Environment.NORMAL);
+                        break;
+                }
+
+                newBiomeObject.setOrder(details.getInt("order", 0));
 
                 List<String> permissions = details.getStringList("permission");
 

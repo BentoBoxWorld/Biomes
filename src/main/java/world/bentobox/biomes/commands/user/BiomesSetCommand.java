@@ -68,7 +68,7 @@ public class BiomesSetCommand extends ExpandedCompositeCommand
 				user,
 				user,
 				biome,
-				user.getWorld(),
+				this.getWorld(),
 				updateMode,
 				size,
 				true);

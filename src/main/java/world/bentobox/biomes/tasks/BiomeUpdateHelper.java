@@ -14,6 +14,7 @@ import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.config.Settings.UpdateMode;
 import world.bentobox.biomes.database.objects.BiomesObject;
+import world.bentobox.biomes.utils.Utils;
 import world.bentobox.level.objects.LevelsData;
 
 
@@ -51,6 +52,22 @@ public class BiomeUpdateHelper
 	 */
 	public boolean canChangeBiome()
 	{
+		// Check if environment is valid.
+		if (!this.biome.getEnvironment().equals(World.Environment.NORMAL))
+		{
+			// Check if nether and the end islands are enabled.
+			if ((!this.biome.getEnvironment().equals(World.Environment.NETHER) ||
+				!this.addon.getPlugin().getIWM().isNetherGenerate(this.world) ||
+				!this.addon.getPlugin().getIWM().isNetherIslands(this.world)) &&
+				(!this.biome.getEnvironment().equals(World.Environment.THE_END) ||
+					!this.addon.getPlugin().getIWM().isEndGenerate(this.world) ||
+					!this.addon.getPlugin().getIWM().isEndIslands(this.world)))
+			{
+				this.callerUser.sendMessage("general.errors.wrong-world");
+				return false;
+			}
+		}
+
 		if (this.callerUser == this.targetUser)
 		{
 			if (!this.checkPermissions())
@@ -255,6 +272,8 @@ public class BiomeUpdateHelper
 
 			if (this.addon.getSettings().isUseProtectionRange())
 			{
+				// Allow to go outside island protection range if it is possible.
+
 				minX = island.getMinProtectedX();
 				minZ = island.getMinProtectedZ();
 
@@ -269,22 +288,58 @@ public class BiomeUpdateHelper
 				maxX = island.getMaxX() - 1;
 				maxZ = island.getMaxZ() - 1;
 			}
+
+			// biome cannot be changed outside island!
+			if (Utils.normalizeBy4(minX) < island.getMinX())
+			{
+				minX = Utils.normalizeBy4(minX + 4);
+			}
+
+			if (Utils.normalizeBy4(maxX) > island.getMaxX())
+			{
+				maxX = Utils.normalizeBy4(maxX - 4);
+			}
+
+			if (Utils.normalizeBy4(minZ) < island.getMinZ())
+			{
+				minZ = Utils.normalizeBy4(minZ + 4);
+			}
+
+			if (Utils.normalizeBy4(maxZ) > island.getMaxZ())
+			{
+				maxZ = Utils.normalizeBy4(maxZ - 4);
+			}
 		}
 		else
 		{
 			// limit by island distance to avoid issues with long updating.
 			int range = this.addon.getPlugin().getIWM().getIslandDistance(this.world);
 
-			minX = this.standingLocation.getBlockX() - range;
-			minZ = this.standingLocation.getBlockZ() - range;
+			minX = Utils.normalizeBy4(this.standingLocation.getBlockX() - range);
+			minZ = Utils.normalizeBy4(this.standingLocation.getBlockZ() - range);
 
-			maxX = this.standingLocation.getBlockX() + range;
-			maxZ = this.standingLocation.getBlockZ() + range;
+			maxX = Utils.normalizeBy4(this.standingLocation.getBlockX() + range);
+			maxZ = Utils.normalizeBy4(this.standingLocation.getBlockZ() + range);
 		}
 
 		// Calculate minimal and maximal coordinate based on update mode.
 
-		BiomeUpdateTask task = new BiomeUpdateTask(this.addon, this.callerUser, this.world, this.biome);
+		BiomeUpdateTask task = new BiomeUpdateTask(this.addon, this.callerUser, this.standingLocation, this.biome);
+
+		// Select world depending on environment.
+
+		if (World.Environment.NETHER.equals(this.biome.getEnvironment()))
+		{
+			task.setWorld(this.addon.getPlugin().getIWM().getNetherWorld(this.world));
+		}
+		else if (World.Environment.THE_END.equals(this.biome.getEnvironment()))
+		{
+			task.setWorld(this.addon.getPlugin().getIWM().getEndWorld(this.world));
+		}
+		else
+		{
+			task.setWorld(this.world);
+		}
 
 		switch (this.updateMode)
 		{
@@ -293,6 +348,10 @@ public class BiomeUpdateHelper
 				task.setMaxX(maxX);
 				task.setMinZ(minZ);
 				task.setMaxZ(maxZ);
+
+				// Select whole island height.
+				task.setMinY(0);
+				task.setMaxY(this.world.getMaxHeight());
 
 				break;
 			case CHUNK:
@@ -304,6 +363,10 @@ public class BiomeUpdateHelper
 				task.setMinZ(Math.max(minZ, (chunk.getZ() - (this.updateNumber - 1)) << 4));
 				task.setMaxZ(Math.min(maxZ, (chunk.getZ() + this.updateNumber) << 4) - 1);
 
+				// Select whole island height.
+				task.setMinY(0);
+				task.setMaxY(this.world.getMaxHeight());
+
 				break;
 			case RANGE:
 				int halfDiameter = this.updateNumber / 2;
@@ -312,27 +375,33 @@ public class BiomeUpdateHelper
 
 				if (x < 0)
 				{
-					task.setMaxX(Math.max(minX, x + halfDiameter));
-					task.setMinX(Math.min(maxX, x - halfDiameter));
+					task.setMaxX(Math.max(minX, Utils.normalizeBy4(x + halfDiameter)));
+					task.setMinX(Math.min(maxX, Utils.normalizeBy4(x - halfDiameter)));
 				}
 				else
 				{
-					task.setMinX(Math.max(minX, x - halfDiameter));
-					task.setMaxX(Math.min(maxX, x + halfDiameter));
+					task.setMinX(Math.max(minX, Utils.normalizeBy4(x - halfDiameter)));
+					task.setMaxX(Math.min(maxX, Utils.normalizeBy4(x + halfDiameter)));
 				}
 
 				int z = this.standingLocation.getBlockZ();
 
 				if (z < 0)
 				{
-					task.setMaxZ(Math.max(minZ, z + halfDiameter));
-					task.setMinZ(Math.min(maxZ, z - halfDiameter));
+					task.setMaxZ(Math.max(minZ, Utils.normalizeBy4(z + halfDiameter)));
+					task.setMinZ(Math.min(maxZ, Utils.normalizeBy4(z - halfDiameter)));
 				}
 				else
 				{
-					task.setMinZ(Math.max(minZ, z - halfDiameter));
-					task.setMaxZ(Math.min(maxZ, z + halfDiameter));
+					task.setMinZ(Math.max(minZ, Utils.normalizeBy4(z - halfDiameter)));
+					task.setMaxZ(Math.min(maxZ, Utils.normalizeBy4(z + halfDiameter)));
 				}
+
+				// Calculate Y location
+				int y = this.standingLocation.getBlockY();
+
+				task.setMinY(Math.max(0, Utils.normalizeBy4(y - halfDiameter)));
+				task.setMaxY(Math.min(this.world.getMaxHeight(), Utils.normalizeBy4(y + halfDiameter)));
 
 				break;
 			default:

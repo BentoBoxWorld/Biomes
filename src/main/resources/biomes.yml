@@ -4,25 +4,35 @@
 # For example: /bsbadmin biomes import
 # to overwrite previous biomes, use /bsbadmin biomes import overwrite
 # Once biomes are imported, you can edit them directly in the database folder.
-#
 ##########################################################################################
-# There exist 73 supported Minecraft Biomes:
-#	OCEAN, PLAINS, DESERT, MOUNTAINS, FOREST, TAIGA, SWAMP, RIVER, NETHER, THE_END,
-#   FROZEN_OCEAN, FROZEN_RIVER, SNOWY_TUNDRA, SNOWY_MOUNTAINS, MUSHROOM_FIELDS,
-#   MUSHROOM_FIELD_SHORE, BEACH, DESERT_HILLS, WOODED_HILLS, TAIGA_HILLS, MOUNTAIN_EDGE,
-#   JUNGLE, JUNGLE_HILLS, JUNGLE_EDGE, DEEP_OCEAN, STONE_SHORE, SNOWY_BEACH, BIRCH_FOREST,
-#   BIRCH_FOREST_HILLS, DARK_FOREST, SNOWY_TAIGA, SNOWY_TAIGA_HILLS, GIANT_TREE_TAIGA,
-#   GIANT_TREE_TAIGA_HILLS, WOODED_MOUNTAINS, SAVANNA, SAVANNA_PLATEAU, BADLANDS,
-#   WOODED_BADLANDS_PLATEAU, BADLANDS_PLATEAU, SMALL_END_ISLANDS, END_MIDLANDS,
-#   END_HIGHLANDS, END_BARRENS, WARM_OCEAN, LUKEWARM_OCEAN, COLD_OCEAN, DEEP_WARM_OCEAN,
-#   DEEP_LUKEWARM_OCEAN, DEEP_COLD_OCEAN, DEEP_FROZEN_OCEAN, THE_VOID, SUNFLOWER_PLAINS,
-#   DESERT_LAKES, GRAVELLY_MOUNTAINS, FLOWER_FOREST, TAIGA_MOUNTAINS, SWAMP_HILLS,
-#   ICE_SPIKES, MODIFIED_JUNGLE, MODIFIED_JUNGLE_EDGE, TALL_BIRCH_FOREST, TALL_BIRCH_HILLS,
-#   DARK_FOREST_HILLS, SNOWY_TAIGA_MOUNTAINS, GIANT_SPRUCE_TAIGA, GIANT_SPRUCE_TAIGA_HILLS,
-#   MODIFIED_GRAVELLY_MOUNTAINS, SHATTERED_SAVANNA, SHATTERED_SAVANNA_PLATEAU,
-#   ERODED_BADLANDS, MODIFIED_WOODED_BADLANDS_PLATEAU, MODIFIED_BADLANDS_PLATEAU
+# File format.
+# biomes:                                        # Internal Data Structure. DO NOT CHANGE!
+#   biomesList:                                  # Internal Data Structure. DO NOT CHANGE!
+#     BIOME_ID:                                  # Spigot BIOME TYPE. Valid values can be found in link below.
+#       friendlyName: 'Biome Display Name'       # String. Custom name for biome.
+#       description: 'Biome description'         # String. Some extra description in icon lore.
+#       icon: 'paper'                            # Spigot MATERIAL TYPE. Spigot Material that will be used. Adding ':NUMBER' allows to specify amount of elements.
+#       islandLevel: 0                           # Integer. Minimal island level for using this biome. Requires Level addon.
+#       environment: 'normal'                    # Spigot WORLD ENVIRONMENT TYPE. World environment value.
+#       cost: 0                                  # Double. Cost for changing biome. Requires Vault.
+#       order: 0                                 # Integer. Order of current biome.
+#       permission: []                           # List of strings. Required permissions to change biome.
+##########################################################################################
+# There exists a lot of biomes in Minecraft. The list of the latest supported biome types
+# can be found here:
+# https://hub.spigotmc.org/javadocs/spigot/org/bukkit/block/Biome.html#enum.constant.summary
 # All these biomes are valid for adding in BiomesList. By default only meaningful for
 # skyblock will be added.
+##########################################################################################
+# Icon supports any viewable item from inventory. However, it does not support enchantments
+# and amount.
+# https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+##########################################################################################
+# Environment supports 3 default Minecraft environments:
+#   - `normal` - for overworld
+#   - `nether` - for the nether
+#   - `the_end` - for the end
+# If value is not specified or is not one of these three, normal will be used.
 ##########################################################################################
 
 biomes:
@@ -32,7 +42,10 @@ biomes:
       description: 'Oh, now you need to learn how to swim.'
       icon: 'water_bucket'
       islandLevel: 0
+      environment: 'normal'
       cost: 100
+      order: 0
+      permission: []
     warm_ocean:
       friendlyName: 'Warm Ocean'
       description: 'Where are my corrals?'
@@ -46,11 +59,11 @@ biomes:
       islandLevel: 0
       cost: 100
     desert:
-     friendlyName: 'Desert'
-     description: 'It is too hot for snow and ice!'
-     icon: 'sand'
-     islandLevel: 0
-     cost: 100
+      friendlyName: 'Desert'
+      description: 'It is too hot for snow and ice!'
+      icon: 'sand'
+      islandLevel: 0
+      cost: 100
     snowy_tundra:
       friendlyName: 'Cold Tundra'
       description: 'The cold winter is coming!'

@@ -1,10 +1,7 @@
 package world.bentobox.biomes.database.objects;
 
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -260,6 +257,27 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
     }
 
 
+    /**
+     * This method returns the environment value.
+     * @return the value of environment.
+     */
+    public World.Environment getEnvironment()
+    {
+        return this.environment;
+    }
+
+
+    /**
+     * This method sets the environment value.
+     * @param environment the environment new value.
+     *
+     */
+    public void setEnvironment(World.Environment environment)
+    {
+        this.environment = environment;
+    }
+
+
     // ---------------------------------------------------------------------
     // Section: Other methods
     // ---------------------------------------------------------------------
@@ -317,10 +335,16 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
     @Override
     public int compareTo(BiomesObject object)
     {
-        int rc = Integer.compare(this.order, object.getOrder());
-
-        return this.biome != null && object.getBiome() != null && rc == 0 ?
-                this.biome.compareTo(object.getBiome()) : rc;
+        // Compare by order
+        return Comparator.comparingInt(BiomesObject::getOrder).
+            // Compare by environment
+            thenComparing(BiomesObject::getEnvironment).
+            // compare by biome
+            thenComparing(BiomesObject::getBiome).
+            // compare by friendly name
+            thenComparing(BiomesObject::getFriendlyName).
+            // Provide objects
+            compare(this, object);
     }
 
 
@@ -368,6 +392,10 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
     @ConfigComment("World where this biome operates. List only NORMAL. NETHER and THE_END are automatically covered.")
     @Expose
     private String world;
+
+    @ConfigComment("Allows to specify environment for biome. This allows to split overworld, nether and the end biomes.")
+    @Expose
+    private World.Environment environment;
 
     @ConfigComment("Unique StringName of the biome")
     @Expose

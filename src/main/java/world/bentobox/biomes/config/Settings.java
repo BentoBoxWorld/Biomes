@@ -1,6 +1,7 @@
 package world.bentobox.biomes.config;
 
 
+import com.google.gson.annotations.Since;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -133,6 +134,16 @@ public class Settings implements ConfigObject
 	}
 
 
+	/**
+	 * This method returns the updateTickCounter value.
+	 * @return the value of updateTickCounter.
+	 */
+	public int getUpdateTickCounter()
+	{
+		return updateTickCounter;
+	}
+
+
 // ---------------------------------------------------------------------
 // Section: Setters
 // ---------------------------------------------------------------------
@@ -236,6 +247,17 @@ public class Settings implements ConfigObject
 	public void setUseProtectionRange(boolean useProtectionRange)
 	{
 		this.useProtectionRange = useProtectionRange;
+	}
+
+
+	/**
+	 * This method sets the updateTickCounter value.
+	 * @param updateTickCounter the updateTickCounter new value.
+	 *
+	 */
+	public void setUpdateTickCounter(int updateTickCounter)
+	{
+		this.updateTickCounter = updateTickCounter;
 	}
 
 
@@ -431,6 +453,13 @@ public class Settings implements ConfigObject
 	@ConfigComment("This indicates cool down in seconds between users can change biomes on their island.")
 	@ConfigEntry(path = "cooldown")
 	private int coolDown = 60;
+
+	@ConfigComment("")
+	@ConfigComment("This indicates tick counter between each background update task.")
+	@ConfigComment("This process load chunks that require biome update and change biome in it.")
+	@ConfigComment("Setting 0 will stop background task and biome will be updated only when loaded.")
+	@ConfigEntry(path = "update-tick-counter", needsRestart = true, since = "1.13.0")
+	private int updateTickCounter = 5;
 
 	@ConfigComment("")
 	@ConfigComment("This variable allows to choose which biomes users can see in Biomes GUI.")
