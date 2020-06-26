@@ -32,6 +32,7 @@ import world.bentobox.biomes.panels.util.NumberGUI;
 import world.bentobox.biomes.panels.util.SelectBiomeGUI;
 import world.bentobox.biomes.panels.util.SelectBlocksGUI;
 import world.bentobox.biomes.panels.util.StringListGUI;
+import world.bentobox.biomes.utils.Utils;
 
 
 /**
@@ -82,13 +83,13 @@ public class EditBiomeGUI extends CommonGUI
 		GuiUtils.fillBorder(panelBuilder, Material.PURPLE_STAINED_GLASS_PANE);
 
 		panelBuilder.item(19, this.createButton(Button.BIOME));
+		panelBuilder.item(28, this.createButton(Button.ENVIRONMENT));
 
 		panelBuilder.item(11, this.createButton(Button.NAME));
 		panelBuilder.item(20, this.createButton(Button.ICON));
 		panelBuilder.item(29, this.createButton(Button.DESCRIPTION));
 
 		panelBuilder.item(21, this.createButton(Button.ORDER));
-
 
 		panelBuilder.item(14, this.createButton(Button.LEVEL));
 		panelBuilder.item(23, this.createButton(Button.COST));
@@ -188,12 +189,13 @@ public class EditBiomeGUI extends CommonGUI
 				itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.admin.required-money"));
 				description.add(this.user.getTranslation("biomes.gui.descriptions.admin.required-money"));
 				description.add(this.user.getTranslation(CURRENT_VALUE,
-					VALUE, Long.toString(this.biome.getRequiredCost())));
+					VALUE, Double.toString(this.biome.getRequiredCost())));
 				itemBuilder.description(GuiUtils.stringSplit(description, this.addon.getSettings().getLoreLineLength()));
 
 				itemBuilder.icon(this.addon.isEconomyProvided() ? Material.GOLD_INGOT : Material.BARRIER);
 				itemBuilder.clickHandler((panel, user, clickType, slot) -> {
-					new NumberGUI(this.user, this.biome.getRequiredCost(), 0, lineLength, (status, value) -> {
+					// TODO: this must be implemented in gui.
+					new NumberGUI(this.user, ((int) this.biome.getRequiredCost()), 0, lineLength, (status, value) -> {
 						if (status)
 						{
 							this.biome.setRequiredCost(value);
@@ -312,6 +314,64 @@ public class EditBiomeGUI extends CommonGUI
 					return true;
 				});
 				break;
+			case ENVIRONMENT:
+				itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.admin.environment"));
+				description.add(this.user.getTranslation("biomes.gui.descriptions.admin.environment"));
+
+				switch (this.biome.getEnvironment())
+				{
+					case NORMAL:
+						description.add(this.user.getTranslation("biomes.gui.descriptions.admin.environment-active",
+							"[value]", "NORMAL"));
+						description.add(this.user.getTranslation("biomes.gui.descriptions.admin.environment-inactive",
+							"[value]", "NETHER"));
+						description.add(this.user.getTranslation("biomes.gui.descriptions.admin.environment-inactive",
+							"[value]", "THE_END"));
+
+						itemBuilder.icon(Material.GRASS_BLOCK);
+						break;
+					case NETHER:
+						description.add(this.user.getTranslation("biomes.gui.descriptions.admin.environment-inactive",
+							"[value]", "NORMAL"));
+						description.add(this.user.getTranslation("biomes.gui.descriptions.admin.environment-active",
+							"[value]", "NETHER"));
+						description.add(this.user.getTranslation("biomes.gui.descriptions.admin.environment-inactive",
+							"[value]", "THE_END"));
+
+						itemBuilder.icon(Material.NETHERRACK);
+						break;
+					case THE_END:
+						description.add(this.user.getTranslation("biomes.gui.descriptions.admin.environment-inactive",
+							"[value]", "NORMAL"));
+						description.add(this.user.getTranslation("biomes.gui.descriptions.admin.environment-inactive",
+							"[value]", "NETHER"));
+						description.add(this.user.getTranslation("biomes.gui.descriptions.admin.environment-active",
+							"[value]", "THE_END"));
+
+						itemBuilder.icon(Material.END_STONE);
+						break;
+				}
+
+				itemBuilder.description(description);
+
+				itemBuilder.clickHandler((panel, user, clickType, slot) -> {
+
+					if (clickType.isLeftClick())
+					{
+						this.biome.setEnvironment(Utils.getNextValue(World.Environment.values(),
+							this.biome.getEnvironment()));
+					}
+					else
+					{
+						this.biome.setEnvironment(Utils.getPreviousValue(World.Environment.values(),
+							this.biome.getEnvironment()));
+					}
+
+					panel.getItems().put(slot, this.createButton(button));
+
+					return true;
+				});
+				break;
 		}
 
 		return itemBuilder.build();
@@ -396,6 +456,7 @@ public class EditBiomeGUI extends CommonGUI
 		COST,
 		LEVEL,
 		ORDER,
+		ENVIRONMENT,
 		DESCRIPTION,
 		ICON,
 		NAME,

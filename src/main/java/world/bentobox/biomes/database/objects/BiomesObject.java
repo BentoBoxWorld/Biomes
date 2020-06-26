@@ -161,7 +161,7 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
     /**
      * @return the cost of changing biome
      */
-    public int getRequiredCost()
+    public double getRequiredCost()
     {
         return this.requiredCost;
     }
@@ -170,7 +170,7 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
     /**
      * @param requiredCost the reqMoney to set
      */
-    public void setRequiredCost(int requiredCost)
+    public void setRequiredCost(double requiredCost)
     {
         this.requiredCost = requiredCost;
     }
@@ -383,7 +383,7 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
 
     @ConfigComment("Cost of changing biome.")
     @Expose
-    private int requiredCost;
+    private double requiredCost;
 
     @ConfigComment("Set of String permission that is required for this biome to be activated.")
     @Expose

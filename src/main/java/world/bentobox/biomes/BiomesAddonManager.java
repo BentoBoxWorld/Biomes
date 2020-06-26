@@ -275,7 +275,7 @@ public class BiomesAddonManager
 
         ConfigurationSection reader = config.getConfigurationSection("biomes.biomesList");
 
-        Map<String, Biome> biomeNameMap = BiomesAddonManager.getBiomeNameMap();
+        Map<String, Biome> biomeNameMap = Utils.getBiomeNameMap();
 
         for (String biome : reader.getKeys(false))
         {
@@ -294,7 +294,7 @@ public class BiomesAddonManager
                 newBiomeObject.setIcon(ItemParser.parse(details.getString("icon") + ":1"));
 
                 newBiomeObject.setRequiredLevel(details.getInt("islandLevel", 0));
-                newBiomeObject.setRequiredCost(details.getInt("cost", 0));
+                newBiomeObject.setRequiredCost(details.getDouble("cost", 0.0));
 
                 String environmentValue = details.getString("environment", "normal").toUpperCase();
 
@@ -455,6 +455,7 @@ public class BiomesAddonManager
             // Sets default biome as VOID.
             biome.setBiome(Biome.THE_VOID);
             biome.setWorld(worldName);
+            biome.setEnvironment(World.Environment.NORMAL);
 
             this.saveBiome(biome);
             this.loadBiomes(biome);
@@ -506,15 +507,16 @@ public class BiomesAddonManager
 
         List<BiomesObject> returnBiomesList = new ArrayList<>(allBiomeList.size());
 
-        allBiomeList.forEach(biomesObject -> {
-            if (biomesObject.isDeployed() &&
-                    (visibilityMode.equals(VisibilityMode.DEPLOYED) ||
-                            biomesObject.getRequiredPermissions().isEmpty() ||
-                            biomesObject.getRequiredPermissions().stream().allMatch(user::hasPermission)))
-            {
-                returnBiomesList.add(biomesObject);
-            }
-        });
+        allBiomeList.stream().
+            // Filter out all biomes that has a different environment then players world.
+            filter(biomeObject -> user.getWorld().getEnvironment().equals(biomeObject.getEnvironment())).
+            // Filter out undeployed biomes if visibility mode is set to only deployed
+            filter(biomesObject -> biomesObject.isDeployed() && (visibilityMode.equals(VisibilityMode.DEPLOYED))).
+            // Filter out biomes which does user not have permissions
+            filter(biomesObject ->
+                biomesObject.getRequiredPermissions().isEmpty() ||
+                    biomesObject.getRequiredPermissions().stream().allMatch(user::hasPermission)).
+            forEach(returnBiomesList::add);
 
         return returnBiomesList;
     }
@@ -601,25 +603,6 @@ public class BiomesAddonManager
 
 
     /**
-     * This method returns map that contains biomes name as key and biome as value.
-     * @return Map that contains relation from biome name to biome.
-     */
-    public static Map<String, Biome> getBiomeNameMap()
-    {
-        Biome[] biomes = Biome.values();
-
-        Map<String, Biome> returnMap = new HashMap<>(biomes.length);
-
-        for (Biome biome : biomes)
-        {
-            returnMap.put(biome.name(), biome);
-        }
-
-        return returnMap;
-    }
-
-
-    /**
      * This method returns if in given world biomes are setup.
      * @param world World that must be checked.
      * @return True if in given world exist biomes.
@@ -629,7 +612,7 @@ public class BiomesAddonManager
         String worldName = Util.getWorld(world) == null ? "" : Util.getWorld(world).getName();
 
         return !worldName.isEmpty() &&
-                this.biomesCacheData.values().stream().anyMatch(biome -> biome.getWorld().equalsIgnoreCase(worldName));
+            this.biomesCacheData.values().stream().anyMatch(biome -> biome.getWorld().equalsIgnoreCase(worldName));
     }
 
 

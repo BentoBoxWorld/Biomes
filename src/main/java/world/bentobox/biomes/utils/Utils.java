@@ -260,9 +260,15 @@ public class Utils
 		switch (biome)
 		{
 			case THE_VOID:
-			case GIANT_TREE_TAIGA_HILLS:
-			case DESERT_HILLS:
+			case WOODED_HILLS:
+			case TAIGA_HILLS:
+			case SNOWY_TAIGA_HILLS:
 			case JUNGLE_HILLS:
+			case DESERT_HILLS:
+			case BIRCH_FOREST_HILLS:
+			case TALL_BIRCH_HILLS:
+			case GIANT_TREE_TAIGA_HILLS:
+			case GIANT_SPRUCE_TAIGA_HILLS:
 			case SNOWY_MOUNTAINS:
 				return true;
 			default:

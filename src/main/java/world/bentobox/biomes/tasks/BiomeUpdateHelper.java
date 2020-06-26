@@ -70,6 +70,13 @@ public class BiomeUpdateHelper
 
 		if (this.callerUser == this.targetUser)
 		{
+			if (!this.biome.getEnvironment().equals(this.callerUser.getWorld().getEnvironment()))
+			{
+				// User must be in the same environment as biome require.
+				this.callerUser.sendMessage("general.errors.wrong-world");
+				return false;
+			}
+
 			if (!this.checkPermissions())
 			{
 				this.callerUser.sendMessage("general.errors.no-permission");

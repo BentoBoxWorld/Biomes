@@ -106,7 +106,7 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 			{
 				case BIOME:
 					String newBiomeString = args.get(2);
-					Biome newBiome = BiomesAddonManager.getBiomeNameMap().getOrDefault(newBiomeString.toUpperCase(), null);
+					Biome newBiome = Utils.getBiomeNameMap().getOrDefault(newBiomeString.toUpperCase(), null);
 
 					if (newBiome == null)
 					{
@@ -167,7 +167,7 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 
 					try
 					{
-						biomesObject.setRequiredCost(Integer.parseUnsignedInt(args.get(2)));
+						biomesObject.setRequiredCost(Double.parseDouble(args.get(2)));
 						break;
 					}
 					catch (Exception e)
@@ -252,7 +252,7 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
 				switch (CommandParameters.getParameter(args.get(3)))
 				{
 					case BIOME:
-						returnList.addAll(BiomesAddonManager.getBiomeNameMap().keySet());
+						returnList.addAll(Utils.getBiomeNameMap().keySet());
 						break;
 					case FRIENDLY_NAME:
 						returnList.add("<name>");
