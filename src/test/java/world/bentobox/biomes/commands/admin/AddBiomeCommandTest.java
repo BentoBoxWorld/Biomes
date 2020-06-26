@@ -20,8 +20,8 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.block.Biome;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFactory;
@@ -30,7 +30,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.eclipse.jdt.annotation.NonNull;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -134,7 +133,7 @@ public class AddBiomeCommandTest {
         when(world.getName()).thenReturn("BSkyBlock_world");
 
         // Player
-		PowerMockito.mockStatic(User.class);
+        PowerMockito.mockStatic(User.class);
         // Sometimes use Mockito.withSettings().verboseLogging()
         when(user.isOp()).thenReturn(false);
         uuid = UUID.randomUUID();
@@ -185,6 +184,7 @@ public class AddBiomeCommandTest {
         when(bo.getDescription()).thenReturn(Collections.singletonList("Badlands biome"));
         when(bo.getUniqueId()).thenReturn("badlands");
         when(bo.getWorld()).thenReturn("world");
+        when(bo.getEnvironment()).thenReturn(Environment.NORMAL);
 
         // Util
         PowerMockito.mockStatic(Util.class);
