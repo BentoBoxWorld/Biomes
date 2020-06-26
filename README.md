@@ -7,8 +7,9 @@ Biomes addon for SkyBlock, SkyGrid, CaveBlock and AcidIsland. It allows to chang
 ## Where to find
 
 Currently Biomes Addon is in **Beta stage**, so it may or may not contain bugs... a lot of bugs. Also it means, that some features are not working or implemented. 
-Latest official **Beta Release is 1.6.0.1**, and you can download it from [Release tab](https://github.com/BentoBoxWorld/Biomes/releases)
+Latest official **Beta Release is 1.12.0**, and you can download it from [Release tab](https://github.com/BentoBoxWorld/Biomes/releases)
 
+Be aware, the latest version is for Spigot 1.16.0.
 Or you can try **nightly builds** where you can check and test new features that will be implemented in next release from [Jenkins Server](https://ci.codemc.org/job/BentoBoxWorld/job/Biomes/lastStableBuild/).
 
 If you like this addon but something is missing or is not working as you want, you can always submit an [Issue request](https://github.com/BentoBoxWorld/Biomes/issues) or get a support in Discord [BentoBox ![icon](https://avatars2.githubusercontent.com/u/41555324?s=15&v=4)](https://discord.gg/JgWKvR)
