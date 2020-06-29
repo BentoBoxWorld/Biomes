@@ -251,7 +251,7 @@ public abstract class CommonGUI
 						result.add(this.user
 							.getTranslation("biomes.gui.biomes-description.required-money",
 								VALUE_TAG,
-								Integer.toString(biomesObject.getRequiredCost())));
+								Double.toString(biomesObject.getRequiredCost())));
 					}
 					break;
 				}
