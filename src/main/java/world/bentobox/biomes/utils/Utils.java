@@ -302,13 +302,15 @@ public class Utils
 	 */
 	public static boolean isNetherBiome(Biome biome)
 	{
-		switch (biome)
+		// TODO: 1.15.2 support.
+		switch (biome.name())
 		{
-			case NETHER_WASTES:
-			case SOUL_SAND_VALLEY:
-			case CRIMSON_FOREST:
-			case WARPED_FOREST:
-			case BASALT_DELTAS:
+			case "NETHER":
+			case "NETHER_WASTES":
+			case "SOUL_SAND_VALLEY":
+			case "CRIMSON_FOREST":
+			case "WARPED_FOREST":
+			case "BASALT_DELTAS":
 				return true;
 			default:
 				return false;
