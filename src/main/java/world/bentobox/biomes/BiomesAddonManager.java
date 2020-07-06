@@ -511,7 +511,10 @@ public class BiomesAddonManager
             // Filter out all biomes that has a different environment then players world.
             filter(biomeObject -> user.getWorld().getEnvironment().equals(biomeObject.getEnvironment())).
             // Filter out undeployed biomes if visibility mode is set to only deployed
-            filter(biomesObject -> biomesObject.isDeployed() && (visibilityMode.equals(VisibilityMode.DEPLOYED))).
+            filter(biomesObject -> visibilityMode.equals(VisibilityMode.ALL) ||
+                biomesObject.isDeployed() &&
+                    (visibilityMode.equals(VisibilityMode.DEPLOYED) ||
+                        visibilityMode.equals(VisibilityMode.ACCESSIBLE))).
             // Filter out biomes which does user not have permissions
             filter(biomesObject ->
                 biomesObject.getRequiredPermissions().isEmpty() ||
