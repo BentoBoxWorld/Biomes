@@ -7,6 +7,7 @@ import org.bukkit.block.Biome;
 import java.util.*;
 
 import world.bentobox.bentobox.BentoBox;
+import world.bentobox.bentobox.api.addons.request.AddonRequestBuilder;
 
 
 /**
@@ -336,5 +337,23 @@ public class Utils
 			default:
 				return false;
 		}
+	}
+
+
+	/**
+	 * Returns the level of this player's island in the given world.
+	 * @param playerUUID UUID of the player, not null.
+	 * @param worldName Name of the world (Overworld) the island is in, not null.
+	 * @return the player's island level or {@code 0L} if the input was invalid or
+	 *         if this player does not have an island in this world.
+	 */
+	public static long getIslandLevel(UUID playerUUID, String worldName)
+	{
+		return (Long) new AddonRequestBuilder().
+			addon("Level").
+			label("island-level").
+			addMetaData("world-name", worldName).
+			addMetaData("player", playerUUID).
+			request();
 	}
 }

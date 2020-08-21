@@ -129,12 +129,11 @@ public class BiomeUpdateHelper
 					// This is here as I am not sure if Level addon can calculate island level
 					// if players can build anywhere.
 
-					LevelsData data = this.addon.getLevelAddon().getLevelsData(this.targetUser.getUniqueId());
+					long islandLevel = Utils.getIslandLevel(this.targetUser.getUniqueId(),
+						this.world.getName());
 
-					if (data == null ||
-						!data.getLevels().containsKey(Util.getWorld(this.world).getName()) ||
-						this.biome.getRequiredLevel() > 0 &&
-							data.getLevel(Util.getWorld(this.world)) <= this.biome.getRequiredLevel())
+					if (this.biome.getRequiredLevel() > 0 &&
+						islandLevel < this.biome.getRequiredLevel())
 					{
 						// Not enough level
 
