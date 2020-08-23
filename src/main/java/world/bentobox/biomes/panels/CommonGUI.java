@@ -273,10 +273,8 @@ public abstract class CommonGUI
 						result.add(this.user.getTranslation("biomes.gui.biomes-description.required-permissions"));
 
 						biomesObject.getRequiredPermissions().forEach(permission ->
-						{
-							result.add(this.user.getTranslation("biomes.gui.descriptions.permission",
-								"[permission]", permission));
-						});
+								result.add(this.user.getTranslation("biomes.gui.descriptions.permission",
+									"[permission]", permission)));
 					}
 					break;
 				}

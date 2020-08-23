@@ -58,8 +58,7 @@ public class BiomesSetCommand extends ExpandedCompositeCommand
 		{
 			// Show help if something fails.
 			this.showHelp(this, user);
-			return false;
-		}
+        }
 		else
 		{
 			// Use BiomeUpdateHelper to change biome for user.
@@ -81,9 +80,9 @@ public class BiomesSetCommand extends ExpandedCompositeCommand
 				return true;
 			}
 
-			return false;
-		}
-	}
+        }
+        return false;
+    }
 
 
 	@Override

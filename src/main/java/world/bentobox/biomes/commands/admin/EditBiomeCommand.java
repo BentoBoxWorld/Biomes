@@ -232,9 +232,7 @@ public class EditBiomeCommand extends ExpandedCompositeCommand
         case 3:
 
             // Create suggestions with all biomes that is available for users.
-            this.addon.getAddonManager().getBiomes(this.getWorld()).forEach(biomesObject -> {
-                returnList.add(biomesObject.getUniqueId().substring(Utils.getGameMode(this.getWorld()).length() + 1));
-            });
+            this.addon.getAddonManager().getBiomes(this.getWorld()).forEach(biomesObject -> returnList.add(biomesObject.getUniqueId().substring(Utils.getGameMode(this.getWorld()).length() + 1)));
 
             break;
         case 4:

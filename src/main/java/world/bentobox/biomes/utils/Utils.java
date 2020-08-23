@@ -1,10 +1,11 @@
 package world.bentobox.biomes.utils;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.World;
 import org.bukkit.block.Biome;
-
-import java.util.*;
 
 import world.bentobox.bentobox.BentoBox;
 
@@ -47,7 +48,7 @@ public class Utils
 	 * @param <T> Instance of given object.
 	 * @return Next value after currentValue in values array.
 	 */
-	public static <T extends Object> T getNextValue(T[] values, T currentValue)
+	public static <T> T getNextValue(T[] values, T currentValue)
 	{
 		for (int i = 0; i < values.length; i++)
 		{
@@ -75,7 +76,7 @@ public class Utils
 	 * @param <T> Instance of given object.
 	 * @return Previous value before currentValue in values array.
 	 */
-	public static <T extends Object> T getPreviousValue(T[] values, T currentValue)
+	public static <T> T getPreviousValue(T[] values, T currentValue)
 	{
 		for (int i = 0; i < values.length; i++)
 		{

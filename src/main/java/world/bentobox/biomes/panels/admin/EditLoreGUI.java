@@ -186,9 +186,7 @@ public class EditLoreGUI extends CommonGUI
 				name = this.user.getTranslation("biomes.gui.buttons.admin.view");
 				description = Collections.emptyList();
 				icon = new ItemStack(Material.YELLOW_STAINED_GLASS_PANE);
-				clickHandler = (panel, user, clickType, slot) -> {
-					return true;
-				};
+				clickHandler = (panel, user, clickType, slot) -> true;
 
 				break;
 			}
@@ -214,7 +212,6 @@ public class EditLoreGUI extends CommonGUI
 	private PanelItem getLoreButton(String loreElement)
 	{
 		Material icon;
-		String name = loreElement;
 		List<String> description = new ArrayList<>();
 		description.add(this.user.getTranslation(REFERENCE_DESCRIPTION + "lore." + loreElement.toLowerCase()));
 
@@ -255,7 +252,7 @@ public class EditLoreGUI extends CommonGUI
 		}
 
 		return new PanelItemBuilder().
-			name(name).
+			name(loreElement).
 			icon(icon).
 			description(GuiUtils.stringSplit(description, this.addon.getSettings().getLoreLineLength())).
 			clickHandler(clickHandler).
