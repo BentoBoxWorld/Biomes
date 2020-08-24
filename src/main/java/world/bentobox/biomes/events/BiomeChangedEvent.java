@@ -21,8 +21,10 @@ public class BiomeChangedEvent extends BentoBoxEvent
 	 * @param biome name of biome that was applied.
 	 * @param playerUUID of type UUID
 	 * @param minX of type int represents minimal X coordinate
+	 * @param minY of type int represents minimal Y coordinate
 	 * @param minZ of type int represents minimal Z coordinate
 	 * @param maxX of type int represents maximal X coordinate
+	 * @param maxY of type int represents maximal Y coordinate
 	 * @param maxZ of type int represents maximal Z coordinate
 	 */
 	public BiomeChangedEvent(
@@ -30,8 +32,10 @@ public class BiomeChangedEvent extends BentoBoxEvent
 		Biome biome,
 		UUID playerUUID,
 		int minX,
+		int minY,
 		int minZ,
 		int maxX,
+		int maxY,
 		int maxZ)
 	{
 		super(true);
@@ -42,6 +46,8 @@ public class BiomeChangedEvent extends BentoBoxEvent
 		this.maxX = maxX;
 		this.minZ = minZ;
 		this.maxZ = maxZ;
+		this.minY = minY;
+		this.maxY = maxY;
 	}
 
 
@@ -197,6 +203,46 @@ public class BiomeChangedEvent extends BentoBoxEvent
 	}
 
 
+	/**
+	 * This method returns the minY value.
+	 * @return the value of minY.
+	 */
+	public int getMinY()
+	{
+		return minY;
+	}
+
+
+	/**
+	 * This method sets the minY value.
+	 * @param minY the minY new value.
+	 */
+	public void setMinY(int minY)
+	{
+		this.minY = minY;
+	}
+
+
+	/**
+	 * This method returns the maxY value.
+	 * @return the value of maxY.
+	 */
+	public int getMaxY()
+	{
+		return maxY;
+	}
+
+
+	/**
+	 * This method sets the maxY value.
+	 * @param maxY the maxY new value.
+	 */
+	public void setMaxY(int maxY)
+	{
+		this.maxY = maxY;
+	}
+
+
 // ---------------------------------------------------------------------
 // Section: Variables
 // ---------------------------------------------------------------------
@@ -228,6 +274,11 @@ public class BiomeChangedEvent extends BentoBoxEvent
 	private int minZ;
 
 	/**
+	 * Minimal Y coordinate of change range.
+	 */
+	private int minY;
+
+	/**
 	 * Maximal X coordinate of change range.
 	 */
 	private int maxX;
@@ -236,5 +287,10 @@ public class BiomeChangedEvent extends BentoBoxEvent
 	 * Maximal Z coordinate of change range.
 	 */
 	private int maxZ;
+
+	/**
+	 * Maximal Y coordinate of change range.
+	 */
+	private int maxY;
 }
 

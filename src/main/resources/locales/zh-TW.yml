@@ -127,7 +127,7 @@
       update-mode:
         island: "島嶼"
         chunk: "區塊"
-        square: "範圍"
+        range: "範圍"
         undefined: "未定義"
       visibility-mode:
         info: "修改你可以看到的地形"

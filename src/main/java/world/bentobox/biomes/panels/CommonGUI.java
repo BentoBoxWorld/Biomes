@@ -137,7 +137,7 @@ public abstract class CommonGUI
 			case NEXT:
 				name = this.user.getTranslation("biomes.gui.buttons.next");
 				description = Collections.emptyList();
-				icon = new ItemStack(BiomesAddon.SIGN_MATERIAL);
+				icon = new ItemStack(Material.OAK_SIGN);
 				clickHandler = (panel, u, clickType, slot) -> {
 					this.pageIndex++;
 					this.build();
@@ -148,7 +148,7 @@ public abstract class CommonGUI
 			case PREVIOUS:
 				name = this.user.getTranslation("biomes.gui.buttons.previous");
 				description = Collections.emptyList();
-				icon = new ItemStack(BiomesAddon.SIGN_MATERIAL);
+				icon = new ItemStack(Material.OAK_SIGN);
 				clickHandler = (panel, u, clickType, slot) -> {
 					this.pageIndex--;
 					this.build();
@@ -251,7 +251,7 @@ public abstract class CommonGUI
 						result.add(this.user
 							.getTranslation("biomes.gui.biomes-description.required-money",
 								VALUE_TAG,
-								Integer.toString(biomesObject.getRequiredCost())));
+								Double.toString(biomesObject.getRequiredCost())));
 					}
 					break;
 				}
@@ -273,10 +273,8 @@ public abstract class CommonGUI
 						result.add(this.user.getTranslation("biomes.gui.biomes-description.required-permissions"));
 
 						biomesObject.getRequiredPermissions().forEach(permission ->
-						{
-							result.add(this.user.getTranslation("biomes.gui.descriptions.permission",
-								"[permission]", permission));
-						});
+								result.add(this.user.getTranslation("biomes.gui.descriptions.permission",
+									"[permission]", permission)));
 					}
 					break;
 				}

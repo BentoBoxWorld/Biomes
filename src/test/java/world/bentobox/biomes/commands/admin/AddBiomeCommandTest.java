@@ -20,8 +20,8 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.block.Biome;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFactory;
@@ -30,7 +30,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.eclipse.jdt.annotation.NonNull;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -62,12 +61,11 @@ import world.bentobox.biomes.utils.Utils;
  *
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Bukkit.class, BentoBox.class, Utils.class, Util.class})
+@PrepareForTest({Bukkit.class, BentoBox.class, Utils.class, Util.class, User.class})
 public class AddBiomeCommandTest {
 
     @Mock
     private CompositeCommand ic;
-    private UUID uuid;
     @Mock
     private User user;
     @Mock
@@ -95,14 +93,6 @@ public class AddBiomeCommandTest {
     private BiomesAddonManager am;
     @Mock
     private Inventory top;
-
-
-    @BeforeClass
-    public static void beforeClass() throws Exception {
-        PowerMockito.mockStatic(Bukkit.class);
-        // version - has to be 1.13 because code is only built to 1.13
-        when(Bukkit.getBukkitVersion()).thenReturn("1.13");
-    }
 
     /**
      * @throws java.lang.Exception
@@ -142,9 +132,10 @@ public class AddBiomeCommandTest {
         when(world.getName()).thenReturn("BSkyBlock_world");
 
         // Player
+        PowerMockito.mockStatic(User.class);
         // Sometimes use Mockito.withSettings().verboseLogging()
         when(user.isOp()).thenReturn(false);
-        uuid = UUID.randomUUID();
+        UUID uuid = UUID.randomUUID();
         when(user.getUniqueId()).thenReturn(uuid);
         when(user.getPlayer()).thenReturn(p);
         when(user.getName()).thenReturn("tastybento");
@@ -192,6 +183,7 @@ public class AddBiomeCommandTest {
         when(bo.getDescription()).thenReturn(Collections.singletonList("Badlands biome"));
         when(bo.getUniqueId()).thenReturn("badlands");
         when(bo.getWorld()).thenReturn("world");
+        when(bo.getEnvironment()).thenReturn(Environment.NORMAL);
 
         // Util
         PowerMockito.mockStatic(Util.class);
@@ -247,10 +239,8 @@ public class AddBiomeCommandTest {
      */
     @Test
     public void testCanExecuteConsoleNoArgs() {
-        CommandSender sender = mock(CommandSender.class);
-        User console = User.getInstance(sender);
-        assertFalse(abc.canExecute(console, "add", Collections.emptyList()));
-        verify(lm).get(eq(console), eq("commands.help.header"));
+        when(user.isPlayer()).thenReturn(false);
+        assertFalse(abc.canExecute(user, "add", Collections.emptyList()));
     }
 
     /**

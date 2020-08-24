@@ -38,13 +38,13 @@ public class ChunkLoadListener implements Listener
         Chunk chunk = event.getChunk();
 
         BiomeChunkUpdateObject updateObject = this.addon.getAddonManager().
-                getPendingChunkUpdateObject(chunk.getWorld(), chunk.getX(), chunk.getZ());
+            getPendingChunkUpdateObject(chunk.getWorld(), chunk.getX(), chunk.getZ());
 
         if (updateObject != null)
         {
             if (updateObject.getMaxX() - updateObject.getMinX() > 15 ||
-                    (updateObject.getMinX() >> 4) != chunk.getX() ||
-                    (updateObject.getMaxX() >> 4) != chunk.getX())
+                (updateObject.getMinX() >> 4) != chunk.getX() ||
+                (updateObject.getMaxX() >> 4) != chunk.getX())
             {
                 // Something is wrong with X coordinates. Change to whole chunk.
                 updateObject.setMinX(updateObject.getChunkX() << 4);
@@ -52,21 +52,26 @@ public class ChunkLoadListener implements Listener
             }
 
             if (updateObject.getMaxZ() - updateObject.getMinZ() > 15 ||
-                    (updateObject.getMinZ() >> 4) != chunk.getZ() ||
-                    (updateObject.getMaxZ() >> 4) != chunk.getZ())
+                (updateObject.getMinZ() >> 4) != chunk.getZ() ||
+                (updateObject.getMaxZ() >> 4) != chunk.getZ())
             {
                 // Something is wrong with Z coordinates. Change to whole chunk.
                 updateObject.setMinZ(updateObject.getChunkZ() << 4);
                 updateObject.setMaxZ(updateObject.getChunkZ() << 4 + 15);
             }
 
-            // Update biome from minX till maxX and minZ till maxZ.
-            for (int x = updateObject.getMinX(); x <= updateObject.getMaxX(); x++)
+            // Update biome from minX till maxX and minZ till maxZ, and minY till maxY.
+            // Every 4th block must be updated as biome are stored in 4x4x4 cubes.
+
+            for (int x = updateObject.getMinX(); x <= updateObject.getMaxX(); x += 4)
             {
-                for (int z = updateObject.getMinZ(); z <= updateObject.getMaxZ(); z++)
+                for (int z = updateObject.getMinZ(); z <= updateObject.getMaxZ(); z += 4)
                 {
-                    // Change Biome
-                    updateObject.getWorld().setBiome(x, z, updateObject.getBiome());
+                    for (int y = updateObject.getMinY(); y <= updateObject.getMaxY(); y += 4)
+                    {
+                        // Change Biome
+                        updateObject.getWorld().setBiome(x, y, z, updateObject.getBiome());
+                    }
                 }
             }
 
@@ -84,5 +89,5 @@ public class ChunkLoadListener implements Listener
     /**
      * BiomeAddon variable.
      */
-    private BiomesAddon addon;
+    private final BiomesAddon addon;
 }

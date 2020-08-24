@@ -130,7 +130,7 @@ biomes:
       update-mode:
         island: "Île"
         chunk: "Chunk"
-        square: "Gamme"
+        range: "Gamme"
         undefined: "Indéfinie"
       visibility-mode:
         info: "Permet de modifier quels biomes vous pouvez voir."

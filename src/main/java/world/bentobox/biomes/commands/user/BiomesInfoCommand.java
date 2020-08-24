@@ -45,7 +45,7 @@ public class BiomesInfoCommand extends ExpandedCompositeCommand
 			user.sendMessage("biomes.information.type", "[type]", biomesObject.getBiome().name());
 			user.sendMessage("biomes.information.description", "[description]", this.getSingleLineDescription(biomesObject.getDescription()));
 			user.sendMessage("biomes.information.level", "[level]", Long.toString(biomesObject.getRequiredLevel()));
-			user.sendMessage("biomes.information.cost","[cost]", Integer.toString(biomesObject.getRequiredCost()));
+			user.sendMessage("biomes.information.cost","[cost]", Double.toString(biomesObject.getRequiredCost()));
 
 			biomesObject.getRequiredPermissions().forEach(s -> user.sendMessage("biomes.information.permission","[permission]", s));
 
