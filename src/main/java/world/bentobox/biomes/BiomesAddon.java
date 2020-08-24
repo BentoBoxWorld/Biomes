@@ -30,347 +30,378 @@ import world.bentobox.level.Level;
  */
 public class BiomesAddon extends Addon
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void onLoad()
-	{
-		// Save default config.yml
-		this.saveDefaultConfig();
-		// Load the plugin's config
-		this.loadSettings();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onLoad()
+    {
+        // Save default config.yml
+        this.saveDefaultConfig();
+        // Load the plugin's config
+        this.loadSettings();
+    }
 
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void onEnable()
-	{
-		// Check if it is enabled - it might be loaded, but not enabled.
-		if (this.getPlugin() == null || !this.getPlugin().isEnabled())
-		{
-			Bukkit.getLogger().severe("BentoBox is not available or disabled!");
-			this.setState(State.DISABLED);
-			return;
-		}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onEnable()
+    {
+        // Check if it is enabled - it might be loaded, but not enabled.
+        if (this.getPlugin() == null || !this.getPlugin().isEnabled())
+        {
+            Bukkit.getLogger().severe("BentoBox is not available or disabled!");
+            this.setState(State.DISABLED);
+            return;
+        }
 
-		// Check if addon is not disabled before.
-		if (this.getState().equals(State.DISABLED))
-		{
-			Bukkit.getLogger().severe("Biomes Addon is not available or disabled!");
-			return;
-		}
+        // Check if addon is not disabled before.
+        if (this.getState().equals(State.DISABLED))
+        {
+            Bukkit.getLogger().severe("Biomes Addon is not available or disabled!");
+            return;
+        }
 
-		this.hooked = false;
+        hookInGameModes();
 
-		this.getPlugin().getAddonsManager().getGameModeAddons().forEach(gameModeAddon -> {
-			if (!this.settings.getDisabledGameModes().contains(gameModeAddon.getDescription().getName()))
-			{
-				if (gameModeAddon.getPlayerCommand().isPresent())
-				{
-					new BiomesCommand(this, gameModeAddon.getPlayerCommand().get());
-					this.hooked = true;
-				}
-
-				if (gameModeAddon.getAdminCommand().isPresent())
-				{
-					new AdminCommand(this, gameModeAddon.getAdminCommand().get());
-				}
-
-				// Add FLAGS
-				BIOMES_WORLD_PROTECTION.addGameModeAddon(gameModeAddon);
-				BIOMES_ISLAND_PROTECTION.addGameModeAddon(gameModeAddon);
-			}
-		});
-
-		if (this.hooked)
-		{
-			// If hooked init Manager
-			this.addonManager = new BiomesAddonManager(this);
-
-			// Try to find Level addon and if it does not exist, display a warning
-
-			Optional<Addon> level = this.getAddonByName("Level");
-
-			if (!level.isPresent())
-			{
-				this.logWarning(
-					"Level add-on not found so level requirements will be ignored!");
-				this.levelAddon = null;
-			}
-			else
-			{
-				this.levelProvided = true;
-				this.levelAddon = (Level) level.get();
-			}
-
-			Optional<VaultHook> vault = this.getPlugin().getVault();
-
-			if (!vault.isPresent() || !vault.get().hook())
-			{
-				this.vaultHook = null;
-				this.logWarning(
-					"Economy plugin not found so money requirements will be ignored!");
-			}
-			else
-			{
-				this.economyProvided = true;
-				this.vaultHook = vault.get();
-			}
-
-			// Register the reset listener
-			this.registerListener(new ChangeOwnerListener(this));
-			this.registerListener(new ChunkLoadListener(this));
-
-			// Register Flags
-			this.registerFlag(BIOMES_WORLD_PROTECTION);
-			this.registerFlag(BIOMES_ISLAND_PROTECTION);
-
-			// Register Request Handlers
-			this.registerRequestHandler(new BiomeDataRequestHandler(this));
-			this.registerRequestHandler(new BiomeListRequestHandler(this));
-
-			this.registerRequestHandler(new ChangeBiomeRequestHandler(this));
-
-			if (this.settings.getUpdateTickCounter() > 0)
-			{
-				// This task will force-load chunk every update tick if its biome is not updated.
-				Bukkit.getScheduler().runTaskTimer(this.getPlugin(),
-					() -> {
-						Iterator<BiomeChunkUpdateObject> iterator =
-							this.addonManager.getBiomeUpdaterCollection().iterator();
-
-						// if there is nothing to load, then skip.
-						if (!iterator.hasNext())
-						{
-							return;
-						}
-
-						BiomeChunkUpdateObject updater = iterator.next();
-
-						// if chunk is already force-loaded, then skip.
-						while (iterator.hasNext() && updater.isForceLoaded())
-						{
-							updater = iterator.next();
-						}
-
-						World world = updater.getWorld();
-
-						// if chunk is loaded then skip.
-						if (!world.isChunkLoaded(updater.getChunkX(), updater.getChunkZ()))
-						{
-							// Set flag as force-loaded.
-							updater.setForceLoaded(true);
-
-							// force-load chunk asynchronously
-							Util.getChunkAtAsync(world,
-								updater.getChunkX(),
-								updater.getChunkZ());
-						}
-					},
-					this.settings.getUpdateTickCounter(),
-					this.settings.getUpdateTickCounter());
-			}
-		}
-		else
-		{
-			this.logError(
-				"Biomes could not hook into any GameMode so will not do anything!");
-			this.setState(State.DISABLED);
-		}
-	}
+        if (this.hooked)
+        {
+            setupAddon();
+        }
+        else
+        {
+            this.logError(
+                    "Biomes could not hook into any GameMode so will not do anything!");
+            this.setState(State.DISABLED);
+        }
+    }
 
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void onReload()
-	{
-		super.onReload();
+    /**
+     * Sets up everything once the addon is hooked into Game Modes
+     */
+    private void setupAddon() {
+        // If hooked init Manager
+        this.addonManager = new BiomesAddonManager(this);
 
-		if (this.hooked)
-		{
-			this.loadSettings();
-			// Reload biomes manager.
-			this.addonManager.reload();
+        // Try to find Level addon and if it does not exist, display a warning
+        findLevelAddon();
 
-			this.getLogger().info("Biomes addon reloaded.");
-		}
-	}
+        findVaultPlugin();
 
+        // Register the reset listener
+        this.registerListener(new ChangeOwnerListener(this));
+        this.registerListener(new ChunkLoadListener(this));
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void onDisable()
-	{
-		if (this.hooked)
-		{
-			if (this.settings != null)
-			{
-				new Config<>(this, Settings.class).saveConfigObject(this.settings);
-			}
+        // Register Flags
+        this.registerFlag(BIOMES_WORLD_PROTECTION);
+        this.registerFlag(BIOMES_ISLAND_PROTECTION);
 
-			if (this.addonManager != null)
-			{
-				this.addonManager.save();
-			}
-		}
-	}
+        // Register Request Handlers
+        this.registerRequestHandler(new BiomeDataRequestHandler(this));
+        this.registerRequestHandler(new BiomeListRequestHandler(this));
+
+        this.registerRequestHandler(new ChangeBiomeRequestHandler(this));
+
+        if (this.settings.getUpdateTickCounter() > 0)
+        {
+            // This task will force-load chunk every update tick if its biome is not updated.
+            runChunkUpdatingScheduler();
+        }
+
+    }
 
 
-	/**
-	 * This method loads addon configuration settings in memory.
-	 */
-	private void loadSettings()
-	{
-		this.settings = new Config<>(this, Settings.class).loadConfigObject();
+    /**
+     * This task will force-load chunk every update tick if its biome is not updated.
+     */
+    private void runChunkUpdatingScheduler() {
+        Bukkit.getScheduler().runTaskTimer(this.getPlugin(),  () -> {
+            Iterator<BiomeChunkUpdateObject> iterator =
+                    this.addonManager.getBiomeUpdaterCollection().iterator();
 
-		if (this.settings == null)
-		{
-			// Disable
-			this.logError("Biomes settings could not load! Addon disabled.");
-			this.setState(State.DISABLED);
-		}
-	}
+            // if there is nothing to load, then skip.
+            if (!iterator.hasNext())
+            {
+                return;
+            }
 
+            BiomeChunkUpdateObject updater = iterator.next();
 
-// ---------------------------------------------------------------------
-// Section: Getters
-// ---------------------------------------------------------------------
+            // if chunk is already force-loaded, then skip.
+            while (iterator.hasNext() && updater.isForceLoaded())
+            {
+                updater = iterator.next();
+            }
 
+            World world = updater.getWorld();
 
-	/**
-	 * This method returns addon manager.
-	 *
-	 * @return Addon manager object.
-	 */
-	public BiomesAddonManager getAddonManager()
-	{
-		return this.addonManager;
-	}
+            // if chunk is loaded then skip.
+            if (!world.isChunkLoaded(updater.getChunkX(), updater.getChunkZ()))
+            {
+                // Set flag as force-loaded.
+                updater.setForceLoaded(true);
 
+                // force-load chunk asynchronously
+                Util.getChunkAtAsync(world,
+                        updater.getChunkX(),
+                        updater.getChunkZ());
+            }
+        },
+                this.settings.getUpdateTickCounter(),
+                this.settings.getUpdateTickCounter());
 
-	/**
-	 * This method returns addon settings.
-	 *
-	 * @return Addon settings object.
-	 */
-	public Settings getSettings()
-	{
-		return this.settings;
-	}
-
-
-	/**
-	 * This method returns the economyProvided value.
-	 * @return the value of economyProvided.
-	 */
-	public boolean isEconomyProvided()
-	{
-		return this.economyProvided;
-	}
+    }
 
 
-	/**
-	 * This method returns the vaultHook value.
-	 * @return the value of vaultHook.
-	 */
-	public VaultHook getVaultHook()
-	{
-		return this.vaultHook;
-	}
+    private void findVaultPlugin() {
+        Optional<VaultHook> vault = this.getPlugin().getVault();
+
+        if (!vault.isPresent() || !vault.get().hook())
+        {
+            this.vaultHook = null;
+            this.logWarning(
+                    "Economy plugin not found so money requirements will be ignored!");
+        }
+        else
+        {
+            this.economyProvided = true;
+            this.vaultHook = vault.get();
+        }
+
+    }
 
 
-	/**
-	 * This method returns the levelAddon value.
-	 * @return the value of levelAddon.
-	 */
-	public Level getLevelAddon()
-	{
-		return this.levelAddon;
-	}
+    private void findLevelAddon() {
+        Optional<Addon> level = this.getAddonByName("Level");
+
+        if (!level.isPresent())
+        {
+            this.logWarning(
+                    "Level add-on not found so level requirements will be ignored!");
+            this.levelAddon = null;
+            this.levelProvided = false;
+        }
+        else
+        {
+            this.levelProvided = true;
+            this.levelAddon = (Level) level.get();
+        }
+    }
 
 
-	/**
-	 * This method returns the levelProvided value.
-	 * @return the value of levelProvided.
-	 */
-	public boolean isLevelProvided()
-	{
-		return this.levelProvided;
-	}
+    private void hookInGameModes() {
+        this.getPlugin().getAddonsManager().getGameModeAddons().forEach(gameModeAddon -> {
+            if (!this.settings.getDisabledGameModes().contains(gameModeAddon.getDescription().getName()))
+            {
+                if (gameModeAddon.getPlayerCommand().isPresent())
+                {
+                    new BiomesCommand(this, gameModeAddon.getPlayerCommand().get());
+                    this.hooked = true;
+                }
+
+                if (gameModeAddon.getAdminCommand().isPresent())
+                {
+                    new AdminCommand(this, gameModeAddon.getAdminCommand().get());
+                }
+
+                // Add FLAGS
+                BIOMES_WORLD_PROTECTION.addGameModeAddon(gameModeAddon);
+                BIOMES_ISLAND_PROTECTION.addGameModeAddon(gameModeAddon);
+            }
+        });
+    }
 
 
-// ---------------------------------------------------------------------
-// Section: Variables
-// ---------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onReload()
+    {
+        super.onReload();
+
+        if (this.hooked)
+        {
+            this.loadSettings();
+            // Reload biomes manager.
+            this.addonManager.reload();
+
+            this.getLogger().info("Biomes addon reloaded.");
+        }
+    }
 
 
-	/**
-	 * This variable stores if current addon is hooked or not.
-	 */
-	private boolean hooked;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onDisable()
+    {
+        if (this.hooked)
+        {
+            if (this.settings != null)
+            {
+                new Config<>(this, Settings.class).saveConfigObject(this.settings);
+            }
 
-	/**
-	 * This variable stores biomes manager.
-	 */
-	private BiomesAddonManager addonManager;
-
-	/**
-	 * This variable stores biomes addon settings.
-	 */
-	private Settings settings;
-
-	/**
-	 * This boolean indicate if economy is enabled.
-	 */
-	private boolean economyProvided;
-
-	/**
-	 * VaultHook that process economy.
-	 */
-	private VaultHook vaultHook;
-
-	/**
-	 * Level addon.
-	 */
-	private Level levelAddon;
-
-	/**
-	 * This indicate if level addon exists.
-	 */
-	private boolean levelProvided;
+            if (this.addonManager != null)
+            {
+                this.addonManager.save();
+            }
+        }
+    }
 
 
-// ---------------------------------------------------------------------
-// Section: Flags
-// ---------------------------------------------------------------------
+    /**
+     * This method loads addon configuration settings in memory.
+     */
+    private void loadSettings()
+    {
+        this.settings = new Config<>(this, Settings.class).loadConfigObject();
+
+        if (this.settings == null)
+        {
+            // Disable
+            this.logError("Biomes settings could not load! Addon disabled.");
+            this.setState(State.DISABLED);
+        }
+    }
 
 
-	/**
-	 * This flag allows to change biomes in any part of the world. It will not limit
-	 * player to their island. Useful for skygrid without protection flags.
-	 */
-	public static final Flag BIOMES_WORLD_PROTECTION =
-		new Flag.Builder("BIOMES_WORLD_PROTECTION", Material.GRASS_BLOCK).
-			type(Flag.Type.WORLD_SETTING).
-			mode(Flag.Mode.ADVANCED).
-			defaultSetting(true).
-			build();
+    // ---------------------------------------------------------------------
+    // Section: Getters
+    // ---------------------------------------------------------------------
 
-	/**
-	 * This flag allows to define which users can change biomes. F.e. it can be set
-	 * that only Island owner can change biomes.
-	 * By default it is set to Visitor.
-	 */
-	public static final Flag BIOMES_ISLAND_PROTECTION =
-		new Flag.Builder("BIOMES_ISLAND_PROTECTION", Material.GRASS_BLOCK).
-			mode(Flag.Mode.ADVANCED).
-			build();
+
+    /**
+     * This method returns addon manager.
+     *
+     * @return Addon manager object.
+     */
+    public BiomesAddonManager getAddonManager()
+    {
+        return this.addonManager;
+    }
+
+
+    /**
+     * This method returns addon settings.
+     *
+     * @return Addon settings object.
+     */
+    public Settings getSettings()
+    {
+        return this.settings;
+    }
+
+
+    /**
+     * This method returns the economyProvided value.
+     * @return the value of economyProvided.
+     */
+    public boolean isEconomyProvided()
+    {
+        return this.economyProvided;
+    }
+
+
+    /**
+     * This method returns the vaultHook value.
+     * @return the value of vaultHook.
+     */
+    public VaultHook getVaultHook()
+    {
+        return this.vaultHook;
+    }
+
+
+    /**
+     * This method returns the levelAddon value.
+     * @return the value of levelAddon.
+     */
+    public Level getLevelAddon()
+    {
+        return this.levelAddon;
+    }
+
+
+    /**
+     * This method returns the levelProvided value.
+     * @return the value of levelProvided.
+     */
+    public boolean isLevelProvided()
+    {
+        return this.levelProvided;
+    }
+
+
+    // ---------------------------------------------------------------------
+    // Section: Variables
+    // ---------------------------------------------------------------------
+
+
+    /**
+     * This variable stores if current addon is hooked or not.
+     */
+    private boolean hooked;
+
+    /**
+     * This variable stores biomes manager.
+     */
+    private BiomesAddonManager addonManager;
+
+    /**
+     * This variable stores biomes addon settings.
+     */
+    private Settings settings;
+
+    /**
+     * This boolean indicate if economy is enabled.
+     */
+    private boolean economyProvided;
+
+    /**
+     * VaultHook that process economy.
+     */
+    private VaultHook vaultHook;
+
+    /**
+     * Level addon.
+     */
+    private Level levelAddon;
+
+    /**
+     * This indicate if level addon exists.
+     */
+    private boolean levelProvided;
+
+
+    // ---------------------------------------------------------------------
+    // Section: Flags
+    // ---------------------------------------------------------------------
+
+
+    /**
+     * This flag allows to change biomes in any part of the world. It will not limit
+     * player to their island. Useful for skygrid without protection flags.
+     */
+    public static final Flag BIOMES_WORLD_PROTECTION =
+            new Flag.Builder("BIOMES_WORLD_PROTECTION", Material.GRASS_BLOCK).
+            type(Flag.Type.WORLD_SETTING).
+            mode(Flag.Mode.ADVANCED).
+            defaultSetting(true).
+            build();
+
+    /**
+     * This flag allows to define which users can change biomes. F.e. it can be set
+     * that only Island owner can change biomes.
+     * By default it is set to Visitor.
+     */
+    public static final Flag BIOMES_ISLAND_PROTECTION =
+            new Flag.Builder("BIOMES_ISLAND_PROTECTION", Material.GRASS_BLOCK).
+            mode(Flag.Mode.ADVANCED).
+            build();
 }
