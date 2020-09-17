@@ -1,12 +1,15 @@
 package world.bentobox.biomes.tasks;
 
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import world.bentobox.bentobox.api.events.addon.AddonEvent;
 import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.objects.Island;
@@ -415,7 +418,16 @@ public class BiomeUpdateHelper
         if (this.canWithdraw)
         {
             this.addon.getPlugin().getVault().ifPresent(
-                    vaultHook -> vaultHook.withdraw(this.callerUser, this.biome.getRequiredCost()));
+                    vaultHook -> {
+                    	vaultHook.withdraw(this.callerUser, this.biome.getRequiredCost());
+                    	
+                        Map<String, Object> keyValues = new HashMap<>();
+                        keyValues.put("eventName", "BiomeBuyEvent");
+                        keyValues.put("targetPlayer", this.callerUser.getUniqueId());
+                        keyValues.put("biome", biome.getFriendlyName());
+                        
+                        new AddonEvent().builder().addon(addon).keyValues(keyValues).build();
+                    });
         }
 
         task.runTaskAsynchronously(this.addon.getPlugin());
