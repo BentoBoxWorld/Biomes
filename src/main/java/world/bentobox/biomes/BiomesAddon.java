@@ -22,6 +22,7 @@ import world.bentobox.biomes.handlers.BiomeListRequestHandler;
 import world.bentobox.biomes.handlers.ChangeBiomeRequestHandler;
 import world.bentobox.biomes.listeners.ChangeOwnerListener;
 import world.bentobox.biomes.listeners.ChunkLoadListener;
+import world.bentobox.greenhouses.Greenhouses;
 import world.bentobox.level.Level;
 
 
@@ -64,16 +65,15 @@ public class BiomesAddon extends Addon
             return;
         }
 
-        hookInGameModes();
+        this.hookInGameModes();
 
         if (this.hooked)
         {
-            setupAddon();
+            this.setupAddon();
         }
         else
         {
-            this.logError(
-                    "Biomes could not hook into any GameMode so will not do anything!");
+            this.logError("Biomes could not hook into any GameMode so will not do anything!");
             this.setState(State.DISABLED);
         }
     }
@@ -87,11 +87,13 @@ public class BiomesAddon extends Addon
         this.addonManager = new BiomesAddonManager(this);
 
         // Try to find Level addon and if it does not exist, display a warning
-        findLevelAddon();
+        this.findLevelAddon();
+        // Try to find Greenhouses addon
+        this.findGreenhousesAddon();
+        // Try to find Economy Plugin
+        this.findVaultPlugin();
 
-        findVaultPlugin();
-
-        // Register the reset listener
+		// Register the reset listener
         this.registerListener(new ChangeOwnerListener(this));
         this.registerListener(new ChunkLoadListener(this));
 
@@ -108,79 +110,88 @@ public class BiomesAddon extends Addon
         if (this.settings.getUpdateTickCounter() > 0)
         {
             // This task will force-load chunk every update tick if its biome is not updated.
-            runChunkUpdatingScheduler();
+            this.runChunkUpdatingScheduler();
         }
-
     }
 
 
     /**
      * This task will force-load chunk every update tick if its biome is not updated.
      */
-    private void runChunkUpdatingScheduler() {
-        Bukkit.getScheduler().runTaskTimer(this.getPlugin(),  () -> {
-            Iterator<BiomeChunkUpdateObject> iterator =
+    private void runChunkUpdatingScheduler()
+    {
+        Bukkit.getScheduler().runTaskTimer(this.getPlugin(), () -> {
+                Iterator<BiomeChunkUpdateObject> iterator =
                     this.addonManager.getBiomeUpdaterCollection().iterator();
 
-            // if there is nothing to load, then skip.
-            if (!iterator.hasNext())
-            {
-                return;
-            }
+                // if there is nothing to load, then skip.
+                if (!iterator.hasNext())
+                {
+                    return;
+                }
 
-            BiomeChunkUpdateObject updater = iterator.next();
+                BiomeChunkUpdateObject updater = iterator.next();
 
-            // if chunk is already force-loaded, then skip.
-            while (iterator.hasNext() && updater.isForceLoaded())
-            {
-                updater = iterator.next();
-            }
+                // if chunk is already force-loaded, then skip.
+                while (iterator.hasNext() && updater.isForceLoaded())
+                {
+                    updater = iterator.next();
+                }
 
-            World world = updater.getWorld();
+                World world = updater.getWorld();
 
-            // if chunk is loaded then skip.
-            if (!world.isChunkLoaded(updater.getChunkX(), updater.getChunkZ()))
-            {
-                // Set flag as force-loaded.
-                updater.setForceLoaded(true);
+                // if chunk is loaded then skip.
+                if (!world.isChunkLoaded(updater.getChunkX(), updater.getChunkZ()))
+                {
+                    // Set flag as force-loaded.
+                    updater.setForceLoaded(true);
 
-                // force-load chunk asynchronously
-                Util.getChunkAtAsync(world,
+                    // force-load chunk asynchronously
+                    Util.getChunkAtAsync(world,
                         updater.getChunkX(),
                         updater.getChunkZ());
-            }
-        },
-                this.settings.getUpdateTickCounter(),
-                this.settings.getUpdateTickCounter());
+                }
+            },
 
+            this.settings.getUpdateTickCounter(),
+            this.settings.getUpdateTickCounter());
     }
 
 
-    private void findVaultPlugin() {
+    /**
+     * This is silly method that was introduced to reduce main method complexity, and just reports
+     * if economy is enabled or not.
+     */
+    private void findVaultPlugin()
+    {
         Optional<VaultHook> vault = this.getPlugin().getVault();
 
         if (!vault.isPresent() || !vault.get().hook())
         {
             this.vaultHook = null;
             this.logWarning(
-                    "Economy plugin not found so money requirements will be ignored!");
+                "Economy plugin not found so money requirements will be ignored!");
         }
         else
         {
             this.economyProvided = true;
             this.vaultHook = vault.get();
         }
-
     }
 
 
-    private void findLevelAddon() {
+    /**
+     * This is silly method that was introduced to reduce main method complexity, and just reports
+     * if level addon is enabled or not.
+     */
+    private void findLevelAddon()
+    {
         Optional<Addon> level = this.getAddonByName("Level");
 
         if (!level.isPresent())
         {
             this.logWarning(
-                    "Level add-on not found so level requirements will be ignored!");
+                "Level add-on not found so level requirements will be ignored!");
             this.levelAddon = null;
             this.levelProvided = false;
         }
@@ -192,7 +203,27 @@ public class BiomesAddon extends Addon
     }
 
 
-    private void hookInGameModes() {
+    /**
+     * This is silly method that was introduced to reduce main method complexity, and just reports
+     * if greenhouses is enabled or not.
+     */
+    private void findGreenhousesAddon()
+    {
+        Optional<Addon> greenhouses = this.getAddonByName("Greenhouses");
+
+        if (greenhouses.isPresent())
+        {
+            this.greenhousesProvided = true;
+            this.greenhouses = (Greenhouses) greenhouses.get();
+        }
+    }
+
+
+    /**
+     * This method hooks commands and flags into each GameModeAddon.
+     */
+    private void hookInGameModes()
+    {
         this.getPlugin().getAddonsManager().getGameModeAddons().forEach(gameModeAddon -> {
             if (!this.settings.getDisabledGameModes().contains(gameModeAddon.getDescription().getName()))
             {
@@ -338,9 +369,29 @@ public class BiomesAddon extends Addon
     }
 
 
-    // ---------------------------------------------------------------------
-    // Section: Variables
-    // ---------------------------------------------------------------------
+	/**
+	 * This method returns the Greenhouses value.
+	 * @return the value of Greenhouses.
+	 */
+	public Greenhouses getGreenhouses()
+	{
+		return this.greenhouses;
+	}
+
+
+	/**
+	 * This method returns the greenhousesProvided value.
+	 * @return the value of greenhousesProvided.
+	 */
+	public boolean isGreenhousesProvided()
+	{
+		return this.greenhousesProvided;
+	}
+
+
+// ---------------------------------------------------------------------
+// Section: Variables
+// ---------------------------------------------------------------------
 
 
     /**
@@ -377,6 +428,16 @@ public class BiomesAddon extends Addon
      * This indicate if level addon exists.
      */
     private boolean levelProvided;
+
+	/**
+	 * Greenhouses addon.
+	 */
+	private Greenhouses greenhouses;
+
+	/**
+	 * This indicate if greenhouses addon exists.
+	 */
+	private boolean greenhousesProvided;
 
 
     // ---------------------------------------------------------------------
