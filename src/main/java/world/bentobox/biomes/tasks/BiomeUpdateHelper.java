@@ -84,6 +84,12 @@ public class BiomeUpdateHelper
                 return false;
             }
 
+            if (!this.hasPermissionToUpdateMode())
+            {
+                this.callerUser.sendMessage("general.errors.no-permission");
+                return false;
+            }
+
             if (!this.updateMode.equals(UpdateMode.ISLAND) && this.updateNumber <= 0)
             {
                 // Cannot update negative numbers.
@@ -442,6 +448,22 @@ public class BiomeUpdateHelper
     {
         return this.biome.getRequiredPermissions().isEmpty() ||
                 this.biome.getRequiredPermissions().stream().allMatch(this.callerUser::hasPermission);
+    }
+
+
+    /**
+     * This method returns if the caller user have a permission to change biome with a given
+     * update mode for given biomeObject.
+     * @return {@code true} if caller has permission to use given update mode on given biomeObject
+     * {@code false} otherwise.
+     */
+    public boolean hasPermissionToUpdateMode()
+    {
+        // TODO: probably passing permission string to helper would be more efficient.
+        return Utils.hasUserUpdateModePermission(this.callerUser,
+            this.addon.getPlugin().getIWM().getPermissionPrefix(this.world),
+            this.updateMode,
+            this.biome.getUniqueId());
     }
 
 

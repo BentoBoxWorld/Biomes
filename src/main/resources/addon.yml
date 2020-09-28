@@ -22,6 +22,15 @@ permissions:
   '[gamemode].biomes.set':
     description: Player can use biomes set command.
     default: true
+  '[gamemode].biomes.set.island.*':
+    description: Player can change biome on whole island for all biomes.
+    default: true
+  '[gamemode].biomes.set.chunk.*':
+    description: Player can change biome by chunk for all biomes.
+    default: true
+  '[gamemode].biomes.set.range.*':
+    description: Player can change biome by range for all biomes.
+    default: true
 
   '[gamemode].admin.biomes':
     description: Player can use admin biomes command that opens GUI.
