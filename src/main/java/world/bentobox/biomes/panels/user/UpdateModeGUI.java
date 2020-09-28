@@ -11,12 +11,15 @@ import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.bentobox.util.heads.HeadCache;
+import world.bentobox.bentobox.util.heads.HeadGetter;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.config.Settings.UpdateMode;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.panels.CommonGUI;
 import world.bentobox.biomes.panels.GuiUtils;
 import world.bentobox.biomes.panels.util.NumberGUI;
+import world.bentobox.biomes.utils.Utils;
 
 
 /**
@@ -60,7 +63,7 @@ public class UpdateModeGUI extends CommonGUI
         PanelBuilder panelBuilder = new PanelBuilder().user(this.user).
                 name(this.user.getTranslation("biomes.gui.title.mode-choose"));
 
-        GuiUtils.fillBorder(panelBuilder, Material.GRAY_STAINED_GLASS_PANE);
+        GuiUtils.fillBorder(panelBuilder, 4, Material.GRAY_STAINED_GLASS_PANE);
 
         // Map at the top of the GUI
         panelBuilder.item(4, this.createButton(Button.HEADER));
@@ -69,37 +72,39 @@ public class UpdateModeGUI extends CommonGUI
         if (BiomesAddon.BIOMES_WORLD_PROTECTION.isSetForWorld(this.world))
         {
             // Island mode should be available only if world protection is enabled.
-            panelBuilder.item(12, this.createButton(Button.ISLAND));
+            panelBuilder.item(11, this.createButton(Button.ISLAND));
+        }
+        
+        panelBuilder.item(13, this.createButton(Button.CHUNK));
+        panelBuilder.item(15, this.createButton(Button.RANGE));
+
+        // Show buttons only for non-island update mode.
+        if (this.updateMode == UpdateMode.CHUNK)
+        {
+            // Decrease of current value
+            panelBuilder.item(21, this.createButton(Button.DECREASE, 1));
+            // Paper that shows current value
+            panelBuilder.item(22, this.createButton(Button.VALUE));
+            // Increase of current value
+            panelBuilder.item(23, this.createButton(Button.INCREASE, 1));
+        }
+        else if (this.updateMode == UpdateMode.RANGE)
+        {
+            panelBuilder.item(20, this.createButton(Button.DECREASE, 5));
+            // Decrease of current value
+            panelBuilder.item(21, this.createButton(Button.DECREASE, 1));
+            // Paper that shows current value
+            panelBuilder.item(22, this.createButton(Button.VALUE));
+            // Increase of current value
+            panelBuilder.item(23, this.createButton(Button.INCREASE, 1));
+            panelBuilder.item(24, this.createButton(Button.INCREASE, 5));
         }
 
-        panelBuilder.item(13, this.createButton(Button.CHUNK));
-        panelBuilder.item(14, this.createButton(Button.SQUARE));
-
-        // Decrease of current value
-        panelBuilder.item(19, this.createButton(Button.DECREASE, 10));
-        panelBuilder.item(20, this.createButton(Button.DECREASE, 5));
-        panelBuilder.item(21, this.createButton(Button.DECREASE, 1));
-        // Paper that shows current value
-        panelBuilder.item(22, this.createButton(Button.VALUE));
-        // Increase of current value
-        panelBuilder.item(23, this.createButton(Button.INCREASE, 1));
-        panelBuilder.item(24, this.createButton(Button.INCREASE, 5));
-        panelBuilder.item(25, this.createButton(Button.INCREASE, 10));
-
-        // Set values
-        panelBuilder.item(28, this.createButton(Button.SET, 0));
-        panelBuilder.item(29, this.createButton(Button.SET, 2));
-        panelBuilder.item(30, this.createButton(Button.SET, 4));
-        panelBuilder.item(31, this.createButton(Button.SET, 8));
-        panelBuilder.item(32, this.createButton(Button.SET, 16));
-        panelBuilder.item(33, this.createButton(Button.SET, 32));
-        panelBuilder.item(34, this.createButton(Button.SET, 64));
-
         // Bottom buttons
-        panelBuilder.item(39, this.createButton(Button.DECLINE));
-        panelBuilder.item(41, this.createButton(Button.ACCEPT));
+        panelBuilder.item(30, this.createButton(Button.DECLINE));
+        panelBuilder.item(32, this.createButton(Button.ACCEPT));
 
-        panelBuilder.item(44, this.returnButton);
+        panelBuilder.item(35, this.returnButton);
 
         panelBuilder.build();
     }
@@ -124,209 +129,202 @@ public class UpdateModeGUI extends CommonGUI
      */
     private PanelItem createButton(Button button, int number)
     {
-        PanelItemBuilder itemBuilder = new PanelItemBuilder();
-
+        String name;
+        ItemStack icon;
+        String description = "";
+        PanelItem.ClickHandler clickHandler;
+        boolean glow = false;
+        
         switch (button)
         {
-        case VALUE:
-        {
-            itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.value",
-                    NUMBER, Integer.toString(this.distanceValue)));
-            itemBuilder.icon(new ItemStack(Material.PAPER, number));
-
-            if (!this.updateMode.equals(UpdateMode.ISLAND))
+            case HEADER:
             {
-                itemBuilder.clickHandler((panel, user1, clickType, i) -> {
+               name = this.user.getTranslation("biomes.gui.buttons.information");
+               
+               description = this.user.getTranslation("biomes.gui.descriptions.information", 
+                   "[biome]", this.biome.getFriendlyName(), 
+                   "[mode]", this.user.getTranslation("biomes.gui.descriptions.update-mode." + this.updateMode.name().toLowerCase()),
+                   "[range]", Integer.toString(this.distanceValue));
+
+               icon = new ItemStack(Material.MAP, number);
+
+               clickHandler = null;
+               break;
+            }
+                
+            case ISLAND:
+            {
+                name = this.user.getTranslation("biomes.gui.descriptions.update-mode.island");
+
+                icon = new ItemStack(Material.GRASS_BLOCK, number);
+                clickHandler = ((panel, user1, clickType, i) ->
+                {
+                    this.updateMode = UpdateMode.ISLAND;
+                    this.build();
+                    return true;
+                });
+
+                glow = this.updateMode.equals(UpdateMode.ISLAND);
+
+                break;
+            }
+            case CHUNK:
+            {
+                name = this.user.getTranslation("biomes.gui.descriptions.update-mode.chunk");
+
+                icon = new ItemStack(Material.DIRT, number);
+                clickHandler = ((panel, user1, clickType, i) ->
+                {
+                    this.updateMode = UpdateMode.CHUNK;
+                    this.build();
+                    return true;
+                });
+
+                glow = this.updateMode.equals(UpdateMode.CHUNK);
+
+                break;
+            }
+            case RANGE:
+            {
+                name = this.user.getTranslation("biomes.gui.descriptions.update-mode.range");
+
+                icon = new ItemStack(Material.GLASS, number);
+                clickHandler = ((panel, user1, clickType, i) ->
+                {
+                    this.updateMode = UpdateMode.RANGE;
+                    this.build();
+                    return true;
+                });
+
+                glow = this.updateMode.equals(UpdateMode.RANGE);
+
+                break;
+            }
+
+            case VALUE:
+            {
+                name = this.user.getTranslation("biomes.gui.buttons.value",
+                    NUMBER, Integer.toString(this.distanceValue));
+                icon = new ItemStack(Material.PAPER, number);
+
+                clickHandler = (panel, user1, clickType, i) -> {
 
                     // On right click open NumberGui for +/- manual input.
                     if (clickType.isRightClick())
                     {
                         new NumberGUI(this.user,
-                                this.distanceValue,
-                                0,
-                                this.addon.getSettings().getLoreLineLength(),
-                                (status, value) -> {
-                                    if (status)
-                                    {
-                                        this.distanceValue = value;
-                                    }
+                            this.distanceValue,
+                            0,
+                            this.addon.getSettings().getLoreLineLength(),
+                            (status, value) -> {
+                                if (status)
+                                {
+                                    this.distanceValue = value;
+                                }
 
-                                    UpdateModeGUI.this.build();
-                                });
+                                UpdateModeGUI.this.build();
+                            });
                     }
                     return true;
-                });
-            }
+                };
 
-            break;
-        }
-        case INCREASE:
-        {
-            itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.increase", NUMBER, Integer.toString(number)));
-
-            if (this.updateMode.equals(UpdateMode.ISLAND))
-            {
-                itemBuilder.icon(new ItemStack(Material.BLACK_STAINED_GLASS_PANE, number));
+                break;
             }
-            else
+            case INCREASE:
             {
-                itemBuilder.icon(new ItemStack(Material.GREEN_STAINED_GLASS_PANE, number));
-                itemBuilder.clickHandler((panel, user1, clickType, i) -> {
+                name = this.user.getTranslation("biomes.gui.buttons.increase",
+                    NUMBER, Integer.toString(number));
+                icon = new ItemStack(Material.GREEN_CARPET);
+
+                clickHandler = (panel, user1, clickType, i) -> {
                     this.distanceValue += number;
 
-                    // Several icons will be updated, so need to rebuild all?
                     this.build();
                     return true;
-                });
+                };
+                
+                break;
             }
-
-            break;
-        }
-        case DECREASE:
-        {
-            itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.decrease", NUMBER, Integer.toString(number)));
-
-            if (this.updateMode.equals(UpdateMode.ISLAND))
+            case DECREASE:
             {
-                itemBuilder.icon(new ItemStack(Material.BLACK_STAINED_GLASS_PANE, number));
-            }
-            else
-            {
-                itemBuilder.icon(new ItemStack(Material.RED_STAINED_GLASS_PANE, number));
-                itemBuilder.clickHandler((panel, user1, clickType, i) -> {
+                name = this.user.getTranslation("biomes.gui.buttons.decrease",
+                    NUMBER, Integer.toString(number));
+                icon = new ItemStack(Material.RED_CARPET);
+                
+                clickHandler = (panel, user1, clickType, i) -> {
                     this.distanceValue -= number;
 
-                    if (this.distanceValue < 0)
+                    if (this.distanceValue < 1)
                     {
-                        this.distanceValue = 0;
-                        // TODO: Probably need to inform or block - buttons.
+                        this.distanceValue = 1;
                     }
 
-                    // Several icons will be updated, so need to rebuild all?
                     this.build();
                     return true;
-                });
+                };
+                
+                break;
             }
 
-            break;
-        }
-        case SET:
-        {
-            itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.set", NUMBER, Integer.toString(number)));
-
-            if (this.updateMode.equals(UpdateMode.ISLAND))
+            case ACCEPT:
             {
-                itemBuilder.icon(new ItemStack(Material.BLACK_STAINED_GLASS_PANE, number == 0 ? 1 : number));
-            }
-            else
-            {
-                if (number == 0)
+                name = this.user.getTranslation("biomes.gui.buttons.accept");
+                
+                if (Utils.hasUserUpdateModePermission(this.user,
+                    this.permissionPrefix,
+                    this.updateMode, 
+                    this.biome.getUniqueId()))
                 {
-                    itemBuilder.icon(new ItemStack(Material.YELLOW_STAINED_GLASS_PANE, 1));
+                    icon = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, number);
+                    clickHandler = (panel, user1, clickType, i) -> {
+                        List<String> arguments = new ArrayList<>(4);
+
+                        if (this.target != null)
+                        {
+                            arguments.add(this.target.getName());
+                        }
+
+                        arguments.add(this.biome.getUniqueId());
+                        arguments.add(this.updateMode.name());
+                        arguments.add(Integer.toString(this.distanceValue));
+
+                        this.callCommand(SET, arguments);
+
+                        return true;
+                    };
                 }
                 else
                 {
-                    itemBuilder.icon(new ItemStack(Material.WHITE_STAINED_GLASS_PANE, number));
+                    icon = new ItemStack(Material.BLACK_STAINED_GLASS_PANE, number);
+                    clickHandler = null;
                 }
-
-                itemBuilder.clickHandler((panel, user1, clickType, i) -> {
-                    this.distanceValue = number;
-                    this.build();
-                    return true;
-                });
+                
+                break;
             }
+            case DECLINE:
+            {
+                name = this.user.getTranslation("biomes.gui.buttons.decline");
+                icon = new ItemStack(Material.RED_STAINED_GLASS_PANE, number);
+                clickHandler = (panel, user1, clickType, i) -> {
+                    this.user.closeInventory();
+                    return true;
+                };
 
-            break;
-        }
-        case ISLAND:
-        {
-            itemBuilder.name(this.user.getTranslation("biomes.gui.descriptions.update-mode.island"));
-            itemBuilder.icon(new ItemStack(Material.GRASS_BLOCK, number));
-            itemBuilder.clickHandler((panel, user1, clickType, i) -> {
-                this.updateMode = UpdateMode.ISLAND;
-                this.build();
-                return true;
-            });
-            itemBuilder.glow(this.updateMode.equals(UpdateMode.ISLAND));
-
-            break;
-        }
-        case CHUNK:
-        {
-            itemBuilder.name(this.user.getTranslation("biomes.gui.descriptions.update-mode.chunk"));
-            itemBuilder.icon(new ItemStack(Material.DIRT, number));
-            itemBuilder.clickHandler((panel, user1, clickType, i) -> {
-                this.updateMode = UpdateMode.CHUNK;
-                this.build();
-                return true;
-            });
-            itemBuilder.glow(this.updateMode.equals(UpdateMode.CHUNK));
-
-            break;
-        }
-        case SQUARE:
-        {
-            itemBuilder.name(this.user.getTranslation("biomes.gui.descriptions.update-mode.square"));
-            itemBuilder.icon(new ItemStack(Material.GLASS, number));
-            itemBuilder.clickHandler((panel, user1, clickType, i) -> {
-                this.updateMode = UpdateMode.RANGE;
-                this.build();
-                return true;
-            });
-            itemBuilder.glow(this.updateMode.equals(UpdateMode.RANGE));
-
-            break;
-        }
-        case ACCEPT:
-        {
-            itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.accept"));
-            itemBuilder.icon(new ItemStack(Material.GREEN_STAINED_GLASS_PANE, number));
-            itemBuilder.clickHandler((panel, user1, clickType, i) -> {
-                List<String> arguments = new ArrayList<>(4);
-
-                if (this.target != null)
-                {
-                    arguments.add(this.target.getName());
-                }
-
-                arguments.add(this.biome.getUniqueId());
-                arguments.add(this.updateMode.name());
-                arguments.add(Integer.toString(this.distanceValue));
-
-                this.callCommand(SET, arguments);
-
-                return true;
-            });
-
-            break;
-        }
-        case DECLINE:
-        {
-            itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.decline"));
-            itemBuilder.icon(new ItemStack(Material.RED_STAINED_GLASS_PANE, number));
-            itemBuilder.clickHandler((panel, user1, clickType, i) -> {
-                this.user.closeInventory();
-                return true;
-            });
-
-            break;
-        }
-        case HEADER:
-        {
-            itemBuilder.name(this.user.getTranslation("biomes.gui.buttons.information"));
-
-            itemBuilder.description(GuiUtils.stringSplit(
-                    this.user.getTranslation("biomes.gui.descriptions.information",
-                            "[biome]", this.biome.getFriendlyName(),
-                            "[mode]", this.user.getTranslation("biomes.gui.descriptions.update-mode." + this.updateMode.name().toLowerCase()),
-                            "[range]", Integer.toString(this.distanceValue)),
-                    this.addon.getSettings().getLoreLineLength()));
-
-            itemBuilder.icon(new ItemStack(Material.MAP, number));
-        }
+                break;
+            }
+            default:
+            {
+                return PanelItem.empty();
+            }
         }
 
-        return itemBuilder.build();
+        return new PanelItemBuilder().
+            icon(icon).
+            name(name).
+            description(GuiUtils.stringSplit(description, this.addon.getSettings().getLoreLineLength())).
+            glow(glow).
+            clickHandler(clickHandler).
+            build();
     }
 
 
@@ -340,13 +338,12 @@ public class UpdateModeGUI extends CommonGUI
      */
     private enum Button
     {
-        SET,
         INCREASE,
         DECREASE,
         VALUE,
         ISLAND,
         CHUNK,
-        SQUARE,
+        RANGE,
         ACCEPT,
         DECLINE,
         HEADER
@@ -360,12 +357,12 @@ public class UpdateModeGUI extends CommonGUI
     /**
      * Biomes that user can be changed.
      */
-    private BiomesObject biome;
+    private final BiomesObject biome;
 
     /**
      * Target player. Most of times it will be equal user, but if admin changes, target will be different user.
      */
-    private User target;
+    private final User target;
 
     /**
      * Integer value that is larger then 0 and provides information about chunk radius or block radius where
