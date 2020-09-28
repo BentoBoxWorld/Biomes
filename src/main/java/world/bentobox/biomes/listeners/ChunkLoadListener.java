@@ -69,8 +69,13 @@ public class ChunkLoadListener implements Listener
                 {
                     for (int y = updateObject.getMinY(); y <= updateObject.getMaxY(); y += 4)
                     {
-                        // Change Biome
-                        updateObject.getWorld().setBiome(x, y, z, updateObject.getBiome());
+                        // Biome should not be changed in Greenhouses.
+                        if (!this.addon.getAddonManager().
+                            hasGreenhouseInLocation(updateObject.getWorld(), x, y, z))
+                        {
+                            // Change Biome
+                            updateObject.getWorld().setBiome(x, y, z, updateObject.getBiome());
+                        }
                     }
                 }
             }

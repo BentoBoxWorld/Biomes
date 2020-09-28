@@ -6,13 +6,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.ConfigurationSection;
@@ -289,8 +289,8 @@ public class BiomesAddonManager
                 newBiomeObject.setFriendlyName(details.getString("friendlyName", biome));
 
                 newBiomeObject.setDescription(
-                    GuiUtils.stringSplit(details.getString("description", ""),
-                        this.addon.getSettings().getLoreLineLength()));
+                        GuiUtils.stringSplit(details.getString("description", ""),
+                                this.addon.getSettings().getLoreLineLength()));
                 newBiomeObject.setIcon(ItemParser.parse(details.getString("icon") + ":1"));
 
                 newBiomeObject.setRequiredLevel(details.getInt("islandLevel", 0));
@@ -300,15 +300,15 @@ public class BiomesAddonManager
 
                 switch (environmentValue)
                 {
-                    case "NETHER":
-                        newBiomeObject.setEnvironment(World.Environment.NETHER);
-                        break;
-                    case "THE_END":
-                        newBiomeObject.setEnvironment(World.Environment.THE_END);
-                        break;
-                    default:
-                        newBiomeObject.setEnvironment(World.Environment.NORMAL);
-                        break;
+                case "NETHER":
+                    newBiomeObject.setEnvironment(World.Environment.NETHER);
+                    break;
+                case "THE_END":
+                    newBiomeObject.setEnvironment(World.Environment.THE_END);
+                    break;
+                default:
+                    newBiomeObject.setEnvironment(World.Environment.NORMAL);
+                    break;
                 }
 
                 newBiomeObject.setOrder(details.getInt("order", 0));
@@ -508,18 +508,18 @@ public class BiomesAddonManager
         List<BiomesObject> returnBiomesList = new ArrayList<>(allBiomeList.size());
 
         allBiomeList.stream().
-            // Filter out all biomes that has a different environment then players world.
-            filter(biomeObject -> user.getWorld().getEnvironment().equals(biomeObject.getEnvironment())).
-            // Filter out undeployed biomes if visibility mode is set to only deployed
-            filter(biomesObject -> visibilityMode.equals(VisibilityMode.ALL) ||
+        // Filter out all biomes that has a different environment then players world.
+        filter(biomeObject -> user.getWorld().getEnvironment().equals(biomeObject.getEnvironment())).
+        // Filter out undeployed biomes if visibility mode is set to only deployed
+        filter(biomesObject -> visibilityMode.equals(VisibilityMode.ALL) ||
                 biomesObject.isDeployed() &&
-                    (visibilityMode.equals(VisibilityMode.DEPLOYED) ||
+                (visibilityMode.equals(VisibilityMode.DEPLOYED) ||
                         visibilityMode.equals(VisibilityMode.ACCESSIBLE))).
-            // Filter out biomes which does user not have permissions
-            filter(biomesObject ->
-                biomesObject.getRequiredPermissions().isEmpty() ||
-                    biomesObject.getRequiredPermissions().stream().allMatch(user::hasPermission)).
-            forEach(returnBiomesList::add);
+        // Filter out biomes which does user not have permissions
+        filter(biomesObject ->
+        biomesObject.getRequiredPermissions().isEmpty() ||
+        biomesObject.getRequiredPermissions().stream().allMatch(user::hasPermission)).
+        forEach(returnBiomesList::add);
 
         return returnBiomesList;
     }
@@ -615,7 +615,23 @@ public class BiomesAddonManager
         String worldName = Util.getWorld(world) == null ? "" : Util.getWorld(world).getName();
 
         return !worldName.isEmpty() &&
-            this.biomesCacheData.values().stream().anyMatch(biome -> biome.getWorld().equalsIgnoreCase(worldName));
+                this.biomesCacheData.values().stream().anyMatch(biome -> biome.getWorld().equalsIgnoreCase(worldName));
+    }
+
+
+    /**
+     * This method returns true if in given location exit a greenhouse.
+     * @param world World where greenhouse must be searched.
+     * @param x X location.
+     * @param y Y location.
+     * @param z Z location.
+     * @return {@code true} if in given location exist a greenhouse, {@code false} otherwise.
+     */
+    public boolean hasGreenhouseInLocation(World world, int x, int y, int z)
+    {
+        return this.addon.isGreenhousesProvided() &&
+            this.addon.getGreenhouses().getManager().getMap().
+                inGreenhouse(new Location(world, x, y, z));
     }
 
 

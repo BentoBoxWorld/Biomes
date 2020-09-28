@@ -66,7 +66,6 @@ public class AddBiomeCommandTest {
 
     @Mock
     private CompositeCommand ic;
-    private UUID uuid;
     @Mock
     private User user;
     @Mock
@@ -136,7 +135,7 @@ public class AddBiomeCommandTest {
         PowerMockito.mockStatic(User.class);
         // Sometimes use Mockito.withSettings().verboseLogging()
         when(user.isOp()).thenReturn(false);
-        uuid = UUID.randomUUID();
+        UUID uuid = UUID.randomUUID();
         when(user.getUniqueId()).thenReturn(uuid);
         when(user.getPlayer()).thenReturn(p);
         when(user.getName()).thenReturn("tastybento");

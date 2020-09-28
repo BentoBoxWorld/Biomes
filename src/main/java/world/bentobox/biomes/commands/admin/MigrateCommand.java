@@ -13,8 +13,8 @@ public class MigrateCommand extends CompositeCommand {
 
     /**
      * Migrates challenges
-     * @param addon
-     * @param cmd
+     * @param addon - addon
+     * @param cmd - command
      */
     public MigrateCommand(Addon addon, CompositeCommand cmd) {
         super(addon, cmd, "migrate");

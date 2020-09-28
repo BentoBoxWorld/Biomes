@@ -35,7 +35,7 @@ public class BiomeListRequestHandler extends AddonRequestHandler
 	/**
 	 * @param metaData Required meta data.
 	 * @return Set of strings that contains completed challenges.
-	 * @see AddonRequestHandler#handle(Map <String, Object>)
+	 * @see AddonRequestHandler#handle(Map &lt;String, Object&gt;)
 	 */
 	@Override
 	public Object handle(Map<String, Object> metaData)

@@ -100,8 +100,13 @@ public class BiomeUpdateTask extends BukkitRunnable
                         }
                         else
                         {
-                            // Change Biome
-                            updateObject.getWorld().setBiome(x, y, z, this.biome);
+                            // Biome should not be changed in Greenhouses.
+                            if (!this.addon.getAddonManager().
+                                hasGreenhouseInLocation(updateObject.getWorld(), x, y, z))
+                            {
+                                // Change Biome
+                                updateObject.getWorld().setBiome(x, y, z, this.biome);
+                            }
                         }
                     }
                 }

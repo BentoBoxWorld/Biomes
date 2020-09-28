@@ -1,16 +1,17 @@
 # Biomes Addon
 [![Discord](https://img.shields.io/discord/272499714048524288.svg?logo=discord)](https://discord.bentobox.world)
 [![Build Status](https://ci.codemc.org/buildStatus/icon?job=BentoBoxWorld/Biomes)](https://ci.codemc.org/job/BentoBoxWorld/job/Biomes/)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=BentoBoxWorld_Biomes&metric=bugs)](https://sonarcloud.io/dashboard?id=BentoBoxWorld_Biomes)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=BentoBoxWorld_Biomes&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=BentoBoxWorld_Biomes)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=BentoBoxWorld_Biomes&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=BentoBoxWorld_Biomes)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=BentoBoxWorld_Biomes&metric=security_rating)](https://sonarcloud.io/dashboard?id=BentoBoxWorld_Biomes)
 
-Biomes addon for SkyBlock, SkyGrid, CaveBlock and AcidIsland. It allows to change biome on Island.
+Biomes addon for SkyBlock, SkyGrid, CaveBlock and AcidIsland. It allows island biome changing.
 
 ## Where to find
 
-Currently Biomes Addon is in **Beta stage**, so it may or may not contain bugs... a lot of bugs. Also it means, that some features are not working or implemented. 
-Latest official **Beta Release is 1.12.0**, and you can download it from [Release tab](https://github.com/BentoBoxWorld/Biomes/releases)
-
-Be aware, the latest version is for Spigot 1.16.0.
-Or you can try **nightly builds** where you can check and test new features that will be implemented in next release from [Jenkins Server](https://ci.codemc.org/job/BentoBoxWorld/job/Biomes/lastStableBuild/).
+Download the latest release from the BentoBox Downloads site (https://download.bentobox.world) or 
+you can try **snapshot builds** where you can check and test new features that will be implemented in next release from [Jenkins Server](https://ci.bentobox.world/Biomes/lastStableBuild/).
 
 If you like this addon but something is missing or is not working as you want, you can always submit an [Issue request](https://github.com/BentoBoxWorld/Biomes/issues) or get a support in Discord [BentoBox ![icon](https://avatars2.githubusercontent.com/u/41555324?s=15&v=4)](https://discord.gg/JgWKvR)
 
@@ -29,15 +30,16 @@ If your language is not in the list, please contact to developers via Discord an
 
 ## Config.yml
 
-After addon is successful installed, it will create config.yml file. Every option in this file comes with comments about them. Please check file for more information.
-Most of options are also editable admin via commands.
+After the addon is successful installed, it will create a config.yml file. Every option in this file comes with comments.
+Please check the file for more information.
+Most options are also editable admin via commands.
 
 ## Biomes.yml
 
 This file contains all necessary information about default biomes. 
 If you change values in biomes.yml, then to apply them, you must run **/bsb biomes import** or **/acid biomes import**.
 
-If you want to force an overwrite of biomes via an import, add the **overwrite** option to the end of the import command.
+If you want to force an overwrite of the biomes via an import, add the **overwrite** option to the end of the import command.
 Note that you must import biomes into both BSkyBlock and AcidIsland separately.
 
 ## User commands
