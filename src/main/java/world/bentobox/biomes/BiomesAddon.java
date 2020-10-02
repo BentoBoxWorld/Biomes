@@ -174,7 +174,6 @@ public class BiomesAddon extends Addon
         }
         else
         {
-            this.economyProvided = true;
             this.vaultHook = vault.get();
         }
     }
@@ -335,7 +334,7 @@ public class BiomesAddon extends Addon
      */
     public boolean isEconomyProvided()
     {
-        return this.economyProvided;
+        return this.vaultHook != null && this.vaultHook.hook();
     }
 
 
@@ -408,11 +407,6 @@ public class BiomesAddon extends Addon
      * This variable stores biomes addon settings.
      */
     private Settings settings;
-
-    /**
-     * This boolean indicate if economy is enabled.
-     */
-    private boolean economyProvided;
 
     /**
      * VaultHook that process economy.
