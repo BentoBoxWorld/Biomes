@@ -1,0 +1,282 @@
+---
+biomes:
+  gui:
+    title:
+      admin:
+        main-gui: "& 6Yönt Menüsü"
+        edit: "& 6Düzenle [biyom]"
+        settings: "& 6Ekran Ayarları"
+        edit-list: "& 6 Düzenlenebilir Biyom Listesi"
+        remove-list: "& 6 Çıkarılabilir Biyom Listesi"
+        user-list: "& 6; Oyuncu Seç"
+        confirm-title: "& 6Önceki İşlemi Onayla"
+        manage-numbers: "& 6Yönetim Numaraları"
+        select-biome: "& 6Biyozu Seç"
+        toggle-environment: "& 6Toggle Ortamı"
+        edit-text-fields: Metin Alanlarını Düzenleme
+        select-block: "& 6Bir Malzeme Seç"
+        lore-edit: "& 6Daha Fazla Mesaj"
+        lore-add: "& 6 Lore Öğesi Ekle"
+        lore-remove: "& 6 Lore Öğesini Kaldır"
+      biomes-choose: "& 6Biyozu Seç"
+      mode-choose: "& 6Güncelleme Modunu Seç"
+    buttons:
+      admin:
+        settings: Ayarlar
+        import: İthalat
+        remove: Biyomu Kaldır
+        edit: Biyomu Düzenle
+        add: Biyom Ekle
+        change: Kullanıcı Biyomunu Değiştir
+        change-biome: biyom
+        name: Ekran adı
+        icon: ikon
+        order: Sipariş
+        description: Açıklama
+        deployment: yayılma
+        required-permissions: Gerekli İzinler
+        required-level: Gereken seviye
+        required-money: Gerekli Para
+        advanced-menu: Gelişmiş Menü
+        default-mode: Varsayılan Güncelleme Modu
+        default-size: Varsayılan Boyut
+        visibility-mode: Biyom Görünürlüğü
+        line-length: Lore Çizgi Uzunluğu
+        biomes-lore: Biome Lore
+        cooldown: Sakin ol
+        reset-biomes: Etkinliği Sıfırla
+        use-protection-range: Koruma Aralığı Kullan
+        toggle-user-list: Oyuncu Listesini Aç / Kapat
+        save: Kayıt etmek
+        cancel: İptal etmek
+        input: Giriş
+        accept: Kabul etmek
+        set-mode: "="
+        increase-mode: "+"
+        reduce-mode: "-"
+        multiply-mode: "*"
+        number: "[numara]"
+        add-string: Dize Ekle
+        clear: Açık
+        remove-empty: Boşaltmayı kaldır
+        input-mode: Giriş Modu
+        value: değer
+        add-element: Öğe Ekle
+        remove-element: Öğeyi Kaldır
+      value: 'Mevcut Değer: [sayı]'
+      increase: "[Sayı] kadar artır"
+      decrease: "[Sayı] kadar azalt"
+      set: Değeri [sayı] olarak ayarla
+      accept: Kabul etmek
+      decline: düşüş
+      information: Bilgi
+      return: Dönüş
+      previous: Önceki
+      next: Sonraki
+    descriptions:
+      admin:
+        edit-text-line: "& 6 Kısa mesajı düzenle!"
+        add-text-line: "& 6 Yeni kısa mesaj ekle!"
+        settings: Ayarları düzenle
+        import: Biomes.yml dosyasından biyomları içe aktarın. | Sağ tıklatma üzerine
+          yazma modunu etkinleştirir / devre dışı bırakır.
+        remove: Biyomu bellekten kaldır
+        edit: Biyom özelliklerini düzenleme
+        add: Mevcut dünyaya yeni biyom ekle
+        change: Oyuncunun ada biyomunu değiştir
+        change-biome: Hangi Minecraft Biome ürününün kullanılacağını değiştirin.
+        required-permissions: Bu biyom için gerekli izinleri değiştirin. | Bu izinler
+          olmadan oyuncular bunu kullanamazlar!
+        required-level: Minimum ada seviyesini değiştirin. | & CDeviye Eklentisi gerektirir.
+        required-money: Biyom maliyetini değiştirin. & CEkonomi Eklentisi / Eklentisi
+          gerektirir.
+        name: Bu Biyom için görünen adı değiştirin.
+        deployment: Oyuncuların bu biyomu kullanma yeteneğini devre dışı bırakın /
+          etkinleştirin.
+        icon: Bu biyom için ekran simgesini ayarlayın.
+        description: Bu biyomun tanımını değiştirin.
+        order: Bu biyomun sipariş yerleşimini değiştirin.
+        advanced-menu: Oyuncular için tüm değişiklik seçenekleriyle Gelişmiş Menüyü
+          etkinleştirin / devre dışı bırakın.
+        default-mode: Varsayılan biyom güncelleme modunu ayarlayın. | Gelişmiş Menü
+          devre dışı bırakılmışsa ve bu menüde varsayılan değerler olarak kullanılır.
+        default-size: Varsayılan biyom güncelleme boyutunu ayarlayın. | Gelişmiş Menü
+          devre dışıysa ve bu menüde varsayılan değerler olarak kullanılır.
+        visibility-mode: Oyuncuların hangi biyomları görebileceğini değiştirin.
+        line-length: Açıklama açıklama satırı karakter uzunluğunun otomatik ayarı.
+        biomes-lore: İrfan mesajında hangi öğelerin görüntüleneceğini değiştirin.
+          | Daha fazla bilgi için config'i kontrol edin.
+        cooldown: Oyuncu arasındaki bekleme süresini saniye cinsinden değiştirin,
+          biyomu tekrar değiştirebilir.
+        reset-biomes: Biyom izinli oyuncu adadan ayrılırsa biyom sıfırlamayı etkinleştir
+          / devre dışı bırak.
+        use-protection-range: Ada koruma aralığı ile sınırlı olmak için biyom güncellemesini
+          etkinleştirin / devre dışı bırakın. Bu devre dışı bırakılırsa, tüm ada aralığını
+          kullanır.
+        toggle-user-list: Geçerli Menü'de hangi oyuncuların görüntülenmesi gerektiğini
+          değiştirin.
+        save: Geçerli değeri kaydedin ve önceki Menüye dönün.
+        cancel: Değişiklik yapmadan önceki Menüye dönün.
+        input: Sohbete numara yaz
+        set-mode: Geçerli değeri tıklanan sayıya ayarlayacak moda ayarlama moduna
+          geçin.
+        increase-mode: Geçerli değeri tıklanan sayıya göre artıracak artış moduna
+          geçin.
+        reduce-mode: Geçerli değeri tıklanan sayı kadar azaltacak olan azaltma moduna
+          geçin.
+        multiply-mode: Mevcut değeri tıklanan sayı ile çarpacak çarpma moduna geçin.
+        click-to-edit: "& 4 Girişi düzenlemek için burayı tıklayın"
+        selected: "& 6Malzeme seçildi"
+        lore:
+          description: Açıklama dizesi. | Biyomlar nesnesinde tanımlanmıştır - biomeObject.description.
+          original_biome: Orijinal Minecraft Biome dizesi. | 'Biomes.gui.biome-description.biome-name'
+            için çeviriyi temsil eder.
+          required_level: Gerekli ada düzeyinde dize. | 'Biomes.gui.biome-description.gerek-ada-seviyesi'
+            çevirisini temsil eder.
+          required_money: Biyom dizisini değiştirme maliyeti. | 'Biomes.gui.biome-description.İhtiyaç-para'
+            çevirisini temsil eder.
+          required_permission: Gerekli izin dizesi. | 'Biomes.gui.biome-description.equired-permissions'
+            için çeviriyi temsil eder.
+      update-mode:
+        island: ada
+        chunk: yığın
+        undefined: Tanımsız
+        range: Aralık
+      visibility-mode:
+        all: Tümü & r- tüm biyomları listele
+        deployed: Konuşlandırılmış - konuşlandırılmış biyomları listele
+        accessible: Erişilebilir - erişilebilir biyomları listele
+        toggleable: Değiştirilebilir - Biomes Menüsü'ndeki değiştirilebilir düğme
+        info: Görünür biyomları değiştirin.
+      view-mode:
+        online: İnternet üzerinden
+        in-world: Bu dünyada
+        with-island: Ada ile
+      current-value: 'Geçerli değer: [değer]'
+      enabled: etkin
+      disabled: engelli
+      permission: " - [izin]"
+      information: Bu değişiklikleri kabul ederseniz, güncelleme modunda [mod] aralık
+        [aralık] ile ada biyomunuzu [biyom] olarak değiştirmeye çalışacağız.
+    questions:
+      prefix: 'Ve 2 [SERVER]:'
+      admin:
+        number: Sohbete bir numara yazın ve kabul etmek için enter tuşuna basın ve
+          enter tuşuna basın.
+        name: Verilen biyom için kolay bir isim yazın.
+        uniqueID: Nesnenin benzersiz adını yazın ve enter tuşuna basın.
+    biomes-description:
+      biome-name: 'Minecraft Biome: [değer]'
+      required-money: Maliyet değeri]
+      required-island-level: 'Min ada seviyesi: [değer]'
+      required-permissions: 'İzinler:'
+  commands:
+    admin:
+      add:
+        parameters: "[İD]"
+        description: yeni biyom ekleyin. Varsayılan ayarlarla boş biyom nesnesi oluşturur.
+      edit:
+        parameters: "<id> <property> <new_value>"
+        description: verilen <id> özelliği. Yalnızca mevcut özellikleri düzenleyebilir.
+      import:
+        parameters: "[Yazma]"
+        description: biyomları biomes.yml dosyasından alır. 'Üzerine yazma' eklendiğinde
+          mevcut biyomların üzerine yazılır.
+      settings:
+        parameters: "<property> <new_value>"
+        description: basit komut ile varsayılan ayarları düzenleyin. Yalnızca mevcut
+          ayarlar düzenlenebilir.
+      help:
+        description: oyuncular için Yönetici GUI'sini açar.
+      set:
+        description: "<player> adası için biyom ayarlayın. [tip] ve [boyut] isteğe
+          bağlıdır."
+        parameters: "<player> <biome> [tip] [boyut]"
+      migrate:
+        description: mevcut oyun dünyası biyomları verilerini depolama biçimine geçirir.
+    user:
+      info:
+        parameters: "<Biomlar>"
+        description: verilen biyom hakkında bilgi görüntüler.
+      help:
+        description: biyom değişim GUI'sini açar.
+      set:
+        description: ada biyomunu <biome> olarak ayarlayın. [tip] ve [boyut] isteğe
+          bağlıdır.
+        parameters: "<biyom> [tip] [boyut]"
+  errors:
+    unique-id: "& cBenzersiz id & d [id] & c geçerli değil!"
+    too-many-arguments: "& cÇok sayıda parametre. Lütfen yardıma bakın!"
+    missing-arguments: "& cMissing komut parametreleri. Lütfen yardıma bakın!"
+    unknown-argument: "& cBilinmeyen komut parametreleri. Lütfen yardıma bakın!"
+    incorrect-mode: "& c Verilen değer & d '[mod]' & c geçerli değil. Geçerli değerler
+      'ADA', 'CHUNK' veya 'KARE' şeklindedir."
+    incorrect-parameter: "& c Verilen özellik & d '[özellik]' & c biyom için tanımlanmamıştır."
+    incorrect-boolean: "& c Verilen değer & d '[boolean]' & c bir boolean değildir.
+      Geçerli değerler 'true' veya 'false'."
+    incorrect-visibility: "& c Verilen değer & d '[mod]' & c geçerli değil."
+    incorrect-object: "& cVerilen ID & d '[biome]' ile biyom bulamıyor."
+    missing-user: "& cUser tanımlı değil."
+    missing-biome: "& cBiome tanımlanmamış."
+    wrong-icon: "& c Verilen malzeme & 6 [değer] & c, ItemStack ile ayrıştırılamaz."
+    not-valid-integer: '& cGerilen "[değer]" tamsayısı geçerli değil! | Değer [dak]
+      ile [maks] arasında olmalıdır.'
+    not-enough-money: "& c Yeteri kadar paran yok. Biyomu değiştirmek $ [number] gerektirir"
+    missing-permission: "& cBu biyom & 6 [izin] & c izni gerektirir. Sende yok."
+    no-file: "& cbiomes.yml bulunamadı."
+    no-load: "& cBiyomları alırken bir hata oluştu: [mesaj]!"
+    load-biome: "& c: Minecraft'ta tanımlanmadığı için '[biome]' biyomunu yükleyemiyorum.
+      Doğru biyom adını kullanın."
+    incorrect-range: "& c Verilen sayı & d '[sayı]' & c geçerli değil. Yalnızca pozitif
+      tamsayılar geçerlidir."
+    incorrect-icon: "& c Verilen simge & d '[simge]' & c ayrıştırılamıyor. Farklı
+      bir şey deneyin."
+    incorrect-biome: "& cGenilen biome & d '[biome]' & c Minecraft'ta bulunamıyor.
+      Doğru bir biyom ismi kullanın."
+    no-biomes: "& cBiomes henüz mevcut dünyada uygulanmadı!"
+    no-biomes-admin: "& cBiomes henüz mevcut dünyada uygulanmadı! Bunları eklemek
+      için & 5 / [komut] & c kullanın!"
+    no-biomes-for-you: Maalesef, kullanılabilir bir biyom bulunamadı.
+    not-a-integer: '& c Verilen değer "[değer]" bir tam sayı değil!'
+    not-on-island: "& cBir adada değilsin."
+    not-enough-level: "& c Ada seviyeniz çok küçük. Biyom en az seviye [sayı] gerektirir"
+    admin-not-on-island: "& c [Kullanıcının] adasında değilsiniz."
+    disabled: "& cŞu anda, bu biyom devre dışıdır."
+    no-rank: "& cBunu yapacak kadar yüksek bir rütbeniz yok."
+  information:
+    header: 'Biyom: [isim]'
+    type: "  Tür: [tür]"
+    description: "  Açıklama: [açıklama]"
+    level: "  Seviye: [seviye]"
+    cost: "  Maliyet maliyeti]"
+    permission: "  İzin: [izin]"
+  messages:
+    admin:
+      migrate-start: "& 2Biyomlar ekleme verilerini taşımaya başlayın."
+      migrate-end: "& 2Biomes addon verileri yeni formata güncellenir."
+      migrate-not: "& 2Tüm veriler geçerlidir."
+    saved: "& dBiome [biome] kaydedilir."
+    biome-created: "& d uniqueID ile oluşturulan yeni Biome nesnesi: [id]"
+    update-done: "& 6 [biome] & r & e adada başarıyla kuruldu."
+    skipping: "[Biyom] ithalini atlıyor."
+    overwriting: Üzerine yazma [biyom].
+    saved-config: Eklenti ayarları güncellendi.
+    biome-removed: Eşsiz kimliğe sahip biyom = '[biome]' bellekten çıkarıldı.
+    update-start: "& eBiome güncellemesi başladı"
+    imported: "[biyom] ithal edildi."
+    import-count: Biyom ithalatı tamamlandı. İthal [sayı] biyomlar.
+protection:
+  flags:
+    BIOMES_WORLD_PROTECTION:
+      name: Biome Island sınırlaması
+      description: |-
+        & 5 & oEnable / devre dışı
+        & 5 & oyuncular için
+        & 5 & obe adalarında
+        & 5 & okanj biyomu.
+      hint: Biyomu değiştirmek için adanızda olmalısınız!
+    BIOMES_ISLAND_PROTECTION:
+      description: |-
+        & 5 & oKimleri yapabilir
+        & 5 & ada biyomunu değiştir
+      name: Biyom kontrolü
