@@ -4,6 +4,7 @@ package world.bentobox.biomes.events;
 import java.util.UUID;
 
 import org.bukkit.block.Biome;
+import org.bukkit.event.HandlerList;
 
 import world.bentobox.bentobox.api.events.BentoBoxEvent;
 
@@ -14,7 +15,7 @@ import world.bentobox.bentobox.api.events.BentoBoxEvent;
  */
 public class BiomeChangedEvent extends BentoBoxEvent
 {
-	/**
+/**
 	 * Constructor BiomeChangeEvent creates a new BiomeChangeEvent instance.
 	 *
 	 * @param biomeID of type String that represents biome unique id. May be empty.
@@ -244,6 +245,34 @@ public class BiomeChangedEvent extends BentoBoxEvent
 
 
 // ---------------------------------------------------------------------
+// Section: Handler methods
+// ---------------------------------------------------------------------
+
+
+	/**
+	 * Gets handlers.
+	 *
+	 * @return the handlers
+	 */
+	@Override
+	public HandlerList getHandlers()
+	{
+		return BiomeChangedEvent.handlers;
+	}
+
+
+	/**
+	 * Gets handlers.
+	 *
+	 * @return the handlers
+	 */
+	public static HandlerList getHandlerList()
+	{
+		return BiomeChangedEvent.handlers;
+	}
+
+
+// ---------------------------------------------------------------------
 // Section: Variables
 // ---------------------------------------------------------------------
 
@@ -292,5 +321,10 @@ public class BiomeChangedEvent extends BentoBoxEvent
 	 * Maximal Y coordinate of change range.
 	 */
 	private int maxY;
+
+	/**
+	 * Event listener list for current
+	 */
+	private static final HandlerList handlers = new HandlerList();
 }
 
