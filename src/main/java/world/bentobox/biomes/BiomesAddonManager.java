@@ -451,6 +451,7 @@ public class BiomesAddonManager
         {
             BiomesObject biome = new BiomesObject();
             biome.setUniqueId(uniqueID);
+            biome.setFriendlyName(uniqueID);
 
             // Sets default biome as VOID.
             biome.setBiome(Biome.THE_VOID);

@@ -100,12 +100,21 @@ public class AddBiomeCommand extends ExpandedCompositeCommand
 					String worldName = Util.getWorld(this.getWorld()).getName();
 					String newName = Utils.getGameMode(this.getWorld()) + "_" + uniqueID.toLowerCase();
 
-					new EditBiomeGUI(this.addon,
-						this.getWorld(),
-						user,
-						this.getTopLabel(),
-						this.getPermissionPrefix(),
-						this.addon.getAddonManager().createBiome(newName, worldName)).build();
+					BiomesObject biome = this.addon.getAddonManager().createBiome(newName, worldName);
+
+					if (biome != null)
+					{
+						new EditBiomeGUI(this.addon,
+							this.getWorld(),
+							user,
+							this.getTopLabel(),
+							this.getPermissionPrefix(),
+							biome).build();
+					}
+					else
+					{
+						user.sendMessage("biomes.errors.unique-id", "[id]", uniqueID.toLowerCase());
+					}
 				},
 				user.getTranslation("biomes.gui.questions.admin.uniqueID"),
 				user,

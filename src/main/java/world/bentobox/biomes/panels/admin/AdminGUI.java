@@ -25,6 +25,7 @@ import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
+import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.panels.CommonGUI;
 import world.bentobox.biomes.panels.GuiUtils;
 import world.bentobox.biomes.utils.Utils;
@@ -121,7 +122,12 @@ public class AdminGUI extends CommonGUI
 							String worldName = Util.getWorld(this.world).getName();
 							String newName = Utils.getGameMode(this.world) + "_" + uniqueID.toLowerCase();
 
-							new EditBiomeGUI(AdminGUI.this, this.addon.getAddonManager().createBiome(newName, worldName)).build();
+							BiomesObject biome = this.addon.getAddonManager().createBiome(newName, worldName);
+
+							if (biome != null)
+							{
+								new EditBiomeGUI(AdminGUI.this, biome).build();
+							}
 						},
 						this.user.getTranslation("biomes.gui.questions.admin.uniqueID"),
 						null);
@@ -285,8 +291,7 @@ public class AdminGUI extends CommonGUI
 					@Override
 					protected boolean isInputValid(ConversationContext context, String input)
 					{
-						String worldName = Util.getWorld(AdminGUI.this.world).getName();
-						String newName = worldName + "-" + input.toLowerCase();
+						String newName = Utils.getGameMode(AdminGUI.this.world) + "_" + input.toLowerCase();
 
 						return !AdminGUI.this.addon.getAddonManager().containsBiome(newName);
 					}
