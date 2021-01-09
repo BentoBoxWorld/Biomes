@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.ConfigurationSection;
@@ -615,6 +616,22 @@ public class BiomesAddonManager
 
         return !worldName.isEmpty() &&
                 this.biomesCacheData.values().stream().anyMatch(biome -> biome.getWorld().equalsIgnoreCase(worldName));
+    }
+
+
+    /**
+     * This method returns true if in given location exit a greenhouse.
+     * @param world World where greenhouse must be searched.
+     * @param x X location.
+     * @param y Y location.
+     * @param z Z location.
+     * @return {@code true} if in given location exist a greenhouse, {@code false} otherwise.
+     */
+    public boolean hasGreenhouseInLocation(World world, int x, int y, int z)
+    {
+        return this.addon.isGreenhousesProvided() &&
+            this.addon.getGreenhouses().getManager().getMap().
+                inGreenhouse(new Location(world, x, y, z));
     }
 
 

@@ -8,6 +8,8 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 
 import world.bentobox.bentobox.BentoBox;
+import world.bentobox.bentobox.api.user.User;
+import world.bentobox.biomes.config.Settings;
 
 
 /**
@@ -15,6 +17,29 @@ import world.bentobox.bentobox.BentoBox;
  */
 public class Utils
 {
+    /**
+     * This method returns if given user has a permission to change biome to given biomeId
+     * with given updateMode.
+     * @param user User who must be checked for permissions.
+     * @param permissionPrefix String that represents gamemode permission prefix.
+     * @param updateMode UpdateMode that will be performed in biome change.
+     * @param biomeId BiomeObject it that will be applied.
+     * @return {@code true} if user has permissions to change biome with given ID and
+     * update mode, {@code false} otherwise.
+     */
+    public static boolean hasUserUpdateModePermission(User user,
+        String permissionPrefix,
+        Settings.UpdateMode updateMode,
+        String biomeId)
+    {
+        String updateModePermission =
+            permissionPrefix + "biomes.set." + updateMode.name().toLowerCase();
+
+        return user.hasPermission(updateModePermission + ".*") ||
+            user.hasPermission(updateModePermission + "." + biomeId.toLowerCase());
+    }
+
+
     /**
      * This method transforms given World into GameMode name. If world is not a GameMode
      * world then it returns an empty string.

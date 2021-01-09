@@ -1,12 +1,15 @@
 package world.bentobox.biomes.tasks;
 
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import world.bentobox.bentobox.api.events.addon.AddonEvent;
 import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.objects.Island;
@@ -76,6 +79,12 @@ public class BiomeUpdateHelper
             }
 
             if (!this.checkPermissions())
+            {
+                this.callerUser.sendMessage("general.errors.no-permission");
+                return false;
+            }
+
+            if (!this.hasPermissionToUpdateMode())
             {
                 this.callerUser.sendMessage("general.errors.no-permission");
                 return false;
@@ -415,7 +424,16 @@ public class BiomeUpdateHelper
         if (this.canWithdraw)
         {
             this.addon.getPlugin().getVault().ifPresent(
-                    vaultHook -> vaultHook.withdraw(this.callerUser, this.biome.getRequiredCost()));
+                    vaultHook -> {
+                    	vaultHook.withdraw(this.callerUser, this.biome.getRequiredCost());
+                    	
+                        Map<String, Object> keyValues = new HashMap<>();
+                        keyValues.put("eventName", "BiomeBuyEvent");
+                        keyValues.put("targetPlayer", this.callerUser.getUniqueId());
+                        keyValues.put("biome", biome.getFriendlyName());
+                        
+                        new AddonEvent().builder().addon(addon).keyValues(keyValues).build();
+                    });
         }
 
         task.runTaskAsynchronously(this.addon.getPlugin());
@@ -430,6 +448,22 @@ public class BiomeUpdateHelper
     {
         return this.biome.getRequiredPermissions().isEmpty() ||
                 this.biome.getRequiredPermissions().stream().allMatch(this.callerUser::hasPermission);
+    }
+
+
+    /**
+     * This method returns if the caller user have a permission to change biome with a given
+     * update mode for given biomeObject.
+     * @return {@code true} if caller has permission to use given update mode on given biomeObject
+     * {@code false} otherwise.
+     */
+    public boolean hasPermissionToUpdateMode()
+    {
+        // TODO: probably passing permission string to helper would be more efficient.
+        return Utils.hasUserUpdateModePermission(this.callerUser,
+            this.addon.getPlugin().getIWM().getPermissionPrefix(this.world),
+            this.updateMode,
+            this.biome.getUniqueId());
     }
 
 
