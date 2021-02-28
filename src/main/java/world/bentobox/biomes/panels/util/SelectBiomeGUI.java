@@ -167,16 +167,13 @@ public class SelectBiomeGUI
         int index = 10;
 
         while (biomesIndex < ((correctPage + 1) * MAX_ELEMENTS) &&
-                biomesIndex < (biomeList.size() - 1) &&
+                biomesIndex < biomeList.size() &&
                 index < 36)
         {
             if (!panelBuilder.slotOccupied(index))
             {
-                if (biomeList.size() != biomesIndex)
-                {
-                    panelBuilder.item(index,
-                            this.createBiomeIcon(biomeList.get(biomesIndex++)));
-                }
+                panelBuilder.item(index,
+                    this.createBiomeIcon(biomeList.get(biomesIndex++)));
             }
 
             index++;
