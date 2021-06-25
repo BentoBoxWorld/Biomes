@@ -44,6 +44,8 @@ public class BiomeUpdateHelper
         this.canWithdraw = canWithdraw;
 
         this.worldProtectionFlag = BiomesAddon.BIOMES_WORLD_PROTECTION.isSetForWorld(this.world);
+        // Initialize standing location to be the location of the target user
+        this.standingLocation = this.targetUser.getLocation();
     }
 
 
