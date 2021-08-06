@@ -34,11 +34,6 @@ reset-biomes: false
 # This indicates cool down in seconds between users can change biomes on their island.
 cooldown: 60
 #
-# This indicates tick counter between each background update task.
-# This process load chunks that require biome update and change biome in it.
-# Setting 0 will stop background task and biome will be updated only when loaded.
-update-tick-counter: 5
-#
 # This variable allows to choose which biomes users can see in Biomes GUI.
 # Valid values are:
 #     'ALL' - there will be no hidden biomes. All biomes will be viewable in GUI.

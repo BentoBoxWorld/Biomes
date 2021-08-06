@@ -1,27 +1,22 @@
 package world.bentobox.biomes;
 
 
-import java.util.Iterator;
 import java.util.Optional;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.World;
 
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.configuration.Config;
 import world.bentobox.bentobox.api.flags.Flag;
 import world.bentobox.bentobox.hooks.VaultHook;
-import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.commands.admin.AdminCommand;
 import world.bentobox.biomes.commands.user.BiomesCommand;
 import world.bentobox.biomes.config.Settings;
-import world.bentobox.biomes.database.objects.BiomeChunkUpdateObject;
 import world.bentobox.biomes.handlers.BiomeDataRequestHandler;
 import world.bentobox.biomes.handlers.BiomeListRequestHandler;
 import world.bentobox.biomes.handlers.ChangeBiomeRequestHandler;
 import world.bentobox.biomes.listeners.ChangeOwnerListener;
-import world.bentobox.biomes.listeners.ChunkLoadListener;
 import world.bentobox.greenhouses.Greenhouses;
 import world.bentobox.level.Level;
 
@@ -95,7 +90,6 @@ public class BiomesAddon extends Addon
 
 		// Register the reset listener
         this.registerListener(new ChangeOwnerListener(this));
-        this.registerListener(new ChunkLoadListener(this));
 
         // Register Flags
         this.registerFlag(BIOMES_WORLD_PROTECTION);
@@ -106,55 +100,6 @@ public class BiomesAddon extends Addon
         this.registerRequestHandler(new BiomeListRequestHandler(this));
 
         this.registerRequestHandler(new ChangeBiomeRequestHandler(this));
-
-        if (this.settings.getUpdateTickCounter() > 0)
-        {
-            // This task will force-load chunk every update tick if its biome is not updated.
-            this.runChunkUpdatingScheduler();
-        }
-    }
-
-
-    /**
-     * This task will force-load chunk every update tick if its biome is not updated.
-     */
-    private void runChunkUpdatingScheduler()
-    {
-        Bukkit.getScheduler().runTaskTimer(this.getPlugin(), () -> {
-                Iterator<BiomeChunkUpdateObject> iterator =
-                    this.addonManager.getBiomeUpdaterCollection().iterator();
-
-                // if there is nothing to load, then skip.
-                if (!iterator.hasNext())
-                {
-                    return;
-                }
-
-                BiomeChunkUpdateObject updater = iterator.next();
-
-                // if chunk is already force-loaded, then skip.
-                while (iterator.hasNext() && updater.isForceLoaded())
-                {
-                    updater = iterator.next();
-                }
-
-                World world = updater.getWorld();
-
-                // if chunk is loaded then skip.
-                if (!world.isChunkLoaded(updater.getChunkX(), updater.getChunkZ()))
-                {
-                    // Set flag as force-loaded.
-                    updater.setForceLoaded(true);
-
-                    // force-load chunk asynchronously
-                    Util.getChunkAtAsync(world,
-                        updater.getChunkX(),
-                        updater.getChunkZ());
-                }
-            },
-
-            this.settings.getUpdateTickCounter(),
-            this.settings.getUpdateTickCounter());
     }
 
 
@@ -272,6 +217,8 @@ public class BiomesAddon extends Addon
     {
         if (this.hooked)
         {
+            this.getLogger().info("Disabling biomes addon.");
+
             if (this.settings != null)
             {
                 new Config<>(this, Settings.class).saveConfigObject(this.settings);
@@ -281,6 +228,8 @@ public class BiomesAddon extends Addon
             {
                 this.addonManager.save();
             }
+
+            this.getLogger().info("Biomes addon disabled.");
         }
     }
 
