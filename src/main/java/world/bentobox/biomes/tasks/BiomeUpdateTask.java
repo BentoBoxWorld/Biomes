@@ -75,53 +75,39 @@ public class BiomeUpdateTask extends BukkitRunnable
         {
             BiomeChunkUpdateObject updateObject = iterator.next();
 
-            boolean completelyChanged = true;
-
             // Since Minecraft 1.15 biome is stored in 4x4x4 blocks.
             // There is no point to update biome in each block position, only in every 4.
 
+            if (!this.world.isChunkLoaded(updateObject.getChunkX(), updateObject.getChunkZ()))
+            {
+                // Temporarily load the chunk
+                this.world.getChunkAt(updateObject.getChunkX(), updateObject.getChunkZ());
+            }
+
             for (int x = updateObject.getMinX();
-                completelyChanged && x <= updateObject.getMaxX();
+                x <= updateObject.getMaxX();
                 x += 4)
             {
-                for (int y = updateObject.getMinY();
-                    completelyChanged && y <= updateObject.getMaxY();
-                    y += 4)
+                for (int z = updateObject.getMinZ();
+                    z <= updateObject.getMaxZ();
+                    z += 4)
                 {
-                    for (int z = updateObject.getMinZ();
-                        completelyChanged && z <= updateObject.getMaxZ();
-                        z += 4)
+                    for (int y = updateObject.getMinY();
+                        y <= updateObject.getMaxY();
+                        y += 4)
                     {
-                        if (!this.world.isChunkLoaded(updateObject.getChunkX(),
-                            updateObject.getChunkZ()))
+                        // Biome should not be changed in Greenhouses.
+                        if (!this.addon.getAddonManager().hasGreenhouseInLocation(updateObject.getWorld(), x, y, z))
                         {
-                            // If chunk is unloaded then skip change.
-                            completelyChanged = false;
-                        }
-                        else
-                        {
-                            // Biome should not be changed in Greenhouses.
-                            if (!this.addon.getAddonManager().
-                                hasGreenhouseInLocation(updateObject.getWorld(), x, y, z))
-                            {
-                                // Change Biome
-                                updateObject.getWorld().setBiome(x, y, z, this.biome);
-                            }
+                            // Change Biome
+                            updateObject.getWorld().setBiome(x, y, z, this.biome);
                         }
                     }
                 }
             }
 
-            if (completelyChanged)
-            {
-                // If biome is changed completely, then remove object.
-                iterator.remove();
-            }
-            else
-            {
-                // Otherwise add it to manager.
-                this.addon.getAddonManager().addChunkUpdateObject(updateObject);
-            }
+            // If biome is changed completely, then remove object.
+            iterator.remove();
         }
 
         if (this.user.isPlayer())
@@ -147,12 +133,6 @@ public class BiomeUpdateTask extends BukkitRunnable
                 " x=" + this.minX + ":" + this.maxX +
                 " y=" + this.minY + ":" + this.maxY +
                 " z=" + this.minZ + ":" + this.maxZ);
-        }
-
-        // Log information about unloaded chunk cound.
-        if (!chunkUpdateObjectList.isEmpty())
-        {
-            this.addon.log("Populated offline updater with " + chunkUpdateObjectList.size() + " chunks.");
         }
 
         // Fire event that biome is changed.

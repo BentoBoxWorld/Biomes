@@ -4,7 +4,6 @@ package world.bentobox.biomes;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -25,7 +24,6 @@ import world.bentobox.bentobox.database.Database;
 import world.bentobox.bentobox.util.ItemParser;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.config.Settings.VisibilityMode;
-import world.bentobox.biomes.database.objects.BiomeChunkUpdateObject;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.panels.GuiUtils;
 import world.bentobox.biomes.utils.Utils;
@@ -57,9 +55,6 @@ public class BiomesAddonManager
             this.addon.saveResource("biomes.yml", false);
         }
 
-        this.biomePendingChunkUpdateDatabase = new Database<>(addon, BiomeChunkUpdateObject.class);
-        this.biomePendingChunkUpdateMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-
         this.load();
     }
 
@@ -75,12 +70,8 @@ public class BiomesAddonManager
     private void load()
     {
         this.biomesCacheData.clear();
-        this.biomePendingChunkUpdateMap.clear();
-
         this.addon.getLogger().info("Loading biomes...");
-
         this.biomesDatabase.loadObjects().forEach(this::loadBiomes);
-        this.biomePendingChunkUpdateDatabase.loadObjects().forEach(this::addChunkUpdateObject);
     }
 
 
@@ -93,9 +84,6 @@ public class BiomesAddonManager
 
         this.biomesDatabase = new Database<>(this.addon, BiomesObject.class);
         this.biomesDatabase.loadObjects().forEach(this::loadBiomes);
-
-        this.biomePendingChunkUpdateDatabase = new Database<>(this.addon, BiomeChunkUpdateObject.class);
-        this.biomePendingChunkUpdateDatabase.loadObjects().forEach(this::addChunkUpdateObject);
     }
 
 
@@ -119,20 +107,9 @@ public class BiomesAddonManager
      */
     public void save()
     {
+        this.addon.getLogger().info("Saving biomes...");
+
         this.biomesCacheData.values().forEach(this.biomesDatabase::saveObjectAsync);
-
-        // Clear Database.
-        List<BiomeChunkUpdateObject> objectList =
-                this.biomePendingChunkUpdateDatabase.loadObjects();
-        objectList.forEach(object -> this.biomePendingChunkUpdateDatabase.
-                deleteID(object.getUniqueId()));
-
-        // Save cache into database.
-        if (!this.biomePendingChunkUpdateMap.isEmpty())
-        {
-            this.biomePendingChunkUpdateMap.values().forEach(
-                    this.biomePendingChunkUpdateDatabase::saveObjectAsync);
-        }
     }
 
     /**
@@ -637,72 +614,18 @@ public class BiomesAddonManager
 
 
     // ---------------------------------------------------------------------
-    // Section: Later Biome Updater
-    // ---------------------------------------------------------------------
-
-
-    /**
-     * This method finds and returns BiomeChunkUpdaterObject in given world with given
-     * chunk X and Z coordinates.
-     * @param world World where process will happen.
-     * @param x Chunk X coordinate.
-     * @param z Chunk Z coordinate.
-     * @return BiomeChunkUpdateObject where update is pending or null.
-     */
-    public BiomeChunkUpdateObject getPendingChunkUpdateObject(World world, int x, int z)
-    {
-        return this.biomePendingChunkUpdateMap.get(Utils.getGameMode(world) + "_" + x + "-" + z);
-    }
-
-
-    /**
-     * This method returns collection with all objects that contains information about
-     * chunks where biome update is still not completed.
-     * @return Collection of BiomeCHunkUpdateObjects.
-     */
-    public Collection<BiomeChunkUpdateObject> getBiomeUpdaterCollection()
-    {
-        return this.biomePendingChunkUpdateMap.values();
-    }
-
-
-    /**
-     * This method adds BiomeChunkUpdateObject to cache.
-     * @param updateObject Object that must be added to cache.
-     */
-    public void addChunkUpdateObject(BiomeChunkUpdateObject updateObject)
-    {
-        this.biomePendingChunkUpdateMap.put(updateObject.getUniqueId(), updateObject);
-    }
-
-
-    /**
-     * This method removes given element form cache and database.
-     * @param element Element that should be removed.
-     */
-    public void removeUpdateObject(BiomeChunkUpdateObject element)
-    {
-        if (this.biomePendingChunkUpdateMap.containsKey(element.getUniqueId()))
-        {
-            this.biomePendingChunkUpdateMap.remove(element.getUniqueId());
-            this.biomePendingChunkUpdateDatabase.deleteObject(element);
-        }
-    }
-
-
-    // ---------------------------------------------------------------------
     // Section: Variables
     // ---------------------------------------------------------------------
 
     /**
      * Variable current addon.
      */
-    private BiomesAddon addon;
+    private final BiomesAddon addon;
 
     /**
      * Variable stores map that links String to loaded biomes object.
      */
-    private Map<String, BiomesObject> biomesCacheData;
+    private final Map<String, BiomesObject> biomesCacheData;
 
     /**
      * Variable stores database of biomes objects.
@@ -713,15 +636,4 @@ public class BiomesAddonManager
      * Variable stores biomes.yml location
      */
     private File biomesFile;
-
-    /**
-     * Variable stores BiomeChunkUpdateObject objects that contains information about
-     * chunk that is not updated yet.
-     */
-    private Map<String, BiomeChunkUpdateObject> biomePendingChunkUpdateMap;
-
-    /**
-     * Variable stores database of BiomeChunkUpdateObject.
-     */
-    private Database<BiomeChunkUpdateObject> biomePendingChunkUpdateDatabase;
 }
