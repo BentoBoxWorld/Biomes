@@ -315,7 +315,9 @@ public class Utils
     {
         return switch (biome) {
             case MOUNTAIN_EDGE,
-                DEEP_WARM_OCEAN -> true;
+                DEEP_WARM_OCEAN,
+                DRIPSTONE_CAVES,
+                LUSH_CAVES -> true;
             default -> false;
         };
     }
