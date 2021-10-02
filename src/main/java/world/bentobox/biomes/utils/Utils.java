@@ -2,13 +2,19 @@ package world.bentobox.biomes.utils;
 
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
+import org.jetbrains.annotations.Nullable;
 
 import world.bentobox.bentobox.BentoBox;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.bentobox.hooks.LangUtilsHook;
+import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.config.Settings;
 
 
@@ -37,6 +43,21 @@ public class Utils
 
         return user.hasPermission(updateModePermission + ".*") ||
             user.hasPermission(updateModePermission + "." + biomeId.toLowerCase());
+    }
+
+
+    /**
+     * Sanitizes the provided input. It replaces spaces and hyphens with underscores and lower cases the input.
+     * This code also removes all color codes from the input.
+     * @param input input to sanitize
+     * @return sanitized input
+     */
+    public static String sanitizeInput(String input)
+    {
+        return ChatColor.stripColor(
+            Util.translateColorCodes(input.toLowerCase(Locale.ENGLISH).
+                replace(" ", "_").
+                replace("-", "_")));
     }
 
 
@@ -148,18 +169,15 @@ public class Utils
      */
     public static boolean isSnowyBiome(Biome biome)
     {
-        switch (biome)
-        {
-        case SNOWY_TUNDRA:
-        case ICE_SPIKES:
-        case SNOWY_TAIGA:
-        case SNOWY_TAIGA_MOUNTAINS:
-        case FROZEN_RIVER:
-        case SNOWY_BEACH:
-            return true;
-        default:
-            return false;
-        }
+        return switch (biome) {
+            case SNOWY_TUNDRA,
+                ICE_SPIKES,
+                SNOWY_TAIGA,
+                SNOWY_TAIGA_MOUNTAINS,
+                FROZEN_RIVER,
+                SNOWY_BEACH -> true;
+            default -> false;
+        };
     }
 
 
@@ -170,21 +188,18 @@ public class Utils
      */
     public static boolean isColdBiome(Biome biome)
     {
-        switch (biome)
-        {
-        case MOUNTAINS:
-        case GRAVELLY_MOUNTAINS:
-        case WOODED_MOUNTAINS:
-        case MODIFIED_GRAVELLY_MOUNTAINS:
-        case TAIGA:
-        case TAIGA_MOUNTAINS:
-        case GIANT_TREE_TAIGA:
-        case GIANT_SPRUCE_TAIGA:
-        case STONE_SHORE:
-            return true;
-        default:
-            return false;
-        }
+        return switch (biome) {
+            case MOUNTAINS,
+                GRAVELLY_MOUNTAINS,
+                WOODED_MOUNTAINS,
+                MODIFIED_GRAVELLY_MOUNTAINS,
+                TAIGA,
+                TAIGA_MOUNTAINS,
+                GIANT_TREE_TAIGA,
+                GIANT_SPRUCE_TAIGA,
+                STONE_SHORE -> true;
+            default -> false;
+        };
     }
 
 
@@ -195,31 +210,28 @@ public class Utils
      */
     public static boolean isLushBiome(Biome biome)
     {
-        switch (biome)
-        {
-        case PLAINS:
-        case SUNFLOWER_PLAINS:
-        case FOREST:
-        case FLOWER_FOREST:
-        case BIRCH_FOREST:
-        case TALL_BIRCH_FOREST:
-        case DARK_FOREST:
-        case DARK_FOREST_HILLS:
-        case SWAMP:
-        case SWAMP_HILLS:
-        case JUNGLE:
-        case MODIFIED_JUNGLE:
-        case JUNGLE_EDGE:
-        case MODIFIED_JUNGLE_EDGE:
-        case BAMBOO_JUNGLE:
-        case RIVER:
-        case BEACH:
-        case MUSHROOM_FIELDS:
-        case MUSHROOM_FIELD_SHORE:
-            return true;
-        default:
-            return false;
-        }
+        return switch (biome) {
+            case PLAINS,
+                SUNFLOWER_PLAINS,
+                FOREST,
+                FLOWER_FOREST,
+                BIRCH_FOREST,
+                TALL_BIRCH_FOREST,
+                DARK_FOREST,
+                DARK_FOREST_HILLS,
+                SWAMP,
+                SWAMP_HILLS,
+                JUNGLE,
+                MODIFIED_JUNGLE,
+                JUNGLE_EDGE,
+                MODIFIED_JUNGLE_EDGE,
+                BAMBOO_JUNGLE,
+                RIVER,
+                BEACH,
+                MUSHROOM_FIELDS,
+                MUSHROOM_FIELD_SHORE -> true;
+            default -> false;
+        };
     }
 
 
@@ -230,24 +242,21 @@ public class Utils
      */
     public static boolean isDryBiome(Biome biome)
     {
-        switch (biome)
-        {
-        case DESERT:
-        case DESERT_LAKES:
-        case SAVANNA:
-        case SHATTERED_SAVANNA:
-        case BADLANDS:
-        case ERODED_BADLANDS:
-        case WOODED_BADLANDS_PLATEAU:
-        case MODIFIED_WOODED_BADLANDS_PLATEAU:
-        case BADLANDS_PLATEAU:
-        case SAVANNA_PLATEAU:
-        case MODIFIED_BADLANDS_PLATEAU:
-        case SHATTERED_SAVANNA_PLATEAU:
-            return true;
-        default:
-            return false;
-        }
+        return switch (biome) {
+            case DESERT,
+                DESERT_LAKES,
+                SAVANNA,
+                SHATTERED_SAVANNA,
+                BADLANDS,
+                ERODED_BADLANDS,
+                WOODED_BADLANDS_PLATEAU,
+                MODIFIED_WOODED_BADLANDS_PLATEAU,
+                BADLANDS_PLATEAU,
+                SAVANNA_PLATEAU,
+                MODIFIED_BADLANDS_PLATEAU,
+                SHATTERED_SAVANNA_PLATEAU -> true;
+            default -> false;
+        };
     }
 
 
@@ -258,21 +267,18 @@ public class Utils
      */
     public static boolean isOceanBiome(Biome biome)
     {
-        switch (biome)
-        {
-        case WARM_OCEAN:
-        case LUKEWARM_OCEAN:
-        case DEEP_LUKEWARM_OCEAN:
-        case OCEAN:
-        case DEEP_OCEAN:
-        case COLD_OCEAN:
-        case DEEP_COLD_OCEAN:
-        case FROZEN_OCEAN:
-        case DEEP_FROZEN_OCEAN:
-            return true;
-        default:
-            return false;
-        }
+        return switch (biome) {
+            case WARM_OCEAN,
+                LUKEWARM_OCEAN,
+                DEEP_LUKEWARM_OCEAN,
+                OCEAN,
+                DEEP_OCEAN,
+                COLD_OCEAN,
+                DEEP_COLD_OCEAN,
+                FROZEN_OCEAN,
+                DEEP_FROZEN_OCEAN -> true;
+            default -> false;
+        };
     }
 
 
@@ -283,23 +289,20 @@ public class Utils
      */
     public static boolean isNeutralBiome(Biome biome)
     {
-        switch (biome)
-        {
-        case THE_VOID:
-        case WOODED_HILLS:
-        case TAIGA_HILLS:
-        case SNOWY_TAIGA_HILLS:
-        case JUNGLE_HILLS:
-        case DESERT_HILLS:
-        case BIRCH_FOREST_HILLS:
-        case TALL_BIRCH_HILLS:
-        case GIANT_TREE_TAIGA_HILLS:
-        case GIANT_SPRUCE_TAIGA_HILLS:
-        case SNOWY_MOUNTAINS:
-            return true;
-        default:
-            return false;
-        }
+        return switch (biome) {
+            case THE_VOID,
+                WOODED_HILLS,
+                TAIGA_HILLS,
+                SNOWY_TAIGA_HILLS,
+                JUNGLE_HILLS,
+                DESERT_HILLS,
+                BIRCH_FOREST_HILLS,
+                TALL_BIRCH_HILLS,
+                GIANT_TREE_TAIGA_HILLS,
+                GIANT_SPRUCE_TAIGA_HILLS,
+                SNOWY_MOUNTAINS -> true;
+            default -> false;
+        };
     }
 
 
@@ -310,14 +313,11 @@ public class Utils
      */
     public static boolean isUnusedBiome(Biome biome)
     {
-        switch (biome)
-        {
-        case MOUNTAIN_EDGE:
-        case DEEP_WARM_OCEAN:
-            return true;
-        default:
-            return false;
-        }
+        return switch (biome) {
+            case MOUNTAIN_EDGE,
+                DEEP_WARM_OCEAN -> true;
+            default -> false;
+        };
     }
 
 
@@ -328,19 +328,14 @@ public class Utils
      */
     public static boolean isNetherBiome(Biome biome)
     {
-        // TODO: 1.15.2 support.
-        switch (biome.name())
-        {
-        case "NETHER":
-        case "NETHER_WASTES":
-        case "SOUL_SAND_VALLEY":
-        case "CRIMSON_FOREST":
-        case "WARPED_FOREST":
-        case "BASALT_DELTAS":
-            return true;
-        default:
-            return false;
-        }
+        return switch (biome) {
+            case NETHER_WASTES,
+                SOUL_SAND_VALLEY,
+                CRIMSON_FOREST,
+                WARPED_FOREST,
+                BASALT_DELTAS -> true;
+            default -> false;
+        };
     }
 
 
@@ -351,16 +346,283 @@ public class Utils
      */
     public static boolean isTheEndBiome(Biome biome)
     {
-        switch (biome)
+        return switch (biome) {
+            case THE_END,
+                SMALL_END_ISLANDS,
+                END_MIDLANDS,
+                END_HIGHLANDS,
+                END_BARRENS -> true;
+            default -> false;
+        };
+    }
+
+
+    /**
+     * Send given message to user and add prefix to the start of the message.
+     *
+     * @param user User who need to receive message.
+     * @param message String of message that must be send.
+     */
+    public static void sendMessage(User user, String message)
+    {
+        user.sendMessage(user.getTranslation(Constants.CONVERSATIONS + "prefix") + message);
+    }
+
+
+    /**
+     * Prettify World.Environment object for user.
+     * @param object Object that must be pretty.
+     * @param user User who will see the object.
+     * @return Prettified string for World.Environment.
+     */
+    public static String prettifyObject(World.Environment object, User user)
+    {
+        // Find addon structure with:
+        // [addon]:
+        //   environments:
+        //     [environment]:
+        //       name: [name]
+        String translation = user.getTranslationOrNothing(Constants.ENVIRONMENTS + object.name().toLowerCase() + ".name");
+
+        if (!translation.isEmpty())
         {
-        case THE_END:
-        case SMALL_END_ISLANDS:
-        case END_MIDLANDS:
-        case END_HIGHLANDS:
-        case END_BARRENS:
-            return true;
-        default:
-            return false;
+            // We found our translation.
+            return translation;
         }
+
+        // Find addon structure with:
+        // [addon]:
+        //   environments:
+        //     [environment]: [name]
+
+        translation = user.getTranslationOrNothing(Constants.ENVIRONMENTS + object.name().toLowerCase());
+
+        if (!translation.isEmpty())
+        {
+            // We found our translation.
+            return translation;
+        }
+
+        // Find general structure with:
+        // environments:
+        //   [environment]: [name]
+
+        translation = user.getTranslationOrNothing("environments." + object.name().toLowerCase());
+
+        if (!translation.isEmpty())
+        {
+            // We found our translation.
+            return translation;
+        }
+
+        // Lang Utils do not have Environment :(
+        //LangUtilsHook.getEnvrionmentName(object, user);
+
+        // Nothing was found. Use just a prettify text function.
+        return Util.prettifyText(object.name());
+    }
+
+
+    /**
+     * Prettify World.Environment object description for user.
+     * @param object Object that must be pretty.
+     * @param user User who will see the object.
+     * @return Prettified description string for World.Environment.
+     */
+    public static String prettifyDescription(World.Environment object, User user)
+    {
+        // Find addon structure with:
+        // [addon]:
+        //   environments:
+        //     [environment]:
+        //       description: [text]
+        String translation = user.getTranslationOrNothing(Constants.ENVIRONMENTS + object.name().toLowerCase() + ".description");
+
+        if (!translation.isEmpty())
+        {
+            // We found our translation.
+            return translation;
+        }
+
+        // No text to return.
+        return "";
+    }
+
+
+    /**
+     * Prettify Material object for user.
+     * @param object Object that must be pretty.
+     * @param user User who will see the object.
+     * @return Prettified string for Material.
+     */
+    public static String prettifyObject(@Nullable Material object, User user)
+    {
+        // Nothing to translate
+        if (object == null)
+        {
+            return "";
+        }
+
+        // Find addon structure with:
+        // [addon]:
+        //   materials:
+        //     [material]:
+        //       name: [name]
+        String translation = user.getTranslationOrNothing(Constants.MATERIALS + object.name().toLowerCase() + ".name");
+
+        if (!translation.isEmpty())
+        {
+            // We found our translation.
+            return translation;
+        }
+
+        // Find addon structure with:
+        // [addon]:
+        //   materials:
+        //     [material]: [name]
+
+        translation = user.getTranslationOrNothing(Constants.MATERIALS + object.name().toLowerCase());
+
+        if (!translation.isEmpty())
+        {
+            // We found our translation.
+            return translation;
+        }
+
+        // Find general structure with:
+        // materials:
+        //   [material]: [name]
+
+        translation = user.getTranslationOrNothing("materials." + object.name().toLowerCase());
+
+        if (!translation.isEmpty())
+        {
+            // We found our translation.
+            return translation;
+        }
+
+        // Use Lang Utils Hook to translate material
+        return LangUtilsHook.getMaterialName(object, user);
+    }
+
+
+    /**
+     * Prettify Material object description for user.
+     * @param object Object that must be pretty.
+     * @param user User who will see the object.
+     * @return Prettified description string for Material.
+     */
+    public static String prettifyDescription(@Nullable Material object, User user)
+    {
+        // Nothing to translate
+        if (object == null)
+        {
+            return "";
+        }
+
+        // Find addon structure with:
+        // [addon]:
+        //   materials:
+        //     [material]:
+        //       description: [text]
+        String translation = user.getTranslationOrNothing(Constants.MATERIALS + object.name().toLowerCase() + ".description");
+
+        if (!translation.isEmpty())
+        {
+            // We found our translation.
+            return translation;
+        }
+
+        // No text to return.
+        return "";
+    }
+
+
+    /**
+     * Prettify Biome object for user.
+     * @param object Object that must be pretty.
+     * @param user User who will see the object.
+     * @return Prettified string for Biome.
+     */
+    public static String prettifyObject(@Nullable Biome object, User user)
+    {
+        // Nothing to translate
+        if (object == null)
+        {
+            return "";
+        }
+
+        // Find addon structure with:
+        // [addon]:
+        //   biomes:
+        //     [biome]:
+        //       name: [name]
+        String translation = user.getTranslationOrNothing(Constants.BIOMES + object.name().toLowerCase() + ".name");
+
+        if (!translation.isEmpty())
+        {
+            // We found our translation.
+            return translation;
+        }
+
+        // Find addon structure with:
+        // [addon]:
+        //   biomes:
+        //     [biome]: [name]
+
+        translation = user.getTranslationOrNothing(Constants.BIOMES + object.name().toLowerCase());
+
+        if (!translation.isEmpty())
+        {
+            // We found our translation.
+            return translation;
+        }
+
+        // Find general structure with:
+        // materials:
+        //   [biome]: [name]
+
+        translation = user.getTranslationOrNothing("biomes." + object.name().toLowerCase());
+
+        if (!translation.isEmpty())
+        {
+            // We found our translation.
+            return translation;
+        }
+
+        // Use Lang Utils Hook to translate material
+        return LangUtilsHook.getBiomeName(object, user);
+    }
+
+
+    /**
+     * Prettify Biome object description for user.
+     * @param object Object that must be pretty.
+     * @param user User who will see the object.
+     * @return Prettified description string for Biome.
+     */
+    public static String prettifyDescription(@Nullable Biome object, User user)
+    {
+        // Nothing to translate
+        if (object == null)
+        {
+            return "";
+        }
+
+        // Find addon structure with:
+        // [addon]:
+        //   biomes:
+        //     [biome]:
+        //       description: [text]
+        String translation = user.getTranslationOrNothing(Constants.BIOMES + object.name().toLowerCase() + ".description");
+
+        if (!translation.isEmpty())
+        {
+            // We found our translation.
+            return translation;
+        }
+
+        // No text to return.
+        return "";
     }
 }
