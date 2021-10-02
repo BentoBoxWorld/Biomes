@@ -17,6 +17,7 @@ import world.bentobox.biomes.handlers.BiomeDataRequestHandler;
 import world.bentobox.biomes.handlers.BiomeListRequestHandler;
 import world.bentobox.biomes.handlers.ChangeBiomeRequestHandler;
 import world.bentobox.biomes.listeners.ChangeOwnerListener;
+import world.bentobox.biomes.managers.BiomesAddonManager;
 import world.bentobox.greenhouses.Greenhouses;
 import world.bentobox.level.Level;
 

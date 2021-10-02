@@ -51,7 +51,7 @@ import world.bentobox.bentobox.managers.LocalesManager;
 import world.bentobox.bentobox.managers.PlaceholdersManager;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
-import world.bentobox.biomes.BiomesAddonManager;
+import world.bentobox.biomes.managers.BiomesAddonManager;
 import world.bentobox.biomes.config.Settings;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.utils.Utils;

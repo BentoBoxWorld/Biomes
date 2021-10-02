@@ -1,4 +1,9 @@
-package world.bentobox.biomes;
+///
+// Created by BONNe
+// Copyright - 2021
+///
+
+package world.bentobox.biomes.managers;
 
 
 import java.io.File;
@@ -23,6 +28,7 @@ import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.Database;
 import world.bentobox.bentobox.util.ItemParser;
 import world.bentobox.bentobox.util.Util;
+import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.config.Settings.VisibilityMode;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.panels.GuiUtils;
@@ -41,7 +47,7 @@ public class BiomesAddonManager
      * This is default constructor for Addon Manager.
      * @param addon Inits addon manager.
      */
-    protected BiomesAddonManager(BiomesAddon addon)
+    public BiomesAddonManager(BiomesAddon addon)
     {
         this.addon = addon;
 
