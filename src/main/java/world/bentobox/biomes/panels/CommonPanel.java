@@ -110,9 +110,6 @@ public abstract class CommonPanel
     {
         final String reference = Constants.DESCRIPTIONS + "biomes.";
 
-        //				case REQUIRED_MONEY:
-        //				case REQUIRED_LEVEL:
-
         // Get description from custom translations
         String description = this.user.getTranslationOrNothing(
             "biomes.custom-biome."  + biome.getUniqueId() + ".description");

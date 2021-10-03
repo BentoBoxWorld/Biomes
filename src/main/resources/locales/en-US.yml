@@ -1,313 +1,155 @@
 biomes:
   gui:
-    title:
-      admin:
-        main-gui: "&6 Admin Menu"
-        edit: "&6 Edit [biome]"
-        settings: "&6 Addon Settings"
-        edit-list: "&6 Editable Biome List"
-        remove-list: "&6 Removable Biome List"
-        user-list: "&6 Choose Player"
-        confirm-title: "&6 Confirm Previous Action"
-        manage-numbers: "&6 Manage Numbers"
-        select-biome: "&6 Select Biome"
-        toggle-environment: "&6 Toggle Environment"
-        edit-text-fields: "&6 Edit Text Fields"
-        select-block: "&6 Select A Material"
-
-        lore-edit: "&6 Lore Message"
-        lore-add: "&6 Add Lore Element"
-        lore-remove: "&6 Remove Lore Element"
-
-      biomes-choose: "&6 Choose Biome"
-      mode-choose: "&6 Choose Update Mode"
-
+    titles:
     buttons:
-      admin:
-        settings: "Settings"
-        import: "Import"
-        remove: "Remove Biome"
-        edit: "Edit Biome"
-        add: "Add Biome"
-        change: "Change User Biome"
-
-        change-biome: "Biome"
-        name: "Display Name"
-        icon: "Icon"
-        order: "Order"
-        description: "Description"
-        deployment: "Deployment"
-        required-permissions: "Required Permissions"
-        required-level: "Required Level"
-        required-money: "Required Money"
-
-        advanced-menu: "Advanced Menu"
-        default-mode: "Default Update Mode"
-        default-size: "Default Size"
-        visibility-mode: "Biomes Visibility"
-        line-length: "Lore Line Length"
-        biomes-lore: "Biome Lore"
-        cooldown: "Cooldown"
-        reset-biomes: "Reset Event"
-        use-protection-range: "Use Protection Range"
-
-        toggle-user-list: "Toggle Player List"
-
-        save: "Save"
-        cancel: "Cancel"
-        input: "Input"
-        accept: "Accept"
-
-        set-mode: "="
-        increase-mode: "+"
-        reduce-mode: "-"
-        multiply-mode: "*"
-        number: "[number]"
-
-        add-string: "Add String"
-        clear: "Clear"
-        remove-empty: "Remove Empty"
-        input-mode: "Input Mode"
-        value: "Value"
-
-        add-element: "Add Element"
-        remove-element: "Remove Element"
-
-        environment: "Change Environment"
-
-        lush: "Show lush biomes"
-        dry: "Show dry biomes"
-        cold: "Show cold biomes"
-        snowy: "Show snowy biomes"
-        ocean: "Show ocean biomes"
-        nether: "Show nether biomes"
-        the_end: "Show the end biomes"
-        neutral: "Show neutral biomes"
-        unused: "Show unused/unlisted biomes"
-
-      value: "Current Value: [number]"
-      increase: "Increase by [number]"
-      decrease: "Decrease by [number]"
-      set: "Set value to [number]"
-      accept: "Accept"
-      decline: "Decline"
-
-      information: "Information"
-
-      return: "Return"
-      previous: "Previous"
-      next: "Next"
+      # Button that is used to return to previous GUI or exit it completely.
+      return:
+        name: "&f&l Return"
+        description: |-
+          &7 Return to previous menu
+          &7 or exit GUI
+      # Button that is used in multi-page GUIs which allows to return to previous page.
+      previous:
+        name: "&f&l Previous Page"
+        description: |-
+          &7 Switch to &e [number] &7 page
+      # Button that is used in multi-page GUIs which allows to go to next page.
+      next:
+        name: "&f&l Next Page"
+        description: |-
+          &7 Switch to &e [number] &7 page
+      # Button that allows to quit the current gui.
+      quit:
+        name: "&f&l Quit"
+        description: |-
+          &7 Exit from the GUI.
+      # Button that allows to save the changes.
+      save:
+        name: "&f&l Save"
+        description: |-
+          &7 Save changes and return.
+      # Button that allows to cancel the changes.
+      cancel:
+        name: "&f&l Cancel"
+        description: |-
+          &7 Cancel changes and return.
+      # Button that allows to search for specific value.
+      search:
+        name: "&f&l Search"
+        description: |-
+          &7 Allows to search an
+          &7 element with input
+          &7 text value.
+        search: "&b Value: [value]"
+    tips:
+      click-to-select: "&e Click &7 to select."
+      click-to-choose: "&e Click &7 to choose."
+      click-to-complete: "&e Click &7 to complete."
+      left-click-to-accept: "&e Left Click &7 to complete."
+      right-click-to-write: "&e Right Click &7 to write."
+      click-to-reduce: "&e Click &7 to reduce."
+      click-to-increase: "&e Click &7 to increase."
+      click-to-return: "&e Click &7 to return."
+      click-to-quit: "&e Click &7 to quit."
+      click-to-wipe: "&e Click &7 to wipe."
+      left-click-to-wipe: "&e Left Click &7 to wipe."
+      right-click-to-switch: "&e Right Click &7 to switch."
+      click-to-open: "&e Click &7 to open."
+      click-to-export: "&e Click &7 to export."
+      click-to-create: "&e Click &7 to create."
+      left-click-to-open: "&e Left Click &7 to open."
+      right-click-to-reset-all: "&e Right Click &7 to wipe all."
+      click-to-toggle: "&e Click &7 to toggle."
+      click-to-change: "&e Click &7 to change."
+      shift-click-to-reset: "&e Shift Click &7 to reset."
+      click-to-add: "&e Click &7 to add."
+      click-to-remove: "&e Click &7 to remove."
+      left-click-to-cycle: "&e Left Click &7 to cycle down."
+      right-click-to-cycle: "&e Right Click &7 to cycle up."
+      click-to-edit: "&e Click &7 to edit."
+      left-click-to-download: "&e Left Click &7 to download."
+      right-click-to-toggle: "&e Right Click &7 to toggle."
+      click-to-install: "&e Click &7 to install."
+      click-to-reset-all: "&e Click &7 to reset all."
+      right-click-to-select: "&e Right Click &7 to select."
+      right-click-to-deselect: "&e Right Click &7 to deselect."
+      left-click-to-choose: "&e Left Click &7 to choose."
+      click-to-cancel: "&e Click &7 to cancel."
+      click-to-save: "&e Click &7 to save."
+      click-to-deselect: "&e Click &7 to deselect."
+      click-on-item: |-
+        &e Click &7 on item in
+        &7 your inventory.
+      left-click-to-edit: "&e Left Click &7 to edit."
+      right-click-to-clear: "&e Right Click &7 to clear."
+      click-to-previous: "&e Click &7 to view previous page."
+      click-to-next: "&e Click &7 to view next page."
+      select-before: "&e Select &7 item(-s) before proceed."
     descriptions:
-      admin:
-        settings: "Edit settings"
-        import: "Import biomes from biomes.yml file.|Right click will enable/disable overwrite mode."
-        remove: "Remove biome from memory"
-        edit: "Edit biome properties"
-        add: "Add new biome in current world"
-        change: "Change player's island biome"
-
-        change-biome: "Change which Minecraft Biome will be used."
-        required-permissions: "Change required permissions for this biome.|Without these permissions players will not be able to use it!"
-        required-level: "Change minimum island level.|&c Requires Level Addon."
-        required-money: "Change biome cost.|&c Requires Economy Addon/Plugin."
-        name: "Change display name for this Biome."
-        deployment: "Disable/enable players ability to use this biome."
-        icon: "Set the display icon for this biome."
-        description: "Modify description of this biome."
-        order: "Modify order placement of this biome."
-
-        advanced-menu: "Enable/disable Advanced Menu with all change options for players."
-        default-mode: "Set default biome update mode.|Will be used if Advanced Menu is disabled and as default values in this menu."
-        default-size: "Set default biome update size.|Will be used if Advanced Menu is disabled and as default values in this menu."
-        visibility-mode: "Modify which biomes players can see."
-        line-length: "Automatic setting of description lore line character length."
-        biomes-lore: "Modify which elements in lore message will be displayed.|Check config for more information."
-        cooldown: "Change cooldown in seconds between player can change biome again."
-        reset-biomes: "Enable/disable biomes reset if player with biome permission leaves island."
-        use-protection-range: "Enable/disable biome update to be limited by island protection range. If this is disabled, then it will use whole island range."
-
-        toggle-user-list: "Switch which players should be displayed in current Menu."
-
-        save: "Save current value and return to previous Menu."
-        cancel: "Return to previous Menu without changes."
-        input: "Write number in Chat"
-
-        set-mode: "Switch to set mode that will set current value to clicked number."
-        increase-mode: "Switch to increment mode that will increase current value by clicked number."
-        reduce-mode: "Switch to decrement mode that will reduce current value by clicked number."
-        multiply-mode: "Switch to multiply mode that will multiply current value by clicked number."
-
-        click-to-edit: '&4 Click here to edit input'
-        edit-text-line: '&6 Edit text message!'
-        add-text-line: '&6 Add new text message!'
-
-        environment: "Allows to change active environment for biome."
-        environment-active: ' &2 - [value]'
-        environment-inactive: ' &c - [value]'
-
-        lush: "Contains biomes with light green grass (with exception) and blue water. | Like plains, forest, beach and mushroom fields."
-        dry: "Contains biomes with olive tone grass and light blue water | Like desert, savanna and badlands."
-        cold: "Contains biomes with aqua colour grass and indigo water. | Like mountains and taiga."
-        snowy: "Contains biomes with aqua colour grass and purple water. | Like snowy tundra and frozen river."
-        ocean: "Contains large volume of water. | Like ocean."
-        nether: "Contains all nether biomes. | Like nether wastes."
-        the_end: "Contains all the end biomes. | Like the end."
-        neutral: "Contains void and all hills biomes. | Like the void."
-        unused: "Contains unused or unlisted biomes."
-
-        selected: "&6 Material is selected"
-
-        lore:
-          description: "Description string. | Defined in biomes object - biomeObject.description."
-          original_biome: "Original Minecraft Biome string. | Represents translation for 'biomes.gui.biome-description.biome-name'."
-          required_level: "Required island level string. | Represents translation for 'biomes.gui.biome-description.required-island-level'."
-          required_money: "Cost for changing biome string. | Represents translation for 'biomes.gui.biome-description.required-money'."
-          required_permission: "Required permission string. | Represents translation for 'biomes.gui.biome-description.equired-permissions'."
-
-      update-mode:
-        island: "Island"
-        chunk: "Chunk"
-        range: "Range"
-        undefined: "Undefined"
-      visibility-mode:
-        info: "Modify visible biomes."
-        all: "All &r- list all biomes"
-        deployed: "Deployed - list deployed biomes"
-        accessible: "Accessible - list accessible biomes"
-        toggleable: "Toggleable - toggleable button in Biomes Menu"
-      view-mode:
-        online: "Online"
-        in-world: "In this world"
-        with-island: "With island"
-
-      current-value: "Current value: [value]"
-      enabled: "enabled"
-      disabled: "disabled"
-      permission: " - [permission]"
-
-      information: "If you accept these changes, we will try to change your island biome to [biome] in update mode [mode] with range [range]. | Be aware, that biome can be changed only in 4x4x4 blocks."
-
-    questions:
-      prefix: "&2[SERVER]: "
-
-      admin:
-        number: "Write a number in chat and press enter to accept it and press enter."
-        name: "Write a friendly name for given biome."
-        uniqueID: "Write object's unique name and press enter."
-
-    biomes-description:
-      biome-name: "Minecraft Biome: [value]"
-      required-money: "Cost: [value]"
-      required-island-level: "Min island level: [value]"
-      required-permissions: "Permissions:"
-
-  commands:
-    admin:
-      add:
-        description: "add new biome. It creates empty biome object with default settings."
-        parameters: "[id]"
-      edit:
-        description: "change given <id> property. Can only edit existing properties."
-        parameters: "<id> <property> <new_value>"
-      help:
-        description: "opens Admin GUI for players."
-        parameters: ""
-      import:
-        description: "import biomes from biomes.yml file. Adding 'overwrite' will overwrite existing biomes."
-        parameters: "[overwrite]"
-      set:
-        description: "set biome for <player>'s island. [type] and [size] are optional."
-        parameters: "<player> <biome> [type] [size]"
-      settings:
-        description: "edit default settings via simple command. Only existing settings can be edited."
-        parameters: "<property> <new_value>"
-
-      migrate:
-        description: 'migrate current game world biomes data to storage format.'
-        parameters: ''
-
-    user:
-      help:
-        description: "opens biome change GUI."
-        parameters: ""
-      info:
-        description: "display information about given biome."
-        parameters: "<biome>"
-      set:
-        description: "set island biome to <biome>. [type] and [size] are optional."
-        parameters: "<biome> [type] [size]"
-
-  errors:
-    unique-id: "&c Unique id &d[id] &c is not valid!"
-    too-many-arguments: "&c Too many parameters. Please check help!"
-    missing-arguments: "&c Missing command parameters. Please check help!"
-    unknown-argument: "&c Unknown command parameters. Please check help!"
-
-    incorrect-range: "&c Given number &d'[number]' &c is not valid. Only positive integers are valid."
-    incorrect-mode: "&c Given value &d'[mode]' &c is not valid. Valid values are 'ISLAND', 'CHUNK' or 'SQUARE'."
-    incorrect-icon: "&c Given icon &d'[icon]' &c cannot be parsed. Try something different."
-    incorrect-biome: "&c Given biome &d'[biome]' &c cannot be found in Minecraft. Use a correct biome name."
-    incorrect-parameter: "&c Given property &d'[property]' &c is not defined for biome."
-    incorrect-boolean: "&c Given value &d'[boolean]' &c is not a boolean. Valid values are 'true' or 'false'."
-    incorrect-visibility: "&c Given value &d'[mode]' &c is not valid."
-    incorrect-object: "&c Cannot find biome with given ID &d'[biome]'."
-
-    no-biomes: '&c Biomes are not implemented in current world yet!'
-    no-biomes-admin: '&c Biomes are not implemented in current world yet! Use &5/[command] &c to add them!'
-    missing-user: "&c User is not defined."
-    missing-biome: "&c Biome is not defined."
-    wrong-icon: "&c Given material &6[value] &c cannot be parsed to ItemStack."
-    no-biomes-for-you: "&c Unfortunately, no usable biome could be found."
-
-    not-valid-integer: '&c Given integer "[value]" is not valid!|Value should be between [min] and [max].'
-    not-a-integer: '&c Given value "[value]" is not an integer!'
-
-    not-on-island: "&c You are not on an island."
-    not-enough-money: "&c You do not have enough money. Changing biome requires $[number]"
-    not-enough-level:  "&c Your island level is too small. Biome requires at least level [number]"
-    admin-not-on-island: "&c You are not on [user]'s island."
-    disabled: "&c Currently, this biome is disabled."
-    missing-permission: "&c This biome requires &6[permission] &c permission. You do not have it."
-
-    no-file: "&c biomes.yml not found."
-    no-load: "&c An error occur while importing biomes: [message]!"
-    load-biome: "&c Cannot load biome '[biome]' as it is not defined in Minecraft. Use correct biome name."
-
-    no-rank: "&c You do not have a high enough rank to do that."
-
-  information:
-    header: "Biome: [name]"
-    type: "  Type: [type]"
-    description: "  Description: [description]"
-    level: "  Level: [level]"
-    cost: "  Cost: [cost]"
-    permission: "  Permission: [permission]"
-
-  messages:
-    admin:
-      migrate-start: '&2 Start migrating biomes addon data.'
-      migrate-end: '&2 Biomes addon data is updated to new format.'
-      migrate-not: '&2 All data is valid.'
-
-    saved: "&d Biome [biome] is saved."
-    biome-created: "&d New Biome object created with uniqueID: [id]"
-    saved-config: "Addon settings updated."
-    biome-removed: "Biome with unique id = '[biome]' removed from memory."
-
-    update-start: "&e Biome updating started"
-    update-done: "&6[biome] &r&e is set on island successfully."
-
-    skipping: "Skipping [biome] importing."
-    overwriting: "Overwriting [biome]."
-    imported: "[biome] imported."
-    import-count: "Biomes import completed. Imported [number] biomes."
-
+      biome:
+        lore: |-
+          [description]
+          [biome]
+          [price]
+          [level]
+          [permissions]
+        # Text that will replace [level]
+        level: |-
+          &7 Requires to reach &e [number]
+          &7 island level.
+        # Text that will replace [biome]
+        original: |-
+          &7 Biome: &e [biome]
+        # Text that will replace price
+        money: |-
+          &7 Change cost: &e $[number]
+        # Text that will replace price
+        permission-single: |-
+          &7 Missing Permission: &c [permission]
+        permissions-title: |-
+          &c Missing Permissions:
+        permissions-list: |-
+          - &c [permission]
+      # This part generates description for the Library Entry
+      library:
+        author: '&7 by &e [author]'
+        version: '&7 Made with CauldronWitchery &e [version]'
+        lang: '&7 Language: &e [lang]'
+        gamemode: '&7 Primary for &e [gamemode]'
+#    materials:
+#        # Names should be lowercase.
+#        cobblestone: "Cobblestone"
+#        # Also supports descriptions.
+#        stone:
+#            name: "Stone"
+#            description: ""
+#    biomes:
+#        # Names should be lowercase.
+#        plains: "Plains"
+#        # Also supports descriptions.
+#        jungle_hills:
+#            name: "Jungle Hills"
+#            description: ""
+#    # Showcase how to support multi-linguistic biomes
+#    custom-biomes:
+#        # Database ID name.
+#        example_biome_id:
+#            name: "&2 Translated Name"
+#            description: |-
+#                &7 Translated Custom
+#                &7 description
 protection:
-    flags:
-        BIOMES_ISLAND_PROTECTION:
-            description: "&5&o Toggle who can\n&5&o change the island biome"
-            name: "Biome control"
-        BIOMES_WORLD_PROTECTION:
-            description: "&5&o Enable/disable\n&5&o requirement for players to\n&5&o be on their island to\n&5&o change biome."
-            name: "Biome Island limitation"
-            hint: "You must be on your island to change the biome!"
+  flags:
+    BIOMES_ISLAND_PROTECTION:
+      name: "Biome control"
+      description: |-
+        &5&o Toggle who can change
+        &5&o the island biome
+    BIOMES_WORLD_PROTECTION:
+      name: "Biome Island limitation"
+      description: |-
+        &5&o Toggle requirement
+        &5&o for players to
+        &5&o be on their island to
+        &5&o change biome.
+      hint: "&c You must be on your island to change the biome!"
