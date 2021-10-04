@@ -1,6 +1,8 @@
 biomes:
   gui:
     titles:
+      # All Titles Below this comment is for Admin Menus.
+      manage-biomes: "&0&l Manage Biomes"
     buttons:
       # Button that is used to return to previous GUI or exit it completely.
       return:
@@ -41,6 +43,20 @@ biomes:
           &7 element with input
           &7 text value.
         search: "&b Value: [value]"
+      # All buttons below this comment is for Admin Menus.
+      add_biome:
+        name: "&f&l Add Biome"
+        description: |-
+          &7 Creates new Biome that
+          &7 players can use using
+          &7 user panels.
+      remove_biome:
+        name: "&f&l Remove Biome"
+        description: |-
+          &7 Removes selected biomes
+          &7 from user panels.
+        title: "&e Selected Biomes:"
+        value: "&e - [biome]"
     tips:
       click-to-select: "&e Click &7 to select."
       click-to-choose: "&e Click &7 to choose."
@@ -86,6 +102,7 @@ biomes:
       click-to-next: "&e Click &7 to view next page."
       select-before: "&e Select &7 item(-s) before proceed."
     descriptions:
+      selected: "&2 Selected"
       biome:
         lore: |-
           [description]
@@ -116,6 +133,73 @@ biomes:
         version: '&7 Made with CauldronWitchery &e [version]'
         lang: '&7 Language: &e [lang]'
         gamemode: '&7 Primary for &e [gamemode]'
+  conversations:
+    # Prefix for messages that are send from server.
+    prefix: "&l&6 [BentoBox]: &r"
+    # List of strings that are valid for confirming input. (separated with ,)
+    confirm-string: "true, on, yes, confirm, y, valid, correct"
+    # List of strings that are valid for denying input. (separated with ,)
+    deny-string: "false, off, no, deny, n, invalid, incorrect"
+    # String that allows to cancel conversation. (can be only one)
+    cancel-string: "cancel"
+    # List of strings that allows to exit conversation. (separated with ,)
+    exit-string: "cancel, exit, quit"
+    # Message that is send to user when conversation is cancelled.
+    cancelled: "&c Conversation cancelled!"
+    # Message that appears when admin clicks on number editing button.
+    input-number: "&e Please enter a number in chat."
+    # Message that appears when admin clicks on seconds editing button.
+    input-seconds: "&e Please enter a seconds in chat."
+    # Error message that is showed if user input a value that is not a number.
+    numeric-only: "&c The given [value] is not a number!"
+    # Error message that is showed if user input a number that is smaller or larger that allowed.
+    not-valid-value: "&c The given number [value] is not valid. It must be larger than [min] and smaller than [max]!"
+    # Message that confirms user data removing.
+    data-removed: "&a Chosen biomes are removed from [gamemode]."
+    # Message that asks confirmation for user data removing.
+    confirm-deletion: "&e Please confirm that you want to delete [number] biomes with names: [value]."
+    # Message that confirms user data removing.
+    user-data-removed: "&a All user data for [gamemode] is cleared from the database."
+    # Message that asks confirmation for user data removing.
+    confirm-user-data-deletion: "&e Please confirm that you want to clear user database for [gamemode]."
+    # Message that confirms user data removing.
+    all-data-removed: "&a All addon data for [gamemode] is cleared from the database."
+    # Message that asks confirmation for user data removing.
+    confirm-all-data-deletion: "&e Please confirm that you want to clear addon data for [gamemode]."
+    # Message that asks user to write a name
+    write-name: "&e Please write a name in the chat."
+    # Message that confirms new object creation.
+    new-object-created: "&a New object for [gamemode] is created."
+    # Error message that sends that object cannot be created with a given name
+    object-already-exists: "&c Object &7 [id] &c already exists. Choose different name."
+    # Message that confirms name changing
+    name-changed: "&a Success, the name was updated."
+    # Message that appears after clicking
+    write-description: "&e Please enter a new description in chat and 'quit' on a line by itself to finish."
+    # Message that appears after successful description change.
+    description-changed: "&a Success, the description was updated."
+    # Message that appears when admin clicks on permission editing button.
+    write-permissions: "&e Please enter the required permissions, one per line in chat, and 'quit' on a line by itself to finish."
+    # Message that appears after successful permission updating.
+    permissions-changed: "&a Success, challenge permissions were updated."
+    # Message that appears when user clicks on library installation.
+    start-downloading: "&a Starting to download and import Biomes Library."
+    # Message that appears when writing multiline text.
+    written-text: "&a Input Text:"
+    # Message that appears after importing library data into database.
+    confirm-data-replacement: "&e Please confirm that you want to replace your current data with new one."
+    # Message that appears after successful data importing
+    new-data-imported: "&a Success, new data for [gamemode] were imported."
+    # Message that appears after admin clicks on database exporting button.
+    exported-file-name: "&e Please enter a file name for the exported database file. (write 'cancel' to exit)"
+    # Message that appears after successful database exporting to file.
+    database-export-completed: "&a Success, the database export for [world] is completed. File [file] generated."
+    # Message that appears if input file name is already taken.
+    file-name-exist: "&c File with name '[id]' exists. Cannot overwrite."
+    # Message that asks for search value input.
+    write-search: "&e Please write a search value. (write 'cancel' to exit)"
+    # Message that appears after updating search value.
+    search-updated: "&a Search value updated."
 #    materials:
 #        # Names should be lowercase.
 #        cobblestone: "Cobblestone"
