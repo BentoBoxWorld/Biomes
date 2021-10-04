@@ -5,9 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.function.BiConsumer;
 
 import world.bentobox.bentobox.api.panels.Panel;
@@ -23,7 +21,7 @@ import world.bentobox.biomes.utils.Utils;
  * This class creates panel that allows to select and deselect World Environments. On save it runs
  * input consumer with true and selected values.
  */
-public record EnvironmentSelector(User user, Set<World.Environment> values, BiConsumer<Boolean, Set<World.Environment>> consumer)
+public record EnvironmentSelector(User user, World.Environment values, BiConsumer<Boolean, World.Environment> consumer)
 {
 	/**
 	 * This method opens GUI that allows to select challenge type.
@@ -31,7 +29,7 @@ public record EnvironmentSelector(User user, Set<World.Environment> values, BiCo
 	 * @param user User who opens GUI.
 	 * @param consumer Consumer that allows to get clicked type.
 	 */
-	public static void open(User user, Set<World.Environment> values, BiConsumer<Boolean, Set<World.Environment>> consumer)
+	public static void open(User user, World.Environment values, BiConsumer<Boolean, World.Environment> consumer)
 	{
 		new EnvironmentSelector(user, values, consumer).build();
 	}
@@ -50,7 +48,6 @@ public record EnvironmentSelector(User user, Set<World.Environment> values, BiCo
 		panelBuilder.item(0, this.getButton(World.Environment.NORMAL));
 		panelBuilder.item(1, this.getButton(World.Environment.NETHER));
 		panelBuilder.item(2, this.getButton(World.Environment.THE_END));
-		panelBuilder.item(3, this.getButton(Button.ACCEPT_SELECTED));
 		panelBuilder.item(4, this.getButton(Button.CANCEL));
 
 		panelBuilder.build();
@@ -73,29 +70,12 @@ public record EnvironmentSelector(User user, Set<World.Environment> values, BiCo
 		description.add(this.user.getTranslationOrNothing(reference + "description",
 			"[description]", Utils.prettifyDescription(environment, this.user)));
 
-		if (this.values.contains(environment))
-		{
-			description.add("");
-			description.add(this.user.getTranslation(Constants.TIPS + "click-to-deselect"));
-		}
-		else
-		{
-			description.add("");
-			description.add(this.user.getTranslation(Constants.TIPS + "click-to-select"));
-		}
+		description.add("");
+		description.add(this.user.getTranslation(Constants.TIPS + "click-to-choose"));
 
 		PanelItem.ClickHandler clickHandler = (panel, user, clickType, slot) ->
 		{
-			if (this.values.contains(environment))
-			{
-				this.values.remove(environment);
-			}
-			else
-			{
-				this.values.add(environment);
-			}
-
-			this.build();
+			this.consumer.accept(true, environment);
 			return true;
 		};
 
@@ -114,7 +94,7 @@ public record EnvironmentSelector(User user, Set<World.Environment> values, BiCo
 			name(name).
 			description(description).
 			clickHandler(clickHandler).
-			glow(this.values.contains(environment)).
+			glow(this.values == environment).
 			build();
 	}
 
@@ -136,43 +116,22 @@ public record EnvironmentSelector(User user, Set<World.Environment> values, BiCo
 		ItemStack icon;
 		PanelItem.ClickHandler clickHandler;
 
-		switch (button)
+		if (button == Button.CANCEL)
 		{
-			case ACCEPT_SELECTED -> {
-				if (!this.values.isEmpty())
-				{
-					description.add(this.user.getTranslation(reference + "title"));
-					this.values.forEach(element -> {
-						description.add(this.user.getTranslation(reference + "element",
-							"[element]", Utils.prettifyObject(element, this.user)));
-					});
-				}
+			icon = new ItemStack(Material.IRON_DOOR);
+			clickHandler = (panel, user, clickType, slot) ->
+			{
+				this.consumer.accept(false, null);
+				return true;
+			};
 
-				icon = new ItemStack(Material.COMMAND_BLOCK);
-				clickHandler = (panel, user, clickType, slot) ->
-				{
-					this.consumer.accept(true, this.values);
-					return true;
-				};
-
-				description.add("");
-				description.add(this.user.getTranslation(Constants.TIPS + "click-to-save"));
-			}
-			case CANCEL -> {
-				icon = new ItemStack(Material.IRON_DOOR);
-				clickHandler = (panel, user, clickType, slot) ->
-				{
-					this.consumer.accept(false, Collections.emptySet());
-					return true;
-				};
-
-				description.add("");
-				description.add(this.user.getTranslation(Constants.TIPS + "click-to-cancel"));
-			}
-			default -> {
-				icon = new ItemStack(Material.PAPER);
-				clickHandler = null;
-			}
+			description.add("");
+			description.add(this.user.getTranslation(Constants.TIPS + "click-to-cancel"));
+		}
+		else
+		{
+			icon = new ItemStack(Material.PAPER);
+			clickHandler = null;
 		}
 
 		return new PanelItemBuilder().
@@ -190,6 +149,5 @@ public record EnvironmentSelector(User user, Set<World.Environment> values, BiCo
 	private enum Button
 	{
 		CANCEL,
-		ACCEPT_SELECTED
 	}
 }

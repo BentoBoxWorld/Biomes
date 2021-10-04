@@ -74,6 +74,72 @@ biomes:
         name: "&f&l [biome]"
         description: |-
           &7 Biome ID: [id].
+      name:
+        name: "&f&l Display Name"
+        description: |-
+          &7 Display name for biome.
+          &7 Supports color codes.
+        value: "&7 Current Value: &r [name]"
+      deployed:
+        name: "&f&l Deployed"
+        description: |-
+          &7 Toggles if biome is
+          &7 accessable to players
+          &7 or not.
+        enabled: "&2 Enabled"
+        disabled: "&c Disabled"
+      environment:
+        name: "&f&l Dimension"
+        description: |-
+          &7 Allows to limit in which
+          &7 dimension the biome
+          &7 can be appied.
+        enabled: "&2"
+        disabled: "&c"
+      icon:
+        name: "&f&l Icon"
+        description: |-
+          &7 Allows to change icon
+          &7 for this biome.
+      order:
+        name: "&f&l Order"
+        description: |-
+          &7 Allows to change order of
+          &7 objects.
+          &7 Objects with equal numbers
+          &7 will be ordered by their
+          &7 unique id names.
+        value: "&7 Current order: &e [number]"
+      permissions:
+        name: "&f&l Permissions"
+        description: |-
+          &7 Allows to change required
+          &7 permissions for this
+          &7 biome to be accessible.
+        title: "&e Permissions: "
+        element: " &8 - [permission]"
+        none: "&7 Permissions are not set."
+      description:
+        name: "&f&l Description"
+        description: |-
+          &7 The specific description
+          &7 for the challenge. The color
+          &7 codes must be applied to it.
+        value: "&e Current description:"
+        none: "&7 Description is not set."
+      cost:
+        name: "&f&l Cost"
+        description: |-
+          &7 Allows to change cost of
+          &7 applaying this biome.
+        value: "&7 Current order: &e $[number]"
+      level:
+        name: "&f&l Level"
+        description: |-
+          &7 Allows to change the
+          &7 required island level
+          &7 for applaying this biome.
+        value: "&7 Current level: &e [number]"
       biome-filter:
         name: "&f&l [filter]"
         description: |-
@@ -212,7 +278,7 @@ biomes:
     # Message that appears when admin clicks on permission editing button.
     write-permissions: "&e Please enter the required permissions, one per line in chat, and 'quit' on a line by itself to finish."
     # Message that appears after successful permission updating.
-    permissions-changed: "&a Success, challenge permissions were updated."
+    permissions-changed: "&a Success, permissions were updated."
     # Message that appears when user clicks on library installation.
     start-downloading: "&a Starting to download and import Biomes Library."
     # Message that appears when writing multiline text.
@@ -231,6 +297,8 @@ biomes:
     write-search: "&e Please write a search value. (write 'cancel' to exit)"
     # Message that appears after updating search value.
     search-updated: "&a Search value updated."
+    # Message that appears when admin tries to deploy invalid biome.
+    invalid-biome: "&c Some data in stored `[biome]` is not valid."
 #    materials:
 #        # Names should be lowercase.
 #        cobblestone: "Cobblestone"

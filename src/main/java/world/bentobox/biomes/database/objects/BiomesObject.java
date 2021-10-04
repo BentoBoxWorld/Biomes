@@ -352,6 +352,16 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
     }
 
 
+    /**
+     * This method checks if this object is valid.
+     * @return {@code true} if biome is valid, {@code false} otherwise.
+     */
+    public boolean isValid()
+    {
+        return this.biome != null;
+    }
+
+
     // ---------------------------------------------------------------------
     // Section: Variables
     // ---------------------------------------------------------------------

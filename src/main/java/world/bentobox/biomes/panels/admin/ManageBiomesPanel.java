@@ -63,7 +63,7 @@ public class ManageBiomesPanel extends CommonPagedPanel<BiomesObject>
      * This method builds this GUI.
      */
     @Override
-    public void build()
+    protected void build()
     {
         // PanelBuilder is a BentoBox API that provides ability to easy create Panels.
         PanelBuilder panelBuilder = new PanelBuilder().
@@ -154,7 +154,7 @@ public class ManageBiomesPanel extends CommonPagedPanel<BiomesObject>
                             if (newObject != null)
                             {
                                 newObject.setFriendlyName(value);
-                                EditBiomeGUI.open(this, newObject);
+                                EditBiomePanel.open(this, newObject);
 
                                 // Add new generator to generatorList.
                                 this.elementList.add(newObject);
@@ -329,7 +329,7 @@ public class ManageBiomesPanel extends CommonPagedPanel<BiomesObject>
             }
             else
             {
-                EditBiomeGUI.open(this, biomesObject);
+                EditBiomePanel.open(this, biomesObject);
             }
 
             // Always return true.
