@@ -3,6 +3,9 @@ biomes:
     titles:
       # All Titles Below this comment is for Admin Menus.
       manage-biomes: "&0&l Manage Biomes"
+      edit-biome: "&0&l Edit Biome: [biome]"
+      environment-selector: "&0&l Select Environment"
+      biome-selector: "&0&l Select Biome"
     buttons:
       # Button that is used to return to previous GUI or exit it completely.
       return:
@@ -57,6 +60,34 @@ biomes:
           &7 from user panels.
         title: "&e Selected Biomes:"
         value: "&e - [biome]"
+      accept_selected:
+        name: "&f&l Accept Selected"
+        description: |-
+          &7 Accepts Selected elements.
+        title: "&e Selected Elements:"
+        element: "&e - [element]"
+      environment_element:
+        name: "&f&l [environment]"
+        description: |-
+          &7 [description].
+      biome:
+        name: "&f&l [biome]"
+        description: |-
+          &7 Biome ID: [id].
+      biome-filter:
+        name: "&f&l [filter]"
+        description: |-
+          &7 Biome Filter based
+          &7 on Minecraft Wiki.
+        lush: "Lush Biomes"
+        dry: "Dry Biomes"
+        cold: "Cold Biomes"
+        snowy: "Snowy Biomes"
+        ocean: "Ocean Biomes"
+        nether: "Nether Biomes"
+        the_end: "The End Biomes"
+        neutral: "Neutral Biomes"
+        unused: "Unused Biomes"
     tips:
       click-to-select: "&e Click &7 to select."
       click-to-choose: "&e Click &7 to choose."
