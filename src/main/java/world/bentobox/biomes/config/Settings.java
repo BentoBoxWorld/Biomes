@@ -1,10 +1,8 @@
 package world.bentobox.biomes.config;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,8 +10,6 @@ import world.bentobox.bentobox.api.configuration.ConfigComment;
 import world.bentobox.bentobox.api.configuration.ConfigEntry;
 import world.bentobox.bentobox.api.configuration.ConfigObject;
 import world.bentobox.bentobox.api.configuration.StoreAt;
-import world.bentobox.bentobox.database.objects.adapters.Adapter;
-import world.bentobox.biomes.database.objects.adapters.LoreAdapter;
 
 
 /**
@@ -22,10 +18,6 @@ import world.bentobox.biomes.database.objects.adapters.LoreAdapter;
  */
 @StoreAt(filename="config.yml", path="addons/Biomes")
 @ConfigComment("Biomes Configuration [version]")
-@ConfigComment("This config file is dynamic and saved when the server is shutdown.")
-@ConfigComment("You cannot edit it while the server is running because changes will")
-@ConfigComment("be lost! Use in-game settings GUI or edit when server is offline.")
-@ConfigComment("")
 public class Settings implements ConfigObject
 {
     // ---------------------------------------------------------------------
@@ -100,26 +92,6 @@ public class Settings implements ConfigObject
     public Set<String> getDisabledGameModes()
     {
         return this.disabledGameModes;
-    }
-
-
-    /**
-     * This method returns the loreMessage value.
-     * @return the value of loreMessage.
-     */
-    public List<Lore> getLore()
-    {
-        return this.lore;
-    }
-
-
-    /**
-     * This method returns the loreLineLength value.
-     * @return the loreLineLength value.
-     */
-    public int getLoreLineLength()
-    {
-        return this.loreLineLength;
     }
 
 
@@ -202,30 +174,10 @@ public class Settings implements ConfigObject
      * This method sets value for disabledGameModes variable.
      * @param disabledGameModes new value.
      */
+    @SuppressWarnings("unused")
     public void setDisabledGameModes(Set<String> disabledGameModes)
     {
         this.disabledGameModes = disabledGameModes;
-    }
-
-
-    /**
-     * This method sets the loreMessage value.
-     * @param loreMessage the loreMessage new value.
-     */
-    public void setLore(List<Lore> loreMessage)
-    {
-        this.lore = loreMessage;
-    }
-
-
-    /**
-     * This method sets the loreLineLength object value.
-     * @param loreLineLength the loreLineLength object new value.
-     *
-     */
-    public void setLoreLineLength(int loreLineLength)
-    {
-        this.loreLineLength = loreLineLength;
     }
 
 
@@ -249,8 +201,17 @@ public class Settings implements ConfigObject
      */
     public enum UpdateMode
     {
+        /**
+         * Island update mode.
+         */
         ISLAND,
+        /**
+         * Chunk update mode.
+         */
         CHUNK,
+        /**
+         * Range update mode.
+         */
         RANGE;
 
         /**
@@ -268,8 +229,8 @@ public class Settings implements ConfigObject
          */
         private static final Map<String, UpdateMode> BY_NAME = new HashMap<>();
 
-        /**
-         * This static method populated BY_NAME map.
+        /*
+          This static method populated BY_NAME map.
          */
         static
         {
@@ -286,9 +247,21 @@ public class Settings implements ConfigObject
      */
     public enum VisibilityMode
     {
+        /**
+         * All visibility mode.
+         */
         ALL,
+        /**
+         * Deployed visibility mode.
+         */
         DEPLOYED,
+        /**
+         * Accessible visibility mode.
+         */
         ACCESSIBLE,
+        /**
+         * Toggleable visibility mode.
+         */
         TOGGLEABLE;
 
 
@@ -307,79 +280,14 @@ public class Settings implements ConfigObject
          */
         private static final Map<String, VisibilityMode> BY_NAME = new HashMap<>();
 
-        /**
-         * This static method populated BY_NAME map.
+        /*
+          This static method populated BY_NAME map.
          */
         static
         {
             for (VisibilityMode visibility : VisibilityMode.values())
             {
                 BY_NAME.put(visibility.name(), visibility);
-            }
-        }
-    }
-
-
-    /**
-     * This enum allows to manage Biome Lore message in all GUIs.
-     */
-    public enum Lore
-    {
-        /**
-         * Description String: defined in biomes object - biomeObject.description
-         */
-        DESCRIPTION,
-
-        /**
-         * Original Biome String: defined minecraft biome name and message with reference
-         * 'biomes.gui.biomes-description.biome-name'
-         */
-        ORIGINAL_BIOME,
-
-        /**
-         * Cost of changing biome String: message about biome cost with reference
-         * 'biomes.gui.biomes-description.biome-money'
-         */
-        REQUIRED_MONEY,
-
-        /**
-         * Required level for changing biome String: message about required level with
-         * reference 'biomes.gui.biomes-description.biome-level'
-         */
-        REQUIRED_LEVEL,
-
-        /**
-         * Required permission for changing biome String: message about required permission
-         * with reference 'biomes.gui.biomes-description.biome-permission'
-         */
-        REQUIRED_PERMISSION;
-
-
-        /**
-         * This method returns stored parameter from string.
-         * @param parameter String of object that must be returned
-         * @return CommandParameters object or null.
-         */
-        public static Lore getLore(String parameter)
-        {
-            return BY_NAME.get(parameter);
-        }
-
-
-        /**
-         * This map allows to access all enum values via their string.
-         */
-        private static final Map<String, Lore> BY_NAME = new HashMap<>();
-
-
-        /**
-         * This static method populated BY_NAME map.
-         */
-        static
-        {
-            for (Lore lore : Lore.values())
-            {
-                BY_NAME.put(lore.name(), lore);
             }
         }
     }
@@ -394,6 +302,7 @@ public class Settings implements ConfigObject
     @ConfigComment("biome or not. Advanced menu contains extra buttons that allows to choose biome")
     @ConfigComment("change mode and range.")
     @ConfigEntry(path = "advanced-menu")
+    @SuppressWarnings("javadoc")
     private boolean advancedMenu = true;
 
     @ConfigComment("")
@@ -405,6 +314,7 @@ public class Settings implements ConfigObject
     @ConfigComment("    'CHUNK' - updates biome on whole chunks around player")
     @ConfigComment("    'RANGE' - updates biome by block in given range")
     @ConfigEntry(path = "default-mode")
+    @SuppressWarnings("javadoc")
     private UpdateMode defaultMode = UpdateMode.ISLAND;
 
     @ConfigComment("")
@@ -412,12 +322,14 @@ public class Settings implements ConfigObject
     @ConfigComment("If advanced menu is disabled or in biome set command update range is not set")
     @ConfigComment("then update algorithm will use this value as update range.")
     @ConfigEntry(path = "default-size")
+    @SuppressWarnings("javadoc")
     private int defaultSize = 3;
 
     @ConfigComment("")
     @ConfigComment("This indicates if changing biome will affect whole island or just protection range.")
     @ConfigComment("Allows to fix issues when biome is changed in space between islands.")
     @ConfigEntry(path = "use-protection-range")
+    @SuppressWarnings("javadoc")
     private boolean useProtectionRange = false;
 
     @ConfigComment("")
@@ -425,11 +337,13 @@ public class Settings implements ConfigObject
     @ConfigComment("island changes owner and it does not have biome set ability.")
     @ConfigComment("'true' means that biome will be reset.")
     @ConfigEntry(path = "reset-biomes")
+    @SuppressWarnings("javadoc")
     private boolean resetBiomes = false;
 
     @ConfigComment("")
     @ConfigComment("This indicates cool down in seconds between users can change biomes on their island.")
     @ConfigEntry(path = "cooldown")
+    @SuppressWarnings("javadoc")
     private int coolDown = 60;
 
     @ConfigComment("")
@@ -440,28 +354,8 @@ public class Settings implements ConfigObject
     @ConfigComment("    'ACCESSIBLE' - only biomes that is unlocked via permission or other unlock type will be visible in GUI.")
     @ConfigComment("    'TOGGLEABLE' - there will be button in GUI that allows users to switch from ALL to ACCESSIBLE modes.")
     @ConfigEntry(path = "biomes-visibility")
+    @SuppressWarnings("javadoc")
     private VisibilityMode visibilityMode = VisibilityMode.DEPLOYED;
-
-    @ConfigComment("")
-    @ConfigComment("This string allows to change element order in Biomes description. Each letter represents")
-    @ConfigComment("one object from Biomes description. If letter is not used, then its represented part")
-    @ConfigComment("will not be in description. If use any letter that is not recognized, then it will be")
-    @ConfigComment("ignored. Some strings can be customized via lang file under 'biomes.gui.biomes-description'.")
-    @ConfigComment("List of strings and their meaning: ")
-    @ConfigComment(" - DESCRIPTION - description from biomes object")
-    @ConfigComment(" - ORIGINAL_BIOME - defined minecraft biomes name: '*.biome-name'")
-    @ConfigComment(" - REQUIRED_MONEY - requirements for biome change: '*.required-money'")
-    @ConfigComment(" - REQUIRED_LEVEL - requirements for biome change: '*.required-island-level'")
-    @ConfigComment(" - REQUIRED_PERMISSION - requirements for biome change: '*.required-permission'")
-    @ConfigEntry(path = "lore")
-    @Adapter(LoreAdapter.class)
-    private List<Lore> lore = new ArrayList<>();
-
-    @ConfigComment("")
-    @ConfigComment("This allows to change lore description line length. By default it is 25, but some server")
-    @ConfigComment("owners may like it to be larger.")
-    @ConfigEntry(path = "lore-length")
-    private int loreLineLength = 25;
 
     @ConfigComment("")
     @ConfigComment("This list stores GameModes in which Biomes addon should not work.")
@@ -469,5 +363,6 @@ public class Settings implements ConfigObject
     @ConfigComment("disabled-gamemodes:")
     @ConfigComment(" - BSkyBlock")
     @ConfigEntry(path = "disabled-gamemodes")
+    @SuppressWarnings("javadoc")
     private Set<String> disabledGameModes = new HashSet<>();
 }
