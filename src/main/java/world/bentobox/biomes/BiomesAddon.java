@@ -220,17 +220,24 @@ public class BiomesAddon extends Addon
         {
             this.getLogger().info("Disabling biomes addon.");
 
-            if (this.settings != null)
-            {
-                new Config<>(this, Settings.class).saveConfigObject(this.settings);
-            }
-
             if (this.addonManager != null)
             {
                 this.addonManager.save();
             }
 
             this.getLogger().info("Biomes addon disabled.");
+        }
+    }
+
+
+    /**
+     * Save settings.
+     */
+    public void saveSettings()
+    {
+        if (this.settings != null)
+        {
+            new Config<>(this, Settings.class).saveConfigObject(this.settings);
         }
     }
 
