@@ -30,7 +30,7 @@ import world.bentobox.biomes.utils.Utils;
 /**
  * This class contains methods that allows to edit specific biome object.
  */
-public class EditBiomePanel extends CommonPanel
+public class BiomeEditPanel extends CommonPanel
 {
     /**
      * Instantiates a new Edit biome panel.
@@ -38,7 +38,7 @@ public class EditBiomePanel extends CommonPanel
      * @param parentPanel the parent panel
      * @param biome the biome
      */
-    private EditBiomePanel(CommonPanel parentPanel, BiomesObject biome)
+    private BiomeEditPanel(CommonPanel parentPanel, BiomesObject biome)
     {
         super(parentPanel);
         this.biome = biome;
@@ -54,7 +54,7 @@ public class EditBiomePanel extends CommonPanel
      */
     public static void open(CommonPanel parentPanel, BiomesObject biome)
     {
-        new EditBiomePanel(parentPanel, biome).build();
+        new BiomeEditPanel(parentPanel, biome).build();
     }
 
 
@@ -500,19 +500,19 @@ public class EditBiomePanel extends CommonPanel
         public void onInventoryClick(User user, InventoryClickEvent event)
         {
             // Handle icon changing
-            if (EditBiomePanel.this.selectedButton == Action.ICON &&
+            if (BiomeEditPanel.this.selectedButton == Action.ICON &&
                 event.getCurrentItem() != null &&
                 !event.getCurrentItem().getType().equals(Material.AIR) &&
                 event.getRawSlot() > 44)
             {
                 // set material and amount only. Other data should be removed.
 
-                EditBiomePanel.this.biome.setIcon(event.getCurrentItem().clone());
-                EditBiomePanel.this.manager.saveBiome(EditBiomePanel.this.biome);
+                BiomeEditPanel.this.biome.setIcon(event.getCurrentItem().clone());
+                BiomeEditPanel.this.manager.saveBiome(BiomeEditPanel.this.biome);
                 // Deselect icon
-                EditBiomePanel.this.selectedButton = null;
+                BiomeEditPanel.this.selectedButton = null;
                 // Rebuild icon
-                EditBiomePanel.this.build();
+                BiomeEditPanel.this.build();
             }
         }
 

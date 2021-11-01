@@ -23,7 +23,7 @@ import world.bentobox.biomes.utils.Utils;
 /**
  * This class opens GUI that allows to manage all generators for admin.
  */
-public class ManageBiomesPanel extends CommonPagedPanel<BiomesObject>
+public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
 {
     // ---------------------------------------------------------------------
     // Section: Internal Constructor
@@ -35,7 +35,7 @@ public class ManageBiomesPanel extends CommonPagedPanel<BiomesObject>
      *
      * @param parentPanel Parent Panel object.
      */
-    private ManageBiomesPanel(CommonPanel parentPanel)
+    private BiomeManagePanel(CommonPanel parentPanel)
     {
         super(parentPanel);
         // Store bundles in local list to avoid building it every time.
@@ -55,7 +55,7 @@ public class ManageBiomesPanel extends CommonPagedPanel<BiomesObject>
      */
     public static void open(CommonPanel parentPanel)
     {
-        new ManageBiomesPanel(parentPanel).build();
+        new BiomeManagePanel(parentPanel).build();
     }
 
 
@@ -154,7 +154,7 @@ public class ManageBiomesPanel extends CommonPagedPanel<BiomesObject>
                             if (newObject != null)
                             {
                                 newObject.setFriendlyName(value);
-                                EditBiomePanel.open(this, newObject);
+                                BiomeEditPanel.open(this, newObject);
 
                                 // Add new generator to generatorList.
                                 this.elementList.add(newObject);
@@ -329,7 +329,7 @@ public class ManageBiomesPanel extends CommonPagedPanel<BiomesObject>
             }
             else
             {
-                EditBiomePanel.open(this, biomesObject);
+                BiomeEditPanel.open(this, biomesObject);
             }
 
             // Always return true.
