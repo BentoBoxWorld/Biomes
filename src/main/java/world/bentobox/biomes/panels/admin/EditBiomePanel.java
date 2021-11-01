@@ -33,8 +33,10 @@ import world.bentobox.biomes.utils.Utils;
 public class EditBiomePanel extends CommonPanel
 {
     /**
-     * {@inheritDoc}
-     * @param biome Object that must be edited.
+     * Instantiates a new Edit biome panel.
+     *
+     * @param parentPanel the parent panel
+     * @param biome the biome
      */
     private EditBiomePanel(CommonPanel parentPanel, BiomesObject biome)
     {
@@ -62,7 +64,7 @@ public class EditBiomePanel extends CommonPanel
     @Override
     protected void build()
     {
-        // PanelBuilder is a BentoBox API that provides ability to easy create Panels.
+        // PanelBuilder is a BentoBox API that provides ability to easily create Panels.
         PanelBuilder panelBuilder = new PanelBuilder().
             user(this.user).
             name(this.user.getTranslation(Constants.TITLE + "edit-biome",
@@ -187,8 +189,6 @@ public class EditBiomePanel extends CommonPanel
                     return true;
                 };
 
-                glow = false;
-
                 description.add("");
                 description.add(this.user.getTranslation(Constants.TIPS + "click-to-change"));
 
@@ -197,12 +197,7 @@ public class EditBiomePanel extends CommonPanel
                     description.add(this.user.getTranslation(Constants.TIPS + "shift-click-to-reset"));
                 }
 
-                return new PanelItemBuilder().
-                    icon(icon).
-                    name(name).
-                    description(description).
-                    clickHandler(clickHandler).
-                    build();
+                glow = false;
             }
             case COST -> {
                 description.add(this.user.getTranslation(reference + "value",
@@ -446,7 +441,6 @@ public class EditBiomePanel extends CommonPanel
                     if (this.biome.isValid())
                     {
                         this.biome.setDeployed(!this.biome.isDeployed());
-                        this.manager.saveBiome(this.biome);
                     }
                     else
                     {
@@ -454,8 +448,9 @@ public class EditBiomePanel extends CommonPanel
                             this.user.getTranslation(Constants.CONVERSATIONS + "invalid-biome",
                                 "[biome]", this.biome.getFriendlyName()));
                         this.biome.setDeployed(false);
-                        this.manager.saveBiome(this.biome);
                     }
+
+                    this.manager.saveBiome(this.biome);
 
                     this.build();
                     return true;
@@ -555,15 +550,45 @@ public class EditBiomePanel extends CommonPanel
      */
     private enum Action
     {
+        /**
+         * Biome action.
+         */
         BIOME,
+        /**
+         * Permission action.
+         */
         PERMISSION,
+        /**
+         * Cost action.
+         */
         COST,
+        /**
+         * Level action.
+         */
         LEVEL,
+        /**
+         * Order action.
+         */
         ORDER,
+        /**
+         * Environment action.
+         */
         ENVIRONMENT,
+        /**
+         * Description action.
+         */
         DESCRIPTION,
+        /**
+         * Icon action.
+         */
         ICON,
+        /**
+         * Name action.
+         */
         NAME,
+        /**
+         * Deployed action.
+         */
         DEPLOYED
     }
 
