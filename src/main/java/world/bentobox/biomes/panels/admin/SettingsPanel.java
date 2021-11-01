@@ -25,14 +25,14 @@ import world.bentobox.biomes.utils.Utils;
 /**
  * This class manages Addon Settings Editing Panel.
  */
-public class EditSettingsPanel extends CommonPanel
+public class SettingsPanel extends CommonPanel
 {
 	/**
 	 * Instantiates a new Edit settings panel.
 	 *
 	 * @param parentPanel the parent panel
 	 */
-	private EditSettingsPanel(CommonPanel parentPanel)
+	private SettingsPanel(CommonPanel parentPanel)
 	{
 		super(parentPanel);
 		this.settings = this.addon.getSettings();
@@ -48,7 +48,7 @@ public class EditSettingsPanel extends CommonPanel
 	 * @param topLabel the top label
 	 * @param permissionPrefix the permission prefix
 	 */
-	private EditSettingsPanel(BiomesAddon addon,
+	private SettingsPanel(BiomesAddon addon,
 		World world,
 		User user,
 		String topLabel,
@@ -66,7 +66,7 @@ public class EditSettingsPanel extends CommonPanel
 	 */
 	public static void open(CommonPanel parentPanel)
 	{
-		new EditSettingsPanel(parentPanel).build();
+		new SettingsPanel(parentPanel).build();
 	}
 
 
@@ -85,7 +85,7 @@ public class EditSettingsPanel extends CommonPanel
 		String topLabel,
 		String permissionPrefix)
 	{
-		new EditSettingsPanel(addon, world, user, topLabel, permissionPrefix).build();
+		new SettingsPanel(addon, world, user, topLabel, permissionPrefix).build();
 	}
 
 
