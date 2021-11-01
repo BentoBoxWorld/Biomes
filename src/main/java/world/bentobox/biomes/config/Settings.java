@@ -26,16 +26,6 @@ public class Settings implements ConfigObject
 
 
     /**
-     * This method returns if advanced menu is enabled.
-     * @return true - if enabled, otherwise false.
-     */
-    public boolean isAdvancedMenu()
-    {
-        return this.advancedMenu;
-    }
-
-
-    /**
      * This method returns default update mode.
      * @return Default update mode.
      */
@@ -108,16 +98,6 @@ public class Settings implements ConfigObject
     // ---------------------------------------------------------------------
     // Section: Setters
     // ---------------------------------------------------------------------
-
-
-    /**
-     * This method sets value of advancedMenu variable.
-     * @param advancedMenu new value.
-     */
-    public void setAdvancedMenu(boolean advancedMenu)
-    {
-        this.advancedMenu = advancedMenu;
-    }
 
 
     /**
@@ -297,13 +277,6 @@ public class Settings implements ConfigObject
     // Section: Variables
     // ---------------------------------------------------------------------
 
-
-    @ConfigComment("This indicates if advanced menu will be enabled in Biomes GUI when users choose")
-    @ConfigComment("biome or not. Advanced menu contains extra buttons that allows to choose biome")
-    @ConfigComment("change mode and range.")
-    @ConfigEntry(path = "advanced-menu")
-    @SuppressWarnings("javadoc")
-    private boolean advancedMenu = true;
 
     @ConfigComment("")
     @ConfigComment("For advanced menu this indicate which mode will be active.")

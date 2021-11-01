@@ -6,6 +6,7 @@ biomes:
       edit-biome: "&0&l Edit Biome: [biome]"
       environment-selector: "&0&l Select Environment"
       biome-selector: "&0&l Select Biome"
+      settings: "&0&l Settings"
     buttons:
       # Button that is used to return to previous GUI or exit it completely.
       return:
@@ -154,6 +155,64 @@ biomes:
         the_end: "The End Biomes"
         neutral: "Neutral Biomes"
         unused: "Unused Biomes"
+      protection_range:
+        name: "&f&l Protection Range"
+        description: |-
+          &7 Allows to limit in the biome
+          &7 changing only to the island
+          &7 protection range instead of
+          &7 changing biome on whole island.
+        enabled: "&2 Enabled"
+        disabled: "&c Disabled"
+      reset:
+        name: "&f&l Reset on Owner change"
+        description: |-
+          &7 Allows to enable force biome
+          &7 change to the default one,
+          &7 if island changes its owner
+          &7 and new owner does not have
+          &7 current biome permission.
+        enabled: "&2 Enabled"
+        disabled: "&c Disabled"
+      cool_down:
+        name: "&f&l Biome Cool Down"
+        description: |-
+          &7 Allows to set number of
+          &7 seconds between player
+          &7 can change biome again.
+        value: "&7 Current cool down: &e [number]"
+        disabled: "&e Cool down is disabled."
+      default_size:
+        name: "&f&l Default Range"
+        description: |-
+          &7 Allows to set number that
+          &7 will be used when player
+          &7 changes biome without
+          &7 writting it.
+        value: "&7 Default Range: &e [number]"
+      default_mode:
+        name: "&f&l Default Update Mode"
+        description: |-
+          &7 Allows to set default update
+          &7 mode when players did not
+          &7 provide it.
+        enabled: "&2"
+        disabled: "&c"
+        island: "Island"
+        chunk: "Chunk"
+        range: "Range"
+      visibility:
+        name: "&f&l Biome Visibility"
+        description: |-
+          &7 Allows to change player
+          &7 biome visibility in the
+          &7 biome selection panels.
+        enabled: "&2"
+        disabled: "&c"
+        all: "All Biomes"
+        deployed: "Deployed Biomes"
+        accessible: "Accessible Biomes"
+        toggleable: "Toggleable"
     tips:
       click-to-select: "&e Click &7 to select."
       click-to-choose: "&e Click &7 to choose."
