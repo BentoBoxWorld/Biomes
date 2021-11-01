@@ -7,6 +7,7 @@ biomes:
       environment-selector: "&0&l Select Environment"
       biome-selector: "&0&l Select Biome"
       settings: "&0&l Settings"
+      choose-biome: "&0&l Choose Biome"
     buttons:
       # Button that is used to return to previous GUI or exit it completely.
       return:
@@ -358,6 +359,11 @@ biomes:
     search-updated: "&a Search value updated."
     # Message that appears when admin tries to deploy invalid biome.
     invalid-biome: "&c Some data in stored `[biome]` is not valid."
+    # Message that appears when admin tries to delete biome.
+    confirm-biome-deletion: "&e Please confirm that you want to remove [biome] from [gamemode]."
+    # Message that appears when admin removed biome.
+    biome-removed: "[biome] &a is removed from [gamemode]."
+
 #    materials:
 #        # Names should be lowercase.
 #        cobblestone: "Cobblestone"
