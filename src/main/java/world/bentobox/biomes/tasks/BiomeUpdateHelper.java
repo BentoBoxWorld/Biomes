@@ -16,6 +16,7 @@ import world.bentobox.bentobox.database.objects.Island;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.config.Settings.UpdateMode;
 import world.bentobox.biomes.database.objects.BiomesObject;
+import world.bentobox.biomes.utils.Constants;
 import world.bentobox.biomes.utils.Utils;
 
 
@@ -66,7 +67,8 @@ public class BiomeUpdateHelper
                             !this.addon.getPlugin().getIWM().isEndGenerate(this.world) ||
                             !this.addon.getPlugin().getIWM().isEndIslands(this.world)))
             {
-                this.callerUser.sendMessage("general.errors.wrong-world");
+                Utils.sendMessage(this.callerUser,
+                    this.callerUser.getTranslation("general.errors.wrong-world"));
                 return false;
             }
         }
@@ -76,19 +78,22 @@ public class BiomeUpdateHelper
             if (!this.biome.getEnvironment().equals(this.callerUser.getWorld().getEnvironment()))
             {
                 // User must be in the same environment as biome require.
-                this.callerUser.sendMessage("general.errors.wrong-world");
+                Utils.sendMessage(this.callerUser,
+                    this.callerUser.getTranslation("general.errors.wrong-world"));
                 return false;
             }
 
             if (!this.checkPermissions())
             {
-                this.callerUser.sendMessage("general.errors.no-permission");
+                Utils.sendMessage(this.callerUser,
+                    this.callerUser.getTranslation("general.errors.no-permission"));
                 return false;
             }
 
             if (!this.hasPermissionToUpdateMode())
             {
-                this.callerUser.sendMessage("general.errors.no-permission");
+                Utils.sendMessage(this.callerUser,
+                    this.callerUser.getTranslation("general.errors.no-permission"));
                 return false;
             }
 
@@ -96,26 +101,27 @@ public class BiomeUpdateHelper
             {
                 // Cannot update negative numbers.
 
-                this.callerUser.sendMessage("biomes.errors.incorrect-range",
+                Utils.sendMessage(this.callerUser,
+                    this.callerUser.getTranslation(Constants.ERRORS + "incorrect-range",
                         TextVariables.NUMBER,
-                        Integer.toString(this.updateNumber));
+                        Integer.toString(this.updateNumber)));
                 return false;
             }
 
             if (this.worldProtectionFlag)
             {
-                Island island =
-                        this.addon.getIslands().getIsland(this.world, this.targetUser);
+                Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
 
                 if (island == null)
                 {
                     // User has no island.
-                    this.callerUser.sendMessage("general.errors.player-has-no-island");
+                    Utils.sendMessage(this.callerUser,
+                        this.callerUser.getTranslation("general.errors.player-has-no-island"));
                     return false;
                 }
 
                 Optional<Island> onIsland =
-                        this.addon.getIslands().getIslandAt(this.callerUser.getLocation());
+                    this.addon.getIslands().getIslandAt(this.callerUser.getLocation());
 
                 if (!onIsland.isPresent() || onIsland.get() != island)
                 {
@@ -129,7 +135,8 @@ public class BiomeUpdateHelper
                 {
                     // This can be checked only if island exists.
 
-                    this.callerUser.sendMessage("biomes.errors.no-rank");
+                    Utils.sendMessage(this.callerUser,
+                        this.callerUser.getTranslation(Constants.ERRORS + "no-rank"));
                     return false;
                 }
 
@@ -143,9 +150,10 @@ public class BiomeUpdateHelper
                     {
                         // Not enough level
 
-                        this.callerUser.sendMessage("biomes.errors.not-enough-level",
+                        Utils.sendMessage(this.callerUser,
+                            this.callerUser.getTranslation(Constants.ERRORS + "not-enough-level",
                                 TextVariables.NUMBER,
-                                String.valueOf(this.biome.getRequiredLevel()));
+                                String.valueOf(this.biome.getRequiredLevel())));
                         return false;
                     }
                 }
@@ -164,9 +172,10 @@ public class BiomeUpdateHelper
                 {
                     // Not enough money.
 
-                    this.callerUser.sendMessage("biomes.errors.not-enough-money",
+                    Utils.sendMessage(this.callerUser,
+                        this.callerUser.getTranslation(Constants.ERRORS + "not-enough-money",
                             TextVariables.NUMBER,
-                            Double.toString(this.biome.getRequiredCost()));
+                            String.valueOf(this.biome.getRequiredCost())));
                     return false;
                 }
             }
@@ -183,7 +192,8 @@ public class BiomeUpdateHelper
                     // Island option is not possible for worlds without world protection.
                     if (this.callerUser.isPlayer())
                     {
-                        this.callerUser.sendMessage(BiomesAddon.BIOMES_WORLD_PROTECTION.getHintReference());
+                        Utils.sendMessage(this.callerUser,
+                            this.callerUser.getTranslation(BiomesAddon.BIOMES_WORLD_PROTECTION.getHintReference()));
                     }
                     else
                     {
@@ -230,9 +240,10 @@ public class BiomeUpdateHelper
                         (!onIsland.isPresent() || onIsland.get() != island))
                 {
                     // Admin is not on user island.
-                    this.callerUser.sendMessage("biomes.errors.admin-not-on-island",
+                    Utils.sendMessage(this.callerUser,
+                        this.callerUser.getTranslation(Constants.ERRORS + "admin-not-on-island",
                             "[user]",
-                            this.targetUser.getName());
+                            this.targetUser.getName()));
 
                     return false;
                 }

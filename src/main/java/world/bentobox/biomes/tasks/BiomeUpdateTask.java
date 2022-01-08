@@ -16,6 +16,7 @@ import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.database.objects.BiomeChunkUpdateObject;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.events.BiomeChangedEvent;
+import world.bentobox.biomes.utils.Constants;
 import world.bentobox.biomes.utils.Utils;
 
 
@@ -53,7 +54,8 @@ public class BiomeUpdateTask extends BukkitRunnable
     {
         if (this.user.isPlayer())
         {
-            this.user.sendMessage("biomes.messages.update-start");
+            Utils.sendMessage(this.user,
+                this.user.getTranslation(Constants.MESSAGES + "update-start"));
         }
 
         // Create and populate ChunkObjectObjects where biome change should occur.
@@ -112,9 +114,8 @@ public class BiomeUpdateTask extends BukkitRunnable
 
         if (this.user.isPlayer())
         {
-            this.user.sendMessage("biomes.messages.update-done",
-                "[biome]",
-                this.objectName);
+            Utils.sendMessage(this.user, this.user.getTranslation(Constants.MESSAGES + "update-done",
+                "[biome]", this.objectName));
 
             this.addon.log(this.user.getName() + " change biome in loaded chunks to " +
                 this.biome + " from" +
