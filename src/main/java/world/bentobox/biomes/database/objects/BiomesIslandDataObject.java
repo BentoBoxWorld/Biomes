@@ -161,6 +161,18 @@ public class BiomesIslandDataObject implements DataObject
     }
 
 
+    /**
+     * This method clears island data for this island.
+     */
+    public void clear()
+    {
+        this.islandBundle = null;
+        this.biomeChangeCounter.clear();
+        this.unlockedBiomes.clear();
+        this.purchasedBiomes.clear();
+    }
+
+
 // ---------------------------------------------------------------------
 // Section: Variables
 // ---------------------------------------------------------------------
