@@ -1,14 +1,77 @@
 biomes:
+  commands:
+    # This section contains only admin commands translations.
+    admin:
+      main:
+        description: "main biomes admin command"
+      import:
+        parameters: "<file>"
+        description: "imports biomes"
+        confirmation: "This will remove existing biomes from [gamemode] and import new biomes from the template file - please confirm"
+      migrate:
+        description: "migrates biomes stored data to new format"
+    # This section contains only player commands translations.
+    player:
+      main:
+        description: "opens biomes selection GUI"
+      set:
+        description: "changes biome for the player"
+        parameters: "<biome-id> [mode] [size]"
+      buy:
+        description: "purchases the requested biome"
+        parameters: "<biome-id>"
+      info:
+        description: "sends a chat message with detailed biome description"
+        parameters: "<biome-id>"
   gui:
     titles:
+      player-panel: "&0&l Choose Biome"
+      advanced-panel: "&0&l Update Mode"
       # All Titles Below this comment is for Admin Menus.
+      admin-panel: "&0&l Admin GUI"
+      settings: "&0&l Settings"
+      library: "&0&l Library"
       manage-biomes: "&0&l Manage Biomes"
+      manage-bundles: "&0&l Manage Bundles"
+      manage-islands: "&0&l Manage Islands Data"
       edit-biome: "&0&l Edit Biome: [biome]"
+      edit-bundle: "&0&l Edit Bundle: [bundle]"
+      edit-island: "&0&l Edit Island: [island]"
       environment-selector: "&0&l Select Environment"
       biome-selector: "&0&l Select Biome"
-      settings: "&0&l Settings"
-      choose-biome: "&0&l Choose Biome"
+      bundle-selector: "&0&l Select Bundle"
     buttons:
+      island:
+        name: "&f&l Island"
+        description: |-
+          &7 Changes biome on whole
+          &7 island.
+      chunk:
+        name: "&f&l Chunk"
+        description: |-
+          &7 Changes biome in chunks.
+      range:
+        name: "&f&l Range"
+        description: |-
+          &7 Changes biome by range.
+      # Button that allows to reduce number
+      reduce:
+        name: "&f&l Reduce"
+        description: |-
+          &7 Reduce by &e [number]
+      # Button that allows to increase number
+      increase:
+        name: "&f&l Increase"
+        description: |-
+          &7 Increase by &e [number]
+      # Button that displays and allows completing challenge
+      accept:
+        name: "&f&l Apply Change"
+        description: |-
+          &7 Changes biome to [biome]
+
+          &7 Update mode: [mode]
+          &7 Update range: [range]
       # Button that is used to return to previous GUI or exit it completely.
       return:
         name: "&f&l Return"
@@ -49,6 +112,60 @@ biomes:
           &7 text value.
         search: "&b Value: [value]"
       # All buttons below this comment is for Admin Menus.
+      manage_islands:
+        name: "&f&l Manage Islands"
+        description: |-
+          &7 Allows to manage island
+          &7 data.
+      manage_biomes:
+        name: "&f&l Manage Biomes"
+        description: |-
+          &7 Allows to manage biomes
+          &7 data.
+      manage_bundles:
+        name: "&f&l Manage Bundles"
+        description: |-
+          &7 Allows to manage bundles
+          &7 data.
+      settings:
+        name: "&f&l Settings"
+        description: |-
+          &7 Allows to change some
+          &7 addon settings.
+      import_template:
+        name: "&f&l Import Template"
+        description: |-
+          &7 Import template
+          &7 file located inside the
+          &7 addon directory.
+      web_library:
+        name: "&f&l Web Library"
+        description: |-
+          &7 Access the web
+          &7 library that contains
+          &7 shared biomes.
+      export_from_database:
+        name: "&f&l Export Database"
+        description: |-
+          &7 Export the database
+          &7 into a single file located in
+          &7 the addon directory.
+      import_to_database:
+        name: "&f&l Import Database"
+        description: |-
+          &7 Import a database from
+          &7 a file located in the addon
+          &7 directory.
+      wipe_islands_data:
+        name: "&f&l Clear Island Database"
+        description: |-
+          &7 Clear all biomes user data
+          &7 for this gamemode.
+      wipe_biomes_data:
+        name: "&f&l Clear Biomes Database"
+        description: |-
+          &7 Clear all biomes and bundel
+          &7 data for this gamemode.
       add_biome:
         name: "&f&l Add Biome"
         description: |-
@@ -75,7 +192,8 @@ biomes:
       biome:
         name: "&f&l [biome]"
         description: |-
-          &7 Biome ID: [id].
+          &7 Minecraft Biome type.
+        value: "&7 Biome ID: &e [id]"
       name:
         name: "&f&l Display Name"
         description: |-
@@ -214,7 +332,142 @@ biomes:
         deployed: "Deployed Biomes"
         accessible: "Accessible Biomes"
         toggleable: "Toggleable"
+      is_online:
+        name: "&f&l Online Player Islands"
+        description: |-
+          &7 List all islands where
+          &7 any member is online.
+      all_islands:
+        name: "&f&l All Islands"
+        description: |-
+          &7 List of all islands
+          &7 that are created in
+          &7 current gamemode.
+      island_name:
+        name: "&f&l [name]"
+        island-owner: "[player]"
+        unknown: "&c Unknown Owner"
+        description: |-
+          [owner]
+          [members]
+          [id]
+        owner: "&7 Owner: &e [player]"
+        title: "&7 Island Members:"
+        element: " &7 - &e [player]"
+      change_biome:
+        name: "&f&l Change Biome"
+        description: |-
+          &7 Change biome per island.
+      manage_data:
+        name: "&f&l Manage Island Data"
+        description: |-
+          &7 Manage data that are
+          &7 stored for specific island.
+      clear_data:
+        name: "&f&l Clear Island Data"
+        description: |-
+          &7 Clear all stored data for
+          &7 island.
+      island_bundle:
+        name: "&f&l Island Bundle"
+        description: |-
+          &7 Bundle that is assigned to
+          &7 the current island.
+          &7 Only biomes from this
+          &7 bundle can be used on the
+          &7 island.
+        value: "&b Bundle: [bundle]"
+        overwritten: |-
+          &c Owner has a permission that
+          &c overwrites bundle.
+      owner_bundle:
+        name: "&f&l Owner Bundle"
+        description: |-
+          &7 Bundle that is assigned to
+          &7 the current island owner.
+          &7 Only biomes from this
+          &7 bundle can be used on the
+          &7 island.
+          &7 Permission for user to assign:
+          &7&o '[gamemode].biomes.
+          &7&o bundle.<bundle-id>'
+        value: "&b Bundle: [bundle]"
+      reset_to_default:
+        name: "&f&l Reset To Defaults"
+        description: |-
+          &7 Resets all island values
+          &7 to the default values from
+          &7 the settings.
+      bundle_info:
+        name: "&f&l General Information"
+        description: |-
+          &7 View general bundle
+          &7 information.
+      bundle_biomes:
+        name: "&f&l Manage Biomes"
+        description: |-
+          &7 Manage biomes that are
+          &7 assigned to the bundle.
+      bundle_name:
+        name: "&f&l Change Name"
+        description: |-
+          &7 Change bundle display
+          &7 name.
+        value: "&e Current Value: &r [bundle]"
+      bundle_icon:
+        name: "&f&l Change Icon"
+        description: |-
+          &7 Change bundle icon.
+      bundle_description:
+        name: "&f&l Change Description"
+        description: |-
+          &7 Change bundle description.
+        value: "&e Current value:"
+        none: "&c No description"
+      bundle_permission:
+        name: "&f&l Bundle Permission"
+        description: |-
+          &7 The permission that must
+          &7 added to the user for
+          &7 forcing this bundle.
+        value: "&e Permission: &f [gamemode].biomes.bundle.[id]"
+      add_bundle_biome:
+        name: "&f&l Add Biome"
+        description: |-
+          &7 Assign a biome
+          &7 to this bundle.
+        title: "&b Selected Biomes:"
+        value: "&b - [biome]"
+      remove_bundle_biome:
+        name: "&f&l Remove Biome"
+        description: |-
+          &7 Remove a biome
+          &7 from this bundle.
+        title: "&b Selected Biomes:"
+        value: "&b - [biome]"
+      create_bundle:
+        name: "&f&l Create Bundle"
+        description: |-
+          &7 Create a new bundle
+          &7 for this gamemode.
+      delete_bundle:
+        name: "&f&l Remove Bundle"
+        description: |-
+          &7 Remove a bundle from
+          &7 this gamemode completely.
+        title: "&b Selected Bundles:"
+        value: "&b - [bundle]"
+      download:
+        name: "&f&l Download"
+        description: |-
+          &7 Download web library.
+        enabled: "&2 With Cache clearing"
+        disabled: "&c Without Cache clearing"
     tips:
+      click-to-manage: "&e Click &7 to manage."
+      click-to-clear: "&e Click &7 to clear."
+      click-to-change-biome: "&e Click &7 to change biome."
+      click-to-view: "&e Click &7 to view."
       click-to-select: "&e Click &7 to select."
       click-to-choose: "&e Click &7 to choose."
       click-to-complete: "&e Click &7 to complete."
@@ -258,8 +511,13 @@ biomes:
       click-to-previous: "&e Click &7 to view previous page."
       click-to-next: "&e Click &7 to view next page."
       select-before: "&e Select &7 item(-s) before proceed."
+      click-to-apply: "&e Click &7 to apply."
+      right-click-to-open: "&e Right Click &7 to open."
+      click-to-perform: "&e Click &7 to perform."
     descriptions:
       selected: "&2 Selected"
+      island-owner: "[player]"
+      unknown: "&e Unknown"
       biome:
         lore: |-
           [description]
@@ -284,10 +542,25 @@ biomes:
           &c Missing Permissions:
         permissions-list: |-
           - &c [permission]
+      bundle:
+        lore: |-
+          [description]
+          [permission]
+          [biomes]
+        permission: |-
+          &7 Permission that must be
+          &7 assigned to player:
+          &7&o [gamemode].biomes.bundle.[id]
+        # String that are before listing all biomes assigned to bundle.
+        title: "&7 Bundle Biomes: "
+        # Each biome name in listing
+        value: "&7 - [biome]"
+        # If no biomes are added.
+        no-biomes: "&c No Biomes Assigned"
       # This part generates description for the Library Entry
       library:
         author: '&7 by &e [author]'
-        version: '&7 Made with CauldronWitchery &e [version]'
+        version: '&7 Made with Biomes &e [version]'
         lang: '&7 Language: &e [lang]'
         gamemode: '&7 Primary for &e [gamemode]'
   conversations:
@@ -363,7 +636,76 @@ biomes:
     confirm-biome-deletion: "&e Please confirm that you want to remove [biome] from [gamemode]."
     # Message that appears when admin removed biome.
     biome-removed: "[biome] &a is removed from [gamemode]."
+    # Message that appears when admin tries to delete island data.
+    confirm-island-data-deletion: "&e Please confirm that you want to remove [player] island data."
+    # Message that appears when admin removed island data.
+    island-data-removed: "[player] &a island data is removed."
+  messages:
+    # Message that is sent to a player if he tries to use locked biome.
+    biome-not-unlocked: "[biome] &r&c is not unlocked. You cannot use it."
+    # Message that is sent to a player if he tries to use biome which he has not purchased.
+    biome-not-purchased: "&c You cannot use &r [biome] &r&c. You need to purchase it."
+    # Message that is sent to player if he tries to unlock invalid or undeployed biome.
+    biome-cannot-be-unlocked: "&c You cannot unlock &r [biome] &r&c."
+    # Message that is sent to player if he tries to buy biome that he already owns.
+    biome-already-purchased: "&c You have already purchased &r [biome] &r&c."
+    # Message that is sent to player if he tries purchase biome without reaching required level.
+    island-level-not-reached: "[biome] &c requires to have at least island level: [level]."
+    # Message that is sent to player if he tries purchase biome without required permission.
+    missing-permission: "[biome] &c requires to have permission: [permission]."
+    # Message that is sent to player if he tries purchase biome without required money in account.
+    no-credits-buy: "&c You do not have enough credits to buy &r [biome] &r&c. It costs [number]."
+    # Message that is sent to player when he buys a biome.
+    biome-purchased: "&e You have purchased &r [biome]."
+    # Message that is sent to player after importing biomes.
+    import-count: "&e Imported [biomes] biomes and [bundles] bundles."
+    # Message that appears after clicking on download button in web library.
+    start-downloading: "&e Start downloading library."
+    # This message is sent to use when biome changing is started.
+    update-start: "&a Starting biome change."
+    # This message is sent to use when biome changing is finished.
+    update-done: "&a Finished changing biome to [biome]."
 
+    skipping: "&a Skipping loading &r [biome] &r&a."
+    overwriting: "&a Overwriting &r [biome] &r&a in cache."
+    imported: "&a Imported &r [biome] &r&a in cache."
+    migrate-start: "&a Starting migration to new data format."
+    migrate-finish: "&a Migration to new data format completed."
+    migrate-valid: "&a All data is valid. Migration is not necessary."
+    bundle-loaded: "&a Bundle &r [bundle] &a is loaded."
+  errors:
+    # Message that is displayed if requested user or island does not have any valid data.
+    no-island-data: "&c Island does not have any stored data."
+    # Message that is displayed for admins if gamemode does not have any biome.
+    no-biomes-admin: "&c Current GameMode does not have any usable biome. Please import or create biomes by using /[command]"
+    # Message that is displayed for players if gamemode does not have any biome.
+    no-biomes: "&c Current GameMode does not have any usable biome."
+    # Message that is displayed for player if biome change is protected by island protection flag.
+    no-rank: "&c You are not allowed to change biome on this island."
+    # Message that is displayed for player if biome requires higher island level.
+    not-enough-level: "&c This biome requires at least island level [number]."
+    # Message that is displayed for player if biome requires more money than player has.
+    not-enough-money: "&c This biomes change cost $[number]."
+    # Message that is displayed for admin when he tries to change biome on other player island while not being on it.
+    admin-not-on-island: "&c You are not on [user] island."
+    # Message that is displayed for players when they use command, but requested biome does not exist.
+    incorrect-object: "&c Could not find biome with requested name: [biome]"
+    # Message that is displayed for players when they use command, but biome is not specified.
+    missing-biome: "&c Biome name is not specified."
+    # Message that is displayed for players when they write incorrect update mode name.
+    incorrect-mode: "&c Mode with name '[mode]' does not exist."
+    # Message that is displayed for players when they write incorrect number.
+    incorrect-range: "&c Given value '[number]' is not a valid number."
+    # Error message that is displayed when user tries to import file that does not exist.
+    no-file: "&c Could not find [file] in biomes directory."
+    # Error message that is displayed when user tries to import broken (incorrect) file.
+    no-load: "&c Could not import biomes from [file]. Reason: [description]"
+    # Error message that is displayed when user tries to import biomes in non-gamemode world. May be impossible to reach.
+    not-a-gamemode-world: "&c World [world] is not a GameModeAddon world."
+    # Error message that is displayed when user tires to export biomes to a file that already exist.
+    file-exist: "&c File with name [file] already exist. Choose a different name."
+    # Error message that is displayed when user opens library gui but there are no elements to display.
+    no-library-entries: "&c Could not find any valid library entries."
 #    materials:
 #        # Names should be lowercase.
 #        cobblestone: "Cobblestone"
