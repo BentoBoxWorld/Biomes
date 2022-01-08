@@ -274,7 +274,7 @@ public class IslandManagePanel extends CommonPagedPanel<Island>
                     {
                         if (value)
                         {
-                            this.addon.getAddonManager().clearIslandData(island);
+                            this.addon.getAddonManager().wipeIslandData(island);
                         }
 
                         this.build();

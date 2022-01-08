@@ -2,17 +2,17 @@ package world.bentobox.biomes.panels.admin;
 
 
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import lv.id.bonne.panelutils.PanelUtils;
 import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
-import world.bentobox.biomes.database.objects.BiomesObject;
+import world.bentobox.biomes.database.objects.BiomesBundleObject;
 import world.bentobox.biomes.panels.CommonPagedPanel;
 import world.bentobox.biomes.panels.CommonPanel;
 import world.bentobox.biomes.panels.ConversationUtils;
@@ -23,7 +23,7 @@ import world.bentobox.biomes.utils.Utils;
 /**
  * This class opens GUI that allows to manage all generators for admin.
  */
-public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
+public class BundleManagePanel extends CommonPagedPanel<BiomesBundleObject>
 {
     // ---------------------------------------------------------------------
     // Section: Internal Constructor
@@ -35,27 +35,14 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
      *
      * @param parentPanel Parent Panel object.
      */
-    private BiomeManagePanel(CommonPanel parentPanel)
+    private BundleManagePanel(CommonPanel parentPanel)
     {
         super(parentPanel);
         // Store bundles in local list to avoid building it every time.
-        this.elementList = this.manager.getBiomes(this.world);
-        this.filterElements = this.elementList;
+        this.elementList = this.manager.getBundles(this.world);
 
         // Init set with selected bundles.
         this.selectedElements = new HashSet<>(this.elementList.size());
-    }
-
-
-    /**
-     * This method is used to open GeneratorManagePanel outside this class. It will be much easier to open panel with
-     * single method call then initializing new object.
-     *
-     * @param parentPanel Parent Panel object.
-     */
-    public static void open(CommonPanel parentPanel)
-    {
-        new BiomeManagePanel(parentPanel).build();
     }
 
 
@@ -68,42 +55,19 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
         // PanelBuilder is a BentoBox API that provides ability to easy create Panels.
         PanelBuilder panelBuilder = new PanelBuilder().
             user(this.user).
-            name(this.user.getTranslation(Constants.TITLE + "manage-biomes"));
+            name(this.user.getTranslation(Constants.TITLE + "manage-bundles"));
 
         PanelUtils.fillBorder(panelBuilder, 5, Material.MAGENTA_STAINED_GLASS_PANE);
 
-        panelBuilder.item(1, this.createButton(Action.ADD_BIOME));
-        panelBuilder.item(2, this.createButton(Action.REMOVE_BIOME));
+        panelBuilder.item(1, this.createButton(Action.CREATE_BUNDLE));
+        panelBuilder.item(2, this.createButton(Action.DELETE_BUNDLE));
 
-        this.populateElements(panelBuilder, this.filterElements);
+        this.populateElements(panelBuilder, this.elementList);
 
         panelBuilder.item(44, this.returnButton);
 
         // Build panel.
         panelBuilder.build();
-    }
-
-
-    @Override
-    protected void updateFilters()
-    {
-        if (this.searchString == null || this.searchString.isBlank())
-        {
-            this.filterElements = this.elementList;
-        }
-        else
-        {
-            this.filterElements = this.elementList.stream().
-                filter(element -> {
-                    // If element name is set and name contains search field, then do not filter out.
-                    return element.getBiome().name().toLowerCase().
-                        contains(this.searchString.toLowerCase()) ||
-                        element.getFriendlyName().toLowerCase().
-                            contains(this.searchString.toLowerCase());
-                }).
-                distinct().
-                collect(Collectors.toList());
-        }
     }
 
 
@@ -120,8 +84,8 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
      */
     private PanelItem createButton(Action button)
     {
-        final String reference = Constants.BUTTON + button.name().toLowerCase() + ".";
-        String name = this.user.getTranslation(reference + "name");
+        final String reference = Constants.BUTTON + button.name().toLowerCase();
+        String name = this.user.getTranslation(reference + ".name");
         List<String> description = new ArrayList<>();
 
         PanelItem.ClickHandler clickHandler;
@@ -132,33 +96,37 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
 
         switch (button)
         {
-            case ADD_BIOME -> {
-                description.add(this.user.getTranslationOrNothing(reference + "description"));
+            case CREATE_BUNDLE -> {
+                description.add(this.user.getTranslationOrNothing(reference + ".description"));
                 description.add("");
                 description.add(this.user.getTranslation(Constants.TIPS + "click-to-create"));
-
                 icon = Material.WRITABLE_BOOK;
                 clickHandler = (panel, user1, clickType, slot) ->
                 {
                     String gameModePrefix = Utils.getGameMode(this.world).toLowerCase() + "_";
 
                     // This consumer process new bundle creating with a name and id from given
-                    // consumer value.
+                    // consumer value..
                     Consumer<String> bundleIdConsumer = value ->
                     {
                         if (value != null)
                         {
-                            BiomesObject newObject = this.addon.getAddonManager().createBiome(
-                                gameModePrefix + Utils.sanitizeInput(value), world.getName());
+                            BiomesBundleObject newBundle = new BiomesBundleObject();
+                            newBundle.setFriendlyName(value);
+                            newBundle.setUniqueId(gameModePrefix + Utils.sanitizeInput(value));
+                            // Add PAPER as new icon.
+                            newBundle.setBundleIcon(new ItemStack(Material.PAPER));
+                            newBundle.setDescription(new ArrayList<>());
+                            newBundle.setBiomeObjects(new HashSet<>());
 
-                            if (newObject != null)
-                            {
-                                newObject.setFriendlyName(value);
-                                BiomeEditPanel.open(this, newObject);
+                            this.manager.saveBundle(newBundle);
+                            this.manager.loadBundle(newBundle, false, this.user);
 
-                                // Add new generator to generatorList.
-                                this.elementList.add(newObject);
-                            }
+                            // Add new generator to generatorList.
+                            this.elementList.add(newBundle);
+
+                            // Open bundle edit panel.
+                            BundleEditPanel.open(this, newBundle);
                         }
                         else
                         {
@@ -168,8 +136,8 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
                     };
 
                     // This function checks if generator with a given ID already exist.
-                    Function<String, Boolean> validationFunction = objectId ->
-                        !this.manager.containsBiome(gameModePrefix + Utils.sanitizeInput(objectId));
+                    Function<String, Boolean> validationFunction = bundleId ->
+                        this.manager.getBundleById(gameModePrefix + Utils.sanitizeInput(bundleId)) == null;
 
                     // Call a conversation API to get input string.
                     ConversationUtils.createIDStringInput(bundleIdConsumer,
@@ -178,23 +146,21 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
                         this.user.getTranslation(Constants.CONVERSATIONS + "write-name"),
                         this.user.getTranslation(Constants.CONVERSATIONS + "new-object-created",
                             Constants.PARAMETER_WORLD, world.getName()),
-                        Constants.CONVERSATIONS + "object-already-exists");
+                        Constants.ERRORS + "object-already-exists");
 
                     return true;
                 };
             }
-            case REMOVE_BIOME -> {
+            case DELETE_BUNDLE -> {
                 icon = this.selectedElements.isEmpty() ? Material.BARRIER : Material.LAVA_BUCKET;
                 glow = !this.selectedElements.isEmpty();
-
-                description.add(this.user.getTranslationOrNothing(reference + "description"));
-
+                description.add(this.user.getTranslationOrNothing(reference + ".description"));
                 if (!this.selectedElements.isEmpty())
                 {
-                    description.add(this.user.getTranslation(reference + "title"));
-                    this.selectedElements.forEach(object ->
-                        description.add(this.user.getTranslation(reference + "value",
-                            "[biome]", object.getFriendlyName())));
+                    description.add(this.user.getTranslation(reference + ".title"));
+                    this.selectedElements.forEach(bundle ->
+                        description.add(this.user.getTranslation(reference + ".value",
+                            Constants.PARAMETER_BUNDLE, bundle.getFriendlyName())));
 
                     description.add("");
                     description.add(this.user.getTranslation(Constants.TIPS + "click-to-remove"));
@@ -207,23 +173,21 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
                         {
                             if (value)
                             {
-                                this.selectedElements.forEach(biomesObject ->
+                                this.selectedElements.forEach(bundle ->
                                 {
-                                    this.manager.removeBiome(biomesObject);
-                                    this.elementList.remove(biomesObject);
+                                    this.manager.wipeBundle(bundle);
+                                    this.elementList.remove(bundle);
                                 });
-
-                                this.selectedElements.clear();
                             }
 
                             this.build();
                         };
 
-                        String stickString;
+                        String generatorString;
 
                         if (!this.selectedElements.isEmpty())
                         {
-                            Iterator<BiomesObject> iterator = this.selectedElements.iterator();
+                            Iterator<BiomesBundleObject> iterator = this.selectedElements.iterator();
 
                             StringBuilder builder = new StringBuilder();
                             builder.append(iterator.next().getFriendlyName());
@@ -233,11 +197,11 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
                                 builder.append(", ").append(iterator.next().getFriendlyName());
                             }
 
-                            stickString = builder.toString();
+                            generatorString = builder.toString();
                         }
                         else
                         {
-                            stickString = "";
+                            generatorString = "";
                         }
 
                         // Create conversation that gets user acceptance to delete selected generator data.
@@ -246,9 +210,9 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
                             this.user,
                             this.user.getTranslation(Constants.CONVERSATIONS + "confirm-deletion",
                                 TextVariables.NUMBER, String.valueOf(this.selectedElements.size()),
-                                "[value]", stickString),
+                                Constants.PARAMETER_VALUE, generatorString),
                             this.user.getTranslation(Constants.CONVERSATIONS + "data-removed",
-                                "[gamemode]", Utils.getGameMode(this.world)));
+                                Constants.PARAMETER_GAMEMODE, Utils.getGameMode(this.world)));
 
 
                         return true;
@@ -278,19 +242,29 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
 
 
     /**
-     * This method creates button for biomes.
-     *
-     * @param biomesObject biomes which button must be created.
-     * @return PanelItem for biomes object.
+     * Update filters.
      */
-    protected PanelItem createElementButton(BiomesObject biomesObject)
+    @Override
+    protected void updateFilters()
     {
-        boolean glow = this.selectedElements.contains(biomesObject);
+        // There are no filters that should be updated.
+    }
+
+
+    /**
+     * This method creates button for bundle.
+     *
+     * @param bundle bundle which button must be created.
+     * @return PanelItem for bundle object.
+     */
+    protected PanelItem createElementButton(BiomesBundleObject bundle)
+    {
+        boolean glow = this.selectedElements.contains(bundle);
 
         List<String> description = new ArrayList<>();
-        description.add(this.generateBiomesDescription(biomesObject, null));
+        description.add(this.generateBundleDescription(bundle));
 
-        if (this.selectedElements.contains(biomesObject))
+        if (this.selectedElements.contains(bundle))
         {
             description.add(this.user.getTranslation(Constants.DESCRIPTIONS + "selected"));
         }
@@ -298,7 +272,7 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
         description.add("");
         description.add(this.user.getTranslation(Constants.TIPS + "left-click-to-edit"));
 
-        if (this.selectedElements.contains(biomesObject))
+        if (this.selectedElements.contains(bundle))
         {
             description.add(this.user.getTranslation(Constants.TIPS + "right-click-to-deselect"));
         }
@@ -315,13 +289,13 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
             if (clickType.isRightClick())
             {
                 // Open edit panel.
-                if (this.selectedElements.contains(biomesObject))
+                if (this.selectedElements.contains(bundle))
                 {
-                    this.selectedElements.remove(biomesObject);
+                    this.selectedElements.remove(bundle);
                 }
                 else
                 {
-                    this.selectedElements.add(biomesObject);
+                    this.selectedElements.add(bundle);
                 }
 
                 // Build necessary as multiple icons are changed.
@@ -329,7 +303,7 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
             }
             else
             {
-                BiomeEditPanel.open(this, biomesObject);
+                BundleEditPanel.open(this, bundle);
             }
 
             // Always return true.
@@ -337,12 +311,24 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
         };
 
         return new PanelItemBuilder().
-            name(biomesObject.getFriendlyName()).
+            name(bundle.getFriendlyName()).
             description(description).
-            icon(biomesObject.getIcon()).
+            icon(bundle.getBundleIcon()).
             clickHandler(clickHandler).
             glow(glow).
             build();
+    }
+
+
+    /**
+     * This method is used to open GeneratorManagePanel outside this class. It will be much easier to open panel with
+     * single method call then initializing new object.
+     *
+     * @param parentPanel Parent Panel object.
+     */
+    public static void open(CommonPanel parentPanel)
+    {
+        new BundleManagePanel(parentPanel).build();
     }
 
 
@@ -357,13 +343,13 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
     private enum Action
     {
         /**
-         * Allows to add new biome.
+         * Allows to add new bundles to the bundleList.
          */
-        ADD_BIOME,
+        CREATE_BUNDLE,
         /**
-         * Allows to delete selected biome.
+         * Allows to delete selected bundles from bundleList.
          */
-        REMOVE_BIOME
+        DELETE_BUNDLE
     }
 
 
@@ -372,17 +358,12 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
     // ---------------------------------------------------------------------
 
     /**
-     * This variable stores all biomes in the given world.
+     * This variable stores all bundles in the given world.
      */
-    private final List<BiomesObject> elementList;
+    private final List<BiomesBundleObject> elementList;
 
     /**
-     * This variable stores all biomes in the given world.
+     * This variable stores all selected bundles.
      */
-    private List<BiomesObject> filterElements;
-
-    /**
-     * This variable stores all selected biomes.
-     */
-    private final Set<BiomesObject> selectedElements;
+    private final Set<BiomesBundleObject> selectedElements;
 }

@@ -83,7 +83,7 @@ public class BiomeEditPanel extends CommonPanel
 
         panelBuilder.item(14, this.createButton(Action.LEVEL));
         panelBuilder.item(23, this.createButton(Action.COST));
-        panelBuilder.item(32, this.createButton(Action.PERMISSION));
+        panelBuilder.item(32, this.createButton(Action.PERMISSIONS));
 
         panelBuilder.item(25, this.createButton(Action.DEPLOYED));
 
@@ -102,9 +102,10 @@ public class BiomeEditPanel extends CommonPanel
      */
     private PanelItem createButton(Action button)
     {
-        final String reference = Constants.BUTTON + button.name().toLowerCase();
-        String name = this.user.getTranslation(reference + ".name");
+        final String reference = Constants.BUTTON + button.name().toLowerCase() + ".";
+        String name = this.user.getTranslation(reference + "name");
         List<String> description = new ArrayList<>();
+        description.add(this.user.getTranslationOrNothing(reference + "description"));
 
         PanelItem.ClickHandler clickHandler;
         boolean glow;
@@ -115,7 +116,7 @@ public class BiomeEditPanel extends CommonPanel
         switch (button)
         {
             case BIOME -> {
-                description.add(this.user.getTranslationOrNothing(reference + ".description"));
+                description.add(this.user.getTranslation(reference + "value"));
                 description.add("");
                 description.add(this.user.getTranslation(Constants.TIPS + "click-to-change"));
 
@@ -141,7 +142,7 @@ public class BiomeEditPanel extends CommonPanel
 
                 glow = false;
             }
-            case PERMISSION -> {
+            case PERMISSIONS -> {
                 if (this.biome.getRequiredPermissions().isEmpty())
                 {
                     description.add(this.user.getTranslation(reference + "none"));
@@ -557,7 +558,7 @@ public class BiomeEditPanel extends CommonPanel
         /**
          * Permission action.
          */
-        PERMISSION,
+        PERMISSIONS,
         /**
          * Cost action.
          */

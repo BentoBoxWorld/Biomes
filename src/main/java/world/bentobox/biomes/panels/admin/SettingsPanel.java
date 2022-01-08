@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 
+import lv.id.bonne.panelutils.PanelUtils;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelBuilder;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
@@ -17,7 +18,6 @@ import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.config.Settings;
 import world.bentobox.biomes.panels.CommonPanel;
 import world.bentobox.biomes.panels.ConversationUtils;
-import world.bentobox.biomes.panels.GuiUtils;
 import world.bentobox.biomes.utils.Constants;
 import world.bentobox.biomes.utils.Utils;
 
@@ -99,11 +99,10 @@ public class SettingsPanel extends CommonPanel
 			user(this.user).
 			name(this.user.getTranslation(Constants.TITLE + "settings"));
 
-		GuiUtils.fillBorder(panelBuilder, Material.PURPLE_STAINED_GLASS_PANE);
+		PanelUtils.fillBorder(panelBuilder, Material.PURPLE_STAINED_GLASS_PANE);
 
 		panelBuilder.item(11, this.createButton(Action.DEFAULT_MODE));
 		panelBuilder.item(20, this.createButton(Action.DEFAULT_SIZE));
-		panelBuilder.item(29, this.createButton(Action.VISIBILITY));
 
 		panelBuilder.item(23, this.createButton(Action.COOL_DOWN));
 		panelBuilder.item(24, this.createButton(Action.PROTECTION_RANGE));
@@ -122,9 +121,10 @@ public class SettingsPanel extends CommonPanel
 	 */
 	private PanelItem createButton(Action button)
 	{
-		final String reference = Constants.BUTTON + button.name().toLowerCase();
-		String name = this.user.getTranslation(reference + ".name");
+		final String reference = Constants.BUTTON + button.name().toLowerCase() + ".";
+		String name = this.user.getTranslation(reference + "name");
 		List<String> description = new ArrayList<>();
+		description.add(this.user.getTranslation(reference + "description"));
 
 		PanelItem.ClickHandler clickHandler;
 		boolean glow;
@@ -210,60 +210,6 @@ public class SettingsPanel extends CommonPanel
 
 				description.add("");
 				description.add(this.user.getTranslation(Constants.TIPS + "click-to-change"));
-			}
-			case VISIBILITY -> {
-				description.add(this.user.getTranslation(reference +
-					(this.settings.getVisibilityMode().equals(Settings.VisibilityMode.ALL) ? "enabled" : "disabled")) +
-					this.user.getTranslation(reference + "all"));
-				description.add(this.user.getTranslation(reference +
-					(this.settings.getVisibilityMode().equals(Settings.VisibilityMode.DEPLOYED) ? "enabled" : "disabled")) +
-					this.user.getTranslation(reference + "deployed"));
-				description.add(this.user.getTranslation(reference +
-					(this.settings.getVisibilityMode().equals(Settings.VisibilityMode.ACCESSIBLE) ? "enabled" : "disabled")) +
-					this.user.getTranslation(reference + "accessible"));
-				description.add(this.user.getTranslation(reference +
-					(this.settings.getVisibilityMode().equals(Settings.VisibilityMode.TOGGLEABLE) ? "enabled" : "disabled")) +
-					this.user.getTranslation(reference + "toggleable"));
-
-				if (this.settings.getVisibilityMode().equals(Settings.VisibilityMode.ALL))
-				{
-					icon = new ItemStack(Material.OAK_PLANKS);
-				}
-				else if (this.settings.getVisibilityMode().equals(Settings.VisibilityMode.DEPLOYED))
-				{
-					icon = new ItemStack(Material.OAK_STAIRS);
-				}
-				else if (this.settings.getVisibilityMode().equals(Settings.VisibilityMode.ACCESSIBLE))
-				{
-					icon = new ItemStack(Material.OAK_SLAB);
-				}
-				else
-				{
-					icon = new ItemStack(Material.OAK_BUTTON);
-				}
-
-				clickHandler = (panel, user, clickType, slot) -> {
-					if (clickType.isRightClick())
-					{
-						this.settings.setVisibilityMode(Utils.getPreviousValue(Settings.VisibilityMode.values(),
-							this.settings.getVisibilityMode()));
-					}
-					else
-					{
-						this.settings.setVisibilityMode(Utils.getNextValue(Settings.VisibilityMode.values(),
-							this.settings.getVisibilityMode()));
-					}
-
-					// Rebuild just this icon
-					panel.getInventory().setItem(slot, this.createButton(button).getItem());
-					this.addon.saveSettings();
-					return true;
-				};
-				glow = false;
-
-				description.add("");
-				description.add(this.user.getTranslation(Constants.TIPS + "left-click-to-cycle"));
-				description.add(this.user.getTranslation(Constants.TIPS + "right-click-to-cycle"));
 			}
 			case COOL_DOWN -> {
 				if (this.settings.getCoolDown() > 0)
@@ -371,10 +317,6 @@ public class SettingsPanel extends CommonPanel
 		 * Default size action.
 		 */
 		DEFAULT_SIZE,
-		/**
-		 * Visibility action.
-		 */
-		VISIBILITY,
 		/**
 		 * Cool down action.
 		 */
