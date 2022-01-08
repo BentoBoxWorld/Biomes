@@ -14,6 +14,7 @@ import world.bentobox.bentobox.api.configuration.StoreAt;
 
 /**
  * All the plugin settings are here
+ *
  * @author BONNe
  */
 @StoreAt(filename="config.yml", path="addons/Biomes")
@@ -62,16 +63,6 @@ public class Settings implements ConfigObject
     public int getCoolDown()
     {
         return this.coolDown;
-    }
-
-
-    /**
-     * This method returns active biomes visibilityMode.
-     * @return Enum that represents biomes visibility.
-     */
-    public VisibilityMode getVisibilityMode()
-    {
-        return this.visibilityMode;
     }
 
 
@@ -141,16 +132,6 @@ public class Settings implements ConfigObject
 
 
     /**
-     * This method sets value of visibilityMode variable.
-     * @param visibilityMode new value.
-     */
-    public void setVisibilityMode(VisibilityMode visibilityMode)
-    {
-        this.visibilityMode = visibilityMode;
-    }
-
-
-    /**
      * This method sets value for disabledGameModes variable.
      * @param disabledGameModes new value.
      */
@@ -168,6 +149,138 @@ public class Settings implements ConfigObject
     public void setUseProtectionRange(boolean useProtectionRange)
     {
         this.useProtectionRange = useProtectionRange;
+    }
+
+
+    /**
+     * Is notify unlocked biomes boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isNotifyUnlockedBiomes()
+    {
+        return notifyUnlockedBiomes;
+    }
+
+
+    /**
+     * Sets notify unlocked biomes.
+     *
+     * @param notifyUnlockedBiomes the notify unlocked biomes
+     */
+    public void setNotifyUnlockedBiomes(boolean notifyUnlockedBiomes)
+    {
+        this.notifyUnlockedBiomes = notifyUnlockedBiomes;
+    }
+
+
+    /**
+     * Gets player command.
+     *
+     * @return the player command
+     */
+    public String getPlayerCommand()
+    {
+        return playerCommand;
+    }
+
+
+    /**
+     * Sets player command.
+     *
+     * @param playerCommand the player command
+     */
+    public void setPlayerCommand(String playerCommand)
+    {
+        this.playerCommand = playerCommand;
+    }
+
+
+    /**
+     * Gets player set command.
+     *
+     * @return the player set command
+     */
+    public String getPlayerSetCommand()
+    {
+        return playerSetCommand;
+    }
+
+
+    /**
+     * Sets player set command.
+     *
+     * @param playerSetCommand the player set command
+     */
+    public void setPlayerSetCommand(String playerSetCommand)
+    {
+        this.playerSetCommand = playerSetCommand;
+    }
+
+
+    /**
+     * Gets player buy command.
+     *
+     * @return the player buy command
+     */
+    public String getPlayerBuyCommand()
+    {
+        return playerBuyCommand;
+    }
+
+
+    /**
+     * Sets player buy command.
+     *
+     * @param playerBuyCommand the player buy command
+     */
+    public void setPlayerBuyCommand(String playerBuyCommand)
+    {
+        this.playerBuyCommand = playerBuyCommand;
+    }
+
+
+    /**
+     * Gets player info command.
+     *
+     * @return the player info command
+     */
+    public String getPlayerInfoCommand()
+    {
+        return playerInfoCommand;
+    }
+
+
+    /**
+     * Sets player info command.
+     *
+     * @param playerInfoCommand the player info command
+     */
+    public void setPlayerInfoCommand(String playerInfoCommand)
+    {
+        this.playerInfoCommand = playerInfoCommand;
+    }
+
+
+    /**
+     * Gets admin command.
+     *
+     * @return the admin command
+     */
+    public String getAdminCommand()
+    {
+        return adminCommand;
+    }
+
+
+    /**
+     * Sets admin command.
+     *
+     * @param adminCommand the admin command
+     */
+    public void setAdminCommand(String adminCommand)
+    {
+        this.adminCommand = adminCommand;
     }
 
 
@@ -222,57 +335,6 @@ public class Settings implements ConfigObject
     }
 
 
-    /**
-     * This enum describes all possible variants which biomes users should see
-     */
-    public enum VisibilityMode
-    {
-        /**
-         * All visibility mode.
-         */
-        ALL,
-        /**
-         * Deployed visibility mode.
-         */
-        DEPLOYED,
-        /**
-         * Accessible visibility mode.
-         */
-        ACCESSIBLE,
-        /**
-         * Toggleable visibility mode.
-         */
-        TOGGLEABLE;
-
-
-        /**
-         * This method returns stored parameter from string.
-         * @param parameter String of object that must be returned
-         * @return CommandParameters object or null.
-         */
-        public static VisibilityMode getMode(String parameter)
-        {
-            return BY_NAME.get(parameter);
-        }
-
-        /**
-         * This map allows to access all enum values via their string.
-         */
-        private static final Map<String, VisibilityMode> BY_NAME = new HashMap<>();
-
-        /*
-          This static method populated BY_NAME map.
-         */
-        static
-        {
-            for (VisibilityMode visibility : VisibilityMode.values())
-            {
-                BY_NAME.put(visibility.name(), visibility);
-            }
-        }
-    }
-
-
     // ---------------------------------------------------------------------
     // Section: Variables
     // ---------------------------------------------------------------------
@@ -306,6 +368,12 @@ public class Settings implements ConfigObject
     private boolean useProtectionRange = false;
 
     @ConfigComment("")
+    @ConfigComment("This indicates that players will be notified about new unlocked biomes.")
+    @ConfigEntry(path = "notify-on-unlock")
+    @SuppressWarnings("javadoc")
+    private boolean notifyUnlockedBiomes = true;
+
+    @ConfigComment("")
     @ConfigComment("This indicates if biome on island must be restored to default biome, if")
     @ConfigComment("island changes owner and it does not have biome set ability.")
     @ConfigComment("'true' means that biome will be reset.")
@@ -319,16 +387,40 @@ public class Settings implements ConfigObject
     @SuppressWarnings("javadoc")
     private int coolDown = 60;
 
-    @ConfigComment("")
-    @ConfigComment("This variable allows to choose which biomes users can see in Biomes GUI.")
-    @ConfigComment("Valid values are:")
-    @ConfigComment("    'ALL' - there will be no hidden biomes. All biomes will be viewable in GUI.")
-    @ConfigComment("    'DEPLOYED' - shows all biomes that are deployed.")
-    @ConfigComment("    'ACCESSIBLE' - only biomes that is unlocked via permission or other unlock type will be visible in GUI.")
-    @ConfigComment("    'TOGGLEABLE' - there will be button in GUI that allows users to switch from ALL to ACCESSIBLE modes.")
-    @ConfigEntry(path = "biomes-visibility")
+    @ConfigComment("Player main sub-command to access the addon.")
+    @ConfigComment("This command label will be required to write after gamemode player command label, f.e. /[label] biomes")
+    @ConfigComment("Each alias must be separated with an empty space.")
+    @ConfigEntry(path = "commands.player.main", needsRestart = true)
     @SuppressWarnings("javadoc")
-    private VisibilityMode visibilityMode = VisibilityMode.DEPLOYED;
+    private String playerCommand = "biomes";
+
+    @ConfigComment("Player set sub-command that allows to set biome with a command.")
+    @ConfigComment("This command label will be required to write after player main command, f.e. /[label] biomes set")
+    @ConfigComment("Each alias must be separated with an empty space.")
+    @ConfigEntry(path = "commands.player.set", needsRestart = true)
+    @SuppressWarnings("javadoc")
+    private String playerSetCommand = "set";
+
+    @ConfigComment("Player buy sub-command that allows to buy biomes with a command.")
+    @ConfigComment("This command label will be required to write after player main command, f.e. /[label] biomes buy")
+    @ConfigComment("Each alias must be separated with an empty space.")
+    @ConfigEntry(path = "commands.player.buy", needsRestart = true)
+    @SuppressWarnings("javadoc")
+    private String playerBuyCommand = "buy";
+
+    @ConfigComment("Player info sub-command that allows to see info about biome with a command.")
+    @ConfigComment("This command label will be required to write after player main command, f.e. /[label] biomes info")
+    @ConfigComment("Each alias must be separated with an empty space.")
+    @ConfigEntry(path = "commands.player.info", needsRestart = true)
+    @SuppressWarnings("javadoc")
+    private String playerInfoCommand = "info";
+
+    @ConfigComment("Admin main sub-command to access the addon.")
+    @ConfigComment("This command label will be required to write after gamemode admin command label, f.e. /[label] biomes")
+    @ConfigComment("Each alias must be separated with an empty space.")
+    @ConfigEntry(path = "commands.admin.main", needsRestart = true)
+    @SuppressWarnings("javadoc")
+    private String adminCommand = "biomes";
 
     @ConfigComment("")
     @ConfigComment("This list stores GameModes in which Biomes addon should not work.")
