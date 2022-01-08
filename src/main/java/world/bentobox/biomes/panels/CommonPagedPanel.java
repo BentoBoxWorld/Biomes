@@ -251,8 +251,17 @@ public abstract class CommonPagedPanel<T> extends CommonPanel
      */
     private enum CommonButtons
     {
+        /**
+         * Next common buttons.
+         */
         NEXT,
+        /**
+         * Previous common buttons.
+         */
         PREVIOUS,
+        /**
+         * Search common buttons.
+         */
         SEARCH
     }
 

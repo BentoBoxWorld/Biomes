@@ -12,13 +12,17 @@ import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
+import world.bentobox.biomes.database.objects.BiomesBundleObject;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.managers.BiomesAddonManager;
 import world.bentobox.biomes.utils.Constants;
@@ -108,7 +112,7 @@ public abstract class CommonPanel
      */
     protected String generateBiomesDescription(BiomesObject biome, @Nullable User target)
     {
-        final String reference = Constants.DESCRIPTIONS + "biomes.";
+        final String reference = Constants.DESCRIPTIONS + "biome.";
 
         // Get description from custom translations
         String description = this.user.getTranslationOrNothing(
@@ -147,7 +151,7 @@ public abstract class CommonPanel
 
         String permissions = this.generatePermissions(biome, target);
 
-        String returnString = this.user.getTranslationOrNothing(reference + "biome.lore",
+        String returnString = this.user.getTranslationOrNothing(reference + "lore",
             "[description]", description,
             "[biome]", originalBiome,
             "[price]", price,
@@ -222,12 +226,113 @@ public abstract class CommonPanel
 
 
     /**
+     * Admin should see simplified view. It is not necessary to view all unnecessary things.
+     *
+     * @param bundle Bundle which description must be generated.
+     * @return List of strings that describes bundle.
+     */
+    protected String generateBundleDescription(BiomesBundleObject bundle)
+    {
+        final String reference = Constants.DESCRIPTIONS + "bundle.";
+
+        StringBuilder descriptionBuilder = new StringBuilder();
+        bundle.getDescription().forEach(line ->
+            descriptionBuilder.append(Util.translateColorCodes(line)).append("\n"));
+
+        String permission;
+
+        if (bundle != BiomesBundleObject.dummyBundle)
+        {
+            permission = this.user.getTranslation(reference + "permission",
+                Constants.PARAMETER_ID, bundle.getUniqueId(),
+                Constants.PARAMETER_GAMEMODE, Utils.getGameMode(this.world).toLowerCase());
+        }
+        else
+        {
+            permission = "";
+        }
+
+        StringBuilder biomesBuilder = new StringBuilder();
+
+        // Add missing permissions
+        if (!bundle.getBiomeObjects().isEmpty())
+        {
+            biomesBuilder.append(this.user.getTranslation(reference + "title"));
+
+            bundle.getBiomeObjects().stream().
+                map(this.manager::getBiomeByID).
+                filter(Objects::nonNull).
+                forEach(biome -> biomesBuilder.append("\n").
+                    append(this.user.getTranslation(reference + "value",
+                        Constants.PARAMETER_BIOME, biome.getFriendlyName())));
+        }
+        else
+        {
+            biomesBuilder.append(this.user.getTranslation(reference + "no-biomes"));
+        }
+
+
+        String returnString = this.user.getTranslationOrNothing(reference + "lore",
+            "[description]", descriptionBuilder.toString(),
+            "[biomes]", biomesBuilder.toString(),
+            "[permission]", permission);
+
+        // Remove empty lines and returns as a list.
+
+        return returnString.replaceAll("(?m)^[ \\t]*\\r?\\n", "");
+    }
+
+
+    /**
      * This method reopens given panel.
      * @param panel Panel that must be reopened.
      */
     public static void reopen(CommonPanel panel)
     {
         panel.build();
+    }
+
+
+    /**
+     * This method finds and try to execute given sub command with given arguments.
+     * @param subCommand Sub Command that need to be called.
+     * @param arguments List of arguments for current command.
+     */
+    protected void callCommand(String subCommand, List<String> arguments)
+    {
+        CompositeCommand command = this.addon.getPlugin().getCommandsManager().getCommand(this.topLabel);
+
+        if (command == null)
+        {
+            // TODO: Throw error that top command not found.
+            return;
+        }
+
+        Optional<CompositeCommand> commandOptional =
+            command.getSubCommand(this.addon.getSettings().getPlayerCommand().split(" ")[0]);
+
+        if (commandOptional.isEmpty())
+        {
+            // TODO: Throw error that biomes command not found.
+            return;
+        }
+
+        commandOptional = commandOptional.get().getSubCommand(subCommand);
+
+        if (commandOptional.isEmpty())
+        {
+            // TODO: Throw error that biomes sub-command not found.
+            return;
+        }
+
+        command = commandOptional.get();
+
+        if (command.canExecute(this.user, subCommand, arguments))
+        {
+            command.execute(this.user, subCommand, arguments);
+        }
+
+        this.user.closeInventory();
     }
 
 
