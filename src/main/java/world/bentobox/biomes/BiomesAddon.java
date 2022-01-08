@@ -11,13 +11,15 @@ import world.bentobox.bentobox.api.configuration.Config;
 import world.bentobox.bentobox.api.flags.Flag;
 import world.bentobox.bentobox.hooks.VaultHook;
 import world.bentobox.biomes.commands.admin.AdminCommand;
-import world.bentobox.biomes.commands.user.BiomesCommand;
+import world.bentobox.biomes.commands.player.BiomesCommand;
 import world.bentobox.biomes.config.Settings;
 import world.bentobox.biomes.handlers.BiomeDataRequestHandler;
 import world.bentobox.biomes.handlers.BiomeListRequestHandler;
 import world.bentobox.biomes.handlers.ChangeBiomeRequestHandler;
 import world.bentobox.biomes.listeners.ChangeOwnerListener;
 import world.bentobox.biomes.managers.BiomesAddonManager;
+import world.bentobox.biomes.managers.BiomesImportManager;
+import world.bentobox.biomes.web.WebManager;
 import world.bentobox.greenhouses.Greenhouses;
 import world.bentobox.level.Level;
 
@@ -78,16 +80,11 @@ public class BiomesAddon extends Addon
     /**
      * Sets up everything once the addon is hooked into Game Modes
      */
-    private void setupAddon() {
+    private void setupAddon()
+    {
         // If hooked init Manager
         this.addonManager = new BiomesAddonManager(this);
-
-        // Try to find Level addon and if it does not exist, display a warning
-        this.findLevelAddon();
-        // Try to find Greenhouses addon
-        this.findGreenhousesAddon();
-        // Try to find Economy Plugin
-        this.findVaultPlugin();
+        this.importManager = new BiomesImportManager(this);
 
 		// Register the reset listener
         this.registerListener(new ChangeOwnerListener(this));
@@ -101,66 +98,8 @@ public class BiomesAddon extends Addon
         this.registerRequestHandler(new BiomeListRequestHandler(this));
 
         this.registerRequestHandler(new ChangeBiomeRequestHandler(this));
-    }
 
-
-    /**
-     * This is silly method that was introduced to reduce main method complexity, and just reports
-     * if economy is enabled or not.
-     */
-    private void findVaultPlugin()
-    {
-        Optional<VaultHook> vault = this.getPlugin().getVault();
-
-        if (!vault.isPresent() || !vault.get().hook())
-        {
-            this.vaultHook = null;
-            this.logWarning(
-                "Economy plugin not found so money requirements will be ignored!");
-        }
-        else
-        {
-            this.vaultHook = vault.get();
-        }
-    }
-
-
-    /**
-     * This is silly method that was introduced to reduce main method complexity, and just reports
-     * if level addon is enabled or not.
-     */
-    private void findLevelAddon()
-    {
-        Optional<Addon> level = this.getAddonByName("Level");
-
-        if (!level.isPresent())
-        {
-            this.logWarning(
-                "Level add-on not found so level requirements will be ignored!");
-            this.levelAddon = null;
-            this.levelProvided = false;
-        }
-        else
-        {
-            this.levelProvided = true;
-            this.levelAddon = (Level) level.get();
-        }
-    }
-
-
-    /**
-     * This is silly method that was introduced to reduce main method complexity, and just reports
-     * if greenhouses is enabled or not.
-     */
-    private void findGreenhousesAddon()
-    {
-        Optional<Addon> greenhouses = this.getAddonByName("Greenhouses");
-
-        if (greenhouses.isPresent())
-        {
-            this.greenhousesProvided = true;
-            this.greenhouses = (Greenhouses) greenhouses.get();
-        }
+        this.webManager = new WebManager(this);
     }
 
 
@@ -192,6 +131,52 @@ public class BiomesAddon extends Addon
 
 
     /**
+     * Process Level addon and Vault Hook when everything is loaded.
+     */
+    @Override
+    public void allLoaded()
+    {
+        super.allLoaded();
+
+        // Try to find Level addon and if it does not exist, display a warning
+        this.getAddonByName("Level").ifPresentOrElse(addon -> {
+            this.levelAddon = (Level) addon;
+            this.levelProvided = true;
+            this.log("Biomes Addon hooked into Level addon.");
+        }, () -> {
+            this.levelAddon = null;
+            this.logWarning("Level add-on not found. Some features from Biomes Addon will not work!");
+        });
+
+        // Try to find Level addon and if it does not exist, display a warning
+        this.getAddonByName("Greenhouses").ifPresentOrElse(addon -> {
+            this.greenhousesProvided = true;
+            this.greenhouses = (Greenhouses) addon;
+            this.log("Biomes Addon hooked into Greenhouses addon.");
+        }, () -> {
+            this.greenhouses = null;
+        });
+
+        // Try to find Vault Plugin and if it does not exist, display a warning
+        this.getPlugin().getVault().ifPresentOrElse(hook -> {
+            this.vaultHook = hook;
+
+            if (this.vaultHook.hook())
+            {
+                this.log("Biomes Addon hooked into Economy.");
+            }
+            else
+            {
+                this.logWarning("Biomes Addon could not hook into valid Economy.");
+            }
+        }, () -> {
+            this.vaultHook = null;
+            this.logWarning("Vault plugin not found. Economy will not work!");
+        });
+    }
+
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -218,13 +203,6 @@ public class BiomesAddon extends Addon
     {
         if (this.hooked)
         {
-            this.getLogger().info("Disabling biomes addon.");
-
-            if (this.addonManager != null)
-            {
-                this.addonManager.save();
-            }
-
             this.getLogger().info("Biomes addon disabled.");
         }
     }
@@ -255,6 +233,13 @@ public class BiomesAddon extends Addon
             this.logError("Biomes settings could not load! Addon disabled.");
             this.setState(State.DISABLED);
         }
+
+        // Save existing panels.
+        this.saveResource("panels/main_panel.yml", false);
+        this.saveResource("panels/advanced_panel.yml",false);
+
+        // Save template
+        this.saveResource("biomesTemplate.yml",false);
     }
 
 
@@ -271,6 +256,17 @@ public class BiomesAddon extends Addon
     public BiomesAddonManager getAddonManager()
     {
         return this.addonManager;
+    }
+
+
+    /**
+     * Gets import manager.
+     *
+     * @return the import manager
+     */
+    public BiomesImportManager getImportManager()
+    {
+        return this.importManager;
     }
 
 
@@ -345,6 +341,17 @@ public class BiomesAddon extends Addon
 	}
 
 
+    /**
+     * Gets web manager.
+     *
+     * @return the web manager
+     */
+    public WebManager getWebManager()
+    {
+        return webManager;
+    }
+
+
 // ---------------------------------------------------------------------
 // Section: Variables
 // ---------------------------------------------------------------------
@@ -359,6 +366,16 @@ public class BiomesAddon extends Addon
      * This variable stores biomes manager.
      */
     private BiomesAddonManager addonManager;
+
+    /**
+     * This variable stores biomes manager.
+     */
+    private BiomesImportManager importManager;
+
+    /**
+     * Variable holds web manager object.
+     */
+    private WebManager webManager;
 
     /**
      * This variable stores biomes addon settings.
