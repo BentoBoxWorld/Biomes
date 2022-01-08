@@ -1,21 +1,27 @@
 package world.bentobox.biomes.utils;
 
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
+import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.jetbrains.annotations.Nullable;
 
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import world.bentobox.bentobox.BentoBox;
+import world.bentobox.bentobox.api.configuration.WorldSettings;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.bentobox.database.objects.Island;
 import world.bentobox.bentobox.hooks.LangUtilsHook;
 import world.bentobox.bentobox.util.Util;
+import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.config.Settings;
+import world.bentobox.biomes.database.objects.BiomesObject;
 
 
 /**
@@ -23,6 +29,84 @@ import world.bentobox.biomes.config.Settings;
  */
 public class Utils
 {
+    /**
+     * This method gets string value of given permission prefix. If user does not have given permission or it have all
+     * (*), then return default value.
+     *
+     * @param user User who's permission should be checked.
+     * @param permissionPrefix Prefix that need to be found.
+     * @param defaultValue Default value that will be returned if permission not found.
+     * @return String value that follows permissionPrefix.
+     */
+    public static String getPermissionValue(User user, String permissionPrefix, String defaultValue)
+    {
+        if (user.isPlayer())
+        {
+            if (permissionPrefix.endsWith("."))
+            {
+                permissionPrefix = permissionPrefix.substring(0, permissionPrefix.length() - 1);
+            }
+
+            String permPrefix = permissionPrefix + ".";
+
+            List<String> permissions = user.getEffectivePermissions().stream().
+                map(PermissionAttachmentInfo::getPermission).
+                filter(permission -> permission.startsWith(permPrefix)).
+                collect(Collectors.toList());
+
+            for (String permission : permissions)
+            {
+                if (permission.contains(permPrefix + "*"))
+                {
+                    // * means all. So continue to search more specific.
+                    continue;
+                }
+
+                String[] parts = permission.split(permPrefix);
+
+                if (parts.length > 1)
+                {
+                    return parts[1];
+                }
+            }
+        }
+
+        return defaultValue;
+    }
+
+
+    /**
+     * This method replaces "[gamemode] and [number] in permission template with a requested gamemode and empty space
+     * accordantly.
+     *
+     * @param world World where permission is operating.
+     * @param permissionTemplate permission template.
+     * @return Parsed permission String.
+     */
+    public static String getPermissionString(World world, String permissionTemplate)
+    {
+        String permissionPrefix = BentoBox.getInstance().getIWM().getPermissionPrefix(world);
+
+        return permissionPrefix.isEmpty() ? permissionTemplate :
+            permissionTemplate.replace("[gamemode].", permissionPrefix);
+    }
+
+
+    /**
+     * This method returns if given user has all required permissions.
+     *
+     * @param user User who must be checked.
+     * @param permissions List of permissions that must be checked.
+     * @return {@code true} if player has all required permissions, {@code flase} otherwise.
+     */
+    public static boolean matchAllPermissions(User user, Collection<String> permissions)
+    {
+        return permissions.isEmpty() ||
+            user.isOp() ||
+            permissions.stream().allMatch(user::hasPermission);
+    }
+
+
     /**
      * This method returns if given user has a permission to change biome to given biomeId
      * with given updateMode.
@@ -164,16 +248,17 @@ public class Utils
 
     /**
      * This method returns if current biome is locally detected as snowy biome.
+     *
      * @param biome Biome that must be checked.
      * @return {@code true} if I think it is snowy biome, {@code false} otherwise.
      */
     public static boolean isSnowyBiome(Biome biome)
     {
         return switch (biome) {
-            case SNOWY_TUNDRA,
-                ICE_SPIKES,
+            //case SNOWY_SLOPES:
+            case SNOWY_PLAINS,
                 SNOWY_TAIGA,
-                SNOWY_TAIGA_MOUNTAINS,
+                ICE_SPIKES,
                 FROZEN_RIVER,
                 SNOWY_BEACH -> true;
             default -> false;
@@ -183,32 +268,32 @@ public class Utils
 
     /**
      * This method returns if current biome is locally detected as cold biome.
+     *
      * @param biome Biome that must be checked.
      * @return {@code true} if I think it is cold biome, {@code false} otherwise.
      */
     public static boolean isColdBiome(Biome biome)
     {
         return switch (biome) {
-            case MOUNTAINS,
-                GRAVELLY_MOUNTAINS,
-                WOODED_MOUNTAINS,
-                MODIFIED_GRAVELLY_MOUNTAINS,
+            case WINDSWEPT_HILLS,
+                WINDSWEPT_GRAVELLY_HILLS,
+                WINDSWEPT_FOREST,
                 TAIGA,
-                TAIGA_MOUNTAINS,
-                GIANT_TREE_TAIGA,
-                GIANT_SPRUCE_TAIGA,
-                STONE_SHORE -> true;
+                OLD_GROWTH_PINE_TAIGA,
+                OLD_GROWTH_SPRUCE_TAIGA,
+                STONY_SHORE -> true;
             default -> false;
         };
     }
 
 
     /**
-     * This method returns if current biome is locally detected as lush biome.
+     * This method returns if current biome is locally detected as temperate biome.
+     *
      * @param biome Biome that must be checked.
-     * @return {@code true} if I think it is lush biome, {@code false} otherwise.
+     * @return {@code true} if I think it is temperate biome, {@code false} otherwise.
      */
-    public static boolean isLushBiome(Biome biome)
+    public static boolean isTemperateBiome(Biome biome)
     {
         return switch (biome) {
             case PLAINS,
@@ -216,56 +301,49 @@ public class Utils
                 FOREST,
                 FLOWER_FOREST,
                 BIRCH_FOREST,
-                TALL_BIRCH_FOREST,
+                OLD_GROWTH_BIRCH_FOREST,
                 DARK_FOREST,
-                DARK_FOREST_HILLS,
                 SWAMP,
-                SWAMP_HILLS,
                 JUNGLE,
-                MODIFIED_JUNGLE,
-                JUNGLE_EDGE,
-                MODIFIED_JUNGLE_EDGE,
+                SPARSE_JUNGLE,
                 BAMBOO_JUNGLE,
                 RIVER,
                 BEACH,
-                MUSHROOM_FIELDS,
-                MUSHROOM_FIELD_SHORE -> true;
+                MUSHROOM_FIELDS -> true;
             default -> false;
         };
     }
 
 
     /**
-     * This method returns if current biome is locally detected as dry biome.
+     * This method returns if current biome is locally detected as warm biome.
+     *
      * @param biome Biome that must be checked.
-     * @return {@code true} if I think it is dry biome, {@code false} otherwise.
+     * @return {@code true} if I think it is warm biome, {@code false} otherwise.
      */
-    public static boolean isDryBiome(Biome biome)
+    public static boolean isWarmBiome(Biome biome)
     {
         return switch (biome) {
+            // case BADLANDS_PLATEAU:
             case DESERT,
-                DESERT_LAKES,
                 SAVANNA,
-                SHATTERED_SAVANNA,
+                WINDSWEPT_SAVANNA,
                 BADLANDS,
                 ERODED_BADLANDS,
-                WOODED_BADLANDS_PLATEAU,
-                MODIFIED_WOODED_BADLANDS_PLATEAU,
-                BADLANDS_PLATEAU,
-                SAVANNA_PLATEAU,
-                MODIFIED_BADLANDS_PLATEAU,
-                SHATTERED_SAVANNA_PLATEAU -> true;
+                WOODED_BADLANDS,
+                SAVANNA_PLATEAU -> true;
             default -> false;
         };
     }
 
 
     /**
-     * This method returns if current biome is locally detected as ocean biome.
+     * This method returns if current biome is locally detected as aquatic biome.
+     *
      * @param biome Biome that must be checked.
-     * @return {@code true} if I think it is ocean biome, {@code false} otherwise.
+     * @return {@code true} if I think it is aquatic biome, {@code false} otherwise.
      */
-    public static boolean isOceanBiome(Biome biome)
+    public static boolean isAquaticBiome(Biome biome)
     {
         return switch (biome) {
             case WARM_OCEAN,
@@ -284,40 +362,27 @@ public class Utils
 
     /**
      * This method returns if current biome is locally detected as neutral biome.
+     *
      * @param biome Biome that must be checked.
      * @return {@code true} if I think it is neutral biome, {@code false} otherwise.
      */
     public static boolean isNeutralBiome(Biome biome)
     {
-        return switch (biome) {
-            case THE_VOID,
-                WOODED_HILLS,
-                TAIGA_HILLS,
-                SNOWY_TAIGA_HILLS,
-                JUNGLE_HILLS,
-                DESERT_HILLS,
-                BIRCH_FOREST_HILLS,
-                TALL_BIRCH_HILLS,
-                GIANT_TREE_TAIGA_HILLS,
-                GIANT_SPRUCE_TAIGA_HILLS,
-                SNOWY_MOUNTAINS -> true;
-            default -> false;
-        };
+        return biome == Biome.THE_VOID;
     }
 
 
     /**
-     * This method returns if current biome is locally detected as unused biome.
+     * This method returns if current biome is locally detected as cave biome.
+     *
      * @param biome Biome that must be checked.
-     * @return {@code true} if I think it is unused biome, {@code false} otherwise.
+     * @return {@code true} if I think it is cave biome, {@code false} otherwise.
      */
-    public static boolean isUnusedBiome(Biome biome)
+    public static boolean isCaveBiome(Biome biome)
     {
         return switch (biome) {
-            case MOUNTAIN_EDGE,
-                DEEP_WARM_OCEAN,
-                DRIPSTONE_CAVES,
-                LUSH_CAVES -> true;
+            case LUSH_CAVES,
+                DRIPSTONE_CAVES -> true;
             default -> false;
         };
     }
@@ -325,6 +390,7 @@ public class Utils
 
     /**
      * This method returns if current biome is locally detected as nether biome.
+     *
      * @param biome Biome that must be checked.
      * @return {@code true} if I think it is nether biome, {@code false} otherwise.
      */
@@ -343,6 +409,7 @@ public class Utils
 
     /**
      * This method returns if current biome is locally detected as the end biome.
+     *
      * @param biome Biome that must be checked.
      * @return {@code true} if I think it is the end biome, {@code false} otherwise.
      */
@@ -368,6 +435,63 @@ public class Utils
     public static void sendMessage(User user, String message)
     {
         user.sendMessage(user.getTranslation(Constants.CONVERSATIONS + "prefix") + message);
+    }
+
+
+    /**
+     * Send unlock message for user with given UUID.
+     *
+     * @param uuid the uuid
+     * @param island the island
+     * @param biome the biome
+     * @param addon instance of biome addon.
+     * @param available the available
+     */
+    public static void sendUnlockMessage(UUID uuid,
+        Island island,
+        BiomesObject biome,
+        BiomesAddon addon,
+        boolean available)
+    {
+        User user = User.getInstance(uuid);
+
+        WorldSettings settings = addon.getPlugin().getIWM().getWorldSettings(island.getWorld());
+
+        if (settings != null && user != null && user.isOnline())
+        {
+            TextComponent component;
+
+            StringBuilder commandBuilder = new StringBuilder();
+            commandBuilder.append("/");
+            commandBuilder.append(settings.getPlayerCommandAliases().split(" ")[0]);
+            commandBuilder.append(" ");
+            commandBuilder.append(addon.getSettings().getPlayerCommand().split(" ")[0]);
+            commandBuilder.append(" ");
+
+            if (!available)
+            {
+                component = new TextComponent(user.getTranslation(Constants.CONVERSATIONS + "click-text-to-purchase",
+                    Constants.PARAMETER_BIOME, biome.getFriendlyName(),
+                    Constants.PARAMETER_NUMBER, String.valueOf(biome.getRequiredCost())));
+
+                commandBuilder.append(addon.getSettings().getPlayerBuyCommand().split(" ")[0]);
+            }
+            else
+            {
+                component =
+                    new TextComponent(user.getTranslation(Constants.CONVERSATIONS + "click-text-to-set",
+                        Constants.PARAMETER_BIOME, biome.getFriendlyName()));
+
+                commandBuilder.append(addon.getSettings().getPlayerCommand().split(" ")[0]);
+            }
+
+            commandBuilder.append(" ");
+            commandBuilder.append(biome.getUniqueId());
+
+            component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, commandBuilder.toString()));
+
+            user.getPlayer().spigot().sendMessage(component);
+        }
     }
 
 
@@ -581,7 +705,7 @@ public class Utils
         }
 
         // Find general structure with:
-        // materials:
+        // biomes:
         //   [biome]: [name]
 
         translation = user.getTranslationOrNothing("biomes." + object.name().toLowerCase());
