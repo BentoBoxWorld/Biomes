@@ -92,15 +92,15 @@ public class BiomeSelector extends PagedSelector<Biome>
 
         PanelUtils.fillBorder(panelBuilder, Material.BLUE_STAINED_GLASS_PANE);
 
-        panelBuilder.item(0, this.buildButton(Mode.LUSH));
-        panelBuilder.item(1, this.buildButton(Mode.DRY));
+        panelBuilder.item(0, this.buildButton(Mode.TEMPERATE));
+        panelBuilder.item(1, this.buildButton(Mode.WARM));
         panelBuilder.item(2, this.buildButton(Mode.COLD));
         panelBuilder.item(3, this.buildButton(Mode.SNOWY));
-        panelBuilder.item(4, this.buildButton(Mode.OCEAN));
+        panelBuilder.item(4, this.buildButton(Mode.AQUATIC));
         panelBuilder.item(5, this.buildButton(Mode.NETHER));
         panelBuilder.item(6, this.buildButton(Mode.THE_END));
         panelBuilder.item(7, this.buildButton(Mode.NEUTRAL));
-        panelBuilder.item(8, this.buildButton(Mode.UNUSED));
+        panelBuilder.item(8, this.buildButton(Mode.CAVE));
 
         this.populateElements(panelBuilder, this.filterElements);
 
@@ -138,11 +138,11 @@ public class BiomeSelector extends PagedSelector<Biome>
             this.filterElements.removeIf(biome -> {
                 switch (this.mode)
                 {
-                    case LUSH -> {
-                        return !Utils.isLushBiome(biome);
+                    case TEMPERATE -> {
+                        return !Utils.isTemperateBiome(biome);
                     }
-                    case DRY -> {
-                        return !Utils.isDryBiome(biome);
+                    case WARM -> {
+                        return !Utils.isWarmBiome(biome);
                     }
                     case COLD -> {
                         return !Utils.isColdBiome(biome);
@@ -150,8 +150,8 @@ public class BiomeSelector extends PagedSelector<Biome>
                     case SNOWY -> {
                         return !Utils.isSnowyBiome(biome);
                     }
-                    case OCEAN -> {
-                        return !Utils.isOceanBiome(biome);
+                    case AQUATIC -> {
+                        return !Utils.isAquaticBiome(biome);
                     }
                     case NETHER -> {
                         return !Utils.isNetherBiome(biome);
@@ -162,8 +162,8 @@ public class BiomeSelector extends PagedSelector<Biome>
                     case NEUTRAL -> {
                         return !Utils.isNeutralBiome(biome);
                     }
-                    case UNUSED -> {
-                        return !Utils.isUnusedBiome(biome);
+                    case CAVE -> {
+                        return !Utils.isCaveBiome(biome);
                     }
                     default -> {
                         return false;
@@ -248,15 +248,15 @@ public class BiomeSelector extends PagedSelector<Biome>
         description.add(this.user.getTranslation(Constants.TIPS + "click-to-filter"));
 
         ItemStack icon = switch (filterMode) {
-            case LUSH -> new ItemStack(Material.SUNFLOWER);
-            case DRY -> new ItemStack(Material.SAND);
+            case TEMPERATE -> new ItemStack(Material.SUNFLOWER);
+            case WARM -> new ItemStack(Material.SAND);
             case COLD -> new ItemStack(Material.GRAVEL);
             case SNOWY -> new ItemStack(Material.SNOW_BLOCK);
-            case OCEAN -> new ItemStack(Material.TROPICAL_FISH);
+            case AQUATIC -> new ItemStack(Material.TROPICAL_FISH);
             case NETHER -> new ItemStack(Material.NETHERRACK);
             case THE_END -> new ItemStack(Material.END_STONE);
             case NEUTRAL -> new ItemStack(Material.STRUCTURE_VOID);
-            case UNUSED -> new ItemStack(Material.BARRIER);
+            case CAVE -> new ItemStack(Material.BARRIER);
         };
 
         return new PanelItemBuilder().
@@ -285,15 +285,42 @@ public class BiomeSelector extends PagedSelector<Biome>
      */
     private enum Mode
     {
-        LUSH,
-        DRY,
+        /**
+         * Temperate mode.
+         */
+        TEMPERATE,
+        /**
+         * Warm mode.
+         */
+        WARM,
+        /**
+         * Cold mode.
+         */
         COLD,
+        /**
+         * Snowy mode.
+         */
         SNOWY,
-        OCEAN,
+        /**
+         * Aquatic mode.
+         */
+        AQUATIC,
+        /**
+         * Nether mode.
+         */
         NETHER,
+        /**
+         * The end mode.
+         */
         THE_END,
+        /**
+         * Neutral mode.
+         */
         NEUTRAL,
-        UNUSED
+        /**
+         * Cave mode.
+         */
+        CAVE
     }
 
 
