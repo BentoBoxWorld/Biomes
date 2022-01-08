@@ -11,10 +11,10 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import com.google.gson.annotations.Expose;
 
-import world.bentobox.bentobox.api.configuration.ConfigComment;
 import world.bentobox.bentobox.database.objects.DataObject;
 import world.bentobox.bentobox.database.objects.Table;
 import world.bentobox.biomes.utils.Utils;
@@ -36,7 +36,10 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
 
 
     /**
-     * Default constructor.
+     * Instantiates a new Biomes object.
+     *
+     * @param biome the biome
+     * @param world the world
      */
     public BiomesObject(Biome biome, World world)
     {
@@ -310,12 +313,10 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
             return true;
         }
 
-        if (!(obj instanceof BiomesObject))
+        if (!(obj instanceof BiomesObject other))
         {
             return false;
         }
-
-        BiomesObject other = (BiomesObject) obj;
 
         if (this.uniqueId == null && other.getUniqueId() == null)
         {
@@ -337,7 +338,7 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public int compareTo(BiomesObject object)
+    public int compareTo(@NotNull BiomesObject object)
     {
         // Compare by order
         return Comparator.comparingInt(BiomesObject::getOrder).
@@ -362,56 +363,105 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
     }
 
 
+    /**
+     * Copy biomes object.
+     *
+     * @return the biomes object
+     */
+    public BiomesObject copy()
+    {
+        BiomesObject object = new BiomesObject();
+        object.setBiome(this.biome);
+        object.setDeployed(this.deployed);
+        object.setFriendlyName(this.friendlyName);
+        object.setDescription(new ArrayList<>(this.description));
+        object.setIcon(this.icon.clone());
+        object.setOrder(this.order);
+        object.setRequiredLevel(this.requiredLevel);
+        object.setRequiredCost(this.requiredCost);
+        object.setRequiredPermissions(new HashSet<>(this.requiredPermissions));
+        object.setWorld(this.world);
+        object.setEnvironment(this.environment);
+        object.setUniqueId(this.uniqueId);
+
+        return object;
+    }
+
+
     // ---------------------------------------------------------------------
     // Section: Variables
     // ---------------------------------------------------------------------
 
 
-    @ConfigComment("Official minecraft biome name.")
+    /**
+     * The Biome.
+     */
     @Expose
     private Biome biome;
 
-    @ConfigComment("Whether this biome is deployed or not")
+    /**
+     * The Deployed.
+     */
     @Expose
     private boolean deployed;
 
-    @ConfigComment("Name of the icon and biomes. May include color codes. Single line.")
+    /**
+     * The Friendly name.
+     */
     @Expose
     private String friendlyName = "";
 
-    @ConfigComment("Description of the biomes. Will become the lore on the icon. Can include & color codes. String List.")
+    /**
+     * The Description.
+     */
     @Expose
     private List<String> description = new ArrayList<>();
 
-    @ConfigComment("The icon in the GUI for this biome. ItemStack.")
+    /**
+     * The Icon.
+     */
     @Expose
     private ItemStack icon = new ItemStack(Material.PAPER);
 
-    @ConfigComment("Order of biome. Biomes will be ordered in ascending order.")
+    /**
+     * The Order.
+     */
     @Expose
     private int order = -1;
 
-    @ConfigComment("Required island level for this biome. Only works if Level Addon is being used.")
+    /**
+     * The Required level.
+     */
     @Expose
     private long requiredLevel;
 
-    @ConfigComment("Cost of changing biome.")
+    /**
+     * The Required cost.
+     */
     @Expose
     private double requiredCost;
 
-    @ConfigComment("Set of String permission that is required for this biome to be activated.")
+    /**
+     * The Required permissions.
+     */
     @Expose
     private Set<String> requiredPermissions = new HashSet<>();
 
-    @ConfigComment("World where this biome operates. List only NORMAL. NETHER and THE_END are automatically covered.")
+    /**
+     * The World.
+     */
     @Expose
     private String world;
 
-    @ConfigComment("Allows to specify environment for biome. This allows to split overworld, nether and the end biomes.")
+    /**
+     * The Environment.
+     */
     @Expose
     private World.Environment environment;
 
-    @ConfigComment("Unique StringName of the biome")
+    /**
+     * The Unique id.
+     */
     @Expose
     private String uniqueId;
 }
