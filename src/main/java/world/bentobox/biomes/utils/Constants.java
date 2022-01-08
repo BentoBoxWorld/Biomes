@@ -225,7 +225,22 @@ public class Constants
     public static final String PARAMETER_DESCRIPTION = "[description]";
 
     /**
-     * Reference string to challenge parameter in translations.
+     * Reference string to biome parameter in translations.
      */
     public static final String PARAMETER_BIOME = "[biome]";
+
+    /**
+     * Reference string to members parameter in translations.
+     */
+    public static final String PARAMETER_MEMBERS = "[members]";
+
+    /**
+     * Reference string to bundle parameter in translations.
+     */
+    public static final String PARAMETER_BUNDLE = "[bundle]";
+
+    /**
+     * Reference string to mode parameter in translations.
+     */
+    public static final String PARAMETER_MODE = "[mode]";
 }
