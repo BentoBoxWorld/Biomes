@@ -70,7 +70,7 @@ public class BiomeDataRequestHandler extends AddonRequestHandler
 		}
 
 		BiomesObject biome =
-			this.addon.getAddonManager().getBiomeFromString((String) metaData.get(BIOME_ID));
+			this.addon.getAddonManager().getBiomeByID((String) metaData.get(BIOME_ID));
 
 		Map<String, Object> biomesDataMap;
 

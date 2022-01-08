@@ -91,7 +91,7 @@ public class ChangeBiomeRequestHandler extends AddonRequestHandler
 		}
 		else if (!metaData.containsKey(BIOME_ID) ||
 			!(metaData.get(BIOME_ID) instanceof String) ||
-			this.addon.getAddonManager().getBiomeFromString((String) metaData.get(BIOME_ID)) == null)
+			this.addon.getAddonManager().getBiomeByID((String) metaData.get(BIOME_ID)) == null)
 		{
 			returnMap.put(STATUS, false);
 			returnMap.put(REASON, "Missing 'biomeId' or it is not valid!");
@@ -102,7 +102,7 @@ public class ChangeBiomeRequestHandler extends AddonRequestHandler
 
 			UUID player = (UUID) metaData.get(PLAYER);
 			BiomesObject biome = this.addon.getAddonManager().
-				getBiomeFromString((String) metaData.get(BIOME_ID));
+				getBiomeByID((String) metaData.get(BIOME_ID));
 
 			// Get Update Mode.
 
