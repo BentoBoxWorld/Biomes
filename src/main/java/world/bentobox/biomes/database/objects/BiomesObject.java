@@ -2,16 +2,19 @@ package world.bentobox.biomes.database.objects;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.google.gson.annotations.Expose;
 
@@ -150,36 +153,36 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
     /**
      * @return the reqIslandlevel
      */
-    public long getRequiredLevel()
+    public long getUnlockLevel()
     {
-        return this.requiredLevel;
+        return this.unlockLevel == null ? 0 : this.unlockLevel;
     }
 
 
     /**
-     * @param requiredLevel the requiredLevel to set
+     * @param unlockLevel the requiredLevel to set
      */
-    public void setRequiredLevel(long requiredLevel)
+    public void setUnlockLevel(@Nullable Long unlockLevel)
     {
-        this.requiredLevel = requiredLevel;
+        this.unlockLevel = unlockLevel;
     }
 
 
     /**
      * @return the cost of changing biome
      */
-    public double getRequiredCost()
+    public double getCost()
     {
-        return this.requiredCost;
+        return this.cost == null ? 0 : this.cost;
     }
 
 
     /**
-     * @param requiredCost the reqMoney to set
+     * @param cost the reqMoney to set
      */
-    public void setRequiredCost(double requiredCost)
+    public void setCost(@Nullable Double cost)
     {
-        this.requiredCost = requiredCost;
+        this.cost = cost;
     }
 
 
@@ -247,20 +250,21 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
      * This method returns the permissions object.
      * @return the permissions object.
      */
-    public Set<String> getRequiredPermissions()
+    @NotNull
+    public Set<String> getUnlockPermissions()
     {
-        return requiredPermissions;
+        return this.unlockPermissions == null ? Collections.emptySet() : this.unlockPermissions;
     }
 
 
     /**
      * This method sets the permissions object value.
-     * @param requiredPermissions the permissions object new value.
+     * @param unlockPermissions the permissions object new value.
      *
      */
-    public void setRequiredPermissions(Set<String> requiredPermissions)
+    public void setUnlockPermissions(@Nullable Set<String> unlockPermissions)
     {
-        this.requiredPermissions = requiredPermissions;
+        this.unlockPermissions = unlockPermissions;
     }
 
 
@@ -282,6 +286,119 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
     public void setEnvironment(World.Environment environment)
     {
         this.environment = environment;
+    }
+
+
+    /**
+     * Gets unlock cost.
+     *
+     * @return the unlock cost
+     */
+    public double getUnlockCost()
+    {
+        return this.unlockCost == null ? 0 : this.unlockCost;
+    }
+
+
+    /**
+     * Sets unlock cost.
+     *
+     * @param unlockCost the unlock cost
+     */
+    public void setUnlockCost(@Nullable Double unlockCost)
+    {
+        this.unlockCost = unlockCost;
+    }
+
+
+    /**
+     * Gets unlock items.
+     *
+     * @return the unlock items
+     */
+    @NotNull
+    public List<ItemStack> getUnlockItems()
+    {
+        return this.unlockItems == null ? Collections.emptyList() : this.unlockItems;
+    }
+
+
+    /**
+     * Sets unlock items.
+     *
+     * @param unlockItems the unlock items
+     */
+    public void setUnlockItems(@Nullable List<ItemStack> unlockItems)
+    {
+        this.unlockItems = unlockItems;
+    }
+
+
+    /**
+     * Gets change item cost.
+     *
+     * @return the change item cost
+     */
+    @NotNull
+    public List<ItemStack> getItemCost()
+    {
+        return this.itemCost == null ? Collections.emptyList() : this.itemCost;
+    }
+
+
+    /**
+     * Sets change item cost.
+     *
+     * @param itemCost the change item cost
+     */
+    public void setItemCost(@Nullable List<ItemStack> itemCost)
+    {
+        this.itemCost = itemCost;
+    }
+
+
+    /**
+     * Gets cost mode.
+     *
+     * @return the cost mode
+     */
+    @NotNull
+    public CostMode getCostMode()
+    {
+        return costMode;
+    }
+
+
+    /**
+     * Sets cost mode.
+     *
+     * @param costMode the cost mode
+     */
+    public void setCostMode(@NotNull CostMode costMode)
+    {
+        this.costMode = costMode;
+    }
+
+
+    /**
+     * Gets cost increment.
+     *
+     * @return the cost increment
+     */
+    public double getCostIncrement()
+    {
+        return costIncrement == null ? 0 : this.costIncrement;
+    }
+
+
+    /**
+     * Sets cost increment.
+     *
+     * @param costIncrement the cost increment
+     */
+    public void setCostIncrement(@Nullable Double costIncrement)
+    {
+        this.costIncrement = costIncrement;
     }
 
 
@@ -377,14 +494,59 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
         object.setDescription(new ArrayList<>(this.description));
         object.setIcon(this.icon.clone());
         object.setOrder(this.order);
-        object.setRequiredLevel(this.requiredLevel);
-        object.setRequiredCost(this.requiredCost);
-        object.setRequiredPermissions(new HashSet<>(this.requiredPermissions));
         object.setWorld(this.world);
         object.setEnvironment(this.environment);
         object.setUniqueId(this.uniqueId);
 
+        object.setUnlockLevel(this.unlockLevel);
+        object.setUnlockCost(this.unlockCost);
+
+        if (this.unlockPermissions != null && !this.unlockPermissions.isEmpty())
+        {
+            object.setUnlockPermissions(new HashSet<>(this.unlockPermissions));
+        }
+
+        if (this.unlockItems != null && !this.unlockItems.isEmpty())
+        {
+            object.setUnlockItems(this.unlockItems.stream().map(ItemStack::clone).collect(Collectors.toList()));
+        }
+
+        object.setCost(this.cost);
+
+        if (this.itemCost != null && !this.itemCost.isEmpty())
+        {
+            object.setItemCost(this.itemCost.stream().map(ItemStack::clone).collect(Collectors.toList()));
+        }
+
+        object.setCostMode(this.costMode);
+        object.setCostIncrement(this.costIncrement);
+
         return object;
+    }
+
+
+    // ---------------------------------------------------------------------
+    // Section: Classes
+    // ---------------------------------------------------------------------
+
+
+    /**
+     * The enum Cost mode.
+     */
+    public enum CostMode
+    {
+        /**
+         * Per block cost mode.
+         */
+        PER_BLOCK,
+        /**
+         * Per usage cost mode.
+         */
+        PER_USAGE,
+        /**
+         * Static cost mode.
+         */
+        STATIC
     }
 
 
@@ -430,24 +592,6 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
     private int order = -1;
 
     /**
-     * The Required level.
-     */
-    @Expose
-    private long requiredLevel;
-
-    /**
-     * The Required cost.
-     */
-    @Expose
-    private double requiredCost;
-
-    /**
-     * The Required permissions.
-     */
-    @Expose
-    private Set<String> requiredPermissions = new HashSet<>();
-
-    /**
      * The World.
      */
     @Expose
@@ -464,4 +608,68 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
      */
     @Expose
     private String uniqueId;
+
+    // ---------------------------------------------------------------------
+    // Section: Unlock/Purchase Cost
+    // ---------------------------------------------------------------------
+
+    /**
+     * The Required level.
+     */
+    @Expose
+    @Nullable
+    private Long unlockLevel = null;
+
+    /**
+     * The Unlock cost.
+     */
+    @Expose
+    @Nullable
+    private Double unlockCost = null;
+
+    /**
+     * The Unlock items.
+     */
+    @Expose
+    @Nullable
+    private List<ItemStack> unlockItems = null;
+
+    /**
+     * The Required permissions.
+     */
+    @Expose
+    @Nullable
+    private Set<String> unlockPermissions = null;
+
+    // ---------------------------------------------------------------------
+    // Section: Change Cost
+    // ---------------------------------------------------------------------
+
+    /**
+     * The Change cost.
+     */
+    @Expose
+    @Nullable
+    private Double cost = null;
+
+    /**
+     * The Change item cost.
+     */
+    @Expose
+    @Nullable
+    private List<ItemStack> itemCost = null;
+
+    /**
+     * The Cost mode.
+     */
+    @Expose
+    @NotNull
+    private CostMode costMode = CostMode.STATIC;
+
+    /**
+     * The Cost increment.
+     */
+    @Expose
+    @Nullable
+    private Double costIncrement = null;
 }
