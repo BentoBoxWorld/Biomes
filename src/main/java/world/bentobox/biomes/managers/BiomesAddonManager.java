@@ -413,6 +413,25 @@ public class BiomesAddonManager
     /**
      * Gets island data.
      *
+     * @param world the world
+     * @param user the user
+     * @return the island data
+     */
+    @Nullable
+    public BiomesIslandDataObject getIslandData(@Nullable World world, @Nullable User user)
+    {
+        if (world == null || user == null)
+        {
+            return null;
+        }
+
+        return this.getIslandData(this.addon.getIslandsManager().getIsland(world, user));
+    }
+
+
+    /**
+     * Gets island data.
+     *
      * @param island the island
      * @return the island data
      */
@@ -571,9 +590,9 @@ public class BiomesAddonManager
             filter(BiomesObject::isValid).
             filter(BiomesObject::isDeployed).
             filter(biome -> !dataObject.getUnlockedBiomes().contains(biome.getUniqueId())).
-            filter(biome -> biome.getRequiredLevel() <= islandLevel).
-            filter(biome -> biome.getRequiredPermissions().isEmpty() ||
-                owner != null && owner.isOnline() && Utils.matchAllPermissions(owner, biome.getRequiredPermissions())).
+            filter(biome -> biome.getUnlockLevel() <= islandLevel).
+            filter(biome -> biome.getUnlockPermissions().isEmpty() ||
+                owner != null && owner.isOnline() && Utils.matchAllPermissions(owner, biome.getUnlockPermissions())).
             forEach(biome -> this.unlockBiome(dataObject, user, island, biome));
     }
 
@@ -649,7 +668,7 @@ public class BiomesAddonManager
         }
         else if (!islandData.getPurchasedBiomes().contains(biomesObject.getUniqueId()) &&
             this.addon.isEconomyProvided() &&
-            biomesObject.getRequiredCost() > 0)
+            biomesObject.getUnlockCost() > 0)
         {
             // Generator is not purchased. Return false.
             Utils.sendMessage(user,
@@ -708,7 +727,7 @@ public class BiomesAddonManager
             }
 
             // Send message to user
-            if (this.addon.isEconomyProvided() && biomesObject.getRequiredCost() > 0)
+            if (this.addon.isEconomyProvided() && biomesObject.getUnlockCost() > 0)
             {
                 // Send message that biomesObject is available for purchase.
 
@@ -767,20 +786,20 @@ public class BiomesAddonManager
                     user.getTranslation(this.addon.getPlugin().getRanksManager().getRank(island.getRank(user)))));
             return false;
         }
-        else if (biomesObject.getRequiredLevel() > this.getIslandLevel(island))
+        else if (biomesObject.getUnlockLevel() > this.getIslandLevel(island))
         {
             // Biome is not unlocked. Return false.
             Utils.sendMessage(user,
                 user.getTranslation(Constants.MESSAGES + "island-level-not-reached",
                     Constants.PARAMETER_BIOME, biomesObject.getFriendlyName(),
-                    TextVariables.NUMBER, String.valueOf(biomesObject.getRequiredLevel())));
+                    TextVariables.NUMBER, String.valueOf(biomesObject.getUnlockLevel())));
             return false;
         }
-        else if (!biomesObject.getRequiredPermissions().isEmpty() &&
+        else if (!biomesObject.getUnlockPermissions().isEmpty() &&
             (owner == null || !owner.isPlayer() ||
-                !biomesObject.getRequiredPermissions().stream().allMatch(owner::hasPermission)))
+                !biomesObject.getUnlockPermissions().stream().allMatch(owner::hasPermission)))
         {
-            Optional<String> missingPermission = biomesObject.getRequiredPermissions().stream().
+            Optional<String> missingPermission = biomesObject.getUnlockPermissions().stream().
                 filter(permission -> owner == null || !owner.isPlayer() || !owner.hasPermission(permission)).
                 findAny();
 
@@ -794,11 +813,11 @@ public class BiomesAddonManager
         }
         else
         {
-            if (this.addon.isEconomyProvided() && biomesObject.getRequiredCost() > 0)
+            if (this.addon.isEconomyProvided() && biomesObject.getUnlockCost() > 0)
             {
                 // Return true only if user has enough money and its removal was successful.
-                if (this.addon.getVaultHook().has(user, biomesObject.getRequiredCost()) &&
-                    this.addon.getVaultHook().withdraw(user, biomesObject.getRequiredCost()).transactionSuccess())
+                if (this.addon.getVaultHook().has(user, biomesObject.getUnlockCost()) &&
+                    this.addon.getVaultHook().withdraw(user, biomesObject.getUnlockCost()).transactionSuccess())
                 {
                     return true;
                 }
@@ -806,7 +825,7 @@ public class BiomesAddonManager
                 {
                     Utils.sendMessage(user,
                         user.getTranslation(Constants.MESSAGES + "no-credits-buy",
-                            TextVariables.NUMBER, String.valueOf(biomesObject.getRequiredCost())));
+                            TextVariables.NUMBER, String.valueOf(biomesObject.getUnlockCost())));
                     return false;
                 }
             }
@@ -980,8 +999,8 @@ public class BiomesAddonManager
             // Filter out undeployed biomes if visibility mode is set to only deployed
             filter(BiomesObject::isDeployed).
             // Filter out biomes which does user not have permissions
-            filter(biomesObject -> biomesObject.getRequiredPermissions().isEmpty() ||
-                biomesObject.getRequiredPermissions().stream().allMatch(user::hasPermission)).
+            filter(biomesObject -> biomesObject.getUnlockPermissions().isEmpty() ||
+                biomesObject.getUnlockPermissions().stream().allMatch(user::hasPermission)).
             forEach(returnBiomesList::add);
 
         return returnBiomesList;

@@ -40,6 +40,7 @@ biomes:
       environment-selector: "&0&l Select Environment"
       biome-selector: "&0&l Select Biome"
       bundle-selector: "&0&l Select Bundle"
+      item-selector: "&0&l Select Items"
     buttons:
       island:
         name: "&f&l Island"
@@ -189,6 +190,18 @@ biomes:
         name: "&f&l [environment]"
         description: |-
           &7 [description].
+      properties:
+        name: "&f&l Properties"
+        description: |-
+          &7 View main biome properties.
+      change_properties:
+        name: "&f&l Change Properties"
+        description: |-
+          &7 View changing biome properties.
+      unlock_properties:
+        name: "&f&l Unlock Properties"
+        description: |-
+          &7 View unlock biome properties.
       biome:
         name: "&f&l [biome]"
         description: |-
@@ -230,15 +243,6 @@ biomes:
           &7 will be ordered by their
           &7 unique id names.
         value: "&7 Current order: &e [number]"
-      permissions:
-        name: "&f&l Permissions"
-        description: |-
-          &7 Allows to change required
-          &7 permissions for this
-          &7 biome to be accessible.
-        title: "&e Permissions: "
-        element: " &8 - [permission]"
-        none: "&7 Permissions are not set."
       description:
         name: "&f&l Description"
         description: |-
@@ -247,19 +251,79 @@ biomes:
           &7 codes must be applied to it.
         value: "&e Current description:"
         none: "&7 Description is not set."
-      cost:
+      unlock_permissions:
+        name: "&f&l Permissions"
+        description: |-
+          &7 Allows to change unlock
+          &7 permissions for this
+          &7 biome to be accessible.
+        title: "&e Permissions: "
+        element: " &8 - [permission]"
+        none: "&7 Permissions are not set."
+      unlock_cost:
         name: "&f&l Cost"
         description: |-
           &7 Allows to change cost of
-          &7 applaying this biome.
+          &7 unlocking this biome.
         value: "&7 Current order: &e $[number]"
-      level:
+      unlock_items:
+        name: "&f&l Items"
+        description: |-
+          &7 Allows to change unlock
+          &7 items for this biome.
+        title: "&e Items: "
+        element: " &8 - [number]x[item]"
+        none: "&7 Items are not set."
+      unlock_level:
         name: "&f&l Level"
         description: |-
           &7 Allows to change the
           &7 required island level
-          &7 for applaying this biome.
+          &7 for unlocking this biome.
         value: "&7 Current level: &e [number]"
+      change_cost:
+        name: "&f&l Cost"
+        description: |-
+          &7 Allows to change cost of
+          &7 applying this biome.
+        value: "&7 Current order: &e $[number]"
+      change_items:
+        name: "&f&l Items"
+        description: |-
+          &7 Allows to change items
+          &7 for applying this biome.
+        title: "&e Items: "
+        element: " &8 - [number]x[item]"
+        none: "&7 Items are not set."
+      change_type:
+        name: "&f&l [type]"
+        description: |-
+          &7 Allows to change cost type
+          &7 for applying this biome.
+        static:
+          name: "Static Value"
+          description: |-
+            &7 Biome change cost does
+            &7 not change.
+        per_block:
+          name: "Per Block"
+          description: |-
+            &7 Biome change cost is
+            &7 calculated per block.
+        per_usage:
+          name: "Per Usage"
+          description: |-
+            &7 Biome change cost is
+            &7 increased after each
+            &7 usage.
+        enabled: "&2"
+        disabled: "&c"
+      change_increment:
+        name: "&f&l Increment"
+        description: |-
+          &7 Allows to change the
+          &7 increment per usage.
+        value: "&7 Current value: &e [number]"
       biome-filter:
         name: "&f&l [filter]"
         description: |-
@@ -522,26 +586,65 @@ biomes:
         lore: |-
           [description]
           [biome]
-          [price]
-          [level]
-          [permissions]
-        # Text that will replace [level]
-        level: |-
-          &7 Requires to reach &e [number]
-          &7 island level.
+          [unlock]
+          [change]
         # Text that will replace [biome]
         original: |-
           &7 Biome: &e [biome]
-        # Text that will replace price
-        money: |-
-          &7 Change cost: &e $[number]
-        # Text that will replace price
-        permission-single: |-
-          &7 Missing Permission: &c [permission]
-        permissions-title: |-
-          &c Missing Permissions:
-        permissions-list: |-
-          - &c [permission]
+        # The text that will replace [unlock] message. If biome is unlocked, then this message will be generated empty.
+        unlock:
+          lore: |-
+            [items]
+            [money]
+            [level]
+            [permissions]
+          # Text that will replace [money]
+          money: |-
+            &7 Unlock cost: &e $[number]
+          # Text that will replace [level]
+          level: |-
+            &7 Requires to reach &e [number]
+            &7 island level.
+          # Text that will replace [permissions]
+          permission-single: |-
+            &7 Missing Permission: &c [permission]
+          permissions-title: |-
+            &c Missing Permissions:
+          permissions-list: |-
+            &c - [permission]
+          # Text that will replace [items]
+          item-single: |-
+            &7 Unlock Item: &e [number] x [item]
+          item-title: |-
+            &7 Unlock Items:
+          item-list: |-
+            &e - [number] x [item]
+        # The text that will replace [change] message. If biome is locked, then this message will be generated empty.
+        change:
+          lore: |-
+            [mode]
+            [items]
+            [money]
+          # Text that will replace [mode]
+          mode:
+            per_block: |-
+              &e Biome costs per each
+              &e changed block.
+            per_usage: |-
+              &e Changing biome increases
+              &e per usage.
+            static: |-
+              &7 Standart change price.
+          # Text that will replace [money]
+          money: |-
+            &7 Cost: &e $[number]
+          # Text that will replace [items]
+          item-single: |-
+            &7 Item: &e [number] x [item]
+          item-title: |-
+            &7 Items:
+          item-list: |-
+            &e - [number] x [item]
       bundle:
         lore: |-
           [description]
@@ -720,6 +823,38 @@ biomes:
 #        jungle_hills:
 #            name: "Jungle Hills"
 #            description: ""
+#    item-stacks:
+#        # Non-specific item meta translations.
+#        # TYPE is the item type
+#        # META is a content of item meta.
+#        generic: "[type] [meta]"
+#        # Non-specific meta translations. Will replace [meta]
+#        meta:
+#            upgraded: "Upgraded"
+#            extended: "Extended"
+#            potion-meta: "&e [type] [upgraded] [extended]"
+#            # Be aware, enchants are always listed below item in separate line.
+#            enchant-meta: "    &7 - &e [type] [level]"
+#            skull-meta: ": &e [player-name]"
+#            book-meta: "&e [title] [author]"
+#        # Custom Enchantment Translation.
+#        enchant:
+#            menting: "Mending"
+#            unbreaking: "Unbreaking"
+#        # Custom Potion Translation.
+#        potion-type:
+#            water_breathing: "Water Breathing"
+#        # You can also create specific item translations
+#        # Like translate all potions.
+#        potion:
+#            # This will overwrite generic translation.
+#            name: "[type] [upgraded] [extended]"
+#            # Type is either specific translation or potion effect.
+#            water_breathing: "Potion of Water Breathing"
+#        stone_shovel:
+#            # This will mean that only stone shovels will not show
+#            # meta information.
+#            name: "[type]"
 #    # Showcase how to support multi-linguistic biomes
 #    custom-biomes:
 #        # Database ID name.

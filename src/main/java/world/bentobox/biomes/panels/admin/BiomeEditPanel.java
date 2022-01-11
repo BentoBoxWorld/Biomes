@@ -42,6 +42,7 @@ public class BiomeEditPanel extends CommonPanel
     {
         super(parentPanel);
         this.biome = biome;
+        this.activeMenu = MenuType.PROPERTIES;
     }
 
 
@@ -72,24 +73,47 @@ public class BiomeEditPanel extends CommonPanel
 
         PanelUtils.fillBorder(panelBuilder, Material.PURPLE_STAINED_GLASS_PANE);
 
-        panelBuilder.item(19, this.createButton(Action.BIOME));
-        panelBuilder.item(28, this.createButton(Action.ENVIRONMENT));
+        panelBuilder.item(2, this.createMenuButton(MenuType.PROPERTIES));
+        panelBuilder.item(4, this.createMenuButton(MenuType.UNLOCK_PROPERTIES));
+        panelBuilder.item(6, this.createMenuButton(MenuType.CHANGE_PROPERTIES));
 
-        panelBuilder.item(11, this.createButton(Action.NAME));
-        panelBuilder.item(20, this.createButton(Action.ICON));
-        panelBuilder.item(29, this.createButton(Action.DESCRIPTION));
+        switch (this.activeMenu)
+        {
+            case UNLOCK_PROPERTIES -> {
+                panelBuilder.item(12, this.createButton(Action.UNLOCK_COST));
+                panelBuilder.item(21, this.createButton(Action.UNLOCK_ITEMS));
 
-        panelBuilder.item(21, this.createButton(Action.ORDER));
+                panelBuilder.item(14, this.createButton(Action.UNLOCK_LEVEL));
+                panelBuilder.item(23, this.createButton(Action.UNLOCK_PERMISSIONS));
+            }
+            case CHANGE_PROPERTIES -> {
+                panelBuilder.item(12, this.createButton(Action.CHANGE_COST));
+                panelBuilder.item(21, this.createButton(Action.CHANGE_ITEMS));
+                panelBuilder.item(10, this.createButton(Action.CHANGE_TYPE));
 
-        panelBuilder.item(14, this.createButton(Action.LEVEL));
-        panelBuilder.item(23, this.createButton(Action.COST));
-        panelBuilder.item(32, this.createButton(Action.PERMISSIONS));
+                if (BiomesObject.CostMode.PER_USAGE.equals(this.biome.getCostMode()))
+                {
+                    panelBuilder.item(19, this.createButton(Action.CHANGE_INCREMENT));
+                }
+            }
+            case PROPERTIES -> {
+                panelBuilder.item(19, this.createButton(Action.BIOME));
+                panelBuilder.item(28, this.createButton(Action.ENVIRONMENT));
 
-        panelBuilder.item(25, this.createButton(Action.DEPLOYED));
+                panelBuilder.item(11, this.createButton(Action.NAME));
+                panelBuilder.item(20, this.createButton(Action.ICON));
+                panelBuilder.item(29, this.createButton(Action.DESCRIPTION));
+
+                panelBuilder.item(21, this.createButton(Action.ORDER));
+
+                panelBuilder.item(25, this.createButton(Action.DEPLOYED));
+
+                panelBuilder.listener(new IconChanger());
+            }
+        }
 
         panelBuilder.item(44, this.returnButton);
 
-        panelBuilder.listener(new IconChanger());
         // Build panel.
         panelBuilder.build();
     }
@@ -116,7 +140,11 @@ public class BiomeEditPanel extends CommonPanel
         switch (button)
         {
             case BIOME -> {
-                description.add(this.user.getTranslation(reference + "value"));
+                name = this.user.getTranslation(reference + "name",
+                    Constants.PARAMETER_BIOME, Utils.prettifyObject(this.biome.getBiome(), this.user));
+
+                description.add(this.user.getTranslation(reference + "value",
+                    Constants.PARAMETER_ID, this.biome.getBiome().name()));
                 description.add("");
                 description.add(this.user.getTranslation(Constants.TIPS + "click-to-change"));
 
@@ -130,7 +158,7 @@ public class BiomeEditPanel extends CommonPanel
                         {
                             this.biome.setBiome(biome);
                             // Save biome
-                            this.addon.getAddonManager().saveBiome(this.biome);
+                            this.manager.saveBiome(this.biome);
                         }
 
                         this.build();
@@ -142,8 +170,8 @@ public class BiomeEditPanel extends CommonPanel
 
                 glow = false;
             }
-            case PERMISSIONS -> {
-                if (this.biome.getRequiredPermissions().isEmpty())
+            case UNLOCK_PERMISSIONS -> {
+                if (this.biome.getUnlockPermissions().isEmpty())
                 {
                     description.add(this.user.getTranslation(reference + "none"));
                 }
@@ -151,7 +179,7 @@ public class BiomeEditPanel extends CommonPanel
                 {
                     description.add(this.user.getTranslation(reference + "title"));
 
-                    this.biome.getRequiredPermissions().forEach(permission ->
+                    this.biome.getUnlockPermissions().forEach(permission ->
                         description.add(this.user.getTranslation(reference + "element",
                             "[permission]", permission)));
                 }
@@ -165,14 +193,14 @@ public class BiomeEditPanel extends CommonPanel
                     {
                         if (value != null)
                         {
-                            this.biome.setRequiredPermissions(new HashSet<>(value));
+                            this.biome.setUnlockPermissions(new HashSet<>(value));
                             this.manager.saveBiome(this.biome);
                         }
 
                         this.build();
                     };
 
-                    if (!this.biome.getRequiredPermissions().isEmpty() &&
+                    if (!this.biome.getUnlockPermissions().isEmpty() &&
                         clickType.isShiftClick())
                     {
                         // Reset to the empty value
@@ -193,23 +221,23 @@ public class BiomeEditPanel extends CommonPanel
                 description.add("");
                 description.add(this.user.getTranslation(Constants.TIPS + "click-to-change"));
 
-                if (!this.biome.getRequiredPermissions().isEmpty())
+                if (!this.biome.getUnlockPermissions().isEmpty())
                 {
                     description.add(this.user.getTranslation(Constants.TIPS + "shift-click-to-reset"));
                 }
 
                 glow = false;
             }
-            case COST -> {
+            case UNLOCK_COST -> {
                 description.add(this.user.getTranslation(reference + "value",
-                    Constants.PARAMETER_NUMBER, String.valueOf(this.biome.getRequiredCost())));
+                    Constants.PARAMETER_NUMBER, String.valueOf(this.biome.getUnlockCost())));
 
                 icon = new ItemStack(this.addon.isEconomyProvided() ? Material.GOLD_INGOT : Material.BARRIER);
                 clickHandler = (panel, user, clickType, i) -> {
                     Consumer<Number> numberConsumer = number -> {
                         if (number != null)
                         {
-                            this.biome.setRequiredCost(number.doubleValue());
+                            this.biome.setUnlockCost(number.doubleValue());
                             this.manager.saveBiome(this.biome);
                         }
 
@@ -230,17 +258,55 @@ public class BiomeEditPanel extends CommonPanel
                 description.add("");
                 description.add(this.user.getTranslation(Constants.TIPS + "click-to-change"));
             }
-            case LEVEL -> {
+            case UNLOCK_ITEMS -> {
+                if (this.biome.getUnlockItems().isEmpty())
+                {
+                    description.add(this.user.getTranslation(reference + "none"));
+                }
+                else
+                {
+                    description.add(this.user.getTranslation(reference + "title"));
+
+                    Utils.groupEqualItems(this.biome.getUnlockItems(), Collections.emptySet()).
+                        stream().
+                        sorted(Comparator.comparing(ItemStack::getType)).
+                        forEach(itemStack ->
+                            description.add(this.user.getTranslationOrNothing(reference + "element",
+                                "[number]", String.valueOf(itemStack.getAmount()),
+                                "[item]", Utils.prettifyObject(itemStack, this.user))));
+                }
+
+                icon = new ItemStack(Material.CHEST);
+                clickHandler = (panel, user, clickType, slot) -> {
+                    ItemSelector.open(this.user,
+                        this.biome.getUnlockItems(),
+                        (status, value) -> {
+                            if (status)
+                            {
+                                this.biome.setUnlockItems(value);
+                                this.manager.saveBiome(this.biome);
+                            }
+
+                            this.build();
+                        });
+                    return true;
+                };
+                glow = false;
+
+                description.add("");
+                description.add(this.user.getTranslation(Constants.TIPS + "click-to-change"));
+            }
+            case UNLOCK_LEVEL -> {
                 description.add(this.user.getTranslation(reference + "value",
-                    Constants.PARAMETER_NUMBER, String.valueOf(this.biome.getRequiredLevel())));
+                    Constants.PARAMETER_NUMBER, String.valueOf(this.biome.getUnlockLevel())));
 
                 icon = new ItemStack(this.addon.isLevelProvided() ? Material.BEACON : Material.BARRIER,
-                    (int) Math.max(1, this.biome.getRequiredLevel()));
+                    (int) Math.max(1, this.biome.getUnlockLevel()));
                 clickHandler = (panel, user, clickType, i) -> {
                     Consumer<Number> numberConsumer = number -> {
                         if (number != null)
                         {
-                            this.biome.setRequiredLevel(number.longValue());
+                            this.biome.setUnlockLevel(number.longValue());
                             this.manager.saveBiome(this.biome);
                         }
 
@@ -461,6 +527,147 @@ public class BiomeEditPanel extends CommonPanel
                 description.add("");
                 description.add(this.user.getTranslation(Constants.TIPS + "click-to-toggle"));
             }
+            case CHANGE_COST -> {
+                description.add(this.user.getTranslation(reference + "value",
+                    Constants.PARAMETER_NUMBER, String.valueOf(this.biome.getCost())));
+
+                icon = new ItemStack(this.addon.isEconomyProvided() ? Material.GOLD_INGOT : Material.BARRIER);
+                clickHandler = (panel, user, clickType, i) -> {
+                    Consumer<Number> numberConsumer = number -> {
+                        if (number != null)
+                        {
+                            this.biome.setCost(number.doubleValue());
+                            this.manager.saveBiome(this.biome);
+                        }
+
+                        // reopen panel
+                        this.build();
+                    };
+
+                    ConversationUtils.createNumericInput(numberConsumer,
+                        this.user,
+                        this.user.getTranslation(Constants.CONVERSATIONS + "input-number"),
+                        0,
+                        Double.MAX_VALUE);
+
+                    return true;
+                };
+                glow = false;
+
+                description.add("");
+                description.add(this.user.getTranslation(Constants.TIPS + "click-to-change"));
+            }
+            case CHANGE_ITEMS -> {
+                if (this.biome.getItemCost().isEmpty())
+                {
+                    description.add(this.user.getTranslation(reference + "none"));
+                }
+                else
+                {
+                    description.add(this.user.getTranslation(reference + "title"));
+
+                    Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()).
+                        stream().
+                        sorted(Comparator.comparing(ItemStack::getType)).
+                        forEach(itemStack ->
+                            description.add(this.user.getTranslationOrNothing(reference + "element",
+                                "[number]", String.valueOf(itemStack.getAmount()),
+                                "[item]", Utils.prettifyObject(itemStack, this.user))));
+                }
+
+                icon = new ItemStack(Material.CHEST);
+                clickHandler = (panel, user, clickType, slot) -> {
+                    ItemSelector.open(this.user,
+                        this.biome.getItemCost(),
+                        (status, value) -> {
+                            if (status)
+                            {
+                                this.biome.setItemCost(value);
+                                this.manager.saveBiome(this.biome);
+                            }
+
+                            this.build();
+                        });
+                    return true;
+                };
+                glow = false;
+
+                description.add("");
+                description.add(this.user.getTranslation(Constants.TIPS + "click-to-change"));
+            }
+            case CHANGE_TYPE -> {
+                String type = this.biome.getCostMode().name().toLowerCase();
+
+                name = this.user.getTranslation(reference + "name",
+                    "[type]", this.user.getTranslation(reference + type + ".name"));
+
+                description.add(this.user.getTranslation(reference + type + ".description"));
+                description.add("");
+                description.add(this.user.getTranslation(Constants.TIPS + "click-to-change"));
+
+                switch (this.biome.getCostMode())
+                {
+                    case PER_BLOCK -> icon = new ItemStack(Material.DIRT);
+                    case PER_USAGE -> icon = new ItemStack(Material.OBSERVER);
+                    case STATIC -> icon = new ItemStack(Material.OBSIDIAN);
+                    default -> icon = new ItemStack(Material.PAPER);
+                }
+
+                clickHandler = (panel, user1, clickType, slot) ->
+                {
+                    this.selectedButton = null;
+
+                    if (clickType.isLeftClick())
+                    {
+                        this.biome.setCostMode(Utils.getNextValue(
+                            BiomesObject.CostMode.values(),
+                            this.biome.getCostMode()));
+                    }
+                    else
+                    {
+                        this.biome.setCostMode(Utils.getPreviousValue(
+                            BiomesObject.CostMode.values(),
+                            this.biome.getCostMode()));
+                    }
+
+                    this.manager.saveBiome(this.biome);
+                    this.build();
+
+                    return true;
+                };
+
+                glow = false;
+            }
+            case CHANGE_INCREMENT -> {
+                description.add(this.user.getTranslation(reference + "value",
+                    Constants.PARAMETER_NUMBER, String.valueOf(this.biome.getCostIncrement())));
+
+                icon = new ItemStack(Material.REDSTONE_TORCH);
+                clickHandler = (panel, user, clickType, i) -> {
+                    Consumer<Number> numberConsumer = number -> {
+                        if (number != null)
+                        {
+                            this.biome.setCostIncrement(number.doubleValue());
+                            this.manager.saveBiome(this.biome);
+                        }
+
+                        // reopen panel
+                        this.build();
+                    };
+
+                    ConversationUtils.createNumericInput(numberConsumer,
+                        this.user,
+                        this.user.getTranslation(Constants.CONVERSATIONS + "input-number"),
+                        0,
+                        Double.MAX_VALUE);
+
+                    return true;
+                };
+                glow = false;
+
+                description.add("");
+                description.add(this.user.getTranslation(Constants.TIPS + "click-to-change"));
+            }
             default -> {
                 icon = new ItemStack(Material.PAPER);
                 clickHandler = (panel, user1, clickType, slot) -> true;
@@ -478,6 +685,73 @@ public class BiomeEditPanel extends CommonPanel
             build();
     }
 
+
+    /**
+     * This method creates top menu buttons, that allows to switch "tabs".
+     * @param menuType Menu Type which button must be constructed.
+     * @return PanelItem that represents given menu type.
+     */
+    private PanelItem createMenuButton(MenuType menuType)
+    {
+        final String reference = Constants.BUTTON + menuType.name().toLowerCase() + ".";
+
+        final String name = this.user.getTranslation(reference + "name");
+        final List<String> description = new ArrayList<>(3);
+        description.add(this.user.getTranslation(reference + "description"));
+        description.add("");
+        description.add(this.user.getTranslation(Constants.TIPS + "click-to-select"));
+
+        ItemStack icon;
+        boolean glow;
+        PanelItem.ClickHandler clickHandler;
+
+        switch (menuType)
+        {
+            case PROPERTIES -> {
+                icon = new ItemStack(Material.CRAFTING_TABLE);
+                clickHandler = (panel, user, clickType, slot) -> {
+                    this.activeMenu = MenuType.PROPERTIES;
+                    this.build();
+
+                    return true;
+                };
+                glow = this.activeMenu.equals(MenuType.PROPERTIES);
+            }
+            case CHANGE_PROPERTIES -> {
+                icon = new ItemStack(Material.HOPPER);
+                clickHandler = (panel, user, clickType, slot) -> {
+                    this.activeMenu = MenuType.CHANGE_PROPERTIES;
+                    this.build();
+
+                    return true;
+                };
+                glow = this.activeMenu.equals(MenuType.CHANGE_PROPERTIES);
+            }
+            case UNLOCK_PROPERTIES -> {
+                icon = new ItemStack(Material.DROPPER);
+                clickHandler = (panel, user, clickType, slot) -> {
+                    this.activeMenu = MenuType.UNLOCK_PROPERTIES;
+                    this.build();
+
+                    return true;
+                };
+                glow = this.activeMenu.equals(MenuType.UNLOCK_PROPERTIES);
+            }
+            default -> {
+                icon = new ItemStack(Material.PAPER);
+                clickHandler = null;
+                glow = false;
+            }
+        }
+
+        return new PanelItemBuilder().
+            icon(icon).
+            name(name).
+            description(description).
+            glow(glow).
+            clickHandler(clickHandler).
+            build();
+    }
 
 
     // ---------------------------------------------------------------------
@@ -547,6 +821,26 @@ public class BiomeEditPanel extends CommonPanel
 
 
     /**
+     * The enum Menu type.
+     */
+    private enum MenuType
+    {
+        /**
+         * Unlock properties menu type.
+         */
+        UNLOCK_PROPERTIES,
+        /**
+         * Change properties menu type.
+         */
+        CHANGE_PROPERTIES,
+        /**
+         * Properties menu type.
+         */
+        PROPERTIES
+    }
+
+
+    /**
      * This enum shows which button should be created.
      */
     private enum Action
@@ -555,18 +849,6 @@ public class BiomeEditPanel extends CommonPanel
          * Biome action.
          */
         BIOME,
-        /**
-         * Permission action.
-         */
-        PERMISSIONS,
-        /**
-         * Cost action.
-         */
-        COST,
-        /**
-         * Level action.
-         */
-        LEVEL,
         /**
          * Order action.
          */
@@ -590,7 +872,39 @@ public class BiomeEditPanel extends CommonPanel
         /**
          * Deployed action.
          */
-        DEPLOYED
+        DEPLOYED,
+        /**
+         * Unlock permissions action.
+         */
+        UNLOCK_PERMISSIONS,
+        /**
+         * Unlock cost action.
+         */
+        UNLOCK_COST,
+        /**
+         * Unlock items action.
+         */
+        UNLOCK_ITEMS,
+        /**
+         * Unlock level action.
+         */
+        UNLOCK_LEVEL,
+        /**
+         * Change cost action.
+         */
+        CHANGE_COST,
+        /**
+         * Change items action.
+         */
+        CHANGE_ITEMS,
+        /**
+         * Change type action.
+         */
+        CHANGE_TYPE,
+        /**
+         * Change increment action.
+         */
+        CHANGE_INCREMENT
     }
 
 
@@ -608,4 +922,9 @@ public class BiomeEditPanel extends CommonPanel
      * Action that allows to change icon.
      */
     private Action selectedButton;
+
+    /**
+     * MenuType that is currently active.
+     */
+    private MenuType activeMenu;
 }

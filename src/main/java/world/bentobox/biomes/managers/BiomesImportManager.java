@@ -229,8 +229,8 @@ public class BiomesImportManager
                 newBiomeObject.setDescription(Arrays.stream(details.getString("description", "").split("\n")).toList());
                 newBiomeObject.setIcon(ItemParser.parse(details.getString("icon")));
 
-                newBiomeObject.setRequiredLevel(details.getInt("islandLevel", 0));
-                newBiomeObject.setRequiredCost(details.getDouble("cost", 0.0));
+                newBiomeObject.setUnlockLevel(details.getLong("islandLevel", 0));
+                newBiomeObject.setUnlockCost(details.getDouble("cost", 0.0));
 
                 String environmentValue = details.getString("environment", "normal").toUpperCase();
 
@@ -247,11 +247,11 @@ public class BiomesImportManager
 
                 if (permissions.isEmpty())
                 {
-                    newBiomeObject.setRequiredPermissions(Collections.emptySet());
+                    newBiomeObject.setUnlockPermissions(Collections.emptySet());
                 }
                 else
                 {
-                    newBiomeObject.setRequiredPermissions(new HashSet<>(permissions));
+                    newBiomeObject.setUnlockPermissions(new HashSet<>(permissions));
                 }
 
                 if (this.addon.getAddonManager().loadBiomes(newBiomeObject, false, null, true))

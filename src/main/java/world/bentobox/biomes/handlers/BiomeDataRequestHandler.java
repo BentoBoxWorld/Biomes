@@ -93,9 +93,9 @@ public class BiomeDataRequestHandler extends AddonRequestHandler
 			biomesDataMap.put("icon", biome.getIcon());
 			biomesDataMap.put("order", biome.getOrder());
 
-			biomesDataMap.put("cost", biome.getRequiredCost());
-			biomesDataMap.put("level", biome.getRequiredLevel());
-			biomesDataMap.put("permissions", biome.getRequiredPermissions());
+			biomesDataMap.put("cost", biome.getUnlockCost());
+			biomesDataMap.put("level", biome.getUnlockLevel());
+			biomesDataMap.put("permissions", biome.getUnlockPermissions());
 		}
 
 		return biomesDataMap;

@@ -145,15 +145,15 @@ public class BiomeUpdateHelper
                     // This is here as I am not sure if Level addon can calculate island level
                     // if players can build anywhere.
 
-                    if (this.biome.getRequiredLevel() > 0 &&
-                            this.addon.getLevelAddon().getIslandLevel(world, this.targetUser.getUniqueId()) <= this.biome.getRequiredLevel())
+                    if (this.biome.getUnlockLevel() > 0 &&
+                            this.addon.getLevelAddon().getIslandLevel(world, this.targetUser.getUniqueId()) <= this.biome.getUnlockLevel())
                     {
                         // Not enough level
 
                         Utils.sendMessage(this.callerUser,
                             this.callerUser.getTranslation(Constants.ERRORS + "not-enough-level",
                                 TextVariables.NUMBER,
-                                String.valueOf(this.biome.getRequiredLevel())));
+                                String.valueOf(this.biome.getUnlockLevel())));
                         return false;
                     }
                 }
@@ -168,14 +168,14 @@ public class BiomeUpdateHelper
 
             if (this.addon.isEconomyProvided())
             {
-                if (!this.addon.getVaultHook().has(this.callerUser, this.biome.getRequiredCost()))
+                if (!this.addon.getVaultHook().has(this.callerUser, this.biome.getUnlockCost()))
                 {
                     // Not enough money.
 
                     Utils.sendMessage(this.callerUser,
                         this.callerUser.getTranslation(Constants.ERRORS + "not-enough-money",
                             TextVariables.NUMBER,
-                            String.valueOf(this.biome.getRequiredCost())));
+                            String.valueOf(this.biome.getUnlockCost())));
                     return false;
                 }
             }
@@ -438,7 +438,7 @@ public class BiomeUpdateHelper
         {
             this.addon.getPlugin().getVault().ifPresent(
                     vaultHook -> {
-                    	vaultHook.withdraw(this.callerUser, this.biome.getRequiredCost());
+                    	vaultHook.withdraw(this.callerUser, this.biome.getUnlockCost());
                     	
                         Map<String, Object> keyValues = new HashMap<>();
                         keyValues.put("eventName", "BiomeBuyEvent");
@@ -459,8 +459,8 @@ public class BiomeUpdateHelper
      */
     private boolean checkPermissions()
     {
-        return this.biome.getRequiredPermissions().isEmpty() ||
-                this.biome.getRequiredPermissions().stream().allMatch(this.callerUser::hasPermission);
+        return this.biome.getUnlockPermissions().isEmpty() ||
+                this.biome.getUnlockPermissions().stream().allMatch(this.callerUser::hasPermission);
     }
 
 

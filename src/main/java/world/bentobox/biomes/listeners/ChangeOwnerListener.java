@@ -76,8 +76,6 @@ public class ChangeOwnerListener implements Listener
             {
                 defaultBiomeObject = new BiomesObject();
                 defaultBiomeObject.setBiome(biome);
-                defaultBiomeObject.setRequiredCost(0);
-                defaultBiomeObject.setRequiredLevel(0);
             }
 
             // Forcefully update biome on whole user island.

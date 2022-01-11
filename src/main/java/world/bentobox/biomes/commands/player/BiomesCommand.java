@@ -333,11 +333,11 @@ public class BiomesCommand extends CompositeCommand
                 user.sendMessage("biomes.information.description",
                     "[description]", BiomesCommand.this.getSingleLineDescription(biomesObject.getDescription()));
                 user.sendMessage("biomes.information.level",
-                    "[level]", Long.toString(biomesObject.getRequiredLevel()));
+                    "[level]", Long.toString(biomesObject.getUnlockLevel()));
                 user.sendMessage("biomes.information.cost",
-                    "[cost]", Double.toString(biomesObject.getRequiredCost()));
+                    "[cost]", Double.toString(biomesObject.getUnlockCost()));
 
-                biomesObject.getRequiredPermissions().forEach(s ->
+                biomesObject.getUnlockPermissions().forEach(s ->
                     user.sendMessage("biomes.information.permission", "[permission]", s));
 
                 return true;
