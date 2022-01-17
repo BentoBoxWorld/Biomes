@@ -18,7 +18,7 @@ import world.bentobox.biomes.database.objects.BiomesObject;
 /**
  * This event is called after player bought the given biome.
  */
-public class BiomesBuyEvent extends BentoBoxEvent
+public class BiomesPurchaseEvent extends BentoBoxEvent
 {
     /**
      * Instantiates a new biome buy event.
@@ -27,7 +27,7 @@ public class BiomesBuyEvent extends BentoBoxEvent
      * @param user the user
      * @param island the island
      */
-    public BiomesBuyEvent(BiomesObject biome, User user, String island)
+    public BiomesPurchaseEvent(BiomesObject biome, User user, String island)
     {
         this.biome = biome.getFriendlyName();
         this.biomeId = biome.getUniqueId();
@@ -138,7 +138,7 @@ public class BiomesBuyEvent extends BentoBoxEvent
     @Override
     public HandlerList getHandlers()
     {
-        return BiomesBuyEvent.handlers;
+        return BiomesPurchaseEvent.handlers;
     }
 
 
@@ -149,7 +149,7 @@ public class BiomesBuyEvent extends BentoBoxEvent
      */
     public static HandlerList getHandlerList()
     {
-        return BiomesBuyEvent.handlers;
+        return BiomesPurchaseEvent.handlers;
     }
 
 

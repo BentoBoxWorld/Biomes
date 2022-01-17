@@ -34,7 +34,7 @@ import world.bentobox.biomes.database.objects.BiomesBundleObject;
 import world.bentobox.biomes.database.objects.BiomesIslandDataObject;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.events.BiomeUnlockEvent;
-import world.bentobox.biomes.events.BiomesBuyEvent;
+import world.bentobox.biomes.events.BiomesPurchaseEvent;
 import world.bentobox.biomes.utils.Constants;
 import world.bentobox.biomes.utils.Utils;
 
@@ -850,7 +850,7 @@ public class BiomesAddonManager
         @NotNull BiomesObject biomesObject)
     {
         // Call event about successful purchase
-        Bukkit.getPluginManager().callEvent(new BiomesBuyEvent(biomesObject,
+        Bukkit.getPluginManager().callEvent(new BiomesPurchaseEvent(biomesObject,
             user,
             islandData.getUniqueId()));
 
