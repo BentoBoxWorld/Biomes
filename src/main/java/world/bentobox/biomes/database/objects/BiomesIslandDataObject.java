@@ -5,10 +5,11 @@ import com.google.gson.annotations.Expose;
 
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import world.bentobox.bentobox.database.objects.DataObject;
 import world.bentobox.bentobox.database.objects.Table;
@@ -144,9 +145,9 @@ public class BiomesIslandDataObject implements DataObject
      *
      * @return the biome change counter
      */
-    public Map<String, Integer> getBiomeChangeCounter()
+    public Map<String, AtomicInteger> getBiomeChangeCounter()
     {
-        return biomeChangeCounter;
+        return this.biomeChangeCounter;
     }
 
 
@@ -155,9 +156,84 @@ public class BiomesIslandDataObject implements DataObject
      *
      * @param biomeChangeCounter the biome change counter
      */
-    public void setBiomeChangeCounter(Map<String, Integer> biomeChangeCounter)
+    public void setBiomeChangeCounter(Map<String, AtomicInteger> biomeChangeCounter)
     {
         this.biomeChangeCounter = biomeChangeCounter;
+    }
+
+
+// ---------------------------------------------------------------------
+// Section: Useful methods
+// ---------------------------------------------------------------------
+
+
+    /**
+     * Gets biome change counter.
+     *
+     * @param biomeObjectId the biome object id
+     * @return the biome change counter
+     */
+    public int getBiomeChangeCounter(String biomeObjectId)
+    {
+        return this.biomeChangeCounter.getOrDefault(biomeObjectId, dummy).get();
+    }
+
+
+    /**
+     * Increase biome change counter.
+     *
+     * @param biomeObjectId the biome object id
+     */
+    public void increaseBiomeChangeCounter(String biomeObjectId)
+    {
+        this.biomeChangeCounter.computeIfAbsent(biomeObjectId,
+            id -> new AtomicInteger(0)).incrementAndGet();
+    }
+
+
+    /**
+     * Is unlocked biome.
+     *
+     * @param biomeObjectId the biome object id
+     * @return the boolean
+     */
+    public boolean isUnlocked(String biomeObjectId)
+    {
+        return this.unlockedBiomes.contains(biomeObjectId);
+    }
+
+
+    /**
+     * Is purchased biome.
+     *
+     * @param biomeObjectId the biome object id
+     * @return the boolean
+     */
+    public boolean isPurchased(String biomeObjectId)
+    {
+        return this.purchasedBiomes.contains(biomeObjectId);
+    }
+
+
+    /**
+     * Unlock biome.
+     *
+     * @param biomeObjectId the biome object id
+     */
+    public void unlockBiome(String biomeObjectId)
+    {
+        this.unlockedBiomes.add(biomeObjectId);
+    }
+
+
+    /**
+     * Purchase biome.
+     *
+     * @param biomeObjectId the biome object id
+     */
+    public void purchaseBiome(String biomeObjectId)
+    {
+        this.purchasedBiomes.add(biomeObjectId);
     }
 
 
@@ -177,6 +253,11 @@ public class BiomesIslandDataObject implements DataObject
 // Section: Variables
 // ---------------------------------------------------------------------
 
+
+    /**
+     * The constant dummy for non-existing values.
+     */
+    private static final AtomicInteger dummy = new AtomicInteger(0);
 
     /**
      * Unique ID of the island.
@@ -214,5 +295,5 @@ public class BiomesIslandDataObject implements DataObject
      * Stores map that links biome with how many times it is updated.
      */
     @Expose
-    private Map<String, Integer> biomeChangeCounter = new HashMap<>();
+    private Map<String, AtomicInteger> biomeChangeCounter = new ConcurrentHashMap<>();
 }

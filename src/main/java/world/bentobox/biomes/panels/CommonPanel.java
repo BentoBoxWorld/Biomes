@@ -352,9 +352,9 @@ public abstract class CommonPanel
         if (target != null &&
             BiomesObject.CostMode.PER_USAGE.equals(biome.getCostMode()) &&
             biome.getCostIncrement() > 0 &&
-            target.getBiomeChangeCounter().containsKey(biome.getUniqueId()))
+            target.getBiomeChangeCounter(biome.getUniqueId()) > 0)
         {
-            int counter = target.getBiomeChangeCounter().get(biome.getUniqueId());
+            int counter = target.getBiomeChangeCounter(biome.getUniqueId());
 
             cost = cost + biome.getCostIncrement() * cost * counter;
         }
@@ -382,9 +382,9 @@ public abstract class CommonPanel
             if (target != null &&
                 BiomesObject.CostMode.PER_USAGE.equals(biome.getCostMode()) &&
                 biome.getCostIncrement() > 0 &&
-                target.getBiomeChangeCounter().containsKey(biome.getUniqueId()))
+                target.getBiomeChangeCounter(biome.getUniqueId()) > 0)
             {
-                increment = biome.getCostIncrement() * target.getBiomeChangeCounter().get(biome.getUniqueId());
+                increment = biome.getCostIncrement() * target.getBiomeChangeCounter(biome.getUniqueId());
             }
             else
             {
