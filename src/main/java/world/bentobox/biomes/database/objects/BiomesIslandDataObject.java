@@ -3,6 +3,7 @@ package world.bentobox.biomes.database.objects;
 
 import com.google.gson.annotations.Expose;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
@@ -173,9 +174,21 @@ public class BiomesIslandDataObject implements DataObject
      * @param biomeObjectId the biome object id
      * @return the biome change counter
      */
-    public int getBiomeChangeCounter(String biomeObjectId)
+    public int getBiomeChangeCounter(@NotNull String biomeObjectId)
     {
         return this.biomeChangeCounter.getOrDefault(biomeObjectId, dummy).get();
+    }
+
+
+    /**
+     * Gets biome change counter.
+     *
+     * @param biomesObject the biome object
+     * @return the biome change counter
+     */
+    public int getBiomeChangeCounter(@NotNull BiomesObject biomesObject)
+    {
+        return this.getBiomeChangeCounter(biomesObject.getUniqueId());
     }
 
 
@@ -184,10 +197,21 @@ public class BiomesIslandDataObject implements DataObject
      *
      * @param biomeObjectId the biome object id
      */
-    public void increaseBiomeChangeCounter(String biomeObjectId)
+    public void increaseBiomeChangeCounter(@NotNull String biomeObjectId)
     {
         this.biomeChangeCounter.computeIfAbsent(biomeObjectId,
             id -> new AtomicInteger(0)).incrementAndGet();
+    }
+
+
+    /**
+     * Increase biome change counter.
+     *
+     * @param biomesObject the biome object
+     */
+    public void increaseBiomeChangeCounter(@NotNull BiomesObject biomesObject)
+    {
+        this.increaseBiomeChangeCounter(biomesObject.getUniqueId());
     }
 
 
@@ -197,9 +221,21 @@ public class BiomesIslandDataObject implements DataObject
      * @param biomeObjectId the biome object id
      * @return the boolean
      */
-    public boolean isUnlocked(String biomeObjectId)
+    public boolean isUnlocked(@NotNull String biomeObjectId)
     {
         return this.unlockedBiomes.contains(biomeObjectId);
+    }
+
+
+    /**
+     * Is unlocked biome.
+     *
+     * @param biomesObject the biome object
+     * @return the boolean
+     */
+    public boolean isUnlocked(@NotNull BiomesObject biomesObject)
+    {
+        return this.isUnlocked(biomesObject.getUniqueId());
     }
 
 
@@ -209,9 +245,21 @@ public class BiomesIslandDataObject implements DataObject
      * @param biomeObjectId the biome object id
      * @return the boolean
      */
-    public boolean isPurchased(String biomeObjectId)
+    public boolean isPurchased(@NotNull String biomeObjectId)
     {
         return this.purchasedBiomes.contains(biomeObjectId);
+    }
+
+
+    /**
+     * Is purchased biome.
+     *
+     * @param biomesObject the biome object
+     * @return the boolean
+     */
+    public boolean isPurchased(@NotNull BiomesObject biomesObject)
+    {
+        return this.isPurchased(biomesObject.getUniqueId());
     }
 
 
@@ -220,9 +268,20 @@ public class BiomesIslandDataObject implements DataObject
      *
      * @param biomeObjectId the biome object id
      */
-    public void unlockBiome(String biomeObjectId)
+    public void unlockBiome(@NotNull String biomeObjectId)
     {
         this.unlockedBiomes.add(biomeObjectId);
+    }
+
+
+    /**
+     * Unlock biome.
+     *
+     * @param biomesObject the biome object
+     */
+    public void unlockBiome(@NotNull BiomesObject biomesObject)
+    {
+        this.unlockBiome(biomesObject.getUniqueId());
     }
 
 
@@ -231,9 +290,20 @@ public class BiomesIslandDataObject implements DataObject
      *
      * @param biomeObjectId the biome object id
      */
-    public void purchaseBiome(String biomeObjectId)
+    public void purchaseBiome(@NotNull String biomeObjectId)
     {
         this.purchasedBiomes.add(biomeObjectId);
+    }
+
+
+    /**
+     * Purchase biome.
+     *
+     * @param biomesObject the biome object
+     */
+    public void purchaseBiome(@NotNull BiomesObject biomesObject)
+    {
+        this.purchaseBiome(biomesObject.getUniqueId());
     }
 
 
