@@ -34,7 +34,7 @@ import world.bentobox.biomes.database.objects.BiomesBundleObject;
 import world.bentobox.biomes.database.objects.BiomesIslandDataObject;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.events.BiomeUnlockEvent;
-import world.bentobox.biomes.events.BiomesPurchaseEvent;
+import world.bentobox.biomes.events.BiomePurchasedEvent;
 import world.bentobox.biomes.utils.Constants;
 import world.bentobox.biomes.utils.Utils;
 
@@ -841,18 +841,20 @@ public class BiomesAddonManager
     /**
      * This method adds biomes object to purchased biomes.
      *
-     * @param user User who will pays.
+     * @param user User who will purchase.
+     * @param island Island which is owned by player.
      * @param islandData island data object.
      * @param biomesObject biomes object that need to be purchased.
      */
     public void purchaseGenerator(@NotNull User user,
+        @NotNull Island island,
         @NotNull BiomesIslandDataObject islandData,
         @NotNull BiomesObject biomesObject)
     {
         // Call event about successful purchase
-        Bukkit.getPluginManager().callEvent(new BiomesPurchaseEvent(biomesObject,
+        Bukkit.getPluginManager().callEvent(new BiomePurchasedEvent(biomesObject,
             user,
-            islandData.getUniqueId()));
+            island));
 
         Utils.sendMessage(user,
             user.getTranslation(Constants.MESSAGES + "biome-purchased",

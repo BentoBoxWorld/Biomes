@@ -7,18 +7,21 @@
 package world.bentobox.biomes.events;
 
 
+import org.bukkit.block.Biome;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 import java.util.UUID;
 
 import world.bentobox.bentobox.api.events.BentoBoxEvent;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.bentobox.database.objects.Island;
 import world.bentobox.biomes.database.objects.BiomesObject;
 
 
 /**
  * This event is called after player bought the given biome.
  */
-public class BiomesPurchaseEvent extends BentoBoxEvent
+public class BiomePurchasedEvent extends BentoBoxEvent
 {
     /**
      * Instantiates a new biome buy event.
@@ -27,35 +30,48 @@ public class BiomesPurchaseEvent extends BentoBoxEvent
      * @param user the user
      * @param island the island
      */
-    public BiomesPurchaseEvent(BiomesObject biome, User user, String island)
+    public BiomePurchasedEvent(@NotNull BiomesObject biome,
+        @NotNull User user,
+        @NotNull Island island)
     {
-        this.biome = biome.getFriendlyName();
-        this.biomeId = biome.getUniqueId();
-
-        this.targetPlayer = user.getUniqueId();
-        this.islandUUID = island;
+        this.biomesObject = biome;
+        this.user = user;
+        this.island = island;
     }
 
 
     /**
-     * Gets target player.
+     * Gets user.
      *
-     * @return the target player
+     * @return the user
      */
-    public UUID getTargetPlayer()
+    @NotNull
+    public User getUser()
     {
-        return targetPlayer;
+        return this.user;
     }
 
 
     /**
-     * Sets target player.
+     * Gets user uuid.
      *
-     * @param targetPlayer the target player
+     * @return the user uuid
      */
-    public void setTargetPlayer(UUID targetPlayer)
+    public UUID getUserUUID()
     {
-        this.targetPlayer = targetPlayer;
+        return this.user.getUniqueId();
+    }
+
+
+    /**
+     * Gets island.
+     *
+     * @return the island
+     */
+    @NotNull
+    public Island getIsland()
+    {
+        return this.island;
     }
 
 
@@ -66,18 +82,19 @@ public class BiomesPurchaseEvent extends BentoBoxEvent
      */
     public String getIslandUUID()
     {
-        return islandUUID;
+        return this.island.getUniqueId();
     }
 
 
     /**
-     * Sets island uuid.
+     * Gets biomes object.
      *
-     * @param islandUUID the island uuid
+     * @return the biomes object
      */
-    public void setIslandUUID(String islandUUID)
+    @NotNull
+    public BiomesObject getBiomesObject()
     {
-        this.islandUUID = islandUUID;
+        return this.biomesObject;
     }
 
 
@@ -86,20 +103,9 @@ public class BiomesPurchaseEvent extends BentoBoxEvent
      *
      * @return the biome
      */
-    public String getBiome()
+    public Biome getBiome()
     {
-        return biome;
-    }
-
-
-    /**
-     * Sets biome.
-     *
-     * @param biome the biome
-     */
-    public void setBiome(String biome)
-    {
-        this.biome = biome;
+        return this.biomesObject.getBiome();
     }
 
 
@@ -110,18 +116,7 @@ public class BiomesPurchaseEvent extends BentoBoxEvent
      */
     public String getBiomeId()
     {
-        return biomeId;
-    }
-
-
-    /**
-     * Sets biome id.
-     *
-     * @param biomeId the biome id
-     */
-    public void setBiomeId(String biomeId)
-    {
-        this.biomeId = biomeId;
+        return this.biomesObject.getUniqueId();
     }
 
 
@@ -138,7 +133,7 @@ public class BiomesPurchaseEvent extends BentoBoxEvent
     @Override
     public HandlerList getHandlers()
     {
-        return BiomesPurchaseEvent.handlers;
+        return BiomePurchasedEvent.handlers;
     }
 
 
@@ -149,7 +144,7 @@ public class BiomesPurchaseEvent extends BentoBoxEvent
      */
     public static HandlerList getHandlerList()
     {
-        return BiomesPurchaseEvent.handlers;
+        return BiomePurchasedEvent.handlers;
     }
 
 
@@ -157,25 +152,25 @@ public class BiomesPurchaseEvent extends BentoBoxEvent
 // Section: Variables
 // ---------------------------------------------------------------------
 
-    /**
-     * Player who bought biome.
-     */
-    private UUID targetPlayer;
 
     /**
-     * Island Id.
+     * The User.
      */
-    private String islandUUID;
+    @NotNull
+    private final User user;
 
     /**
-     * Friendly name for biome.
+     * The Island.
      */
-    private String biome;
+    @NotNull
+    private final Island island;
+
 
     /**
-     * biome ID.
+     * The Biome.
      */
-    private String biomeId;
+    @NotNull
+    private final BiomesObject biomesObject;
 
     /**
      * Event listener list for current

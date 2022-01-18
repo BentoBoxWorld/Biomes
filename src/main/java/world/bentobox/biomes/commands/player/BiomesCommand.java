@@ -598,7 +598,7 @@ public class BiomesCommand extends CompositeCommand
 
                 if (addonManager.canPurchaseGenerator(user, island, data, biomesObject))
                 {
-                    addonManager.purchaseGenerator(user, data, biomesObject);
+                    addonManager.purchaseGenerator(user, island, data, biomesObject);
                     return true;
                 }
 
