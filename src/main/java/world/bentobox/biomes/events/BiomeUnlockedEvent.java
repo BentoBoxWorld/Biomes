@@ -7,8 +7,10 @@
 package world.bentobox.biomes.events;
 
 
+import org.bukkit.block.Biome;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
 
@@ -21,7 +23,7 @@ import world.bentobox.biomes.database.objects.BiomesObject;
 /**
  * This event is fired when user is trying to unlock biome. It is cancellable.
  */
-public class BiomeUnlockEvent extends BentoBoxEvent implements Cancellable
+public class BiomeUnlockedEvent extends BentoBoxEvent implements Cancellable
 {
     /**
      * Instantiates a new biome unlock event.
@@ -30,35 +32,48 @@ public class BiomeUnlockEvent extends BentoBoxEvent implements Cancellable
      * @param user the user
      * @param island the island
      */
-    public BiomeUnlockEvent(BiomesObject biome, @Nullable User user, Island island)
+    public BiomeUnlockedEvent(@NotNull BiomesObject biome,
+        @Nullable User user,
+        @NotNull Island island)
     {
-        this.biome = biome.getFriendlyName();
-        this.biomeId = biome.getUniqueId();
-
-        this.targetPlayer = user == null ? null : user.getUniqueId();
-        this.islandUUID = island.getUniqueId();
+        this.biomesObject = biome;
+        this.user = user;
+        this.island = island;
     }
 
 
     /**
-     * Gets target player.
+     * Gets user.
      *
-     * @return the target player
+     * @return the user
      */
-    public UUID getTargetPlayer()
+    @Nullable
+    public User getUser()
     {
-        return targetPlayer;
+        return this.user;
     }
 
 
     /**
-     * Sets target player.
+     * Gets user uuid.
      *
-     * @param targetPlayer the target player
+     * @return the user uuid
      */
-    public void setTargetPlayer(UUID targetPlayer)
+    public UUID getUserUUID()
     {
-        this.targetPlayer = targetPlayer;
+        return this.user == null ? null : this.user.getUniqueId();
+    }
+
+
+    /**
+     * Gets island.
+     *
+     * @return the island
+     */
+    @NotNull
+    public Island getIsland()
+    {
+        return this.island;
     }
 
 
@@ -69,18 +84,19 @@ public class BiomeUnlockEvent extends BentoBoxEvent implements Cancellable
      */
     public String getIslandUUID()
     {
-        return islandUUID;
+        return this.island.getUniqueId();
     }
 
 
     /**
-     * Sets island uuid.
+     * Gets biomes object.
      *
-     * @param islandUUID the island uuid
+     * @return the biomes object
      */
-    public void setIslandUUID(String islandUUID)
+    @NotNull
+    public BiomesObject getBiomesObject()
     {
-        this.islandUUID = islandUUID;
+        return this.biomesObject;
     }
 
 
@@ -89,20 +105,9 @@ public class BiomeUnlockEvent extends BentoBoxEvent implements Cancellable
      *
      * @return the biome
      */
-    public String getBiome()
+    public Biome getBiome()
     {
-        return biome;
-    }
-
-
-    /**
-     * Sets biome.
-     *
-     * @param biome the biome
-     */
-    public void setBiome(String biome)
-    {
-        this.biome = biome;
+        return this.biomesObject.getBiome();
     }
 
 
@@ -113,18 +118,7 @@ public class BiomeUnlockEvent extends BentoBoxEvent implements Cancellable
      */
     public String getBiomeId()
     {
-        return biomeId;
-    }
-
-
-    /**
-     * Sets biome id.
-     *
-     * @param biomeId the biome id
-     */
-    public void setBiomeId(String biomeId)
-    {
-        this.biomeId = biomeId;
+        return this.biomesObject.getUniqueId();
     }
 
 
@@ -167,7 +161,7 @@ public class BiomeUnlockEvent extends BentoBoxEvent implements Cancellable
     @Override
     public HandlerList getHandlers()
     {
-        return BiomeUnlockEvent.handlers;
+        return BiomeUnlockedEvent.handlers;
     }
 
 
@@ -178,7 +172,7 @@ public class BiomeUnlockEvent extends BentoBoxEvent implements Cancellable
      */
     public static HandlerList getHandlerList()
     {
-        return BiomeUnlockEvent.handlers;
+        return BiomeUnlockedEvent.handlers;
     }
 
 
@@ -187,24 +181,22 @@ public class BiomeUnlockEvent extends BentoBoxEvent implements Cancellable
 // ---------------------------------------------------------------------
 
     /**
-     * Player who unlocks biome.
+     * The User.
      */
-    private UUID targetPlayer;
+    @Nullable
+    private final User user;
 
     /**
-     * Island Id.
+     * The Island.
      */
-    private String islandUUID;
+    @NotNull
+    private final Island island;
 
     /**
-     * Friendly name for biome.
+     * The Biomes object.
      */
-    private String biome;
-
-    /**
-     * Biome ID.
-     */
-    private String biomeId;
+    @NotNull
+    private final BiomesObject biomesObject;
 
     /**
      * Boolean that indicates if event is cancelled.

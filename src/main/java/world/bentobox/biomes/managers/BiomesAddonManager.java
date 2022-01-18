@@ -33,7 +33,7 @@ import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.database.objects.BiomesBundleObject;
 import world.bentobox.biomes.database.objects.BiomesIslandDataObject;
 import world.bentobox.biomes.database.objects.BiomesObject;
-import world.bentobox.biomes.events.BiomeUnlockEvent;
+import world.bentobox.biomes.events.BiomeUnlockedEvent;
 import world.bentobox.biomes.events.BiomePurchasedEvent;
 import world.bentobox.biomes.utils.Constants;
 import world.bentobox.biomes.utils.Utils;
@@ -710,7 +710,7 @@ public class BiomesAddonManager
         }
 
         // Create and call bukkit event to check if unlocking should be cancelled.
-        BiomeUnlockEvent event = new BiomeUnlockEvent(biomesObject, user, island);
+        BiomeUnlockedEvent event = new BiomeUnlockedEvent(biomesObject, user, island);
         Bukkit.getPluginManager().callEvent(event);
 
         if (!event.isCancelled())
