@@ -1,14 +1,23 @@
 package world.bentobox.biomes.commands.admin;
 
 
+import org.bukkit.Bukkit;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.commands.ConfirmableCommand;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
+import world.bentobox.biomes.commands.BiomesCompositeCommand;
+import world.bentobox.biomes.config.Settings;
+import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.panels.admin.AdminPanel;
+import world.bentobox.biomes.tasks.BiomeUpdateHelper;
 import world.bentobox.biomes.utils.Constants;
 import world.bentobox.biomes.utils.Utils;
 
@@ -16,7 +25,7 @@ import world.bentobox.biomes.utils.Utils;
 /**
  * This class process "biomes" as admin command.
  */
-public class AdminCommand extends CompositeCommand
+public class AdminCommand extends BiomesCompositeCommand
 {
 	/**
 	 * This is simple constructor for initializing /{admin_command} biomes command.
@@ -55,6 +64,7 @@ public class AdminCommand extends CompositeCommand
 
 		new ImportCommand(this.getAddon(), this);
 		new MigrateCommand(this.getAddon(), this);
+		new BiomesSetCommand(this.getAddon(), this);
 	}
 
 
@@ -210,6 +220,161 @@ public class AdminCommand extends CompositeCommand
 			this.setPermission("biomes.admin");
 			this.setParametersHelp(Constants.ADMIN_COMMANDS + "migrate.parameters");
 			this.setDescription(Constants.ADMIN_COMMANDS + "migrate.description");
+		}
+	}
+
+
+	/**
+	 * The subcommand that changes biomes on the island.
+	 */
+	private class BiomesSetCommand extends CompositeCommand
+	{
+		/**
+		 * Instantiates a new Biomes set command.
+		 *
+		 * @param addon the addon
+		 * @param parentCommand the parent command
+		 */
+		public BiomesSetCommand(BiomesAddon addon, CompositeCommand parentCommand)
+		{
+			super(addon, parentCommand, "set");
+		}
+
+
+		/**
+		 * Sets up command settings.
+		 */
+		@Override
+		public void setup()
+		{
+			this.setPermission("biomes.admin");
+			this.setParametersHelp(Constants.ADMIN_COMMANDS + "set.parameters");
+			this.setDescription(Constants.ADMIN_COMMANDS + "set.description");
+		}
+
+
+		/**
+		 * Can execute boolean.
+		 *
+		 * @param user the user
+		 * @param label the label
+		 * @param args the args
+		 * @return the boolean
+		 */
+		@Override
+		public boolean canExecute(User user, String label, List<String> args)
+		{
+			return this.<BiomesAddon>getAddon().getSettings().getCoolDown() == 0 || !this.checkCooldown(user);
+		}
+
+
+		/**
+		 * Execute set command.
+		 *
+		 * @param user the user
+		 * @param string the string
+		 * @param args the args
+		 * @return the boolean
+		 */
+		@Override
+		public boolean execute(User user, String label, List<String> input)
+		{
+			List<String> args = input.subList(1, input.size());
+			User target = this.getAddon().getPlayers().getUser(input.get(0));
+			BiomesObject biome = AdminCommand.this.getBiomeObject(args, user);
+			Settings.UpdateMode updateMode = AdminCommand.this.getUpdateMode(args, user);
+			int size = AdminCommand.this.getUpdateRange(args, user);
+
+			if (target == null || biome == null || updateMode == null || size < 1)
+			{
+				// Show help if something fails.
+				this.showHelp(this, user);
+			}
+			else
+			{
+				// Use BiomeUpdateHelper to change biome for user.
+
+				BiomeUpdateHelper helper = new BiomeUpdateHelper(this.getAddon(),
+					user,
+					target,
+					biome,
+					this.<BiomesAddon>getAddon().getAddonManager().getIslandData(this.getWorld(), user),
+					this.getWorld(),
+					updateMode,
+					size,
+					false);
+
+				if (helper.canChangeBiome())
+				{
+					helper.updateIslandBiome();
+					this.setCooldown(user.getUniqueId(), this.<BiomesAddon>getAddon().getSettings().getCoolDown());
+
+					return true;
+				}
+			}
+			return false;
+		}
+
+
+		/**
+		 * Tab complete optional.
+		 *
+		 * @param user the user
+		 * @param alias the alias
+		 * @param args the args
+		 * @return the optional
+		 */
+		@Override
+		public Optional<List<String>> tabComplete(User user, String alias, List<String> args)
+		{
+			String lastString = args.get(args.size() - 1);
+
+			final List<String> returnList = new ArrayList<>();
+			final int size = args.size();
+
+			switch (size)
+			{
+				case 3:
+					// Create suggestions with all player names that is available for users.
+					Bukkit.getOnlinePlayers().forEach(player -> returnList.add(player.getName()));
+
+					break;
+				case 4:
+					List<BiomesObject> biomes =
+						this.<BiomesAddon>getAddon().getAddonManager().getBiomes(this.getWorld());
+
+					// Create suggestions with all biomes that is available for users.
+					biomes.forEach(biomesObject ->
+						returnList.add(biomesObject.getUniqueId()
+							.substring(Utils.getGameMode(this.getWorld()).length() + 1)));
+
+					break;
+				case 5:
+					// Create suggestions with all update modes that is available for users.
+					Arrays.stream(Settings.UpdateMode.values()).
+						map(Enum::name).
+						forEach(returnList::add);
+
+					if (!BiomesAddon.BIOMES_WORLD_PROTECTION.isSetForWorld(this.getWorld()))
+					{
+						// Do not suggest island as it is not valid option
+						returnList.remove(Settings.UpdateMode.ISLAND.name());
+					}
+
+					break;
+				case 6:
+					if (lastString.isEmpty() || lastString.matches("[0-9]*"))
+					{
+						returnList.add("<number>");
+					}
+
+					break;
+				default:
+					returnList.add("help");
+					break;
+			}
+
+			return Optional.of(Util.tabLimit(returnList, lastString));
 		}
 	}
 }
