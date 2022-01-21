@@ -6,13 +6,7 @@
 package world.bentobox.biomes.managers;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -408,6 +402,32 @@ public class BiomesAddonManager
     // ---------------------------------------------------------------------
     // Section: Island Data
     // ---------------------------------------------------------------------
+
+
+    /**
+     * Load user islands into local cache.
+     *
+     * @param uniqueId the unique id
+     */
+    public void loadUserIslands(UUID uniqueId)
+    {
+        this.addon.getPlugin().getIWM().getWorlds().stream().
+            map(world -> this.addon.getIslands().getIsland(world, uniqueId)).
+            filter(Objects::nonNull).
+            forEach(island ->
+            {
+                if (island.getOwner() == uniqueId)
+                {
+                    // Owner island must be validated.
+                    this.validateIslandData(island);
+                }
+                else
+                {
+                    // Members does not influence island data.
+                    this.addIslandData(island);
+                }
+            });
+    }
 
 
     /**
@@ -1207,6 +1227,22 @@ public class BiomesAddonManager
 
         return this.addon.getLevelAddon().getIslandLevel(user.getWorld(),
             user.getUniqueId());
+    }
+
+
+    /**
+     * This method returns if given biome object is purchased.
+     * It also returns true, if unlock cost is not set.
+     *
+     * @param islandData the island data
+     * @param biomesObject the biomes object
+     * @return {@code true} if biome is purchased, {@code false} otherwise.
+     */
+    public boolean isPurchased(BiomesIslandDataObject islandData, BiomesObject biomesObject)
+    {
+        return islandData.isPurchased(biomesObject) ||
+            biomesObject.getUnlockItems().isEmpty() &&
+                (!this.addon.isEconomyProvided() || biomesObject.getUnlockCost() == 0);
     }
 
 

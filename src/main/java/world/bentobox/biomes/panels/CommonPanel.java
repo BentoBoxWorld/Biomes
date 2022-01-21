@@ -179,7 +179,7 @@ public abstract class CommonPanel
             if (islandData != null)
             {
                 unlocked = islandData.isUnlocked(biome);
-                purchased = islandData.isPurchased(biome);
+                purchased = this.addon.getAddonManager().isPurchased(islandData, biome);
 
                 if (unlocked && purchased)
                 {

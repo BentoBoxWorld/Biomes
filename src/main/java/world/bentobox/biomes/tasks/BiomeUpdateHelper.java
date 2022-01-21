@@ -709,7 +709,7 @@ public class BiomeUpdateHelper
      */
     private boolean checkPurchaseStatus()
     {
-        return this.islandData.isPurchased(this.biome);
+        return this.addon.getAddonManager().isPurchased(this.islandData, this.biome);
     }
 
 

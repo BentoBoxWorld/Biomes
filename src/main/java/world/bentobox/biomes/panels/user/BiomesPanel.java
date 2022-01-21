@@ -216,11 +216,11 @@ public class BiomesPanel extends CommonPanel
             switch (action.actionType().toUpperCase())
             {
                 case "BUY" -> {
-                    return this.islandData.isPurchased(biomesObject);
+                    return this.addon.getAddonManager().isPurchased(this.islandData, biomesObject);
                 }
                 case "CHANGE", "ADVANCED_PANEL" -> {
                     return !this.islandData.isUnlocked(biomesObject) ||
-                        !this.islandData.isPurchased(biomesObject);
+                        !this.addon.getAddonManager().isPurchased(this.islandData, biomesObject);
                 }
                 default -> {
                     return false;
