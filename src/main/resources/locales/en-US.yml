@@ -10,6 +10,9 @@ biomes:
         confirmation: "This will remove existing biomes from [gamemode] and import new biomes from the template file - please confirm"
       migrate:
         description: "migrates biomes stored data to new format"
+      set:
+        description: "changes biome for the player"
+        parameters: "<player> <biome-id> [mode] [size]"
     # This section contains only player commands translations.
     player:
       main:
@@ -72,7 +75,7 @@ biomes:
           &7 Changes biome to [biome]
 
           &7 Update mode: [mode]
-          &7 Update range: [range]
+          &7 Update range: [number]
       # Button that is used to return to previous GUI or exit it completely.
       return:
         name: "&f&l Return"
@@ -535,7 +538,7 @@ biomes:
       click-to-select: "&e Click &7 to select."
       click-to-choose: "&e Click &7 to choose."
       click-to-complete: "&e Click &7 to complete."
-      left-click-to-accept: "&e Left Click &7 to complete."
+      left-click-to-accept: "&e Left Click &7 to apply."
       right-click-to-write: "&e Right Click &7 to write."
       click-to-reduce: "&e Click &7 to reduce."
       click-to-increase: "&e Click &7 to increase."
@@ -564,6 +567,7 @@ biomes:
       right-click-to-select: "&e Right Click &7 to select."
       right-click-to-deselect: "&e Right Click &7 to deselect."
       left-click-to-choose: "&e Left Click &7 to choose."
+      click-to-buy: "&e Click &7 to buy."
       click-to-cancel: "&e Click &7 to cancel."
       click-to-save: "&e Click &7 to save."
       click-to-deselect: "&e Click &7 to deselect."
@@ -579,6 +583,10 @@ biomes:
       right-click-to-open: "&e Right Click &7 to open."
       click-to-perform: "&e Click &7 to perform."
     descriptions:
+      update-mode:
+        island: "Island Mode"
+        chunk: "Chunk Mode"
+        range: "Range Mode"
       selected: "&2 Selected"
       island-owner: "[player]"
       unknown: "&e Unknown"

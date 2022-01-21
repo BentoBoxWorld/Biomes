@@ -58,11 +58,14 @@ main_panel:
       data:
         type: BIOME
       actions:
-        left:
+        - click-type: left
           type: CHANGE
           # Supports ISLAND | CHUNK:NUMBER | RANGE:NUMBER
           content: ISLAND
           tooltip: biomes.gui.tips.left-click-to-choose
-        right:
+        - click-type: left
+          type: BUY
+          tooltip: biomes.gui.tips.click-to-buy
+        - click-type: right
           type: ADVANCED_PANEL
           tooltip: biomes.gui.tips.right-click-to-open

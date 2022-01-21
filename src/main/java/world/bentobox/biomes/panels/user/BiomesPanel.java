@@ -13,9 +13,11 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import world.bentobox.bentobox.api.panels.Panel;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.TemplatedPanel;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
@@ -207,26 +209,47 @@ public class BiomesPanel extends CommonPanel
             builder.description(this.generateBiomesDescription(biomesObject, this.user));
         }
 
+        // Get only possible actions, by removing all inactive ones.
+        List<ItemTemplateRecord.ActionRecords> activeActions = new ArrayList<>(template.actions());
+
+        activeActions.removeIf(action -> {
+            switch (action.actionType().toUpperCase())
+            {
+                case "BUY" -> {
+                    return this.islandData.isPurchased(biomesObject);
+                }
+                case "CHANGE", "ADVANCED_PANEL" -> {
+                    return !this.islandData.isUnlocked(biomesObject) ||
+                        !this.islandData.isPurchased(biomesObject);
+                }
+                default -> {
+                    return false;
+                }
+            }
+        });
+
         // Add Click handler
         builder.clickHandler((panel, user, clickType, i) -> {
-            for (ItemTemplateRecord.ActionRecords action : template.actions())
+            for (ItemTemplateRecord.ActionRecords action : activeActions)
             {
                 if (clickType == action.clickType())
                 {
                     switch (action.actionType().toUpperCase())
                     {
-                        case "CHANGE":
+                        case "BUY" -> {
+                            this.buyBiome(biomesObject);
+                        }
+                        case "CHANGE" -> {
                             // Biome change is done via commands, because that is the only way how
                             // to apply timeouts reliably.
 
                             String[] split = action.content().split(":");
 
                             this.changeBiome(biomesObject, split[0], split.length > 1 ? split[1] : "1");
-
-                            break;
-                        case "ADVANCED_PANEL":
-                            AdvancedPanel.open(this, biomesObject, this.user);
-                            break;
+                        }
+                        case "ADVANCED_PANEL" -> {
+                            AdvancedPanel.open(this, biomesObject, null);
+                        }
                     }
                 }
             }
@@ -235,9 +258,8 @@ public class BiomesPanel extends CommonPanel
         });
 
         // Collect tooltips.
-        List<String> tooltips = template.actions().stream().
+        List<String> tooltips = activeActions.stream().
             filter(action -> action.tooltip() != null).
-            filter(action -> this.manager.canApplyBiome(this.user, this.islandData, biomesObject) || "ADVANCED_PANEL".equalsIgnoreCase(action.actionType())).
             map(action -> this.user.getTranslation(this.world, action.tooltip())).
             filter(text -> !text.isBlank()).
             collect(Collectors.toCollection(() -> new ArrayList<>(template.actions().size())));
@@ -440,6 +462,18 @@ public class BiomesPanel extends CommonPanel
         }
 
         this.callCommand(this.addon.getSettings().getPlayerSetCommand().split(" ")[0], arguments);
+    }
+
+
+    /**
+     * Buy biome.
+     *
+     * @param biomesObject the biomes object
+     */
+    private void buyBiome(BiomesObject biomesObject)
+    {
+        this.callCommand(this.addon.getSettings().getPlayerBuyCommand().split(" ")[0],
+            Collections.singletonList(biomesObject.getUniqueId()));
     }
 
 
