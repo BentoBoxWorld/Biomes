@@ -134,6 +134,7 @@ public class ChangeBiomeRequestHandler extends AddonRequestHandler
 				User.getInstance(player),
 				User.getInstance(player),
 				biome,
+				this.addon.getAddonManager().getIslandData(world, User.getInstance(player)),
 				world,
 				mode,
 				range,

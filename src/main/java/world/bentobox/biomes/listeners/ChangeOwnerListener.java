@@ -7,6 +7,7 @@ import org.bukkit.block.Biome;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import world.bentobox.bentobox.api.addons.GameModeAddon;
 import world.bentobox.bentobox.api.events.team.TeamSetownerEvent;
@@ -80,13 +81,14 @@ public class ChangeOwnerListener implements Listener
 
             // Forcefully update biome on whole user island.
             new BiomeUpdateHelper(this.addon,
-                    newUser,
-                    newUser,
-                    defaultBiomeObject,
-                    event.getIsland().getWorld(),
-                    UpdateMode.ISLAND,
-                    1,
-                    false).updateIslandBiome();
+                newUser,
+                newUser,
+                defaultBiomeObject,
+                this.addon.getAddonManager().getIslandData(event.getIsland()),
+                event.getIsland().getWorld(),
+                UpdateMode.ISLAND,
+                1,
+                false).updateIslandBiome();
         }
     }
 

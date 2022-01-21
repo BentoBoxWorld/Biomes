@@ -455,6 +455,7 @@ public class BiomesCommand extends CompositeCommand
                     user,
                     user,
                     biome,
+                    this.<BiomesAddon>getAddon().getAddonManager().getIslandData(this.getWorld(), user),
                     this.getWorld(),
                     updateMode,
                     size,
