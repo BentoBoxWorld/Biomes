@@ -10,29 +10,38 @@ advanced_panel:
   force-shown: []
   content:
     2:
-      3:
+      4:
         icon: GRASS_BLOCK
         title: biomes.gui.buttons.island.name
         description: biomes.gui.buttons.island.description
         data:
           type: MODE
           value: ISLAND
-      4:
-        icon: DIRT_BLOCK
+        actions:
+          left:
+            tooltip: biomes.gui.tips.click-to-choose
+      5:
+        icon: DIRT
         title: biomes.gui.buttons.chunk.name
         description: biomes.gui.buttons.chunk.description
         data:
           type: MODE
           value: CHUNK
-      5:
+        actions:
+          left:
+            tooltip: biomes.gui.tips.click-to-choose
+      6:
         icon: DIRT_PATH
         title: biomes.gui.buttons.range.name
         description: biomes.gui.buttons.range.description
         data:
           type: MODE
           value: RANGE
+        actions:
+          left:
+            tooltip: biomes.gui.tips.click-to-choose
     3:
-      2:
+      3:
         icon: ORANGE_STAINED_GLASS_PANE
         title: biomes.gui.buttons.reduce.name
         description: biomes.gui.buttons.reduce.description
@@ -42,7 +51,7 @@ advanced_panel:
         actions:
           left:
             tooltip: biomes.gui.tips.click-to-reduce
-      3:
+      4:
         icon: ORANGE_STAINED_GLASS_PANE
         title: biomes.gui.buttons.reduce.name
         description: biomes.gui.buttons.reduce.description
@@ -52,7 +61,7 @@ advanced_panel:
         actions:
           left:
             tooltip: biomes.gui.tips.click-to-reduce
-      4:
+      5:
         icon: GREEN_STAINED_GLASS_PANE
         title: biomes.gui.buttons.accept.name
         description: biomes.gui.buttons.accept.description
@@ -65,7 +74,7 @@ advanced_panel:
           right:
             type: INPUT
             tooltip: biomes.gui.tips.right-click-to-write
-      5:
+      6:
         icon: BLUE_STAINED_GLASS_PANE
         title: biomes.gui.buttons.increase.name
         description: biomes.gui.buttons.increase.description
@@ -75,7 +84,7 @@ advanced_panel:
         actions:
           left:
             tooltip: biomes.gui.tips.click-to-increase
-      6:
+      7:
         icon: MAGENTA_STAINED_GLASS_PANE
         title: biomes.gui.buttons.increase.name
         description: biomes.gui.buttons.increase.description

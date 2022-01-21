@@ -9,6 +9,8 @@ package world.bentobox.biomes.panels.user;
 
 import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +44,9 @@ public class AdvancedPanel extends CommonPanel
      * @param biomesObject the biomes object
      * @param target the target
      */
-    private AdvancedPanel(CommonPanel parentPanel,
-        BiomesObject biomesObject,
-        User target)
+    private AdvancedPanel(@NotNull CommonPanel parentPanel,
+        @NotNull BiomesObject biomesObject,
+        @Nullable User target)
     {
         super(parentPanel);
         this.target = target;
@@ -61,9 +63,9 @@ public class AdvancedPanel extends CommonPanel
      * @param biomesObject the biomes object
      * @param target the target
      */
-    public static void open(CommonPanel parentPanel,
-        BiomesObject biomesObject,
-        User target)
+    public static void open(@NotNull CommonPanel parentPanel,
+        @NotNull BiomesObject biomesObject,
+        @Nullable User target)
     {
         new AdvancedPanel(parentPanel, biomesObject, target).build();
     }
@@ -149,6 +151,8 @@ public class AdvancedPanel extends CommonPanel
             builder.description("");
             builder.description(tooltips);
         }
+
+        builder.glow(Settings.UpdateMode.getMode(update.toUpperCase()) == this.updateMode);
 
         return builder.build();
     }
@@ -291,7 +295,7 @@ public class AdvancedPanel extends CommonPanel
         if (template.icon() != null)
         {
             ItemStack clone = template.icon().clone();
-            clone.setAmount(this.range);
+            clone.setAmount(this.range > 0 ? this.range : 1);
             builder.icon(clone);
         }
 
@@ -316,7 +320,7 @@ public class AdvancedPanel extends CommonPanel
             {
                 if (clickType == actionRecords.clickType())
                 {
-                    if (actionRecords.actionType().equalsIgnoreCase("input"))
+                    if ("INPUT".equalsIgnoreCase(actionRecords.actionType()))
                     {
                         // Input consumer.
                         Consumer<Number> numberConsumer = number ->
@@ -336,7 +340,7 @@ public class AdvancedPanel extends CommonPanel
                             1,
                             2000);
                     }
-                    else if (actionRecords.actionType().equalsIgnoreCase("accept"))
+                    else if ("ACCEPT".equalsIgnoreCase(actionRecords.actionType()))
                     {
                         this.changeBiome();
                     }
@@ -394,7 +398,7 @@ public class AdvancedPanel extends CommonPanel
             if (this.updateMode.equals(Settings.UpdateMode.ISLAND))
             {
                 arguments.add(Settings.UpdateMode.RANGE.name());
-                arguments.add(Integer.toString(this.addon.getPlugin().getIWM().getIslandDistance(this.world)));
+                arguments.add(String.valueOf(this.addon.getPlugin().getIWM().getIslandDistance(this.world)));
             }
             else
             {
@@ -403,7 +407,15 @@ public class AdvancedPanel extends CommonPanel
             }
         }
 
-        this.callCommand(this.addon.getSettings().getPlayerSetCommand().split(" ")[0], arguments);
+        if (this.target != null)
+        {
+            this.callCommand(this.addon.getSettings().getPlayerSetCommand().split(" ")[0], arguments);
+        }
+        else
+        {
+            arguments.add(0, "set");
+            this.callCommand(this.addon.getSettings().getAdminCommand().split(" ")[0], arguments);
+        }
     }
 
 
@@ -424,10 +436,12 @@ public class AdvancedPanel extends CommonPanel
     /**
      * The biome that user can change.
      */
+    @NotNull
     private final BiomesObject biomeObject;
 
     /**
      * Target player. Most of the time it will be equal user, but if admin changes, target will be different user.
      */
+    @Nullable
     private final User target;
 }
