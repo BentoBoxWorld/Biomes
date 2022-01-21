@@ -49,6 +49,8 @@ public class AdvancedPanel extends CommonPanel
         super(parentPanel);
         this.target = target;
         this.biomeObject = biomesObject;
+
+        this.updateMode = this.addon.getSettings().getDefaultMode();
     }
 
 
