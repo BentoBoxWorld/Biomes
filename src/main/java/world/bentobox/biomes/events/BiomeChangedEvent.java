@@ -5,8 +5,15 @@ import java.util.UUID;
 
 import org.bukkit.block.Biome;
 import org.bukkit.event.HandlerList;
+import org.bukkit.util.BlockVector;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import world.bentobox.bentobox.api.events.BentoBoxEvent;
+import world.bentobox.bentobox.api.user.User;
+import world.bentobox.bentobox.database.objects.Island;
+import world.bentobox.biomes.database.objects.BiomesObject;
+import world.bentobox.biomes.tasks.UpdateQueue;
 
 
 /**
@@ -15,232 +22,218 @@ import world.bentobox.bentobox.api.events.BentoBoxEvent;
  */
 public class BiomeChangedEvent extends BentoBoxEvent
 {
-/**
-	 * Constructor BiomeChangeEvent creates a new BiomeChangeEvent instance.
+	/**
+	 * Instantiates a new Biome changed event.
 	 *
-	 * @param biomeID of type String that represents biome unique id. May be empty.
-	 * @param biome name of biome that was applied.
-	 * @param playerUUID of type UUID
-	 * @param minX of type int represents minimal X coordinate
-	 * @param minY of type int represents minimal Y coordinate
-	 * @param minZ of type int represents minimal Z coordinate
-	 * @param maxX of type int represents maximal X coordinate
-	 * @param maxY of type int represents maximal Y coordinate
-	 * @param maxZ of type int represents maximal Z coordinate
+	 * @param biome the biome
+	 * @param user the user
+	 * @param island the island
+	 * @param minCoordinate the min coordinate
+	 * @param maxCoordinate the max coordinate
+	 * @param result the result
 	 */
 	public BiomeChangedEvent(
-		String biomeID,
-		Biome biome,
-		UUID playerUUID,
-		int minX,
-		int minY,
-		int minZ,
-		int maxX,
-		int maxY,
-		int maxZ)
+		@NotNull BiomesObject biome,
+		@Nullable User user,
+		@NotNull Island island,
+		@NotNull BlockVector minCoordinate,
+		@NotNull BlockVector maxCoordinate,
+		@Nullable UpdateQueue.Result result)
 	{
-		super(true);
-		this.biomeID = biomeID;
-		this.biome = biome;
-		this.playerUUID = playerUUID;
-		this.minX = minX;
-		this.maxX = maxX;
-		this.minZ = minZ;
-		this.maxZ = maxZ;
-		this.minY = minY;
-		this.maxY = maxY;
+		this.biomesObject = biome;
+		this.user = user;
+		this.island = island;
+		this.minCoordinate = minCoordinate;
+		this.maxCoordinate = maxCoordinate;
+
+		this.result = result;
 	}
 
 
 // ---------------------------------------------------------------------
-// Section: Getters and setters
+// Section: Getters
 // ---------------------------------------------------------------------
 
 
 	/**
-	 * This method returns the biomeID value.
-	 * @return the value of biomeID.
-	 */
-	public String getBiomeID()
-	{
-		return biomeID;
-	}
-
-
-	/**
-	 * This method sets the biomeID value.
-	 * @param biomeID the biomeID new value.
+	 * Gets user.
 	 *
+	 * @return the user
 	 */
-	public void setBiomeID(String biomeID)
+	@Nullable
+	public User getUser()
 	{
-		this.biomeID = biomeID;
+		return this.user;
 	}
 
 
 	/**
-	 * This method returns the biome value.
-	 * @return the value of biome.
+	 * Gets user uuid.
+	 *
+	 * @return the user uuid
+	 */
+	public UUID getUserUUID()
+	{
+		return this.user == null ? null : this.user.getUniqueId();
+	}
+
+
+	/**
+	 * Gets island.
+	 *
+	 * @return the island
+	 */
+	@NotNull
+	public Island getIsland()
+	{
+		return this.island;
+	}
+
+
+	/**
+	 * Gets island uuid.
+	 *
+	 * @return the island uuid
+	 */
+	public String getIslandUUID()
+	{
+		return this.island.getUniqueId();
+	}
+
+
+	/**
+	 * Gets biomes object.
+	 *
+	 * @return the biomes object
+	 */
+	@NotNull
+	public BiomesObject getBiomesObject()
+	{
+		return this.biomesObject;
+	}
+
+
+	/**
+	 * Gets biome.
+	 *
+	 * @return the biome
 	 */
 	public Biome getBiome()
 	{
-		return biome;
+		return this.biomesObject.getBiome();
 	}
 
 
 	/**
-	 * This method sets the biome value.
-	 * @param biome the biome new value.
+	 * Gets biome id.
 	 *
+	 * @return the biome id
 	 */
-	public void setBiome(Biome biome)
+	public String getBiomeId()
 	{
-		this.biome = biome;
+		return this.biomesObject.getUniqueId();
 	}
 
 
 	/**
-	 * This method returns the playerUUID value.
-	 * @return the value of playerUUID.
-	 */
-	public UUID getPlayerUUID()
-	{
-		return playerUUID;
-	}
-
-
-	/**
-	 * This method sets the playerUUID value.
-	 * @param playerUUID the playerUUID new value.
+	 * Gets min coordinate.
 	 *
+	 * @return the min coordinate
 	 */
-	public void setPlayerUUID(UUID playerUUID)
+	@NotNull
+	public BlockVector getMinCoordinate()
 	{
-		this.playerUUID = playerUUID;
+		return this.minCoordinate;
 	}
 
 
 	/**
-	 * This method returns the minX value.
-	 * @return the value of minX.
+	 * Gets min x.
+	 *
+	 * @return the min x
 	 */
 	public int getMinX()
 	{
-		return minX;
+		return this.minCoordinate.getBlockX();
 	}
 
 
 	/**
-	 * This method sets the minX value.
-	 * @param minX the minX new value.
+	 * Gets min y.
 	 *
-	 */
-	public void setMinX(int minX)
-	{
-		this.minX = minX;
-	}
-
-
-	/**
-	 * This method returns the minZ value.
-	 * @return the value of minZ.
-	 */
-	public int getMinZ()
-	{
-		return minZ;
-	}
-
-
-	/**
-	 * This method sets the minZ value.
-	 * @param minZ the minZ new value.
-	 *
-	 */
-	public void setMinZ(int minZ)
-	{
-		this.minZ = minZ;
-	}
-
-
-	/**
-	 * This method returns the maxX value.
-	 * @return the value of maxX.
-	 */
-	public int getMaxX()
-	{
-		return maxX;
-	}
-
-
-	/**
-	 * This method sets the maxX value.
-	 * @param maxX the maxX new value.
-	 *
-	 */
-	public void setMaxX(int maxX)
-	{
-		this.maxX = maxX;
-	}
-
-
-	/**
-	 * This method returns the maxZ value.
-	 * @return the value of maxZ.
-	 */
-	public int getMaxZ()
-	{
-		return maxZ;
-	}
-
-
-	/**
-	 * This method sets the maxZ value.
-	 * @param maxZ the maxZ new value.
-	 *
-	 */
-	public void setMaxZ(int maxZ)
-	{
-		this.maxZ = maxZ;
-	}
-
-
-	/**
-	 * This method returns the minY value.
-	 * @return the value of minY.
+	 * @return the min y
 	 */
 	public int getMinY()
 	{
-		return minY;
+		return this.minCoordinate.getBlockY();
 	}
 
 
 	/**
-	 * This method sets the minY value.
-	 * @param minY the minY new value.
+	 * Gets min z.
+	 *
+	 * @return the min z
 	 */
-	public void setMinY(int minY)
+	public int getMinZ()
 	{
-		this.minY = minY;
+		return this.minCoordinate.getBlockZ();
 	}
 
 
 	/**
-	 * This method returns the maxY value.
-	 * @return the value of maxY.
+	 * Gets max coordinate.
+	 *
+	 * @return the max coordinate
+	 */
+	@NotNull
+	public BlockVector getMaxCoordinate()
+	{
+		return this.maxCoordinate;
+	}
+
+
+	/**
+	 * Gets max x.
+	 *
+	 * @return the max x
+	 */
+	public int getMaxX()
+	{
+		return this.maxCoordinate.getBlockX();
+	}
+
+
+	/**
+	 * Gets max y.
+	 *
+	 * @return the max y
 	 */
 	public int getMaxY()
 	{
-		return maxY;
+		return this.maxCoordinate.getBlockY();
 	}
 
 
 	/**
-	 * This method sets the maxY value.
-	 * @param maxY the maxY new value.
+	 * Gets max z.
+	 *
+	 * @return the max z
 	 */
-	public void setMaxY(int maxY)
+	public int getMaxZ()
 	{
-		this.maxY = maxY;
+		return this.maxCoordinate.getBlockZ();
+	}
+
+
+	/**
+	 * Gets result.
+	 *
+	 * @return the result
+	 */
+	@Nullable
+	public UpdateQueue.Result getResult()
+	{
+		return this.result;
 	}
 
 
@@ -276,51 +269,41 @@ public class BiomeChangedEvent extends BentoBoxEvent
 // Section: Variables
 // ---------------------------------------------------------------------
 
+	/**
+	 * The User.
+	 */
+	@Nullable
+	private final User user;
 
 	/**
-	 * Unique ID of changed biomeObject.
+	 * The Island.
 	 */
-	private String biomeID;
+	@NotNull
+	private final Island island;
 
 	/**
-	 * Biome that is defined in Minecraft.
+	 * The Biome.
 	 */
-	private Biome biome;
+	@NotNull
+	private final BiomesObject biomesObject;
 
 	/**
-	 * Player who was targeted by biome change.
+	 * The Min coordinate.
 	 */
-	private UUID playerUUID;
+	@NotNull
+	private final BlockVector minCoordinate;
 
 	/**
-	 * Minimal X coordinate of change range.
+	 * The Max coordinate.
 	 */
-	private int minX;
+	@NotNull
+	private final BlockVector maxCoordinate;
 
 	/**
-	 * Minimal Z coordinate of change range.
+	 * The result.
 	 */
-	private int minZ;
-
-	/**
-	 * Minimal Y coordinate of change range.
-	 */
-	private int minY;
-
-	/**
-	 * Maximal X coordinate of change range.
-	 */
-	private int maxX;
-
-	/**
-	 * Maximal Z coordinate of change range.
-	 */
-	private int maxZ;
-
-	/**
-	 * Maximal Y coordinate of change range.
-	 */
-	private int maxY;
+	@Nullable
+	private final UpdateQueue.Result result;
 
 	/**
 	 * Event listener list for current

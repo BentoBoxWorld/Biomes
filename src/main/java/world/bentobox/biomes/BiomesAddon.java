@@ -19,6 +19,7 @@ import world.bentobox.biomes.handlers.ChangeBiomeRequestHandler;
 import world.bentobox.biomes.listeners.ChangeOwnerListener;
 import world.bentobox.biomes.managers.BiomesAddonManager;
 import world.bentobox.biomes.managers.BiomesImportManager;
+import world.bentobox.biomes.tasks.UpdateQueue;
 import world.bentobox.biomes.web.WebManager;
 import world.bentobox.greenhouses.Greenhouses;
 import world.bentobox.level.Level;
@@ -173,6 +174,13 @@ public class BiomesAddon extends Addon
             this.vaultHook = null;
             this.logWarning("Vault plugin not found. Economy will not work!");
         });
+
+        // Start update task when everything is loaded.
+
+        if (this.hooked)
+        {
+            this.biomeUpdateQueue = new UpdateQueue(this);
+        }
     }
 
 
@@ -203,6 +211,7 @@ public class BiomesAddon extends Addon
     {
         if (this.hooked)
         {
+            this.biomeUpdateQueue.getTask().cancel();
             this.getLogger().info("Biomes addon disabled.");
         }
     }
@@ -352,6 +361,17 @@ public class BiomesAddon extends Addon
     }
 
 
+    /**
+     * Gets update queue.
+     *
+     * @return the update queue
+     */
+    public UpdateQueue getUpdateQueue()
+    {
+        return this.biomeUpdateQueue;
+    }
+
+
 // ---------------------------------------------------------------------
 // Section: Variables
 // ---------------------------------------------------------------------
@@ -403,9 +423,15 @@ public class BiomesAddon extends Addon
 	private Greenhouses greenhouses;
 
 	/**
-	 * This indicate if greenhouses addon exists.
+	 * This indicates if greenhouses addon exists.
 	 */
 	private boolean greenhousesProvided;
+
+
+    /**
+     * The Biome update queue.
+     */
+    private UpdateQueue biomeUpdateQueue;
 
 
     // ---------------------------------------------------------------------

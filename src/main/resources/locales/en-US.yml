@@ -765,7 +765,7 @@ biomes:
     # Message that appears after clicking on download button in web library.
     start-downloading: "&e Start downloading library."
     # This message is sent to use when biome changing is started.
-    update-start: "&a Starting biome change."
+    update-start: "&a Starting biome changing to [biome] in [number] chunks."
     # This message is sent to use when biome changing is finished.
     update-done: "&a Finished changing biome to [biome]."
 
@@ -789,6 +789,8 @@ biomes:
     not-enough-level: "&c This biome requires at least island level [number]."
     # Message that is displayed for player if biome requires more money than player has.
     not-enough-money: "&c This biomes change cost $[number]."
+    # Message that is displayed for player if biome requires more items than player has.
+    not-enough-items: "&c This biomes change cost [items]."
     # Message that is displayed for admin when he tries to change biome on other player island while not being on it.
     admin-not-on-island: "&c You are not on [user] island."
     # Message that is displayed for players when they use command, but requested biome does not exist.
@@ -809,6 +811,18 @@ biomes:
     file-exist: "&c File with name [file] already exist. Choose a different name."
     # Error message that is displayed when user opens library gui but there are no elements to display.
     no-library-entries: "&c Could not find any valid library entries."
+    # Error message that is displayed when user tries to use biome that is not unlocked.
+    not-unlocked: "&c You have not unlocked this biome."
+    # Error message that is displayed when user tries to use biome that is not purchased.
+    not-purchased: "&c You have not purchased this biome."
+    # Error message that is displayed when biome update task run out of time.
+    timeout: "&c Biome change run out of time. Possibly that selected area was too large or server is busy."
+    # Error message that is displayed when biome update task failed.
+    failed: "&c Server run into some issues while changing biome."
+    # Error message that is displayed when addon failed to withdraw money.
+    something-went-wrong: "&c Something went wrong while withdrawing money."
+    # Error message that is displayed when addon failed to withdraw items.
+    could-not-remove-items: "&c Something went wrong while withdrawing items."
 #    materials:
 #        # Names should be lowercase.
 #        cobblestone: "Cobblestone"
