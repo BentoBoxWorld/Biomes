@@ -379,11 +379,11 @@ public class AdvancedPanel extends CommonPanel
 
         if (this.target != null)
         {
+            arguments.add("set");
             arguments.add(this.target.getName());
         }
 
         arguments.add(this.biomeObject.getUniqueId());
-
 
         if (BiomesAddon.BIOMES_WORLD_PROTECTION.isSetForWorld(this.world))
         {
@@ -407,13 +407,14 @@ public class AdvancedPanel extends CommonPanel
             }
         }
 
-        if (this.target != null)
+        if (this.target == null)
         {
+            // Target is not specified. Use player command.
             this.callCommand(this.addon.getSettings().getPlayerSetCommand().split(" ")[0], arguments);
         }
         else
         {
-            arguments.add(0, "set");
+            // Target is specified. It means command must be called by the admin.
             this.callCommand(this.addon.getSettings().getAdminCommand().split(" ")[0], arguments);
         }
     }
