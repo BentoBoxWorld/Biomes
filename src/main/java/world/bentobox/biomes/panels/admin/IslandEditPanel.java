@@ -140,10 +140,39 @@ public class IslandEditPanel extends CommonPagedPanel<BiomesObject>
         description.add(this.generateBiomesDescription(biomesObject, User.getInstance(this.island.getOwner())));
 
         description.add("");
-        description.add(this.user.getTranslation(Constants.TIPS + "click-to-apply"));
+        description.add(this.user.getTranslation(Constants.TIPS + "left-click-to-apply"));
+
+        if (!this.islandData.isUnlocked(biomesObject))
+        {
+            description.add(this.user.getTranslation(Constants.TIPS + "right-click-to-unlock"));
+        }
+        else if (!this.islandData.isPurchased(biomesObject))
+        {
+            description.add(this.user.getTranslation(Constants.TIPS + "right-click-to-buy"));
+        }
 
         PanelItem.ClickHandler clickHandler = (panel, user, clickType, i) -> {
-            AdvancedPanel.open(this, biomesObject, User.getInstance(this.island.getOwner()));
+
+            if (clickType.isRightClick())
+            {
+                if (!this.islandData.isUnlocked(biomesObject))
+                {
+                    this.islandData.unlockBiome(biomesObject);
+                    this.manager.saveIslandData(this.islandData);
+                    this.build();
+                }
+                else if (!this.islandData.isPurchased(biomesObject))
+                {
+                    this.islandData.purchaseBiome(biomesObject);
+                    this.manager.saveIslandData(this.islandData);
+                    this.build();
+                }
+            }
+            else
+            {
+                AdvancedPanel.open(this, biomesObject, User.getInstance(this.island.getOwner()));
+            }
+
             // Always return true.
             return true;
         };

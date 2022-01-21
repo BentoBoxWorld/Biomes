@@ -582,6 +582,9 @@ biomes:
       click-to-apply: "&e Click &7 to apply."
       right-click-to-open: "&e Right Click &7 to open."
       click-to-perform: "&e Click &7 to perform."
+      left-click-to-apply: "&e Left Click &7 to apply."
+      right-click-to-unlock: "&e Right Click &7 to unlock."
+      right-click-to-buy: "&e Right Click &7 to buy."
     descriptions:
       update-mode:
         island: "Island Mode"
