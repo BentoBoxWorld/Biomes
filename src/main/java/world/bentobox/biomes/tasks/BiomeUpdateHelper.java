@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -545,6 +546,12 @@ public class BiomeUpdateHelper
      */
     private boolean failWithdrawItems(List<ItemStack> requiredItemList, Set<Material> ignoreMetaData)
     {
+        if (this.callerUser.getPlayer().getGameMode() == GameMode.CREATIVE)
+        {
+            // No point to check items from creative inventory.
+            return false;
+        }
+
         for (ItemStack required : requiredItemList)
         {
             int amountToBeRemoved = required.getAmount();
