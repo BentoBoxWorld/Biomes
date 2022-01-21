@@ -284,9 +284,53 @@ public class Settings implements ConfigObject
     }
 
 
-    // ---------------------------------------------------------------------
-    // Section: Enums used for Settings.
-    // ---------------------------------------------------------------------
+    /**
+     * Gets concurrent biome updates.
+     *
+     * @return the concurrent biome updates
+     */
+    public int getConcurrentBiomeUpdates()
+    {
+        return concurrentBiomeUpdates;
+    }
+
+
+    /**
+     * Sets concurrent biome updates.
+     *
+     * @param concurrentBiomeUpdates the concurrent biome updates
+     */
+    public void setConcurrentBiomeUpdates(int concurrentBiomeUpdates)
+    {
+        this.concurrentBiomeUpdates = concurrentBiomeUpdates;
+    }
+
+
+    /**
+     * Gets change timeout.
+     *
+     * @return the change timeout
+     */
+    public long getChangeTimeout()
+    {
+        return changeTimeout;
+    }
+
+
+    /**
+     * Sets change timeout.
+     *
+     * @param changeTimeout the change timeout
+     */
+    public void setChangeTimeout(long changeTimeout)
+    {
+        this.changeTimeout = changeTimeout;
+    }
+
+
+// ---------------------------------------------------------------------
+// Section: Enums used for Settings.
+// ---------------------------------------------------------------------
 
 
     /**
@@ -386,6 +430,22 @@ public class Settings implements ConfigObject
     @ConfigEntry(path = "cooldown")
     @SuppressWarnings("javadoc")
     private int coolDown = 60;
+
+    @ConfigComment("")
+    @ConfigComment("Number of minutes in which biome change will be cancelled. It may happen in busy server or")
+    @ConfigComment("huge island areas.")
+    @ConfigComment("Default value = 5")
+    @ConfigEntry(path = "biome-change-timeout")
+    @SuppressWarnings("javadoc")
+    private long changeTimeout = 5;
+
+    @ConfigComment("")
+    @ConfigComment("Number of biome changes at the same time. Setting it to 0 or lower will disable biome change")
+    @ConfigComment("completely.")
+    @ConfigComment("Default value = 1")
+    @ConfigEntry(path = "parallel-biome-changes")
+    @SuppressWarnings("javadoc")
+    private int concurrentBiomeUpdates = 1;
 
     @ConfigComment("Player main sub-command to access the addon.")
     @ConfigComment("This command label will be required to write after gamemode player command label, f.e. /[label] biomes")
