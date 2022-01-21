@@ -67,7 +67,7 @@ public class IslandManagePanel extends CommonPagedPanel<Island>
             collect(Collectors.toList());
 
         this.filterElements = this.elementList;
-        this.currentAction = Action.CHANGE_BIOME;
+        this.currentAction = Action.MANAGE_DATA;
     }
 
 
@@ -98,7 +98,6 @@ public class IslandManagePanel extends CommonPagedPanel<Island>
         panelBuilder.item(1, this.createButton(Tab.IS_ONLINE));
         panelBuilder.item(2, this.createButton(Tab.ALL_ISLANDS));
 
-        panelBuilder.item(5, this.createButton(Action.CHANGE_BIOME));
         panelBuilder.item(6, this.createButton(Action.MANAGE_DATA));
         panelBuilder.item(7, this.createButton(Action.CLEAR_DATA));
 
@@ -247,15 +246,6 @@ public class IslandManagePanel extends CommonPagedPanel<Island>
 
         switch (this.currentAction)
         {
-            case CHANGE_BIOME -> {
-                clickHandler = (panel, user, clickType, i) -> {
-                    // TODO: Create Biome Choose Panel.
-
-                    return true;
-                };
-                // Add tip
-                description.add(this.user.getTranslation(Constants.TIPS + "click-to-change-biome"));
-            }
             case MANAGE_DATA -> {
                 clickHandler = (panel, user, clickType, i) -> {
                     IslandEditPanel.open(this, island);
@@ -369,7 +359,6 @@ public class IslandManagePanel extends CommonPagedPanel<Island>
         };
 
         Material material = switch (button) {
-            case CHANGE_BIOME -> Material.GRASS_BLOCK;
             case MANAGE_DATA -> Material.CRAFTING_TABLE;
             case CLEAR_DATA -> Material.LAVA_BUCKET;
         };
@@ -410,10 +399,6 @@ public class IslandManagePanel extends CommonPagedPanel<Island>
      */
     private enum Action
     {
-        /**
-         * Change biome action.
-         */
-        CHANGE_BIOME,
         /**
          * Manage data action.
          */
