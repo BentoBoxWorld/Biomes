@@ -625,17 +625,20 @@ biomes:
             &c - [permission]
           # Text that will replace [items]
           item-single: |-
-            &7 Unlock Item: &e [number] x [item]
+            &7 Unlock Item: [color] [number] x [item]
           item-title: |-
             &7 Unlock Items:
           item-list: |-
-            &e - [number] x [item]
+            &7 - [color] [number] x [item]
+          # Text that replaces [color].
+          missing: "&c"
+          has: "&e"
         # The text that will replace [change] message. If biome is locked, then this message will be generated empty.
         change:
           lore: |-
-            [mode]
             [items]
             [money]
+            [mode]
           # Text that will replace [mode]
           mode:
             per_block: |-
@@ -651,11 +654,14 @@ biomes:
             &7 Cost: &e $[number]
           # Text that will replace [items]
           item-single: |-
-            &7 Item: &e [number] x [item]
+            &7 Item: [color] [number] x [item]
           item-title: |-
             &7 Items:
           item-list: |-
-            &e - [number] x [item]
+            &7 - [color] [number] x [item]
+          # Text that replaces [color].
+          missing: "&c"
+          has: "&e"
       bundle:
         lore: |-
           [description]

@@ -136,7 +136,17 @@ public abstract class CommonPanel
             "[biome]", Utils.prettifyObject(biome.getBiome(), this.user));
 
         String unlockDescription = this.generateBiomesUnlockDescription(biome, target);
-        String changeDescription = this.generateBiomesChangeDescription(biome, target);
+
+        String changeDescription;
+
+        if (unlockDescription.isEmpty())
+        {
+            changeDescription = this.generateBiomesChangeDescription(biome, target);
+        }
+        else
+        {
+            changeDescription = "";
+        }
 
         String returnString = this.user.getTranslationOrNothing(reference + "lore",
             "[description]", description,
@@ -159,23 +169,32 @@ public abstract class CommonPanel
     {
         final String reference = Constants.DESCRIPTIONS + "biome.unlock.";
 
+        boolean unlocked = false;
+        boolean purchased = false;
+
         if (target != null)
         {
             BiomesIslandDataObject islandData = this.addon.getAddonManager().getIslandData(this.world, target);
 
-            if (islandData != null && islandData.getUnlockedBiomes().contains(biome.getUniqueId()))
+            if (islandData != null)
             {
-                // Do not generate message for unlocked biomes.
-                return "";
+                unlocked = islandData.isUnlocked(biome);
+                purchased = islandData.isPurchased(biome);
+
+                if (unlocked && purchased)
+                {
+                    // Do not generate message for unlocked biomes.
+                    return "";
+                }
             }
         }
 
-        String items = this.generateUnlockItemPrice(biome, target);
-        String price = this.generateUnlockPrice(biome, target);
+        String items = purchased ? "" : this.generateUnlockItemPrice(biome, target);
+        String price = purchased ? "" : this.generateUnlockPrice(biome, target);
 
         String level;
 
-        if (!this.addon.isLevelProvided() || biome.getUnlockLevel() <= 0)
+        if (!this.addon.isLevelProvided() || biome.getUnlockLevel() <= 0 || unlocked)
         {
             level = "";
         }
@@ -193,7 +212,7 @@ public abstract class CommonPanel
             }
         }
 
-        String permissions = this.generatePermissions(biome, target);
+        String permissions = unlocked ? "" : this.generatePermissions(biome, target);
 
         return this.user.getTranslationOrNothing(reference + "lore",
             "[items]", items,
@@ -238,8 +257,20 @@ public abstract class CommonPanel
 
             if (missingItems.size() == 1)
             {
+                String color;
+
+                if (Utils.hasRequiredItem(this.user, missingItems.get(0), Collections.emptySet()))
+                {
+                    color = this.user.getTranslationOrNothing(reference + "has");
+                }
+                else
+                {
+                    color = this.user.getTranslationOrNothing(reference + "missing");
+                }
+
                 itemBuilder.append(this.user.getTranslationOrNothing(reference + "item-single",
-                        "[number]", String.valueOf(missingItems.get(0).getAmount()),
+                    "[color]", color,
+                    "[number]", String.valueOf(missingItems.get(0).getAmount()),
                     "[item]", Utils.prettifyObject(missingItems.get(0), this.user)));
             }
             else if (!missingItems.isEmpty())
@@ -247,8 +278,20 @@ public abstract class CommonPanel
                 itemBuilder.append(this.user.getTranslationOrNothing(reference + "item-title"));
                 missingItems.forEach(item ->
                 {
+                    String color;
+
+                    if (Utils.hasRequiredItem(this.user, item, Collections.emptySet()))
+                    {
+                        color = this.user.getTranslationOrNothing(reference + "has");
+                    }
+                    else
+                    {
+                        color = this.user.getTranslationOrNothing(reference + "missing");
+                    }
+
                     itemBuilder.append("\n");
                     itemBuilder.append(this.user.getTranslationOrNothing(reference + "item-list",
+                        "[color]", color,
                         "[number]", String.valueOf(item.getAmount()),
                         "[item]", Utils.prettifyObject(item, this.user)));
                 });
@@ -330,6 +373,12 @@ public abstract class CommonPanel
         String items = this.generateChangeItemPrice(biome, islandData);
         String price = this.generateChangePrice(biome, islandData);
 
+        if (items.isEmpty() && price.isEmpty())
+        {
+            // Reset mode as items and price is empty too.
+            mode = "";
+        }
+
         return this.user.getTranslationOrNothing(reference + "lore",
             "[mode]", mode,
             "[items]", items,
@@ -375,7 +424,7 @@ public abstract class CommonPanel
     {
         final String reference = Constants.DESCRIPTIONS + "biome.change.";
 
-        if (!biome.getUnlockItems().isEmpty())
+        if (!biome.getItemCost().isEmpty())
         {
             double increment;
 
@@ -392,15 +441,28 @@ public abstract class CommonPanel
             }
 
             // Yes list duplication for complete menu.
-            List<ItemStack> missingItems = Utils.groupEqualItems(biome.getUnlockItems(), Collections.emptySet());
+            List<ItemStack> missingItems = Utils.groupEqualItems(biome.getItemCost(), Collections.emptySet());
 
             StringBuilder itemBuilder = new StringBuilder();
 
             if (missingItems.size() == 1)
             {
                 int amount = missingItems.get(0).getAmount();
+                missingItems.get(0).setAmount(amount + amount * (int) increment);
+
+                String color;
+
+                if (Utils.hasRequiredItem(this.user, missingItems.get(0), Collections.emptySet()))
+                {
+                    color = this.user.getTranslationOrNothing(reference + "has");
+                }
+                else
+                {
+                    color = this.user.getTranslationOrNothing(reference + "missing");
+                }
 
                 itemBuilder.append(this.user.getTranslationOrNothing(reference + "item-single",
+                    "[color]", color,
                     "[number]", String.valueOf((int) (amount + amount * increment)),
                     "[item]", Utils.prettifyObject(missingItems.get(0), this.user)));
             }
@@ -410,9 +472,22 @@ public abstract class CommonPanel
                 missingItems.forEach(item ->
                 {
                     int amount = item.getAmount();
+                    item.setAmount(amount + amount * (int) increment);
+
+                    String color;
+
+                    if (Utils.hasRequiredItem(this.user, item, Collections.emptySet()))
+                    {
+                        color = this.user.getTranslationOrNothing(reference + "has");
+                    }
+                    else
+                    {
+                        color = this.user.getTranslationOrNothing(reference + "missing");
+                    }
 
                     itemBuilder.append("\n");
                     itemBuilder.append(this.user.getTranslationOrNothing(reference + "item-list",
+                        "[color]", color,
                         "[number]", String.valueOf((int) (amount + amount * increment)),
                         "[item]", Utils.prettifyObject(item, this.user)));
                 });
