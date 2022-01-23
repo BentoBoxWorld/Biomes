@@ -216,6 +216,19 @@ public class BiomesIslandDataObject implements DataObject
 
 
     /**
+     * Adjust biome change counter with the new value.
+     *
+     * @param biomesObject the biomes object
+     * @param intValue the int value
+     */
+    public void adjustBiomeChangeCounter(@NotNull BiomesObject biomesObject, int intValue)
+    {
+        this.biomeChangeCounter.computeIfAbsent(biomesObject.getUniqueId(),
+            id -> new AtomicInteger(0)).set(intValue);
+    }
+
+
+    /**
      * Is unlocked biome.
      *
      * @param biomeObjectId the biome object id

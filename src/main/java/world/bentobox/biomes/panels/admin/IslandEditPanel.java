@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 import lv.id.bonne.panelutils.PanelUtils;
 import world.bentobox.bentobox.api.panels.PanelItem;
@@ -19,6 +20,7 @@ import world.bentobox.biomes.database.objects.BiomesIslandDataObject;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.panels.CommonPagedPanel;
 import world.bentobox.biomes.panels.CommonPanel;
+import world.bentobox.biomes.panels.ConversationUtils;
 import world.bentobox.biomes.panels.user.AdvancedPanel;
 import world.bentobox.biomes.panels.util.BundleSelector;
 import world.bentobox.biomes.utils.Constants;
@@ -55,10 +57,10 @@ public class IslandEditPanel extends CommonPagedPanel<BiomesObject>
         {
             // Deal with situations when island name is not set.
 
-            User user = User.getInstance(island.getOwner());
-
-            if (user != null)
+            if (island.getOwner() != null)
             {
+                User user = User.getInstance(island.getOwner());
+
                 this.title = this.user.getTranslation(Constants.DESCRIPTIONS + "island-owner",
                     Constants.PARAMETER_PLAYER, user.getName());
             }
@@ -137,7 +139,8 @@ public class IslandEditPanel extends CommonPagedPanel<BiomesObject>
         boolean glow = false;
 
         List<String> description = new ArrayList<>();
-        description.add(this.generateBiomesDescription(biomesObject, User.getInstance(this.island.getOwner())));
+        description.add(this.generateBiomesDescription(biomesObject,
+            this.island.getOwner() != null ? User.getInstance(this.island.getOwner()) : null));
 
         description.add("");
         description.add(this.user.getTranslation(Constants.TIPS + "left-click-to-apply"));
@@ -149,6 +152,10 @@ public class IslandEditPanel extends CommonPagedPanel<BiomesObject>
         else if (!this.islandData.isPurchased(biomesObject))
         {
             description.add(this.user.getTranslation(Constants.TIPS + "right-click-to-buy"));
+        }
+        else
+        {
+            description.add(this.user.getTranslation(Constants.TIPS + "right-click-to-change"));
         }
 
         PanelItem.ClickHandler clickHandler = (panel, user, clickType, i) -> {
@@ -166,6 +173,25 @@ public class IslandEditPanel extends CommonPagedPanel<BiomesObject>
                     this.islandData.purchaseBiome(biomesObject);
                     this.manager.saveIslandData(this.islandData);
                     this.build();
+                }
+                else
+                {
+                    Consumer<Number> numberConsumer = number -> {
+                        if (number != null)
+                        {
+                            this.islandData.adjustBiomeChangeCounter(biomesObject, number.intValue());
+                            this.manager.saveIslandData(this.islandData);
+                        }
+
+                        // reopen panel
+                        this.build();
+                    };
+
+                    ConversationUtils.createNumericInput(numberConsumer,
+                        this.user,
+                        this.user.getTranslation(Constants.CONVERSATIONS + "input-number"),
+                        0,
+                        Integer.MAX_VALUE);
                 }
             }
             else
