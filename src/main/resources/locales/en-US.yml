@@ -387,6 +387,36 @@ biomes:
         island: "Island"
         chunk: "Chunk"
         range: "Range"
+      unlock_notify:
+        name: "&f&l Notify On Unlock"
+        description: |-
+          &7 A message will be sent
+          &7 to a user when she unlocks
+          &7 a new biome.
+        enabled: |-
+          &b Notify on unlock is &a enabled &b.
+        disabled: |-
+          &b Notify on unlock is &c disabled &b.
+      change_timeout:
+        name: "&f&l Timeout For Change"
+        description: |-
+          &7 Allows to set after how
+          &7 many minutes biome update
+          &7 will be terminated.
+          &7 May happen on very large
+          &7 islands or servers under
+          &7 huge load.
+        value: "&7 Timeout after: &e [number] min"
+      parallel_updates:
+        name: "&f&l Parallel Updates"
+        description: |-
+          &7 Allows to set how many biome
+          &7 updates may happen at the
+          &7 same time.
+          &7 Others will be placed in the
+          &7 queue.
+        value: |-
+          &7 Current value: &e[number]&7.
       visibility:
         name: "&f&l Biome Visibility"
         description: |-

@@ -101,12 +101,19 @@ public class SettingsPanel extends CommonPanel
 
 		PanelUtils.fillBorder(panelBuilder, Material.PURPLE_STAINED_GLASS_PANE);
 
-		panelBuilder.item(11, this.createButton(Action.DEFAULT_MODE));
-		panelBuilder.item(20, this.createButton(Action.DEFAULT_SIZE));
+		panelBuilder.item(10, this.createButton(Action.DEFAULT_MODE));
+		panelBuilder.item(11, this.createButton(Action.DEFAULT_SIZE));
 
-		panelBuilder.item(23, this.createButton(Action.COOL_DOWN));
-		panelBuilder.item(24, this.createButton(Action.PROTECTION_RANGE));
-		panelBuilder.item(25, this.createButton(Action.RESET));
+		panelBuilder.item(28, this.createButton(Action.CHANGE_TIMEOUT));
+		panelBuilder.item(29, this.createButton(Action.PARALLEL_UPDATES));
+
+		panelBuilder.item(14, this.createButton(Action.COOL_DOWN));
+		panelBuilder.item(15, this.createButton(Action.PROTECTION_RANGE));
+		panelBuilder.item(16, this.createButton(Action.RESET));
+
+		panelBuilder.item(23, this.createButton(Action.UNLOCK_NOTIFY));
+
+
 
 		panelBuilder.item(44, this.returnButton);
 
@@ -281,6 +288,86 @@ public class SettingsPanel extends CommonPanel
 				description.add("");
 				description.add(this.user.getTranslation(Constants.TIPS + "click-to-toggle"));
 			}
+			case UNLOCK_NOTIFY -> {
+				description.add(this.user.getTranslation(reference +
+					(this.settings.isNotifyUnlockedBiomes() ? "enabled" : "disabled")));
+
+				icon = new ItemStack(Material.PAPER);
+
+				clickHandler = (panel, user, clickType, i) -> {
+					this.settings.setNotifyUnlockedBiomes(!this.settings.isNotifyUnlockedBiomes());
+					this.addon.saveSettings();
+					// Update button in panel
+					this.build();
+
+					return true;
+				};
+
+				glow = this.settings.isNotifyUnlockedBiomes();
+
+				description.add("");
+				description.add(this.user.getTranslation(Constants.TIPS + "click-to-toggle"));
+			}
+			case CHANGE_TIMEOUT -> {
+				description.add(this.user.getTranslation(reference + "value",
+					Constants.PARAMETER_NUMBER, String.valueOf(this.settings.getChangeTimeout())));
+
+				icon = new ItemStack(Material.REDSTONE_LAMP, (int) Math.max(1, this.settings.getChangeTimeout()));
+				clickHandler = (panel, user, clickType, i) -> {
+					Consumer<Number> numberConsumer = number -> {
+						if (number != null)
+						{
+							this.settings.setChangeTimeout(number.intValue());
+							this.addon.saveSettings();
+						}
+
+						// reopen panel
+						this.build();
+					};
+
+					ConversationUtils.createNumericInput(numberConsumer,
+						this.user,
+						this.user.getTranslation(Constants.CONVERSATIONS + "input-number"),
+						0,
+						Integer.MAX_VALUE);
+
+					return true;
+				};
+				glow = false;
+
+				description.add("");
+				description.add(this.user.getTranslation(Constants.TIPS + "click-to-change"));
+			}
+			case PARALLEL_UPDATES -> {
+				description.add(this.user.getTranslation(reference + "value",
+					Constants.PARAMETER_NUMBER, String.valueOf(this.settings.getConcurrentBiomeUpdates())));
+
+				icon = new ItemStack(Material.SUGAR_CANE, Math.max(1, this.settings.getConcurrentBiomeUpdates()));
+				clickHandler = (panel, user, clickType, i) -> {
+					Consumer<Number> numberConsumer = number -> {
+						if (number != null)
+						{
+							this.settings.setConcurrentBiomeUpdates(number.intValue());
+							this.addon.saveSettings();
+						}
+
+						// reopen panel
+						this.build();
+					};
+
+					ConversationUtils.createNumericInput(numberConsumer,
+						this.user,
+						this.user.getTranslation(Constants.CONVERSATIONS + "input-number"),
+						1,
+						Integer.MAX_VALUE);
+
+					return true;
+				};
+				glow = false;
+
+				description.add("");
+				description.add(this.user.getTranslation(Constants.TIPS + "click-to-change"));
+			}
 			default -> {
 				icon = new ItemStack(Material.PAPER);
 				clickHandler = (panel, user1, clickType, slot) -> true;
@@ -328,7 +415,19 @@ public class SettingsPanel extends CommonPanel
 		/**
 		 * Reset action.
 		 */
-		RESET
+		RESET,
+		/**
+		 * Notify Biome Unlock
+		 */
+		UNLOCK_NOTIFY,
+		/**
+		 * Change timeout action.
+		 */
+		CHANGE_TIMEOUT,
+		/**
+		 * Parallel biome updates action.
+		 */
+		PARALLEL_UPDATES
 	}
 
 
