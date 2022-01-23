@@ -608,25 +608,41 @@ public abstract class CommonPanel
 
     /**
      * This method finds and try to execute given sub command with given arguments.
+     * @param isPlayerCommand boolean that called command is player command.
      * @param subCommand Sub Command that need to be called.
      * @param arguments List of arguments for current command.
      */
-    protected void callCommand(String subCommand, List<String> arguments)
+    protected void callCommand(boolean isPlayerCommand, String subCommand, List<String> arguments)
     {
+        // Close user inventory.
+        this.user.closeInventory();
+
         CompositeCommand command = this.addon.getPlugin().getCommandsManager().getCommand(this.topLabel);
 
         if (command == null)
         {
-            // TODO: Throw error that top command not found.
+            Utils.sendMessage(this.user, this.user.getTranslation(Constants.ERRORS + "something-went-wrong"));
+            this.addon.logError("Could not find GameMode command that starts with: " + this.topLabel);
             return;
         }
 
-        Optional<CompositeCommand> commandOptional =
-            command.getSubCommand(this.addon.getSettings().getPlayerCommand().split(" ")[0]);
+        Optional<CompositeCommand> commandOptional;
+
+        if (isPlayerCommand)
+        {
+            commandOptional = command.getSubCommand(this.addon.getSettings().getPlayerCommand().split(" ")[0]);
+        }
+        else
+        {
+            commandOptional = command.getSubCommand(this.addon.getSettings().getAdminCommand().split(" ")[0]);
+        }
 
         if (commandOptional.isEmpty())
         {
-            // TODO: Throw error that biomes command not found.
+            Utils.sendMessage(this.user, this.user.getTranslation(Constants.ERRORS + "something-went-wrong"));
+            this.addon.logError("Could not find BiomesAddon main command that starts with: " +
+                (isPlayerCommand ? this.addon.getSettings().getPlayerCommand() :
+                    this.addon.getSettings().getAdminCommand()));
             return;
         }
 
@@ -634,7 +650,8 @@ public abstract class CommonPanel
 
         if (commandOptional.isEmpty())
         {
-            // TODO: Throw error that biomes sub-command not found.
+            Utils.sendMessage(this.user, this.user.getTranslation(Constants.ERRORS + "something-went-wrong"));
+            this.addon.logError("Could not find BiomesAddon SET command that starts with: " + subCommand);
             return;
         }
 
@@ -644,8 +661,6 @@ public abstract class CommonPanel
         {
             command.execute(this.user, subCommand, arguments);
         }
-
-        this.user.closeInventory();
     }
 
 

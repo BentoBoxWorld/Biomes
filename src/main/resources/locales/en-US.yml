@@ -843,9 +843,11 @@ biomes:
     # Error message that is displayed when biome update task failed.
     failed: "&c Server run into some issues while changing biome."
     # Error message that is displayed when addon failed to withdraw money.
-    something-went-wrong: "&c Something went wrong while withdrawing money."
+    could-not-remove-money: "&c Something went wrong while withdrawing money."
     # Error message that is displayed when addon failed to withdraw items.
     could-not-remove-items: "&c Something went wrong while withdrawing items."
+    # Error message that is displayed when addon has some error to do some stuff.
+    something-went-wrong: "&c Something went wrong. Could not do it."
 #    materials:
 #        # Names should be lowercase.
 #        cobblestone: "Cobblestone"

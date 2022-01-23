@@ -410,12 +410,12 @@ public class AdvancedPanel extends CommonPanel
         if (this.target == null)
         {
             // Target is not specified. Use player command.
-            this.callCommand(this.addon.getSettings().getPlayerSetCommand().split(" ")[0], arguments);
+            this.callCommand(true, this.addon.getSettings().getPlayerSetCommand().split(" ")[0], arguments);
         }
         else
         {
             // Target is specified. It means command must be called by the admin.
-            this.callCommand(this.addon.getSettings().getAdminCommand().split(" ")[0], arguments);
+            this.callCommand(false, "set", arguments);
         }
     }
 

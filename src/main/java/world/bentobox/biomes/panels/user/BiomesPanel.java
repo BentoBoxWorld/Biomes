@@ -461,7 +461,7 @@ public class BiomesPanel extends CommonPanel
             }
         }
 
-        this.callCommand(this.addon.getSettings().getPlayerSetCommand().split(" ")[0], arguments);
+        this.callCommand(true, this.addon.getSettings().getPlayerSetCommand().split(" ")[0], arguments);
     }
 
 
@@ -472,7 +472,7 @@ public class BiomesPanel extends CommonPanel
      */
     private void buyBiome(BiomesObject biomesObject)
     {
-        this.callCommand(this.addon.getSettings().getPlayerBuyCommand().split(" ")[0],
+        this.callCommand(true, this.addon.getSettings().getPlayerBuyCommand().split(" ")[0],
             Collections.singletonList(biomesObject.getUniqueId()));
     }
 

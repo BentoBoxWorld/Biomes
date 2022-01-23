@@ -528,7 +528,7 @@ public class BiomeUpdateHelper
             // Something went wrong on withdraw.
 
             Utils.sendMessage(this.callerUser,
-                this.callerUser.getTranslation(Constants.ERRORS + "something-went-wrong"));
+                this.callerUser.getTranslation(Constants.ERRORS + "could-not-remove-money"));
             this.addon.logError(withdraw.errorMessage);
             return true;
         }
