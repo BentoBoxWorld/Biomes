@@ -1,7 +1,7 @@
-//
+///
 // Created by BONNe
-// Copyright - 2021
-//
+// Copyright - 2022
+///
 
 
 package world.bentobox.biomes;
