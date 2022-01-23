@@ -25,6 +25,7 @@ import world.bentobox.biomes.utils.Constants;
 
 /**
  * This panel implements common things for Paged pages.
+ *
  * @param <T> Type of elements that are paged.
  */
 public abstract class CommonPagedPanel<T> extends CommonPanel
@@ -114,7 +115,6 @@ public abstract class CommonPagedPanel<T> extends CommonPanel
         if (size > MAX_ELEMENTS && !(1.0 * size / MAX_ELEMENTS <= this.pageIndex + 1))
         {
             panelBuilder.item(26, this.getButton(CommonButtons.NEXT));
-
         }
 
         if (this.pageIndex > 0)
@@ -133,6 +133,7 @@ public abstract class CommonPagedPanel<T> extends CommonPanel
 
     /**
      * This method returns PanelItem that represents given Button.
+     *
      * @param button Button that must be returned.
      * @return PanelItem with requested functionality.
      */
@@ -198,7 +199,8 @@ public abstract class CommonPagedPanel<T> extends CommonPanel
 
             icon = new ItemStack(Material.ANVIL);
 
-            clickHandler = (panel, user, clickType, slot) -> {
+            clickHandler = (panel, user, clickType, slot) ->
+            {
                 if (clickType.isRightClick())
                 {
                     // Clear string.
@@ -265,14 +267,13 @@ public abstract class CommonPagedPanel<T> extends CommonPanel
         SEARCH
     }
 
+    /**
+     * Text that contains filter string.
+     */
+    protected String searchString = "";
 
     /**
      * Current page index.
      */
     private int pageIndex;
-
-    /**
-     * Text that contains filter string.
-     */
-    protected String searchString = "";
 }

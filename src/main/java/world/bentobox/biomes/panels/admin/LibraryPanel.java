@@ -29,8 +29,8 @@ import world.bentobox.biomes.web.objects.LibraryEntry;
 
 
 /**
- * This class contains all necessary elements to create GUI that lists all challenges.
- * It allows to edit them or remove, depending on given input mode.
+ * This class contains all necessary elements to create GUI that lists all challenges. It allows to edit them or remove,
+ * depending on given input mode.
  */
 public class LibraryPanel extends CommonPagedPanel<LibraryEntry>
 {
@@ -52,30 +52,14 @@ public class LibraryPanel extends CommonPagedPanel<LibraryEntry>
         this.mode = mode;
 
         this.libraryEntries = switch (mode)
-        {
-            case WEB -> this.addon.getWebManager().getLibraryEntries();
-            case DATABASE -> this.generateDatabaseEntries();
-            case TEMPLATE -> this.generateTemplateEntries();
-        };
+            {
+                case WEB -> this.addon.getWebManager().getLibraryEntries();
+                case DATABASE -> this.generateDatabaseEntries();
+                case TEMPLATE -> this.generateTemplateEntries();
+            };
 
         this.filterElements = this.libraryEntries;
     }
-
-
-    /**
-     * This static method allows to easier open Library GUI.
-     * @param parentGui ParentGUI object.
-     * @param mode Library view mode.
-     */
-    public static void open(CommonPanel parentGui, Library mode)
-    {
-        new LibraryPanel(parentGui, mode).build();
-    }
-
-
-// ---------------------------------------------------------------------
-// Section: Data Collectors
-// ---------------------------------------------------------------------
 
 
     /**
@@ -101,6 +85,11 @@ public class LibraryPanel extends CommonPagedPanel<LibraryEntry>
                 Material.PAPER)).
             collect(Collectors.toList());
     }
+
+
+// ---------------------------------------------------------------------
+// Section: Data Collectors
+// ---------------------------------------------------------------------
 
 
     /**
@@ -130,11 +119,6 @@ public class LibraryPanel extends CommonPagedPanel<LibraryEntry>
     }
 
 
-// ---------------------------------------------------------------------
-// Section: Methods
-// ---------------------------------------------------------------------
-
-
     /**
      * This method is called when filter value is updated.
      */
@@ -148,7 +132,8 @@ public class LibraryPanel extends CommonPagedPanel<LibraryEntry>
         else
         {
             this.filterElements = this.libraryEntries.stream().
-                filter(element -> {
+                filter(element ->
+                {
                     // If element name is set and name contains search field, then do not filter out.
                     return element.name().toLowerCase().contains(this.searchString.toLowerCase()) ||
                         element.author().toLowerCase().contains(this.searchString.toLowerCase()) ||
@@ -159,6 +144,11 @@ public class LibraryPanel extends CommonPagedPanel<LibraryEntry>
                 collect(Collectors.toList());
         }
     }
+
+
+// ---------------------------------------------------------------------
+// Section: Methods
+// ---------------------------------------------------------------------
 
 
     /**
@@ -204,6 +194,7 @@ public class LibraryPanel extends CommonPagedPanel<LibraryEntry>
 
     /**
      * This creates download now button, that can skip waiting for automatic request.
+     *
      * @return PanelItem button that allows to manually download libraries.
      */
     private PanelItem createDownloadNow()
@@ -258,6 +249,7 @@ public class LibraryPanel extends CommonPagedPanel<LibraryEntry>
 
     /**
      * This method creates button for given library entry.
+     *
      * @param libraryEntry LibraryEntry which button must be created.
      * @return Entry button.
      */
@@ -272,7 +264,8 @@ public class LibraryPanel extends CommonPagedPanel<LibraryEntry>
             icon(libraryEntry.icon()).
             glow(false);
 
-        itemBuilder.clickHandler((panel, user1, clickType, i) -> {
+        itemBuilder.clickHandler((panel, user1, clickType, i) ->
+        {
             this.generateConfirmationInput(libraryEntry);
             return true;
         });
@@ -350,6 +343,7 @@ public class LibraryPanel extends CommonPagedPanel<LibraryEntry>
 
     /**
      * This method generated description for LibraryEntry object.
+     *
      * @param entry LibraryEntry object which description must be generated.
      * @return List of strings that will be placed in ItemStack lore message.
      */
@@ -419,6 +413,18 @@ public class LibraryPanel extends CommonPagedPanel<LibraryEntry>
 
 
     /**
+     * This static method allows to easier open Library GUI.
+     *
+     * @param parentGui ParentGUI object.
+     * @param mode Library view mode.
+     */
+    public static void open(CommonPanel parentGui, Library mode)
+    {
+        new LibraryPanel(parentGui, mode).build();
+    }
+
+
+    /**
      * Enum that holds different view modes for current panel.
      */
     public enum Library
@@ -443,6 +449,16 @@ public class LibraryPanel extends CommonPagedPanel<LibraryEntry>
 // ---------------------------------------------------------------------
 
     /**
+     * Stores active library that must be searched.
+     */
+    private final Library mode;
+
+    /**
+     * List of library elements.
+     */
+    private final List<LibraryEntry> libraryEntries;
+
+    /**
      * Indicates if download now button should trigger cache clearing.
      */
     private boolean clearCache;
@@ -456,16 +472,6 @@ public class LibraryPanel extends CommonPagedPanel<LibraryEntry>
      * This variable will protect against spam-click.
      */
     private boolean blockedForDownland;
-
-    /**
-     * Stores active library that must be searched.
-     */
-    private final Library mode;
-
-    /**
-     * List of library elements.
-     */
-    private final List<LibraryEntry> libraryEntries;
 
     /**
      * Stores filtered items.

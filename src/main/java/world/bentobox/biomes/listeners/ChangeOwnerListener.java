@@ -7,7 +7,6 @@ import org.bukkit.block.Biome;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import world.bentobox.bentobox.api.addons.GameModeAddon;
 import world.bentobox.bentobox.api.events.team.TeamSetownerEvent;
@@ -20,12 +19,12 @@ import world.bentobox.biomes.utils.Utils;
 
 
 /**
- * This listener checks if new user can change biomes. If he does not have permission to it, then restore
- * biome to default.
+ * This listener checks if new user can change biomes. If he does not have permission to it, then restore biome to
+ * default.
  */
 public class ChangeOwnerListener implements Listener
 {
-    public  ChangeOwnerListener(BiomesAddon addon)
+    public ChangeOwnerListener(BiomesAddon addon)
     {
         this.addon = addon;
     }
@@ -43,7 +42,7 @@ public class ChangeOwnerListener implements Listener
         User newUser = User.getInstance(event.getNewOwner());
 
         Optional<GameModeAddon> gameModeAddon =
-                this.addon.getPlugin().getIWM().getAddon(event.getIsland().getWorld());
+            this.addon.getPlugin().getIWM().getAddon(event.getIsland().getWorld());
 
         final boolean hasPermissions;
         final String defaultBiome;
@@ -98,5 +97,5 @@ public class ChangeOwnerListener implements Listener
     // ---------------------------------------------------------------------
 
 
-    private BiomesAddon addon;
+    private final BiomesAddon addon;
 }

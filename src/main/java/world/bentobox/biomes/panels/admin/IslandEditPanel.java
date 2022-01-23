@@ -158,7 +158,8 @@ public class IslandEditPanel extends CommonPagedPanel<BiomesObject>
             description.add(this.user.getTranslation(Constants.TIPS + "right-click-to-change"));
         }
 
-        PanelItem.ClickHandler clickHandler = (panel, user, clickType, i) -> {
+        PanelItem.ClickHandler clickHandler = (panel, user, clickType, i) ->
+        {
 
             if (clickType.isRightClick())
             {
@@ -176,7 +177,8 @@ public class IslandEditPanel extends CommonPagedPanel<BiomesObject>
                 }
                 else
                 {
-                    Consumer<Number> numberConsumer = number -> {
+                    Consumer<Number> numberConsumer = number ->
+                    {
                         if (number != null)
                         {
                             this.islandData.adjustBiomeChangeCounter(biomesObject, number.intValue());
@@ -378,7 +380,6 @@ public class IslandEditPanel extends CommonPagedPanel<BiomesObject>
             glow(glow).
             build();
     }
-
 
 
     /**

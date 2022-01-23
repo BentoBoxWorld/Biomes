@@ -1,8 +1,6 @@
 package world.bentobox.biomes;
 
 
-import java.util.Optional;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
@@ -89,7 +87,7 @@ public class BiomesAddon extends Addon
         this.addonManager = new BiomesAddonManager(this);
         this.importManager = new BiomesImportManager(this);
 
-		// Register the reset listener
+        // Register the reset listener
         this.registerListener(new ChangeOwnerListener(this));
         this.registerListener(new JoinLeaveListener(this));
         this.registerListener(new IslandLevelListener(this));
@@ -113,7 +111,8 @@ public class BiomesAddon extends Addon
      */
     private void hookInGameModes()
     {
-        this.getPlugin().getAddonsManager().getGameModeAddons().forEach(gameModeAddon -> {
+        this.getPlugin().getAddonsManager().getGameModeAddons().forEach(gameModeAddon ->
+        {
             if (!this.settings.getDisabledGameModes().contains(gameModeAddon.getDescription().getName()))
             {
                 if (gameModeAddon.getPlayerCommand().isPresent())
@@ -144,26 +143,31 @@ public class BiomesAddon extends Addon
         super.allLoaded();
 
         // Try to find Level addon and if it does not exist, display a warning
-        this.getAddonByName("Level").ifPresentOrElse(addon -> {
+        this.getAddonByName("Level").ifPresentOrElse(addon ->
+        {
             this.levelAddon = (Level) addon;
             this.levelProvided = true;
             this.log("Biomes Addon hooked into Level addon.");
-        }, () -> {
+        }, () ->
+        {
             this.levelAddon = null;
             this.logWarning("Level add-on not found. Some features from Biomes Addon will not work!");
         });
 
         // Try to find Level addon and if it does not exist, display a warning
-        this.getAddonByName("Greenhouses").ifPresentOrElse(addon -> {
+        this.getAddonByName("Greenhouses").ifPresentOrElse(addon ->
+        {
             this.greenhousesProvided = true;
             this.greenhouses = (Greenhouses) addon;
             this.log("Biomes Addon hooked into Greenhouses addon.");
-        }, () -> {
+        }, () ->
+        {
             this.greenhouses = null;
         });
 
         // Try to find Vault Plugin and if it does not exist, display a warning
-        this.getPlugin().getVault().ifPresentOrElse(hook -> {
+        this.getPlugin().getVault().ifPresentOrElse(hook ->
+        {
             this.vaultHook = hook;
 
             if (this.vaultHook.hook())
@@ -174,7 +178,8 @@ public class BiomesAddon extends Addon
             {
                 this.logWarning("Biomes Addon could not hook into valid Economy.");
             }
-        }, () -> {
+        }, () ->
+        {
             this.vaultHook = null;
             this.logWarning("Vault plugin not found. Economy will not work!");
         });
@@ -249,10 +254,10 @@ public class BiomesAddon extends Addon
 
         // Save existing panels.
         this.saveResource("panels/main_panel.yml", false);
-        this.saveResource("panels/advanced_panel.yml",false);
+        this.saveResource("panels/advanced_panel.yml", false);
 
         // Save template
-        this.saveResource("biomesTemplate.yml",false);
+        this.saveResource("biomesTemplate.yml", false);
     }
 
 
@@ -296,6 +301,7 @@ public class BiomesAddon extends Addon
 
     /**
      * This method returns the economyProvided value.
+     *
      * @return the value of economyProvided.
      */
     public boolean isEconomyProvided()
@@ -306,6 +312,7 @@ public class BiomesAddon extends Addon
 
     /**
      * This method returns the vaultHook value.
+     *
      * @return the value of vaultHook.
      */
     public VaultHook getVaultHook()
@@ -316,6 +323,7 @@ public class BiomesAddon extends Addon
 
     /**
      * This method returns the levelAddon value.
+     *
      * @return the value of levelAddon.
      */
     public Level getLevelAddon()
@@ -326,6 +334,7 @@ public class BiomesAddon extends Addon
 
     /**
      * This method returns the levelProvided value.
+     *
      * @return the value of levelProvided.
      */
     public boolean isLevelProvided()
@@ -334,24 +343,26 @@ public class BiomesAddon extends Addon
     }
 
 
-	/**
-	 * This method returns the Greenhouses value.
-	 * @return the value of Greenhouses.
-	 */
-	public Greenhouses getGreenhouses()
-	{
-		return this.greenhouses;
-	}
+    /**
+     * This method returns the Greenhouses value.
+     *
+     * @return the value of Greenhouses.
+     */
+    public Greenhouses getGreenhouses()
+    {
+        return this.greenhouses;
+    }
 
 
-	/**
-	 * This method returns the greenhousesProvided value.
-	 * @return the value of greenhousesProvided.
-	 */
-	public boolean isGreenhousesProvided()
-	{
-		return this.greenhousesProvided;
-	}
+    /**
+     * This method returns the greenhousesProvided value.
+     *
+     * @return the value of greenhousesProvided.
+     */
+    public boolean isGreenhousesProvided()
+    {
+        return this.greenhousesProvided;
+    }
 
 
     /**
@@ -421,15 +432,15 @@ public class BiomesAddon extends Addon
      */
     private boolean levelProvided;
 
-	/**
-	 * Greenhouses addon.
-	 */
-	private Greenhouses greenhouses;
+    /**
+     * Greenhouses addon.
+     */
+    private Greenhouses greenhouses;
 
-	/**
-	 * This indicates if greenhouses addon exists.
-	 */
-	private boolean greenhousesProvided;
+    /**
+     * This indicates if greenhouses addon exists.
+     */
+    private boolean greenhousesProvided;
 
 
     /**
@@ -444,23 +455,22 @@ public class BiomesAddon extends Addon
 
 
     /**
-     * This flag allows to change biomes in any part of the world. It will not limit
-     * player to their island. Useful for skygrid without protection flags.
+     * This flag allows to change biomes in any part of the world. It will not limit player to their island. Useful for
+     * skygrid without protection flags.
      */
     public static final Flag BIOMES_WORLD_PROTECTION =
-            new Flag.Builder("BIOMES_WORLD_PROTECTION", Material.GRASS_BLOCK).
+        new Flag.Builder("BIOMES_WORLD_PROTECTION", Material.GRASS_BLOCK).
             type(Flag.Type.WORLD_SETTING).
             mode(Flag.Mode.ADVANCED).
             defaultSetting(true).
             build();
 
     /**
-     * This flag allows to define which users can change biomes. F.e. it can be set
-     * that only Island owner can change biomes.
-     * By default it is set to Visitor.
+     * This flag allows to define which users can change biomes. F.e. it can be set that only Island owner can change
+     * biomes. By default it is set to Visitor.
      */
     public static final Flag BIOMES_ISLAND_PROTECTION =
-            new Flag.Builder("BIOMES_ISLAND_PROTECTION", Material.GRASS_BLOCK).
+        new Flag.Builder("BIOMES_ISLAND_PROTECTION", Material.GRASS_BLOCK).
             mode(Flag.Mode.ADVANCED).
             build();
 }

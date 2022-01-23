@@ -98,7 +98,8 @@ public class BundleSelector extends CommonPagedPanel<BiomesBundleObject>
         description.add("");
         description.add(this.user.getTranslation(Constants.TIPS + "click-to-choose"));
 
-        PanelItem.ClickHandler clickHandler = (panel, user, clickType, i) -> {
+        PanelItem.ClickHandler clickHandler = (panel, user, clickType, i) ->
+        {
             this.consumer.accept(bundle);
             // Always return true.
             return true;
@@ -125,7 +126,6 @@ public class BundleSelector extends CommonPagedPanel<BiomesBundleObject>
     {
         new BundleSelector(panel, bundle, consumer).build();
     }
-
 
 
     // ---------------------------------------------------------------------

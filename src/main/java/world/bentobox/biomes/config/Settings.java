@@ -17,7 +17,7 @@ import world.bentobox.bentobox.api.configuration.StoreAt;
  *
  * @author BONNe
  */
-@StoreAt(filename="config.yml", path="addons/Biomes")
+@StoreAt(filename = "config.yml", path = "addons/Biomes")
 @ConfigComment("Biomes Configuration [version]")
 public class Settings implements ConfigObject
 {
@@ -28,6 +28,7 @@ public class Settings implements ConfigObject
 
     /**
      * This method returns default update mode.
+     *
      * @return Default update mode.
      */
     public UpdateMode getDefaultMode()
@@ -37,62 +38,8 @@ public class Settings implements ConfigObject
 
 
     /**
-     * This method returns default update range.
-     * @return default update range
-     */
-    public int getDefaultSize()
-    {
-        return this.defaultSize;
-    }
-
-
-    /**
-     * This method returns if biome reset is necessary on owner change.
-     * @return true - if biome reset is required.
-     */
-    public boolean isResetBiomes()
-    {
-        return this.resetBiomes;
-    }
-
-
-    /**
-     * This method returns cooldown between biome changes.
-     * @return integer that represents seconds between biome changes.
-     */
-    public int getCoolDown()
-    {
-        return this.coolDown;
-    }
-
-
-    /**
-     * This method returns disabled game modes.
-     * @return Set with disabled game modes.
-     */
-    public Set<String> getDisabledGameModes()
-    {
-        return this.disabledGameModes;
-    }
-
-
-    /**
-     * This method returns the useProtectionRange value
-     * @return the useProtectionRange value.
-     */
-    public boolean isUseProtectionRange()
-    {
-        return this.useProtectionRange;
-    }
-
-
-    // ---------------------------------------------------------------------
-    // Section: Setters
-    // ---------------------------------------------------------------------
-
-
-    /**
      * This method sets value of defaultMode variable.
+     *
      * @param defaultMode new value.
      */
     public void setDefaultMode(UpdateMode defaultMode)
@@ -102,7 +49,19 @@ public class Settings implements ConfigObject
 
 
     /**
+     * This method returns default update range.
+     *
+     * @return default update range
+     */
+    public int getDefaultSize()
+    {
+        return this.defaultSize;
+    }
+
+
+    /**
      * This method sets value of defaultSize variable.
+     *
      * @param defaultSize new value.
      */
     public void setDefaultSize(int defaultSize)
@@ -112,7 +71,19 @@ public class Settings implements ConfigObject
 
 
     /**
+     * This method returns if biome reset is necessary on owner change.
+     *
+     * @return true - if biome reset is required.
+     */
+    public boolean isResetBiomes()
+    {
+        return this.resetBiomes;
+    }
+
+
+    /**
      * This method sets value of resetBiomes variable.
+     *
      * @param resetBiomes new value.
      */
     public void setResetBiomes(boolean resetBiomes)
@@ -121,8 +92,25 @@ public class Settings implements ConfigObject
     }
 
 
+    // ---------------------------------------------------------------------
+    // Section: Setters
+    // ---------------------------------------------------------------------
+
+
+    /**
+     * This method returns cooldown between biome changes.
+     *
+     * @return integer that represents seconds between biome changes.
+     */
+    public int getCoolDown()
+    {
+        return this.coolDown;
+    }
+
+
     /**
      * This method sets value of coolDown variable.
+     *
      * @param coolDown new value.
      */
     public void setCoolDown(int coolDown)
@@ -132,7 +120,19 @@ public class Settings implements ConfigObject
 
 
     /**
+     * This method returns disabled game modes.
+     *
+     * @return Set with disabled game modes.
+     */
+    public Set<String> getDisabledGameModes()
+    {
+        return this.disabledGameModes;
+    }
+
+
+    /**
      * This method sets value for disabledGameModes variable.
+     *
      * @param disabledGameModes new value.
      */
     @SuppressWarnings("unused")
@@ -143,7 +143,19 @@ public class Settings implements ConfigObject
 
 
     /**
+     * This method returns the useProtectionRange value
+     *
+     * @return the useProtectionRange value.
+     */
+    public boolean isUseProtectionRange()
+    {
+        return this.useProtectionRange;
+    }
+
+
+    /**
      * This method sets the useProtectionRange object value.
+     *
      * @param useProtectionRange the useProtectionRange object new value.
      */
     public void setUseProtectionRange(boolean useProtectionRange)
@@ -351,8 +363,10 @@ public class Settings implements ConfigObject
          */
         RANGE;
 
+
         /**
          * This method returns stored parameter from string.
+         *
          * @param parameter String of object that must be returned
          * @return CommandParameters object or null.
          */
@@ -360,6 +374,7 @@ public class Settings implements ConfigObject
         {
             return BY_NAME.get(parameter);
         }
+
 
         /**
          * This map allows to access all enum values via their string.

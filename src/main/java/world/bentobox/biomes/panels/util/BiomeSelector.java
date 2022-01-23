@@ -43,42 +43,13 @@ public class BiomeSelector extends PagedSelector<Biome>
         this.elements = Arrays.stream(Biome.values()).
             filter(material -> !excluded.contains(material)).
             // Sort by name
-            sorted(Comparator.comparing(Biome::name)).
+                sorted(Comparator.comparing(Biome::name)).
             collect(Collectors.toList());
         // Init without filters applied.
         this.filterElements = this.elements;
 
         this.mode = null;
     }
-
-
-    /**
-     * This method opens GUI that allows to select challenge type.
-     *
-     * @param user User who opens GUI.
-     * @param consumer Consumer that allows to get clicked type.
-     */
-    public static void open(User user, Set<Biome> excluded, BiConsumer<Boolean, Biome> consumer)
-    {
-        new BiomeSelector(user, excluded, consumer).build();
-    }
-
-
-    /**
-     * This method opens GUI that allows to select challenge type.
-     *
-     * @param user User who opens GUI.
-     * @param consumer Consumer that allows to get clicked type.
-     */
-    public static void open(User user, BiConsumer<Boolean, Biome> consumer)
-    {
-        new BiomeSelector(user, new HashSet<>(), consumer).build();
-    }
-
-
-// ---------------------------------------------------------------------
-// Section: Methods
-// ---------------------------------------------------------------------
 
 
     /**
@@ -123,7 +94,8 @@ public class BiomeSelector extends PagedSelector<Biome>
         else
         {
             this.filterElements = this.elements.stream().
-                filter(element -> {
+                filter(element ->
+                {
                     // If element name is set and name contains search field, then do not filter out.
                     return element.name().toLowerCase().contains(this.searchString.toLowerCase());
                 }).
@@ -135,7 +107,8 @@ public class BiomeSelector extends PagedSelector<Biome>
         {
             // Filter biomes according selected mode.
 
-            this.filterElements.removeIf(biome -> {
+            this.filterElements.removeIf(biome ->
+            {
                 switch (this.mode)
                 {
                     case TEMPERATE -> {
@@ -174,8 +147,14 @@ public class BiomeSelector extends PagedSelector<Biome>
     }
 
 
+// ---------------------------------------------------------------------
+// Section: Methods
+// ---------------------------------------------------------------------
+
+
     /**
      * This method creates PanelItem button of requested type.
+     *
      * @return new PanelItem with requested functionality.
      */
     private PanelItem createButton()
@@ -207,6 +186,7 @@ public class BiomeSelector extends PagedSelector<Biome>
 
     /**
      * This method creates button for given biome.
+     *
      * @param biome biome which button must be created.
      * @return new Button for biome.
      */
@@ -226,7 +206,8 @@ public class BiomeSelector extends PagedSelector<Biome>
                 Utils.prettifyObject(biome, this.user))).
             icon(Material.MAP).
             description(description).
-            clickHandler((panel, user1, clickType, slot) -> {
+            clickHandler((panel, user1, clickType, slot) ->
+            {
                 this.consumer.accept(true, biome);
                 return true;
             }).
@@ -236,6 +217,7 @@ public class BiomeSelector extends PagedSelector<Biome>
 
     /**
      * This method builds icon for given BiomeGroup object.
+     *
      * @param filterMode object which icon must be created.
      * @return PanelItem for given BiomeGroup.
      */
@@ -247,24 +229,26 @@ public class BiomeSelector extends PagedSelector<Biome>
         description.add("");
         description.add(this.user.getTranslation(Constants.TIPS + "click-to-filter"));
 
-        ItemStack icon = switch (filterMode) {
-            case TEMPERATE -> new ItemStack(Material.SUNFLOWER);
-            case WARM -> new ItemStack(Material.SAND);
-            case COLD -> new ItemStack(Material.GRAVEL);
-            case SNOWY -> new ItemStack(Material.SNOW_BLOCK);
-            case AQUATIC -> new ItemStack(Material.TROPICAL_FISH);
-            case NETHER -> new ItemStack(Material.NETHERRACK);
-            case THE_END -> new ItemStack(Material.END_STONE);
-            case NEUTRAL -> new ItemStack(Material.STRUCTURE_VOID);
-            case CAVE -> new ItemStack(Material.BARRIER);
-        };
+        ItemStack icon = switch (filterMode)
+            {
+                case TEMPERATE -> new ItemStack(Material.SUNFLOWER);
+                case WARM -> new ItemStack(Material.SAND);
+                case COLD -> new ItemStack(Material.GRAVEL);
+                case SNOWY -> new ItemStack(Material.SNOW_BLOCK);
+                case AQUATIC -> new ItemStack(Material.TROPICAL_FISH);
+                case NETHER -> new ItemStack(Material.NETHERRACK);
+                case THE_END -> new ItemStack(Material.END_STONE);
+                case NEUTRAL -> new ItemStack(Material.STRUCTURE_VOID);
+                case CAVE -> new ItemStack(Material.BARRIER);
+            };
 
         return new PanelItemBuilder().
             name(this.user.getTranslation(reference + "name", "[filter]",
                 this.user.getTranslation(reference + filterMode.name().toLowerCase()))).
             icon(icon).
             description(description).
-            clickHandler((panel, user1, clickType, slot) -> {
+            clickHandler((panel, user1, clickType, slot) ->
+            {
                 this.mode = filterMode;
                 this.updateFilters();
                 this.build();
@@ -273,6 +257,30 @@ public class BiomeSelector extends PagedSelector<Biome>
             build();
     }
 
+
+    /**
+     * This method opens GUI that allows to select challenge type.
+     *
+     * @param user User who opens GUI.
+     * @param excluded the excluded
+     * @param consumer Consumer that allows to get clicked type.
+     */
+    public static void open(User user, Set<Biome> excluded, BiConsumer<Boolean, Biome> consumer)
+    {
+        new BiomeSelector(user, excluded, consumer).build();
+    }
+
+
+    /**
+     * This method opens GUI that allows to select challenge type.
+     *
+     * @param user User who opens GUI.
+     * @param consumer Consumer that allows to get clicked type.
+     */
+    public static void open(User user, BiConsumer<Boolean, Biome> consumer)
+    {
+        new BiomeSelector(user, new HashSet<>(), consumer).build();
+    }
 
 
 // ---------------------------------------------------------------------
@@ -329,11 +337,6 @@ public class BiomeSelector extends PagedSelector<Biome>
 // ---------------------------------------------------------------------
 
     /**
-     * Mode of filter.
-     */
-    private Mode mode;
-
-    /**
      * List with elements that will be displayed in current GUI.
      */
     private final List<Biome> elements;
@@ -342,6 +345,11 @@ public class BiomeSelector extends PagedSelector<Biome>
      * This variable stores consumer.
      */
     private final BiConsumer<Boolean, Biome> consumer;
+
+    /**
+     * Mode of filter.
+     */
+    private Mode mode;
 
     /**
      * Stores filtered items.

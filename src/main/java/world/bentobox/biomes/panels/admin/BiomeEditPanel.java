@@ -47,19 +47,6 @@ public class BiomeEditPanel extends CommonPanel
 
 
     /**
-     * This method is used to open GeneratorManagePanel outside this class. It will be much easier to open panel with
-     * single method call then initializing new object.
-     *
-     * @param parentPanel Parent Panel object.
-     * @param biome Biome object.
-     */
-    public static void open(CommonPanel parentPanel, BiomesObject biome)
-    {
-        new BiomeEditPanel(parentPanel, biome).build();
-    }
-
-
-    /**
      * This method builds all necessary elements in GUI panel.
      */
     @Override
@@ -121,6 +108,7 @@ public class BiomeEditPanel extends CommonPanel
 
     /**
      * This method returns button for edit panel of given type.
+     *
      * @param button Type of button.
      * @return new panel button with requested type.
      */
@@ -153,7 +141,8 @@ public class BiomeEditPanel extends CommonPanel
                 {
                     this.selectedButton = null;
 
-                    BiConsumer<Boolean, Biome> biomeConsumer = (success, biome) -> {
+                    BiConsumer<Boolean, Biome> biomeConsumer = (success, biome) ->
+                    {
                         if (success)
                         {
                             this.biome.setBiome(biome);
@@ -233,8 +222,10 @@ public class BiomeEditPanel extends CommonPanel
                     Constants.PARAMETER_NUMBER, String.valueOf(this.biome.getUnlockCost())));
 
                 icon = new ItemStack(this.addon.isEconomyProvided() ? Material.GOLD_INGOT : Material.BARRIER);
-                clickHandler = (panel, user, clickType, i) -> {
-                    Consumer<Number> numberConsumer = number -> {
+                clickHandler = (panel, user, clickType, i) ->
+                {
+                    Consumer<Number> numberConsumer = number ->
+                    {
                         if (number != null)
                         {
                             this.biome.setUnlockCost(number.doubleValue());
@@ -277,10 +268,12 @@ public class BiomeEditPanel extends CommonPanel
                 }
 
                 icon = new ItemStack(Material.CHEST);
-                clickHandler = (panel, user, clickType, slot) -> {
+                clickHandler = (panel, user, clickType, slot) ->
+                {
                     ItemSelector.open(this.user,
                         this.biome.getUnlockItems(),
-                        (status, value) -> {
+                        (status, value) ->
+                        {
                             if (status)
                             {
                                 this.biome.setUnlockItems(value);
@@ -302,8 +295,10 @@ public class BiomeEditPanel extends CommonPanel
 
                 icon = new ItemStack(this.addon.isLevelProvided() ? Material.BEACON : Material.BARRIER,
                     (int) Math.max(1, this.biome.getUnlockLevel()));
-                clickHandler = (panel, user, clickType, i) -> {
-                    Consumer<Number> numberConsumer = number -> {
+                clickHandler = (panel, user, clickType, i) ->
+                {
+                    Consumer<Number> numberConsumer = number ->
+                    {
                         if (number != null)
                         {
                             this.biome.setUnlockLevel(number.longValue());
@@ -332,8 +327,10 @@ public class BiomeEditPanel extends CommonPanel
                     Constants.PARAMETER_NUMBER, String.valueOf(this.biome.getOrder())));
 
                 icon = new ItemStack(Material.HOPPER, Math.max(1, this.biome.getOrder()));
-                clickHandler = (panel, user, clickType, i) -> {
-                    Consumer<Number> numberConsumer = number -> {
+                clickHandler = (panel, user, clickType, i) ->
+                {
+                    Consumer<Number> numberConsumer = number ->
+                    {
                         if (number != null)
                         {
                             this.biome.setOrder(number.intValue());
@@ -369,12 +366,14 @@ public class BiomeEditPanel extends CommonPanel
                     Utils.prettifyObject(World.Environment.THE_END, this.user));
 
                 icon = new ItemStack(Material.DROPPER);
-                clickHandler = (panel, user, clickType, slot) -> {
+                clickHandler = (panel, user, clickType, slot) ->
+                {
                     this.selectedButton = null;
 
                     EnvironmentSelector.open(this.user,
                         this.biome.getEnvironment(),
-                        (status, value) -> {
+                        (status, value) ->
+                        {
                             if (status)
                             {
                                 this.biome.setEnvironment(value);
@@ -502,7 +501,8 @@ public class BiomeEditPanel extends CommonPanel
                     (this.biome.isDeployed() ? "enabled" : "disabled")));
 
                 icon = new ItemStack(Material.LEVER);
-                clickHandler = (panel, user, clickType, slot) -> {
+                clickHandler = (panel, user, clickType, slot) ->
+                {
                     this.selectedButton = null;
 
                     if (this.biome.isValid())
@@ -532,8 +532,10 @@ public class BiomeEditPanel extends CommonPanel
                     Constants.PARAMETER_NUMBER, String.valueOf(this.biome.getCost())));
 
                 icon = new ItemStack(this.addon.isEconomyProvided() ? Material.GOLD_INGOT : Material.BARRIER);
-                clickHandler = (panel, user, clickType, i) -> {
-                    Consumer<Number> numberConsumer = number -> {
+                clickHandler = (panel, user, clickType, i) ->
+                {
+                    Consumer<Number> numberConsumer = number ->
+                    {
                         if (number != null)
                         {
                             this.biome.setCost(number.doubleValue());
@@ -576,10 +578,12 @@ public class BiomeEditPanel extends CommonPanel
                 }
 
                 icon = new ItemStack(Material.CHEST);
-                clickHandler = (panel, user, clickType, slot) -> {
+                clickHandler = (panel, user, clickType, slot) ->
+                {
                     ItemSelector.open(this.user,
                         this.biome.getItemCost(),
-                        (status, value) -> {
+                        (status, value) ->
+                        {
                             if (status)
                             {
                                 this.biome.setItemCost(value);
@@ -643,8 +647,10 @@ public class BiomeEditPanel extends CommonPanel
                     Constants.PARAMETER_NUMBER, String.valueOf(this.biome.getCostIncrement())));
 
                 icon = new ItemStack(Material.REDSTONE_TORCH);
-                clickHandler = (panel, user, clickType, i) -> {
-                    Consumer<Number> numberConsumer = number -> {
+                clickHandler = (panel, user, clickType, i) ->
+                {
+                    Consumer<Number> numberConsumer = number ->
+                    {
                         if (number != null)
                         {
                             this.biome.setCostIncrement(number.doubleValue());
@@ -688,6 +694,7 @@ public class BiomeEditPanel extends CommonPanel
 
     /**
      * This method creates top menu buttons, that allows to switch "tabs".
+     *
      * @param menuType Menu Type which button must be constructed.
      * @return PanelItem that represents given menu type.
      */
@@ -709,7 +716,8 @@ public class BiomeEditPanel extends CommonPanel
         {
             case PROPERTIES -> {
                 icon = new ItemStack(Material.CRAFTING_TABLE);
-                clickHandler = (panel, user, clickType, slot) -> {
+                clickHandler = (panel, user, clickType, slot) ->
+                {
                     this.activeMenu = MenuType.PROPERTIES;
                     this.build();
 
@@ -719,7 +727,8 @@ public class BiomeEditPanel extends CommonPanel
             }
             case CHANGE_PROPERTIES -> {
                 icon = new ItemStack(Material.HOPPER);
-                clickHandler = (panel, user, clickType, slot) -> {
+                clickHandler = (panel, user, clickType, slot) ->
+                {
                     this.activeMenu = MenuType.CHANGE_PROPERTIES;
                     this.build();
 
@@ -729,7 +738,8 @@ public class BiomeEditPanel extends CommonPanel
             }
             case UNLOCK_PROPERTIES -> {
                 icon = new ItemStack(Material.DROPPER);
-                clickHandler = (panel, user, clickType, slot) -> {
+                clickHandler = (panel, user, clickType, slot) ->
+                {
                     this.activeMenu = MenuType.UNLOCK_PROPERTIES;
                     this.build();
 
@@ -752,11 +762,6 @@ public class BiomeEditPanel extends CommonPanel
             clickHandler(clickHandler).
             build();
     }
-
-
-    // ---------------------------------------------------------------------
-    // Section: Classes
-    // ---------------------------------------------------------------------
 
 
     /**
@@ -812,6 +817,24 @@ public class BiomeEditPanel extends CommonPanel
         {
             // Do nothing
         }
+    }
+
+
+    // ---------------------------------------------------------------------
+    // Section: Classes
+    // ---------------------------------------------------------------------
+
+
+    /**
+     * This method is used to open GeneratorManagePanel outside this class. It will be much easier to open panel with
+     * single method call then initializing new object.
+     *
+     * @param parentPanel Parent Panel object.
+     * @param biome Biome object.
+     */
+    public static void open(CommonPanel parentPanel, BiomesObject biome)
+    {
+        new BiomeEditPanel(parentPanel, biome).build();
     }
 
 

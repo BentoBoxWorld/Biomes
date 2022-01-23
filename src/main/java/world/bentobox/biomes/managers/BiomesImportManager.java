@@ -608,6 +608,7 @@ public class BiomesImportManager
 
         /**
          * This method creates and adds to list all objects from default.json file.
+         *
          * @param fileName Name of the file.
          * @return List of all objects from default.json that is with T instance.
          */
@@ -645,6 +646,7 @@ public class BiomesImportManager
 
         /**
          * This method creates and adds to list all objects from default.json file.
+         *
          * @param downloadedObject Object that is downloaded.
          * @return List of all objects from default.json that is with T instance.
          */

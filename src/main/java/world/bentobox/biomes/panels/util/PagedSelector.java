@@ -23,6 +23,7 @@ import world.bentobox.biomes.utils.Constants;
 
 /**
  * This single abstract class will manage paged selectors similar to CommonPagedPanel.
+ * @param <T> Object type for paging.
  */
 public abstract class PagedSelector<T>
 {
@@ -101,7 +102,6 @@ public abstract class PagedSelector<T>
         if (size > MAX_ELEMENTS && !(1.0 * size / MAX_ELEMENTS <= this.pageIndex + 1))
         {
             panelBuilder.item(26, this.getButton(CommonButtons.NEXT));
-
         }
 
         // Add previous page button if pageIndex is not 0.
@@ -121,6 +121,7 @@ public abstract class PagedSelector<T>
 
     /**
      * This method returns PanelItem that represents given Button.
+     *
      * @param button Button that must be returned.
      * @return PanelItem with requested functionality.
      */
@@ -186,7 +187,8 @@ public abstract class PagedSelector<T>
 
             icon = new ItemStack(Material.ANVIL);
 
-            clickHandler = (panel, user, clickType, slot) -> {
+            clickHandler = (panel, user, clickType, slot) ->
+            {
                 if (clickType.isRightClick())
                 {
                     // Clear string.
@@ -239,16 +241,19 @@ public abstract class PagedSelector<T>
      */
     private enum CommonButtons
     {
+        /**
+         * Next common buttons.
+         */
         NEXT,
+        /**
+         * Previous common buttons.
+         */
         PREVIOUS,
+        /**
+         * Search common buttons.
+         */
         SEARCH
     }
-
-
-    /**
-     * Current page index.
-     */
-    private int pageIndex;
 
     /**
      * User who opens gui.
@@ -259,4 +264,9 @@ public abstract class PagedSelector<T>
      * Text that contains filter string.
      */
     protected String searchString;
+
+    /**
+     * Current page index.
+     */
+    private int pageIndex;
 }

@@ -46,15 +46,16 @@ public class IslandManagePanel extends CommonPagedPanel<Island>
         // Store bundles in local list to avoid building it every time.
         this.elementList = this.addon.getIslands().getIslands(this.world).stream().
             filter(Island::isOwned).
-            sorted((o1, o2) -> {
+            sorted((o1, o2) ->
+            {
                 User u1 = User.getInstance(o1.getOwner());
                 User u2 = User.getInstance(o2.getOwner());
 
-                if (u1 == null || !u1.isPlayer())
+                if (!u1.isPlayer())
                 {
                     return -1;
                 }
-                else if (u2 == null || !u2.isPlayer())
+                else if (!u2.isPlayer())
                 {
                     return 1;
                 }
@@ -68,17 +69,6 @@ public class IslandManagePanel extends CommonPagedPanel<Island>
 
         this.filterElements = this.elementList;
         this.currentAction = Action.MANAGE_DATA;
-    }
-
-
-    /**
-     * This method build island panel from parent panel.
-     *
-     * @param panel ParentPanel.
-     */
-    public static void open(CommonPanel panel)
-    {
-        new IslandManagePanel(panel).build();
     }
 
 
@@ -124,7 +114,8 @@ public class IslandManagePanel extends CommonPagedPanel<Island>
         else
         {
             this.filterElements = this.elementList.stream().
-                filter(island -> {
+                filter(island ->
+                {
                     // If island name is set and name contains search field, then do not filter out.
                     if (island.getName() != null &&
                         !island.getName().isEmpty() &&
@@ -138,8 +129,7 @@ public class IslandManagePanel extends CommonPagedPanel<Island>
                     {
                         User member = User.getInstance(uuid);
 
-                        if (member != null &&
-                            member.isPlayer() &&
+                        if (member.isPlayer() &&
                             member.getName().toLowerCase().contains(this.searchString.toLowerCase()))
                         {
                             return true;
@@ -184,12 +174,10 @@ public class IslandManagePanel extends CommonPagedPanel<Island>
         {
             // Deal with situations when island name is not set.
 
-            User user = User.getInstance(island.getOwner());
-
-            if (user != null)
+            if (island.getOwner() != null)
             {
                 name = this.user.getTranslation(reference + "island-owner",
-                    Constants.PARAMETER_PLAYER, user.getName());
+                    Constants.PARAMETER_PLAYER, this.addon.getPlayers().getName(island.getOwner()));
             }
             else
             {
@@ -247,7 +235,8 @@ public class IslandManagePanel extends CommonPagedPanel<Island>
         switch (this.currentAction)
         {
             case MANAGE_DATA -> {
-                clickHandler = (panel, user, clickType, i) -> {
+                clickHandler = (panel, user, clickType, i) ->
+                {
                     IslandEditPanel.open(this, island);
                     // Always return true.
                     return true;
@@ -257,7 +246,8 @@ public class IslandManagePanel extends CommonPagedPanel<Island>
                 description.add(this.user.getTranslation(Constants.TIPS + "click-to-manage"));
             }
             case CLEAR_DATA -> {
-                clickHandler = (panel, user, clickType, i) -> {
+                clickHandler = (panel, user, clickType, i) ->
+                {
 
                     // Create consumer that accepts value from conversation.
                     Consumer<Boolean> consumer = value ->
@@ -275,9 +265,9 @@ public class IslandManagePanel extends CommonPagedPanel<Island>
                         consumer,
                         this.user,
                         this.user.getTranslation(Constants.CONVERSATIONS + "confirm-island-data-deletion",
-                            "[player]", User.getInstance(island.getOwner()).getName()),
+                            "[player]", this.addon.getPlayers().getName(island.getOwner())),
                         this.user.getTranslation(Constants.CONVERSATIONS + "island-data-removed",
-                            "[player]", User.getInstance(island.getOwner()).getName()));
+                            "[player]", this.addon.getPlayers().getName(island.getOwner())));
 
 
                     // Always return true.
@@ -311,21 +301,24 @@ public class IslandManagePanel extends CommonPagedPanel<Island>
     {
         String name = this.user.getTranslation(Constants.BUTTON + button.name().toLowerCase() + ".name");
         List<String> description = new ArrayList<>();
-        description.add(this.user.getTranslationOrNothing(Constants.BUTTON + button.name().toLowerCase() + ".description"));
+        description.add(this.user.getTranslationOrNothing(
+            Constants.BUTTON + button.name().toLowerCase() + ".description"));
         description.add("");
         description.add(this.user.getTranslation(Constants.TIPS + "click-to-view"));
 
-        PanelItem.ClickHandler clickHandler = (panel, user, clickType, i) -> {
+        PanelItem.ClickHandler clickHandler = (panel, user, clickType, i) ->
+        {
             this.activeTab = button;
 
             this.build();
             return true;
         };
 
-        Material material = switch (button) {
-            case IS_ONLINE -> Material.WRITTEN_BOOK;
-            case ALL_ISLANDS -> Material.CHEST;
-        };
+        Material material = switch (button)
+            {
+                case IS_ONLINE -> Material.WRITTEN_BOOK;
+                case ALL_ISLANDS -> Material.CHEST;
+            };
 
         return new PanelItemBuilder().
             name(name).
@@ -347,21 +340,24 @@ public class IslandManagePanel extends CommonPagedPanel<Island>
     {
         String name = this.user.getTranslation(Constants.BUTTON + button.name().toLowerCase() + ".name");
         List<String> description = new ArrayList<>();
-        description.add(this.user.getTranslationOrNothing(Constants.BUTTON + button.name().toLowerCase() + ".description"));
+        description.add(this.user.getTranslationOrNothing(
+            Constants.BUTTON + button.name().toLowerCase() + ".description"));
         description.add("");
         description.add(this.user.getTranslation(Constants.TIPS + "click-to-select"));
 
-        PanelItem.ClickHandler clickHandler = (panel, user, clickType, i) -> {
+        PanelItem.ClickHandler clickHandler = (panel, user, clickType, i) ->
+        {
             this.currentAction = button;
 
             this.build();
             return true;
         };
 
-        Material material = switch (button) {
-            case MANAGE_DATA -> Material.CRAFTING_TABLE;
-            case CLEAR_DATA -> Material.LAVA_BUCKET;
-        };
+        Material material = switch (button)
+            {
+                case MANAGE_DATA -> Material.CRAFTING_TABLE;
+                case CLEAR_DATA -> Material.LAVA_BUCKET;
+            };
 
         return new PanelItemBuilder().
             name(name).
@@ -370,6 +366,17 @@ public class IslandManagePanel extends CommonPagedPanel<Island>
             clickHandler(clickHandler).
             glow(this.currentAction == button).
             build();
+    }
+
+
+    /**
+     * This method build island panel from parent panel.
+     *
+     * @param panel ParentPanel.
+     */
+    public static void open(CommonPanel panel)
+    {
+        new IslandManagePanel(panel).build();
     }
 
 
@@ -409,6 +416,10 @@ public class IslandManagePanel extends CommonPagedPanel<Island>
         CLEAR_DATA
     }
 
+    /**
+     * This variable stores all islands in the given world.
+     */
+    private final List<Island> elementList;
 
     /**
      * Allows switching between active tabs.
@@ -419,11 +430,6 @@ public class IslandManagePanel extends CommonPagedPanel<Island>
      * Allows switching active action.
      */
     private Action currentAction;
-
-    /**
-     * This variable stores all islands in the given world.
-     */
-    private final List<Island> elementList;
 
     /**
      * This variable stores all islands in the given world.

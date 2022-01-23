@@ -18,7 +18,7 @@ import world.bentobox.bentobox.api.addons.Pladdon;
 /**
  * @author tastybento
  */
-@Plugin(name="Pladdon", version="1.0")
+@Plugin(name = "Pladdon", version = "1.0")
 @ApiVersion(ApiVersion.Target.v1_17)
 @Dependency(value = "BentoBox")
 public class BiomesPladdon extends Pladdon

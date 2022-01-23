@@ -3,7 +3,6 @@ package world.bentobox.biomes.tasks;
 
 import java.util.Queue;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -29,6 +28,7 @@ public class BiomeUpdateTask
 {
     /**
      * Default Update task constructor.
+     *
      * @param addon BiomeAddon object.
      * @param user Player who calls biome update.
      * @param biome BiomeObject that will changed.
@@ -62,7 +62,8 @@ public class BiomeUpdateTask
 
         for (int x = this.minCoordinate.getBlockX() >> 4, maxX = this.maxCoordinate.getBlockX() >> 4; x <= maxX; x++)
         {
-            for (int z = this.minCoordinate.getBlockZ() >> 4, maxZ = this.maxCoordinate.getBlockZ() >> 4; z <= maxZ; z++)
+            for (int z = this.minCoordinate.getBlockZ() >> 4, maxZ = this.maxCoordinate.getBlockZ() >> 4; z <= maxZ;
+                z++)
             {
                 this.chunksToUpdate.add(this.constructChunkData(x, z));
             }
@@ -95,7 +96,9 @@ public class BiomeUpdateTask
                 // Done
                 updateQueue.getProcessStartMap().remove(this);
                 this.result.complete(UpdateQueue.Result.TIMEOUT);
-                this.addon.logError("Biome change timed out after " + this.addon.getSettings().getChangeTimeout() + "m for user: " + this.user.getName());
+                this.addon.logError(
+                    "Biome change timed out after " + this.addon.getSettings().getChangeTimeout() + "m for user: " +
+                        this.user.getName());
                 return;
             }
 
@@ -130,6 +133,7 @@ public class BiomeUpdateTask
 
     /**
      * Scan the next chunk on the island
+     *
      * @return completable boolean future that will be true if more chunks are left to be scanned, and false if not
      */
     private CompletableFuture<Boolean> scanNextChunk()
@@ -280,10 +284,11 @@ public class BiomeUpdateTask
 // Section: Setters
 // ---------------------------------------------------------------------
 
+
     /**
      * This method sets the world value.
-     * @param world the world new value.
      *
+     * @param world the world new value.
      */
     public void setWorld(World world)
     {
@@ -371,7 +376,8 @@ public class BiomeUpdateTask
 
 
     /**
-     * The record that contains info about chunk coordinates and limit of blocks where biome must be updated inside chunk.
+     * The record that contains info about chunk coordinates and limit of blocks where biome must be updated inside
+     * chunk.
      */
     private record ChunkData(int chunkX, int chunkZ, int minX, int minY, int minZ, int maxX, int maxY, int maxZ)
     {

@@ -25,6 +25,7 @@ public class UpdateQueue
 {
     /**
      * Initializes biome update queue.
+     *
      * @param addon Biomes Addon instance.
      */
     public UpdateQueue(BiomesAddon addon)
@@ -36,7 +37,8 @@ public class UpdateQueue
         this.timer = new AtomicLong(0);
         this.counter = new AtomicLong(0);
 
-        this.task = Bukkit.getScheduler().runTaskTimer(BentoBox.getInstance(), () -> {
+        this.task = Bukkit.getScheduler().runTaskTimer(BentoBox.getInstance(), () ->
+        {
             if (!BentoBox.getInstance().isEnabled() || !this.addon.isEnabled())
             {
                 this.cancel();
@@ -49,7 +51,8 @@ public class UpdateQueue
                 return;
             }
 
-            for (int i = 0; i < this.addon.getSettings().getConcurrentBiomeUpdates() && !this.processQueue.isEmpty(); i++)
+            for (int i = 0; i < this.addon.getSettings().getConcurrentBiomeUpdates() && !this.processQueue.isEmpty();
+                i++)
             {
                 BiomeUpdateTask updateTask = this.processQueue.poll();
                 // Notify starting
@@ -142,6 +145,7 @@ public class UpdateQueue
 
     /**
      * Get the average time it takes to run a level check
+     *
      * @return the average time in seconds
      */
     public int getQueueTime()
@@ -164,6 +168,7 @@ public class UpdateQueue
 
     /**
      * Gets average time per processing a chunk.
+     *
      * @return the chunk time
      */
     public double getChunkTime()

@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * The type Library entry.
+ *
  * @param name Name of the library entry
  * @param icon Icon of the library entry
  * @param description Description of the library entry
@@ -26,28 +27,29 @@ import org.jetbrains.annotations.NotNull;
 public record LibraryEntry(String name, Material icon, String description, String repository,
                            String language, int slot, String gameMode, String author, String version)
 {
-	/**
-	 * Default constructor.
-	 * @param object Json Object that must be translated to LibraryEntry.
-	 */
-	public static LibraryEntry fromJson(@NotNull JsonObject object)
-	{
-		Material material = Material.matchMaterial(object.get("icon").getAsString());
+    /**
+     * Default constructor.
+     *
+     * @param object Json Object that must be translated to LibraryEntry.
+     */
+    public static LibraryEntry fromJson(@NotNull JsonObject object)
+    {
+        Material material = Material.matchMaterial(object.get("icon").getAsString());
 
-		return new LibraryEntry(object.get("name").getAsString(),
-			(material != null) ? material : Material.PAPER,
-			object.get("description").getAsString(),
-			object.get("repository").getAsString(),
-			object.get("language").getAsString(),
-			object.get("slot").getAsInt(),
-			object.get("for").getAsString(),
-			object.get("author").getAsString(),
-			object.get("version").getAsString());
-	}
+        return new LibraryEntry(object.get("name").getAsString(),
+            (material != null) ? material : Material.PAPER,
+            object.get("description").getAsString(),
+            object.get("repository").getAsString(),
+            object.get("language").getAsString(),
+            object.get("slot").getAsInt(),
+            object.get("for").getAsString(),
+            object.get("author").getAsString(),
+            object.get("version").getAsString());
+    }
 
 
-	public static LibraryEntry fromTemplate(String name, Material icon)
-	{
-		return new LibraryEntry(name, icon, "", "", "", 0, "", "", "");
-	}
+    public static LibraryEntry fromTemplate(String name, Material icon)
+    {
+        return new LibraryEntry(name, icon, "", "", "", 0, "", "", "");
+    }
 }

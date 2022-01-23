@@ -282,7 +282,8 @@ public class BundleManagePanel extends CommonPagedPanel<BiomesBundleObject>
         }
 
 
-        PanelItem.ClickHandler clickHandler = (panel, user, clickType, i) -> {
+        PanelItem.ClickHandler clickHandler = (panel, user, clickType, i) ->
+        {
             // Click handler should work only if user has a permission to change anything.
             // Otherwise just to view.
 

@@ -17,7 +17,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import world.bentobox.bentobox.api.panels.Panel;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.TemplatedPanel;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
@@ -62,25 +61,6 @@ public class BiomesPanel extends CommonPanel
         this.islandData = this.manager.validateIslandData(this.island);
         // Store biomes in local list to avoid building it every time.
         this.biomeList = this.manager.getIslandBiomes(world, this.islandData);
-    }
-
-
-    /**
-     * Open the Biomes GUI.
-     *
-     * @param addon the addon
-     * @param world the world
-     * @param user the user
-     * @param topLabel the top label
-     * @param permissionPrefix the permission prefix
-     */
-    public static void open(BiomesAddon addon,
-        World world,
-        User user,
-        String topLabel,
-        String permissionPrefix)
-    {
-        new BiomesPanel(addon, world, user, topLabel, permissionPrefix).build();
     }
 
 
@@ -212,7 +192,8 @@ public class BiomesPanel extends CommonPanel
         // Get only possible actions, by removing all inactive ones.
         List<ItemTemplateRecord.ActionRecords> activeActions = new ArrayList<>(template.actions());
 
-        activeActions.removeIf(action -> {
+        activeActions.removeIf(action ->
+        {
             switch (action.actionType().toUpperCase())
             {
                 case "BUY" -> {
@@ -229,7 +210,8 @@ public class BiomesPanel extends CommonPanel
         });
 
         // Add Click handler
-        builder.clickHandler((panel, user, clickType, i) -> {
+        builder.clickHandler((panel, user, clickType, i) ->
+        {
             for (ItemTemplateRecord.ActionRecords action : activeActions)
             {
                 if (clickType == action.clickType())
@@ -477,14 +459,28 @@ public class BiomesPanel extends CommonPanel
     }
 
 
+    /**
+     * Open the Biomes GUI.
+     *
+     * @param addon the addon
+     * @param world the world
+     * @param user the user
+     * @param topLabel the top label
+     * @param permissionPrefix the permission prefix
+     */
+    public static void open(BiomesAddon addon,
+        World world,
+        User user,
+        String topLabel,
+        String permissionPrefix)
+    {
+        new BiomesPanel(addon, world, user, topLabel, permissionPrefix).build();
+    }
+
+
 // ---------------------------------------------------------------------
 // Section: Variables
 // ---------------------------------------------------------------------
-
-    /**
-     * This will be used for paging.
-     */
-    private int biomesIndex;
 
     /**
      * List of biomes that user can change.
@@ -500,4 +496,9 @@ public class BiomesPanel extends CommonPanel
      * Target island data object.
      */
     private final BiomesIslandDataObject islandData;
+
+    /**
+     * This will be used for paging.
+     */
+    private int biomesIndex;
 }

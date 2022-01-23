@@ -148,7 +148,7 @@ public class Constants
      * Reference string to environment parameter in translations.
      */
     public static final String PARAMETER_ENVIRONMENT = "[environment]";
-    
+
     /**
      * Reference string to file parameter in translations.
      */
@@ -218,7 +218,7 @@ public class Constants
      * Reference string to level parameter in translations.
      */
     public static final String PARAMETER_LEVEL = "[level]";
-    
+
     /**
      * Reference string to description parameter in translations.
      */

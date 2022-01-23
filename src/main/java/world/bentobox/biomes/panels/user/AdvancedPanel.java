@@ -57,21 +57,6 @@ public class AdvancedPanel extends CommonPanel
 
 
     /**
-     * Opens Biomes Advanced Change Panel.
-     *
-     * @param parentPanel the parent panel
-     * @param biomesObject the biomes object
-     * @param target the target
-     */
-    public static void open(@NotNull CommonPanel parentPanel,
-        @NotNull BiomesObject biomesObject,
-        @Nullable User target)
-    {
-        new AdvancedPanel(parentPanel, biomesObject, target).build();
-    }
-
-
-    /**
      * Builds the panel.
      */
     protected void build()
@@ -420,19 +405,24 @@ public class AdvancedPanel extends CommonPanel
     }
 
 
+    /**
+     * Opens Biomes Advanced Change Panel.
+     *
+     * @param parentPanel the parent panel
+     * @param biomesObject the biomes object
+     * @param target the target
+     */
+    public static void open(@NotNull CommonPanel parentPanel,
+        @NotNull BiomesObject biomesObject,
+        @Nullable User target)
+    {
+        new AdvancedPanel(parentPanel, biomesObject, target).build();
+    }
+
+
 // ---------------------------------------------------------------------
 // Section: Variables
 // ---------------------------------------------------------------------
-
-    /**
-     * This variable stores update range
-     */
-    private int range = 1;
-
-    /**
-     * This variable stores update mode
-     */
-    private Settings.UpdateMode updateMode;
 
     /**
      * The biome that user can change.
@@ -445,4 +435,14 @@ public class AdvancedPanel extends CommonPanel
      */
     @Nullable
     private final User target;
+
+    /**
+     * This variable stores update range
+     */
+    private int range = 1;
+
+    /**
+     * This variable stores update mode
+     */
+    private Settings.UpdateMode updateMode;
 }

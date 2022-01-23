@@ -40,6 +40,7 @@ public class BiomesAddonManager
 {
     /**
      * This is default constructor for Addon Manager.
+     *
      * @param addon Inits addon manager.
      */
     public BiomesAddonManager(BiomesAddon addon)
@@ -98,6 +99,7 @@ public class BiomesAddonManager
 
     /**
      * This method allows to store single biome object.
+     *
      * @param biome Biome that must be saved in database.
      */
     public void saveBiome(BiomesObject biome)
@@ -108,6 +110,7 @@ public class BiomesAddonManager
 
     /**
      * Loads biomes in cache silently. Used when loading.
+     *
      * @param biome that must be stored.
      * @return true if successful
      */
@@ -119,6 +122,7 @@ public class BiomesAddonManager
 
     /**
      * Load biomes in the cache.
+     *
      * @param biome - biome that must be stored.
      * @param overwrite - true if previous biomes should be overwritten
      * @param user - user making the request
@@ -195,6 +199,9 @@ public class BiomesAddonManager
 
     /**
      * This method migrated all biomes addon data from worldName to addonID format.
+     *
+     * @param user the user
+     * @param world the world
      */
     public void migrateDatabase(User user, World world)
     {
@@ -241,9 +248,9 @@ public class BiomesAddonManager
 
     /**
      * This method migrates biomes object to new id format.
+     *
      * @param world World which biomes must be updated.
-     * @return {@code true} if any biome is updated,
-     * 			{@code false} otherwise.
+     * @return {@code true} if any biome is updated, {@code false} otherwise.
      */
     private boolean migrateBiomes(World world)
     {
@@ -259,13 +266,14 @@ public class BiomesAddonManager
 
         for (BiomesObject biomesObject : objectList)
         {
-            if (biomesObject.getUniqueId().regionMatches(true, 0, world.getName() + "-", 0, world.getName().length() + 1))
+            if (biomesObject.getUniqueId()
+                .regionMatches(true, 0, world.getName() + "-", 0, world.getName().length() + 1))
             {
                 this.biomesDatabase.deleteID(biomesObject.getUniqueId());
                 this.biomesCache.remove(biomesObject.getUniqueId());
 
                 biomesObject.setUniqueId(
-                        addonName + "_" + biomesObject.getUniqueId().substring(world.getName().length() + 1));
+                    addonName + "_" + biomesObject.getUniqueId().substring(world.getName().length() + 1));
 
                 // Update world, as in some situations it was not set.
                 biomesObject.setWorld(Util.getWorld(world).getName());
@@ -319,10 +327,10 @@ public class BiomesAddonManager
         // Find default generator from cache.
         return this.bundleCache.values().stream().
             // Filter generators that starts with name.
-            filter(bundle -> bundle.getUniqueId().startsWith(gameMode.toLowerCase())).
+                filter(bundle -> bundle.getUniqueId().startsWith(gameMode.toLowerCase())).
             // Sort in order: default generators are first, followed by lowest priority,
             // Return as list collection.
-            collect(Collectors.toList());
+                collect(Collectors.toList());
     }
 
 
@@ -529,11 +537,11 @@ public class BiomesAddonManager
      */
     private void updateOwnerBundle(@NotNull Island island, @NotNull BiomesIslandDataObject dataObject)
     {
-        User owner = User.getInstance(island.getOwner());
-
         // Permission check can be done only to a player object.
-        if (owner != null && owner.isPlayer())
+        if (island.getOwner() != null)
         {
+            User owner = User.getInstance(island.getOwner());
+
             // Update max island generation range.
             String permissionBundle = Utils.getPermissionValue(owner,
                 Utils.getPermissionString(island.getWorld(), "[gamemode].biomes.bundle"),
@@ -604,7 +612,7 @@ public class BiomesAddonManager
 
         // If level is null, check value from addon.
         final long islandLevel = level == null ? this.getIslandLevel(island) : level;
-        final User owner = User.getInstance(island.getOwner());
+        final User owner = island.getOwner() == null ? null : User.getInstance(island.getOwner());
 
         this.getIslandBiomes(island.getWorld(), dataObject).stream().
             filter(BiomesObject::isValid).
@@ -774,8 +782,8 @@ public class BiomesAddonManager
 
 
     /**
-     * This method checks if given user can purchase given biomes object. This method includes money withdraw,
-     * so it is assumed, that it is used as check before purchasing.
+     * This method checks if given user can purchase given biomes object. This method includes money withdraw, so it is
+     * assumed, that it is used as check before purchasing.
      *
      * @param user User who will pay for purchase.
      * @param island the island who contains data.
@@ -788,7 +796,7 @@ public class BiomesAddonManager
         @NotNull BiomesIslandDataObject islandData,
         @NotNull BiomesObject biomesObject)
     {
-        final User owner = User.getInstance(island.getOwner());
+        final User owner = island.getOwner() == null ? null : User.getInstance(island.getOwner());
 
         if (islandData.getPurchasedBiomes().contains(biomesObject.getUniqueId()))
         {
@@ -969,6 +977,7 @@ public class BiomesAddonManager
 
     /**
      * This method creates and returns new biome with given uniqueID.
+     *
      * @param uniqueID - new ID for challenge.
      * @param worldName - world name where biome operates.
      * @return biome that is currently created.
@@ -1005,6 +1014,7 @@ public class BiomesAddonManager
 
     /**
      * This method returns biomes that is visible for user in given world.
+     *
      * @param world World in which biomes must be returned.
      * @param user User who will see biomes.
      * @return Visible biome list.
@@ -1017,11 +1027,11 @@ public class BiomesAddonManager
 
         allBiomeList.stream().
             // Filter out all biomes that has a different environment then players world.
-            filter(biomeObject -> user.getWorld().getEnvironment().equals(biomeObject.getEnvironment())).
+                filter(biomeObject -> user.getWorld().getEnvironment().equals(biomeObject.getEnvironment())).
             // Filter out undeployed biomes if visibility mode is set to only deployed
-            filter(BiomesObject::isDeployed).
+                filter(BiomesObject::isDeployed).
             // Filter out biomes which does user not have permissions
-            filter(biomesObject -> biomesObject.getUnlockPermissions().isEmpty() ||
+                filter(biomesObject -> biomesObject.getUnlockPermissions().isEmpty() ||
                 biomesObject.getUnlockPermissions().stream().allMatch(user::hasPermission)).
             forEach(returnBiomesList::add);
 
@@ -1031,6 +1041,7 @@ public class BiomesAddonManager
 
     /**
      * This method returns list with loaded biomes for given world.
+     *
      * @param world World where biome operates.
      * @return list with loaded biomes.
      */
@@ -1044,6 +1055,7 @@ public class BiomesAddonManager
 
     /**
      * This method returns list with loaded biomes for given world.
+     *
      * @param worldName Name of world where biome operates.
      * @return list with loaded biomes.
      */
@@ -1057,8 +1069,8 @@ public class BiomesAddonManager
 
 
     /**
-     * This method returns biome object that hides behind biome name or null, if biome
-     * with name does not exist.
+     * This method returns biome object that hides behind biome name or null, if biome with name does not exist.
+     *
      * @param biomeUniqueID Biome's name.
      * @return BiomesObject that is represented by biome string.
      */
@@ -1097,6 +1109,7 @@ public class BiomesAddonManager
 
     /**
      * Given method removes biome from database and cache.
+     *
      * @param biome Biome that must be removed.
      */
     public void removeBiome(BiomesObject biome)
@@ -1159,6 +1172,7 @@ public class BiomesAddonManager
 
     /**
      * This method returns if in given world biomes are setup.
+     *
      * @param world World that must be checked.
      * @return True if in given world exist biomes.
      */
@@ -1167,12 +1181,13 @@ public class BiomesAddonManager
         String worldName = Util.getWorld(world) == null ? "" : Util.getWorld(world).getName();
 
         return !worldName.isEmpty() &&
-                this.biomesCache.values().stream().anyMatch(biome -> biome.getWorld().equalsIgnoreCase(worldName));
+            this.biomesCache.values().stream().anyMatch(biome -> biome.getWorld().equalsIgnoreCase(worldName));
     }
 
 
     /**
      * This method returns true if in given location exit a greenhouse.
+     *
      * @param world World where greenhouse must be searched.
      * @param x X location.
      * @param y Y location.
@@ -1231,8 +1246,7 @@ public class BiomesAddonManager
 
 
     /**
-     * This method returns if given biome object is purchased.
-     * It also returns true, if unlock cost is not set.
+     * This method returns if given biome object is purchased. It also returns true, if unlock cost is not set.
      *
      * @param islandData the island data
      * @param biomesObject the biomes object
@@ -1261,19 +1275,9 @@ public class BiomesAddonManager
     private final Map<String, BiomesObject> biomesCache;
 
     /**
-     * Variable stores database of biomes objects.
-     */
-    private Database<BiomesObject> biomesDatabase;
-
-    /**
      * Variable stores map that links String to loaded bundle object.
      */
     private final Map<String, BiomesBundleObject> bundleCache;
-
-    /**
-     * Variable stores database of bundle objects.
-     */
-    private Database<BiomesBundleObject> bundleDatabase;
 
     /**
      * Variable stores map that links String to loaded island data object.
@@ -1284,4 +1288,14 @@ public class BiomesAddonManager
      * Variable stores database of island dat objects.
      */
     private final Database<BiomesIslandDataObject> islandDatabase;
+
+    /**
+     * Variable stores database of biomes objects.
+     */
+    private Database<BiomesObject> biomesDatabase;
+
+    /**
+     * Variable stores database of bundle objects.
+     */
+    private Database<BiomesBundleObject> bundleDatabase;
 }

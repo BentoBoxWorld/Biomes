@@ -64,7 +64,8 @@ public abstract class CommonPanel
             description("").
             description(this.user.getTranslationOrNothing(Constants.TIPS + "click-to-quit")).
             icon(Material.OAK_DOOR).
-            clickHandler((panel, user1, clickType, i) -> {
+            clickHandler((panel, user1, clickType, i) ->
+            {
                 this.user.closeInventory();
                 return true;
             }).build();
@@ -94,7 +95,8 @@ public abstract class CommonPanel
             description("").
             description(this.user.getTranslationOrNothing(Constants.TIPS + "click-to-return")).
             icon(Material.OAK_DOOR).
-            clickHandler((panel, user1, clickType, i) -> {
+            clickHandler((panel, user1, clickType, i) ->
+            {
                 this.parentPanel.build();
                 return true;
             }).build();
@@ -114,6 +116,7 @@ public abstract class CommonPanel
 
     /**
      * This method generates biomesObject description.
+     *
      * @param biome Biomes Object.
      * @param target User who is targeted with biomes object.
      * @return String that contains info about biomes object.
@@ -124,7 +127,7 @@ public abstract class CommonPanel
 
         // Get description from custom translations
         String description = this.user.getTranslationOrNothing(
-            "biomes.custom-biome."  + biome.getUniqueId() + ".description");
+            "biomes.custom-biome." + biome.getUniqueId() + ".description");
 
         if (description.isEmpty())
         {
@@ -164,6 +167,7 @@ public abstract class CommonPanel
 
     /**
      * This method generates biomesObject unlock description.
+     *
      * @param biome Biomes object.
      * @param target User who is targeted with biomes object.
      * @return String that contains unlock message.
@@ -227,6 +231,7 @@ public abstract class CommonPanel
 
     /**
      * This method generates price description for changing biome.
+     *
      * @param biome Biome that will be changed.
      * @param target User who is targeted.
      * @return Price description.
@@ -243,6 +248,7 @@ public abstract class CommonPanel
 
     /**
      * This method generates item price description for changing biome.
+     *
      * @param biome Biome that will be changed.
      * @param target User who is targeted.
      * @return Price description.
@@ -311,6 +317,7 @@ public abstract class CommonPanel
 
     /**
      * This method generates permission description for changing biome.
+     *
      * @param biome Biome that will be changed.
      * @param target User who is targeted.
      * @return Permission description.
@@ -356,6 +363,7 @@ public abstract class CommonPanel
 
     /**
      * This method generates biomesObject change description.
+     *
      * @param biome Biomes object.
      * @param target User who is targeted with biomes object.
      * @return String that contains change message.
@@ -414,6 +422,7 @@ public abstract class CommonPanel
 
     /**
      * This method generates price description for changing biome.
+     *
      * @param biome Biome that will be changed.
      * @param target island who is targeted.
      * @return Price description.
@@ -434,7 +443,7 @@ public abstract class CommonPanel
             cost = cost + biome.getCostIncrement() * cost * counter;
         }
 
-        return !this.addon.isEconomyProvided() ||cost <= 0 ? "" :
+        return !this.addon.isEconomyProvided() || cost <= 0 ? "" :
             this.user.getTranslationOrNothing(reference + "money",
                 "[number]", String.valueOf(cost));
     }
@@ -442,6 +451,7 @@ public abstract class CommonPanel
 
     /**
      * This method generates item description for changing biome.
+     *
      * @param biome Biome that will be changed.
      * @param target island who is targeted.
      * @return Item description.
@@ -597,17 +607,8 @@ public abstract class CommonPanel
 
 
     /**
-     * This method reopens given panel.
-     * @param panel Panel that must be reopened.
-     */
-    public static void reopen(CommonPanel panel)
-    {
-        panel.build();
-    }
-
-
-    /**
      * This method finds and try to execute given sub command with given arguments.
+     *
      * @param isPlayerCommand boolean that called command is player command.
      * @param subCommand Sub Command that need to be called.
      * @param arguments List of arguments for current command.
@@ -641,8 +642,9 @@ public abstract class CommonPanel
         {
             Utils.sendMessage(this.user, this.user.getTranslation(Constants.ERRORS + "something-went-wrong"));
             this.addon.logError("Could not find BiomesAddon main command that starts with: " +
-                (isPlayerCommand ? this.addon.getSettings().getPlayerCommand() :
-                    this.addon.getSettings().getAdminCommand()));
+                (
+                    isPlayerCommand ? this.addon.getSettings().getPlayerCommand() :
+                        this.addon.getSettings().getAdminCommand()));
             return;
         }
 
@@ -664,10 +666,20 @@ public abstract class CommonPanel
     }
 
 
+    /**
+     * This method reopens given panel.
+     *
+     * @param panel Panel that must be reopened.
+     */
+    public static void reopen(CommonPanel panel)
+    {
+        panel.build();
+    }
+
+
 // ---------------------------------------------------------------------
 // Section: Variables
 // ---------------------------------------------------------------------
-
 
     /**
      * This variable stores parent gui.

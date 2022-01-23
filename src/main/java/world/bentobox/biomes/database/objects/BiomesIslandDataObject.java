@@ -336,12 +336,6 @@ public class BiomesIslandDataObject implements DataObject
 // Section: Variables
 // ---------------------------------------------------------------------
 
-
-    /**
-     * The constant dummy for non-existing values.
-     */
-    private static final AtomicInteger dummy = new AtomicInteger(0);
-
     /**
      * Unique ID of the island.
      */
@@ -379,4 +373,9 @@ public class BiomesIslandDataObject implements DataObject
      */
     @Expose
     private Map<String, AtomicInteger> biomeChangeCounter = new ConcurrentHashMap<>();
+
+    /**
+     * The constant dummy for non-existing values.
+     */
+    private static final AtomicInteger dummy = new AtomicInteger(0);
 }

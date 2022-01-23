@@ -23,6 +23,9 @@ import world.bentobox.biomes.utils.Constants;
 import world.bentobox.biomes.utils.Utils;
 
 
+/**
+ * This class contains a lot of methods that allows users to interact with plugin through chat
+ */
 public class ConversationUtils
 {
     // ---------------------------------------------------------------------
@@ -41,9 +44,9 @@ public class ConversationUtils
      * @param user User who is targeted with current confirmation.
      */
     public static void createConfirmation(Consumer<Boolean> consumer,
-            User user,
-            @NotNull String question,
-            @Nullable String successMessage)
+        User user,
+        @NotNull String question,
+        @Nullable String successMessage)
     {
         ValidatingPrompt confirmationPrompt = new ValidatingPrompt()
         {
@@ -59,9 +62,9 @@ public class ConversationUtils
             {
                 // Get valid strings from translations
                 String validEntry = user.getTranslation(Constants.CONVERSATIONS + "confirm-string") +
-                        "," + user.getTranslation(Constants.CONVERSATIONS + "deny-string") +
-                        "," + user.getTranslation(Constants.CONVERSATIONS + "exit-string") +
-                        "," + user.getTranslation(Constants.CONVERSATIONS + "cancel-string");
+                    "," + user.getTranslation(Constants.CONVERSATIONS + "deny-string") +
+                    "," + user.getTranslation(Constants.CONVERSATIONS + "exit-string") +
+                    "," + user.getTranslation(Constants.CONVERSATIONS + "cancel-string");
 
                 // Split and check if they exist in valid entries.
                 String[] accepted = validEntry.toLowerCase().replaceAll("\\s", "").split(",");
@@ -77,7 +80,6 @@ public class ConversationUtils
              * @return the prompt
              */
             @Override
-            @Nullable
             protected Prompt acceptValidatedInput(@NotNull ConversationContext context, @NotNull String input)
             {
                 String validEntry = user.getTranslation(Constants.CONVERSATIONS + "confirm-string").toLowerCase();
@@ -96,7 +98,7 @@ public class ConversationUtils
 
                     // Return message about failed operation.
                     return ConversationUtils.endMessagePrompt(
-                            user.getTranslation(Constants.CONVERSATIONS + "cancelled"));
+                        user.getTranslation(Constants.CONVERSATIONS + "cancelled"));
                 }
             }
 
@@ -133,15 +135,16 @@ public class ConversationUtils
      * @param consumer Consumer that accepts player output text.
      * @param validation Function that validates if input value is acceptable.
      * @param question Message that will be displayed in chat when player triggers conversion.
+     * @param successMessage Message that is returned on success.
      * @param failTranslationLocation Message that will be displayed on failed operation.
      * @param user User who is targeted with current confirmation.
      */
     public static void createIDStringInput(Consumer<String> consumer,
-            Function<String, Boolean> validation,
-            User user,
-            @NotNull String question,
-            @Nullable String successMessage,
-            @Nullable String failTranslationLocation)
+        Function<String, Boolean> validation,
+        User user,
+        @NotNull String question,
+        @Nullable String successMessage,
+        @Nullable String failTranslationLocation)
     {
         ValidatingPrompt validatingPrompt = new ValidatingPrompt()
         {
@@ -154,7 +157,8 @@ public class ConversationUtils
              * @return The text to display.
              */
             @Override
-            public String getPromptText(ConversationContext context)
+            @NotNull
+            public String getPromptText(@NotNull ConversationContext context)
             {
                 // Close input GUI.
                 user.closeInventory();
@@ -175,7 +179,7 @@ public class ConversationUtils
              * validity of the input.
              */
             @Override
-            protected boolean isInputValid(ConversationContext context, String input)
+            protected boolean isInputValid(@NotNull ConversationContext context, @NotNull String input)
             {
                 return validation.apply(input);
             }
@@ -194,12 +198,12 @@ public class ConversationUtils
              * correct the input.
              */
             @Override
-            protected String getFailedValidationText(ConversationContext context,
-                    String invalidInput)
+            protected String getFailedValidationText(@NotNull ConversationContext context,
+                @NotNull String invalidInput)
             {
                 return user.getTranslation(failTranslationLocation,
-                        Constants.PARAMETER_ID,
-                        Utils.sanitizeInput(invalidInput));
+                    Constants.PARAMETER_ID,
+                    Utils.sanitizeInput(invalidInput));
             }
 
 
@@ -216,7 +220,7 @@ public class ConversationUtils
              * @return The next Prompt in the prompt graph.
              */
             @Override
-            protected Prompt acceptValidatedInput(ConversationContext context, String input)
+            protected Prompt acceptValidatedInput(@NotNull ConversationContext context, @NotNull String input)
             {
                 // Add answer to consumer.
                 consumer.accept(input);
@@ -231,9 +235,9 @@ public class ConversationUtils
             withLocalEcho(false).
             withTimeout(90).
             // On cancel conversation will be closed.
-            withEscapeSequence(user.getTranslation(Constants.CONVERSATIONS + "cancel-string")).
+                withEscapeSequence(user.getTranslation(Constants.CONVERSATIONS + "cancel-string")).
             // Use null value in consumer to detect if user has abandoned conversation.
-            addConversationAbandonedListener(ConversationUtils.getAbandonListener(consumer, user)).
+                addConversationAbandonedListener(ConversationUtils.getAbandonListener(consumer, user)).
             buildConversation(user.getPlayer()).
             begin();
     }
@@ -244,13 +248,16 @@ public class ConversationUtils
      * message will trigger consumer and gui will reopen.
      *
      * @param consumer Consumer that accepts player output text.
+     * @param user the user
      * @param question Message that will be displayed in chat when player triggers conversion.
+     * @param minValue the min value
+     * @param maxValue the max value
      */
     public static void createNumericInput(Consumer<Number> consumer,
-            @NotNull User user,
-            @NotNull String question,
-            Number minValue,
-            Number maxValue)
+        @NotNull User user,
+        @NotNull String question,
+        Number minValue,
+        Number maxValue)
     {
         // Create NumericPromt instance that will validate and process input.
         NumericPrompt numberPrompt = new NumericPrompt()
@@ -267,7 +274,7 @@ public class ConversationUtils
              * graph.
              */
             @Override
-            protected Prompt acceptValidatedInput(ConversationContext context, Number input)
+            protected Prompt acceptValidatedInput(@NotNull ConversationContext context, @NotNull Number input)
             {
                 // Add answer to consumer.
                 consumer.accept(input);
@@ -285,10 +292,10 @@ public class ConversationUtils
              * @return The validity of the player's input.
              */
             @Override
-            protected boolean isNumberValid(ConversationContext context, Number input)
+            protected boolean isNumberValid(@NotNull ConversationContext context, Number input)
             {
                 return input.doubleValue() >= minValue.doubleValue() &&
-                        input.doubleValue() <= maxValue.doubleValue();
+                    input.doubleValue() <= maxValue.doubleValue();
             }
 
 
@@ -301,9 +308,11 @@ public class ConversationUtils
              * @return A message explaining how to correct the input.
              */
             @Override
-            protected String getInputNotNumericText(ConversationContext context, String invalidInput)
+            protected String getInputNotNumericText(@NotNull ConversationContext context, @NotNull String invalidInput)
             {
-                return user.getTranslation(Constants.CONVERSATIONS + "numeric-only", Constants.PARAMETER_VALUE, invalidInput);
+                return user.getTranslation(Constants.CONVERSATIONS + "numeric-only",
+                    Constants.PARAMETER_VALUE,
+                    invalidInput);
             }
 
 
@@ -316,12 +325,12 @@ public class ConversationUtils
              * @return A message explaining how to correct the input.
              */
             @Override
-            protected String getFailedValidationText(ConversationContext context, Number invalidInput)
+            protected String getFailedValidationText(@NotNull ConversationContext context, Number invalidInput)
             {
                 return user.getTranslation(Constants.CONVERSATIONS + "not-valid-value",
-                        Constants.PARAMETER_VALUE, invalidInput.toString(),
-                        Constants.PARAMETER_MIN, Double.toString(minValue.doubleValue()),
-                        Constants.PARAMETER_MAX, Double.toString(maxValue.doubleValue()));
+                    Constants.PARAMETER_VALUE, invalidInput.toString(),
+                    Constants.PARAMETER_MIN, Double.toString(minValue.doubleValue()),
+                    Constants.PARAMETER_MAX, Double.toString(maxValue.doubleValue()));
             }
 
 
@@ -329,7 +338,7 @@ public class ConversationUtils
              * @see Prompt#getPromptText(ConversationContext)
              */
             @Override
-            public String getPromptText(ConversationContext conversationContext)
+            public @NotNull String getPromptText(@NotNull ConversationContext conversationContext)
             {
                 // Close input GUI.
                 user.closeInventory();
@@ -346,7 +355,7 @@ public class ConversationUtils
             withTimeout(90).
             withEscapeSequence(user.getTranslation(Constants.CONVERSATIONS + "cancel-string")).
             // Use null value in consumer to detect if user has abandoned conversation.
-            addConversationAbandonedListener(ConversationUtils.getAbandonListener(consumer, user)).
+                addConversationAbandonedListener(ConversationUtils.getAbandonListener(consumer, user)).
             buildConversation(user.getPlayer()).
             begin();
     }
@@ -359,13 +368,14 @@ public class ConversationUtils
      * consumer for failure message.
      *
      * @param consumer Consumer that accepts player output text.
-     * @param question Message that will be displayed in chat when player triggers conversion.
      * @param user User who is targeted with current confirmation.
+     * @param question Message that will be displayed in chat when player triggers conversion.
+     * @param successMessage the success message
      */
     public static void createStringListInput(Consumer<List<String>> consumer,
-            User user,
-            @NotNull String question,
-            @NotNull String successMessage)
+        User user,
+        @NotNull String question,
+        @NotNull String successMessage)
     {
         final String SESSION_CONSTANT = Constants.CONVERSATIONS + user.getUniqueId();
 
@@ -424,11 +434,12 @@ public class ConversationUtils
 
 
             @Override
-            public @Nullable Prompt acceptInput(@NotNull ConversationContext context, @Nullable String input)
+            @NotNull
+            public Prompt acceptInput(@NotNull ConversationContext context, @Nullable String input)
             {
                 String[] exit = user.getTranslation(Constants.CONVERSATIONS + "exit-string").
-                        toLowerCase().replaceAll("\\s", "").
-                        split(",");
+                    toLowerCase().replaceAll("\\s", "").
+                    split(",");
 
                 if (input != null && ArrayUtils.contains(exit, input.toLowerCase()))
                 {
@@ -441,9 +452,12 @@ public class ConversationUtils
                 {
                     desc = ((List<String>) context.getSessionData(SESSION_CONSTANT));
                 }
-                if (input != null) {
+
+                if (input != null)
+                {
                     desc.add(ChatColor.translateAlternateColorCodes('&', input));
                 }
+
                 context.setSessionData(SESSION_CONSTANT, desc);
                 return this;
             }
@@ -467,13 +481,14 @@ public class ConversationUtils
      * will trigger consumer and gui will reopen.
      *
      * @param consumer Consumer that accepts player output text.
-     * @param question Message that will be displayed in chat when player triggers conversion.
      * @param user User who is targeted with current confirmation.
+     * @param question Message that will be displayed in chat when player triggers conversion.
+     * @param successMessage the success message
      */
     public static void createStringInput(Consumer<String> consumer,
-            User user,
-            @NotNull String question,
-            @Nullable String successMessage)
+        User user,
+        @NotNull String question,
+        @Nullable String successMessage)
     {
         // Text input message.
         StringPrompt stringPrompt = new StringPrompt()
@@ -498,11 +513,11 @@ public class ConversationUtils
             withPrefix(context -> user.getTranslation(Constants.CONVERSATIONS + "prefix")).
             withFirstPrompt(stringPrompt).
             // On cancel conversation will be closed.
-            withLocalEcho(false).
+                withLocalEcho(false).
             withTimeout(90).
             withEscapeSequence(user.getTranslation(Constants.CONVERSATIONS + "cancel-string")).
             // Use null value in consumer to detect if user has abandoned conversation.
-            addConversationAbandonedListener(ConversationUtils.getAbandonListener(consumer, user)).
+                addConversationAbandonedListener(ConversationUtils.getAbandonListener(consumer, user)).
             buildConversation(user.getPlayer()).
             begin();
     }
@@ -548,9 +563,9 @@ public class ConversationUtils
             if (!abandonedEvent.gracefulExit())
             {
                 consumer.accept(null);
-                // send cancell message
+                // send cancel message
                 abandonedEvent.getContext().getForWhom().sendRawMessage(
-                        user.getTranslation(Constants.CONVERSATIONS + "prefix") +
+                    user.getTranslation(Constants.CONVERSATIONS + "prefix") +
                         user.getTranslation(Constants.CONVERSATIONS + "cancelled"));
             }
         };

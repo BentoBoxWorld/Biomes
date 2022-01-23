@@ -36,8 +36,9 @@ import world.bentobox.biomes.database.objects.BiomesObject;
 public class Utils
 {
     /**
-     * This method groups input items in single itemstack with correct amount and returns it.
-     * Allows to remove duplicate items from list.
+     * This method groups input items in single itemstack with correct amount and returns it. Allows to remove duplicate
+     * items from list.
+     *
      * @param requiredItems Input item list
      * @param ignoreMetaData Set that contains items which can ignore meta data.
      * @return List that contains unique items that cannot be grouped.
@@ -108,12 +109,7 @@ public class Utils
         {
             int numInInventory;
 
-            if (user.getInventory() == null)
-            {
-                // Sanity check. User always has inventory at this point of code.
-                numInInventory = 0;
-            }
-            else if (!ignoreMetaData.isEmpty() && ignoreMetaData.contains(requiredItem.getType()))
+            if (!ignoreMetaData.isEmpty() && ignoreMetaData.contains(requiredItem.getType()))
             {
                 numInInventory = Arrays.stream(user.getInventory().getContents()).
                     filter(Objects::nonNull).
@@ -214,14 +210,14 @@ public class Utils
 
 
     /**
-     * This method returns if given user has a permission to change biome to given biomeId
-     * with given updateMode.
+     * This method returns if given user has a permission to change biome to given biomeId with given updateMode.
+     *
      * @param user User who must be checked for permissions.
      * @param permissionPrefix String that represents gamemode permission prefix.
      * @param updateMode UpdateMode that will be performed in biome change.
      * @param biomeId BiomeObject it that will be applied.
-     * @return {@code true} if user has permissions to change biome with given ID and
-     * update mode, {@code false} otherwise.
+     * @return {@code true} if user has permissions to change biome with given ID and update mode, {@code false}
+     * otherwise.
      */
     public static boolean hasUserUpdateModePermission(User user,
         String permissionPrefix,
@@ -237,8 +233,9 @@ public class Utils
 
 
     /**
-     * Sanitizes the provided input. It replaces spaces and hyphens with underscores and lower cases the input.
-     * This code also removes all color codes from the input.
+     * Sanitizes the provided input. It replaces spaces and hyphens with underscores and lower cases the input. This
+     * code also removes all color codes from the input.
+     *
      * @param input input to sanitize
      * @return sanitized input
      */
@@ -252,22 +249,24 @@ public class Utils
 
 
     /**
-     * This method transforms given World into GameMode name. If world is not a GameMode
-     * world then it returns an empty string.
+     * This method transforms given World into GameMode name. If world is not a GameMode world then it returns an empty
+     * string.
+     *
      * @param world World which gameMode name must be found out.
      * @return GameMode name or empty string if not known.
      */
     public static String getGameMode(World world)
     {
         return BentoBox.getInstance().getIWM().getAddon(world).
-                map(gameModeAddon -> gameModeAddon.getDescription().getName()).
-                orElse("");
+            map(gameModeAddon -> gameModeAddon.getDescription().getName()).
+            orElse("");
     }
 
 
     /**
-     * This method normalizes given coordinate to factor 4.
-     * In Minecraft 1.15 and 1.16, biomes are stored in 4x4x4 blocks.
+     * This method normalizes given coordinate to factor 4. In Minecraft 1.15 and 1.16, biomes are stored in 4x4x4
+     * blocks.
+     *
      * @param coordinate Input coordinate.
      * @return Normalized coordinate.
      */
@@ -279,6 +278,7 @@ public class Utils
 
     /**
      * This method allows to get next value from array list after given value.
+     *
      * @param values Array that should be searched for given value.
      * @param currentValue Value which next element should be found.
      * @param <T> Instance of given object.
@@ -307,6 +307,7 @@ public class Utils
 
     /**
      * This method allows to get previous value from array list after given value.
+     *
      * @param values Array that should be searched for given value.
      * @param currentValue Value which previous element should be found.
      * @param <T> Instance of given object.
@@ -335,6 +336,7 @@ public class Utils
 
     /**
      * This method returns map that contains biomes name as key and biome as value.
+     *
      * @return Map that contains relation from biome name to biome.
      */
     public static Map<String, Biome> getBiomeNameMap()
@@ -360,15 +362,16 @@ public class Utils
      */
     public static boolean isSnowyBiome(Biome biome)
     {
-        return switch (biome) {
-            //case SNOWY_SLOPES:
-            case SNOWY_PLAINS,
-                SNOWY_TAIGA,
-                ICE_SPIKES,
-                FROZEN_RIVER,
-                SNOWY_BEACH -> true;
-            default -> false;
-        };
+        return switch (biome)
+            {
+                //case SNOWY_SLOPES:
+                case SNOWY_PLAINS,
+                    SNOWY_TAIGA,
+                    ICE_SPIKES,
+                    FROZEN_RIVER,
+                    SNOWY_BEACH -> true;
+                default -> false;
+            };
     }
 
 
@@ -380,16 +383,17 @@ public class Utils
      */
     public static boolean isColdBiome(Biome biome)
     {
-        return switch (biome) {
-            case WINDSWEPT_HILLS,
-                WINDSWEPT_GRAVELLY_HILLS,
-                WINDSWEPT_FOREST,
-                TAIGA,
-                OLD_GROWTH_PINE_TAIGA,
-                OLD_GROWTH_SPRUCE_TAIGA,
-                STONY_SHORE -> true;
-            default -> false;
-        };
+        return switch (biome)
+            {
+                case WINDSWEPT_HILLS,
+                    WINDSWEPT_GRAVELLY_HILLS,
+                    WINDSWEPT_FOREST,
+                    TAIGA,
+                    OLD_GROWTH_PINE_TAIGA,
+                    OLD_GROWTH_SPRUCE_TAIGA,
+                    STONY_SHORE -> true;
+                default -> false;
+            };
     }
 
 
@@ -401,23 +405,24 @@ public class Utils
      */
     public static boolean isTemperateBiome(Biome biome)
     {
-        return switch (biome) {
-            case PLAINS,
-                SUNFLOWER_PLAINS,
-                FOREST,
-                FLOWER_FOREST,
-                BIRCH_FOREST,
-                OLD_GROWTH_BIRCH_FOREST,
-                DARK_FOREST,
-                SWAMP,
-                JUNGLE,
-                SPARSE_JUNGLE,
-                BAMBOO_JUNGLE,
-                RIVER,
-                BEACH,
-                MUSHROOM_FIELDS -> true;
-            default -> false;
-        };
+        return switch (biome)
+            {
+                case PLAINS,
+                    SUNFLOWER_PLAINS,
+                    FOREST,
+                    FLOWER_FOREST,
+                    BIRCH_FOREST,
+                    OLD_GROWTH_BIRCH_FOREST,
+                    DARK_FOREST,
+                    SWAMP,
+                    JUNGLE,
+                    SPARSE_JUNGLE,
+                    BAMBOO_JUNGLE,
+                    RIVER,
+                    BEACH,
+                    MUSHROOM_FIELDS -> true;
+                default -> false;
+            };
     }
 
 
@@ -429,17 +434,18 @@ public class Utils
      */
     public static boolean isWarmBiome(Biome biome)
     {
-        return switch (biome) {
-            // case BADLANDS_PLATEAU:
-            case DESERT,
-                SAVANNA,
-                WINDSWEPT_SAVANNA,
-                BADLANDS,
-                ERODED_BADLANDS,
-                WOODED_BADLANDS,
-                SAVANNA_PLATEAU -> true;
-            default -> false;
-        };
+        return switch (biome)
+            {
+                // case BADLANDS_PLATEAU:
+                case DESERT,
+                    SAVANNA,
+                    WINDSWEPT_SAVANNA,
+                    BADLANDS,
+                    ERODED_BADLANDS,
+                    WOODED_BADLANDS,
+                    SAVANNA_PLATEAU -> true;
+                default -> false;
+            };
     }
 
 
@@ -451,18 +457,19 @@ public class Utils
      */
     public static boolean isAquaticBiome(Biome biome)
     {
-        return switch (biome) {
-            case WARM_OCEAN,
-                LUKEWARM_OCEAN,
-                DEEP_LUKEWARM_OCEAN,
-                OCEAN,
-                DEEP_OCEAN,
-                COLD_OCEAN,
-                DEEP_COLD_OCEAN,
-                FROZEN_OCEAN,
-                DEEP_FROZEN_OCEAN -> true;
-            default -> false;
-        };
+        return switch (biome)
+            {
+                case WARM_OCEAN,
+                    LUKEWARM_OCEAN,
+                    DEEP_LUKEWARM_OCEAN,
+                    OCEAN,
+                    DEEP_OCEAN,
+                    COLD_OCEAN,
+                    DEEP_COLD_OCEAN,
+                    FROZEN_OCEAN,
+                    DEEP_FROZEN_OCEAN -> true;
+                default -> false;
+            };
     }
 
 
@@ -486,11 +493,12 @@ public class Utils
      */
     public static boolean isCaveBiome(Biome biome)
     {
-        return switch (biome) {
-            case LUSH_CAVES,
-                DRIPSTONE_CAVES -> true;
-            default -> false;
-        };
+        return switch (biome)
+            {
+                case LUSH_CAVES,
+                    DRIPSTONE_CAVES -> true;
+                default -> false;
+            };
     }
 
 
@@ -502,14 +510,15 @@ public class Utils
      */
     public static boolean isNetherBiome(Biome biome)
     {
-        return switch (biome) {
-            case NETHER_WASTES,
-                SOUL_SAND_VALLEY,
-                CRIMSON_FOREST,
-                WARPED_FOREST,
-                BASALT_DELTAS -> true;
-            default -> false;
-        };
+        return switch (biome)
+            {
+                case NETHER_WASTES,
+                    SOUL_SAND_VALLEY,
+                    CRIMSON_FOREST,
+                    WARPED_FOREST,
+                    BASALT_DELTAS -> true;
+                default -> false;
+            };
     }
 
 
@@ -521,14 +530,15 @@ public class Utils
      */
     public static boolean isTheEndBiome(Biome biome)
     {
-        return switch (biome) {
-            case THE_END,
-                SMALL_END_ISLANDS,
-                END_MIDLANDS,
-                END_HIGHLANDS,
-                END_BARRENS -> true;
-            default -> false;
-        };
+        return switch (biome)
+            {
+                case THE_END,
+                    SMALL_END_ISLANDS,
+                    END_MIDLANDS,
+                    END_HIGHLANDS,
+                    END_BARRENS -> true;
+                default -> false;
+            };
     }
 
 
@@ -593,6 +603,7 @@ public class Utils
 
     /**
      * Prettify World.Environment object for user.
+     *
      * @param object Object that must be pretty.
      * @param user User who will see the object.
      * @return Prettified string for World.Environment.
@@ -604,7 +615,8 @@ public class Utils
         //   environments:
         //     [environment]:
         //       name: [name]
-        String translation = user.getTranslationOrNothing(Constants.ENVIRONMENTS + object.name().toLowerCase() + ".name");
+        String translation =
+            user.getTranslationOrNothing(Constants.ENVIRONMENTS + object.name().toLowerCase() + ".name");
 
         if (!translation.isEmpty())
         {
@@ -647,6 +659,7 @@ public class Utils
 
     /**
      * Prettify World.Environment object description for user.
+     *
      * @param object Object that must be pretty.
      * @param user User who will see the object.
      * @return Prettified description string for World.Environment.
@@ -658,7 +671,8 @@ public class Utils
         //   environments:
         //     [environment]:
         //       description: [text]
-        String translation = user.getTranslationOrNothing(Constants.ENVIRONMENTS + object.name().toLowerCase() + ".description");
+        String translation =
+            user.getTranslationOrNothing(Constants.ENVIRONMENTS + object.name().toLowerCase() + ".description");
 
         if (!translation.isEmpty())
         {
@@ -673,6 +687,7 @@ public class Utils
 
     /**
      * Prettify Material object for user.
+     *
      * @param object Object that must be pretty.
      * @param user User who will see the object.
      * @return Prettified string for Material.
@@ -730,6 +745,7 @@ public class Utils
 
     /**
      * Prettify Material object description for user.
+     *
      * @param object Object that must be pretty.
      * @param user User who will see the object.
      * @return Prettified description string for Material.
@@ -747,7 +763,8 @@ public class Utils
         //   materials:
         //     [material]:
         //       description: [text]
-        String translation = user.getTranslationOrNothing(Constants.MATERIALS + object.name().toLowerCase() + ".description");
+        String translation =
+            user.getTranslationOrNothing(Constants.MATERIALS + object.name().toLowerCase() + ".description");
 
         if (!translation.isEmpty())
         {
@@ -762,6 +779,7 @@ public class Utils
 
     /**
      * Prettify Biome object for user.
+     *
      * @param object Object that must be pretty.
      * @param user User who will see the object.
      * @return Prettified string for Biome.
@@ -819,6 +837,7 @@ public class Utils
 
     /**
      * Prettify Biome object description for user.
+     *
      * @param object Object that must be pretty.
      * @param user User who will see the object.
      * @return Prettified description string for Biome.
@@ -836,7 +855,8 @@ public class Utils
         //   biomes:
         //     [biome]:
         //       description: [text]
-        String translation = user.getTranslationOrNothing(Constants.BIOMES + object.name().toLowerCase() + ".description");
+        String translation =
+            user.getTranslationOrNothing(Constants.BIOMES + object.name().toLowerCase() + ".description");
 
         if (!translation.isEmpty())
         {
@@ -851,6 +871,7 @@ public class Utils
 
     /**
      * Prettify ItemStack object for user.
+     *
      * @param object Object that must be pretty.
      * @param user User who will see the object.
      * @return Prettified string for ItemStack.
@@ -877,24 +898,23 @@ public class Utils
             case POTION, SPLASH_POTION, LINGERING_POTION, TIPPED_ARROW ->
                 // Get Potion Meta
                 translation = prettifyObject(object, (PotionMeta) object.getItemMeta(), user);
-            case PLAYER_HEAD, PLAYER_WALL_HEAD ->
-                translation = prettifyObject(object, (SkullMeta) object.getItemMeta(), user);
-            case ENCHANTED_BOOK ->
-                translation = prettifyObject(object, (EnchantmentStorageMeta) object.getItemMeta(), user);
-            case WRITTEN_BOOK, WRITABLE_BOOK ->
-                translation = prettifyObject(object, (BookMeta) object.getItemMeta(), user);
-            case LEATHER_BOOTS,LEATHER_CHESTPLATE,LEATHER_HELMET,LEATHER_LEGGINGS,LEATHER_HORSE_ARMOR,
-                TRIDENT,CROSSBOW,CHAINMAIL_HELMET,CHAINMAIL_CHESTPLATE,CHAINMAIL_LEGGINGS,CHAINMAIL_BOOTS,IRON_HELMET,
-                IRON_CHESTPLATE,IRON_LEGGINGS,IRON_BOOTS,DIAMOND_HELMET,DIAMOND_CHESTPLATE,DIAMOND_LEGGINGS,DIAMOND_BOOTS,
-                GOLDEN_HELMET,GOLDEN_CHESTPLATE,GOLDEN_LEGGINGS,GOLDEN_BOOTS,NETHERITE_HELMET,NETHERITE_CHESTPLATE,
-                NETHERITE_LEGGINGS,NETHERITE_BOOTS,WOODEN_SWORD,WOODEN_SHOVEL,WOODEN_PICKAXE,WOODEN_AXE,WOODEN_HOE,
-                STONE_SWORD,STONE_SHOVEL,STONE_PICKAXE,STONE_AXE,STONE_HOE,GOLDEN_SWORD,GOLDEN_SHOVEL,GOLDEN_PICKAXE,
-                GOLDEN_AXE,GOLDEN_HOE,IRON_SWORD,IRON_SHOVEL,IRON_PICKAXE,IRON_AXE,IRON_HOE,DIAMOND_SWORD,DIAMOND_SHOVEL,
-                DIAMOND_PICKAXE,DIAMOND_AXE,DIAMOND_HOE,NETHERITE_SWORD,NETHERITE_SHOVEL,NETHERITE_PICKAXE,NETHERITE_AXE,
-                NETHERITE_HOE,TURTLE_HELMET,SHEARS,SHIELD,FLINT_AND_STEEL,BOW ->
-                translation = prettifyObject(object, object.getItemMeta(), user);
-            default ->
-                translation = "";
+            case PLAYER_HEAD, PLAYER_WALL_HEAD -> translation =
+                prettifyObject(object, (SkullMeta) object.getItemMeta(), user);
+            case ENCHANTED_BOOK -> translation =
+                prettifyObject(object, (EnchantmentStorageMeta) object.getItemMeta(), user);
+            case WRITTEN_BOOK, WRITABLE_BOOK -> translation =
+                prettifyObject(object, (BookMeta) object.getItemMeta(), user);
+            case LEATHER_BOOTS, LEATHER_CHESTPLATE, LEATHER_HELMET, LEATHER_LEGGINGS, LEATHER_HORSE_ARMOR,
+                TRIDENT, CROSSBOW, CHAINMAIL_HELMET, CHAINMAIL_CHESTPLATE, CHAINMAIL_LEGGINGS, CHAINMAIL_BOOTS, IRON_HELMET,
+                IRON_CHESTPLATE, IRON_LEGGINGS, IRON_BOOTS, DIAMOND_HELMET, DIAMOND_CHESTPLATE, DIAMOND_LEGGINGS, DIAMOND_BOOTS,
+                GOLDEN_HELMET, GOLDEN_CHESTPLATE, GOLDEN_LEGGINGS, GOLDEN_BOOTS, NETHERITE_HELMET, NETHERITE_CHESTPLATE,
+                NETHERITE_LEGGINGS, NETHERITE_BOOTS, WOODEN_SWORD, WOODEN_SHOVEL, WOODEN_PICKAXE, WOODEN_AXE, WOODEN_HOE,
+                STONE_SWORD, STONE_SHOVEL, STONE_PICKAXE, STONE_AXE, STONE_HOE, GOLDEN_SWORD, GOLDEN_SHOVEL, GOLDEN_PICKAXE,
+                GOLDEN_AXE, GOLDEN_HOE, IRON_SWORD, IRON_SHOVEL, IRON_PICKAXE, IRON_AXE, IRON_HOE, DIAMOND_SWORD, DIAMOND_SHOVEL,
+                DIAMOND_PICKAXE, DIAMOND_AXE, DIAMOND_HOE, NETHERITE_SWORD, NETHERITE_SHOVEL, NETHERITE_PICKAXE, NETHERITE_AXE,
+                NETHERITE_HOE, TURTLE_HELMET, SHEARS, SHIELD, FLINT_AND_STEEL, BOW -> translation =
+                prettifyObject(object, object.getItemMeta(), user);
+            default -> translation = "";
         }
 
         if (!translation.isEmpty())
@@ -1084,7 +1104,8 @@ public class Utils
 
         StringBuilder builder = new StringBuilder();
 
-        itemMeta.getEnchants().forEach((enchantment, level) -> {
+        itemMeta.getEnchants().forEach((enchantment, level) ->
+        {
             builder.append("\n");
             builder.append(user.getTranslationOrNothing(Constants.ITEM_STACKS + "meta.enchant-meta",
                 "[type]", prettifyObject(enchantment, user),
@@ -1127,7 +1148,8 @@ public class Utils
 
         StringBuilder builder = new StringBuilder();
 
-        enchantmentMeta.getEnchants().forEach((enchantment, level) -> {
+        enchantmentMeta.getEnchants().forEach((enchantment, level) ->
+        {
             builder.append("\n");
             builder.append(user.getTranslationOrNothing(Constants.ITEM_STACKS + "meta.enchant-meta",
                 "[type]", prettifyObject(enchantment, user),

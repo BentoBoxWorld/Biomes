@@ -48,18 +48,6 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
 
 
     /**
-     * This method is used to open GeneratorManagePanel outside this class. It will be much easier to open panel with
-     * single method call then initializing new object.
-     *
-     * @param parentPanel Parent Panel object.
-     */
-    public static void open(CommonPanel parentPanel)
-    {
-        new BiomeManagePanel(parentPanel).build();
-    }
-
-
-    /**
      * This method builds this GUI.
      */
     @Override
@@ -94,7 +82,8 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
         else
         {
             this.filterElements = this.elementList.stream().
-                filter(element -> {
+                filter(element ->
+                {
                     // If element name is set and name contains search field, then do not filter out.
                     return element.getBiome().name().toLowerCase().
                         contains(this.searchString.toLowerCase()) ||
@@ -105,11 +94,6 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
                 collect(Collectors.toList());
         }
     }
-
-
-// ---------------------------------------------------------------------
-// Section: Methods
-// ---------------------------------------------------------------------
 
 
     /**
@@ -277,6 +261,11 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
     }
 
 
+// ---------------------------------------------------------------------
+// Section: Methods
+// ---------------------------------------------------------------------
+
+
     /**
      * This method creates button for biomes.
      *
@@ -308,7 +297,8 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
         }
 
 
-        PanelItem.ClickHandler clickHandler = (panel, user, clickType, i) -> {
+        PanelItem.ClickHandler clickHandler = (panel, user, clickType, i) ->
+        {
             // Click handler should work only if user has a permission to change anything.
             // Otherwise just to view.
 
@@ -346,6 +336,18 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
     }
 
 
+    /**
+     * This method is used to open GeneratorManagePanel outside this class. It will be much easier to open panel with
+     * single method call then initializing new object.
+     *
+     * @param parentPanel Parent Panel object.
+     */
+    public static void open(CommonPanel parentPanel)
+    {
+        new BiomeManagePanel(parentPanel).build();
+    }
+
+
     // ---------------------------------------------------------------------
     // Section: Enums
     // ---------------------------------------------------------------------
@@ -377,12 +379,12 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
     private final List<BiomesObject> elementList;
 
     /**
-     * This variable stores all biomes in the given world.
-     */
-    private List<BiomesObject> filterElements;
-
-    /**
      * This variable stores all selected biomes.
      */
     private final Set<BiomesObject> selectedElements;
+
+    /**
+     * This variable stores all biomes in the given world.
+     */
+    private List<BiomesObject> filterElements;
 }

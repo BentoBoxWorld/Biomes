@@ -113,7 +113,8 @@ public class AdminPanel extends CommonPanel
                 description.add("");
                 description.add(this.user.getTranslation(Constants.TIPS + "click-to-open"));
 
-                clickHandler = (panel, user1, clickType, slot) -> {
+                clickHandler = (panel, user1, clickType, slot) ->
+                {
                     IslandManagePanel.open(this);
                     return true;
                 };
@@ -125,7 +126,8 @@ public class AdminPanel extends CommonPanel
                 description.add("");
                 description.add(this.user.getTranslation(Constants.TIPS + "click-to-open"));
 
-                clickHandler = (panel, user1, clickType, slot) -> {
+                clickHandler = (panel, user1, clickType, slot) ->
+                {
                     BiomeManagePanel.open(this);
                     return true;
                 };
@@ -137,7 +139,8 @@ public class AdminPanel extends CommonPanel
                 description.add("");
                 description.add(this.user.getTranslation(Constants.TIPS + "click-to-open"));
 
-                clickHandler = (panel, user1, clickType, slot) -> {
+                clickHandler = (panel, user1, clickType, slot) ->
+                {
                     BundleManagePanel.open(this);
                     return true;
                 };
@@ -149,7 +152,8 @@ public class AdminPanel extends CommonPanel
                 description.add("");
                 description.add(this.user.getTranslation(Constants.TIPS + "click-to-open"));
 
-                clickHandler = (panel, user1, clickType, slot) -> {
+                clickHandler = (panel, user1, clickType, slot) ->
+                {
                     SettingsPanel.open(this);
                     return true;
                 };
@@ -161,7 +165,8 @@ public class AdminPanel extends CommonPanel
                 description.add("");
                 description.add(this.user.getTranslation(Constants.TIPS + "click-to-open"));
 
-                clickHandler = (panel, user1, clickType, slot) -> {
+                clickHandler = (panel, user1, clickType, slot) ->
+                {
                     LibraryPanel.open(this, LibraryPanel.Library.TEMPLATE);
                     return true;
                 };
@@ -173,7 +178,8 @@ public class AdminPanel extends CommonPanel
                 description.add("");
                 description.add(this.user.getTranslation(Constants.TIPS + "click-to-open"));
 
-                clickHandler = (panel, user1, clickType, slot) -> {
+                clickHandler = (panel, user1, clickType, slot) ->
+                {
                     LibraryPanel.open(this, LibraryPanel.Library.WEB);
                     return true;
                 };
@@ -185,9 +191,11 @@ public class AdminPanel extends CommonPanel
                 description.add("");
                 description.add(this.user.getTranslation(Constants.TIPS + "click-to-export"));
 
-                clickHandler = (panel, user1, clickType, slot) -> {
+                clickHandler = (panel, user1, clickType, slot) ->
+                {
                     // This consumer process file exporting after user input is returned.
-                    Consumer<String> fileNameConsumer = value -> {
+                    Consumer<String> fileNameConsumer = value ->
+                    {
                         if (value != null)
                         {
                             this.addon.getImportManager().generateDatabaseFile(this.user,
@@ -225,7 +233,8 @@ public class AdminPanel extends CommonPanel
                 description.add("");
                 description.add(this.user.getTranslation(Constants.TIPS + "click-to-open"));
 
-                clickHandler = (panel, user1, clickType, slot) -> {
+                clickHandler = (panel, user1, clickType, slot) ->
+                {
                     LibraryPanel.open(this, LibraryPanel.Library.DATABASE);
                     return true;
                 };
@@ -238,9 +247,11 @@ public class AdminPanel extends CommonPanel
                 description.add("");
                 description.add(this.user.getTranslation(Constants.TIPS + "click-to-wipe"));
 
-                clickHandler = (panel, user1, clickType, slot) -> {
+                clickHandler = (panel, user1, clickType, slot) ->
+                {
                     // Create consumer that accepts value from conversation.
-                    Consumer<Boolean> consumer = value -> {
+                    Consumer<Boolean> consumer = value ->
+                    {
                         if (value)
                         {
                             this.addon.getAddonManager().
@@ -269,9 +280,11 @@ public class AdminPanel extends CommonPanel
                 description.add("");
                 description.add(this.user.getTranslation(Constants.TIPS + "click-to-wipe"));
 
-                clickHandler = (panel, user1, clickType, slot) -> {
+                clickHandler = (panel, user1, clickType, slot) ->
+                {
                     // Create consumer that accepts value from conversation.
-                    Consumer<Boolean> consumer = value -> {
+                    Consumer<Boolean> consumer = value ->
+                    {
                         if (value)
                         {
                             this.addon.getAddonManager().

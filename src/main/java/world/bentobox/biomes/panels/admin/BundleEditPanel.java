@@ -333,16 +333,18 @@ public class BundleEditPanel extends CommonPagedPanel<BiomesObject>
         description.add("");
         description.add(this.user.getTranslation(Constants.TIPS + "click-to-view"));
 
-        PanelItem.ClickHandler clickHandler = (panel, user, clickType, i) -> {
+        PanelItem.ClickHandler clickHandler = (panel, user, clickType, i) ->
+        {
             this.activeTab = button;
             this.build();
             return true;
         };
 
-        Material material = switch (button) {
-            case BUNDLE_INFO -> Material.WRITTEN_BOOK;
-            case BUNDLE_BIOMES -> Material.CHEST;
-        };
+        Material material = switch (button)
+            {
+                case BUNDLE_INFO -> Material.WRITTEN_BOOK;
+                case BUNDLE_BIOMES -> Material.CHEST;
+            };
 
         return new PanelItemBuilder().
             name(name).
@@ -509,7 +511,8 @@ public class BundleEditPanel extends CommonPagedPanel<BiomesObject>
         }
 
 
-        PanelItem.ClickHandler clickHandler = (panel, user, clickType, i) -> {
+        PanelItem.ClickHandler clickHandler = (panel, user, clickType, i) ->
+        {
             if (this.selectedBiomes.contains(biomesObject))
             {
                 this.selectedBiomes.remove(biomesObject);
@@ -534,24 +537,6 @@ public class BundleEditPanel extends CommonPagedPanel<BiomesObject>
             glow(glow).
             build();
     }
-
-
-    /**
-     * This method is used to open UserPanel outside this class. It will be much easier to open panel with single method
-     * call then initializing new object.
-     *
-     * @param panel Parent Panel
-     * @param bundle Bundle that must be displayed.
-     */
-    public static void open(CommonPanel panel, BiomesBundleObject bundle)
-    {
-        new BundleEditPanel(panel, bundle).build();
-    }
-
-
-    // ---------------------------------------------------------------------
-    // Section: Private Classes
-    // ---------------------------------------------------------------------
 
 
     /**
@@ -608,6 +593,24 @@ public class BundleEditPanel extends CommonPagedPanel<BiomesObject>
         {
             // Do nothing
         }
+    }
+
+
+    // ---------------------------------------------------------------------
+    // Section: Private Classes
+    // ---------------------------------------------------------------------
+
+
+    /**
+     * This method is used to open UserPanel outside this class. It will be much easier to open panel with single method
+     * call then initializing new object.
+     *
+     * @param panel Parent Panel
+     * @param bundle Bundle that must be displayed.
+     */
+    public static void open(CommonPanel panel, BiomesBundleObject bundle)
+    {
+        new BundleEditPanel(panel, bundle).build();
     }
 
 

@@ -60,6 +60,7 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
 
     /**
      * This method returns biomes name.
+     *
      * @return Biomes name.
      */
     public Biome getBiome()
@@ -70,6 +71,7 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
 
     /**
      * This method sets biomes name.
+     *
      * @param biome Biomes name.
      */
     public void setBiome(Biome biome)
@@ -187,7 +189,6 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
 
 
     /**
-     *
      * @return world in which biome operates
      */
     public String getWorld()
@@ -227,6 +228,7 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
 
     /**
      * This method returns the order object.
+     *
      * @return the order object.
      */
     public int getOrder()
@@ -237,8 +239,8 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
 
     /**
      * This method sets the order object value.
-     * @param order the order object new value.
      *
+     * @param order the order object new value.
      */
     public void setOrder(int order)
     {
@@ -248,6 +250,7 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
 
     /**
      * This method returns the permissions object.
+     *
      * @return the permissions object.
      */
     @NotNull
@@ -259,8 +262,8 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
 
     /**
      * This method sets the permissions object value.
-     * @param unlockPermissions the permissions object new value.
      *
+     * @param unlockPermissions the permissions object new value.
      */
     public void setUnlockPermissions(@Nullable Set<String> unlockPermissions)
     {
@@ -270,6 +273,7 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
 
     /**
      * This method returns the environment value.
+     *
      * @return the value of environment.
      */
     public World.Environment getEnvironment()
@@ -280,8 +284,8 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
 
     /**
      * This method sets the environment value.
-     * @param environment the environment new value.
      *
+     * @param environment the environment new value.
      */
     public void setEnvironment(World.Environment environment)
     {
@@ -460,18 +464,19 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
         // Compare by order
         return Comparator.comparingInt(BiomesObject::getOrder).
             // Compare by environment
-            thenComparing(BiomesObject::getEnvironment).
+                thenComparing(BiomesObject::getEnvironment).
             // compare by biome
-            thenComparing(BiomesObject::getBiome).
+                thenComparing(BiomesObject::getBiome).
             // compare by friendly name
-            thenComparing(BiomesObject::getFriendlyName).
+                thenComparing(BiomesObject::getFriendlyName).
             // Provide objects
-            compare(this, object);
+                compare(this, object);
     }
 
 
     /**
      * This method checks if this object is valid.
+     *
      * @return {@code true} if biome is valid, {@code false} otherwise.
      */
     public boolean isValid()

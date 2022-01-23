@@ -34,8 +34,8 @@ import world.bentobox.biomes.utils.Utils;
 
 
 /**
- * This class helps to validate if user can change biome. It also calculates how large
- * update must be and calls update task.
+ * This class helps to validate if user can change biome. It also calculates how large update must be and calls update
+ * task.
  */
 public class BiomeUpdateHelper
 {
@@ -53,14 +53,14 @@ public class BiomeUpdateHelper
      * @param canWithdraw the can withdraw
      */
     public BiomeUpdateHelper(BiomesAddon addon,
-            User callerUser,
-            User targetUser,
-            BiomesObject biome,
-            BiomesIslandDataObject islandData,
-            World world,
-            UpdateMode updateMode,
-            int range,
-            boolean canWithdraw)
+        User callerUser,
+        User targetUser,
+        BiomesObject biome,
+        BiomesIslandDataObject islandData,
+        World world,
+        UpdateMode updateMode,
+        int range,
+        boolean canWithdraw)
     {
         this.addon = addon;
         this.callerUser = callerUser;
@@ -80,7 +80,8 @@ public class BiomeUpdateHelper
 
     /**
      * This method returns if update tack can be called.
-     * @return <code>true</code> if user can change biome.
+     *
+     * @return {@code true} if user can change biome.
      */
     public boolean canChangeBiome()
     {
@@ -88,12 +89,14 @@ public class BiomeUpdateHelper
         if (!this.biome.getEnvironment().equals(World.Environment.NORMAL))
         {
             // Check if nether and the end islands are enabled.
-            if ((!this.biome.getEnvironment().equals(World.Environment.NETHER) ||
+            if ((
+                !this.biome.getEnvironment().equals(World.Environment.NETHER) ||
                     !this.addon.getPlugin().getIWM().isNetherGenerate(this.world) ||
                     !this.addon.getPlugin().getIWM().isNetherIslands(this.world)) &&
-                    (!this.biome.getEnvironment().equals(World.Environment.THE_END) ||
-                            !this.addon.getPlugin().getIWM().isEndGenerate(this.world) ||
-                            !this.addon.getPlugin().getIWM().isEndIslands(this.world)))
+                (
+                    !this.biome.getEnvironment().equals(World.Environment.THE_END) ||
+                        !this.addon.getPlugin().getIWM().isEndGenerate(this.world) ||
+                        !this.addon.getPlugin().getIWM().isEndIslands(this.world)))
             {
                 Utils.sendMessage(this.callerUser,
                     this.callerUser.getTranslation("general.errors.wrong-world"));
@@ -189,11 +192,11 @@ public class BiomeUpdateHelper
 
             // Process biome mode cost
             return switch (this.biome.getCostMode())
-            {
-                case PER_BLOCK -> this.checkPerBlockCost();
-                case PER_USAGE ->  this.checkPerUsageCost();
-                case STATIC -> this.checkStaticCost();
-            };
+                {
+                    case PER_BLOCK -> this.checkPerBlockCost();
+                    case PER_USAGE -> this.checkPerUsageCost();
+                    case STATIC -> this.checkStaticCost();
+                };
         }
         else
         {
@@ -210,7 +213,7 @@ public class BiomeUpdateHelper
                     else
                     {
                         this.addon.logWarning("Biome change is not possible with Island mode " +
-                                "for this world as BIOMES_WORLD_PROTECTION is disabled!");
+                            "for this world as BIOMES_WORLD_PROTECTION is disabled!");
                     }
 
                     return false;
@@ -244,7 +247,7 @@ public class BiomeUpdateHelper
                 // Chunk and square based update modes can be called only by player.
 
                 Optional<Island> onIsland =
-                        this.addon.getIslands().getIslandAt(this.callerUser.getLocation());
+                    this.addon.getIslands().getIslandAt(this.callerUser.getLocation());
 
                 if (onIsland.isEmpty() || onIsland.get() != this.island)
                 {
@@ -266,12 +269,13 @@ public class BiomeUpdateHelper
                 // Check if target user is his island.
 
                 Optional<Island> onIsland =
-                        this.addon.getIslands().getIslandAt(this.targetUser.getLocation());
+                    this.addon.getIslands().getIslandAt(this.targetUser.getLocation());
 
                 if (onIsland.isEmpty() || onIsland.get() != this.island)
                 {
                     // Admin is not on user island.
-                    this.addon.logWarning("Biome change for player " + this.targetUser.getName() + " is not possible as he is not on his island!");
+                    this.addon.logWarning("Biome change for player " + this.targetUser.getName() +
+                        " is not possible as he is not on his island!");
                     return false;
                 }
 
@@ -451,11 +455,12 @@ public class BiomeUpdateHelper
         // Take required cost.
 
         boolean runTask = !this.canWithdraw ||
-            switch (this.biome.getCostMode()) {
-            case PER_BLOCK -> this.withdrawPerBlock();
-            case PER_USAGE ->  this.withdrawPerUsage();
-            case STATIC -> this.withdrawStatic();
-        };
+            switch (this.biome.getCostMode())
+                {
+                    case PER_BLOCK -> this.withdrawPerBlock();
+                    case PER_USAGE -> this.withdrawPerUsage();
+                    case STATIC -> this.withdrawStatic();
+                };
 
         if (runTask)
         {
@@ -470,8 +475,9 @@ public class BiomeUpdateHelper
                 switch (result)
                 {
                     case FINISHED -> {
-                        Utils.sendMessage(this.callerUser, this.callerUser.getTranslation(Constants.MESSAGES + "update-done",
-                            "[biome]", this.biome.getFriendlyName()));
+                        Utils.sendMessage(this.callerUser,
+                            this.callerUser.getTranslation(Constants.MESSAGES + "update-done",
+                                "[biome]", this.biome.getFriendlyName()));
 
                         this.addon.log(this.callerUser.getName() + " changed biome in loaded chunks to " +
                             this.biome.getFriendlyName() + " from" +
@@ -481,7 +487,8 @@ public class BiomeUpdateHelper
                             " location=" + this.standingLocation.toVector());
                     }
                     case TIMEOUT -> {
-                        Utils.sendMessage(this.callerUser, this.callerUser.getTranslation(Constants.ERRORS + "timeout"));
+                        Utils.sendMessage(this.callerUser,
+                            this.callerUser.getTranslation(Constants.ERRORS + "timeout"));
 
                         this.addon.logWarning(this.callerUser.getName() + " timeout while changing biome to " +
                             this.biome.getFriendlyName() + " from" +
@@ -557,12 +564,7 @@ public class BiomeUpdateHelper
             int amountToBeRemoved = required.getAmount();
             List<ItemStack> itemsInInventory;
 
-            if (this.callerUser.getInventory() == null)
-            {
-                // Sanity check. User always has inventory at this point of code.
-                itemsInInventory = Collections.emptyList();
-            }
-            else if (ignoreMetaData.contains(required.getType()))
+            if (ignoreMetaData.contains(required.getType()))
             {
                 // Use collecting method that ignores item meta.
                 itemsInInventory = Arrays.stream(this.callerUser.getInventory().getContents()).
@@ -660,7 +662,8 @@ public class BiomeUpdateHelper
         if (!this.biome.getItemCost().isEmpty())
         {
             List<ItemStack> itemCost = Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet());
-            itemCost.forEach(itemStack -> itemStack.setAmount(itemStack.getAmount() + (int) increment * itemStack.getAmount()));
+            itemCost.forEach(itemStack -> itemStack.setAmount(
+                itemStack.getAmount() + (int) increment * itemStack.getAmount()));
 
             return !this.failWithdrawItems(itemCost, Collections.emptySet());
         }
@@ -695,6 +698,7 @@ public class BiomeUpdateHelper
 
     /**
      * This method checks if given biome object is unlocked for island.
+     *
      * @return {@code true} if biomeObject is unlocked, {@code false} otherwise.
      */
     private boolean checkUnlockStatus()
@@ -705,6 +709,7 @@ public class BiomeUpdateHelper
 
     /**
      * This method checks if given biome object is purchased for island.
+     *
      * @return {@code true} if biomeObject is unlocked, {@code false} otherwise.
      */
     private boolean checkPurchaseStatus()
@@ -738,7 +743,8 @@ public class BiomeUpdateHelper
         {
             List<ItemStack> missingItemList = new ArrayList<>();
 
-            Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()).forEach(item -> {
+            Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()).forEach(item ->
+            {
                 if (!Utils.hasRequiredItem(this.callerUser, item, Collections.emptySet()))
                 {
                     missingItemList.add(item.clone());
@@ -795,7 +801,8 @@ public class BiomeUpdateHelper
         {
             List<ItemStack> missingItemList = new ArrayList<>();
 
-            Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()).forEach(item -> {
+            Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()).forEach(item ->
+            {
                 ItemStack clone = item.clone();
                 // Increase items by increment.
                 clone.setAmount(clone.getAmount() + clone.getAmount() * (int) increment);
@@ -838,7 +845,6 @@ public class BiomeUpdateHelper
     }
 
 
-
     /**
      * Check per block cost boolean.
      *
@@ -868,7 +874,8 @@ public class BiomeUpdateHelper
         {
             List<ItemStack> missingItemList = new ArrayList<>();
 
-            Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()).forEach(item -> {
+            Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()).forEach(item ->
+            {
                 ItemStack clone = item.clone();
                 // Increase items by increment.
                 clone.setAmount(clone.getAmount() * blockCount);
@@ -915,20 +922,22 @@ public class BiomeUpdateHelper
 
     /**
      * This method checks if user has all required permissions.
+     *
      * @return true if user has all required permissions, otherwise false.
      */
     private boolean checkPermissions()
     {
         return this.biome.getUnlockPermissions().isEmpty() ||
-                this.biome.getUnlockPermissions().stream().allMatch(this.callerUser::hasPermission);
+            this.biome.getUnlockPermissions().stream().allMatch(this.callerUser::hasPermission);
     }
 
 
     /**
-     * This method returns if the caller user have a permission to change biome with a given
-     * update mode for given biomeObject.
-     * @return {@code true} if caller has permission to use given update mode on given biomeObject
-     * {@code false} otherwise.
+     * This method returns if the caller user have a permission to change biome with a given update mode for given
+     * biomeObject.
+     *
+     * @return {@code true} if caller has permission to use given update mode on given biomeObject {@code false}
+     * otherwise.
      */
     public boolean hasPermissionToUpdateMode()
     {
@@ -991,8 +1000,8 @@ public class BiomeUpdateHelper
     private final boolean canWithdraw;
 
     /**
-     * This variable stores if world protection flag is enabled. Avoids checking it each
-     * time as flag will not change its value while updating.
+     * This variable stores if world protection flag is enabled. Avoids checking it each time as flag will not change
+     * its value while updating.
      */
     private final boolean worldProtectionFlag;
 
