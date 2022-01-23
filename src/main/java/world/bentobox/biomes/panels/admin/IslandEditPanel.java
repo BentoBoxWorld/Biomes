@@ -168,7 +168,7 @@ public class IslandEditPanel extends CommonPagedPanel<BiomesObject>
                     this.manager.saveIslandData(this.islandData);
                     this.build();
                 }
-                else if (!this.islandData.isPurchased(biomesObject))
+                else if (!this.manager.isPurchased(this.islandData, biomesObject))
                 {
                     this.islandData.purchaseBiome(biomesObject);
                     this.manager.saveIslandData(this.islandData);
