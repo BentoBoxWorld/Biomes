@@ -563,7 +563,7 @@ public class Utils
 
         WorldSettings settings = addon.getPlugin().getIWM().getWorldSettings(island.getWorld());
 
-        if (settings != null && user != null && user.isOnline())
+        if (user.isOnline())
         {
             TextComponent component;
 
@@ -572,27 +572,17 @@ public class Utils
             commandBuilder.append(settings.getPlayerCommandAliases().split(" ")[0]);
             commandBuilder.append(" ");
             commandBuilder.append(addon.getSettings().getPlayerCommand().split(" ")[0]);
-            commandBuilder.append(" ");
 
             if (!available)
             {
                 component = new TextComponent(user.getTranslation(Constants.CONVERSATIONS + "click-text-to-purchase",
-                    Constants.PARAMETER_BIOME, biome.getFriendlyName(),
-                    Constants.PARAMETER_NUMBER, String.valueOf(biome.getUnlockCost())));
-
-                commandBuilder.append(addon.getSettings().getPlayerBuyCommand().split(" ")[0]);
+                    Constants.PARAMETER_BIOME, biome.getFriendlyName()));
             }
             else
             {
-                component =
-                    new TextComponent(user.getTranslation(Constants.CONVERSATIONS + "click-text-to-set",
-                        Constants.PARAMETER_BIOME, biome.getFriendlyName()));
-
-                commandBuilder.append(addon.getSettings().getPlayerCommand().split(" ")[0]);
+                component = new TextComponent(user.getTranslation(Constants.CONVERSATIONS + "click-text-to-set",
+                    Constants.PARAMETER_BIOME, biome.getFriendlyName()));
             }
-
-            commandBuilder.append(" ");
-            commandBuilder.append(biome.getUniqueId());
 
             component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, commandBuilder.toString()));
 
