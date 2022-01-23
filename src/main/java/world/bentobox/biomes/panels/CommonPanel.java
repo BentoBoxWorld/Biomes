@@ -230,7 +230,7 @@ public abstract class CommonPanel
      */
     private String generateUnlockPrice(BiomesObject biome, @Nullable User target)
     {
-        final String reference = Constants.DESCRIPTIONS + "biomes.unlock.";
+        final String reference = Constants.DESCRIPTIONS + "biome.unlock.";
 
         return !this.addon.isEconomyProvided() || biome.getUnlockCost() <= 0 ? "" :
             this.user.getTranslationOrNothing(reference + "money",
@@ -372,6 +372,7 @@ public abstract class CommonPanel
         String mode = this.user.getTranslationOrNothing(reference + "mode." + biome.getCostMode().name().toLowerCase());
         String items = this.generateChangeItemPrice(biome, islandData);
         String price = this.generateChangePrice(biome, islandData);
+        String usage = this.generateUsageText(biome, islandData);
 
         if (items.isEmpty() && price.isEmpty())
         {
@@ -382,7 +383,29 @@ public abstract class CommonPanel
         return this.user.getTranslationOrNothing(reference + "lore",
             "[mode]", mode,
             "[items]", items,
-            "[money]", price);
+            "[money]", price,
+            "[usage]", usage);
+    }
+
+
+    /**
+     * Generate usage text string.
+     *
+     * @param biome the biome
+     * @param islandData the island data
+     * @return the string
+     */
+    private String generateUsageText(BiomesObject biome, @Nullable BiomesIslandDataObject islandData)
+    {
+        final String reference = Constants.DESCRIPTIONS + "biome.change.";
+
+        if (islandData == null)
+        {
+            return "";
+        }
+
+        return this.user.getTranslation(reference + "number-of-usage",
+            "[number]", String.valueOf(islandData.getBiomeChangeCounter(biome)));
     }
 
 
@@ -394,7 +417,7 @@ public abstract class CommonPanel
      */
     private String generateChangePrice(BiomesObject biome, @Nullable BiomesIslandDataObject target)
     {
-        final String reference = Constants.DESCRIPTIONS + "biomes.change.";
+        final String reference = Constants.DESCRIPTIONS + "biome.change.";
 
         double cost = biome.getCost();
 

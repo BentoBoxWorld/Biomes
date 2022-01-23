@@ -8,11 +8,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -465,6 +460,10 @@ public class BiomeUpdateHelper
         if (runTask)
         {
             task.updateChunkQueue();
+
+            // Increase counter.
+            this.islandData.increaseBiomeChangeCounter(this.biome);
+            this.addon.getAddonManager().saveIslandData(this.islandData);
 
             this.addon.getUpdateQueue().addUpdateTask(task).thenAccept((result) ->
             {

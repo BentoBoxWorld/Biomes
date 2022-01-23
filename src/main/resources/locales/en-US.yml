@@ -639,16 +639,17 @@ biomes:
             [items]
             [money]
             [mode]
+            [usage]
           # Text that will replace [mode]
           mode:
             per_block: |-
-              &e Biome costs per each
-              &e changed block.
+              &b&o Biome costs per each
+              &b&o changed block.
             per_usage: |-
-              &e Changing biome increases
-              &e per usage.
+              &b&o Changing biome increases
+              &b&o its price.
             static: |-
-              &7 Standart change price.
+              &b&o Standart change price.
           # Text that will replace [money]
           money: |-
             &7 Cost: &e $[number]
@@ -659,6 +660,10 @@ biomes:
             &7 Items:
           item-list: |-
             &7 - [color] [number] x [item]
+          # Text that shows how many times player has used this biome.
+          number-of-usage: |-
+            |&7 This biome has been
+            &7 applied &e [number] &r&7 times.
           # Text that replaces [color].
           missing: "&c"
           has: "&e"
