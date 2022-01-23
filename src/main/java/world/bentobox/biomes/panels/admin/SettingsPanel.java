@@ -87,7 +87,7 @@ public class SettingsPanel extends CommonPanel
         panelBuilder.item(16, this.createButton(Action.RESET));
 
         panelBuilder.item(23, this.createButton(Action.UNLOCK_NOTIFY));
-
+        panelBuilder.item(24, this.createButton(Action.USE_BANK));
 
         panelBuilder.item(44, this.returnButton);
 
@@ -354,6 +354,35 @@ public class SettingsPanel extends CommonPanel
                 description.add("");
                 description.add(this.user.getTranslation(Constants.TIPS + "click-to-change"));
             }
+            case USE_BANK -> {
+                description.add(this.user.getTranslation(reference +
+                    (this.settings.isUseBankAccount() ? "enabled" : "disabled")));
+
+                if (this.addon.isBankProvided())
+                {
+                    icon = new ItemStack(Material.DIAMOND);
+                }
+                else
+                {
+                    icon = new ItemStack(Material.BARRIER);
+                    description.add(this.user.getTranslation(reference + "missing"));
+                }
+
+                clickHandler = (panel, user, clickType, i) ->
+                {
+                    this.settings.setUseBankAccount(!this.settings.isUseBankAccount());
+                    this.addon.saveSettings();
+                    // Update button in panel
+                    this.build();
+
+                    return true;
+                };
+
+                glow = this.settings.isUseBankAccount();
+
+                description.add("");
+                description.add(this.user.getTranslation(Constants.TIPS + "click-to-toggle"));
+            }
             default -> {
                 icon = new ItemStack(Material.PAPER);
                 clickHandler = (panel, user1, clickType, slot) -> true;
@@ -443,7 +472,11 @@ public class SettingsPanel extends CommonPanel
         /**
          * Parallel biome updates action.
          */
-        PARALLEL_UPDATES
+        PARALLEL_UPDATES,
+        /**
+         * Use bank action.
+         */
+        USE_BANK
     }
 
 

@@ -9,6 +9,7 @@ package world.bentobox.biomes;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
+import world.bentobox.bank.Bank;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.configuration.Config;
 import world.bentobox.bentobox.api.flags.Flag;
@@ -146,6 +147,17 @@ public class BiomesAddon extends Addon
     public void allLoaded()
     {
         super.allLoaded();
+
+        // Try to find Level addon and if it does not exist, display a warning
+        this.getAddonByName("Bank").ifPresentOrElse(addon ->
+        {
+            this.bankAddon = (Bank) addon;
+            this.bankProvided = true;
+            this.log("Biomes Addon hooked into Bank addon.");
+        }, () ->
+        {
+            this.levelAddon = null;
+        });
 
         // Try to find Level addon and if it does not exist, display a warning
         this.getAddonByName("Level").ifPresentOrElse(addon ->
@@ -392,6 +404,28 @@ public class BiomesAddon extends Addon
     }
 
 
+    /**
+     * Is bank provided boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isBankProvided()
+    {
+        return this.bankProvided;
+    }
+
+
+    /**
+     * Gets bank addon.
+     *
+     * @return the bank addon
+     */
+    public Bank getBankAddon()
+    {
+        return this.bankAddon;
+    }
+
+
 // ---------------------------------------------------------------------
 // Section: Variables
 // ---------------------------------------------------------------------
@@ -447,6 +481,15 @@ public class BiomesAddon extends Addon
      */
     private boolean greenhousesProvided;
 
+    /**
+     * Bank addon.
+     */
+    private Bank bankAddon;
+
+    /**
+     * This indicates if Bank addon exists.
+     */
+    private boolean bankProvided;
 
     /**
      * The Biome update queue.

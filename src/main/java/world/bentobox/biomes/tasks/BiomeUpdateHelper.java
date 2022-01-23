@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -25,6 +26,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.BlockVector;
 
 import net.milkbowl.vault.economy.EconomyResponse;
+import world.bentobox.bank.BankManager;
+import world.bentobox.bank.BankResponse;
+import world.bentobox.bank.data.Money;
+import world.bentobox.bank.data.TxType;
 import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.objects.Island;
@@ -459,109 +464,159 @@ public class BiomeUpdateHelper
 
         // Take required cost.
 
-        boolean runTask = !this.canWithdraw ||
-            switch (this.biome.getCostMode())
+        CompletableFuture<Boolean> changeBiomeStage = new CompletableFuture<Boolean>().
+            whenComplete((runTask, error) -> {
+                if (runTask)
                 {
-                    case PER_BLOCK -> this.withdrawPerBlock();
-                    case PER_USAGE -> this.withdrawPerUsage();
-                    case STATIC -> this.withdrawStatic();
-                };
-
-        if (runTask)
-        {
-            task.updateChunkQueue();
-
-            // Increase counter.
-            this.islandData.increaseBiomeChangeCounter(this.biome);
-            this.addon.getAddonManager().saveIslandData(this.islandData);
-
-            this.addon.getUpdateQueue().addUpdateTask(task).thenAccept((result) ->
-            {
-                switch (result)
-                {
-                    case FINISHED -> {
-                        Utils.sendMessage(this.callerUser,
-                            this.callerUser.getTranslation(Constants.MESSAGES + "update-done",
-                                "[biome]", this.biome.getFriendlyName()));
-
-                        this.addon.log(this.callerUser.getName() + " changed biome in loaded chunks to " +
-                            this.biome.getFriendlyName() + " from" +
-                            " min=" + this.minCoordinate +
-                            " max=" + this.maxCoordinate +
-                            " while standing on" +
-                            " location=" + this.standingLocation.toVector());
-                    }
-                    case TIMEOUT -> {
-                        Utils.sendMessage(this.callerUser,
-                            this.callerUser.getTranslation(Constants.ERRORS + "timeout"));
-
-                        this.addon.logWarning(this.callerUser.getName() + " timeout while changing biome to " +
-                            this.biome.getFriendlyName() + " from" +
-                            " min=" + this.minCoordinate +
-                            " max=" + this.maxCoordinate +
-                            " while standing on" +
-                            " location=" + this.standingLocation.toVector());
-                    }
-                    default -> {
-                        Utils.sendMessage(this.callerUser, this.callerUser.getTranslation(Constants.ERRORS + "failed"));
-
-                        this.addon.logError(this.callerUser.getName() + " failed to changed biome to " +
-                            this.biome.getFriendlyName() + " from" +
-                            " min=" + this.minCoordinate +
-                            " max=" + this.maxCoordinate +
-                            " while standing on" +
-                            " location=" + this.standingLocation.toVector());
-                    }
+                    this.runBiomeChangeTask(task);
                 }
-
-                Bukkit.getPluginManager().callEvent(new BiomeChangedEvent(this.biome,
-                    this.targetUser,
-                    this.island,
-                    this.minCoordinate,
-                    this.maxCoordinate,
-                    result));
             });
+
+        if (!this.canWithdraw)
+        {
+            changeBiomeStage.complete(true);
+        }
+
+        switch (this.biome.getCostMode())
+        {
+            case PER_BLOCK -> this.withdrawPerBlock(changeBiomeStage);
+            case PER_USAGE -> this.withdrawPerUsage(changeBiomeStage);
+            case STATIC -> this.withdrawStatic(changeBiomeStage);
         }
     }
 
 
     /**
-     * Fail withdraw money boolean.
+     * Run biome change task.
      *
-     * @param money the money
-     * @return the boolean
+     * @param task the task
      */
-    private boolean failWithdrawMoney(double money)
+    private void runBiomeChangeTask(BiomeUpdateTask task)
     {
-        EconomyResponse withdraw = this.addon.getVaultHook().withdraw(this.callerUser, money);
+        task.updateChunkQueue();
 
-        if (!withdraw.transactionSuccess())
+        // Increase counter.
+        this.islandData.increaseBiomeChangeCounter(this.biome);
+        this.addon.getAddonManager().saveIslandData(this.islandData);
+
+        this.addon.getUpdateQueue().addUpdateTask(task).thenAccept((result) ->
         {
-            // Something went wrong on withdraw.
+            switch (result)
+            {
+                case FINISHED -> {
+                    Utils.sendMessage(this.callerUser,
+                        this.callerUser.getTranslation(Constants.MESSAGES + "update-done",
+                            "[biome]", this.biome.getFriendlyName()));
 
+                    this.addon.log(this.callerUser.getName() + " changed biome in loaded chunks to " +
+                        this.biome.getFriendlyName() + " from" +
+                        " min=" + this.minCoordinate +
+                        " max=" + this.maxCoordinate +
+                        " while standing on" +
+                        " location=" + this.standingLocation.toVector());
+                }
+                case TIMEOUT -> {
+                    Utils.sendMessage(this.callerUser,
+                        this.callerUser.getTranslation(Constants.ERRORS + "timeout"));
+
+                    this.addon.logWarning(this.callerUser.getName() + " timeout while changing biome to " +
+                        this.biome.getFriendlyName() + " from" +
+                        " min=" + this.minCoordinate +
+                        " max=" + this.maxCoordinate +
+                        " while standing on" +
+                        " location=" + this.standingLocation.toVector());
+                }
+                default -> {
+                    Utils.sendMessage(this.callerUser, this.callerUser.getTranslation(Constants.ERRORS + "failed"));
+
+                    this.addon.logError(this.callerUser.getName() + " failed to changed biome to " +
+                        this.biome.getFriendlyName() + " from" +
+                        " min=" + this.minCoordinate +
+                        " max=" + this.maxCoordinate +
+                        " while standing on" +
+                        " location=" + this.standingLocation.toVector());
+                }
+            }
+
+            Bukkit.getPluginManager().callEvent(new BiomeChangedEvent(this.biome,
+                this.targetUser,
+                this.island,
+                this.minCoordinate,
+                this.maxCoordinate,
+                result));
+        });
+    }
+
+
+    /**
+     * Method that withdraws the money for changing biome.
+     *
+     * @param changeBiomeStage the change biome stage
+     * @param money the money
+     */
+    private void withdrawMoney(CompletableFuture<Boolean> changeBiomeStage, double money)
+    {
+        if (!this.addon.isEconomyProvided())
+        {
             Utils.sendMessage(this.callerUser,
                 this.callerUser.getTranslation(Constants.ERRORS + "could-not-remove-money"));
-            this.addon.logError(withdraw.errorMessage);
-            return true;
+            this.addon.logError("Economy Addon not provided.");
+            changeBiomeStage.complete(false);
         }
 
-        return false;
+        if (this.addon.getSettings().isUseBankAccount() && this.addon.isBankProvided())
+        {
+            BankManager bankManager = this.addon.getBankAddon().getBankManager();
+            bankManager.withdraw(this.callerUser, this.island, new Money(money), TxType.WITHDRAW).
+                thenAccept(response -> {
+                    if (response == BankResponse.SUCCESS)
+                    {
+                        changeBiomeStage.complete(true);
+                    }
+                    else
+                    {
+                        Utils.sendMessage(this.callerUser,
+                            this.callerUser.getTranslation(Constants.ERRORS + "could-not-remove-money"));
+                        changeBiomeStage.complete(false);
+                    }
+                });
+        }
+        else
+        {
+            EconomyResponse withdraw = this.addon.getVaultHook().withdraw(this.callerUser, money);
+
+            if (withdraw.transactionSuccess())
+            {
+                changeBiomeStage.complete(true);
+            }
+            else
+            {
+                // Something went wrong on withdraw.
+
+                Utils.sendMessage(this.callerUser,
+                    this.callerUser.getTranslation(Constants.ERRORS + "could-not-remove-money"));
+                this.addon.logError(withdraw.errorMessage);
+                changeBiomeStage.complete(false);
+            }
+        }
     }
 
 
     /**
-     * Fail withdraw items boolean.
+     * Method that withdraws items for changing biome.
      *
+     * @param changeBiomeStage the change biome stage
      * @param requiredItemList the required item list
      * @param ignoreMetaData items that can ignore metadata.
-     * @return the boolean
      */
-    private boolean failWithdrawItems(List<ItemStack> requiredItemList, Set<Material> ignoreMetaData)
+    private void withdrawItems(CompletableFuture<Boolean> changeBiomeStage,
+        List<ItemStack> requiredItemList,
+        Set<Material> ignoreMetaData)
     {
         if (this.callerUser.getPlayer().getGameMode() == GameMode.CREATIVE)
         {
             // No point to check items from creative inventory.
-            return false;
+            changeBiomeStage.complete(true);
         }
 
         for (ItemStack required : requiredItemList)
@@ -614,27 +669,28 @@ public class BiomeUpdateHelper
 
                 this.addon.logError("Could not remove " + amountToBeRemoved + " of " + required.getType() +
                     " from player's inventory!");
-                return true;
+
+                changeBiomeStage.complete(false);
             }
         }
 
-        return false;
+        // Complete at the end.
+        changeBiomeStage.complete(true);
     }
 
 
     /**
      * Withdraw per block boolean.
      *
-     * @return the boolean
+     * @param changeBiomeStage the change biome stage
      */
-    private boolean withdrawPerBlock()
+    private void withdrawPerBlock(CompletableFuture<Boolean> changeBiomeStage)
     {
         int blockCount = this.getBlockCount();
 
-        if (this.addon.isEconomyProvided() &&
-            this.failWithdrawMoney(this.biome.getCost() * blockCount))
+        if (this.addon.isEconomyProvided())
         {
-            return false;
+            this.withdrawMoney(changeBiomeStage, this.biome.getCost() * blockCount);
         }
 
         if (!this.biome.getItemCost().isEmpty())
@@ -642,26 +698,26 @@ public class BiomeUpdateHelper
             List<ItemStack> itemCost = Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet());
             itemCost.forEach(itemStack -> itemStack.setAmount(itemStack.getAmount() * blockCount));
 
-            return !this.failWithdrawItems(itemCost, Collections.emptySet());
+            this.withdrawItems(changeBiomeStage, itemCost, Collections.emptySet());
         }
 
-        return true;
+        changeBiomeStage.complete(true);
     }
 
 
     /**
      * Withdraw per usage boolean.
      *
-     * @return the boolean
+     * @param changeBiomeStage the change biome stage
      */
-    private boolean withdrawPerUsage()
+    private void withdrawPerUsage(CompletableFuture<Boolean> changeBiomeStage)
     {
         double increment = this.getUsageIncrement();
 
-        if (this.addon.isEconomyProvided() &&
-            this.failWithdrawMoney(this.biome.getCost() + increment * this.biome.getCost()))
+        if (this.addon.isEconomyProvided())
         {
-            return false;
+            this.withdrawMoney(changeBiomeStage,
+                this.biome.getCost() + increment * this.biome.getCost());
         }
 
         if (!this.biome.getItemCost().isEmpty())
@@ -670,34 +726,35 @@ public class BiomeUpdateHelper
             itemCost.forEach(itemStack -> itemStack.setAmount(
                 itemStack.getAmount() + (int) increment * itemStack.getAmount()));
 
-            return !this.failWithdrawItems(itemCost, Collections.emptySet());
+            this.withdrawItems(changeBiomeStage,
+                itemCost,
+                Collections.emptySet());
         }
 
-        return true;
+        changeBiomeStage.complete(true);
     }
 
 
     /**
      * Withdraw static boolean.
      *
-     * @return the boolean
+     * @param changeBiomeStage the change biome stage
      */
-    private boolean withdrawStatic()
+    private void withdrawStatic(CompletableFuture<Boolean> changeBiomeStage)
     {
-        if (this.addon.isEconomyProvided() &&
-            this.failWithdrawMoney(this.biome.getCost()))
+        if (this.addon.isEconomyProvided())
         {
-            return false;
+            this.withdrawMoney(changeBiomeStage, this.biome.getCost());
         }
 
         if (!this.biome.getItemCost().isEmpty())
         {
-            return !this.failWithdrawItems(
+            this.withdrawItems(changeBiomeStage,
                 Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()),
                 Collections.emptySet());
         }
 
-        return true;
+        changeBiomeStage.complete(true);
     }
 
 
@@ -732,7 +789,19 @@ public class BiomeUpdateHelper
     {
         if (this.addon.isEconomyProvided())
         {
-            if (!this.addon.getVaultHook().has(this.callerUser, this.biome.getCost()))
+            if (this.addon.getSettings().isUseBankAccount() && this.addon.isBankProvided())
+            {
+                if (this.addon.getBankAddon().getBankManager().getBalance(this.island).getValue() < this.biome.getCost())
+                {
+                    // Not enough money.
+                    Utils.sendMessage(this.callerUser,
+                        this.callerUser.getTranslation(Constants.ERRORS + "not-enough-money-bank",
+                            TextVariables.NUMBER,
+                            String.valueOf(this.biome.getCost())));
+                    return false;
+                }
+            }
+            else if (!this.addon.getVaultHook().has(this.callerUser, this.biome.getCost()))
             {
                 // Not enough money.
 
@@ -790,7 +859,19 @@ public class BiomeUpdateHelper
         {
             double cost = this.biome.getCost() + increment * this.biome.getCost();
 
-            if (!this.addon.getVaultHook().has(this.callerUser, cost))
+            if (this.addon.getSettings().isUseBankAccount() && this.addon.isBankProvided())
+            {
+                if (this.addon.getBankAddon().getBankManager().getBalance(this.island).getValue() < cost)
+                {
+                    // Not enough money.
+                    Utils.sendMessage(this.callerUser,
+                        this.callerUser.getTranslation(Constants.ERRORS + "not-enough-money-bank",
+                            TextVariables.NUMBER,
+                            String.valueOf(cost)));
+                    return false;
+                }
+            }
+            else if (!this.addon.getVaultHook().has(this.callerUser, cost))
             {
                 // Not enough money.
 
@@ -863,7 +944,19 @@ public class BiomeUpdateHelper
         {
             double cost = this.biome.getCost() * blockCount;
 
-            if (!this.addon.getVaultHook().has(this.callerUser, cost))
+            if (this.addon.getSettings().isUseBankAccount() && this.addon.isBankProvided())
+            {
+                if (this.addon.getBankAddon().getBankManager().getBalance(this.island).getValue() < cost)
+                {
+                    // Not enough money.
+                    Utils.sendMessage(this.callerUser,
+                        this.callerUser.getTranslation(Constants.ERRORS + "not-enough-money-bank",
+                            TextVariables.NUMBER,
+                            String.valueOf(cost)));
+                    return false;
+                }
+            }
+            else if (!this.addon.getVaultHook().has(this.callerUser, cost))
             {
                 // Not enough money.
 

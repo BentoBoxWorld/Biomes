@@ -17,6 +17,10 @@ import org.bukkit.block.Biome;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import world.bentobox.bank.BankManager;
+import world.bentobox.bank.BankResponse;
+import world.bentobox.bank.data.Money;
+import world.bentobox.bank.data.TxType;
 import world.bentobox.bentobox.api.addons.GameModeAddon;
 import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.user.User;
@@ -857,10 +861,28 @@ public class BiomesAddonManager
         {
             if (this.addon.isEconomyProvided() && biomesObject.getUnlockCost() > 0)
             {
-                // Return true only if user has enough money and its removal was successful.
-                if (this.addon.getVaultHook().has(user, biomesObject.getUnlockCost()) &&
+                if (this.addon.getSettings().isUseBankAccount() && this.addon.isBankProvided())
+                {
+                    BankManager manager = this.addon.getBankAddon().getBankManager();
+
+                    if (manager.getBalance(island).getValue() > biomesObject.getUnlockCost() &&
+                        manager.withdraw(user, island, new Money(biomesObject.getUnlockCost()), TxType.WITHDRAW).join() == BankResponse.SUCCESS)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        Utils.sendMessage(user,
+                            user.getTranslation(Constants.MESSAGES + "no-credits-buy-bank",
+                                TextVariables.NUMBER, String.valueOf(biomesObject.getUnlockCost())));
+                        return false;
+                    }
+                }
+                else if (this.addon.getVaultHook().has(user, biomesObject.getUnlockCost()) &&
                     this.addon.getVaultHook().withdraw(user, biomesObject.getUnlockCost()).transactionSuccess())
                 {
+                    // Return true only if user has enough money and its removal was successful.
+
                     return true;
                 }
                 else

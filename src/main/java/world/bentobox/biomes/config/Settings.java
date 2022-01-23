@@ -345,6 +345,28 @@ public class Settings implements ConfigObject
     }
 
 
+    /**
+     * Is use bank account boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isUseBankAccount()
+    {
+        return useBankAccount;
+    }
+
+
+    /**
+     * Sets use bank account.
+     *
+     * @param useBankAccount the use bank account
+     */
+    public void setUseBankAccount(boolean useBankAccount)
+    {
+        this.useBankAccount = useBankAccount;
+    }
+
+
 // ---------------------------------------------------------------------
 // Section: Enums used for Settings.
 // ---------------------------------------------------------------------
@@ -430,6 +452,12 @@ public class Settings implements ConfigObject
     @ConfigEntry(path = "use-protection-range")
     @SuppressWarnings("javadoc")
     private boolean useProtectionRange = false;
+
+    @ConfigComment("")
+    @ConfigComment("This indicates if all monetary payments should be done via Bank Addon Account.")
+    @ConfigEntry(path = "use-bank-account")
+    @SuppressWarnings("javadoc")
+    private boolean useBankAccount = false;
 
     @ConfigComment("")
     @ConfigComment("This indicates that players will be notified about new unlocked biomes.")

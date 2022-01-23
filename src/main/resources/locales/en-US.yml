@@ -417,6 +417,19 @@ biomes:
           &7 queue.
         value: |-
           &7 Current value: &e[number]&7.
+      use_bank:
+        name: "&f&l Use Bank Account"
+        description: |-
+          &7 Toggles if all payments that
+          &7 are done by Biomes addon will
+          &7 be using Bank Addon Island
+          &7 account.
+        enabled: |-
+          &b Using Bank Account is &a enabled &b.
+        disabled: |-
+          &b Using Bank Account is &c disabled &b.
+        missing: |-
+          &c The Bank addon is not installed.
       visibility:
         name: "&f&l Biome Visibility"
         description: |-
@@ -815,6 +828,8 @@ biomes:
     missing-permission: "[biome] &c requires to have permission: [permission]."
     # Message that is sent to player if he tries purchase biome without required money in account.
     no-credits-buy: "&c You do not have enough credits to buy &r [biome] &r&c. It costs [number]."
+    # Message that is sent to player if he tries purchase biome without required money in bank account.
+    no-credits-buy-bank: "&c You do not have enough credits in your bank account to buy &r [biome] &r&c. It costs [number]."
     # Message that is sent to player when he buys a biome.
     biome-purchased: "&e You have purchased &r [biome]."
     # Message that is sent to player after importing biomes.
@@ -847,6 +862,8 @@ biomes:
     not-enough-level: "&c This biome requires at least island level [number]."
     # Message that is displayed for player if biome requires more money than player has.
     not-enough-money: "&c This biomes change cost $[number]."
+    # Message that is displayed for player if biome requires more money than island bank has.
+    not-enough-money-bank: "&c Your bank account has not enough credits. Biome change costs $[number]."
     # Message that is displayed for player if biome requires more items than player has.
     not-enough-items: "&c This biomes change cost [items]."
     # Message that is displayed for admin when he tries to change biome on other player island while not being on it.
