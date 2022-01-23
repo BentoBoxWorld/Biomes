@@ -427,7 +427,7 @@ public class AdvancedPanel extends CommonPanel
     /**
      * This variable stores update range
      */
-    private int range;
+    private int range = 1;
 
     /**
      * This variable stores update mode

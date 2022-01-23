@@ -3,6 +3,7 @@ package world.bentobox.biomes.tasks;
 
 import java.util.Queue;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -31,12 +32,10 @@ public class BiomeUpdateTask
      * @param addon BiomeAddon object.
      * @param user Player who calls biome update.
      * @param biome BiomeObject that will changed.
-     * @param result Result exposer.
      */
     public BiomeUpdateTask(BiomesAddon addon,
         User user,
-        BiomesObject biome,
-        CompletableFuture<UpdateQueue.Result> result)
+        BiomesObject biome)
     {
         this.addon = addon;
         this.user = user;
@@ -45,7 +44,7 @@ public class BiomeUpdateTask
         this.biomesObject = biome;
 
         this.chunksToUpdate = new ConcurrentLinkedQueue<>();
-        this.result = result;
+        this.result = new CompletableFuture<>();
 
         this.processCounter = new AtomicInteger(0);
     }
@@ -88,8 +87,10 @@ public class BiomeUpdateTask
                 this.addon.logError("scanChunk not on Primary Thread!");
             }
 
+            long runTime = System.currentTimeMillis() - updateQueue.getProcessStartMap().get(this);
+
             // Timeout check
-            if (System.currentTimeMillis() - updateQueue.getProcessStartMap().get(this) > this.addon.getSettings().getChangeTimeout() * 60000)
+            if (runTime > this.addon.getSettings().getChangeTimeout() * 60000)
             {
                 // Done
                 updateQueue.getProcessStartMap().remove(this);
@@ -106,6 +107,9 @@ public class BiomeUpdateTask
                 if (this.chunksToUpdate.isEmpty())
                 {
                     // Done there are no more things to process
+                    updateQueue.updateTimer(runTime, this.getNumberOfChunks());
+                    updateQueue.getProcessStartMap().remove(this);
+
                     this.result.complete(UpdateQueue.Result.FINISHED);
                 }
                 else
@@ -337,14 +341,27 @@ public class BiomeUpdateTask
 
 
     /**
-     * Notify biome change process starting to the user.
+     * Notify that biome is added in processing queue.
      */
     public void notifyStarting()
     {
         Utils.sendMessage(this.user, this.user.getTranslation(
             Constants.MESSAGES + "update-start",
             "[biome]", this.biomesObject.getFriendlyName(),
-            "[number]", String.valueOf(this.numberOfChunks)));
+            "[number]", String.valueOf(this.getNumberOfChunks()),
+            "[time]", String.valueOf((int)
+                Math.max(1, this.getNumberOfChunks() * this.addon.getUpdateQueue().getChunkTime()))));
+    }
+
+
+    /**
+     * Notify that biome is added in waiting queue.
+     */
+    public void notifyWaiting()
+    {
+        Utils.sendMessage(this.user,
+            this.user.getTranslation(Constants.MESSAGES + "waiting",
+                "[time]", String.valueOf(this.addon.getUpdateQueue().getQueueTime())));
     }
 
 

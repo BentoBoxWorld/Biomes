@@ -9,6 +9,10 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -421,12 +425,9 @@ public class BiomeUpdateHelper
     {
         // Calculate minimal and maximal coordinate based on update mode.
 
-        CompletableFuture<UpdateQueue.Result> completableFuture = new CompletableFuture<>();
-
         BiomeUpdateTask task = new BiomeUpdateTask(this.addon,
             this.callerUser,
-            this.biome,
-            completableFuture);
+            this.biome);
 
         // Select world depending on environment.
 
@@ -465,7 +466,7 @@ public class BiomeUpdateHelper
         {
             task.updateChunkQueue();
 
-            this.addon.getUpdateQueue().addUpdateTask(task).thenAccept(result ->
+            this.addon.getUpdateQueue().addUpdateTask(task).thenAccept((result) ->
             {
                 switch (result)
                 {
