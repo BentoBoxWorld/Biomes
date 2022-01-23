@@ -241,6 +241,18 @@ public class BiomeChangedEvent extends BentoBoxEvent
     }
 
 
+    /**
+     * Gets result name.
+     *
+     * @return the result name
+     */
+    @Nullable
+    public String getResultName()
+    {
+        return this.result == null ? null : this.result.name();
+    }
+
+
 // ---------------------------------------------------------------------
 // Section: Handler methods
 // ---------------------------------------------------------------------
