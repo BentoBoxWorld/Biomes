@@ -155,7 +155,10 @@ public abstract class CommonPanel
             "[unlock]", unlockDescription);
 
         // Remove empty lines and returns as a list.
-        return returnString.replaceAll("(?m)^[ \\t]*\\r?\\n", "");
+        return returnString.
+            replaceAll("(?m)^[ \\t]*\\r?\\n", "").
+            replaceAll("(?<!\\\\)\\|", "\n").
+            replaceAll("\\\\\\|", "|");
     }
 
 
