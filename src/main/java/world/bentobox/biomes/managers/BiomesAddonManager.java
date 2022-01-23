@@ -427,7 +427,7 @@ public class BiomesAddonManager
                 if (island.getOwner() == uniqueId)
                 {
                     // Owner island must be validated.
-                    this.validateIslandData(island);
+                    this.validateIslandData(island, User.getInstance(uniqueId));
                 }
                 else
                 {
@@ -560,6 +560,20 @@ public class BiomesAddonManager
     @Nullable
     public BiomesIslandDataObject validateIslandData(@Nullable Island island)
     {
+        return this.validateIslandData(island, null);
+    }
+
+
+    /**
+     * This method adds, validates and returns island data for given island.
+     *
+     * @param island Island which data must be returned.
+     * @param user User who triggered validation.
+     * @return BiomesIslandDataObject or null if failed to create.
+     */
+    @Nullable
+    public BiomesIslandDataObject validateIslandData(@Nullable Island island, @Nullable User user)
+    {
         if (island == null || island.getOwner() == null)
         {
             return null;
@@ -577,7 +591,7 @@ public class BiomesAddonManager
         this.updateOwnerBundle(island, dataObject);
 
         // Call check command which finds unlocked biomes.
-        this.checkBiomesUnlockStatus(island, null, null);
+        this.checkBiomesUnlockStatus(island, user, this.getIslandLevel(island));
 
         return dataObject;
     }
