@@ -17,6 +17,7 @@ import world.bentobox.biomes.handlers.BiomeDataRequestHandler;
 import world.bentobox.biomes.handlers.BiomeListRequestHandler;
 import world.bentobox.biomes.handlers.ChangeBiomeRequestHandler;
 import world.bentobox.biomes.listeners.ChangeOwnerListener;
+import world.bentobox.biomes.listeners.IslandLevelListener;
 import world.bentobox.biomes.listeners.JoinLeaveListener;
 import world.bentobox.biomes.managers.BiomesAddonManager;
 import world.bentobox.biomes.managers.BiomesImportManager;
@@ -91,6 +92,7 @@ public class BiomesAddon extends Addon
 		// Register the reset listener
         this.registerListener(new ChangeOwnerListener(this));
         this.registerListener(new JoinLeaveListener(this));
+        this.registerListener(new IslandLevelListener(this));
 
         // Register Flags
         this.registerFlag(BIOMES_WORLD_PROTECTION);
