@@ -287,6 +287,29 @@ public class BiomesAddonManager
 
                 updated = true;
             }
+
+            // Migrate to the new format.
+            if (biomesObject.getRequiredLevel() != null)
+            {
+                biomesObject.setUnlockLevel(biomesObject.getRequiredLevel());
+                biomesObject.setRequiredLevel(null);
+                updated = true;
+            }
+
+            if (biomesObject.getRequiredCost() != null)
+            {
+                biomesObject.setCost(biomesObject.getRequiredCost());
+                biomesObject.setCostMode(BiomesObject.CostMode.STATIC);
+                biomesObject.setRequiredCost(null);
+                updated = true;
+            }
+
+            if (biomesObject.getRequiredPermissions() != null)
+            {
+                biomesObject.setUnlockPermissions(biomesObject.getRequiredPermissions());
+                biomesObject.setRequiredPermissions(null);
+                updated = true;
+            }
         }
 
         return updated;

@@ -58,9 +58,9 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
     }
 
 
-    // ---------------------------------------------------------------------
-    // Section: Setters and Getters
-    // ---------------------------------------------------------------------
+// ---------------------------------------------------------------------
+// Section: Setters and Getters
+// ---------------------------------------------------------------------
 
 
     /**
@@ -411,9 +411,89 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
     }
 
 
-    // ---------------------------------------------------------------------
-    // Section: Other methods
-    // ---------------------------------------------------------------------
+// ---------------------------------------------------------------------
+// Section: Deprecated fields
+// ---------------------------------------------------------------------
+
+
+    /**
+     * Gets required level.
+     *
+     * @return the required level
+     */
+    @Nullable
+    @Deprecated
+    public Long getRequiredLevel()
+    {
+        return requiredLevel;
+    }
+
+
+    /**
+     * Sets required level.
+     *
+     * @param requiredLevel the required level
+     */
+    @Deprecated
+    public void setRequiredLevel(@Nullable Long requiredLevel)
+    {
+        this.requiredLevel = requiredLevel;
+    }
+
+
+    /**
+     * Gets required cost.
+     *
+     * @return the required cost
+     */
+    @Nullable
+    @Deprecated
+    public Double getRequiredCost()
+    {
+        return requiredCost;
+    }
+
+
+    /**
+     * Sets required cost.
+     *
+     * @param requiredCost the required cost
+     */
+    @Deprecated
+    public void setRequiredCost(@Nullable Double requiredCost)
+    {
+        this.requiredCost = requiredCost;
+    }
+
+
+    /**
+     * Gets required permissions.
+     *
+     * @return the required permissions
+     */
+    @Nullable
+    @Deprecated
+    public Set<String> getRequiredPermissions()
+    {
+        return requiredPermissions;
+    }
+
+
+    /**
+     * Sets required permissions.
+     *
+     * @param requiredPermissions the required permissions
+     */
+    @Deprecated
+    public void setRequiredPermissions(@Nullable Set<String> requiredPermissions)
+    {
+        this.requiredPermissions = requiredPermissions;
+    }
+
+
+// ---------------------------------------------------------------------
+// Section: Other methods
+// ---------------------------------------------------------------------
 
 
     /*
@@ -560,9 +640,9 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
     }
 
 
-    // ---------------------------------------------------------------------
-    // Section: Variables
-    // ---------------------------------------------------------------------
+// ---------------------------------------------------------------------
+// Section: Variables
+// ---------------------------------------------------------------------
 
 
     /**
@@ -682,4 +762,36 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
     @Expose
     @Nullable
     private Double costIncrement = null;
+
+
+// ---------------------------------------------------------------------
+// Section: Deprecated fields
+// ---------------------------------------------------------------------
+
+    /**
+     * Deprecated field. Used for migration to the new system.
+     * @deprecated 2.0.0
+     */
+    @Expose
+    @Nullable
+    @Deprecated
+    private Long requiredLevel;
+
+    /**
+     * Deprecated field. Used for migration to the new system.
+     * @deprecated 2.0.0
+     */
+    @Expose
+    @Nullable
+    @Deprecated
+    private Double requiredCost;
+
+    /**
+     * Deprecated field. Used for migration to the new system.
+     * @deprecated 2.0.0
+     */
+    @Expose
+    @Nullable
+    @Deprecated
+    private Set<String> requiredPermissions;
 }
