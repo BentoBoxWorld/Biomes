@@ -7,6 +7,7 @@
 package world.bentobox.biomes.managers;
 
 
+import com.google.common.base.Enums;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
@@ -18,6 +19,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -175,8 +177,8 @@ public class BiomesImportManager
 
         if (config.isConfigurationSection("biomes"))
         {
-            biomeCount = this.importBiomes(config.getConfigurationSection("biomes"),
-                gameMode.getOverWorld());
+            biomeCount = this.importBiomes(
+                Objects.requireNonNull(config.getConfigurationSection("biomes")), gameMode);
         }
         else
         {
@@ -185,7 +187,8 @@ public class BiomesImportManager
 
         if (config.isConfigurationSection("bundles"))
         {
-            bundleCount = this.importBundles(config.getConfigurationSection("bundles"),
+            bundleCount = this.importBundles(
+                Objects.requireNonNull(config.getConfigurationSection("bundles")),
                 gameMode.getDescription().getName() + "_");
         }
         else
@@ -206,59 +209,142 @@ public class BiomesImportManager
      * Import biomes from the given config.
      *
      * @param reader the reader
-     * @param world the world
+     * @param gameModeAddon the world
      * @return the int
      */
-    private int importBiomes(ConfigurationSection reader, World world)
+    private int importBiomes(@NotNull ConfigurationSection reader, GameModeAddon gameModeAddon)
     {
         int size = 0;
 
-        Map<String, Biome> biomeNameMap = Utils.getBiomeNameMap();
+        final String prefix = gameModeAddon.getDescription().getName() + "_";
 
-        for (String biome : reader.getKeys(false))
+        for (String biomeId : reader.getKeys(false))
         {
-            if (biomeNameMap.containsKey(biome.toUpperCase()))
+            ConfigurationSection details = reader.getConfigurationSection(biomeId);
+
+            if (details == null)
             {
-                BiomesObject newBiomeObject = new BiomesObject(Biome.valueOf(biome.toUpperCase()), world);
-                newBiomeObject.setDeployed(true);
+                this.addon.logError("Cannot read template section: " + biomeId);
+                continue;
+            }
 
-                ConfigurationSection details = reader.getConfigurationSection(biome);
+            BiomesObject biomesObject = new BiomesObject();
+            biomesObject.setUniqueId(Utils.sanitizeInput(prefix + biomeId.toLowerCase()));
 
-                newBiomeObject.setFriendlyName(details.getString("friendlyName", biome));
+            // Read biome or replace it with VOID
+            biomesObject.setBiome(
+                Enums.getIfPresent(Biome.class, details.getString("biome", "").toUpperCase()).
+                    or(Biome.THE_VOID));
+            // Read environment or replace with Normal
+            biomesObject.setEnvironment(
+                Enums.getIfPresent(World.Environment.class, details.getString("environment", "").toUpperCase()).
+                    or(World.Environment.NORMAL));
 
-                newBiomeObject.setDescription(Arrays.stream(details.getString("description", "").split("\n")).toList());
-                newBiomeObject.setIcon(ItemParser.parse(details.getString("icon")));
+            // Read GUI stuff
+            // Read Name
+            biomesObject.setFriendlyName(details.getString("name", biomeId.replace("_", " ")));
 
-                newBiomeObject.setUnlockLevel(details.getLong("islandLevel", 0));
-                newBiomeObject.setUnlockCost(details.getDouble("cost", 0.0));
+            // Read description
+            if (details.isList("description"))
+            {
+                biomesObject.setDescription(details.getStringList("description"));
+            }
+            else if (details.isString("description"))
+            {
+                String description = details.getString("description");
 
-                String environmentValue = details.getString("environment", "normal").toUpperCase();
-
-                switch (environmentValue)
+                if (description != null)
                 {
-                    case "NETHER" -> newBiomeObject.setEnvironment(World.Environment.NETHER);
-                    case "THE_END" -> newBiomeObject.setEnvironment(World.Environment.THE_END);
-                    default -> newBiomeObject.setEnvironment(World.Environment.NORMAL);
+                    // Define as list.
+                    biomesObject.setDescription(Arrays.asList(
+                        description.replaceAll("\\|", "\n").
+                            split("\n").
+                            clone()));
+                }
+            }
+
+            // Read Icon
+            biomesObject.setIcon(ItemParser.parse(details.getString("icon"), new ItemStack(Material.PAPER)));
+            // Read Order
+            biomesObject.setOrder(details.getInt("order", -1));
+            // Set deployment.
+            biomesObject.setDeployed(true);
+
+            // Read Unlock conditions
+            if (details.isConfigurationSection("unlock"))
+            {
+                ConfigurationSection unlockSection = Objects.requireNonNull(details.getConfigurationSection("unlock"));
+
+                // Set unlock level
+                biomesObject.setUnlockLevel(unlockSection.getLong("level"));
+
+                // Set unlock permissions
+                Set<String> permissions = new HashSet<>(unlockSection.getStringList("permission"));
+
+                if (!permissions.isEmpty())
+                {
+                    biomesObject.setUnlockPermissions(permissions);
                 }
 
-                newBiomeObject.setOrder(details.getInt("order", 0));
+                // Set unlock cost
+                biomesObject.setUnlockCost(unlockSection.getDouble("cost"));
 
-                List<String> permissions = details.getStringList("permission");
+                // Set unlock items
+                final List<ItemStack> items = new ArrayList<>();
 
-                if (permissions.isEmpty())
-                {
-                    newBiomeObject.setUnlockPermissions(Collections.emptySet());
-                }
-                else
-                {
-                    newBiomeObject.setUnlockPermissions(new HashSet<>(permissions));
-                }
+                unlockSection.getStringList("items").forEach(text -> {
+                    ItemStack item = ItemParser.parse(text);
 
-                if (this.addon.getAddonManager().loadBiomes(newBiomeObject, false, null, true))
+                    if (item != null)
+                    {
+                        items.add(item);
+                    }
+                });
+
+                if (!items.isEmpty())
                 {
-                    this.addon.getAddonManager().saveBiome(newBiomeObject);
-                    size++;
+                    biomesObject.setUnlockItems(items);
                 }
+            }
+
+            // Read Change conditions
+            if (details.isConfigurationSection("change"))
+            {
+                ConfigurationSection changeSection = Objects.requireNonNull(details.getConfigurationSection("change"));
+
+                // Set change mode
+                biomesObject.setCostMode(
+                    Enums.getIfPresent(BiomesObject.CostMode.class, changeSection.getString("mode", "").toUpperCase()).
+                        or(BiomesObject.CostMode.STATIC));
+
+                // Set change increment
+                biomesObject.setCostIncrement(changeSection.getDouble("increment"));
+
+                // Set change cost
+                biomesObject.setCost(changeSection.getDouble("cost"));
+
+                // Set change items
+                final List<ItemStack> items = new ArrayList<>();
+
+                changeSection.getStringList("items").forEach(text -> {
+                    ItemStack item = ItemParser.parse(text);
+
+                    if (item != null)
+                    {
+                        items.add(item);
+                    }
+                });
+
+                if (!items.isEmpty())
+                {
+                    biomesObject.setItemCost(items);
+                }
+            }
+
+            if (this.addon.getAddonManager().loadBiomes(biomesObject, false, null, true))
+            {
+                this.addon.getAddonManager().saveBiome(biomesObject);
+                size++;
             }
         }
 
@@ -280,7 +366,7 @@ public class BiomesImportManager
         for (String bundleId : reader.getKeys(false))
         {
             BiomesBundleObject generatorBundle = new BiomesBundleObject();
-            generatorBundle.setUniqueId(prefix + bundleId.toLowerCase());
+            generatorBundle.setUniqueId(Utils.sanitizeInput(prefix + bundleId.toLowerCase()));
 
             ConfigurationSection details = reader.getConfigurationSection(bundleId);
 
