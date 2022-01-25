@@ -58,7 +58,7 @@ public class BiomesCommand extends BiomesCompositeCommand
         this.setDescription(Constants.PLAYER_COMMANDS + "main.description");
 
         new BiomesSetCommand(this.getAddon(), this);
-        new BiomesInfoCommand(this.getAddon(), this);
+//        new BiomesInfoCommand(this.getAddon(), this);
         new BiomesBuyCommand(this.getAddon(), this);
     }
 
