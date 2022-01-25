@@ -99,7 +99,7 @@ biomes:
       &7 A coldness of this
       &7 ocean is matched
       &7 only by its size.
-    icon: FROSTED_ICE
+    icon: ICE
     unlock:
       level: 20
     change:
@@ -277,7 +277,7 @@ biomes:
       &7 bee would love to live.
       &7 All flowers that you
       &7 wished are here.
-    icon: POPPY
+    icon: ORANGE_TULIP
     unlock:
       level: 75
     change:
