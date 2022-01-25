@@ -250,7 +250,7 @@ biomes:
         name: "&f&l Description"
         description: |-
           &7 The specific description
-          &7 for the challenge. The color
+          &7 for the biome. The color
           &7 codes must be applied to it.
         value: "&e Current description:"
         none: "&7 Description is not set."
@@ -268,7 +268,7 @@ biomes:
         description: |-
           &7 Allows to change cost of
           &7 unlocking this biome.
-        value: "&7 Current order: &e $[number]"
+        value: "&7 Current cost: &e $[number]"
       unlock_items:
         name: "&f&l Items"
         description: |-
@@ -289,7 +289,7 @@ biomes:
         description: |-
           &7 Allows to change cost of
           &7 applying this biome.
-        value: "&7 Current order: &e $[number]"
+        value: "&7 Current cost: &e $[number]"
       change_items:
         name: "&f&l Items"
         description: |-
@@ -384,9 +384,6 @@ biomes:
           &7 provide it.
         enabled: "&2"
         disabled: "&c"
-        island: "Island"
-        chunk: "Chunk"
-        range: "Range"
       unlock_notify:
         name: "&f&l Notify On Unlock"
         description: |-

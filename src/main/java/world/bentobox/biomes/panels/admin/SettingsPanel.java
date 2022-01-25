@@ -119,13 +119,13 @@ public class SettingsPanel extends CommonPanel
             case DEFAULT_MODE -> {
                 description.add(this.user.getTranslation(reference +
                     (this.settings.getDefaultMode().equals(Settings.UpdateMode.ISLAND) ? "enabled" : "disabled")) +
-                    this.user.getTranslation(reference + "island"));
+                    this.user.getTranslation(Constants.DESCRIPTIONS + "update-mode.island"));
                 description.add(this.user.getTranslation(reference +
                     (this.settings.getDefaultMode().equals(Settings.UpdateMode.CHUNK) ? "enabled" : "disabled")) +
-                    this.user.getTranslation(reference + "chunk"));
+                    this.user.getTranslation(Constants.DESCRIPTIONS + "update-mode.chunk"));
                 description.add(this.user.getTranslation(reference +
                     (this.settings.getDefaultMode().equals(Settings.UpdateMode.RANGE) ? "enabled" : "disabled")) +
-                    this.user.getTranslation(reference + "range"));
+                    this.user.getTranslation(Constants.DESCRIPTIONS + "update-mode.range"));
 
                 if (this.settings.getDefaultMode().equals(Settings.UpdateMode.ISLAND))
                 {
