@@ -13,6 +13,9 @@ biomes:
       set:
         description: "mainīt biomu uz spēlētāja salas"
         parameters: "<spēlētājs> <bioma-id> [mode] [izmērs]"
+      unlock:
+        description: "atver biomu priekš spēlētāja nepārbaudot prasības. Pievienojot `true` beigās, uzstādīs to kā nopirktu."
+        parameters: "<spēlētājs> <bioma-id> [true]"
     # This section contains only player commands translations.
     player:
       main:
@@ -830,6 +833,8 @@ biomes:
     no-credits-buy: "&c Tev nav pietiekoši daudz naudas, lai nopirktu &r [biome] &r&c. Tas maksā [number]."
     # Message that is sent to player if he tries purchase biome without required money in bank account.
     no-credits-buy-bank: "&c Tavā bankas kontā nav pietiekoši daudz naudas, lai nopirktu &r [biome] &r&c. Tas maksā [number]."
+    # Message that is sent to player if he tries purchase biome without required items in account.
+    no-items-buy: "&c Tev nav pietiekoši daudz lietas, lai nopirktu &r [biome] &r&c. Tev nepieciešams [items]."
     # Message that is sent to player when he buys a biome.
     biome-purchased: "&e Tu esi iegādājies &r [biome]."
     # Message that is sent to player after importing biomes.
@@ -842,6 +847,8 @@ biomes:
     update-done: "&a Pabeigta bioma [biome] uzstādīšana."
     # This message is sent to user when his change is placed in queue.
     waiting: "&a Pievienots rindai. &e Aptuvenais gaidīšanas laiks: [time] sec."
+    # Message that is sent to player when the biome is already unlocked.
+    biome-already-unlocked: "&r [biome] &e jau ir atvērta."
     skipping: "&a Izlaiž ielādi: &r [biome] &r&a."
     overwriting: "&a Pārraksta &r [biome] &r&a atmiņā."
     imported: "&a Ielādē &r [biome] &r&a atmiņā."

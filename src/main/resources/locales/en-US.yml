@@ -13,6 +13,9 @@ biomes:
       set:
         description: "changes biome for the player"
         parameters: "<player> <biome-id> [mode] [size]"
+      unlock:
+        description: "unlocks biome for the player without checks. Adding `true` at the end will mark it as purchased."
+        parameters: "<player> <biome-id> [true]"
     # This section contains only player commands translations.
     player:
       main:
@@ -827,6 +830,8 @@ biomes:
     no-credits-buy: "&c You do not have enough credits to buy &r [biome] &r&c. It costs [number]."
     # Message that is sent to player if he tries purchase biome without required money in bank account.
     no-credits-buy-bank: "&c You do not have enough credits in your bank account to buy &r [biome] &r&c. It costs [number]."
+    # Message that is sent to player if he tries purchase biome without required items in account.
+    no-items-buy: "&c You do not have enough items to buy &r [biome] &r&c. It requires [items]."
     # Message that is sent to player when he buys a biome.
     biome-purchased: "&e You have purchased &r [biome]."
     # Message that is sent to player after importing biomes.
@@ -839,6 +844,8 @@ biomes:
     update-done: "&a Finished changing biome to [biome]."
     # This message is sent to user when his change is placed in queue.
     waiting: "&a Added biome change in queue. &e Estimated waiting time: [time] sec."
+    # Message that is sent to player when the biome is already unlocked.
+    biome-already-unlocked: "&r [biome] &e is already unlocked."
     skipping: "&a Skipping loading &r [biome] &r&a."
     overwriting: "&a Overwriting &r [biome] &r&a in cache."
     imported: "&a Imported &r [biome] &r&a in cache."

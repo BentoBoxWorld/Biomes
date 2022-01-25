@@ -16,11 +16,14 @@ import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.commands.ConfirmableCommand;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.bentobox.database.objects.Island;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.commands.BiomesCompositeCommand;
 import world.bentobox.biomes.config.Settings;
+import world.bentobox.biomes.database.objects.BiomesIslandDataObject;
 import world.bentobox.biomes.database.objects.BiomesObject;
+import world.bentobox.biomes.managers.BiomesAddonManager;
 import world.bentobox.biomes.panels.admin.AdminPanel;
 import world.bentobox.biomes.tasks.BiomeUpdateHelper;
 import world.bentobox.biomes.utils.Constants;
@@ -70,6 +73,7 @@ public class AdminCommand extends BiomesCompositeCommand
         new ImportCommand(this.getAddon(), this);
         new MigrateCommand(this.getAddon(), this);
         new BiomesSetCommand(this.getAddon(), this);
+        new BiomesUnlockCommand(this.getAddon(), this);
     }
 
 
@@ -138,21 +142,6 @@ public class AdminCommand extends BiomesCompositeCommand
 
 
         /**
-         * Can execute boolean.
-         *
-         * @param user the user
-         * @param label the label
-         * @param args the args
-         * @return the boolean
-         */
-        @Override
-        public boolean canExecute(User user, String label, List<String> args)
-        {
-            return this.<BiomesAddon>getAddon().getSettings().getCoolDown() == 0 || !this.checkCooldown(user);
-        }
-
-
-        /**
          * Execute set command.
          *
          * @param user the user
@@ -163,6 +152,12 @@ public class AdminCommand extends BiomesCompositeCommand
         @Override
         public boolean execute(User user, String label, List<String> input)
         {
+            if (input.size() < 2)
+            {
+                this.showHelp(this, user);
+                return false;
+            }
+
             List<String> args = input.subList(1, input.size());
             User target = this.getAddon().getPlayers().getUser(input.get(0));
             BiomesObject biome = AdminCommand.this.getBiomeObject(args, user);
@@ -191,8 +186,6 @@ public class AdminCommand extends BiomesCompositeCommand
                 if (helper.canChangeBiome())
                 {
                     helper.updateIslandBiome();
-                    this.setCooldown(user.getUniqueId(), this.<BiomesAddon>getAddon().getSettings().getCoolDown());
-
                     return true;
                 }
             }
@@ -380,6 +373,143 @@ public class AdminCommand extends BiomesCompositeCommand
             this.inheritPermission();
             this.setParametersHelp(Constants.ADMIN_COMMANDS + "migrate.parameters");
             this.setDescription(Constants.ADMIN_COMMANDS + "migrate.description");
+        }
+    }
+
+
+    /**
+     * This subclass allows run biomes unlock command for admins.
+     */
+    private class BiomesUnlockCommand extends CompositeCommand
+    {
+        /**
+         * Instantiates a new Biomes unlock command.
+         *
+         * @param addon the addon
+         * @param parentCommand the parent command
+         */
+        public BiomesUnlockCommand(BiomesAddon addon, CompositeCommand parentCommand)
+        {
+            super(addon, parentCommand, "unlock");
+        }
+
+
+        /**
+         * Sets up command settings.
+         */
+        @Override
+        public void setup()
+        {
+            this.inheritPermission();
+            this.setParametersHelp(Constants.ADMIN_COMMANDS + "unlock.parameters");
+            this.setDescription(Constants.ADMIN_COMMANDS + "unlock.description");
+        }
+
+
+        /**
+         * Execute unlock command.
+         *
+         * @param user the user
+         * @param label the label
+         * @param input the input
+         * @return the boolean
+         */
+        @Override
+        public boolean execute(User user, String label, List<String> input)
+        {
+            if (input.size() < 2)
+            {
+                this.showHelp(this, user);
+                return false;
+            }
+
+            List<String> args = input.subList(1, input.size());
+            User target = this.getAddon().getPlayers().getUser(input.get(0));
+            BiomesObject biome = AdminCommand.this.getBiomeObject(args, user);
+
+            boolean buy = input.size() == 3 && "true".equalsIgnoreCase(input.get(2));
+
+            BiomesAddonManager addonManager = this.<BiomesAddon>getAddon().getAddonManager();
+            Island island = this.getIslands().getIsland(this.getWorld(), target);
+            BiomesIslandDataObject islandData = addonManager.getIslandData(island);
+
+            if (target == null || biome == null)
+            {
+                // Show help if something fails.
+                this.showHelp(this, user);
+            }
+            else if (island == null || islandData == null)
+            {
+                Utils.sendMessage(user, user.getTranslation("general.errors.no-island"));
+            }
+            else
+            {
+                if (islandData.isUnlocked(biome))
+                {
+                    if (buy && !addonManager.isPurchased(islandData, biome))
+                    {
+                        addonManager.purchaseBiome(user, island, islandData, biome, false);
+                    }
+                    else
+                    {
+                        Utils.sendMessage(user, user.getTranslation(Constants.MESSAGES + "biome-already-unlocked",
+                            "[biome]", biome.getFriendlyName()));
+                    }
+                }
+                else
+                {
+                    addonManager.unlockBiome(islandData, user, island, biome);
+
+                    if (buy)
+                    {
+                        addonManager.purchaseBiome(user, island, islandData, biome, false);
+                    }
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+
+        /**
+         * Tab complete optional.
+         *
+         * @param user the user
+         * @param alias the alias
+         * @param args the args
+         * @return the optional
+         */
+        @Override
+        public Optional<List<String>> tabComplete(User user, String alias, List<String> args)
+        {
+            String lastString = args.get(args.size() - 1);
+
+            final List<String> returnList = new ArrayList<>();
+            final int size = args.size();
+
+            switch (size)
+            {
+                case 3 ->
+                    // Create suggestions with all player names that is available for users.
+                    Bukkit.getOnlinePlayers().forEach(player -> returnList.add(player.getName()));
+                case 4 -> {
+                    List<BiomesObject> biomes =
+                        this.<BiomesAddon>getAddon().getAddonManager().getBiomes(this.getWorld());
+
+                    // Create suggestions with all biomes that is available for users.
+                    biomes.forEach(biomesObject ->
+                        returnList.add(biomesObject.getUniqueId()
+                            .substring(Utils.getGameMode(this.getWorld()).length() + 1)));
+                }
+                case 5 -> {
+                    returnList.add("true");
+                }
+                default -> returnList.add("help");
+            }
+
+            return Optional.of(Util.tabLimit(returnList, lastString));
         }
     }
 }

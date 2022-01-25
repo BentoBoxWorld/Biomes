@@ -10,7 +10,6 @@ import java.util.*;
 
 import world.bentobox.bentobox.api.addons.GameModeAddon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
-import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.objects.Island;
 import world.bentobox.bentobox.util.Util;
@@ -465,9 +464,9 @@ public class BiomesCommand extends BiomesCompositeCommand
                     return false;
                 }
 
-                if (addonManager.canPurchaseGenerator(user, island, data, biomesObject))
+                if (addonManager.canPurchaseBiome(user, island, data, biomesObject))
                 {
-                    addonManager.purchaseGenerator(user, island, data, biomesObject);
+                    addonManager.purchaseBiome(user, island, data, biomesObject);
                     return true;
                 }
 
