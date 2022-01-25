@@ -464,24 +464,26 @@ public class BiomeUpdateHelper
 
         // Take required cost.
 
-        CompletableFuture<Boolean> changeBiomeStage = new CompletableFuture<Boolean>().
-            whenComplete((runTask, error) -> {
-                if (runTask)
-                {
-                    this.runBiomeChangeTask(task);
-                }
-            });
+        CompletableFuture<Boolean> changeBiomeStage = new CompletableFuture<>();
+        changeBiomeStage.thenAccept((runTask) -> {
+            if (runTask)
+            {
+                this.runBiomeChangeTask(task);
+            }
+        });
 
-        if (!this.canWithdraw)
+        if (this.canWithdraw)
+        {
+            switch (this.biome.getCostMode())
+            {
+                case PER_BLOCK -> this.withdrawPerBlock(changeBiomeStage);
+                case PER_USAGE -> this.withdrawPerUsage(changeBiomeStage);
+                case STATIC -> this.withdrawStatic(changeBiomeStage);
+            }
+        }
+        else
         {
             changeBiomeStage.complete(true);
-        }
-
-        switch (this.biome.getCostMode())
-        {
-            case PER_BLOCK -> this.withdrawPerBlock(changeBiomeStage);
-            case PER_USAGE -> this.withdrawPerUsage(changeBiomeStage);
-            case STATIC -> this.withdrawStatic(changeBiomeStage);
         }
     }
 
