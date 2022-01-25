@@ -131,7 +131,7 @@ public class AdminCommand extends BiomesCompositeCommand
         @Override
         public void setup()
         {
-            this.setPermission("biomes.admin");
+            this.inheritPermission();
             this.setParametersHelp(Constants.ADMIN_COMMANDS + "set.parameters");
             this.setDescription(Constants.ADMIN_COMMANDS + "set.description");
         }
@@ -377,7 +377,7 @@ public class AdminCommand extends BiomesCompositeCommand
         @Override
         public void setup()
         {
-            this.setPermission("biomes.admin");
+            this.inheritPermission();
             this.setParametersHelp(Constants.ADMIN_COMMANDS + "migrate.parameters");
             this.setDescription(Constants.ADMIN_COMMANDS + "migrate.description");
         }
