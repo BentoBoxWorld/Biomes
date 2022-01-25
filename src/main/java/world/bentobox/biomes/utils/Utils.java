@@ -264,7 +264,7 @@ public class Utils
     {
         return BentoBox.getInstance().getIWM().getAddon(world).
             map(gameModeAddon -> gameModeAddon.getDescription().getName()).
-            orElse("");
+            orElse("").toLowerCase();
     }
 
 

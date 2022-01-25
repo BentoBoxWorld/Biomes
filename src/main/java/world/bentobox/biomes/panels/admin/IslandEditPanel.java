@@ -339,7 +339,7 @@ public class IslandEditPanel extends CommonPagedPanel<BiomesObject>
             }
             case OWNER_BUNDLE -> {
                 description.add(this.user.getTranslationOrNothing(reference + "description",
-                    Constants.PARAMETER_GAMEMODE, Utils.getGameMode(this.world).toLowerCase()));
+                    Constants.PARAMETER_GAMEMODE, Utils.getGameMode(this.world)));
 
                 BiomesBundleObject bundle = this.islandData.getOwnerBundle() != null ?
                     this.addon.getAddonManager().getBundleById(this.islandData.getOwnerBundle()) : null;

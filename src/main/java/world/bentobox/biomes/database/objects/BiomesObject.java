@@ -25,7 +25,6 @@ import com.google.gson.annotations.Expose;
 
 import world.bentobox.bentobox.database.objects.DataObject;
 import world.bentobox.bentobox.database.objects.Table;
-import world.bentobox.biomes.utils.Utils;
 
 
 /**
@@ -40,21 +39,6 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
     public BiomesObject()
     {
         // Empty constructor.
-    }
-
-
-    /**
-     * Instantiates a new Biomes object.
-     *
-     * @param biome the biome
-     * @param world the world
-     */
-    public BiomesObject(Biome biome, World world)
-    {
-        this.biome = biome;
-        this.world = world.getName();
-        this.friendlyName = biome.name();
-        this.setUniqueId(Utils.getGameMode(world) + "_" + this.biome.toString().toLowerCase());
     }
 
 
@@ -190,24 +174,6 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
     public void setCost(@Nullable Double cost)
     {
         this.cost = cost;
-    }
-
-
-    /**
-     * @return world in which biome operates
-     */
-    public String getWorld()
-    {
-        return this.world;
-    }
-
-
-    /**
-     * @param world where biome must operate.
-     */
-    public void setWorld(String world)
-    {
-        this.world = world;
     }
 
 
@@ -584,7 +550,7 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
         object.setDescription(new ArrayList<>(this.description));
         object.setIcon(this.icon.clone());
         object.setOrder(this.order);
-        object.setWorld(this.world);
+
         object.setEnvironment(this.environment);
         object.setUniqueId(this.uniqueId);
 
@@ -680,12 +646,6 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
      */
     @Expose
     private int order = -1;
-
-    /**
-     * The World.
-     */
-    @Expose
-    private String world;
 
     /**
      * The Environment.

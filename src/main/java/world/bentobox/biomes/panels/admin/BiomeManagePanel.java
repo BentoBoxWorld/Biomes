@@ -129,7 +129,7 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
                 icon = Material.WRITABLE_BOOK;
                 clickHandler = (panel, user1, clickType, slot) ->
                 {
-                    String gameModePrefix = Utils.getGameMode(this.world).toLowerCase() + "_";
+                    String gameModePrefix = Utils.getGameMode(this.world) + "_";
 
                     // This consumer process new bundle creating with a name and id from given
                     // consumer value.
@@ -138,7 +138,7 @@ public class BiomeManagePanel extends CommonPagedPanel<BiomesObject>
                         if (value != null)
                         {
                             BiomesObject newObject = this.addon.getAddonManager().createBiome(
-                                gameModePrefix + Utils.sanitizeInput(value), world.getName());
+                                gameModePrefix + Utils.sanitizeInput(value));
 
                             if (newObject != null)
                             {

@@ -87,7 +87,6 @@ public class BiomeDataRequestHandler extends AddonRequestHandler
             biomesDataMap = new HashMap<>();
 
             biomesDataMap.put("uniqueId", biome.getUniqueId());
-            biomesDataMap.put("world", biome.getWorld());
             biomesDataMap.put("biome", biome.getBiome().name());
 
             biomesDataMap.put("name", biome.getFriendlyName());

@@ -270,24 +270,6 @@ public class BiomesAddonManager
 
         for (BiomesObject biomesObject : objectList)
         {
-            if (biomesObject.getUniqueId()
-                .regionMatches(true, 0, world.getName() + "-", 0, world.getName().length() + 1))
-            {
-                this.biomesDatabase.deleteID(biomesObject.getUniqueId());
-                this.biomesCache.remove(biomesObject.getUniqueId());
-
-                biomesObject.setUniqueId(
-                    addonName + "_" + biomesObject.getUniqueId().substring(world.getName().length() + 1));
-
-                // Update world, as in some situations it was not set.
-                biomesObject.setWorld(Util.getWorld(world).getName());
-
-                this.biomesDatabase.saveObjectAsync(biomesObject);
-                this.biomesCache.put(biomesObject.getUniqueId(), biomesObject);
-
-                updated = true;
-            }
-
             // Migrate to the new format.
             if (biomesObject.getRequiredLevel() != null)
             {
@@ -342,8 +324,7 @@ public class BiomesAddonManager
      */
     public List<BiomesBundleObject> getBundles(World world)
     {
-        String gameMode = this.addon.getPlugin().getIWM().getAddon(world).map(
-            gameModeAddon -> gameModeAddon.getDescription().getName()).orElse("");
+        String gameMode = Utils.getGameMode(Util.getWorld(world));
 
         if (gameMode.isEmpty())
         {
@@ -352,12 +333,13 @@ public class BiomesAddonManager
         }
 
         // Find default generator from cache.
+        // Filter generators that starts with name.
+        // Sort in order: default generators are first, followed by lowest priority,
+        // Return as list collection.
+
         return this.bundleCache.values().stream().
-            // Filter generators that starts with name.
-                filter(bundle -> bundle.getUniqueId().startsWith(gameMode.toLowerCase())).
-            // Sort in order: default generators are first, followed by lowest priority,
-            // Return as list collection.
-                collect(Collectors.toList());
+            filter(bundle -> bundle.getUniqueId().startsWith(gameMode)).
+            collect(Collectors.toList());
     }
 
 
@@ -1038,10 +1020,9 @@ public class BiomesAddonManager
      * This method creates and returns new biome with given uniqueID.
      *
      * @param uniqueID - new ID for challenge.
-     * @param worldName - world name where biome operates.
      * @return biome that is currently created.
      */
-    public BiomesObject createBiome(String uniqueID, String worldName)
+    public BiomesObject createBiome(String uniqueID)
     {
         if (!this.containsBiome(uniqueID))
         {
@@ -1051,8 +1032,8 @@ public class BiomesAddonManager
 
             // Sets default biome as VOID.
             biome.setBiome(Biome.THE_VOID);
-            biome.setWorld(worldName);
             biome.setEnvironment(World.Environment.NORMAL);
+            biome.setCostMode(BiomesObject.CostMode.STATIC);
 
             this.saveBiome(biome);
             this.loadBiomes(biome);
@@ -1084,13 +1065,14 @@ public class BiomesAddonManager
 
         List<BiomesObject> returnBiomesList = new ArrayList<>(allBiomeList.size());
 
+        // Filter out all biomes that has a different environment then players world.
+        // Filter out undeployed biomes if visibility mode is set to only deployed
+        // Filter out biomes which does user not have permissions
+
         allBiomeList.stream().
-            // Filter out all biomes that has a different environment then players world.
-                filter(biomeObject -> user.getWorld().getEnvironment().equals(biomeObject.getEnvironment())).
-            // Filter out undeployed biomes if visibility mode is set to only deployed
-                filter(BiomesObject::isDeployed).
-            // Filter out biomes which does user not have permissions
-                filter(biomesObject -> biomesObject.getUnlockPermissions().isEmpty() ||
+            filter(biomeObject -> user.getWorld().getEnvironment().equals(biomeObject.getEnvironment())).
+            filter(BiomesObject::isDeployed).
+            filter(biomesObject -> biomesObject.getUnlockPermissions().isEmpty() ||
                 biomesObject.getUnlockPermissions().stream().allMatch(user::hasPermission)).
             forEach(returnBiomesList::add);
 
@@ -1106,23 +1088,19 @@ public class BiomesAddonManager
      */
     public List<BiomesObject> getBiomes(World world)
     {
-        world = Util.getWorld(world);
+        final String gameMode = Utils.getGameMode(Util.getWorld(world));
 
-        return world == null ? Collections.emptyList() : this.getBiomes(world.getName());
-    }
+        if (gameMode.isEmpty())
+        {
+            // If not a gamemode world then return.
+            return Collections.emptyList();
+        }
 
-
-    /**
-     * This method returns list with loaded biomes for given world.
-     *
-     * @param worldName Name of world where biome operates.
-     * @return list with loaded biomes.
-     */
-    public List<BiomesObject> getBiomes(String worldName)
-    {
+        // Find biomes that is defined to the given gamemode.
+        // Sort biomes by its comparator.
         return this.biomesCache.values().stream().
+            filter(biome -> biome.getUniqueId().startsWith(gameMode)).
             sorted(BiomesObject::compareTo).
-            filter(biome -> biome.getWorld().equalsIgnoreCase(worldName)).
             collect(Collectors.toList());
     }
 
@@ -1237,10 +1215,10 @@ public class BiomesAddonManager
      */
     public boolean hasAnyBiome(World world)
     {
-        String worldName = Util.getWorld(world) == null ? "" : Util.getWorld(world).getName();
+        final String gameMode = Utils.getGameMode(Util.getWorld(world));
 
-        return !worldName.isEmpty() &&
-            this.biomesCache.values().stream().anyMatch(biome -> biome.getWorld().equalsIgnoreCase(worldName));
+        return !gameMode.isEmpty() &&
+            this.biomesCache.values().stream().anyMatch(biome -> biome.getUniqueId().startsWith(gameMode));
     }
 
 

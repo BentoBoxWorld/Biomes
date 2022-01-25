@@ -454,7 +454,7 @@ public class BiomesImportManager
         {
             if (defaultFile.createNewFile())
             {
-                String replacementString = Utils.getGameMode(world).toLowerCase() + "_";
+                String replacementString = Utils.getGameMode(world) + "_";
                 BiomesAddonManager manager = this.addon.getAddonManager();
 
                 List<BiomesObject> generatorTierList = manager.getBiomes(world).
@@ -556,7 +556,7 @@ public class BiomesImportManager
         {
             // This prefix will be used to all generators. That is a unique way how to separate generators for
             // each game mode.
-            String uniqueIDPrefix = Utils.getGameMode(world).toLowerCase() + "_";
+            String uniqueIDPrefix = Utils.getGameMode(world) + "_";
             DefaultDataHolder downloadedBiomes = new DefaultJSONHandler(this.addon).loadObject(fileName);
 
             if (downloadedBiomes == null)

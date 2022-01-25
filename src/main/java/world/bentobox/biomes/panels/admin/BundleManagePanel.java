@@ -108,7 +108,7 @@ public class BundleManagePanel extends CommonPagedPanel<BiomesBundleObject>
                 icon = Material.WRITABLE_BOOK;
                 clickHandler = (panel, user1, clickType, slot) ->
                 {
-                    String gameModePrefix = Utils.getGameMode(this.world).toLowerCase() + "_";
+                    String gameModePrefix = Utils.getGameMode(this.world) + "_";
 
                     // This consumer process new bundle creating with a name and id from given
                     // consumer value..

@@ -563,7 +563,7 @@ public abstract class CommonPanel
         {
             permission = this.user.getTranslation(reference + "permission",
                 Constants.PARAMETER_ID, bundle.getUniqueId(),
-                Constants.PARAMETER_GAMEMODE, Utils.getGameMode(this.world).toLowerCase());
+                Constants.PARAMETER_GAMEMODE, Utils.getGameMode(this.world));
         }
         else
         {
