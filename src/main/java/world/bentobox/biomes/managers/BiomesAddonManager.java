@@ -7,16 +7,17 @@ package world.bentobox.biomes.managers;
 
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Biome;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import net.milkbowl.vault.economy.EconomyResponse;
 import world.bentobox.bank.BankManager;
 import world.bentobox.bank.BankResponse;
 import world.bentobox.bank.data.Money;
@@ -814,7 +815,7 @@ public class BiomesAddonManager
      * @param biomesObject biomes object that need to be purchased.
      * @return {@code true} if can purchase, {@code false} if cannot purchase.
      */
-    public boolean canPurchaseGenerator(@NotNull User user,
+    public boolean canPurchaseBiome(@NotNull User user,
         @NotNull Island island,
         @NotNull BiomesIslandDataObject islandData,
         @NotNull BiomesObject biomesObject)
@@ -868,41 +869,57 @@ public class BiomesAddonManager
             {
                 if (this.addon.getSettings().isUseBankAccount() && this.addon.isBankProvided())
                 {
-                    BankManager manager = this.addon.getBankAddon().getBankManager();
-
-                    if (manager.getBalance(island).getValue() > biomesObject.getUnlockCost() &&
-                        manager.withdraw(user, island, new Money(biomesObject.getUnlockCost()), TxType.WITHDRAW).join() == BankResponse.SUCCESS)
+                    if (this.addon.getBankAddon().getBankManager().getBalance(island).getValue() < biomesObject.getUnlockCost())
                     {
-                        return true;
-                    }
-                    else
-                    {
+                        // Not enough money.
                         Utils.sendMessage(user,
                             user.getTranslation(Constants.MESSAGES + "no-credits-buy-bank",
                                 TextVariables.NUMBER, String.valueOf(biomesObject.getUnlockCost())));
                         return false;
                     }
                 }
-                else if (this.addon.getVaultHook().has(user, biomesObject.getUnlockCost()) &&
-                    this.addon.getVaultHook().withdraw(user, biomesObject.getUnlockCost()).transactionSuccess())
+                else if (!this.addon.getVaultHook().has(user, biomesObject.getUnlockCost()))
                 {
-                    // Return true only if user has enough money and its removal was successful.
+                    // Not enough money.
 
-                    return true;
-                }
-                else
-                {
                     Utils.sendMessage(user,
-                        user.getTranslation(Constants.MESSAGES + "no-credits-buy",
+                        user.getTranslation(Constants.MESSAGES + "no-credits-buy-bank",
                             TextVariables.NUMBER, String.valueOf(biomesObject.getUnlockCost())));
                     return false;
                 }
             }
-            else
+
+            if (!biomesObject.getUnlockItems().isEmpty())
             {
-                // Vault is not enabled or cost is not set. Allow change.
-                return true;
+                List<ItemStack> missingItemList = new ArrayList<>();
+
+                Utils.groupEqualItems(biomesObject.getUnlockItems(), Collections.emptySet()).forEach(item ->
+                {
+                    if (!Utils.hasRequiredItem(user, item, Collections.emptySet()))
+                    {
+                        missingItemList.add(item.clone());
+                    }
+                });
+
+                if (!missingItemList.isEmpty())
+                {
+                    // Not enough items
+                    StringBuilder missingItems = new StringBuilder();
+                    missingItemList.forEach(itemStack -> missingItems.
+                        append(itemStack.getAmount()).
+                        append(" ").
+                        append(Utils.prettifyObject(itemStack, user)).
+                        append(" "));
+
+                    Utils.sendMessage(user,
+                        user.getTranslation(Constants.MESSAGES + "no-items-buy",
+                            Constants.PARAMETER_BIOME, biomesObject.getFriendlyName(),
+                            "[items]", missingItems.toString()));
+                    return false;
+                }
             }
+
+            return true;
         }
     }
 
@@ -915,23 +932,194 @@ public class BiomesAddonManager
      * @param islandData island data object.
      * @param biomesObject biomes object that need to be purchased.
      */
-    public void purchaseGenerator(@NotNull User user,
+    public void purchaseBiome(@NotNull User user,
         @NotNull Island island,
         @NotNull BiomesIslandDataObject islandData,
         @NotNull BiomesObject biomesObject)
     {
-        // Call event about successful purchase
-        Bukkit.getPluginManager().callEvent(new BiomePurchasedEvent(biomesObject,
-            user,
-            island));
+        this.purchaseBiome(user, island, islandData, biomesObject, true);
+    }
 
-        Utils.sendMessage(user,
-            user.getTranslation(Constants.MESSAGES + "biome-purchased",
-                Constants.PARAMETER_BIOME, biomesObject.getFriendlyName()));
-        islandData.getPurchasedBiomes().add(biomesObject.getUniqueId());
 
-        // Save object.
-        this.saveIslandData(islandData);
+    /**
+     * This method adds biomes object to purchased biomes.
+     *
+     * @param user User who will purchase.
+     * @param island Island which is owned by player.
+     * @param islandData island data object.
+     * @param biomesObject biomes object that need to be purchased.
+     * @param takeItems take money and items
+     */
+    public void purchaseBiome(@NotNull User user,
+        @NotNull Island island,
+        @NotNull BiomesIslandDataObject islandData,
+        @NotNull BiomesObject biomesObject,
+        boolean takeItems)
+    {
+        CompletableFuture<Boolean> purchaseBiome = new CompletableFuture<>();
+        purchaseBiome.thenAccept(runTask ->
+        {
+            if (runTask)
+            {
+                // Call event about successful purchase
+                Bukkit.getPluginManager().callEvent(new BiomePurchasedEvent(biomesObject,
+                    user,
+                    island));
+
+                Utils.sendMessage(user,
+                    user.getTranslation(Constants.MESSAGES + "biome-purchased",
+                        Constants.PARAMETER_BIOME, biomesObject.getFriendlyName()));
+                islandData.getPurchasedBiomes().add(biomesObject.getUniqueId());
+
+                // Save object.
+                this.saveIslandData(islandData);
+            }
+        });
+
+        if (takeItems)
+        {
+            if (this.addon.isEconomyProvided())
+            {
+                this.withdrawMoney(purchaseBiome, user, island, biomesObject.getUnlockCost());
+            }
+
+            if (!biomesObject.getUnlockItems().isEmpty())
+            {
+                this.withdrawItems(purchaseBiome,
+                    user,
+                    Utils.groupEqualItems(biomesObject.getUnlockItems(), Collections.emptySet()),
+                    Collections.emptySet());
+            }
+        }
+
+        purchaseBiome.complete(true);
+    }
+
+
+    /**
+     * Withdraw money for unlocking biome.
+     *
+     * @param changeBiomeStage the change biome stage
+     * @param user the user
+     * @param island the island
+     * @param money the money
+     */
+    private void withdrawMoney(CompletableFuture<Boolean> changeBiomeStage, User user, Island island, double money)
+    {
+        if (this.addon.getSettings().isUseBankAccount() && this.addon.isBankProvided())
+        {
+            BankManager bankManager = this.addon.getBankAddon().getBankManager();
+            bankManager.withdraw(user, island, new Money(money), TxType.WITHDRAW).
+                thenAccept(response -> {
+                    if (response == BankResponse.SUCCESS)
+                    {
+                        changeBiomeStage.complete(true);
+                    }
+                    else
+                    {
+                        Utils.sendMessage(user,
+                            user.getTranslation(Constants.ERRORS + "could-not-remove-money"));
+                        changeBiomeStage.complete(false);
+                    }
+                });
+        }
+        else
+        {
+            EconomyResponse withdraw = this.addon.getVaultHook().withdraw(user, money);
+
+            if (withdraw.transactionSuccess())
+            {
+                changeBiomeStage.complete(true);
+            }
+            else
+            {
+                // Something went wrong on withdraw.
+
+                Utils.sendMessage(user,
+                    user.getTranslation(Constants.ERRORS + "could-not-remove-money"));
+                this.addon.logError(withdraw.errorMessage);
+                changeBiomeStage.complete(false);
+            }
+        }
+    }
+
+
+    /**
+     * Withdraw items for unlocking biome.
+     *
+     * @param changeBiomeStage the change biome stage
+     * @param user the user
+     * @param requiredItemList the required item list
+     * @param ignoreMetaData the ignore meta data
+     */
+    private void withdrawItems(CompletableFuture<Boolean> changeBiomeStage,
+        User user,
+        List<ItemStack> requiredItemList,
+        Set<Material> ignoreMetaData)
+    {
+        if (user.getPlayer().getGameMode() == GameMode.CREATIVE)
+        {
+            // No point to check items from creative inventory.
+            changeBiomeStage.complete(true);
+        }
+
+        for (ItemStack required : requiredItemList)
+        {
+            int amountToBeRemoved = required.getAmount();
+            List<ItemStack> itemsInInventory;
+
+            if (ignoreMetaData.contains(required.getType()))
+            {
+                // Use collecting method that ignores item meta.
+                itemsInInventory = Arrays.stream(user.getInventory().getContents()).
+                    filter(Objects::nonNull).
+                    filter(i -> i.getType().equals(required.getType())).
+                    collect(Collectors.toList());
+            }
+            else
+            {
+                // Use collecting method that compares item meta.
+                itemsInInventory = Arrays.stream(user.getInventory().getContents()).
+                    filter(Objects::nonNull).
+                    filter(i -> i.isSimilar(required)).
+                    collect(Collectors.toList());
+            }
+
+            for (ItemStack itemStack : itemsInInventory)
+            {
+                if (amountToBeRemoved > 0)
+                {
+                    ItemStack dummy = itemStack.clone();
+                    dummy.setAmount(1);
+
+                    // Remove either the full amount or the remaining amount
+                    if (itemStack.getAmount() >= amountToBeRemoved)
+                    {
+                        itemStack.setAmount(itemStack.getAmount() - amountToBeRemoved);
+                        amountToBeRemoved = 0;
+                    }
+                    else
+                    {
+                        amountToBeRemoved -= itemStack.getAmount();
+                        itemStack.setAmount(0);
+                    }
+                }
+            }
+
+            if (amountToBeRemoved > 0)
+            {
+                Utils.sendMessage(user,
+                    user.getTranslation(Constants.ERRORS + "could-not-remove-items"));
+
+                this.addon.logError("Could not remove " + amountToBeRemoved + " of " + required.getType() +
+                    " from player's inventory!");
+
+                changeBiomeStage.complete(false);
+            }
+        }
+
+        // Complete at the end.
+        changeBiomeStage.complete(true);
     }
 
 
