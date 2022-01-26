@@ -993,7 +993,7 @@ public class BiomesAddonManager
                 this.withdrawMoney(purchaseBiome, user, island, biomesObject.getUnlockCost());
             }
 
-            if (!biomesObject.getUnlockItems().isEmpty())
+            if (!purchaseBiome.isDone() && !biomesObject.getUnlockItems().isEmpty())
             {
                 this.withdrawItems(purchaseBiome,
                     user,
@@ -1002,7 +1002,10 @@ public class BiomesAddonManager
             }
         }
 
-        purchaseBiome.complete(true);
+        if (!purchaseBiome.isDone())
+        {
+            purchaseBiome.complete(true);
+        }
     }
 
 
@@ -1021,11 +1024,7 @@ public class BiomesAddonManager
             BankManager bankManager = this.addon.getBankAddon().getBankManager();
             bankManager.withdraw(user, island, new Money(money), TxType.WITHDRAW).
                 thenAccept(response -> {
-                    if (response == BankResponse.SUCCESS)
-                    {
-                        changeBiomeStage.complete(true);
-                    }
-                    else
+                    if (response != BankResponse.SUCCESS)
                     {
                         Utils.sendMessage(user,
                             user.getTranslation(Constants.ERRORS + "could-not-remove-money"));
@@ -1037,11 +1036,7 @@ public class BiomesAddonManager
         {
             EconomyResponse withdraw = this.addon.getVaultHook().withdraw(user, money);
 
-            if (withdraw.transactionSuccess())
-            {
-                changeBiomeStage.complete(true);
-            }
-            else
+            if (!withdraw.transactionSuccess())
             {
                 // Something went wrong on withdraw.
 
@@ -1070,7 +1065,7 @@ public class BiomesAddonManager
         if (user.getPlayer().getGameMode() == GameMode.CREATIVE)
         {
             // No point to check items from creative inventory.
-            changeBiomeStage.complete(true);
+            return;
         }
 
         for (ItemStack required : requiredItemList)
@@ -1125,11 +1120,9 @@ public class BiomesAddonManager
                     " from player's inventory!");
 
                 changeBiomeStage.complete(false);
+                return;
             }
         }
-
-        // Complete at the end.
-        changeBiomeStage.complete(true);
     }
 
 
