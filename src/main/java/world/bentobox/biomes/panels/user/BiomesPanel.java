@@ -213,8 +213,7 @@ public class BiomesPanel extends CommonPanel
                     return this.addon.getAddonManager().isPurchased(this.islandData, biomesObject);
                 }
                 case "CHANGE", "ADVANCED_PANEL" -> {
-                    return !this.islandData.isUnlocked(biomesObject) ||
-                        !this.addon.getAddonManager().isPurchased(this.islandData, biomesObject);
+                    return !this.manager.isPurchased(this.islandData, biomesObject);
                 }
                 default -> {
                     return false;

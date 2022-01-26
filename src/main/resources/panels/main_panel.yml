@@ -77,7 +77,7 @@ main_panel:
           type: CHANGE
           # Supports ISLAND | CHUNK:NUMBER | RANGE:NUMBER
           content: ISLAND
-          tooltip: biomes.gui.tips.left-click-to-choose
+          tooltip: biomes.gui.tips.left-click-to-apply
         right:
           type: ADVANCED_PANEL
           tooltip: biomes.gui.tips.right-click-to-open

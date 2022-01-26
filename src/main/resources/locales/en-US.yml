@@ -76,10 +76,10 @@ biomes:
       accept:
         name: "&f&l Apply Change"
         description: |-
-          &7 Changes biome to [biome]
+          &7 Changes biome to &e [biome]
 
-          &7 Update mode: [mode]
-          &7 Update range: [number]
+          &7 Update mode: &e [mode]
+          &7 Update range: &e [number]
       # Button that is used to return to previous GUI or exit it completely.
       return:
         name: "&f&l Return"
