@@ -20,6 +20,7 @@ import world.bentobox.biomes.database.objects.BiomesIslandDataObject;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.managers.BiomesAddonManager;
 import world.bentobox.biomes.panels.user.BiomesPanel;
+import world.bentobox.biomes.panels.user.BuyPanel;
 import world.bentobox.biomes.tasks.BiomeUpdateHelper;
 import world.bentobox.biomes.utils.Constants;
 import world.bentobox.biomes.utils.Utils;
@@ -443,6 +444,17 @@ public class BiomesCommand extends BiomesCompositeCommand
         @Override
         public boolean execute(User user, String label, List<String> args)
         {
+            if (args.isEmpty())
+            {
+                BuyPanel.open(this.getAddon(),
+                    this.getWorld(),
+                    user,
+                    this.getTopLabel(),
+                    this.getPermissionPrefix());
+
+                return true;
+            }
+
             BiomesObject biomesObject = BiomesCommand.this.getBiomeObject(args, user);
             BiomesAddonManager addonManager = this.<BiomesAddon>getAddon().getAddonManager();
 

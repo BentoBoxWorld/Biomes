@@ -1490,7 +1490,8 @@ public class BiomesAddonManager
     public boolean isPurchased(BiomesIslandDataObject islandData, BiomesObject biomesObject)
     {
         return islandData.isPurchased(biomesObject) ||
-            biomesObject.getUnlockItems().isEmpty() &&
+            islandData.isUnlocked(biomesObject) &&
+                biomesObject.getUnlockItems().isEmpty() &&
                 (!this.addon.isEconomyProvided() || biomesObject.getUnlockCost() == 0);
     }
 

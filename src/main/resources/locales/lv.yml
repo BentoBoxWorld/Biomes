@@ -32,6 +32,7 @@ biomes:
   gui:
     titles:
       player-panel: "&0&l Izvēlies Biomu"
+      buy-panel: "&0&l Nopirkt Biomu"
       advanced-panel: "&0&l Izvēlies Veidu"
       # All Titles Below this comment is for Admin Menus.
       admin-panel: "&0&l Administratora Izvēlne"
@@ -118,6 +119,11 @@ biomes:
           &7 Ļauj meklēt elementu
           &7 pēc ievadītās vērtības.
         search: "&b Vērtība: [value]"
+      # Button that allows to buy biome.
+      buy:
+        name: "&f&l Pirkt"
+        description: |-
+          &7 Ļauj pirkt jaunu biomu.
       # All buttons below this comment is for Admin Menus.
       manage_islands:
         name: "&f&l Pārvaldīt Salas"
@@ -826,7 +832,7 @@ biomes:
     # Message that is sent to player if he tries to buy biome that he already owns.
     biome-already-purchased: "&c Tu jau esi nopircis &r [biome] &r&c."
     # Message that is sent to player if he tries purchase biome without reaching required level.
-    island-level-not-reached: "[biome] &c nepieciešams vismaz [level] salas līmenis."
+    island-level-not-reached: "[biome] &c nepieciešams vismaz [number] salas līmenis."
     # Message that is sent to player if he tries purchase biome without required permission.
     missing-permission: "[biome] &c nepieciešama atļauja: [permission]."
     # Message that is sent to player if he tries purchase biome without required money in account.
@@ -849,6 +855,8 @@ biomes:
     waiting: "&a Pievienots rindai. &e Aptuvenais gaidīšanas laiks: [time] sec."
     # Message that is sent to player when the biome is already unlocked.
     biome-already-unlocked: "&r [biome] &e jau ir atvērta."
+    # Message that is displayed for players if gamemode does not have any biome.
+    everything-already-bought: "&a Tu jau esi nopircis visus biomus priekš šī spēles režīma."
     skipping: "&a Izlaiž ielādi: &r [biome] &r&a."
     overwriting: "&a Pārraksta &r [biome] &r&a atmiņā."
     imported: "&a Ielādē &r [biome] &r&a atmiņā."

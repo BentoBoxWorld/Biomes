@@ -32,6 +32,7 @@ biomes:
   gui:
     titles:
       player-panel: "&0&l Choose Biome"
+      buy-panel: "&0&l Purchase Biome"
       advanced-panel: "&0&l Update Mode"
       # All Titles Below this comment is for Admin Menus.
       admin-panel: "&0&l Admin GUI"
@@ -83,8 +84,7 @@ biomes:
       return:
         name: "&f&l Return"
         description: |-
-          &7 Return to previous menu
-          &7 or exit GUI
+          &7 Return to previous menu.
       # Button that is used in multi-page GUIs which allows to return to previous page.
       previous:
         name: "&f&l Previous Page"
@@ -118,6 +118,11 @@ biomes:
           &7 element with input
           &7 text value.
         search: "&b Value: [value]"
+      # Button that allows to buy biome.
+      buy:
+        name: "&f&l Purchase"
+        description: |-
+          &7 Purchase a new biome.
       # All buttons below this comment is for Admin Menus.
       manage_islands:
         name: "&f&l Manage Islands"
@@ -823,7 +828,7 @@ biomes:
     # Message that is sent to player if he tries to buy biome that he already owns.
     biome-already-purchased: "&c You have already purchased &r [biome] &r&c."
     # Message that is sent to player if he tries purchase biome without reaching required level.
-    island-level-not-reached: "[biome] &c requires to have at least island level: [level]."
+    island-level-not-reached: "[biome] &c requires to have at least island level: [number]."
     # Message that is sent to player if he tries purchase biome without required permission.
     missing-permission: "[biome] &c requires to have permission: [permission]."
     # Message that is sent to player if he tries purchase biome without required money in account.
@@ -846,6 +851,8 @@ biomes:
     waiting: "&a Added biome change in queue. &e Estimated waiting time: [time] sec."
     # Message that is sent to player when the biome is already unlocked.
     biome-already-unlocked: "&r [biome] &e is already unlocked."
+    # Message that is displayed for players if gamemode does not have any biome.
+    everything-already-bought: "&a You already have bought all biomes for this gamemode."
     skipping: "&a Skipping loading &r [biome] &r&a."
     overwriting: "&a Overwriting &r [biome] &r&a in cache."
     imported: "&a Imported &r [biome] &r&a in cache."

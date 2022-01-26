@@ -1,24 +1,14 @@
-main_panel:
-  title: biomes.gui.titles.player-panel
+buy_panel:
+  title: biomes.gui.titles.buy-panel
   type: INVENTORY
   background:
-    icon: BLACK_STAINED_GLASS_PANE
+    icon: PURPLE_STAINED_GLASS_PANE
     title: "&b&r" # Empty text
   border:
-    icon: BLACK_STAINED_GLASS_PANE
+    icon: PURPLE_STAINED_GLASS_PANE
     title: "&b&r"  # Empty text
   force-shown: []
   content:
-    1:
-      9:
-        icon: DIAMOND
-        title: biomes.gui.buttons.buy.name
-        description: biomes.gui.buttons.buy.description
-        data:
-          type: PURCHASE
-        action:
-          left:
-            tooltip: biomes.gui.tips.click-to-view
     2:
       2: biomes_button
       3: biomes_button
@@ -74,10 +64,5 @@ main_panel:
         type: BIOME
       actions:
         left:
-          type: CHANGE
-          # Supports ISLAND | CHUNK:NUMBER | RANGE:NUMBER
-          content: ISLAND
-          tooltip: biomes.gui.tips.left-click-to-choose
-        right:
-          type: ADVANCED_PANEL
-          tooltip: biomes.gui.tips.right-click-to-open
+          type: BUY
+          tooltip: biomes.gui.tips.click-to-buy

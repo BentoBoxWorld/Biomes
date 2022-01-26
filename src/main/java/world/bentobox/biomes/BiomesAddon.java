@@ -272,6 +272,7 @@ public class BiomesAddon extends Addon
         // Save existing panels.
         this.saveResource("panels/main_panel.yml", false);
         this.saveResource("panels/advanced_panel.yml", false);
+        this.saveResource("panels/buy_panel.yml", false);
 
         // Save template
         this.saveResource("biomesTemplate.yml", false);

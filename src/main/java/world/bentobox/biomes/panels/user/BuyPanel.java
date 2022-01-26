@@ -24,10 +24,8 @@ import world.bentobox.bentobox.api.panels.builders.TemplatedPanelBuilder;
 import world.bentobox.bentobox.api.panels.reader.ItemTemplateRecord;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.objects.Island;
-import world.bentobox.bentobox.paperlib.PaperLib;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
-import world.bentobox.biomes.config.Settings;
 import world.bentobox.biomes.database.objects.BiomesIslandDataObject;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.panels.CommonPanel;
@@ -38,7 +36,7 @@ import world.bentobox.biomes.utils.Utils;
 /**
  * Biomes panel builder.
  */
-public class BiomesPanel extends CommonPanel
+public class BuyPanel extends CommonPanel
 {
     /**
      * Instantiates a new Biomes panel.
@@ -49,7 +47,7 @@ public class BiomesPanel extends CommonPanel
      * @param topLabel the top label
      * @param permissionPrefix the permission prefix
      */
-    private BiomesPanel(BiomesAddon addon,
+    private BuyPanel(BiomesAddon addon,
         World world,
         User user,
         String topLabel,
@@ -64,12 +62,31 @@ public class BiomesPanel extends CommonPanel
         // Remove wrong environment biomes.
         this.biomeList = this.manager.getIslandBiomes(world, this.islandData).stream().
             filter(biome -> biome.getEnvironment().equals(user.getWorld().getEnvironment())).
-            filter(biomesObject -> this.islandData != null && this.manager.isPurchased(this.islandData, biomesObject)).
+            filter(biomesObject -> this.islandData != null && !this.manager.isPurchased(this.islandData, biomesObject)).
             collect(Collectors.toList());
 
-        this.numberOfPurchasableBiomes = this.manager.getIslandBiomes(this.world, this.islandData).stream().
+    }
+
+
+    /**
+     * Instantiates a new Buy panel.
+     *
+     * @param parentPanel the parent panel
+     */
+    private BuyPanel(CommonPanel parentPanel)
+    {
+        super(parentPanel);
+
+        this.island = this.addon.getIslands().getIsland(world, user);
+        // Get valid user island data
+        this.islandData = this.manager.validateIslandData(this.island);
+        // Store biomes in local list to avoid building it every time.
+        // Remove wrong environment biomes.
+        this.biomeList = this.manager.getIslandBiomes(world, this.islandData).stream().
+            filter(biome -> biome.getEnvironment().equals(user.getWorld().getEnvironment())).
             filter(biomesObject -> this.islandData != null && !this.manager.isPurchased(this.islandData, biomesObject)).
-            count();
+            collect(Collectors.toList());
+
     }
 
 
@@ -85,7 +102,7 @@ public class BiomesPanel extends CommonPanel
         if (this.biomeList.isEmpty())
         {
             this.addon.logError("There are no available biomes!");
-            Utils.sendMessage(this.user, this.user.getTranslation(Constants.ERRORS + "no-biomes",
+            Utils.sendMessage(this.user, this.user.getTranslation(Constants.MESSAGES + "everything-already-bought",
                 Constants.PARAMETER_GAMEMODE, Utils.getGameMode(this.world)));
             return;
         }
@@ -94,7 +111,7 @@ public class BiomesPanel extends CommonPanel
         TemplatedPanelBuilder panelBuilder = new TemplatedPanelBuilder();
 
         // Set main template.
-        panelBuilder.template("main_panel", new File(this.addon.getDataFolder(), "panels"));
+        panelBuilder.template("buy_panel", new File(this.addon.getDataFolder(), "panels"));
         panelBuilder.user(this.user);
         panelBuilder.world(this.user.getWorld());
 
@@ -105,9 +122,6 @@ public class BiomesPanel extends CommonPanel
         panelBuilder.registerTypeBuilder("NEXT", this::createNextButton);
         panelBuilder.registerTypeBuilder("PREVIOUS", this::createPreviousButton);
         panelBuilder.registerTypeBuilder("RETURN", this::createReturnButton);
-
-        // Register buy and return buttons
-        panelBuilder.registerTypeBuilder("PURCHASE", this::createPurchaseButton);
 
         // Register unknown type builder.
         panelBuilder.build();
@@ -207,18 +221,13 @@ public class BiomesPanel extends CommonPanel
 
         activeActions.removeIf(action ->
         {
-            switch (action.actionType().toUpperCase())
+            if ("BUY".equalsIgnoreCase(action.actionType()))
             {
-                case "BUY" -> {
-                    return this.addon.getAddonManager().isPurchased(this.islandData, biomesObject);
-                }
-                case "CHANGE", "ADVANCED_PANEL" -> {
-                    return !this.islandData.isUnlocked(biomesObject) ||
-                        !this.addon.getAddonManager().isPurchased(this.islandData, biomesObject);
-                }
-                default -> {
-                    return false;
-                }
+                return this.addon.getAddonManager().isPurchased(this.islandData, biomesObject);
+            }
+            else
+            {
+                return false;
             }
         });
 
@@ -227,25 +236,10 @@ public class BiomesPanel extends CommonPanel
         {
             for (ItemTemplateRecord.ActionRecords action : activeActions)
             {
-                if (clickType == action.clickType())
+                if (clickType == action.clickType() &&
+                    "BUY".equalsIgnoreCase(action.actionType()))
                 {
-                    switch (action.actionType().toUpperCase())
-                    {
-                        case "BUY" -> {
-                            this.buyBiome(biomesObject);
-                        }
-                        case "CHANGE" -> {
-                            // Biome change is done via commands, because that is the only way how
-                            // to apply timeouts reliably.
-
-                            String[] split = action.content().split(":");
-
-                            this.changeBiome(biomesObject, split[0], split.length > 1 ? split[1] : "1");
-                        }
-                        case "ADVANCED_PANEL" -> {
-                            AdvancedPanel.open(this, biomesObject, null);
-                        }
-                    }
+                    this.buyBiome(biomesObject);
                 }
             }
 
@@ -260,7 +254,7 @@ public class BiomesPanel extends CommonPanel
             collect(Collectors.toCollection(() -> new ArrayList<>(template.actions().size())));
 
         // Add tooltips.
-        if (!tooltips.isEmpty())
+        if (!tooltips.isEmpty() && this.islandData.isUnlocked(biomesObject))
         {
             // Empty line and tooltips.
             builder.description("");
@@ -485,108 +479,6 @@ public class BiomesPanel extends CommonPanel
 
 
     /**
-     * Create purchase button panel item.
-     *
-     * @param template the template
-     * @param slot the slot
-     * @return the panel item
-     */
-    @Nullable
-    private PanelItem createPurchaseButton(@NonNull ItemTemplateRecord template, TemplatedPanel.ItemSlot slot)
-    {
-        PanelItemBuilder builder = new PanelItemBuilder();
-
-        if (template.icon() != null)
-        {
-            builder.icon(template.icon().clone());
-        }
-
-        if (template.title() != null)
-        {
-            builder.name(this.user.getTranslation(this.world, template.title()));
-        }
-
-        if (template.description() != null)
-        {
-            builder.description(this.user.getTranslation(this.world, template.description()));
-        }
-
-        // Add ClickHandler
-        builder.clickHandler((panel, user, clickType, i) -> {
-            if (this.numberOfPurchasableBiomes > 0)
-            {
-                BuyPanel.open(this);
-            }
-            else
-            {
-                Utils.sendMessage(this.user,
-                    this.user.getTranslation(Constants.MESSAGES + "everything-already-bought",
-                        Constants.PARAMETER_GAMEMODE, Utils.getGameMode(this.world)));
-            }
-
-            return true;
-        });
-
-        // Collect tooltips.
-        List<String> tooltips = template.actions().stream().
-            filter(action -> action.tooltip() != null).
-            map(action -> this.user.getTranslation(this.world, action.tooltip())).
-            filter(text -> !text.isBlank()).
-            collect(Collectors.toCollection(() -> new ArrayList<>(template.actions().size())));
-
-        // Add tooltips.
-        if (!tooltips.isEmpty() && this.numberOfPurchasableBiomes > 0)
-        {
-            // Empty line and tooltips.
-            builder.description("");
-            builder.description(tooltips);
-        }
-
-        return builder.build();
-    }
-
-
-    /**
-     * Change biome with given parameters.
-     *
-     * @param biomesObject the biomes object
-     * @param mode the mode
-     * @param range the range
-     */
-    private void changeBiome(BiomesObject biomesObject, String mode, String range)
-    {
-        List<String> arguments = new ArrayList<>();
-
-        arguments.add(biomesObject.getUniqueId());
-
-
-        if (BiomesAddon.BIOMES_WORLD_PROTECTION.isSetForWorld(this.world))
-        {
-            arguments.add(mode);
-            arguments.add(range);
-        }
-        else
-        {
-            // This fix issues when admin disables Advanced GUI and sets
-            // incompatible options
-
-            if (mode.equalsIgnoreCase(Settings.UpdateMode.ISLAND.name()))
-            {
-                arguments.add(Settings.UpdateMode.RANGE.name());
-                arguments.add(Integer.toString(this.addon.getPlugin().getIWM().getIslandDistance(this.world)));
-            }
-            else
-            {
-                arguments.add(mode);
-                arguments.add(range);
-            }
-        }
-
-        this.callCommand(true, this.addon.getSettings().getPlayerSetCommand().split(" ")[0], arguments);
-    }
-
-
-    /**
      * Buy biome.
      *
      * @param biomesObject the biomes object
@@ -613,7 +505,18 @@ public class BiomesPanel extends CommonPanel
         String topLabel,
         String permissionPrefix)
     {
-        new BiomesPanel(addon, world, user, topLabel, permissionPrefix).build();
+        new BuyPanel(addon, world, user, topLabel, permissionPrefix).build();
+    }
+
+
+    /**
+     * Open new buy panel.
+     *
+     * @param parentPanel the parent panel
+     */
+    public static void open(CommonPanel parentPanel)
+    {
+        new BuyPanel(parentPanel).build();
     }
 
 
@@ -635,11 +538,6 @@ public class BiomesPanel extends CommonPanel
      * Target island data object.
      */
     private final BiomesIslandDataObject islandData;
-
-    /**
-     * Stores how many biomes player can still purchase.
-     */
-    private final long numberOfPurchasableBiomes;
 
     /**
      * This will be used for paging.
