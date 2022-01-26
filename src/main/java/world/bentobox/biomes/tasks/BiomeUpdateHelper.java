@@ -564,6 +564,7 @@ public class BiomeUpdateHelper
                 this.callerUser.getTranslation(Constants.ERRORS + "could-not-remove-money"));
             this.addon.logError("Economy Addon not provided.");
             changeBiomeStage.complete(false);
+            return;
         }
 
         if (this.addon.getSettings().isUseBankAccount() && this.addon.isBankProvided())
@@ -571,11 +572,7 @@ public class BiomeUpdateHelper
             BankManager bankManager = this.addon.getBankAddon().getBankManager();
             bankManager.withdraw(this.callerUser, this.island, new Money(money), TxType.WITHDRAW).
                 thenAccept(response -> {
-                    if (response == BankResponse.SUCCESS)
-                    {
-                        changeBiomeStage.complete(true);
-                    }
-                    else
+                    if (response != BankResponse.SUCCESS)
                     {
                         Utils.sendMessage(this.callerUser,
                             this.callerUser.getTranslation(Constants.ERRORS + "could-not-remove-money"));
@@ -587,11 +584,7 @@ public class BiomeUpdateHelper
         {
             EconomyResponse withdraw = this.addon.getVaultHook().withdraw(this.callerUser, money);
 
-            if (withdraw.transactionSuccess())
-            {
-                changeBiomeStage.complete(true);
-            }
-            else
+            if (!withdraw.transactionSuccess())
             {
                 // Something went wrong on withdraw.
 
@@ -618,7 +611,7 @@ public class BiomeUpdateHelper
         if (this.callerUser.getPlayer().getGameMode() == GameMode.CREATIVE)
         {
             // No point to check items from creative inventory.
-            changeBiomeStage.complete(true);
+            return;
         }
 
         for (ItemStack required : requiredItemList)
@@ -673,11 +666,9 @@ public class BiomeUpdateHelper
                     " from player's inventory!");
 
                 changeBiomeStage.complete(false);
+                return;
             }
         }
-
-        // Complete at the end.
-        changeBiomeStage.complete(true);
     }
 
 
@@ -695,12 +686,24 @@ public class BiomeUpdateHelper
             this.withdrawMoney(changeBiomeStage, this.biome.getCost() * blockCount);
         }
 
+        if (changeBiomeStage.isDone())
+        {
+            // Return if already processed.
+            return;
+        }
+
         if (!this.biome.getItemCost().isEmpty())
         {
             List<ItemStack> itemCost = Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet());
             itemCost.forEach(itemStack -> itemStack.setAmount(itemStack.getAmount() * blockCount));
 
             this.withdrawItems(changeBiomeStage, itemCost, Collections.emptySet());
+        }
+
+        if (changeBiomeStage.isDone())
+        {
+            // Return if already processed.
+            return;
         }
 
         changeBiomeStage.complete(true);
@@ -722,6 +725,12 @@ public class BiomeUpdateHelper
                 this.biome.getCost() + increment * this.biome.getCost());
         }
 
+        if (changeBiomeStage.isDone())
+        {
+            // Return if already processed.
+            return;
+        }
+
         if (!this.biome.getItemCost().isEmpty())
         {
             List<ItemStack> itemCost = Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet());
@@ -731,6 +740,12 @@ public class BiomeUpdateHelper
             this.withdrawItems(changeBiomeStage,
                 itemCost,
                 Collections.emptySet());
+        }
+
+        if (changeBiomeStage.isDone())
+        {
+            // Return if already processed.
+            return;
         }
 
         changeBiomeStage.complete(true);
@@ -749,11 +764,23 @@ public class BiomeUpdateHelper
             this.withdrawMoney(changeBiomeStage, this.biome.getCost());
         }
 
+        if (changeBiomeStage.isDone())
+        {
+            // Return if already processed.
+            return;
+        }
+
         if (!this.biome.getItemCost().isEmpty())
         {
             this.withdrawItems(changeBiomeStage,
                 Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()),
                 Collections.emptySet());
+        }
+
+        if (changeBiomeStage.isDone())
+        {
+            // Return if already processed.
+            return;
         }
 
         changeBiomeStage.complete(true);
