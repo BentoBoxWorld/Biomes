@@ -271,6 +271,16 @@ public class BiomesAddonManager
 
         for (BiomesObject biomesObject : objectList)
         {
+            if (biomesObject.getUniqueId().matches("(.*[A-Z].*)"))
+            {
+                this.biomesCache.remove(biomesObject.getUniqueId());
+                this.biomesDatabase.deleteObject(biomesObject);
+
+                biomesObject.setUniqueId(biomesObject.getUniqueId().toLowerCase());
+                this.saveBiome(biomesObject);
+                this.loadBiomes(biomesObject);
+            }
+
             // Migrate to the new format.
             if (biomesObject.getRequiredLevel() != null)
             {
