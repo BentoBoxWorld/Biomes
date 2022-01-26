@@ -75,6 +75,7 @@ public class AdvancedPanel extends CommonPanel
         panelBuilder.registerTypeBuilder("INCREASE", this::createIncreaseButton);
         panelBuilder.registerTypeBuilder("REDUCE", this::createReduceButton);
         panelBuilder.registerTypeBuilder("ACCEPT", this::createValueButton);
+        panelBuilder.registerTypeBuilder("RETURN", this::createReturnButton);
 
         // Register unknown type builder.
         panelBuilder.build();
@@ -340,6 +341,70 @@ public class AdvancedPanel extends CommonPanel
         List<String> tooltips = template.actions().stream().
             filter(action -> action.tooltip() != null).
             map(action -> this.user.getTranslation(action.tooltip())).
+            filter(text -> !text.isBlank()).
+            collect(Collectors.toCollection(() -> new ArrayList<>(template.actions().size())));
+
+        // Add tooltips.
+        if (!tooltips.isEmpty())
+        {
+            // Empty line and tooltips.
+            builder.description("");
+            builder.description(tooltips);
+        }
+
+        return builder.build();
+    }
+
+
+    /**
+     * Create return button panel item.
+     *
+     * @param template the template
+     * @param slot the slot
+     * @return the panel item
+     */
+    @Nullable
+    private PanelItem createReturnButton(@NonNull ItemTemplateRecord template, TemplatedPanel.ItemSlot slot)
+    {
+        PanelItemBuilder builder = new PanelItemBuilder();
+
+        if (template.icon() != null)
+        {
+            builder.icon(template.icon().clone());
+        }
+        else
+        {
+            builder.icon(this.returnButton.getItem());
+        }
+
+        if (template.title() != null)
+        {
+            builder.name(this.user.getTranslation(this.world, template.title()));
+        }
+        else
+        {
+            builder.name(this.returnButton.getName());
+        }
+
+        if (template.description() != null)
+        {
+            builder.description(this.user.getTranslation(this.world, template.description()));
+        }
+        else
+        {
+            builder.description(this.returnButton.getDescription());
+        }
+
+        // Add ClickHandler
+        if (this.returnButton.getClickHandler().isPresent())
+        {
+            builder.clickHandler(this.returnButton.getClickHandler().get());
+        }
+
+        // Collect tooltips.
+        List<String> tooltips = template.actions().stream().
+            filter(action -> action.tooltip() != null).
+            map(action -> this.user.getTranslation(this.world, action.tooltip())).
             filter(text -> !text.isBlank()).
             collect(Collectors.toCollection(() -> new ArrayList<>(template.actions().size())));
 

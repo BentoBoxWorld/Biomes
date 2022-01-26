@@ -94,3 +94,8 @@ advanced_panel:
         actions:
           left:
             tooltip: biomes.gui.tips.click-to-increase
+    6:
+      9:
+        icon: OAK_DOOR
+        data:
+          type: RETURN
