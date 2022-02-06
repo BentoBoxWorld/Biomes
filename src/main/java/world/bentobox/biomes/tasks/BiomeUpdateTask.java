@@ -226,7 +226,11 @@ public class BiomeUpdateTask
             }
         }
 
-        chunk.getWorld().refreshChunk(chunk.getX(), chunk.getZ());
+        if (this.addon.getSettings().isUseChunkRefresh())
+        {
+            chunk.getWorld().refreshChunk(chunk.getX(), chunk.getZ());
+        }
+
         completed.complete(true);
     }
 

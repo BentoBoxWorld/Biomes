@@ -367,6 +367,28 @@ public class Settings implements ConfigObject
     }
 
 
+    /**
+     * Is use chunk refresh boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isUseChunkRefresh()
+    {
+        return useChunkRefresh;
+    }
+
+
+    /**
+     * Sets use chunk refresh.
+     *
+     * @param useChunkRefresh the use chunk refresh
+     */
+    public void setUseChunkRefresh(boolean useChunkRefresh)
+    {
+        this.useChunkRefresh = useChunkRefresh;
+    }
+
+
 // ---------------------------------------------------------------------
 // Section: Enums used for Settings.
 // ---------------------------------------------------------------------
@@ -494,6 +516,17 @@ public class Settings implements ConfigObject
     @ConfigEntry(path = "parallel-biome-changes")
     @SuppressWarnings("javadoc")
     private int concurrentBiomeUpdates = 1;
+
+
+    @ConfigComment("")
+    @ConfigComment("Allows toggling if Biomes Addon should refresh chunks, so players could get biome instantly.")
+    @ConfigComment("Otherwise, biome will be updated after chunk is unloaded (player leaves the area).")
+    @ConfigComment("Be aware, not all plugins and clients supports this feature. If you get error after biome")
+    @ConfigComment("updates, please disable this feature.")
+    @ConfigComment("Default value = true")
+    @ConfigEntry(path = "use-chunk-refresh")
+    @SuppressWarnings("javadoc")
+    private boolean useChunkRefresh = true;
 
     @ConfigComment("Player main sub-command to access the addon.")
     @ConfigComment("This command label will be required to write after gamemode player command label, f.e. /[label] biomes")

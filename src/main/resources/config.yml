@@ -41,6 +41,13 @@ biome-change-timeout: 5
 # completely.
 # Default value = 1
 parallel-biome-changes: 1
+#
+# Allows toggling if Biomes Addon should refresh chunks, so players could get biome instantly.
+# Otherwise, biome will be updated after chunk is unloaded (player leaves the area).
+# Be aware, not all plugins and clients supports this feature. If you get error after biome
+# updates, please disable this feature.
+# Default value = true
+use-chunk-refresh: true
 commands:
   player:
     # Player main sub-command to access the addon.
