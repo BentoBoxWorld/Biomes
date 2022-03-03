@@ -1,0 +1,101 @@
+advanced_panel:
+  title: biomes.gui.titles.advanced-panel
+  type: INVENTORY
+  background:
+    icon: BLACK_STAINED_GLASS_PANE
+    title: "&b&r" # Empty text
+  border:
+    icon: BLACK_STAINED_GLASS_PANE
+    title: "&b&r"  # Empty text
+  force-shown: []
+  content:
+    2:
+      4:
+        icon: GRASS_BLOCK
+        title: biomes.gui.buttons.island.name
+        description: biomes.gui.buttons.island.description
+        data:
+          type: MODE
+          value: ISLAND
+        actions:
+          left:
+            tooltip: biomes.gui.tips.click-to-choose
+      5:
+        icon: DIRT
+        title: biomes.gui.buttons.chunk.name
+        description: biomes.gui.buttons.chunk.description
+        data:
+          type: MODE
+          value: CHUNK
+        actions:
+          left:
+            tooltip: biomes.gui.tips.click-to-choose
+      6:
+        icon: DIRT_PATH
+        title: biomes.gui.buttons.range.name
+        description: biomes.gui.buttons.range.description
+        data:
+          type: MODE
+          value: RANGE
+        actions:
+          left:
+            tooltip: biomes.gui.tips.click-to-choose
+    3:
+      3:
+        icon: ORANGE_STAINED_GLASS_PANE
+        title: biomes.gui.buttons.reduce.name
+        description: biomes.gui.buttons.reduce.description
+        data:
+          type: REDUCE
+          value: 5
+        actions:
+          left:
+            tooltip: biomes.gui.tips.click-to-reduce
+      4:
+        icon: ORANGE_STAINED_GLASS_PANE
+        title: biomes.gui.buttons.reduce.name
+        description: biomes.gui.buttons.reduce.description
+        data:
+          type: REDUCE
+          value: 1
+        actions:
+          left:
+            tooltip: biomes.gui.tips.click-to-reduce
+      5:
+        icon: GREEN_STAINED_GLASS_PANE
+        title: biomes.gui.buttons.accept.name
+        description: biomes.gui.buttons.accept.description
+        data:
+          type: ACCEPT
+        actions:
+          left:
+            type: ACCEPT
+            tooltip: biomes.gui.tips.left-click-to-accept
+          right:
+            type: INPUT
+            tooltip: biomes.gui.tips.right-click-to-write
+      6:
+        icon: BLUE_STAINED_GLASS_PANE
+        title: biomes.gui.buttons.increase.name
+        description: biomes.gui.buttons.increase.description
+        data:
+          type: INCREASE
+          value: 1
+        actions:
+          left:
+            tooltip: biomes.gui.tips.click-to-increase
+      7:
+        icon: MAGENTA_STAINED_GLASS_PANE
+        title: biomes.gui.buttons.increase.name
+        description: biomes.gui.buttons.increase.description
+        data:
+          type: INCREASE
+          value: 5
+        actions:
+          left:
+            tooltip: biomes.gui.tips.click-to-increase
+    6:
+      9:
+        icon: OAK_DOOR
+        data:
+          type: RETURN

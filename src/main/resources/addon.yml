@@ -1,7 +1,7 @@
 name: Biomes
 main: world.bentobox.biomes.BiomesAddon
 version: ${project.version}${build.number}
-api-version: 1.14
+api-version: 1.20
 
 repository: 'BentoBoxWorld/Biomes'
 metrics: true
@@ -9,7 +9,7 @@ metrics: true
 icon: GRASS_BLOCK
 authors: [BONNe]
 
-softdepend: AcidIsland, AOneBlock, BSkyBlock, CaveBlock, SkyGrid, Level
+softdepend: AcidIsland, AOneBlock, BSkyBlock, CaveBlock, SkyGrid, Boxed, Bank, Level
 description: ${project.description}
 
 permissions:
@@ -31,23 +31,10 @@ permissions:
   '[gamemode].biomes.set.range.*':
     description: Player can change biome by range for all biomes.
     default: true
+  '[gamemode].biomes.buy':
+    description: Player can biomes buy command.
+    default: true
 
   '[gamemode].admin.biomes':
     description: Player can use admin biomes command that opens GUI.
-    default: op
-  '[gamemode].admin.biomes.add':
-    description: Player can use admin biomes add command that adds new biome.
-    default: op
-  '[gamemode].admin.biomes.edit':
-    description: Player can use admin biomes edit command that edits existing biomes parameters.
-    default: op
-  '[gamemode].admin.biomes.set':
-    description: Player can use admin biomes set command that allows to change other player biomes.
-    default: op
-
-  '[gamemode].admin.biomes.import':
-    description: Player can use admin biomes import command allows to import biomes in world.
-    default: op
-  '[gamemode].admin.biomes.settings':
-    description: Player can use admin biomes settings command that allows to change addon settings.
     default: op

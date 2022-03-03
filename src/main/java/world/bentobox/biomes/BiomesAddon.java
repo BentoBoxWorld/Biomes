@@ -1,27 +1,32 @@
+///
+// Created by BONNe
+// Copyright - 2022
+///
+
 package world.bentobox.biomes;
 
 
-import java.util.Iterator;
-import java.util.Optional;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.World;
 
+import world.bentobox.bank.Bank;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.configuration.Config;
 import world.bentobox.bentobox.api.flags.Flag;
 import world.bentobox.bentobox.hooks.VaultHook;
-import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.commands.admin.AdminCommand;
-import world.bentobox.biomes.commands.user.BiomesCommand;
+import world.bentobox.biomes.commands.player.BiomesCommand;
 import world.bentobox.biomes.config.Settings;
-import world.bentobox.biomes.database.objects.BiomeChunkUpdateObject;
 import world.bentobox.biomes.handlers.BiomeDataRequestHandler;
 import world.bentobox.biomes.handlers.BiomeListRequestHandler;
 import world.bentobox.biomes.handlers.ChangeBiomeRequestHandler;
 import world.bentobox.biomes.listeners.ChangeOwnerListener;
-import world.bentobox.biomes.listeners.ChunkLoadListener;
+import world.bentobox.biomes.listeners.IslandLevelListener;
+import world.bentobox.biomes.listeners.JoinLeaveListener;
+import world.bentobox.biomes.managers.BiomesAddonManager;
+import world.bentobox.biomes.managers.BiomesImportManager;
+import world.bentobox.biomes.tasks.UpdateQueue;
+import world.bentobox.biomes.web.WebManager;
 import world.bentobox.greenhouses.Greenhouses;
 import world.bentobox.level.Level;
 
@@ -82,20 +87,16 @@ public class BiomesAddon extends Addon
     /**
      * Sets up everything once the addon is hooked into Game Modes
      */
-    private void setupAddon() {
+    private void setupAddon()
+    {
         // If hooked init Manager
         this.addonManager = new BiomesAddonManager(this);
+        this.importManager = new BiomesImportManager(this);
 
-        // Try to find Level addon and if it does not exist, display a warning
-        this.findLevelAddon();
-        // Try to find Greenhouses addon
-        this.findGreenhousesAddon();
-        // Try to find Economy Plugin
-        this.findVaultPlugin();
-
-		// Register the reset listener
+        // Register the reset listener
         this.registerListener(new ChangeOwnerListener(this));
-        this.registerListener(new ChunkLoadListener(this));
+        this.registerListener(new JoinLeaveListener(this));
+        this.registerListener(new IslandLevelListener(this));
 
         // Register Flags
         this.registerFlag(BIOMES_WORLD_PROTECTION);
@@ -107,114 +108,7 @@ public class BiomesAddon extends Addon
 
         this.registerRequestHandler(new ChangeBiomeRequestHandler(this));
 
-        if (this.settings.getUpdateTickCounter() > 0)
-        {
-            // This task will force-load chunk every update tick if its biome is not updated.
-            this.runChunkUpdatingScheduler();
-        }
-    }
-
-
-    /**
-     * This task will force-load chunk every update tick if its biome is not updated.
-     */
-    private void runChunkUpdatingScheduler()
-    {
-        Bukkit.getScheduler().runTaskTimer(this.getPlugin(), () -> {
-                Iterator<BiomeChunkUpdateObject> iterator =
-                    this.addonManager.getBiomeUpdaterCollection().iterator();
-
-                // if there is nothing to load, then skip.
-                if (!iterator.hasNext())
-                {
-                    return;
-                }
-
-                BiomeChunkUpdateObject updater = iterator.next();
-
-                // if chunk is already force-loaded, then skip.
-                while (iterator.hasNext() && updater.isForceLoaded())
-                {
-                    updater = iterator.next();
-                }
-
-                World world = updater.getWorld();
-
-                // if chunk is loaded then skip.
-                if (!world.isChunkLoaded(updater.getChunkX(), updater.getChunkZ()))
-                {
-                    // Set flag as force-loaded.
-                    updater.setForceLoaded(true);
-
-                    // force-load chunk asynchronously
-                    Util.getChunkAtAsync(world,
-                        updater.getChunkX(),
-                        updater.getChunkZ());
-                }
-            },
-
-            this.settings.getUpdateTickCounter(),
-            this.settings.getUpdateTickCounter());
-    }
-
-
-    /**
-     * This is silly method that was introduced to reduce main method complexity, and just reports
-     * if economy is enabled or not.
-     */
-    private void findVaultPlugin()
-    {
-        Optional<VaultHook> vault = this.getPlugin().getVault();
-
-        if (!vault.isPresent() || !vault.get().hook())
-        {
-            this.vaultHook = null;
-            this.logWarning(
-                "Economy plugin not found so money requirements will be ignored!");
-        }
-        else
-        {
-            this.vaultHook = vault.get();
-        }
-    }
-
-
-    /**
-     * This is silly method that was introduced to reduce main method complexity, and just reports
-     * if level addon is enabled or not.
-     */
-    private void findLevelAddon()
-    {
-        Optional<Addon> level = this.getAddonByName("Level");
-
-        if (!level.isPresent())
-        {
-            this.logWarning(
-                "Level add-on not found so level requirements will be ignored!");
-            this.levelAddon = null;
-            this.levelProvided = false;
-        }
-        else
-        {
-            this.levelProvided = true;
-            this.levelAddon = (Level) level.get();
-        }
-    }
-
-
-    /**
-     * This is silly method that was introduced to reduce main method complexity, and just reports
-     * if greenhouses is enabled or not.
-     */
-    private void findGreenhousesAddon()
-    {
-        Optional<Addon> greenhouses = this.getAddonByName("Greenhouses");
-
-        if (greenhouses.isPresent())
-        {
-            this.greenhousesProvided = true;
-            this.greenhouses = (Greenhouses) greenhouses.get();
-        }
+        this.webManager = new WebManager(this);
     }
 
 
@@ -223,7 +117,8 @@ public class BiomesAddon extends Addon
      */
     private void hookInGameModes()
     {
-        this.getPlugin().getAddonsManager().getGameModeAddons().forEach(gameModeAddon -> {
+        this.getPlugin().getAddonsManager().getGameModeAddons().forEach(gameModeAddon ->
+        {
             if (!this.settings.getDisabledGameModes().contains(gameModeAddon.getDescription().getName()))
             {
                 if (gameModeAddon.getPlayerCommand().isPresent())
@@ -242,6 +137,76 @@ public class BiomesAddon extends Addon
                 BIOMES_ISLAND_PROTECTION.addGameModeAddon(gameModeAddon);
             }
         });
+    }
+
+
+    /**
+     * Process Level addon and Vault Hook when everything is loaded.
+     */
+    @Override
+    public void allLoaded()
+    {
+        super.allLoaded();
+
+        // Try to find Level addon and if it does not exist, display a warning
+        this.getAddonByName("Bank").ifPresentOrElse(addon ->
+        {
+            this.bankAddon = (Bank) addon;
+            this.bankProvided = true;
+            this.log("Biomes Addon hooked into Bank addon.");
+        }, () ->
+        {
+            this.levelAddon = null;
+        });
+
+        // Try to find Level addon and if it does not exist, display a warning
+        this.getAddonByName("Level").ifPresentOrElse(addon ->
+        {
+            this.levelAddon = (Level) addon;
+            this.levelProvided = true;
+            this.log("Biomes Addon hooked into Level addon.");
+        }, () ->
+        {
+            this.levelAddon = null;
+            this.logWarning("Level add-on not found. Some features from Biomes Addon will not work!");
+        });
+
+        // Try to find Level addon and if it does not exist, display a warning
+        this.getAddonByName("Greenhouses").ifPresentOrElse(addon ->
+        {
+            this.greenhousesProvided = true;
+            this.greenhouses = (Greenhouses) addon;
+            this.log("Biomes Addon hooked into Greenhouses addon.");
+        }, () ->
+        {
+            this.greenhouses = null;
+        });
+
+        // Try to find Vault Plugin and if it does not exist, display a warning
+        this.getPlugin().getVault().ifPresentOrElse(hook ->
+        {
+            this.vaultHook = hook;
+
+            if (this.vaultHook.hook())
+            {
+                this.log("Biomes Addon hooked into Economy.");
+            }
+            else
+            {
+                this.logWarning("Biomes Addon could not hook into valid Economy.");
+            }
+        }, () ->
+        {
+            this.vaultHook = null;
+            this.logWarning("Vault plugin not found. Economy will not work!");
+        });
+
+        // Start update task when everything is loaded.
+
+        if (this.hooked)
+        {
+            this.biomeUpdateQueue = new UpdateQueue(this);
+        }
     }
 
 
@@ -272,15 +237,20 @@ public class BiomesAddon extends Addon
     {
         if (this.hooked)
         {
-            if (this.settings != null)
-            {
-                new Config<>(this, Settings.class).saveConfigObject(this.settings);
-            }
+            this.biomeUpdateQueue.getTask().cancel();
+            this.getLogger().info("Biomes addon disabled.");
+        }
+    }
 
-            if (this.addonManager != null)
-            {
-                this.addonManager.save();
-            }
+
+    /**
+     * Save settings.
+     */
+    public void saveSettings()
+    {
+        if (this.settings != null)
+        {
+            new Config<>(this, Settings.class).saveConfigObject(this.settings);
         }
     }
 
@@ -298,6 +268,14 @@ public class BiomesAddon extends Addon
             this.logError("Biomes settings could not load! Addon disabled.");
             this.setState(State.DISABLED);
         }
+
+        // Save existing panels.
+        this.saveResource("panels/main_panel.yml", false);
+        this.saveResource("panels/advanced_panel.yml", false);
+        this.saveResource("panels/buy_panel.yml", false);
+
+        // Save template
+        this.saveResource("biomesTemplate.yml", false);
     }
 
 
@@ -318,6 +296,17 @@ public class BiomesAddon extends Addon
 
 
     /**
+     * Gets import manager.
+     *
+     * @return the import manager
+     */
+    public BiomesImportManager getImportManager()
+    {
+        return this.importManager;
+    }
+
+
+    /**
      * This method returns addon settings.
      *
      * @return Addon settings object.
@@ -330,6 +319,7 @@ public class BiomesAddon extends Addon
 
     /**
      * This method returns the economyProvided value.
+     *
      * @return the value of economyProvided.
      */
     public boolean isEconomyProvided()
@@ -340,6 +330,7 @@ public class BiomesAddon extends Addon
 
     /**
      * This method returns the vaultHook value.
+     *
      * @return the value of vaultHook.
      */
     public VaultHook getVaultHook()
@@ -350,6 +341,7 @@ public class BiomesAddon extends Addon
 
     /**
      * This method returns the levelAddon value.
+     *
      * @return the value of levelAddon.
      */
     public Level getLevelAddon()
@@ -360,6 +352,7 @@ public class BiomesAddon extends Addon
 
     /**
      * This method returns the levelProvided value.
+     *
      * @return the value of levelProvided.
      */
     public boolean isLevelProvided()
@@ -368,24 +361,70 @@ public class BiomesAddon extends Addon
     }
 
 
-	/**
-	 * This method returns the Greenhouses value.
-	 * @return the value of Greenhouses.
-	 */
-	public Greenhouses getGreenhouses()
-	{
-		return this.greenhouses;
-	}
+    /**
+     * This method returns the Greenhouses value.
+     *
+     * @return the value of Greenhouses.
+     */
+    public Greenhouses getGreenhouses()
+    {
+        return this.greenhouses;
+    }
 
 
-	/**
-	 * This method returns the greenhousesProvided value.
-	 * @return the value of greenhousesProvided.
-	 */
-	public boolean isGreenhousesProvided()
-	{
-		return this.greenhousesProvided;
-	}
+    /**
+     * This method returns the greenhousesProvided value.
+     *
+     * @return the value of greenhousesProvided.
+     */
+    public boolean isGreenhousesProvided()
+    {
+        return this.greenhousesProvided;
+    }
+
+
+    /**
+     * Gets web manager.
+     *
+     * @return the web manager
+     */
+    public WebManager getWebManager()
+    {
+        return webManager;
+    }
+
+
+    /**
+     * Gets update queue.
+     *
+     * @return the update queue
+     */
+    public UpdateQueue getUpdateQueue()
+    {
+        return this.biomeUpdateQueue;
+    }
+
+
+    /**
+     * Is bank provided boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isBankProvided()
+    {
+        return this.bankProvided;
+    }
+
+
+    /**
+     * Gets bank addon.
+     *
+     * @return the bank addon
+     */
+    public Bank getBankAddon()
+    {
+        return this.bankAddon;
+    }
 
 
 // ---------------------------------------------------------------------
@@ -402,6 +441,16 @@ public class BiomesAddon extends Addon
      * This variable stores biomes manager.
      */
     private BiomesAddonManager addonManager;
+
+    /**
+     * This variable stores biomes manager.
+     */
+    private BiomesImportManager importManager;
+
+    /**
+     * Variable holds web manager object.
+     */
+    private WebManager webManager;
 
     /**
      * This variable stores biomes addon settings.
@@ -423,15 +472,30 @@ public class BiomesAddon extends Addon
      */
     private boolean levelProvided;
 
-	/**
-	 * Greenhouses addon.
-	 */
-	private Greenhouses greenhouses;
+    /**
+     * Greenhouses addon.
+     */
+    private Greenhouses greenhouses;
 
-	/**
-	 * This indicate if greenhouses addon exists.
-	 */
-	private boolean greenhousesProvided;
+    /**
+     * This indicates if greenhouses addon exists.
+     */
+    private boolean greenhousesProvided;
+
+    /**
+     * Bank addon.
+     */
+    private Bank bankAddon;
+
+    /**
+     * This indicates if Bank addon exists.
+     */
+    private boolean bankProvided;
+
+    /**
+     * The Biome update queue.
+     */
+    private UpdateQueue biomeUpdateQueue;
 
 
     // ---------------------------------------------------------------------
@@ -440,23 +504,22 @@ public class BiomesAddon extends Addon
 
 
     /**
-     * This flag allows to change biomes in any part of the world. It will not limit
-     * player to their island. Useful for skygrid without protection flags.
+     * This flag allows to change biomes in any part of the world. It will not limit player to their island. Useful for
+     * skygrid without protection flags.
      */
     public static final Flag BIOMES_WORLD_PROTECTION =
-            new Flag.Builder("BIOMES_WORLD_PROTECTION", Material.GRASS_BLOCK).
+        new Flag.Builder("BIOMES_WORLD_PROTECTION", Material.GRASS_BLOCK).
             type(Flag.Type.WORLD_SETTING).
             mode(Flag.Mode.ADVANCED).
             defaultSetting(true).
             build();
 
     /**
-     * This flag allows to define which users can change biomes. F.e. it can be set
-     * that only Island owner can change biomes.
-     * By default it is set to Visitor.
+     * This flag allows to define which users can change biomes. F.e. it can be set that only Island owner can change
+     * biomes. By default it is set to Visitor.
      */
     public static final Flag BIOMES_ISLAND_PROTECTION =
-            new Flag.Builder("BIOMES_ISLAND_PROTECTION", Material.GRASS_BLOCK).
+        new Flag.Builder("BIOMES_ISLAND_PROTECTION", Material.GRASS_BLOCK).
             mode(Flag.Mode.ADVANCED).
             build();
 }

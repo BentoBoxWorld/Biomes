@@ -1,0 +1,68 @@
+buy_panel:
+  title: biomes.gui.titles.buy-panel
+  type: INVENTORY
+  background:
+    icon: PURPLE_STAINED_GLASS_PANE
+    title: "&b&r" # Empty text
+  border:
+    icon: PURPLE_STAINED_GLASS_PANE
+    title: "&b&r"  # Empty text
+  force-shown: []
+  content:
+    2:
+      2: biomes_button
+      3: biomes_button
+      4: biomes_button
+      5: biomes_button
+      6: biomes_button
+      7: biomes_button
+      8: biomes_button
+    3:
+      1:
+        icon: TIPPED_ARROW:INSTANT_HEAL::::1
+        title: biomes.gui.buttons.previous.name
+        description: biomes.gui.buttons.previous.description
+        data:
+          type: PREVIOUS
+          indexing: true
+        action:
+          left:
+            tooltip: biomes.gui.tips.click-to-previous
+      2: biomes_button
+      3: biomes_button
+      4: biomes_button
+      5: biomes_button
+      6: biomes_button
+      7: biomes_button
+      8: biomes_button
+      9:
+        icon: TIPPED_ARROW:JUMP::::1
+        title: biomes.gui.buttons.next.name
+        description: biomes.gui.buttons.next.description
+        data:
+          type: NEXT
+          indexing: true
+        action:
+          left:
+            tooltip: biomes.gui.tips.click-to-next
+    4:
+      2: biomes_button
+      3: biomes_button
+      4: biomes_button
+      5: biomes_button
+      6: biomes_button
+      7: biomes_button
+      8: biomes_button
+    6:
+      9:
+        icon: OAK_DOOR
+        data:
+          type: RETURN
+  reusable:
+    biomes_button:
+      data:
+        type: BIOME
+      actions:
+        left:
+          type: BUY
+          tooltip: biomes.gui.tips.click-to-buy

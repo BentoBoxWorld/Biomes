@@ -1,55 +1,97 @@
+///
+// Created by BONNe
+// Copyright - 2022
+///
+
 package world.bentobox.biomes.tasks;
 
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.BlockVector;
 
-import world.bentobox.bentobox.api.events.addon.AddonEvent;
+import net.milkbowl.vault.economy.EconomyResponse;
+import world.bentobox.bank.BankManager;
+import world.bentobox.bank.BankResponse;
+import world.bentobox.bank.data.Money;
+import world.bentobox.bank.data.TxType;
 import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.objects.Island;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.config.Settings.UpdateMode;
+import world.bentobox.biomes.database.objects.BiomesIslandDataObject;
 import world.bentobox.biomes.database.objects.BiomesObject;
+import world.bentobox.biomes.events.BiomeChangedEvent;
+import world.bentobox.biomes.events.BiomePreChangeEvent;
+import world.bentobox.biomes.utils.Constants;
 import world.bentobox.biomes.utils.Utils;
 
 
 /**
- * This class helps to validate if user can change biome. It also calculates how large
- * update must be and calls update task.
+ * This class helps to validate if user can change biome. It also calculates how large update must be and calls update
+ * task.
  */
 public class BiomeUpdateHelper
 {
+    /**
+     * Instantiates a new Biome update helper.
+     *
+     * @param addon the addon
+     * @param callerUser the caller user
+     * @param targetUser the target user
+     * @param biome the biome
+     * @param islandData the island data
+     * @param world the world
+     * @param updateMode the update mode
+     * @param range the range
+     * @param canWithdraw the can withdraw
+     */
     public BiomeUpdateHelper(BiomesAddon addon,
-            User callerUser,
-            User targetUser,
-            BiomesObject biome,
-            World world,
-            UpdateMode updateMode,
-            int updateNumber,
-            boolean canWithdraw)
+        User callerUser,
+        User targetUser,
+        BiomesObject biome,
+        BiomesIslandDataObject islandData,
+        World world,
+        UpdateMode updateMode,
+        int range,
+        boolean canWithdraw)
     {
         this.addon = addon;
         this.callerUser = callerUser;
         this.targetUser = targetUser;
+        this.islandData = islandData;
         this.biome = biome;
         this.world = world;
         this.updateMode = updateMode;
-        this.updateNumber = updateNumber;
+        this.range = range;
         this.canWithdraw = canWithdraw;
 
         this.worldProtectionFlag = BiomesAddon.BIOMES_WORLD_PROTECTION.isSetForWorld(this.world);
+        // Initialize standing location to be the location of the target user
+        this.standingLocation = this.targetUser.getLocation();
     }
 
 
     /**
      * This method returns if update tack can be called.
-     * @return <code>true</code> if user can change biome.
+     *
+     * @return {@code true} if user can change biome.
      */
     public boolean canChangeBiome()
     {
@@ -57,65 +99,81 @@ public class BiomeUpdateHelper
         if (!this.biome.getEnvironment().equals(World.Environment.NORMAL))
         {
             // Check if nether and the end islands are enabled.
-            if ((!this.biome.getEnvironment().equals(World.Environment.NETHER) ||
+            if ((
+                !this.biome.getEnvironment().equals(World.Environment.NETHER) ||
                     !this.addon.getPlugin().getIWM().isNetherGenerate(this.world) ||
                     !this.addon.getPlugin().getIWM().isNetherIslands(this.world)) &&
-                    (!this.biome.getEnvironment().equals(World.Environment.THE_END) ||
-                            !this.addon.getPlugin().getIWM().isEndGenerate(this.world) ||
-                            !this.addon.getPlugin().getIWM().isEndIslands(this.world)))
+                (
+                    !this.biome.getEnvironment().equals(World.Environment.THE_END) ||
+                        !this.addon.getPlugin().getIWM().isEndGenerate(this.world) ||
+                        !this.addon.getPlugin().getIWM().isEndIslands(this.world)))
             {
-                this.callerUser.sendMessage("general.errors.wrong-world");
+                Utils.sendMessage(this.callerUser,
+                    this.callerUser.getTranslation("general.errors.wrong-world"));
                 return false;
             }
         }
+
+        this.island = this.addon.getIslands().getIsland(this.world, this.targetUser);
+
+        if (this.island == null)
+        {
+            // User has no island.
+            Utils.sendMessage(this.callerUser,
+                this.callerUser.getTranslation("general.errors.player-has-no-island"));
+            return false;
+        }
+
+        this.calculateArea();
 
         if (this.callerUser == this.targetUser)
         {
             if (!this.biome.getEnvironment().equals(this.callerUser.getWorld().getEnvironment()))
             {
                 // User must be in the same environment as biome require.
-                this.callerUser.sendMessage("general.errors.wrong-world");
+                Utils.sendMessage(this.callerUser,
+                    this.callerUser.getTranslation("general.errors.wrong-world"));
                 return false;
             }
 
-            if (!this.checkPermissions())
+            if (!this.checkUnlockStatus())
             {
-                this.callerUser.sendMessage("general.errors.no-permission");
+                Utils.sendMessage(this.callerUser,
+                    this.callerUser.getTranslation(Constants.ERRORS + "not-unlocked"));
+                return false;
+            }
+
+            if (!this.checkPurchaseStatus())
+            {
+                Utils.sendMessage(this.callerUser,
+                    this.callerUser.getTranslation(Constants.ERRORS + "not-purchased"));
                 return false;
             }
 
             if (!this.hasPermissionToUpdateMode())
             {
-                this.callerUser.sendMessage("general.errors.no-permission");
+                Utils.sendMessage(this.callerUser,
+                    this.callerUser.getTranslation("general.errors.no-permission"));
                 return false;
             }
 
-            if (!this.updateMode.equals(UpdateMode.ISLAND) && this.updateNumber <= 0)
+            if (!this.updateMode.equals(UpdateMode.ISLAND) && this.range <= 0)
             {
                 // Cannot update negative numbers.
 
-                this.callerUser.sendMessage("biomes.errors.incorrect-range",
+                Utils.sendMessage(this.callerUser,
+                    this.callerUser.getTranslation(Constants.ERRORS + "incorrect-range",
                         TextVariables.NUMBER,
-                        Integer.toString(this.updateNumber));
+                        Integer.toString(this.range)));
                 return false;
             }
 
             if (this.worldProtectionFlag)
             {
-                Island island =
-                        this.addon.getIslands().getIsland(this.world, this.targetUser);
-
-                if (island == null)
-                {
-                    // User has no island.
-                    this.callerUser.sendMessage("general.errors.player-has-no-island");
-                    return false;
-                }
-
                 Optional<Island> onIsland =
-                        this.addon.getIslands().getIslandAt(this.callerUser.getLocation());
+                    this.addon.getIslands().getIslandAt(this.callerUser.getLocation());
 
-                if (!onIsland.isPresent() || onIsland.get() != island)
+                if (onIsland.isEmpty() || onIsland.get() != this.island)
                 {
                     // User is not on his island.
 
@@ -123,29 +181,13 @@ public class BiomeUpdateHelper
                     return false;
                 }
 
-                if (!island.isAllowed(this.callerUser, BiomesAddon.BIOMES_ISLAND_PROTECTION))
+                if (!this.island.isAllowed(this.callerUser, BiomesAddon.BIOMES_ISLAND_PROTECTION))
                 {
                     // This can be checked only if island exists.
 
-                    this.callerUser.sendMessage("biomes.errors.no-rank");
+                    Utils.sendMessage(this.callerUser,
+                        this.callerUser.getTranslation(Constants.ERRORS + "no-rank"));
                     return false;
-                }
-
-                if (this.addon.isLevelProvided())
-                {
-                    // This is here as I am not sure if Level addon can calculate island level
-                    // if players can build anywhere.
-
-                    if (this.biome.getRequiredLevel() > 0 &&
-                            this.addon.getLevelAddon().getIslandLevel(world, this.targetUser.getUniqueId()) <= this.biome.getRequiredLevel())
-                    {
-                        // Not enough level
-
-                        this.callerUser.sendMessage("biomes.errors.not-enough-level",
-                                TextVariables.NUMBER,
-                                String.valueOf(this.biome.getRequiredLevel()));
-                        return false;
-                    }
                 }
             }
             else if (this.updateMode.equals(UpdateMode.ISLAND))
@@ -155,22 +197,16 @@ public class BiomeUpdateHelper
                 return false;
             }
 
-
-            if (this.addon.isEconomyProvided())
-            {
-                if (!this.addon.getVaultHook().has(this.callerUser, this.biome.getRequiredCost()))
-                {
-                    // Not enough money.
-
-                    this.callerUser.sendMessage("biomes.errors.not-enough-money",
-                            TextVariables.NUMBER,
-                            Double.toString(this.biome.getRequiredCost()));
-                    return false;
-                }
-            }
-
             // Init starting location.
             this.standingLocation = this.targetUser.getLocation();
+
+            // Process biome mode cost
+            return switch (this.biome.getCostMode())
+                {
+                    case PER_BLOCK -> this.checkPerBlockCost();
+                    case PER_USAGE -> this.checkPerUsageCost();
+                    case STATIC -> this.checkStaticCost();
+                };
         }
         else
         {
@@ -181,12 +217,13 @@ public class BiomeUpdateHelper
                     // Island option is not possible for worlds without world protection.
                     if (this.callerUser.isPlayer())
                     {
-                        this.callerUser.sendMessage(BiomesAddon.BIOMES_WORLD_PROTECTION.getHintReference());
+                        Utils.sendMessage(this.callerUser,
+                            this.callerUser.getTranslation(BiomesAddon.BIOMES_WORLD_PROTECTION.getHintReference()));
                     }
                     else
                     {
                         this.addon.logWarning("Biome change is not possible with Island mode " +
-                                "for this world as BIOMES_WORLD_PROTECTION is disabled!");
+                            "for this world as BIOMES_WORLD_PROTECTION is disabled!");
                     }
 
                     return false;
@@ -219,18 +256,16 @@ public class BiomeUpdateHelper
             {
                 // Chunk and square based update modes can be called only by player.
 
-                Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
-
                 Optional<Island> onIsland =
-                        this.addon.getIslands().getIslandAt(this.callerUser.getLocation());
+                    this.addon.getIslands().getIslandAt(this.callerUser.getLocation());
 
-                if (this.updateMode != UpdateMode.ISLAND &&
-                        (!onIsland.isPresent() || onIsland.get() != island))
+                if (onIsland.isEmpty() || onIsland.get() != this.island)
                 {
                     // Admin is not on user island.
-                    this.callerUser.sendMessage("biomes.errors.admin-not-on-island",
+                    Utils.sendMessage(this.callerUser,
+                        this.callerUser.getTranslation(Constants.ERRORS + "admin-not-on-island",
                             "[user]",
-                            this.targetUser.getName());
+                            this.targetUser.getName()));
 
                     return false;
                 }
@@ -242,15 +277,15 @@ public class BiomeUpdateHelper
             else
             {
                 // Check if target user is his island.
-                Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
 
                 Optional<Island> onIsland =
-                        this.addon.getIslands().getIslandAt(this.targetUser.getLocation());
+                    this.addon.getIslands().getIslandAt(this.targetUser.getLocation());
 
-                if (!onIsland.isPresent() || onIsland.get() != island)
+                if (onIsland.isEmpty() || onIsland.get() != this.island)
                 {
                     // Admin is not on user island.
-                    this.addon.logWarning("Biome change for player " + this.targetUser.getName() + " is not possible as he is not on his island!");
+                    this.addon.logWarning("Biome change for player " + this.targetUser.getName() +
+                        " is not possible as he is not on his island!");
                     return false;
                 }
 
@@ -264,58 +299,58 @@ public class BiomeUpdateHelper
 
 
     /**
-     * This method calculates update region and call BiomeUpdateTask to change given biome on island.
+     * This method calculates and sets minimal/maximal coordinates.
      */
-    public void updateIslandBiome()
+    private void calculateArea()
     {
         int minX;
         int minZ;
         int maxX;
         int maxZ;
+        int minY;
+        int maxY;
 
         // Limit island update range
         if (this.worldProtectionFlag)
         {
-            Island island = this.addon.getIslands().getIsland(this.world, this.targetUser);
-
             // This is implemented to fix issue when biome is changed in space between islands. #34
 
             if (this.addon.getSettings().isUseProtectionRange())
             {
-                // Allow to go outside island protection range if it is possible.
+                // Allow go outside island protection range if it is possible.
 
-                minX = island.getMinProtectedX();
-                minZ = island.getMinProtectedZ();
+                minX = this.island.getMinProtectedX();
+                minZ = this.island.getMinProtectedZ();
 
-                maxX = island.getMaxProtectedX() - 1;
-                maxZ = island.getMaxProtectedZ() - 1;
+                maxX = this.island.getMaxProtectedX() - 1;
+                maxZ = this.island.getMaxProtectedZ() - 1;
             }
             else
             {
-                minX = island.getMinX();
-                minZ = island.getMinZ();
+                minX = this.island.getMinX();
+                minZ = this.island.getMinZ();
 
-                maxX = island.getMaxX() - 1;
-                maxZ = island.getMaxZ() - 1;
+                maxX = this.island.getMaxX() - 1;
+                maxZ = this.island.getMaxZ() - 1;
             }
 
             // biome cannot be changed outside island!
-            if (Utils.normalizeBy4(minX) < island.getMinX())
+            if (Utils.normalizeBy4(minX) < this.island.getMinX())
             {
                 minX = Utils.normalizeBy4(minX + 4);
             }
 
-            if (Utils.normalizeBy4(maxX) > island.getMaxX())
+            if (Utils.normalizeBy4(maxX) > this.island.getMaxX())
             {
                 maxX = Utils.normalizeBy4(maxX - 4);
             }
 
-            if (Utils.normalizeBy4(minZ) < island.getMinZ())
+            if (Utils.normalizeBy4(minZ) < this.island.getMinZ())
             {
                 minZ = Utils.normalizeBy4(minZ + 4);
             }
 
-            if (Utils.normalizeBy4(maxZ) > island.getMaxZ())
+            if (Utils.normalizeBy4(maxZ) > this.island.getMaxZ())
             {
                 maxZ = Utils.normalizeBy4(maxZ - 4);
             }
@@ -332,9 +367,76 @@ public class BiomeUpdateHelper
             maxZ = Utils.normalizeBy4(this.standingLocation.getBlockZ() + range);
         }
 
+        switch (this.updateMode)
+        {
+            case CHUNK -> {
+                Chunk chunk = this.standingLocation.getChunk();
+
+                // Limit by the chunk.
+                minX = Math.max(minX, (chunk.getX() - (this.range - 1)) << 4);
+                maxX = Math.min(maxX, (chunk.getX() + this.range) << 4) - 1;
+                minZ = Math.max(minZ, (chunk.getZ() - (this.range - 1)) << 4);
+                maxZ = Math.min(maxZ, (chunk.getZ() + this.range) << 4) - 1;
+
+                // Select whole island height.
+                minY = this.world.getMinHeight();
+                maxY = this.world.getMaxHeight();
+            }
+            case RANGE -> {
+                int halfDiameter = this.range / 2;
+                int x = this.standingLocation.getBlockX();
+
+                if (x < 0)
+                {
+                    minX = Math.max(minX, Utils.normalizeBy4(x + halfDiameter));
+                    maxX = Math.min(maxX, Utils.normalizeBy4(x - halfDiameter));
+                }
+                else
+                {
+                    minX = Math.max(minX, Utils.normalizeBy4(x - halfDiameter));
+                    maxX = Math.min(maxX, Utils.normalizeBy4(x + halfDiameter));
+                }
+
+                int z = this.standingLocation.getBlockZ();
+
+                if (z < 0)
+                {
+                    minZ = Math.max(minZ, Utils.normalizeBy4(z + halfDiameter));
+                    maxZ = Math.min(maxZ, Utils.normalizeBy4(z - halfDiameter));
+                }
+                else
+                {
+                    minZ = Math.max(minZ, Utils.normalizeBy4(z - halfDiameter));
+                    maxZ = Math.min(maxZ, Utils.normalizeBy4(z + halfDiameter));
+                }
+
+                // Calculate Y location
+                int y = this.standingLocation.getBlockY();
+                minY = Math.max(this.world.getMinHeight(), Utils.normalizeBy4(y - halfDiameter));
+                maxY = Math.max(this.world.getMaxHeight(), Utils.normalizeBy4(y + halfDiameter));
+            }
+            default -> {
+                // Select whole island height.
+                minY = this.world.getMinHeight();
+                maxY = this.world.getMaxHeight();
+            }
+        }
+
+        this.minCoordinate = new BlockVector(minX, minY, minZ);
+        this.maxCoordinate = new BlockVector(maxX, maxY, maxZ);
+    }
+
+
+    /**
+     * This method calculates update region and call BiomeUpdateTask to change given biome on island.
+     */
+    public void updateIslandBiome()
+    {
         // Calculate minimal and maximal coordinate based on update mode.
 
-        BiomeUpdateTask task = new BiomeUpdateTask(this.addon, this.callerUser, this.standingLocation, this.biome);
+        BiomeUpdateTask task = new BiomeUpdateTask(this.addon,
+            this.callerUser,
+            this.biome);
 
         // Select world depending on environment.
 
@@ -351,111 +453,618 @@ public class BiomeUpdateHelper
             task.setWorld(this.world);
         }
 
-        switch (this.updateMode)
+        task.setMinCoordinate(this.minCoordinate);
+        task.setMaxCoordinate(this.maxCoordinate);
+
+        Bukkit.getPluginManager().callEvent(new BiomePreChangeEvent(this.biome,
+            this.targetUser,
+            this.island,
+            this.minCoordinate,
+            this.maxCoordinate));
+
+        // Take required cost.
+
+        CompletableFuture<Boolean> changeBiomeStage = new CompletableFuture<>();
+        changeBiomeStage.thenAccept((runTask) -> {
+            if (runTask)
+            {
+                this.runBiomeChangeTask(task);
+            }
+        });
+
+        if (this.canWithdraw)
         {
-        case ISLAND:
-            task.setMinX(minX);
-            task.setMaxX(maxX);
-            task.setMinZ(minZ);
-            task.setMaxZ(maxZ);
-
-            // Select whole island height.
-            task.setMinY(0);
-            task.setMaxY(this.world.getMaxHeight());
-
-            break;
-        case CHUNK:
-            Chunk chunk = this.standingLocation.getChunk();
-
-            task.setMinX(Math.max(minX, (chunk.getX() - (this.updateNumber - 1)) << 4));
-            task.setMaxX(Math.min(maxX, (chunk.getX() + this.updateNumber) << 4) - 1);
-
-            task.setMinZ(Math.max(minZ, (chunk.getZ() - (this.updateNumber - 1)) << 4));
-            task.setMaxZ(Math.min(maxZ, (chunk.getZ() + this.updateNumber) << 4) - 1);
-
-            // Select whole island height.
-            task.setMinY(0);
-            task.setMaxY(this.world.getMaxHeight());
-
-            break;
-        case RANGE:
-            int halfDiameter = this.updateNumber / 2;
-
-            int x = this.standingLocation.getBlockX();
-
-            if (x < 0)
+            switch (this.biome.getCostMode())
             {
-                task.setMaxX(Math.max(minX, Utils.normalizeBy4(x + halfDiameter)));
-                task.setMinX(Math.min(maxX, Utils.normalizeBy4(x - halfDiameter)));
+                case PER_BLOCK -> this.withdrawPerBlock(changeBiomeStage);
+                case PER_USAGE -> this.withdrawPerUsage(changeBiomeStage);
+                case STATIC -> this.withdrawStatic(changeBiomeStage);
             }
-            else
+        }
+        else
+        {
+            changeBiomeStage.complete(true);
+        }
+    }
+
+
+    /**
+     * Run biome change task.
+     *
+     * @param task the task
+     */
+    private void runBiomeChangeTask(BiomeUpdateTask task)
+    {
+        task.updateChunkQueue();
+
+        // Increase counter.
+        this.islandData.increaseBiomeChangeCounter(this.biome);
+        this.addon.getAddonManager().saveIslandData(this.islandData);
+
+        this.addon.getUpdateQueue().addUpdateTask(task).thenAccept((result) ->
+        {
+            switch (result)
             {
-                task.setMinX(Math.max(minX, Utils.normalizeBy4(x - halfDiameter)));
-                task.setMaxX(Math.min(maxX, Utils.normalizeBy4(x + halfDiameter)));
+                case FINISHED -> {
+                    Utils.sendMessage(this.callerUser,
+                        this.callerUser.getTranslation(Constants.MESSAGES + "update-done",
+                            "[biome]", this.biome.getFriendlyName()));
+
+                    this.addon.log(this.callerUser.getName() + " changed biome in loaded chunks to " +
+                        this.biome.getFriendlyName() + " from" +
+                        " min=" + this.minCoordinate +
+                        " max=" + this.maxCoordinate +
+                        " while standing on" +
+                        " location=" + this.standingLocation.toVector());
+                }
+                case TIMEOUT -> {
+                    Utils.sendMessage(this.callerUser,
+                        this.callerUser.getTranslation(Constants.ERRORS + "timeout"));
+
+                    this.addon.logWarning(this.callerUser.getName() + " timeout while changing biome to " +
+                        this.biome.getFriendlyName() + " from" +
+                        " min=" + this.minCoordinate +
+                        " max=" + this.maxCoordinate +
+                        " while standing on" +
+                        " location=" + this.standingLocation.toVector());
+                }
+                default -> {
+                    Utils.sendMessage(this.callerUser, this.callerUser.getTranslation(Constants.ERRORS + "failed"));
+
+                    this.addon.logError(this.callerUser.getName() + " failed to changed biome to " +
+                        this.biome.getFriendlyName() + " from" +
+                        " min=" + this.minCoordinate +
+                        " max=" + this.maxCoordinate +
+                        " while standing on" +
+                        " location=" + this.standingLocation.toVector());
+                }
             }
 
-            int z = this.standingLocation.getBlockZ();
+            Bukkit.getPluginManager().callEvent(new BiomeChangedEvent(this.biome,
+                this.targetUser,
+                this.island,
+                this.minCoordinate,
+                this.maxCoordinate,
+                result));
+        });
+    }
 
-            if (z < 0)
-            {
-                task.setMaxZ(Math.max(minZ, Utils.normalizeBy4(z + halfDiameter)));
-                task.setMinZ(Math.min(maxZ, Utils.normalizeBy4(z - halfDiameter)));
-            }
-            else
-            {
-                task.setMinZ(Math.max(minZ, Utils.normalizeBy4(z - halfDiameter)));
-                task.setMaxZ(Math.min(maxZ, Utils.normalizeBy4(z + halfDiameter)));
-            }
 
-            // Calculate Y location
-            int y = this.standingLocation.getBlockY();
-
-            task.setMinY(Math.max(0, Utils.normalizeBy4(y - halfDiameter)));
-            task.setMaxY(Math.min(this.world.getMaxHeight(), Utils.normalizeBy4(y + halfDiameter)));
-
-            break;
-        default:
-            // Setting all values to 0 will skip biome changing.
-            // Default should never appear.
+    /**
+     * Method that withdraws the money for changing biome.
+     *
+     * @param changeBiomeStage the change biome stage
+     * @param money the money
+     */
+    private void withdrawMoney(CompletableFuture<Boolean> changeBiomeStage, double money)
+    {
+        if (!this.addon.isEconomyProvided())
+        {
+            Utils.sendMessage(this.callerUser,
+                this.callerUser.getTranslation(Constants.ERRORS + "could-not-remove-money"));
+            this.addon.logError("Economy Addon not provided.");
+            changeBiomeStage.complete(false);
             return;
         }
 
-        // Take Money
-        if (this.canWithdraw)
+        if (this.addon.getSettings().isUseBankAccount() && this.addon.isBankProvided())
         {
-            this.addon.getPlugin().getVault().ifPresent(
-                    vaultHook -> {
-                    	vaultHook.withdraw(this.callerUser, this.biome.getRequiredCost());
-                    	
-                        Map<String, Object> keyValues = new HashMap<>();
-                        keyValues.put("eventName", "BiomeBuyEvent");
-                        keyValues.put("targetPlayer", this.callerUser.getUniqueId());
-                        keyValues.put("biome", biome.getFriendlyName());
-                        
-                        new AddonEvent().builder().addon(addon).keyValues(keyValues).build();
-                    });
+            BankManager bankManager = this.addon.getBankAddon().getBankManager();
+            bankManager.withdraw(this.callerUser, this.island, new Money(money), TxType.WITHDRAW).
+                thenAccept(response -> {
+                    if (response != BankResponse.SUCCESS)
+                    {
+                        Utils.sendMessage(this.callerUser,
+                            this.callerUser.getTranslation(Constants.ERRORS + "could-not-remove-money"));
+                        changeBiomeStage.complete(false);
+                    }
+                });
+        }
+        else
+        {
+            EconomyResponse withdraw = this.addon.getVaultHook().withdraw(this.callerUser, money);
+
+            if (!withdraw.transactionSuccess())
+            {
+                // Something went wrong on withdraw.
+
+                Utils.sendMessage(this.callerUser,
+                    this.callerUser.getTranslation(Constants.ERRORS + "could-not-remove-money"));
+                this.addon.logError(withdraw.errorMessage);
+                changeBiomeStage.complete(false);
+            }
+        }
+    }
+
+
+    /**
+     * Method that withdraws items for changing biome.
+     *
+     * @param changeBiomeStage the change biome stage
+     * @param requiredItemList the required item list
+     * @param ignoreMetaData items that can ignore metadata.
+     */
+    private void withdrawItems(CompletableFuture<Boolean> changeBiomeStage,
+        List<ItemStack> requiredItemList,
+        Set<Material> ignoreMetaData)
+    {
+        if (this.callerUser.getPlayer().getGameMode() == GameMode.CREATIVE)
+        {
+            // No point to check items from creative inventory.
+            return;
         }
 
-        task.runTaskAsynchronously(this.addon.getPlugin());
+        for (ItemStack required : requiredItemList)
+        {
+            int amountToBeRemoved = required.getAmount();
+            List<ItemStack> itemsInInventory;
+
+            if (ignoreMetaData.contains(required.getType()))
+            {
+                // Use collecting method that ignores item meta.
+                itemsInInventory = Arrays.stream(this.callerUser.getInventory().getContents()).
+                    filter(Objects::nonNull).
+                    filter(i -> i.getType().equals(required.getType())).
+                    collect(Collectors.toList());
+            }
+            else
+            {
+                // Use collecting method that compares item meta.
+                itemsInInventory = Arrays.stream(this.callerUser.getInventory().getContents()).
+                    filter(Objects::nonNull).
+                    filter(i -> i.isSimilar(required)).
+                    collect(Collectors.toList());
+            }
+
+            for (ItemStack itemStack : itemsInInventory)
+            {
+                if (amountToBeRemoved > 0)
+                {
+                    ItemStack dummy = itemStack.clone();
+                    dummy.setAmount(1);
+
+                    // Remove either the full amount or the remaining amount
+                    if (itemStack.getAmount() >= amountToBeRemoved)
+                    {
+                        itemStack.setAmount(itemStack.getAmount() - amountToBeRemoved);
+                        amountToBeRemoved = 0;
+                    }
+                    else
+                    {
+                        amountToBeRemoved -= itemStack.getAmount();
+                        itemStack.setAmount(0);
+                    }
+                }
+            }
+
+            if (amountToBeRemoved > 0)
+            {
+                Utils.sendMessage(this.callerUser,
+                    this.callerUser.getTranslation(Constants.ERRORS + "could-not-remove-items"));
+
+                this.addon.logError("Could not remove " + amountToBeRemoved + " of " + required.getType() +
+                    " from player's inventory!");
+
+                changeBiomeStage.complete(false);
+                return;
+            }
+        }
+    }
+
+
+    /**
+     * Withdraw per block boolean.
+     *
+     * @param changeBiomeStage the change biome stage
+     */
+    private void withdrawPerBlock(CompletableFuture<Boolean> changeBiomeStage)
+    {
+        int blockCount = this.getBlockCount();
+
+        if (this.addon.isEconomyProvided())
+        {
+            this.withdrawMoney(changeBiomeStage, this.biome.getCost() * blockCount);
+        }
+
+        if (changeBiomeStage.isDone())
+        {
+            // Return if already processed.
+            return;
+        }
+
+        if (!this.biome.getItemCost().isEmpty())
+        {
+            List<ItemStack> itemCost = Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet());
+            itemCost.forEach(itemStack -> itemStack.setAmount(itemStack.getAmount() * blockCount));
+
+            this.withdrawItems(changeBiomeStage, itemCost, Collections.emptySet());
+        }
+
+        if (changeBiomeStage.isDone())
+        {
+            // Return if already processed.
+            return;
+        }
+
+        changeBiomeStage.complete(true);
+    }
+
+
+    /**
+     * Withdraw per usage boolean.
+     *
+     * @param changeBiomeStage the change biome stage
+     */
+    private void withdrawPerUsage(CompletableFuture<Boolean> changeBiomeStage)
+    {
+        double increment = this.getUsageIncrement();
+
+        if (this.addon.isEconomyProvided())
+        {
+            this.withdrawMoney(changeBiomeStage,
+                this.biome.getCost() + increment * this.biome.getCost());
+        }
+
+        if (changeBiomeStage.isDone())
+        {
+            // Return if already processed.
+            return;
+        }
+
+        if (!this.biome.getItemCost().isEmpty())
+        {
+            List<ItemStack> itemCost = Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet());
+            itemCost.forEach(itemStack -> itemStack.setAmount(
+                itemStack.getAmount() + (int) increment * itemStack.getAmount()));
+
+            this.withdrawItems(changeBiomeStage,
+                itemCost,
+                Collections.emptySet());
+        }
+
+        if (changeBiomeStage.isDone())
+        {
+            // Return if already processed.
+            return;
+        }
+
+        changeBiomeStage.complete(true);
+    }
+
+
+    /**
+     * Withdraw static boolean.
+     *
+     * @param changeBiomeStage the change biome stage
+     */
+    private void withdrawStatic(CompletableFuture<Boolean> changeBiomeStage)
+    {
+        if (this.addon.isEconomyProvided())
+        {
+            this.withdrawMoney(changeBiomeStage, this.biome.getCost());
+        }
+
+        if (changeBiomeStage.isDone())
+        {
+            // Return if already processed.
+            return;
+        }
+
+        if (!this.biome.getItemCost().isEmpty())
+        {
+            this.withdrawItems(changeBiomeStage,
+                Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()),
+                Collections.emptySet());
+        }
+
+        if (changeBiomeStage.isDone())
+        {
+            // Return if already processed.
+            return;
+        }
+
+        changeBiomeStage.complete(true);
+    }
+
+
+    /**
+     * This method checks if given biome object is unlocked for island.
+     *
+     * @return {@code true} if biomeObject is unlocked, {@code false} otherwise.
+     */
+    private boolean checkUnlockStatus()
+    {
+        return this.islandData.isUnlocked(this.biome);
+    }
+
+
+    /**
+     * This method checks if given biome object is purchased for island.
+     *
+     * @return {@code true} if biomeObject is unlocked, {@code false} otherwise.
+     */
+    private boolean checkPurchaseStatus()
+    {
+        return this.addon.getAddonManager().isPurchased(this.islandData, this.biome);
+    }
+
+
+    /**
+     * Check static cost of changing biome.
+     *
+     * @return {@code true} if player has requirements, {@code false} otherwise.
+     */
+    private boolean checkStaticCost()
+    {
+        if (this.addon.isEconomyProvided())
+        {
+            if (this.addon.getSettings().isUseBankAccount() && this.addon.isBankProvided())
+            {
+                if (this.addon.getBankAddon().getBankManager().getBalance(this.island).getValue() < this.biome.getCost())
+                {
+                    // Not enough money.
+                    Utils.sendMessage(this.callerUser,
+                        this.callerUser.getTranslation(Constants.ERRORS + "not-enough-money-bank",
+                            TextVariables.NUMBER,
+                            String.valueOf(this.biome.getCost())));
+                    return false;
+                }
+            }
+            else if (!this.addon.getVaultHook().has(this.callerUser, this.biome.getCost()))
+            {
+                // Not enough money.
+
+                Utils.sendMessage(this.callerUser,
+                    this.callerUser.getTranslation(Constants.ERRORS + "not-enough-money",
+                        TextVariables.NUMBER,
+                        String.valueOf(this.biome.getCost())));
+                return false;
+            }
+        }
+
+        if (!this.biome.getItemCost().isEmpty())
+        {
+            List<ItemStack> missingItemList = new ArrayList<>();
+
+            Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()).forEach(item ->
+            {
+                if (!Utils.hasRequiredItem(this.callerUser, item, Collections.emptySet()))
+                {
+                    missingItemList.add(item.clone());
+                }
+            });
+
+            if (!missingItemList.isEmpty())
+            {
+                // Not enough items
+                StringBuilder missingItems = new StringBuilder();
+                missingItemList.forEach(itemStack -> missingItems.
+                    append(itemStack.getAmount()).
+                    append(" ").
+                    append(Utils.prettifyObject(itemStack, this.callerUser)).
+                    append(" "));
+
+                Utils.sendMessage(this.callerUser,
+                    this.callerUser.getTranslation(Constants.ERRORS + "not-enough-items",
+                        "[items]", missingItems.toString()));
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+    /**
+     * Check per usage cost of changing biome.
+     *
+     * @return {@code true} if player has requirements, {@code false} otherwise.
+     */
+    private boolean checkPerUsageCost()
+    {
+        double increment = this.getUsageIncrement();
+
+        if (this.addon.isEconomyProvided())
+        {
+            double cost = this.biome.getCost() + increment * this.biome.getCost();
+
+            if (this.addon.getSettings().isUseBankAccount() && this.addon.isBankProvided())
+            {
+                if (this.addon.getBankAddon().getBankManager().getBalance(this.island).getValue() < cost)
+                {
+                    // Not enough money.
+                    Utils.sendMessage(this.callerUser,
+                        this.callerUser.getTranslation(Constants.ERRORS + "not-enough-money-bank",
+                            TextVariables.NUMBER,
+                            String.valueOf(cost)));
+                    return false;
+                }
+            }
+            else if (!this.addon.getVaultHook().has(this.callerUser, cost))
+            {
+                // Not enough money.
+
+                Utils.sendMessage(this.callerUser,
+                    this.callerUser.getTranslation(Constants.ERRORS + "not-enough-money",
+                        TextVariables.NUMBER,
+                        String.valueOf(cost)));
+                return false;
+            }
+        }
+
+        if (!this.biome.getItemCost().isEmpty())
+        {
+            List<ItemStack> missingItemList = new ArrayList<>();
+
+            Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()).forEach(item ->
+            {
+                ItemStack clone = item.clone();
+                // Increase items by increment.
+                clone.setAmount(clone.getAmount() + clone.getAmount() * (int) increment);
+
+                if (!Utils.hasRequiredItem(this.callerUser, clone, Collections.emptySet()))
+                {
+                    missingItemList.add(clone);
+                }
+            });
+
+            if (!missingItemList.isEmpty())
+            {
+                // Not enough items
+                StringBuilder missingItems = new StringBuilder();
+                missingItemList.forEach(itemStack -> missingItems.
+                    append(itemStack.getAmount()).
+                    append(" ").
+                    append(Utils.prettifyObject(itemStack, this.callerUser)).
+                    append(" "));
+
+                Utils.sendMessage(this.callerUser,
+                    this.callerUser.getTranslation(Constants.ERRORS + "not-enough-items",
+                        "[items]", missingItems.toString()));
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+    /**
+     * Gets usage increment.
+     *
+     * @return the usage increment
+     */
+    private double getUsageIncrement()
+    {
+        return this.biome.getCostIncrement() * this.islandData.getBiomeChangeCounter(this.biome);
+    }
+
+
+    /**
+     * Check per block cost boolean.
+     *
+     * @return {@code true} if player has requirements, {@code false} otherwise.
+     */
+    private boolean checkPerBlockCost()
+    {
+        int blockCount = this.getBlockCount();
+
+        if (this.addon.isEconomyProvided())
+        {
+            double cost = this.biome.getCost() * blockCount;
+
+            if (this.addon.getSettings().isUseBankAccount() && this.addon.isBankProvided())
+            {
+                if (this.addon.getBankAddon().getBankManager().getBalance(this.island).getValue() < cost)
+                {
+                    // Not enough money.
+                    Utils.sendMessage(this.callerUser,
+                        this.callerUser.getTranslation(Constants.ERRORS + "not-enough-money-bank",
+                            TextVariables.NUMBER,
+                            String.valueOf(cost)));
+                    return false;
+                }
+            }
+            else if (!this.addon.getVaultHook().has(this.callerUser, cost))
+            {
+                // Not enough money.
+
+                Utils.sendMessage(this.callerUser,
+                    this.callerUser.getTranslation(Constants.ERRORS + "not-enough-money",
+                        TextVariables.NUMBER,
+                        String.valueOf(cost)));
+                return false;
+            }
+        }
+
+        if (!this.biome.getItemCost().isEmpty())
+        {
+            List<ItemStack> missingItemList = new ArrayList<>();
+
+            Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()).forEach(item ->
+            {
+                ItemStack clone = item.clone();
+                // Increase items by increment.
+                clone.setAmount(clone.getAmount() * blockCount);
+
+                if (!Utils.hasRequiredItem(this.callerUser, clone, Collections.emptySet()))
+                {
+                    missingItemList.add(clone);
+                }
+            });
+
+            if (!missingItemList.isEmpty())
+            {
+                // Not enough items
+                StringBuilder missingItems = new StringBuilder();
+                missingItemList.forEach(itemStack -> missingItems.
+                    append(itemStack.getAmount()).
+                    append(" ").
+                    append(Utils.prettifyObject(itemStack, this.callerUser)).
+                    append(" "));
+
+                Utils.sendMessage(this.callerUser,
+                    this.callerUser.getTranslation(Constants.ERRORS + "not-enough-items",
+                        "[items]", missingItems.toString()));
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+    /**
+     * Gets block count.
+     *
+     * @return the block count
+     */
+    private int getBlockCount()
+    {
+        return (this.maxCoordinate.getBlockX() - this.minCoordinate.getBlockX()) *
+            (this.maxCoordinate.getBlockZ() - this.minCoordinate.getBlockZ()) *
+            (this.maxCoordinate.getBlockY() - this.minCoordinate.getBlockY());
     }
 
 
     /**
      * This method checks if user has all required permissions.
+     *
      * @return true if user has all required permissions, otherwise false.
      */
     private boolean checkPermissions()
     {
-        return this.biome.getRequiredPermissions().isEmpty() ||
-                this.biome.getRequiredPermissions().stream().allMatch(this.callerUser::hasPermission);
+        return this.biome.getUnlockPermissions().isEmpty() ||
+            this.biome.getUnlockPermissions().stream().allMatch(this.callerUser::hasPermission);
     }
 
 
     /**
-     * This method returns if the caller user have a permission to change biome with a given
-     * update mode for given biomeObject.
-     * @return {@code true} if caller has permission to use given update mode on given biomeObject
-     * {@code false} otherwise.
+     * This method returns if the caller user have a permission to change biome with a given update mode for given
+     * biomeObject.
+     *
+     * @return {@code true} if caller has permission to use given update mode on given biomeObject {@code false}
+     * otherwise.
      */
     public boolean hasPermissionToUpdateMode()
     {
@@ -475,17 +1084,58 @@ public class BiomeUpdateHelper
     /**
      * This variable stores caller addon.
      */
-    private BiomesAddon addon;
+    private final BiomesAddon addon;
 
     /**
      * This variable stores User that calls update.
      */
-    private User callerUser;
+    private final User callerUser;
 
     /**
      * This variable stores User that is targeted by update.
      */
-    private User targetUser;
+    private final User targetUser;
+
+    /**
+     * IslandDataObject that stores island related data.
+     */
+    private final BiomesIslandDataObject islandData;
+
+    /**
+     * This variable stores BiomesObject that must be applied.
+     */
+    private final BiomesObject biome;
+
+    /**
+     * This variable stores update mode.
+     */
+    private final UpdateMode updateMode;
+
+    /**
+     * This variable stores how large update region must be.
+     */
+    private final int range;
+
+    /**
+     * This variable stores update world.
+     */
+    private final World world;
+
+    /**
+     * This variable stores if money from caller can be withdrawn.
+     */
+    private final boolean canWithdraw;
+
+    /**
+     * This variable stores if world protection flag is enabled. Avoids checking it each time as flag will not change
+     * its value while updating.
+     */
+    private final boolean worldProtectionFlag;
+
+    /**
+     * The Island.
+     */
+    private Island island;
 
     /**
      * This variable holds from which location Update process should start.
@@ -493,33 +1143,12 @@ public class BiomeUpdateHelper
     private Location standingLocation;
 
     /**
-     * This variable stores BiomesObject that must be applied.
+     * This variable stores minCoordinate for area where biome is changed.
      */
-    private BiomesObject biome;
+    private BlockVector minCoordinate;
 
     /**
-     * This variable stores update mode.
+     * This variable stores maxCoordinate for area where biome is changed.
      */
-    private UpdateMode updateMode;
-
-    /**
-     * This variable stores how large update region must be.
-     */
-    private int updateNumber;
-
-    /**
-     * This variable stores update world.
-     */
-    private World world;
-
-    /**
-     * This variable stores if money from caller can be withdrawn.
-     */
-    private boolean canWithdraw;
-
-    /**
-     * This variable stores if world protection flag is enabled. Avoids checking it each
-     * time as flag will not change its value while updating.
-     */
-    private final boolean worldProtectionFlag;
+    private BlockVector maxCoordinate;
 }

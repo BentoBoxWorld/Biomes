@@ -1,3 +1,8 @@
+///
+// Created by BONNe
+// Copyright - 2022
+///
+
 package world.bentobox.biomes.listeners;
 
 
@@ -19,12 +24,12 @@ import world.bentobox.biomes.utils.Utils;
 
 
 /**
- * This listener checks if new user can change biomes. If he does not have permission to it, then restore
- * biome to default.
+ * This listener checks if new user can change biomes. If he does not have permission to it, then restore biome to
+ * default.
  */
 public class ChangeOwnerListener implements Listener
 {
-    public  ChangeOwnerListener(BiomesAddon addon)
+    public ChangeOwnerListener(BiomesAddon addon)
     {
         this.addon = addon;
     }
@@ -42,7 +47,7 @@ public class ChangeOwnerListener implements Listener
         User newUser = User.getInstance(event.getNewOwner());
 
         Optional<GameModeAddon> gameModeAddon =
-                this.addon.getPlugin().getIWM().getAddon(event.getIsland().getWorld());
+            this.addon.getPlugin().getIWM().getAddon(event.getIsland().getWorld());
 
         final boolean hasPermissions;
         final String defaultBiome;
@@ -76,19 +81,18 @@ public class ChangeOwnerListener implements Listener
             {
                 defaultBiomeObject = new BiomesObject();
                 defaultBiomeObject.setBiome(biome);
-                defaultBiomeObject.setRequiredCost(0);
-                defaultBiomeObject.setRequiredLevel(0);
             }
 
             // Forcefully update biome on whole user island.
             new BiomeUpdateHelper(this.addon,
-                    newUser,
-                    newUser,
-                    defaultBiomeObject,
-                    event.getIsland().getWorld(),
-                    UpdateMode.ISLAND,
-                    1,
-                    false).updateIslandBiome();
+                newUser,
+                newUser,
+                defaultBiomeObject,
+                this.addon.getAddonManager().getIslandData(event.getIsland()),
+                event.getIsland().getWorld(),
+                UpdateMode.ISLAND,
+                1,
+                false).updateIslandBiome();
         }
     }
 
@@ -98,5 +102,5 @@ public class ChangeOwnerListener implements Listener
     // ---------------------------------------------------------------------
 
 
-    private BiomesAddon addon;
+    private final BiomesAddon addon;
 }

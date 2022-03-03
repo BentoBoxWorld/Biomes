@@ -1,12 +1,4 @@
 # Biomes Configuration ${project.version}
-# This config file is dynamic and saved when the server is shutdown.
-# You cannot edit it while the server is running because changes will
-# be lost! Use in-game settings GUI or edit when server is offline.
-#
-# This indicates if advanced menu will be enabled in Biomes GUI when users choose
-# biome or not. Advanced menu contains extra buttons that allows to choose biome
-# change mode and range.
-advanced-menu: true
 #
 # For advanced menu this indicate which mode will be active.
 # If advanced menu is disabled or in biome set command update mode is not passed
@@ -26,6 +18,12 @@ default-size: 3
 # Allows to fix issues when biome is changed in space between islands.
 use-protection-range: false
 #
+# This indicates if all monetary payments should be done via Bank Addon Account.
+use-bank-account: false
+#
+# This indicates that players will be notified about new unlocked biomes.
+notify-on-unlock: true
+#
 # This indicates if biome on island must be restored to default biome, if
 # island changes owner and it does not have biome set ability.
 # 'true' means that biome will be reset.
@@ -34,39 +32,50 @@ reset-biomes: false
 # This indicates cool down in seconds between users can change biomes on their island.
 cooldown: 60
 #
-# This indicates tick counter between each background update task.
-# This process load chunks that require biome update and change biome in it.
-# Setting 0 will stop background task and biome will be updated only when loaded.
-update-tick-counter: 5
+# Number of minutes in which biome change will be cancelled. It may happen in busy server or
+# huge island areas.
+# Default value = 5
+biome-change-timeout: 5
 #
-# This variable allows to choose which biomes users can see in Biomes GUI.
-# Valid values are:
-#     'ALL' - there will be no hidden biomes. All biomes will be viewable in GUI.
-#     'DEPLOYED' - shows all biomes that are deployed.
-#     'ACCESSIBLE' - only biomes that is unlocked via permission or other unlock type will be visible in GUI.
-#     'TOGGLEABLE' - there will be button in GUI that allows users to switch from ALL to ACCESSIBLE modes.
-biomes-visibility: TOGGLEABLE
+# Number of biome changes at the same time. Setting it to 0 or lower will disable biome change
+# completely.
+# Default value = 1
+parallel-biome-changes: 1
 #
-# This string allows to change element order in Biomes description. Each letter represents
-# one object from Biomes description. If letter is not used, then its represented part
-# will not be in description. If use any letter that is not recognized, then it will be
-# ignored. Some strings can be customized via lang file under 'biomes.gui.biomes-description'.
-# List of strings and their meaning:
-#  - DESCRIPTION - description from biomes object
-#  - ORIGINAL_BIOME - defined minecraft biomes name: '*.biome-name'
-#  - REQUIRED_MONEY - requirements for biome change: '*.required-money'
-#  - REQUIRED_LEVEL - requirements for biome change: '*.required-island-level'
-#  - REQUIRED_PERMISSION - requirements for biome change: '*.required-permission'
-lore:
-  - DESCRIPTION
-  - ORIGINAL_BIOME
-  - REQUIRED_MONEY
-  - REQUIRED_LEVEL
-  - REQUIRED_PERMISSION
-#
-# This allows to change lore description line length. By default it is 25, but some server
-# owners may like it to be larger.
-lore-length: 25
+# Allows toggling if Biomes Addon should refresh chunks, so players could get biome instantly.
+# Otherwise, biome will be updated after chunk is unloaded (player leaves the area).
+# Be aware, not all plugins and clients supports this feature. If you get error after biome
+# updates, please disable this feature.
+# Default value = true
+use-chunk-refresh: true
+commands:
+  player:
+    # Player main sub-command to access the addon.
+    # This command label will be required to write after gamemode player command label, f.e. /[label] biomes
+    # Each alias must be separated with an empty space.
+    # /!\ In order to apply the changes made to this option, you must restart your server. Reloading BentoBox or the server won't work.
+    main: biomes
+    # Player set sub-command that allows to set biome with a command.
+    # This command label will be required to write after player main command, f.e. /[label] biomes set
+    # Each alias must be separated with an empty space.
+    # /!\ In order to apply the changes made to this option, you must restart your server. Reloading BentoBox or the server won't work.
+    set: set
+    # Player buy sub-command that allows to buy biomes with a command.
+    # This command label will be required to write after player main command, f.e. /[label] biomes buy
+    # Each alias must be separated with an empty space.
+    # /!\ In order to apply the changes made to this option, you must restart your server. Reloading BentoBox or the server won't work.
+    buy: buy
+    # Player info sub-command that allows to see info about biome with a command.
+    # This command label will be required to write after player main command, f.e. /[label] biomes info
+    # Each alias must be separated with an empty space.
+    # /!\ In order to apply the changes made to this option, you must restart your server. Reloading BentoBox or the server won't work.
+    info: info
+  admin:
+    # Admin main sub-command to access the addon.
+    # This command label will be required to write after gamemode admin command label, f.e. /[label] biomes
+    # Each alias must be separated with an empty space.
+    # /!\ In order to apply the changes made to this option, you must restart your server. Reloading BentoBox or the server won't work.
+    main: biomes
 #
 # This list stores GameModes in which Biomes addon should not work.
 # To disable addon it is necessary to write its name in new line that starts with -. Example:

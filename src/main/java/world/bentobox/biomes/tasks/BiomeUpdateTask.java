@@ -1,249 +1,303 @@
+///
+// Created by BONNe
+// Copyright - 2022
+///
+
 package world.bentobox.biomes.tasks;
 
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
+import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
-import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.BlockVector;
 
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.bentobox.paperlib.PaperLib;
+import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
-import world.bentobox.biomes.database.objects.BiomeChunkUpdateObject;
 import world.bentobox.biomes.database.objects.BiomesObject;
-import world.bentobox.biomes.events.BiomeChangedEvent;
+import world.bentobox.biomes.utils.Constants;
 import world.bentobox.biomes.utils.Utils;
 
 
 /**
  * This class updates biome from min coordinate till max coordinate.
  */
-public class BiomeUpdateTask extends BukkitRunnable
+public class BiomeUpdateTask
 {
     /**
      * Default Update task constructor.
+     *
      * @param addon BiomeAddon object.
      * @param user Player who calls biome update.
-     * @param location Location for biome location object.
      * @param biome BiomeObject that will changed.
      */
     public BiomeUpdateTask(BiomesAddon addon,
         User user,
-        Location location,
         BiomesObject biome)
     {
         this.addon = addon;
         this.user = user;
-        this.location = location;
+
         this.biome = biome.getBiome();
-        this.objectID = biome.getUniqueId();
-        this.objectName = biome.getFriendlyName();
+        this.biomesObject = biome;
+
+        this.chunksToUpdate = new ConcurrentLinkedQueue<>();
+        this.result = new CompletableFuture<>();
+
+        this.processCounter = new AtomicInteger(0);
     }
 
 
     /**
-     * Default RunTask.
+     * Update chunk queue based on min and max coordinate.
      */
-    @Override
-    public void run()
+    public void updateChunkQueue()
     {
-        if (this.user.isPlayer())
+        if (this.minCoordinate == null || this.maxCoordinate == null)
         {
-            this.user.sendMessage("biomes.messages.update-start");
+            return;
         }
 
-        // Create and populate ChunkObjectObjects where biome change should occur.
-        List<BiomeChunkUpdateObject> chunkUpdateObjectList = new ArrayList<>();
-
-        for (int x = this.minX >> 4, maxX = this.maxX >> 4; x <= maxX; x++)
+        for (int x = this.minCoordinate.getBlockX() >> 4, maxX = this.maxCoordinate.getBlockX() >> 4; x <= maxX; x++)
         {
-            for (int z = this.minZ >> 4, maxZ = this.maxZ >> 4; z <= maxZ; z++)
+            for (int z = this.minCoordinate.getBlockZ() >> 4, maxZ = this.maxCoordinate.getBlockZ() >> 4; z <= maxZ;
+                z++)
             {
-                chunkUpdateObjectList.add(this.createChunkUpdateObject(x, z));
+                this.chunksToUpdate.add(this.constructChunkData(x, z));
             }
         }
 
-        // After everything is created update biome where it is possible.
-        // Use iterator as it will allow to remove element from list.
-        Iterator<BiomeChunkUpdateObject> iterator = chunkUpdateObjectList.iterator();
+        this.numberOfChunks = this.chunksToUpdate.size();
+    }
 
-        while (iterator.hasNext())
+
+    /**
+     * Process biome change.
+     *
+     * @param updateQueue the update queue
+     */
+    public void processBiomeChange(UpdateQueue updateQueue)
+    {
+        // Scan the next chunk
+        this.scanNextChunk().thenAccept(result ->
         {
-            BiomeChunkUpdateObject updateObject = iterator.next();
-
-            boolean completelyChanged = true;
-
-            // Since Minecraft 1.15 biome is stored in 4x4x4 blocks.
-            // There is no point to update biome in each block position, only in every 4.
-
-            for (int x = updateObject.getMinX();
-                completelyChanged && x <= updateObject.getMaxX();
-                x += 4)
+            if (!PaperLib.isPaper() && !Bukkit.isPrimaryThread())
             {
-                for (int y = updateObject.getMinY();
-                    completelyChanged && y <= updateObject.getMaxY();
-                    y += 4)
+                this.addon.logError("scanChunk not on Primary Thread!");
+            }
+
+            long runTime = System.currentTimeMillis() - updateQueue.getProcessStartMap().get(this);
+
+            // Timeout check
+            if (runTime > this.addon.getSettings().getChangeTimeout() * 60000)
+            {
+                // Done
+                updateQueue.getProcessStartMap().remove(this);
+                this.result.complete(UpdateQueue.Result.TIMEOUT);
+                this.addon.logError(
+                    "Biome change timed out after " + this.addon.getSettings().getChangeTimeout() + "m for user: " +
+                        this.user.getName());
+                return;
+            }
+
+            if (Boolean.TRUE.equals(result) && !updateQueue.getTask().isCancelled())
+            {
+                // Increment counter for the biome change.
+                this.processCounter.incrementAndGet();
+
+                if (this.chunksToUpdate.isEmpty())
                 {
-                    for (int z = updateObject.getMinZ();
-                        completelyChanged && z <= updateObject.getMaxZ();
-                        z += 4)
-                    {
-                        if (!this.world.isChunkLoaded(updateObject.getChunkX(),
-                            updateObject.getChunkZ()))
-                        {
-                            // If chunk is unloaded then skip change.
-                            completelyChanged = false;
-                        }
-                        else
-                        {
-                            // Biome should not be changed in Greenhouses.
-                            if (!this.addon.getAddonManager().
-                                hasGreenhouseInLocation(updateObject.getWorld(), x, y, z))
-                            {
-                                // Change Biome
-                                updateObject.getWorld().setBiome(x, y, z, this.biome);
-                            }
-                        }
-                    }
-                }
-            }
+                    // Done there are no more things to process
+                    updateQueue.updateTimer(runTime, this.getNumberOfChunks());
+                    updateQueue.getProcessStartMap().remove(this);
 
-            if (completelyChanged)
-            {
-                // If biome is changed completely, then remove object.
-                iterator.remove();
+                    this.result.complete(UpdateQueue.Result.FINISHED);
+                }
+                else
+                {
+                    // scanNextChunk returns true if there are more chunks to scan
+                    this.processBiomeChange(updateQueue);
+                }
             }
             else
             {
-                // Otherwise add it to manager.
-                this.addon.getAddonManager().addChunkUpdateObject(updateObject);
+                // Done, result returned false.
+                updateQueue.getProcessStartMap().remove(this);
+                this.result.complete(UpdateQueue.Result.FAILED);
+            }
+        });
+    }
+
+
+    /**
+     * Scan the next chunk on the island
+     *
+     * @return completable boolean future that will be true if more chunks are left to be scanned, and false if not
+     */
+    private CompletableFuture<Boolean> scanNextChunk()
+    {
+        if (this.chunksToUpdate.isEmpty())
+        {
+            this.addon.logError("Unexpected: no chunks to scan!");
+            // This should not be needed, but just in case
+            return CompletableFuture.completedFuture(false);
+        }
+
+        // Set up the completed
+        CompletableFuture<Boolean> completed = new CompletableFuture<>();
+
+        ChunkData chunkData = this.chunksToUpdate.poll();
+
+        chunkData.getChunk(this.world).thenAccept(chunk ->
+            this.scanChunk(chunkData, chunk).thenAccept(completed::complete));
+
+        return completed;
+    }
+
+
+    /**
+     * This method scans given chunk and updates biome in it based on chunk data.
+     *
+     * @param chunkData the chunk data
+     * @param chunk the chunk
+     * @return the completable future
+     */
+    private CompletableFuture<Boolean> scanChunk(ChunkData chunkData, Chunk chunk)
+    {
+        CompletableFuture<Boolean> completed = new CompletableFuture<>();
+
+        if (chunk == null)
+        {
+            completed.complete(false);
+            return completed;
+        }
+
+        if (PaperLib.isPaper())
+        {
+            Bukkit.getScheduler().runTaskAsynchronously(this.addon.getPlugin(),
+                () -> this.runBiomeChange(chunkData, chunk, completed));
+        }
+        else
+        {
+            Bukkit.getScheduler().runTask(this.addon.getPlugin(),
+                () -> this.runBiomeChange(chunkData, chunk, completed));
+        }
+
+        return completed;
+    }
+
+
+    /**
+     * This method changes biome for given chunk.
+     *
+     * @param chunkData the chunk data
+     * @param chunk the chunk
+     * @param completed the completed
+     */
+    @SuppressWarnings("deprecated")
+    private void runBiomeChange(ChunkData chunkData, Chunk chunk, CompletableFuture<Boolean> completed)
+    {
+        for (int x = chunkData.minX();
+            x <= chunkData.maxX();
+            x += 4)
+        {
+            for (int z = chunkData.minZ();
+                z <= chunkData.maxZ();
+                z += 4)
+            {
+                for (int y = chunkData.minY();
+                    y <= chunkData.maxY();
+                    y += 4)
+                {
+                    // Biome should not be changed in Greenhouses.
+                    if (!this.addon.getAddonManager().hasGreenhouseInLocation(this.world, x, y, z))
+                    {
+                        // Change Biome
+                        this.world.setBiome(x, y, z, this.biome);
+                    }
+                }
             }
         }
 
-        if (this.user.isPlayer())
+        if (this.addon.getSettings().isUseChunkRefresh())
         {
-            this.user.sendMessage("biomes.messages.update-done",
-                "[biome]",
-                this.objectName);
-
-            this.addon.log(this.user.getName() + " change biome in loaded chunks to " +
-                this.biome + " from" +
-                " x=" + this.minX + ":" + this.maxX +
-                " y=" + this.minY + ":" + this.maxY +
-                " z=" + this.minZ + ":" + this.maxZ +
-                " while standing on" +
-                " x=" + this.location.getBlockX() +
-                " y=" + this.location.getBlockY() +
-                " z=" + this.location.getBlockZ());
-        }
-        else
-        {
-            this.addon.log("Console changed biome in loaded chunks to " +
-                this.biome + " from" +
-                " x=" + this.minX + ":" + this.maxX +
-                " y=" + this.minY + ":" + this.maxY +
-                " z=" + this.minZ + ":" + this.maxZ);
+            chunk.getWorld().refreshChunk(chunk.getX(), chunk.getZ());
         }
 
-        // Log information about unloaded chunk cound.
-        if (!chunkUpdateObjectList.isEmpty())
-        {
-            this.addon.log("Populated offline updater with " + chunkUpdateObjectList.size() + " chunks.");
-        }
-
-        // Fire event that biome is changed.
-        Bukkit.getPluginManager().callEvent(
-            new BiomeChangedEvent(this.objectID,
-                this.biome,
-                this.user.getUniqueId(),
-                this.minX,
-                this.minY,
-                this.minZ,
-                this.maxX,
-                this.maxY,
-                this.maxZ));
+        completed.complete(true);
     }
 
 
     /**
-     * This method create object that contains information where biome must be changed.
-     * @param chunkX Chunk X coordinate.
-     * @param chunkZ Chunk Z coordinate.
-     * @return ChunkUpdateObject that contains all necessary information about pending
-     * biome updating.
-     * Note!
-     * If update is queued in different Y values, then newest object will overwrite value.
-     * Older object will not be saved.
-     * It is so, because fo uniqueId generation.
+     * Gets chunk data.
+     *
+     * @param chunkX the chunk x
+     * @param chunkZ the chunk z
+     * @return the chunk data
      */
-    private BiomeChunkUpdateObject createChunkUpdateObject(int chunkX, int chunkZ)
+    private ChunkData constructChunkData(int chunkX, int chunkZ)
     {
-        BiomeChunkUpdateObject chunkUpdateObject = new BiomeChunkUpdateObject();
-        chunkUpdateObject.setUniqueId(Utils.getGameMode(this.world) + "_" + chunkX + "-" + chunkZ);
-        chunkUpdateObject.setWorld(this.world);
-        chunkUpdateObject.setBiome(this.biome);
-
-        chunkUpdateObject.setChunkX(chunkX);
-        chunkUpdateObject.setChunkZ(chunkZ);
+        int minX, minZ, maxX, maxZ;
 
         // transform to chunk coordinates
-        if (this.minX >> 4 == chunkX)
+        if (this.minCoordinate.getBlockX() >> 4 == chunkX)
         {
-            chunkUpdateObject.setMinX(this.minX);
+            minX = this.minCoordinate.getBlockX();
         }
         else
         {
-            chunkUpdateObject.setMinX(chunkX << 4);
+            minX = chunkX << 4;
         }
 
-        if (this.maxX >> 4 == chunkX)
+        if (this.maxCoordinate.getBlockX() >> 4 == chunkX)
         {
-            chunkUpdateObject.setMaxX(this.maxX);
-
+            maxX = this.maxCoordinate.getBlockX();
         }
         else
         {
-            chunkUpdateObject.setMaxX((chunkX << 4) + 15);
+            maxX = (chunkX << 4) + 15;
         }
 
-        if (this.minZ >> 4 == chunkZ)
+        if (this.minCoordinate.getBlockZ() >> 4 == chunkZ)
         {
-            chunkUpdateObject.setMinZ(this.minZ);
+            minZ = this.minCoordinate.getBlockZ();
         }
         else
         {
-            chunkUpdateObject.setMinZ(chunkZ << 4);
+            minZ = chunkZ << 4;
         }
 
-        if (this.maxZ >> 4 == chunkZ)
+        if (this.maxCoordinate.getBlockZ() >> 4 == chunkZ)
         {
-            chunkUpdateObject.setMaxZ(this.maxZ);
-
+            maxZ = this.maxCoordinate.getBlockZ();
         }
         else
         {
-            chunkUpdateObject.setMaxZ((chunkZ << 4) + 15);
+            maxZ = (chunkZ << 4) + 15;
         }
 
-        chunkUpdateObject.setMinY(this.minY);
-        chunkUpdateObject.setMaxY(this.maxY);
-
-        return chunkUpdateObject;
+        return new ChunkData(chunkX, chunkZ,
+            minX, this.minCoordinate.getBlockY(), minZ,
+            maxX, this.maxCoordinate.getBlockY(), maxZ);
     }
 
 
-    // ---------------------------------------------------------------------
-    // Section: Setters
-    // ---------------------------------------------------------------------
+// ---------------------------------------------------------------------
+// Section: Setters
+// ---------------------------------------------------------------------
+
 
     /**
      * This method sets the world value.
-     * @param world the world new value.
      *
+     * @param world the world new value.
      */
     public void setWorld(World world)
     {
@@ -252,68 +306,107 @@ public class BiomeUpdateTask extends BukkitRunnable
 
 
     /**
-     * Default Setter.
-     * @param minX Integer.
+     * Sets min coordinate.
+     *
+     * @param minCoordinate the min coordinate
      */
-    public void setMinX(int minX)
+    public void setMinCoordinate(BlockVector minCoordinate)
     {
-        this.minX = minX;
+        this.minCoordinate = minCoordinate;
     }
 
 
     /**
-     * Default Setter.
-     * @param maxX Integer.
+     * Sets max coordinate.
+     *
+     * @param maxCoordinate the max coordinate
      */
-    public void setMaxX(int maxX)
+    public void setMaxCoordinate(BlockVector maxCoordinate)
     {
-        this.maxX = maxX;
+        this.maxCoordinate = maxCoordinate;
+    }
+
+
+// ---------------------------------------------------------------------
+// Section: Getters
+// ---------------------------------------------------------------------
+
+
+    /**
+     * Gets result.
+     *
+     * @return the result
+     */
+    public CompletableFuture<UpdateQueue.Result> getResult()
+    {
+        return this.result;
     }
 
 
     /**
-     * Default Setter.
-     * @param minZ Integer.
+     * Gets number of chunks.
+     *
+     * @return the number of chunks
      */
-    public void setMinZ(int minZ)
+    public int getNumberOfChunks()
     {
-        this.minZ = minZ;
+        return this.numberOfChunks;
     }
 
 
     /**
-     * Default Setter.
-     * @param maxZ Integer.
+     * Notify that biome is added in processing queue.
      */
-    public void setMaxZ(int maxZ)
+    public void notifyStarting()
     {
-        this.maxZ = maxZ;
+        Utils.sendMessage(this.user, this.user.getTranslation(
+            Constants.MESSAGES + "update-start",
+            "[biome]", this.biomesObject.getFriendlyName(),
+            "[number]", String.valueOf(this.getNumberOfChunks()),
+            "[time]", String.valueOf((int)
+                Math.max(1, this.getNumberOfChunks() * this.addon.getUpdateQueue().getChunkTime()))));
     }
 
 
     /**
-     * This method sets the minY value.
-     * @param minY the minY new value.
+     * Notify that biome is added in waiting queue.
      */
-    public void setMinY(int minY)
+    public void notifyWaiting()
     {
-        this.minY = minY;
+        Utils.sendMessage(this.user,
+            this.user.getTranslation(Constants.MESSAGES + "waiting",
+                "[time]", String.valueOf(this.addon.getUpdateQueue().getQueueTime())));
     }
+
+
+// ---------------------------------------------------------------------
+// Section: Classes
+// ---------------------------------------------------------------------
 
 
     /**
-     * This method sets the maxY value.
-     * @param maxY the maxY new value.
+     * The record that contains info about chunk coordinates and limit of blocks where biome must be updated inside
+     * chunk.
      */
-    public void setMaxY(int maxY)
+    private record ChunkData(int chunkX, int chunkZ, int minX, int minY, int minZ, int maxX, int maxY, int maxZ)
     {
-        this.maxY = maxY;
+        /**
+         * Gets chunk.
+         *
+         * @param world the world
+         * @return the chunk
+         */
+        public CompletableFuture<Chunk> getChunk(World world)
+        {
+            return Util.getChunkAtAsync(world, this.chunkX, this.chunkZ, true);
+        }
     }
 
 
-    // ---------------------------------------------------------------------
-    // Section: Variables
-    // ---------------------------------------------------------------------
+// ---------------------------------------------------------------------
+// Section: Variables
+// ---------------------------------------------------------------------
+
 
     /**
      * Instance of biomes addon.
@@ -321,14 +414,24 @@ public class BiomeUpdateTask extends BukkitRunnable
     private final BiomesAddon addon;
 
     /**
+     * The queue of chunk id's that must be updated.
+     */
+    private final Queue<ChunkData> chunksToUpdate;
+
+    /**
      * Instance of user who will be informed about update task.
      */
     private final User user;
 
     /**
-     * Instance of location from which update was called.
+     * Instance of results exporter.
      */
-    private final Location location;
+    private final CompletableFuture<UpdateQueue.Result> result;
+
+    /**
+     * Instance of AtomicInteger that counts processed chunks.
+     */
+    private final AtomicInteger processCounter;
 
     /**
      * Instance of biome that is required to be changed.
@@ -336,14 +439,9 @@ public class BiomeUpdateTask extends BukkitRunnable
     private final Biome biome;
 
     /**
-     * Original biome object name.
+     * Instance of biomesObject that is required to be changed.
      */
-    private final String objectName;
-
-    /**
-     * Original biome object id.
-     */
-    private final String objectID;
+    private final BiomesObject biomesObject;
 
     /**
      * Instance of world where update will be processed.
@@ -351,32 +449,17 @@ public class BiomeUpdateTask extends BukkitRunnable
     private World world;
 
     /**
-     * Minimal X Coordinate.
+     * Minimal Coordinate.
      */
-    private int minX;
+    private BlockVector minCoordinate;
 
     /**
-     * Maximal X Coordinate.
+     * Maximal Coordinate.
      */
-    private int maxX;
+    private BlockVector maxCoordinate;
 
     /**
-     * Minimal Z Coordinate.
+     * The Number of chunks.
      */
-    private int minZ;
-
-    /**
-     * Maximal Z Coordinate.
-     */
-    private int maxZ;
-
-    /**
-     * Minimal Y Coordinate.
-     */
-    private int minY;
-
-    /**
-     * Maximal Y Coordinate.
-     */
-    private int maxY;
+    private int numberOfChunks;
 }

@@ -1,10 +1,13 @@
+///
+// Created by BONNe
+// Copyright - 2022
+///
+
 package world.bentobox.biomes.config;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,20 +15,15 @@ import world.bentobox.bentobox.api.configuration.ConfigComment;
 import world.bentobox.bentobox.api.configuration.ConfigEntry;
 import world.bentobox.bentobox.api.configuration.ConfigObject;
 import world.bentobox.bentobox.api.configuration.StoreAt;
-import world.bentobox.bentobox.database.objects.adapters.Adapter;
-import world.bentobox.biomes.database.objects.adapters.LoreAdapter;
 
 
 /**
  * All the plugin settings are here
+ *
  * @author BONNe
  */
-@StoreAt(filename="config.yml", path="addons/Biomes")
+@StoreAt(filename = "config.yml", path = "addons/Biomes")
 @ConfigComment("Biomes Configuration [version]")
-@ConfigComment("This config file is dynamic and saved when the server is shutdown.")
-@ConfigComment("You cannot edit it while the server is running because changes will")
-@ConfigComment("be lost! Use in-game settings GUI or edit when server is offline.")
-@ConfigComment("")
 public class Settings implements ConfigObject
 {
     // ---------------------------------------------------------------------
@@ -34,17 +32,8 @@ public class Settings implements ConfigObject
 
 
     /**
-     * This method returns if advanced menu is enabled.
-     * @return true - if enabled, otherwise false.
-     */
-    public boolean isAdvancedMenu()
-    {
-        return this.advancedMenu;
-    }
-
-
-    /**
      * This method returns default update mode.
+     *
      * @return Default update mode.
      */
     public UpdateMode getDefaultMode()
@@ -54,112 +43,8 @@ public class Settings implements ConfigObject
 
 
     /**
-     * This method returns default update range.
-     * @return default update range
-     */
-    public int getDefaultSize()
-    {
-        return this.defaultSize;
-    }
-
-
-    /**
-     * This method returns if biome reset is necessary on owner change.
-     * @return true - if biome reset is required.
-     */
-    public boolean isResetBiomes()
-    {
-        return this.resetBiomes;
-    }
-
-
-    /**
-     * This method returns cooldown between biome changes.
-     * @return integer that represents seconds between biome changes.
-     */
-    public int getCoolDown()
-    {
-        return this.coolDown;
-    }
-
-
-    /**
-     * This method returns active biomes visibilityMode.
-     * @return Enum that represents biomes visibility.
-     */
-    public VisibilityMode getVisibilityMode()
-    {
-        return this.visibilityMode;
-    }
-
-
-    /**
-     * This method returns disabled game modes.
-     * @return Set with disabled game modes.
-     */
-    public Set<String> getDisabledGameModes()
-    {
-        return this.disabledGameModes;
-    }
-
-
-    /**
-     * This method returns the loreMessage value.
-     * @return the value of loreMessage.
-     */
-    public List<Lore> getLore()
-    {
-        return this.lore;
-    }
-
-
-    /**
-     * This method returns the loreLineLength value.
-     * @return the loreLineLength value.
-     */
-    public int getLoreLineLength()
-    {
-        return this.loreLineLength;
-    }
-
-
-    /**
-     * This method returns the useProtectionRange value
-     * @return the useProtectionRange value.
-     */
-    public boolean isUseProtectionRange()
-    {
-        return this.useProtectionRange;
-    }
-
-
-    /**
-     * This method returns the updateTickCounter value.
-     * @return the value of updateTickCounter.
-     */
-    public int getUpdateTickCounter()
-    {
-        return updateTickCounter;
-    }
-
-
-    // ---------------------------------------------------------------------
-    // Section: Setters
-    // ---------------------------------------------------------------------
-
-
-    /**
-     * This method sets value of advancedMenu variable.
-     * @param advancedMenu new value.
-     */
-    public void setAdvancedMenu(boolean advancedMenu)
-    {
-        this.advancedMenu = advancedMenu;
-    }
-
-
-    /**
      * This method sets value of defaultMode variable.
+     *
      * @param defaultMode new value.
      */
     public void setDefaultMode(UpdateMode defaultMode)
@@ -169,7 +54,19 @@ public class Settings implements ConfigObject
 
 
     /**
+     * This method returns default update range.
+     *
+     * @return default update range
+     */
+    public int getDefaultSize()
+    {
+        return this.defaultSize;
+    }
+
+
+    /**
      * This method sets value of defaultSize variable.
+     *
      * @param defaultSize new value.
      */
     public void setDefaultSize(int defaultSize)
@@ -179,7 +76,19 @@ public class Settings implements ConfigObject
 
 
     /**
+     * This method returns if biome reset is necessary on owner change.
+     *
+     * @return true - if biome reset is required.
+     */
+    public boolean isResetBiomes()
+    {
+        return this.resetBiomes;
+    }
+
+
+    /**
      * This method sets value of resetBiomes variable.
+     *
      * @param resetBiomes new value.
      */
     public void setResetBiomes(boolean resetBiomes)
@@ -188,8 +97,25 @@ public class Settings implements ConfigObject
     }
 
 
+    // ---------------------------------------------------------------------
+    // Section: Setters
+    // ---------------------------------------------------------------------
+
+
+    /**
+     * This method returns cooldown between biome changes.
+     *
+     * @return integer that represents seconds between biome changes.
+     */
+    public int getCoolDown()
+    {
+        return this.coolDown;
+    }
+
+
     /**
      * This method sets value of coolDown variable.
+     *
      * @param coolDown new value.
      */
     public void setCoolDown(int coolDown)
@@ -199,19 +125,22 @@ public class Settings implements ConfigObject
 
 
     /**
-     * This method sets value of visibilityMode variable.
-     * @param visibilityMode new value.
+     * This method returns disabled game modes.
+     *
+     * @return Set with disabled game modes.
      */
-    public void setVisibilityMode(VisibilityMode visibilityMode)
+    public Set<String> getDisabledGameModes()
     {
-        this.visibilityMode = visibilityMode;
+        return this.disabledGameModes;
     }
 
 
     /**
      * This method sets value for disabledGameModes variable.
+     *
      * @param disabledGameModes new value.
      */
+    @SuppressWarnings("unused")
     public void setDisabledGameModes(Set<String> disabledGameModes)
     {
         this.disabledGameModes = disabledGameModes;
@@ -219,28 +148,19 @@ public class Settings implements ConfigObject
 
 
     /**
-     * This method sets the loreMessage value.
-     * @param loreMessage the loreMessage new value.
-     */
-    public void setLore(List<Lore> loreMessage)
-    {
-        this.lore = loreMessage;
-    }
-
-
-    /**
-     * This method sets the loreLineLength object value.
-     * @param loreLineLength the loreLineLength object new value.
+     * This method returns the useProtectionRange value
      *
+     * @return the useProtectionRange value.
      */
-    public void setLoreLineLength(int loreLineLength)
+    public boolean isUseProtectionRange()
     {
-        this.loreLineLength = loreLineLength;
+        return this.useProtectionRange;
     }
 
 
     /**
      * This method sets the useProtectionRange object value.
+     *
      * @param useProtectionRange the useProtectionRange object new value.
      */
     public void setUseProtectionRange(boolean useProtectionRange)
@@ -250,19 +170,228 @@ public class Settings implements ConfigObject
 
 
     /**
-     * This method sets the updateTickCounter value.
-     * @param updateTickCounter the updateTickCounter new value.
+     * Is notify unlocked biomes boolean.
      *
+     * @return the boolean
      */
-    public void setUpdateTickCounter(int updateTickCounter)
+    public boolean isNotifyUnlockedBiomes()
     {
-        this.updateTickCounter = updateTickCounter;
+        return notifyUnlockedBiomes;
     }
 
 
-    // ---------------------------------------------------------------------
-    // Section: Enums used for Settings.
-    // ---------------------------------------------------------------------
+    /**
+     * Sets notify unlocked biomes.
+     *
+     * @param notifyUnlockedBiomes the notify unlocked biomes
+     */
+    public void setNotifyUnlockedBiomes(boolean notifyUnlockedBiomes)
+    {
+        this.notifyUnlockedBiomes = notifyUnlockedBiomes;
+    }
+
+
+    /**
+     * Gets player command.
+     *
+     * @return the player command
+     */
+    public String getPlayerCommand()
+    {
+        return playerCommand;
+    }
+
+
+    /**
+     * Sets player command.
+     *
+     * @param playerCommand the player command
+     */
+    public void setPlayerCommand(String playerCommand)
+    {
+        this.playerCommand = playerCommand;
+    }
+
+
+    /**
+     * Gets player set command.
+     *
+     * @return the player set command
+     */
+    public String getPlayerSetCommand()
+    {
+        return playerSetCommand;
+    }
+
+
+    /**
+     * Sets player set command.
+     *
+     * @param playerSetCommand the player set command
+     */
+    public void setPlayerSetCommand(String playerSetCommand)
+    {
+        this.playerSetCommand = playerSetCommand;
+    }
+
+
+    /**
+     * Gets player buy command.
+     *
+     * @return the player buy command
+     */
+    public String getPlayerBuyCommand()
+    {
+        return playerBuyCommand;
+    }
+
+
+    /**
+     * Sets player buy command.
+     *
+     * @param playerBuyCommand the player buy command
+     */
+    public void setPlayerBuyCommand(String playerBuyCommand)
+    {
+        this.playerBuyCommand = playerBuyCommand;
+    }
+
+
+    /**
+     * Gets player info command.
+     *
+     * @return the player info command
+     */
+    public String getPlayerInfoCommand()
+    {
+        return playerInfoCommand;
+    }
+
+
+    /**
+     * Sets player info command.
+     *
+     * @param playerInfoCommand the player info command
+     */
+    public void setPlayerInfoCommand(String playerInfoCommand)
+    {
+        this.playerInfoCommand = playerInfoCommand;
+    }
+
+
+    /**
+     * Gets admin command.
+     *
+     * @return the admin command
+     */
+    public String getAdminCommand()
+    {
+        return adminCommand;
+    }
+
+
+    /**
+     * Sets admin command.
+     *
+     * @param adminCommand the admin command
+     */
+    public void setAdminCommand(String adminCommand)
+    {
+        this.adminCommand = adminCommand;
+    }
+
+
+    /**
+     * Gets concurrent biome updates.
+     *
+     * @return the concurrent biome updates
+     */
+    public int getConcurrentBiomeUpdates()
+    {
+        return concurrentBiomeUpdates;
+    }
+
+
+    /**
+     * Sets concurrent biome updates.
+     *
+     * @param concurrentBiomeUpdates the concurrent biome updates
+     */
+    public void setConcurrentBiomeUpdates(int concurrentBiomeUpdates)
+    {
+        this.concurrentBiomeUpdates = concurrentBiomeUpdates;
+    }
+
+
+    /**
+     * Gets change timeout.
+     *
+     * @return the change timeout
+     */
+    public long getChangeTimeout()
+    {
+        return changeTimeout;
+    }
+
+
+    /**
+     * Sets change timeout.
+     *
+     * @param changeTimeout the change timeout
+     */
+    public void setChangeTimeout(long changeTimeout)
+    {
+        this.changeTimeout = changeTimeout;
+    }
+
+
+    /**
+     * Is use bank account boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isUseBankAccount()
+    {
+        return useBankAccount;
+    }
+
+
+    /**
+     * Sets use bank account.
+     *
+     * @param useBankAccount the use bank account
+     */
+    public void setUseBankAccount(boolean useBankAccount)
+    {
+        this.useBankAccount = useBankAccount;
+    }
+
+
+    /**
+     * Is use chunk refresh boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isUseChunkRefresh()
+    {
+        return useChunkRefresh;
+    }
+
+
+    /**
+     * Sets use chunk refresh.
+     *
+     * @param useChunkRefresh the use chunk refresh
+     */
+    public void setUseChunkRefresh(boolean useChunkRefresh)
+    {
+        this.useChunkRefresh = useChunkRefresh;
+    }
+
+
+// ---------------------------------------------------------------------
+// Section: Enums used for Settings.
+// ---------------------------------------------------------------------
 
 
     /**
@@ -270,12 +399,23 @@ public class Settings implements ConfigObject
      */
     public enum UpdateMode
     {
+        /**
+         * Island update mode.
+         */
         ISLAND,
+        /**
+         * Chunk update mode.
+         */
         CHUNK,
+        /**
+         * Range update mode.
+         */
         RANGE;
+
 
         /**
          * This method returns stored parameter from string.
+         *
          * @param parameter String of object that must be returned
          * @return CommandParameters object or null.
          */
@@ -284,13 +424,14 @@ public class Settings implements ConfigObject
             return BY_NAME.get(parameter);
         }
 
+
         /**
          * This map allows to access all enum values via their string.
          */
         private static final Map<String, UpdateMode> BY_NAME = new HashMap<>();
 
-        /**
-         * This static method populated BY_NAME map.
+        /*
+          This static method populated BY_NAME map.
          */
         static
         {
@@ -302,120 +443,10 @@ public class Settings implements ConfigObject
     }
 
 
-    /**
-     * This enum describes all possible variants which biomes users should see
-     */
-    public enum VisibilityMode
-    {
-        ALL,
-        DEPLOYED,
-        ACCESSIBLE,
-        TOGGLEABLE;
-
-
-        /**
-         * This method returns stored parameter from string.
-         * @param parameter String of object that must be returned
-         * @return CommandParameters object or null.
-         */
-        public static VisibilityMode getMode(String parameter)
-        {
-            return BY_NAME.get(parameter);
-        }
-
-        /**
-         * This map allows to access all enum values via their string.
-         */
-        private static final Map<String, VisibilityMode> BY_NAME = new HashMap<>();
-
-        /**
-         * This static method populated BY_NAME map.
-         */
-        static
-        {
-            for (VisibilityMode visibility : VisibilityMode.values())
-            {
-                BY_NAME.put(visibility.name(), visibility);
-            }
-        }
-    }
-
-
-    /**
-     * This enum allows to manage Biome Lore message in all GUIs.
-     */
-    public enum Lore
-    {
-        /**
-         * Description String: defined in biomes object - biomeObject.description
-         */
-        DESCRIPTION,
-
-        /**
-         * Original Biome String: defined minecraft biome name and message with reference
-         * 'biomes.gui.biomes-description.biome-name'
-         */
-        ORIGINAL_BIOME,
-
-        /**
-         * Cost of changing biome String: message about biome cost with reference
-         * 'biomes.gui.biomes-description.biome-money'
-         */
-        REQUIRED_MONEY,
-
-        /**
-         * Required level for changing biome String: message about required level with
-         * reference 'biomes.gui.biomes-description.biome-level'
-         */
-        REQUIRED_LEVEL,
-
-        /**
-         * Required permission for changing biome String: message about required permission
-         * with reference 'biomes.gui.biomes-description.biome-permission'
-         */
-        REQUIRED_PERMISSION;
-
-
-        /**
-         * This method returns stored parameter from string.
-         * @param parameter String of object that must be returned
-         * @return CommandParameters object or null.
-         */
-        public static Lore getLore(String parameter)
-        {
-            return BY_NAME.get(parameter);
-        }
-
-
-        /**
-         * This map allows to access all enum values via their string.
-         */
-        private static final Map<String, Lore> BY_NAME = new HashMap<>();
-
-
-        /**
-         * This static method populated BY_NAME map.
-         */
-        static
-        {
-            for (Lore lore : Lore.values())
-            {
-                BY_NAME.put(lore.name(), lore);
-            }
-        }
-    }
-
-
     // ---------------------------------------------------------------------
     // Section: Variables
     // ---------------------------------------------------------------------
 
-
-    @ConfigComment("This indicates if advanced menu will be enabled in Biomes GUI when users choose")
-    @ConfigComment("biome or not. Advanced menu contains extra buttons that allows to choose biome")
-    @ConfigComment("change mode and range.")
-    @ConfigEntry(path = "advanced-menu")
-    private boolean advancedMenu = true;
 
     @ConfigComment("")
     @ConfigComment("For advanced menu this indicate which mode will be active.")
@@ -426,6 +457,7 @@ public class Settings implements ConfigObject
     @ConfigComment("    'CHUNK' - updates biome on whole chunks around player")
     @ConfigComment("    'RANGE' - updates biome by block in given range")
     @ConfigEntry(path = "default-mode")
+    @SuppressWarnings("javadoc")
     private UpdateMode defaultMode = UpdateMode.ISLAND;
 
     @ConfigComment("")
@@ -433,63 +465,103 @@ public class Settings implements ConfigObject
     @ConfigComment("If advanced menu is disabled or in biome set command update range is not set")
     @ConfigComment("then update algorithm will use this value as update range.")
     @ConfigEntry(path = "default-size")
+    @SuppressWarnings("javadoc")
     private int defaultSize = 3;
 
     @ConfigComment("")
     @ConfigComment("This indicates if changing biome will affect whole island or just protection range.")
     @ConfigComment("Allows to fix issues when biome is changed in space between islands.")
     @ConfigEntry(path = "use-protection-range")
+    @SuppressWarnings("javadoc")
     private boolean useProtectionRange = false;
+
+    @ConfigComment("")
+    @ConfigComment("This indicates if all monetary payments should be done via Bank Addon Account.")
+    @ConfigEntry(path = "use-bank-account")
+    @SuppressWarnings("javadoc")
+    private boolean useBankAccount = false;
+
+    @ConfigComment("")
+    @ConfigComment("This indicates that players will be notified about new unlocked biomes.")
+    @ConfigEntry(path = "notify-on-unlock")
+    @SuppressWarnings("javadoc")
+    private boolean notifyUnlockedBiomes = true;
 
     @ConfigComment("")
     @ConfigComment("This indicates if biome on island must be restored to default biome, if")
     @ConfigComment("island changes owner and it does not have biome set ability.")
     @ConfigComment("'true' means that biome will be reset.")
     @ConfigEntry(path = "reset-biomes")
+    @SuppressWarnings("javadoc")
     private boolean resetBiomes = false;
 
     @ConfigComment("")
     @ConfigComment("This indicates cool down in seconds between users can change biomes on their island.")
     @ConfigEntry(path = "cooldown")
+    @SuppressWarnings("javadoc")
     private int coolDown = 60;
 
     @ConfigComment("")
-    @ConfigComment("This indicates tick counter between each background update task.")
-    @ConfigComment("This process load chunks that require biome update and change biome in it.")
-    @ConfigComment("Setting 0 will stop background task and biome will be updated only when loaded.")
-    @ConfigEntry(path = "update-tick-counter", needsRestart = true, since = "1.13.0")
-    private int updateTickCounter = 5;
+    @ConfigComment("Number of minutes in which biome change will be cancelled. It may happen in busy server or")
+    @ConfigComment("huge island areas.")
+    @ConfigComment("Default value = 5")
+    @ConfigEntry(path = "biome-change-timeout")
+    @SuppressWarnings("javadoc")
+    private long changeTimeout = 5;
 
     @ConfigComment("")
-    @ConfigComment("This variable allows to choose which biomes users can see in Biomes GUI.")
-    @ConfigComment("Valid values are:")
-    @ConfigComment("    'ALL' - there will be no hidden biomes. All biomes will be viewable in GUI.")
-    @ConfigComment("    'DEPLOYED' - shows all biomes that are deployed.")
-    @ConfigComment("    'ACCESSIBLE' - only biomes that is unlocked via permission or other unlock type will be visible in GUI.")
-    @ConfigComment("    'TOGGLEABLE' - there will be button in GUI that allows users to switch from ALL to ACCESSIBLE modes.")
-    @ConfigEntry(path = "biomes-visibility")
-    private VisibilityMode visibilityMode = VisibilityMode.DEPLOYED;
+    @ConfigComment("Number of biome changes at the same time. Setting it to 0 or lower will disable biome change")
+    @ConfigComment("completely.")
+    @ConfigComment("Default value = 1")
+    @ConfigEntry(path = "parallel-biome-changes")
+    @SuppressWarnings("javadoc")
+    private int concurrentBiomeUpdates = 1;
+
 
     @ConfigComment("")
-    @ConfigComment("This string allows to change element order in Biomes description. Each letter represents")
-    @ConfigComment("one object from Biomes description. If letter is not used, then its represented part")
-    @ConfigComment("will not be in description. If use any letter that is not recognized, then it will be")
-    @ConfigComment("ignored. Some strings can be customized via lang file under 'biomes.gui.biomes-description'.")
-    @ConfigComment("List of strings and their meaning: ")
-    @ConfigComment(" - DESCRIPTION - description from biomes object")
-    @ConfigComment(" - ORIGINAL_BIOME - defined minecraft biomes name: '*.biome-name'")
-    @ConfigComment(" - REQUIRED_MONEY - requirements for biome change: '*.required-money'")
-    @ConfigComment(" - REQUIRED_LEVEL - requirements for biome change: '*.required-island-level'")
-    @ConfigComment(" - REQUIRED_PERMISSION - requirements for biome change: '*.required-permission'")
-    @ConfigEntry(path = "lore")
-    @Adapter(LoreAdapter.class)
-    private List<Lore> lore = new ArrayList<>();
+    @ConfigComment("Allows toggling if Biomes Addon should refresh chunks, so players could get biome instantly.")
+    @ConfigComment("Otherwise, biome will be updated after chunk is unloaded (player leaves the area).")
+    @ConfigComment("Be aware, not all plugins and clients supports this feature. If you get error after biome")
+    @ConfigComment("updates, please disable this feature.")
+    @ConfigComment("Default value = true")
+    @ConfigEntry(path = "use-chunk-refresh")
+    @SuppressWarnings("javadoc")
+    private boolean useChunkRefresh = true;
 
-    @ConfigComment("")
-    @ConfigComment("This allows to change lore description line length. By default it is 25, but some server")
-    @ConfigComment("owners may like it to be larger.")
-    @ConfigEntry(path = "lore-length")
-    private int loreLineLength = 25;
+    @ConfigComment("Player main sub-command to access the addon.")
+    @ConfigComment("This command label will be required to write after gamemode player command label, f.e. /[label] biomes")
+    @ConfigComment("Each alias must be separated with an empty space.")
+    @ConfigEntry(path = "commands.player.main", needsRestart = true)
+    @SuppressWarnings("javadoc")
+    private String playerCommand = "biomes";
+
+    @ConfigComment("Player set sub-command that allows to set biome with a command.")
+    @ConfigComment("This command label will be required to write after player main command, f.e. /[label] biomes set")
+    @ConfigComment("Each alias must be separated with an empty space.")
+    @ConfigEntry(path = "commands.player.set", needsRestart = true)
+    @SuppressWarnings("javadoc")
+    private String playerSetCommand = "set";
+
+    @ConfigComment("Player buy sub-command that allows to buy biomes with a command.")
+    @ConfigComment("This command label will be required to write after player main command, f.e. /[label] biomes buy")
+    @ConfigComment("Each alias must be separated with an empty space.")
+    @ConfigEntry(path = "commands.player.buy", needsRestart = true)
+    @SuppressWarnings("javadoc")
+    private String playerBuyCommand = "buy";
+
+    @ConfigComment("Player info sub-command that allows to see info about biome with a command.")
+    @ConfigComment("This command label will be required to write after player main command, f.e. /[label] biomes info")
+    @ConfigComment("Each alias must be separated with an empty space.")
+    @ConfigEntry(path = "commands.player.info", needsRestart = true)
+    @SuppressWarnings("javadoc")
+    private String playerInfoCommand = "info";
+
+    @ConfigComment("Admin main sub-command to access the addon.")
+    @ConfigComment("This command label will be required to write after gamemode admin command label, f.e. /[label] biomes")
+    @ConfigComment("Each alias must be separated with an empty space.")
+    @ConfigEntry(path = "commands.admin.main", needsRestart = true)
+    @SuppressWarnings("javadoc")
+    private String adminCommand = "biomes";
 
     @ConfigComment("")
     @ConfigComment("This list stores GameModes in which Biomes addon should not work.")
@@ -497,5 +569,6 @@ public class Settings implements ConfigObject
     @ConfigComment("disabled-gamemodes:")
     @ConfigComment(" - BSkyBlock")
     @ConfigEntry(path = "disabled-gamemodes")
+    @SuppressWarnings("javadoc")
     private Set<String> disabledGameModes = new HashSet<>();
 }

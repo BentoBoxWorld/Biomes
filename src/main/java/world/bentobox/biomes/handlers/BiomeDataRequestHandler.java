@@ -1,3 +1,8 @@
+///
+// Created by BONNe
+// Copyright - 2022
+///
+
 package world.bentobox.biomes.handlers;
 
 
@@ -16,29 +21,28 @@ import world.bentobox.biomes.database.objects.BiomesObject;
 public class BiomeDataRequestHandler extends AddonRequestHandler
 {
 
-	private static final String BIOME_ID = "biomeId";
+    /**
+     * Constructor creates a new BiomeDataRequestHandler instance.
+     *
+     * @param addon of type BiomesAddon
+     */
+    public BiomeDataRequestHandler(BiomesAddon addon)
+    {
+        super("biome-data");
+        this.addon = addon;
+    }
 
 
     /**
-	 * Constructor creates a new BiomeDataRequestHandler instance.
-	 *
-	 * @param addon of type BiomesAddon
-	 */
-	public BiomeDataRequestHandler(BiomesAddon addon)
-	{
-		super("biome-data");
-		this.addon = addon;
-	}
-
-
-	/**
-	 * @param metaData Required meta data.
-	 * @return Map that returns information about biome
-	 * @see AddonRequestHandler#handle(Map &lt;String, Object&gt;)
-	 */
-	@Override
-	public Object handle(Map<String, Object> metaData)
-	{
+     * Handle object.
+     *
+     * @param metaData Required meta data.
+     * @return Map that returns information about biome
+     * @see AddonRequestHandler#handle(Map AddonRequestHandler#handle(MapltString,Objectgt)
+     */
+    @Override
+    public Object handle(Map<String, Object> metaData)
+    {
 		/*
             What we need in the metaData:
 				0. "biomeId" -> String
@@ -61,54 +65,58 @@ public class BiomeDataRequestHandler extends AddonRequestHandler
 			 		- permissions: Set of strings that represents required permissions.
          */
 
-		if (metaData == null ||
-			metaData.isEmpty() ||
-			metaData.get(BIOME_ID) == null ||
-			!(metaData.get(BIOME_ID) instanceof String))
-		{
-			return Collections.emptyMap();
-		}
+        if (metaData == null ||
+            metaData.isEmpty() ||
+            metaData.get(BIOME_ID) == null ||
+            !(metaData.get(BIOME_ID) instanceof String))
+        {
+            return Collections.emptyMap();
+        }
 
-		BiomesObject biome =
-			this.addon.getAddonManager().getBiomeFromString((String) metaData.get(BIOME_ID));
+        BiomesObject biome =
+            this.addon.getAddonManager().getBiomeByID((String) metaData.get(BIOME_ID));
 
-		Map<String, Object> biomesDataMap;
+        Map<String, Object> biomesDataMap;
 
-		if (biome == null)
-		{
-			biomesDataMap = Collections.emptyMap();
-		}
-		else
-		{
-			biomesDataMap = new HashMap<>();
+        if (biome == null)
+        {
+            biomesDataMap = Collections.emptyMap();
+        }
+        else
+        {
+            biomesDataMap = new HashMap<>();
 
-			biomesDataMap.put("uniqueId", biome.getUniqueId());
-			biomesDataMap.put("world", biome.getWorld());
-			biomesDataMap.put("biome", biome.getBiome().name());
+            biomesDataMap.put("uniqueId", biome.getUniqueId());
+            biomesDataMap.put("biome", biome.getBiome().name());
 
-			biomesDataMap.put("name", biome.getFriendlyName());
-			biomesDataMap.put("description", biome.getDescription());
-			biomesDataMap.put("deployed", biome.isDeployed());
+            biomesDataMap.put("name", biome.getFriendlyName());
+            biomesDataMap.put("description", biome.getDescription());
+            biomesDataMap.put("deployed", biome.isDeployed());
 
-			biomesDataMap.put("icon", biome.getIcon());
-			biomesDataMap.put("order", biome.getOrder());
+            biomesDataMap.put("icon", biome.getIcon());
+            biomesDataMap.put("order", biome.getOrder());
 
-			biomesDataMap.put("cost", biome.getRequiredCost());
-			biomesDataMap.put("level", biome.getRequiredLevel());
-			biomesDataMap.put("permissions", biome.getRequiredPermissions());
-		}
+            biomesDataMap.put("cost", biome.getUnlockCost());
+            biomesDataMap.put("level", biome.getUnlockLevel());
+            biomesDataMap.put("permissions", biome.getUnlockPermissions());
+        }
 
-		return biomesDataMap;
-	}
+        return biomesDataMap;
+    }
+
+
+    /**
+     * Variable stores biomes addon.
+     */
+    private final BiomesAddon addon;
 
 
 // ---------------------------------------------------------------------
 // Section: Variables
 // ---------------------------------------------------------------------
 
-
-	/**
-	 * Variable stores biomes addon.
-	 */
-	private BiomesAddon addon;
+    /**
+     * The constant BIOME_ID.
+     */
+    private static final String BIOME_ID = "biomeId";
 }

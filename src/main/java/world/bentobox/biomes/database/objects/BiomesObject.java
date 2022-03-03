@@ -1,23 +1,30 @@
+///
+// Created by BONNe
+// Copyright - 2022
+///
+
 package world.bentobox.biomes.database.objects;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.google.gson.annotations.Expose;
 
-import world.bentobox.bentobox.api.configuration.ConfigComment;
 import world.bentobox.bentobox.database.objects.DataObject;
 import world.bentobox.bentobox.database.objects.Table;
-import world.bentobox.biomes.utils.Utils;
 
 
 /**
@@ -35,25 +42,14 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
     }
 
 
-    /**
-     * Default constructor.
-     */
-    public BiomesObject(Biome biome, World world)
-    {
-        this.biome = biome;
-        this.world = world.getName();
-        this.friendlyName = biome.name();
-        this.setUniqueId(Utils.getGameMode(world) + "_" + this.biome.toString().toLowerCase());
-    }
-
-
-    // ---------------------------------------------------------------------
-    // Section: Setters and Getters
-    // ---------------------------------------------------------------------
+// ---------------------------------------------------------------------
+// Section: Setters and Getters
+// ---------------------------------------------------------------------
 
 
     /**
      * This method returns biomes name.
+     *
      * @return Biomes name.
      */
     public Biome getBiome()
@@ -64,6 +60,7 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
 
     /**
      * This method sets biomes name.
+     *
      * @param biome Biomes name.
      */
     public void setBiome(Biome biome)
@@ -147,55 +144,36 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
     /**
      * @return the reqIslandlevel
      */
-    public long getRequiredLevel()
+    public long getUnlockLevel()
     {
-        return this.requiredLevel;
+        return this.unlockLevel == null ? 0 : this.unlockLevel;
     }
 
 
     /**
-     * @param requiredLevel the requiredLevel to set
+     * @param unlockLevel the requiredLevel to set
      */
-    public void setRequiredLevel(long requiredLevel)
+    public void setUnlockLevel(@Nullable Long unlockLevel)
     {
-        this.requiredLevel = requiredLevel;
+        this.unlockLevel = unlockLevel;
     }
 
 
     /**
      * @return the cost of changing biome
      */
-    public double getRequiredCost()
+    public double getCost()
     {
-        return this.requiredCost;
+        return this.cost == null ? 0 : this.cost;
     }
 
 
     /**
-     * @param requiredCost the reqMoney to set
+     * @param cost the reqMoney to set
      */
-    public void setRequiredCost(double requiredCost)
+    public void setCost(@Nullable Double cost)
     {
-        this.requiredCost = requiredCost;
-    }
-
-
-    /**
-     *
-     * @return world in which biome operates
-     */
-    public String getWorld()
-    {
-        return this.world;
-    }
-
-
-    /**
-     * @param world where biome must operate.
-     */
-    public void setWorld(String world)
-    {
-        this.world = world;
+        this.cost = cost;
     }
 
 
@@ -221,6 +199,7 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
 
     /**
      * This method returns the order object.
+     *
      * @return the order object.
      */
     public int getOrder()
@@ -231,8 +210,8 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
 
     /**
      * This method sets the order object value.
-     * @param order the order object new value.
      *
+     * @param order the order object new value.
      */
     public void setOrder(int order)
     {
@@ -242,27 +221,30 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
 
     /**
      * This method returns the permissions object.
+     *
      * @return the permissions object.
      */
-    public Set<String> getRequiredPermissions()
+    @NotNull
+    public Set<String> getUnlockPermissions()
     {
-        return requiredPermissions;
+        return this.unlockPermissions == null ? Collections.emptySet() : this.unlockPermissions;
     }
 
 
     /**
      * This method sets the permissions object value.
-     * @param requiredPermissions the permissions object new value.
      *
+     * @param unlockPermissions the permissions object new value.
      */
-    public void setRequiredPermissions(Set<String> requiredPermissions)
+    public void setUnlockPermissions(@Nullable Set<String> unlockPermissions)
     {
-        this.requiredPermissions = requiredPermissions;
+        this.unlockPermissions = unlockPermissions;
     }
 
 
     /**
      * This method returns the environment value.
+     *
      * @return the value of environment.
      */
     public World.Environment getEnvironment()
@@ -273,8 +255,8 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
 
     /**
      * This method sets the environment value.
-     * @param environment the environment new value.
      *
+     * @param environment the environment new value.
      */
     public void setEnvironment(World.Environment environment)
     {
@@ -282,9 +264,202 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
     }
 
 
-    // ---------------------------------------------------------------------
-    // Section: Other methods
-    // ---------------------------------------------------------------------
+    /**
+     * Gets unlock cost.
+     *
+     * @return the unlock cost
+     */
+    public double getUnlockCost()
+    {
+        return this.unlockCost == null ? 0 : this.unlockCost;
+    }
+
+
+    /**
+     * Sets unlock cost.
+     *
+     * @param unlockCost the unlock cost
+     */
+    public void setUnlockCost(@Nullable Double unlockCost)
+    {
+        this.unlockCost = unlockCost;
+    }
+
+
+    /**
+     * Gets unlock items.
+     *
+     * @return the unlock items
+     */
+    @NotNull
+    public List<ItemStack> getUnlockItems()
+    {
+        return this.unlockItems == null ? Collections.emptyList() : this.unlockItems;
+    }
+
+
+    /**
+     * Sets unlock items.
+     *
+     * @param unlockItems the unlock items
+     */
+    public void setUnlockItems(@Nullable List<ItemStack> unlockItems)
+    {
+        this.unlockItems = unlockItems;
+    }
+
+
+    /**
+     * Gets change item cost.
+     *
+     * @return the change item cost
+     */
+    @NotNull
+    public List<ItemStack> getItemCost()
+    {
+        return this.itemCost == null ? Collections.emptyList() : this.itemCost;
+    }
+
+
+    /**
+     * Sets change item cost.
+     *
+     * @param itemCost the change item cost
+     */
+    public void setItemCost(@Nullable List<ItemStack> itemCost)
+    {
+        this.itemCost = itemCost;
+    }
+
+
+    /**
+     * Gets cost mode.
+     *
+     * @return the cost mode
+     */
+    @NotNull
+    public CostMode getCostMode()
+    {
+        return costMode;
+    }
+
+
+    /**
+     * Sets cost mode.
+     *
+     * @param costMode the cost mode
+     */
+    public void setCostMode(@NotNull CostMode costMode)
+    {
+        this.costMode = costMode;
+    }
+
+
+    /**
+     * Gets cost increment.
+     *
+     * @return the cost increment
+     */
+    public double getCostIncrement()
+    {
+        return costIncrement == null ? 0 : this.costIncrement;
+    }
+
+
+    /**
+     * Sets cost increment.
+     *
+     * @param costIncrement the cost increment
+     */
+    public void setCostIncrement(@Nullable Double costIncrement)
+    {
+        this.costIncrement = costIncrement;
+    }
+
+
+// ---------------------------------------------------------------------
+// Section: Deprecated fields
+// ---------------------------------------------------------------------
+
+
+    /**
+     * Gets required level.
+     *
+     * @return the required level
+     */
+    @Nullable
+    @Deprecated
+    public Long getRequiredLevel()
+    {
+        return requiredLevel;
+    }
+
+
+    /**
+     * Sets required level.
+     *
+     * @param requiredLevel the required level
+     */
+    @Deprecated
+    public void setRequiredLevel(@Nullable Long requiredLevel)
+    {
+        this.requiredLevel = requiredLevel;
+    }
+
+
+    /**
+     * Gets required cost.
+     *
+     * @return the required cost
+     */
+    @Nullable
+    @Deprecated
+    public Double getRequiredCost()
+    {
+        return requiredCost;
+    }
+
+
+    /**
+     * Sets required cost.
+     *
+     * @param requiredCost the required cost
+     */
+    @Deprecated
+    public void setRequiredCost(@Nullable Double requiredCost)
+    {
+        this.requiredCost = requiredCost;
+    }
+
+
+    /**
+     * Gets required permissions.
+     *
+     * @return the required permissions
+     */
+    @Nullable
+    @Deprecated
+    public Set<String> getRequiredPermissions()
+    {
+        return requiredPermissions;
+    }
+
+
+    /**
+     * Sets required permissions.
+     *
+     * @param requiredPermissions the required permissions
+     */
+    @Deprecated
+    public void setRequiredPermissions(@Nullable Set<String> requiredPermissions)
+    {
+        this.requiredPermissions = requiredPermissions;
+    }
+
+
+// ---------------------------------------------------------------------
+// Section: Other methods
+// ---------------------------------------------------------------------
 
 
     /*
@@ -310,12 +485,10 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
             return true;
         }
 
-        if (!(obj instanceof BiomesObject))
+        if (!(obj instanceof BiomesObject other))
         {
             return false;
         }
-
-        BiomesObject other = (BiomesObject) obj;
 
         if (this.uniqueId == null && other.getUniqueId() == null)
         {
@@ -337,71 +510,248 @@ public class BiomesObject implements DataObject, Comparable<BiomesObject>
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public int compareTo(BiomesObject object)
+    public int compareTo(@NotNull BiomesObject object)
     {
         // Compare by order
         return Comparator.comparingInt(BiomesObject::getOrder).
             // Compare by environment
-            thenComparing(BiomesObject::getEnvironment).
+                thenComparing(BiomesObject::getEnvironment).
             // compare by biome
-            thenComparing(BiomesObject::getBiome).
+                thenComparing(BiomesObject::getBiome).
             // compare by friendly name
-            thenComparing(BiomesObject::getFriendlyName).
+                thenComparing(BiomesObject::getFriendlyName).
             // Provide objects
-            compare(this, object);
+                compare(this, object);
+    }
+
+
+    /**
+     * This method checks if this object is valid.
+     *
+     * @return {@code true} if biome is valid, {@code false} otherwise.
+     */
+    public boolean isValid()
+    {
+        return this.biome != null;
+    }
+
+
+    /**
+     * Copy biomes object.
+     *
+     * @return the biomes object
+     */
+    public BiomesObject copy()
+    {
+        BiomesObject object = new BiomesObject();
+        object.setBiome(this.biome);
+        object.setDeployed(this.deployed);
+        object.setFriendlyName(this.friendlyName);
+        object.setDescription(new ArrayList<>(this.description));
+        object.setIcon(this.icon.clone());
+        object.setOrder(this.order);
+
+        object.setEnvironment(this.environment);
+        object.setUniqueId(this.uniqueId);
+
+        object.setUnlockLevel(this.unlockLevel);
+        object.setUnlockCost(this.unlockCost);
+
+        if (this.unlockPermissions != null && !this.unlockPermissions.isEmpty())
+        {
+            object.setUnlockPermissions(new HashSet<>(this.unlockPermissions));
+        }
+
+        if (this.unlockItems != null && !this.unlockItems.isEmpty())
+        {
+            object.setUnlockItems(this.unlockItems.stream().map(ItemStack::clone).collect(Collectors.toList()));
+        }
+
+        object.setCost(this.cost);
+
+        if (this.itemCost != null && !this.itemCost.isEmpty())
+        {
+            object.setItemCost(this.itemCost.stream().map(ItemStack::clone).collect(Collectors.toList()));
+        }
+
+        object.setCostMode(this.costMode);
+        object.setCostIncrement(this.costIncrement);
+
+        return object;
     }
 
 
     // ---------------------------------------------------------------------
-    // Section: Variables
+    // Section: Classes
     // ---------------------------------------------------------------------
 
 
-    @ConfigComment("Official minecraft biome name.")
+    /**
+     * The enum Cost mode.
+     */
+    public enum CostMode
+    {
+        /**
+         * Per block cost mode.
+         */
+        PER_BLOCK,
+        /**
+         * Per usage cost mode.
+         */
+        PER_USAGE,
+        /**
+         * Static cost mode.
+         */
+        STATIC
+    }
+
+
+// ---------------------------------------------------------------------
+// Section: Variables
+// ---------------------------------------------------------------------
+
+
+    /**
+     * The Biome.
+     */
     @Expose
     private Biome biome;
 
-    @ConfigComment("Whether this biome is deployed or not")
+    /**
+     * The Deployed.
+     */
     @Expose
     private boolean deployed;
 
-    @ConfigComment("Name of the icon and biomes. May include color codes. Single line.")
+    /**
+     * The Friendly name.
+     */
     @Expose
     private String friendlyName = "";
 
-    @ConfigComment("Description of the biomes. Will become the lore on the icon. Can include & color codes. String List.")
+    /**
+     * The Description.
+     */
     @Expose
     private List<String> description = new ArrayList<>();
 
-    @ConfigComment("The icon in the GUI for this biome. ItemStack.")
+    /**
+     * The Icon.
+     */
     @Expose
     private ItemStack icon = new ItemStack(Material.PAPER);
 
-    @ConfigComment("Order of biome. Biomes will be ordered in ascending order.")
+    /**
+     * The Order.
+     */
     @Expose
     private int order = -1;
 
-    @ConfigComment("Required island level for this biome. Only works if Level Addon is being used.")
-    @Expose
-    private long requiredLevel;
-
-    @ConfigComment("Cost of changing biome.")
-    @Expose
-    private double requiredCost;
-
-    @ConfigComment("Set of String permission that is required for this biome to be activated.")
-    @Expose
-    private Set<String> requiredPermissions = new HashSet<>();
-
-    @ConfigComment("World where this biome operates. List only NORMAL. NETHER and THE_END are automatically covered.")
-    @Expose
-    private String world;
-
-    @ConfigComment("Allows to specify environment for biome. This allows to split overworld, nether and the end biomes.")
+    /**
+     * The Environment.
+     */
     @Expose
     private World.Environment environment;
 
-    @ConfigComment("Unique StringName of the biome")
+    /**
+     * The Unique id.
+     */
     @Expose
     private String uniqueId;
+
+    // ---------------------------------------------------------------------
+    // Section: Unlock/Purchase Cost
+    // ---------------------------------------------------------------------
+
+    /**
+     * The Required level.
+     */
+    @Expose
+    @Nullable
+    private Long unlockLevel = null;
+
+    /**
+     * The Unlock cost.
+     */
+    @Expose
+    @Nullable
+    private Double unlockCost = null;
+
+    /**
+     * The Unlock items.
+     */
+    @Expose
+    @Nullable
+    private List<ItemStack> unlockItems = null;
+
+    /**
+     * The Required permissions.
+     */
+    @Expose
+    @Nullable
+    private Set<String> unlockPermissions = null;
+
+    // ---------------------------------------------------------------------
+    // Section: Change Cost
+    // ---------------------------------------------------------------------
+
+    /**
+     * The Change cost.
+     */
+    @Expose
+    @Nullable
+    private Double cost = null;
+
+    /**
+     * The Change item cost.
+     */
+    @Expose
+    @Nullable
+    private List<ItemStack> itemCost = null;
+
+    /**
+     * The Cost mode.
+     */
+    @Expose
+    @NotNull
+    private CostMode costMode = CostMode.STATIC;
+
+    /**
+     * The Cost increment.
+     */
+    @Expose
+    @Nullable
+    private Double costIncrement = null;
+
+
+// ---------------------------------------------------------------------
+// Section: Deprecated fields
+// ---------------------------------------------------------------------
+
+    /**
+     * Deprecated field. Used for migration to the new system.
+     * @deprecated 2.0.0
+     */
+    @Expose
+    @Nullable
+    @Deprecated
+    private Long requiredLevel;
+
+    /**
+     * Deprecated field. Used for migration to the new system.
+     * @deprecated 2.0.0
+     */
+    @Expose
+    @Nullable
+    @Deprecated
+    private Double requiredCost;
+
+    /**
+     * Deprecated field. Used for migration to the new system.
+     * @deprecated 2.0.0
+     */
+    @Expose
+    @Nullable
+    @Deprecated
+    private Set<String> requiredPermissions;
 }

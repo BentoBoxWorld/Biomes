@@ -6,51 +6,47 @@
 package world.bentobox.biomes.events;
 
 
-import java.util.UUID;
-
 import org.bukkit.block.Biome;
 import org.bukkit.event.HandlerList;
 import org.bukkit.util.BlockVector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import java.util.UUID;
 
 import world.bentobox.bentobox.api.events.BentoBoxEvent;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.objects.Island;
 import world.bentobox.biomes.database.objects.BiomesObject;
-import world.bentobox.biomes.tasks.UpdateQueue;
 
 
 /**
- * This event is fired when player changed biome. It is just informative and is fired when everything is done already.
+ * This event is fired before player changed biome. It is just informative and is fired when everything is done
+ * already.
  */
-public class BiomeChangedEvent extends BentoBoxEvent
+public class BiomePreChangeEvent extends BentoBoxEvent
 {
     /**
-     * Instantiates a new Biome changed event.
+     * Instantiates a new Biome pre change event.
      *
      * @param biome the biome
      * @param user the user
      * @param island the island
      * @param minCoordinate the min coordinate
      * @param maxCoordinate the max coordinate
-     * @param result the result
      */
-    public BiomeChangedEvent(
+    public BiomePreChangeEvent(
         @NotNull BiomesObject biome,
         @Nullable User user,
         @NotNull Island island,
         @NotNull BlockVector minCoordinate,
-        @NotNull BlockVector maxCoordinate,
-        @Nullable UpdateQueue.Result result)
+        @NotNull BlockVector maxCoordinate)
     {
         this.biomesObject = biome;
         this.user = user;
         this.island = island;
+
         this.minCoordinate = minCoordinate;
         this.maxCoordinate = maxCoordinate;
-
-        this.result = result;
     }
 
 
@@ -229,30 +225,6 @@ public class BiomeChangedEvent extends BentoBoxEvent
     }
 
 
-    /**
-     * Gets result.
-     *
-     * @return the result
-     */
-    @Nullable
-    public UpdateQueue.Result getResult()
-    {
-        return this.result;
-    }
-
-
-    /**
-     * Gets result name.
-     *
-     * @return the result name
-     */
-    @Nullable
-    public String getResultName()
-    {
-        return this.result == null ? null : this.result.name();
-    }
-
-
 // ---------------------------------------------------------------------
 // Section: Handler methods
 // ---------------------------------------------------------------------
@@ -266,7 +238,7 @@ public class BiomeChangedEvent extends BentoBoxEvent
     @Override
     public HandlerList getHandlers()
     {
-        return BiomeChangedEvent.handlers;
+        return BiomePreChangeEvent.handlers;
     }
 
 
@@ -277,7 +249,7 @@ public class BiomeChangedEvent extends BentoBoxEvent
      */
     public static HandlerList getHandlerList()
     {
-        return BiomeChangedEvent.handlers;
+        return BiomePreChangeEvent.handlers;
     }
 
 
@@ -314,12 +286,6 @@ public class BiomeChangedEvent extends BentoBoxEvent
      */
     @NotNull
     private final BlockVector maxCoordinate;
-
-    /**
-     * The result.
-     */
-    @Nullable
-    private final UpdateQueue.Result result;
 
     /**
      * Event listener list for current
