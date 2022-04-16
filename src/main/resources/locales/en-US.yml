@@ -814,6 +814,10 @@ biomes:
     confirm-island-data-deletion: "&e Please confirm that you want to remove [player] island data."
     # Message that appears when admin removed island data.
     island-data-removed: "[player] &a island data is removed."
+    # Message that appears when admin tries to delete biome.
+    confirm-biome-data-deletion: "&e Please confirm that you want to remove all biomes from [gamemode]."
+    # Message that appears when admin removed biome.
+    biome-data-removed: "All biomes are removed from [gamemode]."
     # Message that appears when user unlocks new biome and need to buy it.
     click-text-to-purchase: "&e You have unlocked &r [biome]&r&e! Click here to buy it."
     # Message that appears when user unlocks new biome and can already use it.
