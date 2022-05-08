@@ -237,7 +237,11 @@ public class BiomesAddon extends Addon
     {
         if (this.hooked)
         {
-            this.biomeUpdateQueue.getTask().cancel();
+            if (this.biomeUpdateQueue != null)
+            {
+                this.biomeUpdateQueue.getTask().cancel();
+            }
+
             this.getLogger().info("Biomes addon disabled.");
         }
     }
