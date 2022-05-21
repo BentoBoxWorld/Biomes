@@ -7,7 +7,9 @@ biomes:
         parameters: "[overwrite]"
         description: 你可以通过该指令导入biomes.yml文件中的地形设置
       migrate: {}
-      set: {}
+      set:
+        description: 你可以通过该指令修改玩家 <player> 的岛屿地形. <type> 和 <size> 可以选择不输入.
+        parameters: "<player> <biome-id> [type] [size]"
       unlock: {}
     player:
       main: {}
@@ -15,21 +17,32 @@ biomes:
       buy: {}
       info: {}
   gui:
-    titles: {}
+    titles:
+      edit-biome: "&0&l 编辑生物群系：[biome]"
+      edit-bundle: "&0&l 编辑包：[bundle]"
+      edit-island: "&0&l 编辑岛：[island]"
     buttons:
       island: {}
       chunk: {}
       range: {}
-      reduce: {}
-      increase: {}
-      accept: {}
+      reduce:
+        description: "&7 减少 &e [number]"
+      increase:
+        description: "&7 增加 &e [number]"
+      accept:
+        description: |-
+          &7 将生物群系更改为 &e [生物群系]
+
+          &7 更新模式：&e [mode]
+          &7 更新范围：&e [number]
       return: {}
       previous: {}
       next: {}
       quit: {}
       save: {}
       cancel: {}
-      search: {}
+      search:
+        search: "&b 值：[vaule]"
       buy: {}
       manage_islands: {}
       manage_biomes: {}
@@ -42,44 +55,81 @@ biomes:
       wipe_islands_data: {}
       wipe_biomes_data: {}
       add_biome: {}
-      remove_biome: {}
-      accept_selected: {}
-      environment_element: {}
+      remove_biome:
+        value: "&e - [biome]"
+      accept_selected:
+        element: "&e - [element]"
+      environment_element:
+        name: "&f&l [environment]"
+        description: "&7 [description]."
       properties: {}
       change_properties: {}
       unlock_properties: {}
-      biome: {}
-      name: {}
+      biome:
+        name: "&f&l [biome]"
+        description: "&7 Minecraft 生物群系类型."
+      name:
+        value: "&7 当前值：&r [number]"
       deployed: {}
       environment: {}
       icon: {}
-      order: {}
+      order:
+        value: "&7 当前订单：&e [number]"
       description: {}
-      unlock_permissions: {}
-      unlock_cost: {}
-      unlock_items: {}
-      unlock_level: {}
-      change_cost: {}
-      change_items: {}
+      unlock_permissions:
+        element: " &8 - [permission]"
+      unlock_cost:
+        value: "&7 当前成本：&e $[number]"
+      unlock_items:
+        element: " &8 - [number]x[item]"
+      unlock_level:
+        value: "&7 当前级别：&e [number]"
+      change_cost:
+        value: "&7 当前价格：&e $[number]"
+      change_items:
+        element: " &8 - [number]x[item]"
       change_type:
+        name: "&f&l [type]"
         static: {}
         per_block: {}
         per_usage: {}
-      change_increment: {}
-      biome-filter: {}
+      change_increment:
+        value: "&7 当前值：&e [number]"
+      biome-filter:
+        name: "&f&l [filter]"
+        description: |-
+          &7 基于生物群落过滤器
+          &7 在 Minecraft Wiki 上.
       protection_range: {}
       reset: {}
       cool_down: {}
       default_size: {}
       default_mode: {}
       unlock_notify: {}
-      change_timeout: {}
-      parallel_updates: {}
+      change_timeout:
+        value: "&7 预计时间：&e [number] 分钟"
+      parallel_updates:
+        value: "&7 当前值：&e[number]&7."
       use_bank: {}
       visibility: {}
-      is_online: {}
-      all_islands: {}
-      island_name: {}
+      is_online:
+        description: |-
+          &7 列出所有岛屿
+          &7 任何成员在线.
+      all_islands:
+        description: |-
+          &7 所有岛屿列表
+          &7 创建于
+          &7 当前游戏模式.
+      island_name:
+        name: "&f&l [name]"
+        island-owner: "[player]"
+        description: |-
+          [owner]
+          [members]
+          [id]
+        owner: "&7 所有者：&e [player]"
+        title: "&7 岛屿成员："
       change_biome: {}
       manage_data: {}
       clear_data: {}
@@ -88,14 +138,19 @@ biomes:
       reset_to_default: {}
       bundle_info: {}
       bundle_biomes: {}
-      bundle_name: {}
+      bundle_name:
+        value: "&e 当前值：&r [bundle]"
       bundle_icon: {}
       bundle_description: {}
-      bundle_permission: {}
-      add_bundle_biome: {}
-      remove_bundle_biome: {}
+      bundle_permission:
+        value: "&e 权限：&f [gamemode].biomes.bundle.[id]"
+      add_bundle_biome:
+        value: "&b - [biome]"
+      remove_bundle_biome:
+        value: "&b - [biome]"
       create_bundle: {}
-      delete_bundle: {}
+      delete_bundle:
+        value: "&b - [bundle]"
       download: {}
     tips: {}
     descriptions:
@@ -103,6 +158,7 @@ biomes:
         island: 岛屿
         chunk: 区块
         range: 范围
+      island-owner: "[player]"
       biome:
         unlock: {}
         change:
