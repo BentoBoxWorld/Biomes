@@ -1,0 +1,149 @@
+---
+biomes:
+  commands:
+    admin:
+      main: {}
+      import:
+        parameters: "[overwrite]"
+        description: 你可以通过该指令导入biomes.yml文件中的地形设置
+      migrate: {}
+      set: {}
+      unlock: {}
+    player:
+      main: {}
+      set: {}
+      buy: {}
+      info: {}
+  gui:
+    titles: {}
+    buttons:
+      island: {}
+      chunk: {}
+      range: {}
+      reduce: {}
+      increase: {}
+      accept: {}
+      return: {}
+      previous: {}
+      next: {}
+      quit: {}
+      save: {}
+      cancel: {}
+      search: {}
+      buy: {}
+      manage_islands: {}
+      manage_biomes: {}
+      manage_bundles: {}
+      settings: {}
+      import_template: {}
+      web_library: {}
+      export_from_database: {}
+      import_to_database: {}
+      wipe_islands_data: {}
+      wipe_biomes_data: {}
+      add_biome: {}
+      remove_biome: {}
+      accept_selected: {}
+      environment_element: {}
+      properties: {}
+      change_properties: {}
+      unlock_properties: {}
+      biome: {}
+      name: {}
+      deployed: {}
+      environment: {}
+      icon: {}
+      order: {}
+      description: {}
+      unlock_permissions: {}
+      unlock_cost: {}
+      unlock_items: {}
+      unlock_level: {}
+      change_cost: {}
+      change_items: {}
+      change_type:
+        static: {}
+        per_block: {}
+        per_usage: {}
+      change_increment: {}
+      biome-filter: {}
+      protection_range: {}
+      reset: {}
+      cool_down: {}
+      default_size: {}
+      default_mode: {}
+      unlock_notify: {}
+      change_timeout: {}
+      parallel_updates: {}
+      use_bank: {}
+      visibility: {}
+      is_online: {}
+      all_islands: {}
+      island_name: {}
+      change_biome: {}
+      manage_data: {}
+      clear_data: {}
+      island_bundle: {}
+      owner_bundle: {}
+      reset_to_default: {}
+      bundle_info: {}
+      bundle_biomes: {}
+      bundle_name: {}
+      bundle_icon: {}
+      bundle_description: {}
+      bundle_permission: {}
+      add_bundle_biome: {}
+      remove_bundle_biome: {}
+      create_bundle: {}
+      delete_bundle: {}
+      download: {}
+    tips: {}
+    descriptions:
+      update-mode:
+        island: 岛屿
+        chunk: 区块
+        range: 范围
+      biome:
+        unlock: {}
+        change:
+          mode: {}
+      bundle: {}
+      library: {}
+      admin:
+        input-mode: 在聊天和铁砧输入模式之间切换。
+  conversations: {}
+  messages:
+    import-count: 岛屿地形导入结束. 成功导入 [number] 个地形.
+    update-start: "&e地形更新开始..."
+    update-done: "&6[biome]&r&e 成功更新"
+    skipping: 跳过[biome] 导入.
+    overwriting: 覆盖 [biome].
+    imported: "[biome] 成功岛屿."
+  errors:
+    no-biomes-admin: "&c该世界不允许使用地形! 你需要使用 &5/[command] &c加入地形!"
+    no-biomes: "&c该世界不允许使用地形"
+    no-rank: "&c你没有足够等级做到这一点"
+    not-enough-level: "&c你的岛屿等级过低，修改该地形需要岛屿等级为 [number]"
+    not-enough-money: "&c你没有足够的金钱，修改该地形需要金钱 $[number]"
+    admin-not-on-island: "&c你不在 [user] 的岛上."
+    incorrect-object: "&c无法找到具体给定ID的地形 &d'[biome]'."
+    missing-biome: "&c地形未定义"
+    incorrect-mode: "&c给定的值 &d'[mode]'&c 无效. 有效值必须为 'ISLAND', 'CHUNK' 或者 'SQUARE'."
+    incorrect-range: "&c给定的数字 &d'[number]'&c 无效. 该数字必须是整数."
+    no-file: "&c无法找到biomes.yml"
+    no-load: "&c导入地形时出现错误: [message]!"
+protection:
+  flags:
+    BIOMES_ISLAND_PROTECTION:
+      name: 地形保护
+      description: |-
+        &5&o切换到谁可以
+        &5&o改变岛屿地形
+    BIOMES_WORLD_PROTECTION:
+      name: 地形限制
+      description: |-
+        &5&o这将允许/禁止
+        &5&o玩家在岛屿
+        &5&o修改地形
+        &5&o的需求.
+      hint: 岛外不允许改变岛屿地形！
