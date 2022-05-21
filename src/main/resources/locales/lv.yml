@@ -1,40 +1,40 @@
+---
 biomes:
   commands:
-    # This section contains only admin commands translations.
     admin:
       main:
-        description: "galvenā biomu kommanda"
+        description: galvenā biomu kommanda
       import:
         parameters: "<file>"
-        description: "ielādēt biomus"
-        confirmation: "Šis process dzēsīs visus eksistējošos biomus no [gamemode] un ielādēs jaunus no parauga faila - lūdzu apstiprini"
+        description: ielādēt biomus
+        confirmation: Šis process dzēsīs visus eksistējošos biomus no [gamemode] un
+          ielādēs jaunus no parauga faila - lūdzu apstiprini
       migrate:
-        description: "migrēt biomu saglabātos datus uz jauno formātu"
+        description: migrēt biomu saglabātos datus uz jauno formātu
       set:
-        description: "mainīt biomu uz spēlētāja salas"
+        description: mainīt biomu uz spēlētāja salas
         parameters: "<spēlētājs> <bioma-id> [mode] [izmērs]"
       unlock:
-        description: "atver biomu priekš spēlētāja nepārbaudot prasības. Pievienojot `true` beigās, uzstādīs to kā nopirktu."
+        description: atver biomu priekš spēlētāja nepārbaudot prasības. Pievienojot
+          `true` beigās, uzstādīs to kā nopirktu.
         parameters: "<spēlētājs> <bioma-id> [true]"
-    # This section contains only player commands translations.
     player:
       main:
-        description: "atver biomu izvēlni"
+        description: atver biomu izvēlni
       set:
-        description: "maina biomu"
+        description: maina biomu
         parameters: "<bioma-id> [mode] [izmērs]"
       buy:
-        description: "nopērk biomu"
+        description: nopērk biomu
         parameters: "<bioma-id>"
       info:
-        description: "nosūta detalizētu informāciju par biomu"
+        description: nosūta detalizētu informāciju par biomu
         parameters: "<bioma-id>"
   gui:
     titles:
       player-panel: "&0&l Izvēlies Biomu"
       buy-panel: "&0&l Nopirkt Biomu"
       advanced-panel: "&0&l Izvēlies Veidu"
-      # All Titles Below this comment is for Admin Menus.
       admin-panel: "&0&l Administratora Izvēlne"
       settings: "&0&l Iestatījumi"
       library: "&0&l Bibliotēka"
@@ -61,19 +61,13 @@ biomes:
           &7 (čunkam).
       range:
         name: "&f&l Attālums"
-        description: |-
-          &7 Mainīt biomu attālumā.
-      # Button that allows to reduce number
+        description: "&7 Mainīt biomu attālumā."
       reduce:
         name: "&f&l Samazināt"
-        description: |-
-          &7 Samazināt par &e [number]
-      # Button that allows to increase number
+        description: "&7 Samazināt par &e [number]"
       increase:
         name: "&f&l Palielināt"
-        description: |-
-          &7 Palielināt par &e [number]
-      # Button that displays and allows completing challenge
+        description: "&7 Palielināt par &e [number]"
       accept:
         name: "&f&l Mainīt Biomu"
         description: |-
@@ -81,50 +75,35 @@ biomes:
 
           &7 Uzstādīšanas mode: [mode]
           &7 Uzstādīšanas attālums: [number]
-      # Button that is used to return to previous GUI or exit it completely.
       return:
         name: "&f&l Atpakaļ"
         description: |-
           &7 Atgriezties uz iepriekšējo
           &7 izvēlni.
-      # Button that is used in multi-page GUIs which allows to return to previous page.
       previous:
         name: "&f&l Iepriekšējā Lapa"
-        description: |-
-          &7 Atgriezties uz &e [number] &7 lapu.
-      # Button that is used in multi-page GUIs which allows to go to next page.
+        description: "&7 Atgriezties uz &e [number] &7 lapu."
       next:
         name: "&f&l Nākošā Lapa"
-        description: |-
-          &7 Iet uz &e [number] &7 lapu.
-      # Button that allows to quit the current gui.
+        description: "&7 Iet uz &e [number] &7 lapu."
       quit:
         name: "&f&l Iziet"
-        description: |-
-          &7 Iziet no izvēlnes.
-      # Button that allows to save the changes.
+        description: "&7 Iziet no izvēlnes."
       save:
         name: "&f&l Saglabāt"
-        description: |-
-          &7 Saglabāt un atgriezties.
-      # Button that allows to cancel the changes.
+        description: "&7 Saglabāt un atgriezties."
       cancel:
         name: "&f&l Atcelt"
-        description: |-
-          &7 Atcelt un atgriezties.
-      # Button that allows to search for specific value.
+        description: "&7 Atcelt un atgriezties."
       search:
         name: "&f&l Meklēt"
         description: |-
           &7 Ļauj meklēt elementu
           &7 pēc ievadītās vērtības.
         search: "&b Vērtība: [value]"
-      # Button that allows to buy biome.
       buy:
         name: "&f&l Pirkt"
-        description: |-
-          &7 Ļauj pirkt jaunu biomu.
-      # All buttons below this comment is for Admin Menus.
+        description: "&7 Ļauj pirkt jaunu biomu."
       manage_islands:
         name: "&f&l Pārvaldīt Salas"
         description: |-
@@ -191,18 +170,15 @@ biomes:
         value: "&e - [biome]"
       accept_selected:
         name: "&f&l Apstiprināt Izvēlētos"
-        description: |-
-          &7 Apstiprināt izvēlētos elementus.
+        description: "&7 Apstiprināt izvēlētos elementus."
         title: "&e Izvēlētie Elementi:"
         element: "&e - [element]"
       environment_element:
         name: "&f&l [environment]"
-        description: |-
-          &7 [description].
+        description: "&7 [description]."
       properties:
         name: "&f&l Iestatījumi"
-        description: |-
-          &7 Skatīt galvenos iestatījumus.
+        description: "&7 Skatīt galvenos iestatījumus."
       change_properties:
         name: "&f&l Mainīšanas Iestatījumi"
         description: |-
@@ -215,8 +191,7 @@ biomes:
           &7 iestatījumus.
       biome:
         name: "&f&l [biome]"
-        description: |-
-          &7 Minecraft Bioma Tips.
+        description: "&7 Minecraft Bioma Tips."
         value: "&7 Biome ID: &e [id]"
       name:
         name: "&f&l Nosaukums"
@@ -271,13 +246,11 @@ biomes:
         none: "&7 Atļaujas nav uzstādītas."
       unlock_cost:
         name: "&f&l Maksa"
-        description: |-
-          &7 Ļauj uzstādīt pirkšanas maksu.
+        description: "&7 Ļauj uzstādīt pirkšanas maksu."
         value: "&7 Pirkšanas maksa: &e €[number]"
       unlock_items:
         name: "&f&l Lietas"
-        description: |-
-          &7 Ļauj uzstādīt pirkšanas lietas.
+        description: "&7 Ļauj uzstādīt pirkšanas lietas."
         title: "&e Lietas: "
         element: " &8 - [number] x [item]"
         none: "&7 Lietas nav uzstādītas."
@@ -289,13 +262,11 @@ biomes:
         value: "&7 Uzstādītas līmenis: &e [number]"
       change_cost:
         name: "&f&l Maksa"
-        description: |-
-          &7 Ļauj uzstādīt izmantošanas maksu.
+        description: "&7 Ļauj uzstādīt izmantošanas maksu."
         value: "&7 Izmantošanas maksa: &e €[number]"
       change_items:
         name: "&f&l Lietas"
-        description: |-
-          &7 Ļauj uzstādīt izmantošanas lietas.
+        description: "&7 Ļauj uzstādīt izmantošanas lietas."
         title: "&e Lietas: "
         element: " &8 - [number]x[item]"
         none: "&7 Lietas nav uzstādītas."
@@ -305,18 +276,18 @@ biomes:
           &7 Ļauj uzstādīt izmantošanas
           &7 maksas aprēķināšanas veidu.
         static:
-          name: "Statisks"
+          name: Statisks
           description: |-
             &7 Bioma uzstādīšanas maksa
             &7 nemainās.
         per_block:
-          name: "Par bloku"
+          name: Par bloku
           description: |-
             &7 Bioma uzstādīšanas maksa
             &7 tiek rēķināta par katru
             &7 bloku.
         per_usage:
-          name: "Par Izmantošanu"
+          name: Par Izmantošanu
           description: |-
             &7 Bioma uzstādīšanas maksa
             &7 tiek palielināta pēc katras
@@ -334,15 +305,15 @@ biomes:
         description: |-
           &7 Biomu filtri pēc
           &7 Minecraft Wiki.
-        lush: "Dzīvelīgie Biomi"
-        dry: "Sausie Biomi"
-        cold: "Aukstie Biomi"
-        snowy: "Sniegotie Biomi"
-        ocean: "Okeāna Biomi"
-        nether: "Elles Biomi"
-        the_end: "Beigu Biomi"
-        neutral: "Neitrāli Biomi"
-        unused: "Nelietoti Biomi"
+        lush: Dzīvelīgie Biomi
+        dry: Sausie Biomi
+        cold: Aukstie Biomi
+        snowy: Sniegotie Biomi
+        ocean: Okeāna Biomi
+        nether: Elles Biomi
+        the_end: Beigu Biomi
+        neutral: Neitrāli Biomi
+        unused: Nelietoti Biomi
       protection_range:
         name: "&f&l Aizsardzības Distance"
         description: |-
@@ -388,10 +359,8 @@ biomes:
           &7 Ļauj uzstādīt, vai lietotājam
           &7 tiks nosūtīta ziņa par jauna
           &7 bioma atslēgšanu.
-        enabled: |-
-          &b Paziņošana ir &a ieslēgta &b.
-        disabled: |-
-          &b Paziņošana ir &c izslēgta &b.
+        enabled: "&b Paziņošana ir &a ieslēgta &b."
+        disabled: "&b Paziņošana ir &c izslēgta &b."
       change_timeout:
         name: "&f&l Noilgums izmaiņai"
         description: |-
@@ -407,20 +376,27 @@ biomes:
           &7 Ļauj uzstādīt cik daudz
           &7 bioma maiņas var notikt
           &7 vienlaicīgi.
-        value: |-
-          &7 Esošā vertība: &e[number]&7.
+        value: "&7 Esošā vertība: &e[number]&7."
       use_bank:
         name: "&f&l Izmanoto Bankas Kontu"
         description: |-
           &7 Pārslēdz vai nauda tiek skaitīta
           &7 no salas bankas konda.
           &7 Nepieciešams Bakas papildinājums.
-        enabled: |-
-          &b Izmanot Bankas Kontu ir &a ieslēgts &b.
-        disabled: |-
-          &b Izmanot Bankas Kontu ir &c izslēgts &b.
-        missing: |-
-          &c Bankas papildinājums nav ieinstalēts.
+        enabled: "&b Izmanot Bankas Kontu ir &a ieslēgts &b."
+        disabled: "&b Izmanot Bankas Kontu ir &c izslēgts &b."
+        missing: "&c Bankas papildinājums nav ieinstalēts."
+      visibility:
+        name: "&f&l Biomu Redzamība"
+        description: |-
+          &7 Ļauj mainīt biomu redzamību
+          &7 biomu izvēlnes panelī
+        enabled: "&2"
+        disabled: "&c"
+        all: Visi Biomi
+        deployed: Atvērtie Biomi
+        accessible: Pieejamie Biomi
+        toggleable: Pārslēdzams
       is_online:
         name: "&f&l Tiešsaitē Esošie Spēlētāji"
         description: |-
@@ -444,8 +420,7 @@ biomes:
         element: " &7 - &e [player]"
       change_biome:
         name: "&f&l Mainīt Biomu"
-        description: |-
-          &7 Mainīt salas Biomu.
+        description: "&7 Mainīt salas Biomu."
       manage_data:
         name: "&f&l Pārvaldīt Salas Datus"
         description: |-
@@ -485,8 +460,7 @@ biomes:
           &7 uz noklusējuma vērtībām.
       bundle_info:
         name: "&f&l Informācija"
-        description: |-
-          &7 Skatīt bundļa informāciju.
+        description: "&7 Skatīt bundļa informāciju."
       bundle_biomes:
         name: "&f&l Pārvaldīt Biomus"
         description: |-
@@ -494,16 +468,14 @@ biomes:
           &7 pievienoti bundlim.
       bundle_name:
         name: "&f&l Mainīt Nosaukumu"
-        description: |-
-          &7 Mainīt bundļa nosaukumu.
+        description: "&7 Mainīt bundļa nosaukumu."
         value: "&e Nosaukums: &r [bundle]"
       bundle_icon:
         name: "&f&l Mainīt Ikonu"
         description: ikonu.
       bundle_description:
         name: "&f&l Mainīt Aprakstu"
-        description: |-
-          &7 Mainīt bundļa aprakstu.
+        description: "&7 Mainīt bundļa aprakstu."
         value: "&e Apraksts:"
         none: "&c Nav uzstādīts"
       bundle_permission:
@@ -515,30 +487,25 @@ biomes:
         value: "&e Atļauja: &f [gamemode].biomes.bundle.[id]"
       add_bundle_biome:
         name: "&f&l Pievienot Biomu"
-        description: |-
-          &7 Pievieno biomus bundlim.
+        description: "&7 Pievieno biomus bundlim."
         title: "&b Izvēlētie biomi:"
         value: "&b - [biome]"
       remove_bundle_biome:
         name: "&f&l Noņemt Biomu"
-        description: |-
-          &7 Noņem biomus no bundļa.
+        description: "&7 Noņem biomus no bundļa."
         title: "&b Izvēlētie biomi:"
         value: "&b - [biome]"
       create_bundle:
         name: "&f&l Izveidot Bundli"
-        description: |-
-          &7 Ļauj izveidot jaunu bundli.
+        description: "&7 Ļauj izveidot jaunu bundli."
       delete_bundle:
         name: "&f&l Dzēst Bundli"
-        description: |-
-          &7 Ļauj dzēst izvēlētos bundļus.
+        description: "&7 Ļauj dzēst izvēlētos bundļus."
         title: "&b Izvēlētie bundļi:"
         value: "&b - [bundle]"
       download:
         name: "&f&l Lejupielādēt"
-        description: |-
-          &7 Lejupielādēt bibliotēku.
+        description: "&7 Lejupielādēt bibliotēku."
         enabled: "&2 Ar atmiņas notīrīšanu"
         disabled: "&c Bez atmiņas notīrīšanas"
     tips:
@@ -546,24 +513,9 @@ biomes:
       click-to-clear: "&e Klikšķini, &7 lai notīrītu."
       click-to-change-biome: "&e Klikšķini, &7 lai mainītu biomu."
       click-to-view: "&e Klikšķini, &7 lai skatītu."
-      click-to-buy: "&e Klikšķini, &7 lai nopirktu."
-      select-before: "&e Izvēlies &7 elementu(-s) pirms turpināt."
-      click-to-apply: "&e Klikšķini, &7 lai apstiprinātu."
-      right-click-to-open: "&e Labais Klikšķins, &7 lai atvērtu."
-      click-to-perform: "&e Klikšķini, &7 lai veiktu."
-      left-click-to-apply: "&e Kreisais Klikšķins, &7 lai apstiprinātu."
-      right-click-to-unlock: "&e Labais Klikšķins, &7 lai atklātu."
-      right-click-to-buy: "&e Labais Klikšķins, &7 lai nopirktu."
-      right-click-to-change: "&e Labais Klikšķins, &7 lai mainītu."
       click-to-select: "&e Klikšķini, &7 lai atlasītu."
       click-to-choose: "&e Klikšķini, &7 lai izvēlētos."
       click-to-complete: "&e Klikšķini, &7 lai pabeigtu."
-      right-click-multiple-open: |-
-        &e Labais klikšķis,
-        &7 lai izvēlētos daudzumu.
-      shift-left-click-to-complete-all: |-
-        &e Shift un klikšķis,
-        &7 lai pabeigtu visus.
       left-click-to-accept: |-
         &e Kreisais klikšķis,
         &7 lai pabeigtu.
@@ -621,6 +573,7 @@ biomes:
       left-click-to-choose: |-
         &e Kreisais klikšķis,
         &7 lai izvēlētos.
+      click-to-buy: "&e Klikšķini, &7 lai nopirktu."
       click-to-cancel: "&e Klikšķini, &7 lai atceltu."
       click-to-save: "&e Klikšķini, &7 lai saglabātu."
       click-to-deselect: |-
@@ -641,11 +594,19 @@ biomes:
       click-to-next: |-
         &e Klikšķini, &7 lai
         &7 skatītu nākošo.
+      select-before: "&e Izvēlies &7 elementu(-s) pirms turpināt."
+      click-to-apply: "&e Klikšķini, &7 lai apstiprinātu."
+      right-click-to-open: "&e Labais Klikšķins, &7 lai atvērtu."
+      click-to-perform: "&e Klikšķini, &7 lai veiktu."
+      left-click-to-apply: "&e Kreisais Klikšķins, &7 lai apstiprinātu."
+      right-click-to-unlock: "&e Labais Klikšķins, &7 lai atklātu."
+      right-click-to-buy: "&e Labais Klikšķins, &7 lai nopirktu."
+      right-click-to-change: "&e Labais Klikšķins, &7 lai mainītu."
     descriptions:
       update-mode:
-        island: "Salas Mode"
-        chunk: "Bloka Mode"
-        range: "Attāluma Mode"
+        island: Salas Mode
+        chunk: Bloka Mode
+        range: Attāluma Mode
       selected: "&2 Izvēlēts"
       island-owner: "[player]"
       unknown: "&e Nezināms"
@@ -655,48 +616,31 @@ biomes:
           [biome]
           [unlock]
           [change]
-        # Text that will replace [biome]
-        original: |-
-          &7 Bioms: &e [biome]
-        # The text that will replace [unlock] message. If biome is unlocked, then this message will be generated empty.
+        original: "&7 Bioms: &e [biome]"
         unlock:
           lore: |-
             [items]
             [money]
             [level]
             [permissions]
-          # Text that will replace [money]
-          money: |-
-            &7 Pirkšanas maksa: &e €[number]
-          # Text that will replace [level]
+          money: "&7 Pirkšanas maksa: &e €[number]"
           level: |-
             &7 Nepieciešams sasniegt &e [number]
             &7 salas līmeni.
-          # Text that will replace [permissions]
-          permission-single: |-
-            &7 Trūkst atļauja: &c [permission]
-          permissions-title: |-
-            &c Trūkstošās atļaujas:
-          permissions-list: |-
-            &c - [permission]
-          # Text that will replace [items]
-          item-single: |-
-            &7 Pirkšanas Priekšmets: [color] [number] x [item]
-          item-title: |-
-            &7 Pirkšanas Priekšmeti:
-          item-list: |-
-            &7 - [color] [number] x [item]
-          # Text that replaces [color].
+          permission-single: "&7 Trūkst atļauja: &c [permission]"
+          permissions-title: "&c Trūkstošās atļaujas:"
+          permissions-list: "&c - [permission]"
+          item-single: "&7 Pirkšanas Priekšmets: [color] [number] x [item]"
+          item-title: "&7 Pirkšanas Priekšmeti:"
+          item-list: "&7 - [color] [number] x [item]"
           missing: "&c"
           has: "&e"
-        # The text that will replace [change] message. If biome is locked, then this message will be generated empty.
         change:
           lore: |-
             [items]
             [money]
             [mode]
             [usage]
-          # Text that will replace [mode]
           mode:
             per_block: |-
               &b&o Bioma uzstādīšana
@@ -705,23 +649,14 @@ biomes:
               &b&o Biome uzstādīšana
               &b&o palielinās pēc katras
               &b&o uzstādīšanas reizes.
-            static: |-
-              &b&o Standarta izmaksas.
-          # Text that will replace [money]
-          money: |-
-            &7 Maksa: &e €[number]
-          # Text that will replace [items]
-          item-single: |-
-            &7 Lieta: [color] [number] x [item]
-          item-title: |-
-            &7 Lietas:
-          item-list: |-
-            &7 - [color] [number] x [item]
-          # Text that shows how many times player has used this biome.
+            static: "&b&o Standarta izmaksas."
+          money: "&7 Maksa: &e €[number]"
+          item-single: "&7 Lieta: [color] [number] x [item]"
+          item-title: "&7 Lietas:"
+          item-list: "&7 - [color] [number] x [item]"
           number-of-usage: |-
             |&7 Šis bioms ir uzstādīts
             &e [number] &r&7 reizes.
-          # Text that replaces [color].
           missing: "&c"
           has: "&e"
       bundle:
@@ -733,130 +668,94 @@ biomes:
           &7 Atļauja, kas nepieciešama
           &7 lietotājam:
           &7&o [gamemode].biomes.bundle.[id]
-        # String that are before listing all biomes assigned to bundle.
         title: "&7 Bundļa Biomi: "
-        # Each biome name in listing
         value: "&7 - [biome]"
-        # If no biomes are added.
         no-biomes: "&c Biomi nav pievienoti"
-      # This part generates description for the Library Entry
       library:
-        author: '&e [author]'
-        version: '&7 Izveidots ar Biomi &e [version]'
-        lang: '&7 Valoda: &e [lang]'
-        gamemode: '&7 Galvenokārt priekš &e [gamemode]'
+        author: "&e [author]"
+        version: "&7 Izveidots ar Biomi &e [version]"
+        lang: "&7 Valoda: &e [lang]"
+        gamemode: "&7 Galvenokārt priekš &e [gamemode]"
   conversations:
-    # Prefix for messages that are send from server.
     prefix: "&l&6 [BentoBox]: &r"
-    # List of strings that are valid for confirming input. (separated with ,)
-    confirm-string: "true, on, yes, confirm, y, valid, correct, jā, ja, apstiprinu, pareizi"
-    # List of strings that are valid for denying input. (separated with ,)
-    deny-string: "false, off, no, deny, n, invalid, incorrect, nē, ne, neapstiprinu, nepareizi"
-    # String that allows to cancel conversation. (can be only one)
-    cancel-string: "atcelt"
-    # List of strings that allows to exit conversation. (separated with ,)
-    exit-string: "cancel, exit, quit, atcelt, iziet"
-    # Message that is send to user when conversation is cancelled.
+    confirm-string: true, on, yes, confirm, y, valid, correct, jā, ja, apstiprinu,
+      pareizi
+    deny-string: false, off, no, deny, n, invalid, incorrect, nē, ne, neapstiprinu,
+      nepareizi
+    cancel-string: atcelt
+    exit-string: cancel, exit, quit, atcelt, iziet
     cancelled: "&c Saruna pārtraukta!"
-    # Message that appears when admin clicks on number editing button.
     input-number: "&e Lūdzu ieraksti skaitli sarakstē!"
-    # Message that appears when admin clicks on seconds editing button.
     input-seconds: "&e Lūdzu ieraksti sekunžu skaitu sarakstē!"
-    # Error message that is showed if user input a value that is not a number.
     numeric-only: "&c Šis `[value]` nav skaitlis!"
-    # Error message that is showed if user input a number that is smaller or larger that allowed.
-    not-valid-value: "&c Ierakstītais skaitlis [value] nav derīgs. Skaitlis nedrīkst būt mazāks par [min] un lielāks par [max]!"
-    # Message that confirms user data removing.
+    not-valid-value: "&c Ierakstītais skaitlis [value] nav derīgs. Skaitlis nedrīkst
+      būt mazāks par [min] un lielāks par [max]!"
     data-removed: "&a Izvēlētie biomi ir dzēsti no [gamemode]."
-    # Message that asks confirmation for user data removing.
     confirm-deletion: "&e Lūdzu apstiprini, ka vēlies dzēst [number] biomus: [value]."
-    # Message that confirms user data removing.
     user-data-removed: "&a Visi lietotāju dati priekš [gamemode] ir dzēsti."
-    # Message that asks confirmation for user data removing.
-    confirm-user-data-deletion: "&e Lūdzu apstiprini sarakstē (jā), ka vēlies dzēst lietotāju datus par [gamemode]."
-    # Message that confirms user data removing.
+    confirm-user-data-deletion: "&e Lūdzu apstiprini sarakstē (jā), ka vēlies dzēst
+      lietotāju datus par [gamemode]."
     all-data-removed: "&a Visi dati priekš [gamemode] ir dzēsti."
-    # Message that asks confirmation for user data removing.
-    confirm-all-data-deletion: "&e Lūdzu apstiprini sarakstē (jā), ka vēlies dzēst visus datus par [gamemode]."
-    # Message that asks user to write a name
+    confirm-all-data-deletion: "&e Lūdzu apstiprini sarakstē (jā), ka vēlies dzēst
+      visus datus par [gamemode]."
     write-name: "&e Lūdzu ieraksti sarakstē vārdu."
-    # Message that confirms new object creation.
     new-object-created: "&a Jauns objekts priekš [gamemode] ir uztaisīts."
-    # Error message that sends that object cannot be created with a given name
     object-already-exists: "&c Objekts ar &7 [id] &c jau eksistē. Izvēlies citu vārdu."
-    # Message that confirms name changing
     name-changed: "&a Nosaukums veiksmīgi mainīts."
-    # Message that appears after clicking
-    write-description: "&e Lūdzu raksti jauno aprakstu sarakstē un 'iziet' jaunā rindā, lai beigtu."
-    # Message that appears after successful description change.
+    write-description: "&e Lūdzu raksti jauno aprakstu sarakstē un 'iziet' jaunā rindā,
+      lai beigtu."
     description-changed: "&a Apraksts vaiksmīgi mainīts."
-    # Message that appears when admin clicks on permission editing button.
-    write-permissions: "&e Lūdzu ieraksti nepieciešamās atļaujas sarakstē, katru savā rindā, and 'iziet' jaunā rindā, lai beigtu."
-    # Message that appears after successful permission updating.
+    write-permissions: "&e Lūdzu ieraksti nepieciešamās atļaujas sarakstē, katru savā
+      rindā, and 'iziet' jaunā rindā, lai beigtu."
     permissions-changed: "&a Atļaujas veiksmīgi mainītas."
-    # Message that appears when user clicks on library installation.
     start-downloading: "&a Sāk lejupielādēt Biomu bibliotēku."
-    # Message that appears when writing multiline text.
     written-text: "&a Ievadītais teksts:"
-    # Message that appears after importing library data into database.
-    confirm-data-replacement: "&e Lūdzu apstiprini (jā), ka vēlies dzēst esošos biomus un aizstāt ar jauniem."
-    # Message that appears after successful data importing
+    confirm-data-replacement: "&e Lūdzu apstiprini (jā), ka vēlies dzēst esošos biomus
+      un aizstāt ar jauniem."
     new-data-imported: "&a Jaunie dati ir veiksmīgi ielādēti priekš [gamemode]."
-    # Message that appears after admin clicks on database exporting button.
-    exported-file-name: "&e Lūdzu ieraksti eksportētā faila nosaukumu. (ieraksti 'atcelt', lai izietu)"
-    # Message that appears after successful database exporting to file.
-    database-export-completed: "&a Veiksmīgi eksportēti biomi no [world]. Fails [file] ir izveidots."
-    # Message that appears if input file name is already taken.
+    exported-file-name: "&e Lūdzu ieraksti eksportētā faila nosaukumu. (ieraksti 'atcelt',
+      lai izietu)"
+    database-export-completed: "&a Veiksmīgi eksportēti biomi no [world]. Fails [file]
+      ir izveidots."
     file-name-exist: "&c Faila nosaukums '[id]' jau eksistē. Nevar pārrakstīt."
-    # Message that asks for search value input.
     write-search: "&e Lūdzu ievadi meklēšanas vērtību. (vai 'atcelt', lai izietu)"
-    # Message that appears after updating search value.
     search-updated: "&a Meklēšanas vērtība atjaunota."
-    # Message that appears when admin tries to deploy invalid biome.
     invalid-biome: "&c Daži dati priekš `[biome]` nav korekti."
-    # Message that appears when admin tries to delete island data.
-    confirm-island-data-deletion: "&e Lūdzu apstiprini, ka vēliedz dzēst [player] salas datus."
-    # Message that appears when admin removed island data.
+    confirm-biome-deletion: "&e Lūdzu apstiprini, ka vēlies dzēst [biome] no [gamemode]."
+    biome-removed: "[biome] &a ir dzēsts no [gamemode]."
+    confirm-island-data-deletion: "&e Lūdzu apstiprini, ka vēliedz dzēst [player]
+      salas datus."
     island-data-removed: "[player] &a salas dati dzēsti."
-    # Message that appears when user unlocks new biome and need to buy it.
-    click-text-to-purchase: "&e Tu esi atvēris jaunu biomu: &r [biome]&r&e! Klikšķini šeit, lai nopirktu."
-    # Message that appears when user unlocks new biome and can already use it.
-    click-text-to-set: "&eTu esi atvēris jaunu biomu: &r [biome]&r&e! Klikšķini šeit, lai izmantotu."
+    confirm-biome-data-deletion: "&e Lūdzu apstiprini, ka vēlies dzēst visus biomus
+      no [gamemode]."
+    biome-data-removed: Visi biomi dzēsti no [gamemode].
+    click-text-to-purchase: "&e Tu esi atvēris jaunu biomu: &r [biome]&r&e! Klikšķini
+      šeit, lai nopirktu."
+    click-text-to-set: "&eTu esi atvēris jaunu biomu: &r [biome]&r&e! Klikšķini šeit,
+      lai izmantotu."
   messages:
-    # Message that is sent to a player if he tries to use locked biome.
     biome-not-unlocked: "[biome] &r&c nav atvērts. Tu nevari to lietot."
-    # Message that is sent to a player if he tries to use biome which he has not purchased.
     biome-not-purchased: "&c Tu nevari lietot &r [biome] &r&c. Tev tas ir jānopērk."
-    # Message that is sent to player if he tries to unlock invalid or undeployed biome.
     biome-cannot-be-unlocked: "&c Tu nevari atvērt &r [biome] &r&c."
-    # Message that is sent to player if he tries to buy biome that he already owns.
     biome-already-purchased: "&c Tu jau esi nopircis &r [biome] &r&c."
-    # Message that is sent to player if he tries purchase biome without reaching required level.
     island-level-not-reached: "[biome] &c nepieciešams vismaz [number] salas līmenis."
-    # Message that is sent to player if he tries purchase biome without required permission.
     missing-permission: "[biome] &c nepieciešama atļauja: [permission]."
-    # Message that is sent to player if he tries purchase biome without required money in account.
-    no-credits-buy: "&c Tev nav pietiekoši daudz naudas, lai nopirktu &r [biome] &r&c. Tas maksā [number]."
-    # Message that is sent to player if he tries purchase biome without required money in bank account.
-    no-credits-buy-bank: "&c Tavā bankas kontā nav pietiekoši daudz naudas, lai nopirktu &r [biome] &r&c. Tas maksā [number]."
-    # Message that is sent to player if he tries purchase biome without required items in account.
-    no-items-buy: "&c Tev nav pietiekoši daudz lietas, lai nopirktu &r [biome] &r&c. Tev nepieciešams [items]."
-    # Message that is sent to player when he buys a biome.
+    no-credits-buy: "&c Tev nav pietiekoši daudz naudas, lai nopirktu &r [biome] &r&c.
+      Tas maksā [number]."
+    no-credits-buy-bank: "&c Tavā bankas kontā nav pietiekoši daudz naudas, lai nopirktu
+      &r [biome] &r&c. Tas maksā [number]."
+    no-items-buy: "&c Tev nav pietiekoši daudz lietas, lai nopirktu &r [biome] &r&c.
+      Tev nepieciešams [items]."
     biome-purchased: "&e Tu esi iegādājies &r [biome]."
-    # Message that is sent to player after importing biomes.
     import-count: "&e Ielādēti [biomes] biomi un [bundles] bundļi."
-    # Message that appears after clicking on download button in web library.
     start-downloading: "&e Sāk bibliotēkas lejupielādi."
-    # This message is sent to user when biome changing is started.
-    update-start: "&a Sāk bioma [biome] izmaiņu iekš [number] čunkiem. &e Aptuvenais laiks: [time] sec."
-    # This message is sent to user when biome changing is finished.
+    update-start: "&a Sāk bioma [biome] izmaiņu iekš [number] čunkiem. &e Aptuvenais
+      laiks: [time] sec."
     update-done: "&a Pabeigta bioma [biome] uzstādīšana."
-    # This message is sent to user when his change is placed in queue.
     waiting: "&a Pievienots rindai. &e Aptuvenais gaidīšanas laiks: [time] sec."
-    # Message that is sent to player when the biome is already unlocked.
     biome-already-unlocked: "&r [biome] &e jau ir atvērta."
-    # Message that is displayed for players if gamemode does not have any biome.
-    everything-already-bought: "&a Tu jau esi nopircis visus biomus priekš šī spēles režīma."
+    everything-already-bought: "&a Tu jau esi nopircis visus biomus priekš šī spēles
+      režīma."
     skipping: "&a Izlaiž ielādi: &r [biome] &r&a."
     overwriting: "&a Pārraksta &r [biome] &r&a atmiņā."
     imported: "&a Ielādē &r [biome] &r&a atmiņā."
@@ -865,123 +764,47 @@ biomes:
     migrate-valid: "&a Visi dati ir korekti. Migrācija nav nepieciešama."
     bundle-loaded: "&a Bundlis &r [bundle] &a ir ielādēts."
   errors:
-    # Message that is displayed if requested user or island does not have any valid data.
     no-island-data: "&c Esošajai salai nav saglabāti nekādi dati."
-    # Message that is displayed for admins if gamemode does not have any biome.
-    no-biomes-admin: "&c Esošajam spēles režīmam nav uzstādīts neviens bioms. Lūdzu ielādē vai izvedo biomus ar /[command]"
-    # Message that is displayed for players if gamemode does not have any biome.
+    no-biomes-admin: "&c Esošajam spēles režīmam nav uzstādīts neviens bioms. Lūdzu
+      ielādē vai izvedo biomus ar /[command]"
     no-biomes: "&c Esošajam spēles režīmam nav uzstādīts neviens bioms."
-    # Message that is displayed for player if biome change is protected by island protection flag.
     no-rank: "&c Tev nav atļaujas, lai mainītu biomu uz šīs salas!"
-    # Message that is displayed for player if biome requires higher island level.
     not-enough-level: "&c Šim biomam nepieciešams vismaz [number] salas līmenis."
-    # Message that is displayed for player if biome requires more money than player has.
     not-enough-money: "&c Bioma izmaiņa izmaksā €[number]."
-    # Message that is displayed for player if biome requires more money than island bank has.
-    not-enough-money-bank: "&c Tavā bankas kontā nav pietiekoši daudz naudas. Bioma izmaiņa izmaksā €[number]."
-    # Message that is displayed for player if biome requires more items than player has.
+    not-enough-money-bank: "&c Tavā bankas kontā nav pietiekoši daudz naudas. Bioma
+      izmaiņa izmaksā €[number]."
     not-enough-items: "&c Bioma izmaiņa izmaksā [items]."
-    # Message that is displayed for admin when he tries to change biome on other player island while not being on it.
     admin-not-on-island: "&c Tu neesi uz [user] salas."
-    # Message that is displayed for players when they use command, but requested biome does not exist.
     incorrect-object: "&c Neizdevās atrast biomu: [biome]"
-    # Message that is displayed for players when they use command, but biome is not specified.
     missing-biome: "&c Bioma nosaukums nav norādīts."
-    # Message that is displayed for players when they write incorrect update mode name.
     incorrect-mode: "&c Mode ar nosaukumu '[mode]' neeksistē."
-    # Message that is displayed for players when they write incorrect number.
     incorrect-range: "&c Dotā vertība '[number]' nav korekts skaitlis."
-    # Error message that is displayed when user tries to import file that does not exist.
     no-file: "&c Neizdevās atrast failu [file] biomes mapītē."
-    # Error message that is displayed when user tries to import broken (incorrect) file.
     no-load: "&c Neizdevās ielādēt biomus no [file]. Iemesls: [description]"
-    # Error message that is displayed when user tries to import biomes in non-gamemode world. May be impossible to reach.
     not-a-gamemode-world: "&c Pasaula [world] nav BentoBox pasaule."
-    # Error message that is displayed when user tires to export biomes to a file that already exist.
     file-exist: "&c Fails ar nosaukumu [file] jau eksistē. Izvēlies citu nosaukumu."
-    # Error message that is displayed when user opens library gui but there are no elements to display.
     no-library-entries: "&c Neizdevās atrast neveinu derīgu bibliotēkas ierakstu."
-    # Error message that is displayed when user tries to use biome that is not unlocked.
     not-unlocked: "&c Tu neesi atvēris šo biomu."
-    # Error message that is displayed when user tries to use biome that is not purchased.
     not-purchased: "&c Tu neesi nopircis šo biomu."
-    # Error message that is displayed when biome update task run out of time.
-    timeout: "&c Bioma maiņa tika pārtraukta. Iespējams izvēlētais laukums bija pārlieku liels, vai arī servers ir noslogots."
-    # Error message that is displayed when biome update task failed.
+    timeout: "&c Bioma maiņa tika pārtraukta. Iespējams izvēlētais laukums bija pārlieku
+      liels, vai arī servers ir noslogots."
     failed: "&c Serveris nespēja nomainīt biomu."
-    # Error message that is displayed when addon failed to withdraw money.
     could-not-remove-money: "&c Neizdevās noņemt naudu."
-    # Error message that is displayed when addon failed to withdraw items.
     could-not-remove-items: "&c Neizdevās noņemt lietas."
-    # Error message that is displayed when addon has some error to do some stuff.
     something-went-wrong: "&c Kaut kas nogāja greizi."
-#    materials:
-#        # Names should be lowercase.
-#        cobblestone: "Cobblestone"
-#        # Also supports descriptions.
-#        stone:
-#            name: "Stone"
-#            description: ""
-#    biomes:
-#        # Names should be lowercase.
-#        plains: "Plains"
-#        # Also supports descriptions.
-#        jungle_hills:
-#            name: "Jungle Hills"
-#            description: ""
-#    item-stacks:
-#        # Non-specific item meta translations.
-#        # TYPE is the item type
-#        # META is a content of item meta.
-#        generic: "[type] [meta]"
-#        # Non-specific meta translations. Will replace [meta]
-#        meta:
-#            upgraded: "Upgraded"
-#            extended: "Extended"
-#            potion-meta: "&e [type] [upgraded] [extended]"
-#            # Be aware, enchants are always listed below item in separate line.
-#            enchant-meta: "    &7 - &e [type] [level]"
-#            skull-meta: ": &e [player-name]"
-#            book-meta: "&e [title] [author]"
-#        # Custom Enchantment Translation.
-#        enchant:
-#            menting: "Mending"
-#            unbreaking: "Unbreaking"
-#        # Custom Potion Translation.
-#        potion-type:
-#            water_breathing: "Water Breathing"
-#        # You can also create specific item translations
-#        # Like translate all potions.
-#        potion:
-#            # This will overwrite generic translation.
-#            name: "[type] [upgraded] [extended]"
-#            # Type is either specific translation or potion effect.
-#            water_breathing: "Potion of Water Breathing"
-#        stone_shovel:
-#            # This will mean that only stone shovels will not show
-#            # meta information.
-#            name: "[type]"
-#    # Showcase how to support multi-linguistic biomes
-#    custom-biomes:
-#        # Database ID name.
-#        example_biome_id:
-#            name: "&2 Translated Name"
-#            description: |-
-#                &7 Translated Custom
-#                &7 description
 protection:
   flags:
     BIOMES_ISLAND_PROTECTION:
+      name: Biomu maiņas aizsardzība
       description: |-
         &5&o Ļauj pārslēgt, kuri
         &5&o spēlētāji var pārslēgt
         &5&o biomu uz salas.
-      name: "Biomu maiņas aizsardzība"
     BIOMES_WORLD_PROTECTION:
+      name: Biomu Salas Ierobežojums
       description: |-
         &5&o Ļauj pārslēgt nepieciešamību
         &5&o spēlētājiem būt uz savas
         &5&o salas, lai mainītu
         &5&o biomu."
-      name: "Biomu Salas Ierobežojums"
-      hint: "Biomu maiņa ārpus salas nav atļauta!"
+      hint: Biomu maiņa ārpus salas nav atļauta!
