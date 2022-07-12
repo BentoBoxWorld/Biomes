@@ -212,7 +212,7 @@ public class IslandManagePanel extends CommonPagedPanel<Island>
 
             for (UUID uuid : members)
             {
-                if (uuid != island.getOwner())
+                if (!uuid.equals(island.getOwner()))
                 {
                     builder.append("\n").append(this.user.getTranslation(reference + "element",
                         Constants.PARAMETER_PLAYER, this.addon.getPlayers().getName(uuid)));

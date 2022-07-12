@@ -444,7 +444,7 @@ public class BiomesAddonManager
             filter(Objects::nonNull).
             forEach(island ->
             {
-                if (island.getOwner() == uniqueId)
+                if (uniqueId.equals(island.getOwner()))
                 {
                     // Owner island must be validated.
                     this.validateIslandData(island, User.getInstance(uniqueId));
