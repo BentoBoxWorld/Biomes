@@ -884,6 +884,7 @@ public class BiomesAddonManager
                         // Not enough money.
                         Utils.sendMessage(user,
                             user.getTranslation(Constants.MESSAGES + "no-credits-buy-bank",
+                                Constants.PARAMETER_BIOME, biomesObject.getFriendlyName(),
                                 TextVariables.NUMBER, String.valueOf(biomesObject.getUnlockCost())));
                         return false;
                     }
@@ -893,7 +894,8 @@ public class BiomesAddonManager
                     // Not enough money.
 
                     Utils.sendMessage(user,
-                        user.getTranslation(Constants.MESSAGES + "no-credits-buy-bank",
+                        user.getTranslation(Constants.MESSAGES + "no-credits-buy",
+                            Constants.PARAMETER_BIOME, biomesObject.getFriendlyName(),
                             TextVariables.NUMBER, String.valueOf(biomesObject.getUnlockCost())));
                     return false;
                 }
