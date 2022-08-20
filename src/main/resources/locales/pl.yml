@@ -62,6 +62,7 @@ biomes:
         description: "&7 Zmienia biom według zasięgu."
       reduce:
         name: "&f&l Zmniejsz"
+        description: "&7 Zmniejsz o &e [number]"
       increase:
         name: "&f&l Zwiększ"
         description: "&7 Zwiększ o &e [number]"
@@ -642,6 +643,7 @@ biomes:
         author: "&7 autor: &e [author]"
         version: "&7 Wykonane z biomami &e [version]"
         lang: "&7 Język: &e [lang]"
+        gamemode: "&7 Główny dla &e [gamemode]"
   conversations:
     prefix: "&l&6 [BentoBox]: &r"
     confirm-string: prawda, wł., tak, potwierdź, y, poprawny, poprawny
