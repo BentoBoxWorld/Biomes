@@ -1,0 +1,413 @@
+---
+biomes:
+  commands:
+    admin:
+      main:
+        description: główne polecenie administracji biomami
+      import:
+        confirmation: Spowoduje to usunięcie istniejących biomów z [gamemode] i zaimportowanie
+          nowych biomów z pliku szablonu - proszę potwierdzić
+      migrate: {}
+      set: {}
+      unlock:
+        description: odblokowuje biom dla gracza bez kontroli. Dodanie `true` na końcu
+          spowoduje oznaczenie go jako zakupione.
+        parameters: "<player> <biome-id> [true]"
+    player:
+      main:
+        description: otwiera GUI wyboru biomów
+      set:
+        description: zmienia biom dla gracza
+        parameters: "<biome-id> [mode] [wielość]"
+      buy:
+        description: kupuje żądany biom
+        parameters: "<biome-id>"
+      info:
+        description: wysyła wiadomość na czacie ze szczegółowym opisem biomu
+        parameters: "<biom-id>"
+  gui:
+    titles:
+      player-panel: "&0&l Wybierz biom"
+      buy-panel: "&0&l Kup biom"
+      advanced-panel: "&0 Tryb aktualizacji"
+      library: "&0&l Biblioteka"
+      manage-biomes: "&0&l Zarządzaj biomami"
+      manage-bundles: "&0&l Zarządzaj pakietami"
+      manage-islands: "&0&l Zarządzaj danymi wysp"
+      edit-biome: "&0&l Edytuj biom: [biome]"
+      edit-bundle: "&0&l Edytuj pakiet: [bundle]"
+      edit-island: "&0&l Edytuj wyspę: [island]"
+      environment-selector: "&0&l Wybierz środowisko"
+      biome-selector: "&0&l Wybierz biom"
+      bundle-selector: "&0&l Wybierz pakiet"
+      item-selector: "&0&l Wybierz elementy"
+    buttons:
+      island:
+        name: "&f&l Wyspa"
+        description: |-
+          &7 Zmienia biom na całej
+          &7 wyspie.
+      chunk:
+        name: "&f&l Chunk"
+        description: "&7 Zmienia biom w chunkach."
+      range:
+        name: "&f&l Zakres"
+        description: "&7 Zmienia biom według zasięgu."
+      reduce:
+        name: "&f&l Zmniejsz"
+      increase:
+        name: "&f&l Zwiększ"
+        description: "&7 Zwiększ o &e [number]"
+      accept:
+        name: "&f&l Zastosuj zmiany"
+        description: |-
+          &7 Zmienia biom na &e [biome]
+
+          &7 Tryb aktualizacji: &e [mode]
+          &7 Zakres aktualizacji: &e [number]
+      return: {}
+      previous:
+        description: "&7 Przełącz na &e [number] &7 stronę"
+      next:
+        description: "&7 Przełącz na &e [number] &7 stronę"
+      quit: {}
+      save:
+        name: "&f&l Zapisz"
+        description: "&7 Zapisz zmiany i wróć."
+      cancel:
+        name: "&f&l Anuluj"
+        description: "&7 Anuluj zmiany i wróć."
+      search:
+        description: "&7 Umożliwia wyszukiwanie \n&7 elementów za pomocą\n&7 wartości
+          tekstowej."
+        search: "&b Wartość: [value]"
+      buy:
+        name: "&f&l Zakup"
+        description: "&7 Kup nowy biom."
+      manage_islands:
+        name: "&f&l Zarządzaj wyspami"
+        description: "&7 Pozwala zarządzać danymi wyspy."
+      manage_biomes:
+        name: "&f&l Zarządzaj biomami"
+        description: "&7 Pozwala zarządzać danymi \n biomów."
+      manage_bundles: {}
+      settings: {}
+      import_template:
+        description: |-
+          &7 Importuj szablon
+          &7 plik znajduje się wewnątrz
+          &7 katalogu dodatków.
+      web_library:
+        description: "&7 Uzyskaj dostęp do \n&7 biblioteki zawierającej\n&7 udostępnione
+          biomy."
+      export_from_database: {}
+      import_to_database: {}
+      wipe_islands_data: {}
+      wipe_biomes_data:
+        description: |-
+          &7 Wyczyść wszystkie biomy i pakiety
+          &7 danych dla tego trybu gry.
+      add_biome:
+        description: |-
+          &7 Tworzy nowy biom, który
+          &7 gracz może użyć za pomocą
+          &7 paneli użytkownika.
+      remove_biome:
+        value: "&e - [biome]"
+      accept_selected: {}
+      environment_element:
+        name: "&f&l [environment]"
+        description: "&7 [description]."
+      properties: {}
+      change_properties: {}
+      unlock_properties: {}
+      biome:
+        name: "&f&l [biome]"
+      name:
+        value: "&7 Bieżąca wartość: &r [name]"
+      deployed: {}
+      environment:
+        name: "&f&l Wymiar"
+      icon:
+        name: "&f&l Ikona"
+      order:
+        name: "&f&l Kolejność"
+        description: |-
+          &7 Pozwala zmienić kolejność
+          &7 obiektów.
+          &7 Obiekty o równych numerach
+          &7 zostaną ułożone alfabetycznie
+        value: "&7 Bieżąca kolejność: &e [number]"
+      description: {}
+      unlock_permissions:
+        element: " &8 - [permission]"
+      unlock_cost:
+        value: "&7 Bieżący koszt: &e $[number]"
+      unlock_items:
+        name: "&f&l Przedmioty"
+        element: " &8 - [number]x[item]"
+      unlock_level:
+        value: "&7 Bieżący poziom: &e [number]"
+      change_cost:
+        value: "&7 Bieżący koszt: &e $[number]"
+      change_items:
+        name: "&f&l Przedmioty"
+        element: " &8 - [number]x[item]"
+      change_type:
+        name: "&f&l [type]"
+        static:
+          name: Wartość stała
+          description: |-
+            &7 Koszt zmiany biomu
+            &7 jest niezmienny.
+        per_block:
+          description: "&7 Koszt zmiany biomu \n&7 jest obliczany za każdy blok"
+        per_usage:
+          description: "&7 Koszt zmiany biomu \n&7 wzrasta po każdej\n&7 zmianie."
+      change_increment:
+        value: "&7 Aktualna wartość: &e [number]"
+      biome-filter:
+        name: "&f&l [filter]"
+      protection_range:
+        description: "&7 Pozwala ograniczyć zmianę \n&7 biomu tylko do zakresu \n&7
+          ochrony  wyspy zamiast zmieniać biom \n&7 na całej wyspie."
+      reset:
+        description: "&7Pozwala włączyć wymuszenie\n&7zmiany biomu na domyślny, \n&7jeśli
+          wyspa zmieni właściciela, a \n&7nowy właściciel nie ma \n&7aktualnych uprawnień
+          do biomu."
+      cool_down:
+        description: |-
+          &7 Pozwala ustawić liczbę
+          &7 sekund między ponownymi
+          &7 zmianami biomu
+        value: "&7 Aktualny czas odnowienia: &e [number]"
+      default_size:
+        description: |-
+          &7 Pozwala ustawić liczbę, która
+          &7 zostanie użyta, gdy gracz
+          &7 zmieni biom bez jej okreslenia
+        value: "&7 Domyślny zakres: &e [number]"
+      default_mode:
+        description: "&7 Pozwala ustawić domyślny \n&7 tryb aktualizacji, gdy gracze
+          \n&7 go nie udostępnili."
+      unlock_notify:
+        description: |-
+          &7 Wiadomość zostanie wysłana
+          &7 do użytkownika, gdy odblokuje
+          &7 nowy biom.
+      change_timeout:
+        name: "&f&l Upłynął limit czasu na zmianę"
+        value: "&7 Limit czasu po: &e [number] min"
+      parallel_updates:
+        description: |-
+          &7 Pozwala ustawić ile wysp
+          &7 może jednocześnie zmieniać
+          &7 biom
+          &7 Pozostałe zostaną dodane
+          &7 do kolejki
+        value: "&7 Aktualna wartość: &e[number]&7."
+      use_bank:
+        name: "&f&l Użyj pieniędzy z konta gracza"
+        description: "&7Przełącza, czy wszystkie \n&7płatności dokonywane przez \n&7dodatek
+          Biomes będą \n&7korzystały z rachunku wyspy."
+        enabled: "&b Korzystanie z rachunku gracza jest &a włączone &b."
+        disabled: "&b Korzystanie z rachunku gracza jest &c wyłączone &b."
+      visibility:
+        description: |-
+          &7 Pozwala zmienić graczowi
+          &7 widoczność biomu w
+          &7 panelu wyboru biomu.
+      is_online: {}
+      all_islands: {}
+      island_name:
+        name: "&f&l [name]"
+        island-owner: "[player]"
+        description: |-
+          [owner]
+          [members]
+          [id]
+        owner: "&7 Właściciel: &e [player]"
+        element: " &7 - &e [player]"
+      change_biome: {}
+      manage_data: {}
+      clear_data: {}
+      island_bundle:
+        description: |-
+          &7 Pakiet przypisany do
+          &7 aktualnej wyspy.
+          &7 Biomy tylko z tego
+          &7 pakiety mogą być używane na
+          &7 wyspie.
+        value: "&b Pakiet: [bundle]"
+        overwritten: |-
+          &c Właściciel ma uprawnienia, które
+          &c nadpisują pakiet.
+      owner_bundle:
+        description: |-
+          &7 Pakiet przypisany do
+          &7 obecnego właściciela wyspy.
+          &7 Tylko biomy z tego
+          &7 pakietu mogą być używane na
+          &7 wyspie.
+          &7 Zezwolenie dla użytkownika na przypisanie:
+          &7&o '[gamemode].biomy.
+          Pakiet &7&o.<bundle-id>'
+        value: "&b Pakiet: [bundle]"
+      reset_to_default: {}
+      bundle_info: {}
+      bundle_biomes: {}
+      bundle_name:
+        value: "&e Bieżąca wartość: &r [bundle]"
+      bundle_icon: {}
+      bundle_description: {}
+      bundle_permission:
+        description: |-
+          &7 Pozwolenie, które musi
+          &7 zostać dodane do użytkownika dla
+          &7 wymuszenia tego pakietu.
+        value: "&e Uprawnienie: &f [gamemode].biomes.bundle.[id]"
+      add_bundle_biome:
+        value: "&b - [biome]"
+      remove_bundle_biome:
+        value: "&b - [biome]"
+      create_bundle: {}
+      delete_bundle:
+        value: "&b - [budle]"
+      download: {}
+    tips: {}
+    descriptions:
+      update-mode:
+        island: Tryb wyspy
+      selected: "&2 Wybrane"
+      island-owner: "[player]"
+      biome:
+        lore: |-
+          [description]
+          [biome]
+          [unlock]
+          [change]
+        original: "&7 Biom: &e [biome]"
+        unlock:
+          lore: |-
+            [items]
+            [money]
+            [level]
+            [permissions]
+          money: "&7 Koszt odblokowania: &e $[number]"
+          level: |-
+            &7 Wymaga osiągnięcia &e [number]
+            &7 poziom wyspy.
+          permission-single: "&7 Brakujące pozwolenie: &c [permission]"
+          permissions-list: "&c - [permission]"
+          item-single: "&7 Odblokuj przedmiot: [color] [number] x [item]"
+          item-list: "&7 - [color] [numbe] x [item]"
+        change:
+          lore: |-
+            [items]
+            [money]
+            [mode]
+            [usage]
+          mode:
+            per_usage: |-
+              &b&o Zmiana biomu wzrasta
+              &b&o cenę kolejnej zmiany.
+          money: "&7 Koszt: &e $[number]"
+          item-single: "&7 Przedmiot: [color] [number] x [item]"
+          item-list: "&7 - [color] [number] x [item]"
+          number-of-usage: |-
+            &7 Ten biom został
+            &7 zastosowano &e [number] &r&7 razy.
+          has: "&e"
+      bundle:
+        lore: |-
+          [description]
+          [permission]
+          [biomes]
+        permission: |-
+          &7 Pozwolenie, które musi być
+          &7 przypisane do gracza:
+          &7&o [gamemode].biomes.bundle.[id]
+        value: "&7 - [biome]"
+      library:
+        author: "&7 autor: &e [author]"
+        version: "&7 Wykonane z biomami &e [version]"
+        lang: "&7 Język: &e [lang]"
+  conversations:
+    numeric-only: "&c Podana [value] nie jest liczbą!"
+    not-valid-value: "&c Podana liczba [value] jest nieprawidłowa. Musi być większy
+      niż [min] i mniejszy niż [max]!"
+    confirm-deletion: "&e Potwierdź, że chcesz usunąć [number] biomów o nazwach: [value]."
+    write-name: "&e Proszę wpisać nazwę na czacie."
+    write-description: "&e Wprowadź nowy opis na czacie. Każda wiadomość to nowa linia
+      opisu. Aby zakończyć napisz 'quit'."
+    write-permissions: "&e Wprowadź wymagane uprawnienia, po jednym dla każdej linii
+      na czacie i 'zakończ' w osobnej linii, aby zakończyć."
+    exported-file-name: "&e Proszę podać nazwę pliku dla eksportowanego pliku bazy
+      danych. (napisz „cancel”, aby wyjść)"
+    database-export-completed: "&a Sukces, eksport bazy danych dla [world] został
+      zakończony. Wygenerowano plik [file]."
+    write-search: "&e Proszę wpisać wartość wyszukiwania. (napisz „cancel”, aby wyjść)"
+    invalid-biome: "&c Niektóre dane w przechowywanym `[biome]` są nieprawidłowe."
+    confirm-biome-deletion: "&e Potwierdź, że chcesz usunąć [biome] z [gamemode]."
+    biome-removed: "[biome] &a został usunięty z [gamemode]."
+    biome-data-removed: Wszystkie biomy są usuwane z [gamemode].
+    click-text-to-purchase: "&e Odblokowałeś &r [biome]&r&e! Kliknij tutaj, aby go
+      kupić."
+    click-text-to-set: "&e Odblokowałeś &r [biome]&r&e! Kliknij tutaj, aby z niego
+      skorzystać."
+  messages:
+    biome-not-unlocked: "[biome] &r&c nie jest odblokowany. Nie możesz tego użyć."
+    biome-not-purchased: "&c Nie można używać &r [biome] &r&c. Musisz go kupić."
+    biome-cannot-be-unlocked: "&c Nie można odblokować &r [biome] &r&c."
+    biome-already-purchased: "&c Kupiłeś już &r [biome] &r&c."
+    island-level-not-reached: "[biome] &c wymaga przynajmniej poziomu wyspy: [number]."
+    no-credits-buy: "&c Nie masz wystarczającej ilości kredytów, aby kupić &r [biome]
+      &r&c. Kosztuje [number]."
+    no-credits-buy-bank: "&c Nie masz wystarczającej liczby kredytów na swoim koncie
+      bankowym, aby kupić &r [biome] &r&c. Kosztuje [number]."
+    no-items-buy: "&c Nie masz wystarczającej liczby przedmiotów do zakupu &r [biome]
+      &r&c. Wymaga [items]."
+    biome-purchased: "&e Kupiłeś &r [biome]."
+    import-count: "&e Zaimportowane [biomes] biomy i pakiety [bundles]."
+    update-start: "&a Rozpoczęcie zmiany biomu na [biome] na [number] chankach. &e
+      Szacowany czas: [time] sekund."
+    update-done: "&a Zakończono zmiane biomu na [biome]."
+    waiting: "&a Dodano zmianę biomu w kolejce. &e Szacowany czas oczekiwania: [time]
+      sek."
+    biome-already-unlocked: "&r [biome] &e jest już odblokowany."
+    skipping: "&a Pomijanie ładowania biomu &r [biome] &r&a."
+    overwriting: "&a Nadpisywanie &r [biome] &r&a w pamięci podręcznej."
+    imported: "&a Zaimportowany &r [biome] &r&a do pamięci podręcznej."
+    bundle-loaded: "&a Pakiet &r [bundle] &a jest załadowany."
+  errors:
+    no-biomes-admin: "&c W bieżącym trybie gry nie ma żadnego użytecznego biomu. Zaimportuj
+      lub utwórz biomy za pomocą /[command]"
+    no-biomes: "&c W bieżącym trybie gry nie ma żadnego dostępnego biomu."
+    no-rank: "&c Nie możesz zmieniać biomu na tej wyspie."
+    not-enough-level: "&c Ten biom wymaga co najmniej &e[number] &cpoziomu wyspy."
+    not-enough-money: "&c Ta zmiana biomów kosztuje $[number]."
+    not-enough-money-bank: "&c Na Twoim koncie bankowym nie ma wystarczających środków.
+      Zmiana biomu kosztuje $[number]."
+    not-enough-items: "&c Te biomy zmieniają koszt [items]."
+    admin-not-on-island: "&c Nie jesteś na wyspie [user]."
+    incorrect-object: "&c Nie można znaleźć biomu o żądanej nazwie: [biome]"
+    missing-biome: "&c Nie określono nazwy biomu."
+    incorrect-mode: "&c Tryb o nazwie „[mode]” nie istnieje."
+    incorrect-range: "&c Podana wartość „[number]” nie jest prawidłową liczbą."
+    no-file: "&c Nie można znaleźć [file] w katalogu dodatku &7biomes&c."
+    no-load: "&c Nie można zaimportować biomów z [file]. Powód: [description]"
+    not-a-gamemode-world: "&c Świat [worls] nie jest światem GameModeAddon."
+    file-exist: "&c Plik o nazwie [file] już istnieje. Wybierz inną nazwę."
+protection:
+  flags:
+    BIOMES_ISLAND_PROTECTION:
+      name: Kontrola biomu
+      description: |-
+        &5&o Przełącz, kto może zmieniać
+        &5&o biom na wyspie
+    BIOMES_WORLD_PROTECTION:
+      description: |-
+        &5&o Przełącz wymaganie
+        &5&o dla graczy do
+        &5&o bycia na swojej wyspie, aby
+        &5&o zmień biom.
