@@ -442,8 +442,7 @@ biomes:
           &7 pakietu mogą być używane na
           &7 wyspie.
           &7 Zezwolenie dla użytkownika na przypisanie:
-          &7&o '[gamemode].biomy.
-          Pakiet &7&o.<bundle-id>'
+          &7&o '[gamemode].biome.bundle.<bundle-id>'
         value: "&b Pakiet: [bundle]"
       reset_to_default:
         name: "&f&l Resetuj do ustawień domyślnych"
