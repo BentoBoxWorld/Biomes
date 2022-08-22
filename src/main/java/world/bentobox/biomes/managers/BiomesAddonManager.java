@@ -708,41 +708,54 @@ public class BiomesAddonManager
 
 
     /**
-     * This method checks if given user can apply given biome.
+     * This method checks if biome can be unlocked based on biome object and island data.
+     * This method is silent, it does not report missing stuff.
      *
-     * @param user User who will pay for activating.
-     * @param islandData Data that stores island biomes.
-     * @param biomesObject Biome that need to be changed.
-     * @return {@code true} if can apply, {@code false} otherwise.
+     * @param dataObject DataObject where all data will be saved.
+     * @param island Island that need to unlock Biome.
+     * @param biomesObject Biome that must be unlocked.
+     *
+     * @return {@code true} if biome can be unlocked, {@code false} otherwise.
      */
-    public boolean canApplyBiome(@NotNull User user,
-        @NotNull BiomesIslandDataObject islandData,
-        @NotNull BiomesObject biomesObject)
+    public boolean canUnlockBiome(BiomesIslandDataObject dataObject, Island island, BiomesObject biomesObject)
     {
-        if (!islandData.getUnlockedBiomes().contains(biomesObject.getUniqueId()))
+        if (!biomesObject.isValid() || !biomesObject.isDeployed())
         {
-            // Generator is not unlocked. Return false.
-            Utils.sendMessage(user,
-                user.getTranslation(Constants.MESSAGES + "biome-not-unlocked",
-                    Constants.PARAMETER_BIOME, biomesObject.getFriendlyName()));
-
+            // Fast exit. Biome object that is not valid and is not deployed cannot be unlocked.
             return false;
         }
-        else if (!islandData.getPurchasedBiomes().contains(biomesObject.getUniqueId()) &&
-            this.addon.isEconomyProvided() &&
-            biomesObject.getUnlockCost() > 0)
-        {
-            // Generator is not purchased. Return false.
-            Utils.sendMessage(user,
-                user.getTranslation(Constants.MESSAGES + "biome-not-purchased",
-                    Constants.PARAMETER_BIOME, biomesObject.getFriendlyName()));
 
+        // Update owner bundle, as it may influence island generators.
+        this.updateOwnerBundle(island, dataObject);
+
+        // Check if biome is part of available biomes.
+        if (!this.getIslandBiomes(island.getWorld(), dataObject).contains(biomesObject))
+        {
+            // Biome is not in island bundle list.
             return false;
         }
-        else
+
+        // Get island level from the addon.
+        final long islandLevel = this.getIslandLevel(island);
+        final User owner = island.getOwner() == null ? null : User.getInstance(island.getOwner());
+
+        if (biomesObject.getUnlockLevel() > islandLevel)
         {
-            return true;
+            // Not allowed by level.
+            return false;
         }
+
+        if (!biomesObject.getUnlockPermissions().isEmpty() &&
+            (owner == null ||
+                !owner.isOnline() ||
+                !Utils.matchAllPermissions(owner, biomesObject.getUnlockPermissions())))
+        {
+            // If permissions are set, then biome unlock status can be validated only if owner is online.
+            return false;
+        }
+
+        // More unlocking stuff can be added here.
+        return true;
     }
 
 
@@ -981,7 +994,7 @@ public class BiomesAddonManager
                 Utils.sendMessage(user,
                     user.getTranslation(Constants.MESSAGES + "biome-purchased",
                         Constants.PARAMETER_BIOME, biomesObject.getFriendlyName()));
-                islandData.getPurchasedBiomes().add(biomesObject.getUniqueId());
+                islandData.purchaseBiome(biomesObject.getUniqueId());
 
                 // Save object.
                 this.saveIslandData(islandData);
@@ -1485,9 +1498,22 @@ public class BiomesAddonManager
     public boolean isPurchased(BiomesIslandDataObject islandData, BiomesObject biomesObject)
     {
         return islandData.isPurchased(biomesObject) ||
-            islandData.isUnlocked(biomesObject) &&
-                biomesObject.getUnlockItems().isEmpty() &&
-                (!this.addon.isEconomyProvided() || biomesObject.getUnlockCost() == 0);
+            islandData.isUnlocked(biomesObject) && !this.hasPriceSet(biomesObject);
+    }
+
+
+    /**
+     * This method returns if biome has price set or it should be given for free.
+     * @param biomesObject Biome object that need to be checked.
+     * @return {@code true} if biome has price set, {@code false} otherwise.
+     */
+    public boolean hasPriceSet(BiomesObject biomesObject)
+    {
+        // If unlock items are not set and/or there are no unlock cost associated to the biome, then
+        // it is purchased by default.
+
+        return !biomesObject.getUnlockItems().isEmpty() ||
+            this.addon.isEconomyProvided() && biomesObject.getUnlockCost() != 0;
     }
 
 
