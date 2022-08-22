@@ -388,8 +388,8 @@ public class BiomeUpdateHelper
 
                 if (x < 0)
                 {
-                    minX = Math.max(minX, Utils.normalizeBy4(x + halfDiameter));
-                    maxX = Math.min(maxX, Utils.normalizeBy4(x - halfDiameter));
+                    minX = Math.max(minX, Utils.normalizeBy4(x - halfDiameter));
+                    maxX = Math.min(maxX, Utils.normalizeBy4(x + halfDiameter));
                 }
                 else
                 {
@@ -401,8 +401,8 @@ public class BiomeUpdateHelper
 
                 if (z < 0)
                 {
-                    minZ = Math.max(minZ, Utils.normalizeBy4(z + halfDiameter));
-                    maxZ = Math.min(maxZ, Utils.normalizeBy4(z - halfDiameter));
+                    minZ = Math.max(minZ, Utils.normalizeBy4(z - halfDiameter));
+                    maxZ = Math.min(maxZ, Utils.normalizeBy4(z + halfDiameter));
                 }
                 else
                 {
@@ -413,7 +413,7 @@ public class BiomeUpdateHelper
                 // Calculate Y location
                 int y = this.standingLocation.getBlockY();
                 minY = Math.max(this.world.getMinHeight(), Utils.normalizeBy4(y - halfDiameter));
-                maxY = Math.max(this.world.getMaxHeight(), Utils.normalizeBy4(y + halfDiameter));
+                maxY = Math.min(this.world.getMaxHeight(), Utils.normalizeBy4(y + halfDiameter));
             }
             default -> {
                 // Select whole island height.
