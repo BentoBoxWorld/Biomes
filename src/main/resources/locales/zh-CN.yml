@@ -30,7 +30,13 @@ biomes:
         parameters: "<生物群落ID>"
   gui:
     titles:
+      player-panel: "&0&l 选择群系"
+      buy-panel: "&0&l 购买群系"
+      advanced-panel: "&0&l 更新模式"
+      admin-panel: "&0&l 管理员界面"
+      settings: "&0&l 设置"
       library: "&0&l 库"
+      manage-biomes: "&0&l 管理群系"
       manage-bundles: "&0&l 管理捆绑包"
       manage-islands: "&0&l 管理岛屿数据"
       edit-biome: "&0&l 编辑生物群系：[biome]"
@@ -59,18 +65,26 @@ biomes:
         name: "&f&l 增加"
         description: "&7 增加 &e [number]"
       accept:
+        name: "&f&l 应用此次更改"
         description: |-
           &7 将生物群系更改为 &e [生物群系]
 
           &7 更新模式：&e [mode]
           &7 更新范围：&e [number]
       return:
+        name: "&f&l 返回"
         description: "&7 返回上一级菜单。"
-      previous: {}
-      next: {}
+      previous:
+        name: "&f&l 上一页"
+        description: "&7 跳转至第 &e [number] &7 页"
+      next:
+        name: "&f&l 下一页"
+        description: "&7 跳转至第 &e [number] &7 页"
       quit:
+        name: "&f&l 退出"
         description: "&7 退出 GUI。"
       save:
+        name: "&f&l 保存"
         description: "&7 保存更改并返回。"
       cancel:
         name: "&f&l 取消"
