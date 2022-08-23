@@ -9,6 +9,7 @@ biomes:
       migrate:
         description: 将原生物群系相关数据转为新格式
       set:
+        description: 你可以通过该指令修改玩家 <player> 的岛屿地形. <type> 和 <size> 可以选择不输入.
         parameters: "<player> <biome-id> [type] [size]"
       unlock: {}
     player:
@@ -46,7 +47,8 @@ biomes:
       add_biome: {}
       remove_biome: {}
       accept_selected: {}
-      environment_element: {}
+      environment_element:
+        description: "&7 [description]."
       properties: {}
       change_properties: {}
       unlock_properties: {}
