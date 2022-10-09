@@ -176,8 +176,9 @@ public class BiomeUpdateHelper
                 if (onIsland.isEmpty() || onIsland.get() != this.island)
                 {
                     // User is not on his island.
+                    Utils.sendMessage(this.callerUser,
+                        this.callerUser.getTranslation("general.errors.not-on-island"));
 
-                    this.callerUser.sendMessage("biomes.errors.not-on-island");
                     return false;
                 }
 
