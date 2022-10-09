@@ -389,6 +389,28 @@ public class Settings implements ConfigObject
     }
 
 
+    /**
+     * Is use single menu boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isUseSingleMenu()
+    {
+        return useSingleMenu;
+    }
+
+
+    /**
+     * Sets use single menu.
+     *
+     * @param useSingleMenu the use single menu
+     */
+    public void setUseSingleMenu(boolean useSingleMenu)
+    {
+        this.useSingleMenu = useSingleMenu;
+    }
+
+
 // ---------------------------------------------------------------------
 // Section: Enums used for Settings.
 // ---------------------------------------------------------------------
@@ -527,6 +549,12 @@ public class Settings implements ConfigObject
     @ConfigEntry(path = "use-chunk-refresh")
     @SuppressWarnings("javadoc")
     private boolean useChunkRefresh = true;
+
+    @ConfigComment("Use single GUI. This will allow to disable buy panel, and use main panel to buy biomes.")
+    @ConfigComment("BUY action need to be added to the main panel biome button.")
+    @ConfigComment("Default value = false")
+    @ConfigEntry(path = "use-single-menu")
+    private boolean useSingleMenu = false;
 
     @ConfigComment("Player main sub-command to access the addon.")
     @ConfigComment("This command label will be required to write after gamemode player command label, f.e. /[label] biomes")

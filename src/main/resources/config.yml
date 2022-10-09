@@ -48,6 +48,10 @@ parallel-biome-changes: 1
 # updates, please disable this feature.
 # Default value = true
 use-chunk-refresh: true
+# Use single GUI. This will allow to disable buy panel, and use main panel to buy biomes.
+# BUY action need to be added to the main panel biome button.
+# Default value = false
+use-single-menu: false
 commands:
   player:
     # Player main sub-command to access the addon.

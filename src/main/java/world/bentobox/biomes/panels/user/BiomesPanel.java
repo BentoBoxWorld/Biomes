@@ -63,7 +63,8 @@ public class BiomesPanel extends CommonPanel
         // Remove wrong environment biomes.
         this.biomeList = this.manager.getIslandBiomes(world, this.islandData).stream().
             filter(biome -> biome.getEnvironment().equals(user.getWorld().getEnvironment())).
-            filter(biomesObject -> this.islandData != null && this.manager.isPurchased(this.islandData, biomesObject)).
+            filter(biomesObject -> this.addon.getSettings().isUseSingleMenu() ||
+                this.islandData != null && this.manager.isPurchased(this.islandData, biomesObject)).
             collect(Collectors.toList());
 
         this.numberOfPurchasableBiomes = this.manager.getIslandBiomes(this.world, this.islandData).stream().
