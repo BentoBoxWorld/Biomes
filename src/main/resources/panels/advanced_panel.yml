@@ -17,6 +17,7 @@ advanced_panel:
         data:
           type: MODE
           value: ISLAND
+          max-value: 1
         actions:
           left:
             tooltip: biomes.gui.tips.click-to-choose
@@ -27,6 +28,7 @@ advanced_panel:
         data:
           type: MODE
           value: CHUNK
+          max-value: 25
         actions:
           left:
             tooltip: biomes.gui.tips.click-to-choose
@@ -37,6 +39,8 @@ advanced_panel:
         data:
           type: MODE
           value: RANGE
+          min-value: 4
+          max-value: 400
         actions:
           left:
             tooltip: biomes.gui.tips.click-to-choose
