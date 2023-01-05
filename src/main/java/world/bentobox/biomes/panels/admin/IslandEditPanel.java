@@ -261,7 +261,7 @@ public class IslandEditPanel extends CommonPagedPanel<BiomesObject>
 
                     for (UUID uuid : members)
                     {
-                        if (uuid != this.island.getOwner())
+                        if (!uuid.equals(this.island.getOwner()))
                         {
                             builder.append("\n").append(this.user.getTranslation(reference + "value",
                                 Constants.PARAMETER_PLAYER, this.addon.getPlayers().getName(uuid)));

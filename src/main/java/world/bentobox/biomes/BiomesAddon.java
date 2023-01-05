@@ -156,7 +156,7 @@ public class BiomesAddon extends Addon
             this.log("Biomes Addon hooked into Bank addon.");
         }, () ->
         {
-            this.levelAddon = null;
+            this.bankAddon = null;
         });
 
         // Try to find Level addon and if it does not exist, display a warning
@@ -237,7 +237,11 @@ public class BiomesAddon extends Addon
     {
         if (this.hooked)
         {
-            this.biomeUpdateQueue.getTask().cancel();
+            if (this.biomeUpdateQueue != null)
+            {
+                this.biomeUpdateQueue.getTask().cancel();
+            }
+
             this.getLogger().info("Biomes addon disabled.");
         }
     }

@@ -805,15 +805,19 @@ biomes:
     # Message that appears after updating search value.
     search-updated: "&a Search value updated."
     # Message that appears when admin tries to deploy invalid biome.
-    invalid-biome: "&c Some data in stored `[biome]` is not valid."
+    invalid-biome: "&c Some data in stored `[biome]`&r&c is not valid."
     # Message that appears when admin tries to delete biome.
-    confirm-biome-deletion: "&e Please confirm that you want to remove [biome] from [gamemode]."
+    confirm-biome-deletion: "&e Please confirm that you want to remove [biome]&r&e from [gamemode]."
     # Message that appears when admin removed biome.
-    biome-removed: "[biome] &a is removed from [gamemode]."
+    biome-removed: "[biome] &r&a is removed from [gamemode]."
     # Message that appears when admin tries to delete island data.
     confirm-island-data-deletion: "&e Please confirm that you want to remove [player] island data."
     # Message that appears when admin removed island data.
     island-data-removed: "[player] &a island data is removed."
+    # Message that appears when admin tries to delete biome.
+    confirm-biome-data-deletion: "&e Please confirm that you want to remove all biomes from [gamemode]."
+    # Message that appears when admin removed biome.
+    biome-data-removed: "All biomes are removed from [gamemode]."
     # Message that appears when user unlocks new biome and need to buy it.
     click-text-to-purchase: "&e You have unlocked &r [biome]&r&e! Click here to buy it."
     # Message that appears when user unlocks new biome and can already use it.
@@ -828,9 +832,9 @@ biomes:
     # Message that is sent to player if he tries to buy biome that he already owns.
     biome-already-purchased: "&c You have already purchased &r [biome] &r&c."
     # Message that is sent to player if he tries purchase biome without reaching required level.
-    island-level-not-reached: "[biome] &c requires to have at least island level: [number]."
+    island-level-not-reached: "[biome] &r&c requires to have at least island level: [number]."
     # Message that is sent to player if he tries purchase biome without required permission.
-    missing-permission: "[biome] &c requires to have permission: [permission]."
+    missing-permission: "[biome] &r&c requires to have permission: [permission]."
     # Message that is sent to player if he tries purchase biome without required money in account.
     no-credits-buy: "&c You do not have enough credits to buy &r [biome] &r&c. It costs [number]."
     # Message that is sent to player if he tries purchase biome without required money in bank account.
@@ -838,22 +842,22 @@ biomes:
     # Message that is sent to player if he tries purchase biome without required items in account.
     no-items-buy: "&c You do not have enough items to buy &r [biome] &r&c. It requires [items]."
     # Message that is sent to player when he buys a biome.
-    biome-purchased: "&e You have purchased &r [biome]."
+    biome-purchased: "&e You have purchased &r [biome]&r&e."
     # Message that is sent to player after importing biomes.
     import-count: "&e Imported [biomes] biomes and [bundles] bundles."
     # Message that appears after clicking on download button in web library.
     start-downloading: "&e Start downloading library."
     # This message is sent to user when biome changing is started.
-    update-start: "&a Starting biome changing to [biome] in [number] chunks. &e Estimated time: [time] sec."
+    update-start: "&a Starting biome changing to [biome]&r&a in [number] chunks. &e Estimated time: [time] sec."
     # This message is sent to user when biome changing is finished.
-    update-done: "&a Finished changing biome to [biome]."
+    update-done: "&a Finished changing biome to [biome]&r&a."
     # This message is sent to user when his change is placed in queue.
     waiting: "&a Added biome change in queue. &e Estimated waiting time: [time] sec."
     # Message that is sent to player when the biome is already unlocked.
-    biome-already-unlocked: "&r [biome] &e is already unlocked."
+    biome-already-unlocked: "[biome] &r&e is already unlocked."
     # Message that is displayed for players if gamemode does not have any biome.
     everything-already-bought: "&a You already have bought all biomes for this gamemode."
-    skipping: "&a Skipping loading &r [biome] &r&a."
+    skipping: "&a Skipping loading &r [biome]&r&a."
     overwriting: "&a Overwriting &r [biome] &r&a in cache."
     imported: "&a Imported &r [biome] &r&a in cache."
     migrate-start: "&a Starting migration to new data format."

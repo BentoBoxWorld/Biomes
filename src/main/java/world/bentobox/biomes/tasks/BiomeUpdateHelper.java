@@ -176,8 +176,9 @@ public class BiomeUpdateHelper
                 if (onIsland.isEmpty() || onIsland.get() != this.island)
                 {
                     // User is not on his island.
+                    Utils.sendMessage(this.callerUser,
+                        this.callerUser.getTranslation("general.errors.not-on-island"));
 
-                    this.callerUser.sendMessage("biomes.errors.not-on-island");
                     return false;
                 }
 
@@ -386,34 +387,20 @@ public class BiomeUpdateHelper
                 int halfDiameter = this.range / 2;
                 int x = this.standingLocation.getBlockX();
 
-                if (x < 0)
-                {
-                    minX = Math.max(minX, Utils.normalizeBy4(x + halfDiameter));
-                    maxX = Math.min(maxX, Utils.normalizeBy4(x - halfDiameter));
-                }
-                else
-                {
-                    minX = Math.max(minX, Utils.normalizeBy4(x - halfDiameter));
-                    maxX = Math.min(maxX, Utils.normalizeBy4(x + halfDiameter));
-                }
+                // Calculate X location
+                minX = Math.max(minX, Utils.normalizeBy4(x - halfDiameter));
+                maxX = Math.min(maxX, Utils.normalizeBy4(x + halfDiameter));
 
                 int z = this.standingLocation.getBlockZ();
 
-                if (z < 0)
-                {
-                    minZ = Math.max(minZ, Utils.normalizeBy4(z + halfDiameter));
-                    maxZ = Math.min(maxZ, Utils.normalizeBy4(z - halfDiameter));
-                }
-                else
-                {
-                    minZ = Math.max(minZ, Utils.normalizeBy4(z - halfDiameter));
-                    maxZ = Math.min(maxZ, Utils.normalizeBy4(z + halfDiameter));
-                }
+                // Calculate Z location
+                minZ = Math.max(minZ, Utils.normalizeBy4(z - halfDiameter));
+                maxZ = Math.min(maxZ, Utils.normalizeBy4(z + halfDiameter));
 
                 // Calculate Y location
                 int y = this.standingLocation.getBlockY();
                 minY = Math.max(this.world.getMinHeight(), Utils.normalizeBy4(y - halfDiameter));
-                maxY = Math.max(this.world.getMaxHeight(), Utils.normalizeBy4(y + halfDiameter));
+                maxY = Math.min(this.world.getMaxHeight(), Utils.normalizeBy4(y + halfDiameter));
             }
             default -> {
                 // Select whole island height.

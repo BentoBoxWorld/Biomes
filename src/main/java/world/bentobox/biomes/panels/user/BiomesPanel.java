@@ -24,7 +24,6 @@ import world.bentobox.bentobox.api.panels.builders.TemplatedPanelBuilder;
 import world.bentobox.bentobox.api.panels.reader.ItemTemplateRecord;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.objects.Island;
-import world.bentobox.bentobox.paperlib.PaperLib;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.config.Settings;
@@ -64,7 +63,8 @@ public class BiomesPanel extends CommonPanel
         // Remove wrong environment biomes.
         this.biomeList = this.manager.getIslandBiomes(world, this.islandData).stream().
             filter(biome -> biome.getEnvironment().equals(user.getWorld().getEnvironment())).
-            filter(biomesObject -> this.islandData != null && this.manager.isPurchased(this.islandData, biomesObject)).
+            filter(biomesObject -> this.addon.getSettings().isUseSingleMenu() ||
+                this.islandData != null && this.manager.isPurchased(this.islandData, biomesObject)).
             collect(Collectors.toList());
 
         this.numberOfPurchasableBiomes = this.manager.getIslandBiomes(this.world, this.islandData).stream().
@@ -82,7 +82,7 @@ public class BiomesPanel extends CommonPanel
         }
 
         // Do not open gui if there is no magic sticks.
-        if (this.biomeList.isEmpty())
+        if (this.biomeList.isEmpty() && this.numberOfPurchasableBiomes == 0)
         {
             this.addon.logError("There are no available biomes!");
             Utils.sendMessage(this.user, this.user.getTranslation(Constants.ERRORS + "no-biomes",

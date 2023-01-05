@@ -420,6 +420,7 @@ public class Utils
                     OLD_GROWTH_BIRCH_FOREST,
                     DARK_FOREST,
                     SWAMP,
+                    MANGROVE_SWAMP,
                     JUNGLE,
                     SPARSE_JUNGLE,
                     BAMBOO_JUNGLE,
@@ -501,7 +502,8 @@ public class Utils
         return switch (biome)
             {
                 case LUSH_CAVES,
-                    DRIPSTONE_CAVES -> true;
+                    DRIPSTONE_CAVES,
+                    DEEP_DARK -> true;
                 default -> false;
             };
     }

@@ -7,6 +7,7 @@
 package world.bentobox.biomes.panels.user;
 
 
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -95,6 +96,9 @@ public class AdvancedPanel extends CommonPanel
         String update = (String) template.dataMap().getOrDefault("value",
             Settings.UpdateMode.ISLAND.name());
 
+        int minValue = (int) template.dataMap().getOrDefault("min-value", 1);
+        int maxValue = (int) template.dataMap().getOrDefault("max-value", Integer.MAX_VALUE);
+
         PanelItemBuilder builder = new PanelItemBuilder();
 
         if (template.icon() != null)
@@ -117,6 +121,12 @@ public class AdvancedPanel extends CommonPanel
         builder.clickHandler((panel, user, clickType, i) ->
         {
             this.updateMode = Settings.UpdateMode.getMode(update.toUpperCase());
+
+            this.minValue = Math.min(minValue, maxValue);
+            this.maxValue = Math.max(minValue, maxValue);
+
+            this.range = Math.max(Math.min(this.range, this.maxValue), this.minValue);
+
             this.build();
 
             // Always return true.
@@ -176,10 +186,16 @@ public class AdvancedPanel extends CommonPanel
                 Constants.PARAMETER_NUMBER, String.valueOf(increaseValue)));
         }
 
+        if (this.range >= this.maxValue)
+        {
+            // Change icon as max value has been reached.
+            builder.icon(Material.BARRIER);
+        }
+
         // Add ClickHandler
         builder.clickHandler((panel, user, clickType, i) ->
         {
-            this.range += increaseValue;
+            this.range = Math.min(this.range + increaseValue, this.maxValue);
             this.build();
 
             // Always return true.
@@ -237,10 +253,16 @@ public class AdvancedPanel extends CommonPanel
                 Constants.PARAMETER_NUMBER, String.valueOf(decreaseValue)));
         }
 
+        if (this.range <= this.minValue)
+        {
+            // Change icon as max value has been reached.
+            builder.icon(Material.BARRIER);
+        }
+
         // Add ClickHandler
         builder.clickHandler((panel, user, clickType, i) ->
         {
-            this.range = Math.max(this.range - decreaseValue, 1);
+            this.range = Math.max(this.range - decreaseValue, this.minValue);
             this.build();
 
             // Always return true.
@@ -323,8 +345,8 @@ public class AdvancedPanel extends CommonPanel
                         ConversationUtils.createNumericInput(numberConsumer,
                             this.user,
                             this.user.getTranslation(Constants.CONVERSATIONS + "input-number"),
-                            1,
-                            2000);
+                            this.minValue,
+                            this.maxValue);
                     }
                     else if ("ACCEPT".equalsIgnoreCase(actionRecords.actionType()))
                     {
@@ -510,4 +532,14 @@ public class AdvancedPanel extends CommonPanel
      * This variable stores update mode
      */
     private Settings.UpdateMode updateMode;
+
+    /**
+     * This variable stores the minimal update size that can be set.
+     */
+    private int minValue = 1;
+
+    /**
+     * This variable stores the maximal update size that can be set.
+     */
+    private int maxValue = Integer.MAX_VALUE;
 }

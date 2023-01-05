@@ -476,8 +476,43 @@ public class BiomesCommand extends BiomesCompositeCommand
                     return false;
                 }
 
+                if (!data.isUnlocked(biomesObject))
+                {
+                    // Check biome unlock status.
+                    if (addonManager.canUnlockBiome(data, island, biomesObject))
+                    {
+                        // Unlock biome as it is marked as valid.
+                        addonManager.unlockBiome(data, user, island, biomesObject);
+                    }
+                    else
+                    {
+                        // Do not allow to buy non-unlocked biomes.
+                        Utils.sendMessage(user,
+                            user.getTranslation(Constants.MESSAGES + "biome-not-unlocked",
+                                Constants.PARAMETER_BIOME, biomesObject.getFriendlyName()));
+                        return false;
+                    }
+                }
+
+                if (!addonManager.hasPriceSet(biomesObject))
+                {
+                    // If price is not set check if addon should send notification to the user.
+                    if (!this.<BiomesAddon>getAddon().getSettings().isNotifyUnlockedBiomes())
+                    {
+                        // Notify user that biome is available if notify on unlock is disabled.
+                        Utils.sendUnlockMessage(user.getUniqueId(),
+                            island,
+                            biomesObject,
+                            this.getAddon(),
+                            true);
+                    }
+
+                    return true;
+                }
+
                 if (addonManager.canPurchaseBiome(user, island, data, biomesObject))
                 {
+                    // Purchase biome.
                     addonManager.purchaseBiome(user, island, data, biomesObject);
                     return true;
                 }
