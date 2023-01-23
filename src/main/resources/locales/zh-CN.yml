@@ -15,10 +15,13 @@ biomes:
         parameters: "<player> <biome-id> [type] [size]"
       unlock:
         description: 无需检查即可为玩家解锁生物群落, 末尾添加 `true` 会将其标记为已购买
+        parameters: "<player> <biome-id> [true]"
     player:
-      main: {}
+      main:
+        description: 打开生物群系选择 GUI
       set:
         description: 更改玩家的生物群系
+        parameters: "<biome-id> [mode] [size]"
       buy:
         description: 购买需要的生物群落
         parameters: "<biome-id>"
@@ -298,6 +301,7 @@ biomes:
         dry: 干燥的生物群系
         cold: 寒冷的生物群系
         snowy: 积雪生物群系
+        ocean: 海洋生物群系
         nether: 下界生物群系
         the_end: 末地生物群系
         neutral: 中性生物群系
@@ -327,12 +331,14 @@ biomes:
           &7 设置玩家每次
           &7 更改生物群系之间
           &7 需要的冷却时间
+        value: "&7 当前冷却时间：&e [number]"
         disabled: "&e 已禁用冷却时间"
       default_size:
         name: "&f&l 默认范围"
         description: |-
           &7 设置玩家更改
           &7 生物群系的默认范围
+        value: "&7 默认范围：&e [number]"
       default_mode:
         name: "&f&l 默认更新模式"
         description: |-
@@ -438,6 +444,7 @@ biomes:
           &7 权限分配格式：
           &7&o '[gamemode].biomes.
           &7&o bundle.<bundle-id>'
+        value: "&b 捆绑包：[bundle]"
       reset_to_default:
         name: "&f&l 重置为默认值"
         description: |-
@@ -577,6 +584,7 @@ biomes:
           permission-single: "&7 缺少权限：&c [permission]"
           permissions-title: "&c 缺少权限："
           permissions-list: "&c - [permission]"
+          item-single: "&7 解锁物品：[color] [number] x [item]"
           item-title: "&7 解锁物品："
           item-list: "&7 - [color] [number] x [item]"
           missing: "&c"
@@ -595,6 +603,8 @@ biomes:
               &b&o 更改生物群系
               &b&o 每次增加的费用
             static: "&b&o 固定更改费用"
+          money: "&7 费用：&e $[number]"
+          item-single: "&7 项目：[color] [number] x [item]"
           item-title: "&7 项："
           item-list: "&7 - [color] [number] x [item]"
           number-of-usage: |-
@@ -614,6 +624,7 @@ biomes:
         title: "&7 生物群系捆绑包："
         no-biomes: "&c 没有指定生物群系"
       library:
+        author: "&7 作者 &e [author]"
         version: "&7 Biomes版本 &e [version]"
         lang: "&7 语言：&e [lang]"
         gamemode: "&7 用于 &e [gamemode]"
