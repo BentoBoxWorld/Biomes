@@ -432,6 +432,7 @@ biomes:
           &7 分配给此岛屿的捆绑包
           &7 岛屿仅能使用
           &7 捆绑包内的生物群系
+        value: "&b 捆绑包：[bundle]"
         overwritten: |-
           &c 岛主拥有的捆绑包权限
           &c 会覆盖岛屿捆绑包
@@ -579,6 +580,11 @@ biomes:
           [change]
         original: "&7 生物群系：&e [biome]"
         unlock:
+          lore: |-
+            [items]
+            [money]
+            [level]
+            [permissions]
           money: "&7 解锁费用：&e $[number]"
           level: "&7 需要 &e[number] &7 岛屿等级"
           permission-single: "&7 缺少权限：&c [permission]"
@@ -622,6 +628,7 @@ biomes:
           &7 给玩家的权限：
           &7&o [gamemode].biomes.bundle.[id]
         title: "&7 生物群系捆绑包："
+        value: "&7 - [biome]"
         no-biomes: "&c 没有指定生物群系"
       library:
         author: "&7 作者 &e [author]"
