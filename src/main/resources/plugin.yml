@@ -1,0 +1,9 @@
+name: BentoBox-Biomes
+main: world.bentobox.biomes.BiomesPladdon
+version: ${project.version}${build.number}
+api-version: "1.19"
+
+authors: [BONNe]
+contributors: ["The BentoBoxWorld Community"]
+website: https://bentobox.world
+description: ${project.description}

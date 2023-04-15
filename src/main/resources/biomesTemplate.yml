@@ -129,7 +129,7 @@ biomes:
     environment: NORMAL
     name: '&f&l Plains'
     description: |-
-      &7 Flat but geen, the best
+      &7 Flat but green, the best
       &7 starting biome.
     icon: GRASS_BLOCK
     change:
