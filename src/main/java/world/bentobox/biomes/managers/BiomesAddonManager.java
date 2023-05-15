@@ -27,6 +27,7 @@ import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.Database;
 import world.bentobox.bentobox.database.objects.Island;
+import world.bentobox.bentobox.managers.IslandWorldManager;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.database.objects.BiomesBundleObject;
@@ -1514,6 +1515,42 @@ public class BiomesAddonManager
 
         return !biomesObject.getUnlockItems().isEmpty() ||
             this.addon.isEconomyProvided() && biomesObject.getUnlockCost() != 0;
+    }
+
+
+    // ---------------------------------------------------------------------
+    // Section: Queue methods
+    // ---------------------------------------------------------------------
+
+
+    /**
+     * This method clears biome change queue for the given world.
+     * @param user User who triggers queue cleaning.
+     * @param world World where queue must be cleared.
+     */
+    public void clearQueues(User user, World world)
+    {
+        IslandWorldManager islandWorldManager = this.addon.getPlugin().getIWM();
+        Optional<GameModeAddon> gameMode = islandWorldManager.getAddon(world);
+
+        gameMode.ifPresent(gamemode -> {
+            // Remove all tasks with the same world as given from the queue.
+            this.addon.getUpdateQueue().getProcessQueue().removeIf(task -> gamemode.getOverWorld() == task.getWorld());
+
+            if (islandWorldManager.isNetherGenerate(world) && islandWorldManager.isNetherIslands(world))
+            {
+                this.addon.getUpdateQueue().getProcessQueue().removeIf(task -> gamemode.getNetherWorld() == task.getWorld());
+            }
+
+            if (islandWorldManager.isEndGenerate(world) && islandWorldManager.isEndIslands(world))
+            {
+                this.addon.getUpdateQueue().getProcessQueue().removeIf(task -> gamemode.getEndWorld() == task.getWorld());
+            }
+
+            Utils.sendMessage(user,
+                user.getTranslationOrNothing(Constants.MESSAGES + "queue.clear",
+                    Constants.PARAMETER_GAMEMODE, gamemode.getDescription().getName()));
+        });
     }
 
 

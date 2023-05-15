@@ -74,6 +74,8 @@ public class AdminCommand extends BiomesCompositeCommand
         new MigrateCommand(this.getAddon(), this);
         new BiomesSetCommand(this.getAddon(), this);
         new BiomesUnlockCommand(this.getAddon(), this);
+
+        new BiomesClearQueueCommand(this.getAddon(), this);
     }
 
 
@@ -537,6 +539,52 @@ public class AdminCommand extends BiomesCompositeCommand
             }
 
             return Optional.of(Util.tabLimit(returnList, lastString));
+        }
+    }
+
+
+    /**
+     * The queue clear command.
+     */
+    private static class BiomesClearQueueCommand extends CompositeCommand
+    {
+        /**
+         * Migrates biomes
+         *
+         * @param addon - addon
+         * @param cmd - command
+         */
+        public BiomesClearQueueCommand(Addon addon, CompositeCommand cmd)
+        {
+            super(addon, cmd, "clearqueue");
+        }
+
+
+        /**
+         * Execute command.
+         *
+         * @param user the user
+         * @param label the command top label
+         * @param args the args
+         * @return always true.
+         */
+        @Override
+        public boolean execute(User user, String label, List<String> args)
+        {
+            this.<BiomesAddon>getAddon().getAddonManager().clearQueues(user, getWorld());
+            return true;
+        }
+
+
+        /**
+         * Sets command settings.
+         */
+        @Override
+        public void setup()
+        {
+            this.inheritPermission();
+            this.setParametersHelp(Constants.ADMIN_COMMANDS + "clear-queue.parameters");
+            this.setDescription(Constants.ADMIN_COMMANDS + "clear-queue.description");
         }
     }
 
