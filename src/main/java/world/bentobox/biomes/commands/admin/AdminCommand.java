@@ -159,12 +159,38 @@ public class AdminCommand extends BiomesCompositeCommand
             }
 
             List<String> args = input.subList(1, input.size());
-            User target = this.getAddon().getPlayers().getUser(input.get(0));
+
+            String targetName = input.get(0);
+            boolean hasTarget;
+            User target;
+
+            if (HERE.equalsIgnoreCase(targetName))
+            {
+                target = this.getIslandsManager().getIslandAt(user.getLocation()).
+                    map(Island::getOwner).
+                    map(User::getInstance).
+                    orElse(null);
+                hasTarget = true;
+            }
+            else
+            {
+                if (AdminCommand.this.getPlayers().getUUID(targetName) != null)
+                {
+                    target = AdminCommand.this.getPlayers().getUser(targetName);
+                }
+                else
+                {
+                    target = null;
+                }
+
+                hasTarget = target != null;
+            }
+
             BiomesObject biome = AdminCommand.this.getBiomeObject(args, user);
             Settings.UpdateMode updateMode = AdminCommand.this.getUpdateMode(args, user);
             int size = AdminCommand.this.getUpdateRange(args, user);
 
-            if (target == null || biome == null || updateMode == null || size < 1)
+            if (!hasTarget || biome == null || updateMode == null || size < 1)
             {
                 // Show help if something fails.
                 this.showHelp(this, user);
@@ -175,9 +201,9 @@ public class AdminCommand extends BiomesCompositeCommand
 
                 BiomeUpdateHelper helper = new BiomeUpdateHelper(this.getAddon(),
                     user,
-                    target,
+                    target == null ? user : target,
                     biome,
-                    this.<BiomesAddon>getAddon().getAddonManager().getIslandData(this.getWorld(), user),
+                    this.<BiomesAddon>getAddon().getAddonManager().getIslandData(this.getWorld(), target),
                     this.getWorld(),
                     updateMode,
                     size,
@@ -214,6 +240,7 @@ public class AdminCommand extends BiomesCompositeCommand
                 case 3:
                     // Create suggestions with all player names that is available for users.
                     Bukkit.getOnlinePlayers().forEach(player -> returnList.add(player.getName()));
+                    returnList.add(HERE);
 
                     break;
                 case 4:
@@ -512,4 +539,15 @@ public class AdminCommand extends BiomesCompositeCommand
             return Optional.of(Util.tabLimit(returnList, lastString));
         }
     }
+
+
+// ---------------------------------------------------------------------
+// Section: Static Variables
+// ---------------------------------------------------------------------
+
+
+    /**
+     * The constant HERE.
+     */
+    public static final String HERE = "here";
 }
