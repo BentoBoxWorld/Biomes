@@ -170,7 +170,7 @@ public class AdminCommand extends BiomesCompositeCommand
                     map(Island::getOwner).
                     map(User::getInstance).
                     orElse(null);
-                hasTarget = true;
+                hasTarget = user.isPlayer();
             }
             else
             {
