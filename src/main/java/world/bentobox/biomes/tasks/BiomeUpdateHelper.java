@@ -152,8 +152,17 @@ public class BiomeUpdateHelper
 
             if (!this.hasPermissionToUpdateMode())
             {
+                String missingPermission =
+                    this.addon.getPlugin().getIWM().getPermissionPrefix(this.world) + 
+                        "biomes.set." + 
+                        this.updateMode.name().toLowerCase() +
+                        "." + 
+                        this.biome.getUniqueId().toLowerCase();
+                
                 Utils.sendMessage(this.callerUser,
-                    this.callerUser.getTranslation("general.errors.no-permission"));
+                    this.callerUser.getTranslation("general.errors.no-permission",
+                        "[permission]",
+                        missingPermission));
                 return false;
             }
 
