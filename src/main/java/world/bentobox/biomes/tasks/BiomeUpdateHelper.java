@@ -60,7 +60,7 @@ public class BiomeUpdateHelper
      * @param world the world
      * @param updateMode the update mode
      * @param range the range
-     * @param canWithdraw the can withdraw
+     * @param notForced the biome change is forced. No withdraws are made.
      */
     public BiomeUpdateHelper(BiomesAddon addon,
         User callerUser,
@@ -70,7 +70,7 @@ public class BiomeUpdateHelper
         World world,
         UpdateMode updateMode,
         int range,
-        boolean canWithdraw)
+        boolean notForced)
     {
         this.addon = addon;
         this.callerUser = callerUser;
@@ -80,7 +80,7 @@ public class BiomeUpdateHelper
         this.world = world;
         this.updateMode = updateMode;
         this.range = range;
-        this.canWithdraw = canWithdraw;
+        this.notForced = notForced;
 
         this.worldProtectionFlag = BiomesAddon.BIOMES_WORLD_PROTECTION.isSetForWorld(this.world);
         // Initialize standing location to be the location of the target user
@@ -126,7 +126,7 @@ public class BiomeUpdateHelper
 
         this.calculateArea();
 
-        if (this.callerUser == this.targetUser)
+        if (this.notForced)
         {
             if (!this.biome.getEnvironment().equals(this.callerUser.getWorld().getEnvironment()))
             {
@@ -152,8 +152,17 @@ public class BiomeUpdateHelper
 
             if (!this.hasPermissionToUpdateMode())
             {
+                String missingPermission =
+                    this.addon.getPlugin().getIWM().getPermissionPrefix(this.world) + 
+                        "biomes.set." + 
+                        this.updateMode.name().toLowerCase() +
+                        "." + 
+                        this.biome.getUniqueId().toLowerCase();
+                
                 Utils.sendMessage(this.callerUser,
-                    this.callerUser.getTranslation("general.errors.no-permission"));
+                    this.callerUser.getTranslation("general.errors.no-permission",
+                        "[permission]",
+                        missingPermission));
                 return false;
             }
 
@@ -459,7 +468,7 @@ public class BiomeUpdateHelper
             }
         });
 
-        if (this.canWithdraw)
+        if (this.notForced)
         {
             switch (this.biome.getCostMode())
             {
@@ -484,9 +493,12 @@ public class BiomeUpdateHelper
     {
         task.updateChunkQueue();
 
-        // Increase counter.
-        this.islandData.increaseBiomeChangeCounter(this.biome);
-        this.addon.getAddonManager().saveIslandData(this.islandData);
+        if (this.islandData != null)
+        {
+            // Increase counter.
+            this.islandData.increaseBiomeChangeCounter(this.biome);
+            this.addon.getAddonManager().saveIslandData(this.islandData);
+        }
 
         this.addon.getUpdateQueue().addUpdateTask(task).thenAccept((result) ->
         {
@@ -781,7 +793,8 @@ public class BiomeUpdateHelper
      */
     private boolean checkUnlockStatus()
     {
-        return this.islandData.isUnlocked(this.biome);
+        return this.islandData != null &&
+            this.islandData.isUnlocked(this.biome);
     }
 
 
@@ -792,7 +805,8 @@ public class BiomeUpdateHelper
      */
     private boolean checkPurchaseStatus()
     {
-        return this.addon.getAddonManager().isPurchased(this.islandData, this.biome);
+        return this.islandData != null &&
+            this.addon.getAddonManager().isPurchased(this.islandData, this.biome);
     }
 
 
@@ -943,7 +957,8 @@ public class BiomeUpdateHelper
      */
     private double getUsageIncrement()
     {
-        return this.biome.getCostIncrement() * this.islandData.getBiomeChangeCounter(this.biome);
+        return this.islandData == null ? 0 :
+            this.biome.getCostIncrement() * this.islandData.getBiomeChangeCounter(this.biome);
     }
 
 
@@ -1109,9 +1124,10 @@ public class BiomeUpdateHelper
     private final World world;
 
     /**
-     * This variable stores if money from caller can be withdrawn.
+     * This variable stores if biome change is forced or not.
+     * Forced change does skip unlocks, purchases and monetary settings.
      */
-    private final boolean canWithdraw;
+    private final boolean notForced;
 
     /**
      * This variable stores if world protection flag is enabled. Avoids checking it each time as flag will not change

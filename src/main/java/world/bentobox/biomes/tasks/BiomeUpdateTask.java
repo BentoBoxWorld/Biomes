@@ -306,6 +306,17 @@ public class BiomeUpdateTask
 
 
     /**
+     * Gets world.
+     *
+     * @return the world
+     */
+    public World getWorld()
+    {
+        return this.world;
+    }
+
+
+    /**
      * Sets min coordinate.
      *
      * @param minCoordinate the min coordinate

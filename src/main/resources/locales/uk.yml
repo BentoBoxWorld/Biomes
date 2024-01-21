@@ -1,0 +1,806 @@
+---
+biomes:
+  commands:
+    admin:
+      main:
+        description: головна команда адміністратора біомів
+      import:
+        parameters: "<file>"
+        description: імпортує біоми
+        confirmation: Це видалить існуючі біоми з [gamemode] та імпортує нові біоми
+          з файлу шаблону – підтвердьте
+      migrate:
+        description: переносить збережені дані біомів у новий формат
+      set:
+        description: змінює біом для гравця
+        parameters: "<player> <biome-id> [mode] [size]"
+      unlock:
+        description: розблоковує біом для гравця без перевірок. Якщо додати `true`
+          у кінці, це буде позначено як придбане.
+        parameters: "<player> <biome-id> [true]"
+      clear-queue:
+        description: очищає чергу оновлення біома
+    player:
+      main:
+        description: відкриває графічний інтерфейс вибору біомів
+      set:
+        description: змінює біом для гравця
+        parameters: "<biome-id> [mode] [size]"
+      buy:
+        description: купує запитаний біом
+        parameters: "<biome-id>"
+      info:
+        description: надсилає повідомлення чату з детальним описом біома
+        parameters: "<biome-id>"
+  gui:
+    titles:
+      player-panel: "&0&l Виберіть Біом"
+      buy-panel: "&0&l Придбати біом"
+      advanced-panel: "&0&l Режим оновлення"
+      admin-panel: "&0&l Графічний інтерфейс адміністратора"
+      settings: "&0&l Налаштування"
+      library: "&0&l Бібліотека"
+      manage-biomes: "&0&l Керуйте біомами"
+      manage-bundles: "&0&l Керувати пакетами"
+      manage-islands: "&0&l Керування даними островів"
+      edit-biome: "&0&l Редагувати біом: [biome]"
+      edit-bundle: "&0&l Редагувати пакет: [bundle]"
+      edit-island: "&0&l Редагувати острів: [island]"
+      environment-selector: "&0&l Виберіть середовище"
+      biome-selector: "&0&l Виберіть Біом"
+      bundle-selector: "&0&l Виберіть пакет"
+      item-selector: "&0&l Вибрати елементи"
+    buttons:
+      island:
+        name: "&f&l Острів"
+        description: |-
+          &7 Повністю змінює біом
+          &7 острів.
+      chunk:
+        name: "&f&l Чанк"
+        description: "&7 Змінює біом частинами."
+      range:
+        name: "&f&l Діапазон"
+        description: "&7 Змінює біом за діапазоном."
+      reduce:
+        name: "&f&l Зменшити"
+        description: "&7 Зменшити на &e [number]"
+      increase:
+        name: "&f&l Збільшити"
+        description: "&7 Збільшити на &e [number]"
+      accept:
+        name: "&f&l Застосувати зміни"
+        description: |-
+          &7 Змінює біом на &e [biome]
+
+          &7 Режим оновлення: &e [mode]
+          &7 Діапазон оновлення: &e [number]
+      return:
+        name: "&f&l Повернутися"
+        description: "&7 Повернення до попереднього меню."
+      previous:
+        name: "&f&l Попередня сторінка"
+        description: "&7 Перейти на сторінку &e [number] &7"
+      next:
+        name: "&f&l Наступна сторінка"
+        description: "&7 Перейти на сторінку &e [number] &7"
+      quit:
+        name: "&f&l Вийти"
+        description: "&7 Вийти з GUI."
+      save:
+        name: "&f&l Зберегти"
+        description: "&7 Збережіть зміни та поверніться."
+      cancel:
+        name: "&f&l Скасувати"
+        description: "&7 Скасувати зміни та повернутися."
+      search:
+        name: "&f&l Пошук"
+        description: |-
+          &7 Дозволяє шукати
+          &7 елемент із введенням
+          &7 текстове значення.
+        search: "&b Значення: [value]"
+      buy:
+        name: "&f&l Купівля"
+        description: "&7 Придбайте новий біом."
+      manage_islands:
+        name: "&f&l Керувати островами"
+        description: |-
+          &7 Дозволяє керувати островом
+          &7 даних.
+      manage_biomes:
+        name: "&f&l Керуйте біомами"
+        description: |-
+          &7 Дозволяє керувати біомами
+          &7 даних.
+      manage_bundles:
+        name: "&f&l Керувати пакетами"
+        description: |-
+          &7 Дозволяє керувати пакетами
+          &7 даних.
+      settings:
+        name: "&f&l Налаштування"
+        description: |-
+          &7 Дозволяє змінити деякі
+          &7 налаштувань аддона.
+      import_template:
+        name: "&f&l Імпортувати шаблон"
+        description: |-
+          &7 Імпортувати шаблон
+          &7 файл, розташований усередині
+          &7 каталог аддонів.
+      web_library:
+        name: "&f&l Веб-бібліотека"
+        description: |-
+          &7 Доступ до Інтернету
+          &7 бібліотека, яка містить
+          &7 спільних біомів.
+      export_from_database:
+        name: "&f&l Експорт бази даних"
+        description: |-
+          &7 Експорт бази даних
+          &7 в один файл, розташований у
+          &7 каталог аддонів.
+      import_to_database:
+        name: "&f&l Імпорт бази даних"
+        description: |-
+          &7 Імпорт бази даних із
+          &7 файл, розташований у додатку
+          &7 каталог.
+      wipe_islands_data:
+        name: "&f&l Очистити базу даних острова"
+        description: |-
+          &7 Очистити всі дані користувача біомів
+          &7 для цього ігрового режиму.
+      wipe_biomes_data:
+        name: "&f&l Очистити базу даних біомів"
+        description: |-
+          &7 Очистити всі біоми та комплект
+          &7 дані для цього ігрового режиму.
+      add_biome:
+        name: "&f&l Додати біом"
+        description: |-
+          &7 Створює новий біом, який
+          &7 гравців можуть використовувати за допомогою
+          &7 панелей користувача.
+      remove_biome:
+        name: "&f&l Видалити біом"
+        description: |-
+          &7 Видаляє вибрані біоми
+          &7 з панелей користувача.
+        title: "&e Вибрані біоми:"
+        value: "&e - [biome]"
+      accept_selected:
+        name: "&f&l Прийняти вибране"
+        description: "&7 Приймає вибрані елементи."
+        title: "&e Вибрані елементи:"
+        element: "&e - [element]"
+      environment_element:
+        name: "&f&l [environment]"
+        description: "&7 [description]."
+      properties:
+        name: "&f&l Властивості"
+        description: "&7 Переглянути основні властивості біома."
+      change_properties:
+        name: "&f&l Змінити властивості"
+        description: "&7 Перегляньте зміни властивостей біома."
+      unlock_properties:
+        name: "&f&l Розблокувати властивості"
+        description: "&7 Переглянути розблоковані властивості біома."
+      biome:
+        name: "&f&l [biome]"
+        description: "&7 Тип біома Minecraft."
+        value: "&7 Біом ID: &e [id]"
+      name:
+        name: "&f&l Відображуване ім'я"
+        description: |-
+          &7 Відображувана назва біома.
+          &7 Підтримує кольорові коди.
+        value: "&7 Поточне значення: &r [name]"
+      deployed:
+        name: "&f&l Розгорнуто"
+        description: |-
+          &7 Перемикає, якщо біом є
+          &7 доступний для гравців
+          &7 чи ні.
+        enabled: "&2 Увімкнено"
+        disabled: "&c Вимкнено"
+      environment:
+        name: "&f&l Розмір"
+        description: |-
+          &7 Дозволяє обмежити, у якому
+          &7 вимірювати біом
+          &7 можна застосувати.
+        enabled: "&2"
+        disabled: "&c"
+      icon:
+        name: "&f&l Значок"
+        description: |-
+          &7 Дозволяє змінити значок
+          &7 для цього біома.
+      order:
+        name: "&f&l Порядок"
+        description: |-
+          &7 Дозволяє змінювати порядок
+          &7 об'єктів.
+          &7 Об’єкти з рівними номерами
+          &7 замовлять їх
+          &7 унікальних імен ідентифікаторів.
+        value: "&7 Поточне замовлення: &e [number]"
+      description:
+        name: "&f&l Опис"
+        description: |-
+          &7 Конкретний опис
+          &7 для біома. Колір
+          До нього необхідно застосувати коди &7.
+        value: "&e Поточний опис:"
+        none: "&7 Опис не встановлено."
+      unlock_permissions:
+        name: "&f&l Дозволи"
+        description: |-
+          &7 Дозволяє змінити розблокування
+          &7 дозволів для цього
+          &7 біом буде доступним.
+        title: "&e Дозволи:"
+        element: " &8 - [permission]"
+        none: "&7 Дозволи не встановлено."
+      unlock_cost:
+        name: "&f&l Вартість"
+        description: |-
+          &7 Дозволяє змінювати вартість
+          &7 розблокування цього біому.
+        value: "&7 Поточна вартість: &e $[number]"
+      unlock_items:
+        name: "&f&l Предмети"
+        description: |-
+          &7 Дозволяє змінити розблокування
+          &7 елементів для цього біома.
+        title: "&e Предмети:"
+        element: " &8 - [number]x[item]"
+        none: "&7 Елементи не встановлено."
+      unlock_level:
+        name: "&f&l Рівень"
+        description: |-
+          &7 Дозволяє змінювати
+          &7 необхідний рівень острова
+          &7 за розблокування цього біому.
+        value: "&7 Поточний рівень: &e [number]"
+      change_cost:
+        name: "&f&l Вартість"
+        description: |-
+          &7 Дозволяє змінювати вартість
+          &7 застосування цього біому.
+        value: "&7 Поточна вартість: &e $[number]"
+      change_items:
+        name: "&f&l Предмети"
+        description: |-
+          &7 Дозволяє змінювати елементи
+          &7 за застосування цього біома.
+        title: "&e Предмети:"
+        element: " &8 - [number]x[item]"
+        none: "&7 Елементи не встановлено."
+      change_type:
+        name: "&f&l [type]"
+        description: |-
+          &7 Дозволяє змінити тип вартості
+          &7 за застосування цього біома.
+        static:
+          name: Статичне значення
+          description: |-
+            &7 Вартість зміни біома
+            &7 не змінюється.
+        per_block:
+          name: За блок
+          description: |-
+            &7 Вартість зміни біома становить
+            &7 розраховується на блок.
+        per_usage:
+          name: За використання
+          description: |-
+            &7 Вартість зміни біома становить
+            &7 збільшувався після кожного
+            &7 використання.
+        enabled: "&2"
+        disabled: "&c"
+      change_increment:
+        name: "&f&l Приріст"
+        description: |-
+          &7 Дозволяє змінювати
+          &7 приріст за використання.
+        value: "&7 Поточне значення: &e [number]"
+      biome-filter:
+        name: "&f&l [filter]"
+        description: |-
+          &7 На основі фільтра Biome
+          &7 на Minecraft Wiki.
+        lush: Пишні біоми
+        dry: Сухі біоми
+        cold: Холодні біоми
+        snowy: Засніжені біоми
+        ocean: Океанські біоми
+        nether: Біоми Пустоти
+        the_end: Енд біоми
+        neutral: Нейтральні біоми
+        unused: Невикористані біоми
+      protection_range:
+        name: "&f&l Діапазон захисту"
+        description: |-
+          &7 Дозволяє обмежити в біомі
+          &7 змінюючи лише на острів
+          &7 діапазон захисту замість
+          &7 мінливий біом на всьому острові.
+        enabled: "&2 Увімкнено"
+        disabled: "&c Вимкнено"
+      reset:
+        name: "&f&l Скидання після зміни власника"
+        description: |-
+          &7 Дозволяє ввімкнути силовий біом
+          &7 змінити стандартний,
+          &7, якщо острів змінив власника
+          &7 і нового власника не має
+          &7 поточний дозвіл біома.
+        enabled: "&2 Увімкнено"
+        disabled: "&c Вимкнено"
+      cool_down:
+        name: "&f&l Охолодження біома"
+        description: |-
+          &7 Дозволяє встановити кількість
+          &7 секунд між гравцями
+          &7 може знову змінити біом.
+        value: "&7 Поточне охолодження: &e [number]"
+        disabled: "&e Охолодження вимкнено."
+      default_size:
+        name: "&f&l Діапазон за замовчуванням"
+        description: |-
+          &7 Дозволяє встановити номер, який
+          &7 буде використано, коли гравець
+          &7 змінює біом без
+          &7 написання цього.
+        value: "&7 Діапазон за замовчуванням: &e [number]"
+      default_mode:
+        name: "&f&l Режим оновлення за умовчанням"
+        description: |-
+          &7 Дозволяє встановити оновлення за умовчанням
+          режим &7, коли гравці не робили цього
+          &7 надайте його.
+        enabled: "&2"
+        disabled: "&c"
+      unlock_notify:
+        name: "&f&l Сповіщати про розблокування"
+        description: |-
+          &7 Буде надіслано повідомлення
+          &7 користувачеві, коли вона розблокує
+          &7 новий біом.
+        enabled: "&b Сповіщати про розблокування &a увімкнено &b."
+        disabled: "&b Сповіщати про розблокування &c вимкнено &b."
+      change_timeout:
+        name: "&f&l Тайм-аут для зміни"
+        description: |-
+          &7 Дозволяє встановити після як
+          &7 багатохвилинне оновлення біома
+          &7 буде припинено.
+          &7 Може статися на дуже великих
+          &7 островів або серверів нижче
+          &7 величезне навантаження.
+        value: "&7 Тайм-аут після: &e [number] хв"
+      parallel_updates:
+        name: "&f&l Паралельні оновлення"
+        description: |-
+          &7 Дозволяє встановити кількість біомів
+          &7 Оновлення можуть відбутися в
+          &7 одночасно.
+          &7 Інші будуть розміщені в
+          &7 черга.
+        value: "&7 Поточне значення: &e[number]&7."
+      use_bank:
+        name: "&f&l Використовувати банківський рахунок"
+        description: |-
+          &7 Перемикає, якщо всі платежі, що
+          &7 зроблено додатком Biomes will
+          &7 використовувати Bank Addon Island
+          обліковий запис &7.
+        enabled: "&b Використання банківського рахунку &a увімкнено &b."
+        disabled: "&b Використання банківського рахунку &c вимкнено &b."
+        missing: "&c Аддон банку не встановлено."
+      visibility:
+        name: "&f&l Видимість біома"
+        description: |-
+          &7 Дозволяє змінювати гравця
+          &7 видимість біома в
+          &7 панелей вибору біомів.
+        enabled: "&2"
+        disabled: "&c"
+        all: Всі біоми
+        deployed: Розгорнуті біоми
+        accessible: Доступні біоми
+        toggleable: Перемикається
+      is_online:
+        name: "&f&l Острови онлайн-гравців"
+        description: |-
+          &7 Перелічіть усі острови, де
+          &7 будь-який учасник онлайн.
+      all_islands:
+        name: "&f&l Усі острови"
+        description: |-
+          &7 Список усіх островів
+          &7, які створено в
+          &7 поточний ігровий режим.
+      island_name:
+        name: "&f&l [name]"
+        island-owner: "[player]"
+        unknown: "&c Невідомий власник"
+        description: |-
+          [owner]
+          [members]
+          [id]
+        owner: "&7 Власник: &e [player]"
+        title: "&7 членів острова:"
+        element: " &7 - &e [player]"
+      change_biome:
+        name: "&f&l Змінити біом"
+        description: "&7 Змінити біом для кожного острова."
+      manage_data:
+        name: "&f&l Керувати даними острова"
+        description: |-
+          &7 Керування даними, які є
+          &7 зберігається для певного острова.
+      clear_data:
+        name: "&f&l Очистити дані острова"
+        description: |-
+          &7 Очистити всі збережені дані для
+          &7 острів.
+      island_bundle:
+        name: "&f&l Острівний пакет"
+        description: |-
+          &7 Комплект, якому призначено
+          &7 поточний острів.
+          &7 Лише біоми з цього
+          Пакет &7 можна використовувати на
+          &7 острів.
+        value: "&b Комплект: [bundle]"
+        overwritten: |-
+          &c Власник має дозвіл на це
+          &c перезаписує пакет.
+      owner_bundle:
+        name: "&f&l Пакет власників"
+        description: |-
+          &7 Пакет, якому призначено
+          &7 поточний власник острова.
+          &7 Лише біоми з цього
+          Пакет &7 можна використовувати на
+          &7 острів.
+          &7 Дозвіл користувача на призначення:
+          &7&o '[gamemode].biomes.
+          &7&o bundle.<bundle-id>'
+        value: "&b Комплект: [bundle]"
+      reset_to_default:
+        name: "&f&l Відновити значення за замовчуванням"
+        description: |-
+          &7 Скидає всі значення острова
+          &7 до значень за замовчуванням з
+          &7 налаштування.
+      bundle_info:
+        name: "&f&l Загальна інформація"
+        description: |-
+          &7 Переглянути загальний пакет
+          &7 інформація.
+      bundle_biomes:
+        name: "&f&l Керуйте біомами"
+        description: |-
+          &7 Керуйте біомами, які є
+          &7 призначено пакету.
+      bundle_name:
+        name: "&f&l Змінити назву"
+        description: |-
+          &7 Змінити відображення пакета
+          &7 ім'я.
+        value: "&e Поточне значення: &r [bundle]"
+      bundle_icon:
+        name: "&f&l Змінити значок"
+        description: "&7 Змінити значок пакета."
+      bundle_description:
+        name: "&f&l Змінити опис"
+        description: "&7 Змінити опис пакета."
+        value: "&e Поточне значення:"
+        none: "&c Без опису"
+      bundle_permission:
+        name: "&f&l Дозвіл на пакет"
+        description: |-
+          &7 Дозвіл, який повинен
+          &7 додано до користувача для
+          &7 форсування цього пакету.
+        value: "&e Дозвіл: &f [gamemode].biomes.bundle.[id]"
+      add_bundle_biome:
+        name: "&f&l Додати біом"
+        description: |-
+          &7 Призначте біом
+          &7 до цього пакету.
+        title: "&b Вибрані біоми:"
+        value: "&b - [biome]"
+      remove_bundle_biome:
+        name: "&f&l Видалити біом"
+        description: |-
+          &7 Видалити біом
+          &7 із цього комплекту.
+        title: "&b Вибрані біоми:"
+        value: "&b - [biome]"
+      create_bundle:
+        name: "&f&l Створити пакет"
+        description: |-
+          &7 Створіть новий пакет
+          &7 для цього ігрового режиму.
+      delete_bundle:
+        name: "&f&l Видалити пакет"
+        description: |-
+          &7 Видалити групу з
+          &7 цей ігровий режим повністю.
+        title: "&b Вибрані комплекти:"
+        value: "&b - [bundle]"
+      download:
+        name: "&f&l Завантажити"
+        description: "&7 Завантажте веб-бібліотеку."
+        enabled: "&2 З очищенням кешу"
+        disabled: "&c Без очищення кешу"
+    tips:
+      click-to-manage: "&e Натисніть &7 для керування."
+      click-to-clear: "&e Натисніть &7, щоб очистити."
+      click-to-change-biome: "&e Натисніть &7, щоб змінити біом."
+      click-to-view: "&e Натисніть &7, щоб переглянути."
+      click-to-select: "&e Натисніть &7, щоб вибрати."
+      click-to-choose: "&e Натисніть &7, щоб вибрати."
+      click-to-complete: "&e Натисніть &7, щоб завершити."
+      left-click-to-accept: "&e Клацніть лівою кнопкою миші &7, щоб застосувати."
+      right-click-to-write: "&e Клацніть правою кнопкою миші &7, щоб написати."
+      click-to-reduce: "&e Натисніть &7, щоб зменшити."
+      click-to-increase: "&e Натисніть &7, щоб збільшити."
+      click-to-return: "&e Натисніть &7, щоб повернутися."
+      click-to-quit: "&e Натисніть &7, щоб вийти."
+      click-to-wipe: "&e Натисніть &7, щоб стерти."
+      left-click-to-wipe: "&e Клацніть лівою кнопкою миші &7, щоб стерти."
+      right-click-to-switch: "&e Клацніть правою кнопкою миші &7, щоб переключитися."
+      click-to-open: "&e Натисніть &7, щоб відкрити."
+      click-to-export: "&e Натисніть &7, щоб експортувати."
+      click-to-create: "&e Натисніть &7, щоб створити."
+      left-click-to-open: "&e Клацніть лівою кнопкою миші &7, щоб відкрити."
+      right-click-to-reset-all: "&e Клацніть правою кнопкою миші &7, щоб стерти все."
+      click-to-toggle: "&e Натисніть &7, щоб перемкнути."
+      click-to-change: "&e Натисніть &7, щоб змінити."
+      shift-click-to-reset: "&e Shift Натисніть &7, щоб скинути."
+      click-to-add: "&e Натисніть &7, щоб додати."
+      click-to-remove: "&e Натисніть &7, щоб видалити."
+      left-click-to-cycle: "&e Клацніть лівою кнопкою миші &7, щоб перейти вниз."
+      right-click-to-cycle: "&e Клацніть правою кнопкою миші &7, щоб перейти вгору."
+      click-to-edit: "&e Натисніть &7, щоб редагувати."
+      left-click-to-download: "&e Клацніть лівою кнопкою миші &7, щоб завантажити."
+      right-click-to-toggle: "&e Клацніть правою кнопкою миші &7 для перемикання."
+      click-to-install: "&e Натисніть &7, щоб установити."
+      click-to-reset-all: "&e Натисніть &7, щоб скинути все."
+      right-click-to-select: "&e Клацніть правою кнопкою миші &7, щоб вибрати."
+      right-click-to-deselect: "&e Клацніть правою кнопкою миші &7, щоб скасувати
+        вибір."
+      left-click-to-choose: "&e Клацніть лівою кнопкою миші &7, щоб вибрати."
+      click-to-buy: "&e Натисніть &7, щоб купити."
+      click-to-cancel: "&e Натисніть &7, щоб скасувати."
+      click-to-save: "&e Натисніть &7, щоб зберегти."
+      click-to-deselect: "&e Натисніть &7, щоб скасувати вибір."
+      click-on-item: |-
+        &e Клацніть &7 на елементі в
+        &7 ваш інвентар.
+      left-click-to-edit: "&e Клацніть лівою кнопкою миші &7 для редагування."
+      right-click-to-clear: "&e Клацніть правою кнопкою миші &7, щоб очистити."
+      click-to-previous: "&e Натисніть &7, щоб переглянути попередню сторінку."
+      click-to-next: "&e Натисніть &7, щоб переглянути наступну сторінку."
+      select-before: "&e Виберіть &7 елемент(ів), перш ніж продовжити."
+      click-to-apply: "&e Натисніть &7, щоб застосувати."
+      right-click-to-open: "&e Клацніть правою кнопкою миші &7, щоб відкрити."
+      click-to-perform: "&e Натисніть &7, щоб виконати."
+      left-click-to-apply: "&e Клацніть лівою кнопкою миші &7, щоб застосувати."
+      right-click-to-unlock: "&e Клацніть правою кнопкою миші &7, щоб розблокувати."
+      right-click-to-buy: "&e Клацніть правою кнопкою миші &7, щоб купити."
+      right-click-to-change: "&e Клацніть правою кнопкою миші &7, щоб змінити."
+    descriptions:
+      update-mode:
+        island: Режим острова
+        chunk: Режим фрагментів
+        range: Режим діапазону
+      selected: "&2 Вибрано"
+      island-owner: "[player]"
+      unknown: "&e Невідомо"
+      biome:
+        lore: |-
+          [description]
+          [biome]
+          [unlock]
+          [change]
+        original: "&7 Біом: &e [biome]"
+        unlock:
+          lore: |-
+            [items]
+            [money]
+            [level]
+            [permissions]
+          money: "&7 Вартість розблокування: &e $[number]"
+          level: |-
+            &7 Потрібно досягти &e [number]
+            &7 рівень острова.
+          permission-single: "&7 Відсутній дозвіл: &c [permission]"
+          permissions-title: "&c Відсутні дозволи:"
+          permissions-list: "&c - [permission]"
+          item-single: "&7 Розблокувати предмет: [color] [number] x [item]"
+          item-title: "&7 Розблокувати предмети:"
+          item-list: "&7 - [color] [number] x [item]"
+          missing: "&c"
+          has: "&e"
+        change:
+          lore: |-
+            [items]
+            [money]
+            [mode]
+            [usage]
+          mode:
+            per_block: |-
+              &b&o Біом витрати на кожен
+              &b&o змінений блок.
+            per_usage: |-
+              &b&o Зміна біома збільшується
+              &b&o його ціна.
+            static: "&b&o Стандартна змінна ціна."
+          money: "&7 Вартість: &e $[number]"
+          item-single: "&7 Елемент: [color] [number] x [item]"
+          item-title: "&7 Елементів:"
+          item-list: "&7 - [color] [number] x [item]"
+          number-of-usage: |-
+            |&7 Цей біом був
+            &7 застосовано &e [number] &r&7 разів.
+          missing: "&c"
+          has: "&e"
+      bundle:
+        lore: |-
+          [description]
+          [permission]
+          [biomes]
+        permission: |-
+          &7 Дозвіл, який повинен бути
+          &7 призначено гравцеві:
+          &7&o [gamemode].biomes.bundle.[id]
+        title: "&7 Наборів біомів:"
+        value: "&7 - [biome]"
+        no-biomes: "&c Біоми не призначені"
+      library:
+        author: "&7 від &e [author]"
+        version: "&7 Зроблено за допомогою Biomes &e [version]"
+        lang: "&7 Мова: &e [lang]"
+        gamemode: "&7 Основний для &e [gamemode]"
+  conversations:
+    prefix: "&l&6 [BentoBox]: &r"
+    confirm-string: true, on, yes, confirm, y, valid, correct
+    deny-string: false, off, no, deny, n, invalid, incorrect
+    cancel-string: cancel
+    exit-string: cancel, exit, quit
+    cancelled: "&c Розмова скасована!"
+    input-number: "&e Будь ласка, введіть номер у чаті."
+    input-seconds: "&e Будь ласка, введіть секунди в чаті."
+    numeric-only: "&c Дане [value] не є числом!"
+    not-valid-value: "&c Дане число [value] недійсне. Він має бути більшим за [min]
+      і меншим за [max]!"
+    data-removed: "&a Вибрані біоми видаляються з [gamemode]."
+    confirm-deletion: "&e Підтвердьте, що ви хочете видалити [number] біомів із іменами:
+      [value]."
+    user-data-removed: "&a Усі дані користувача для [gamemode] видалено з бази даних."
+    confirm-user-data-deletion: "&e Підтвердьте, що ви бажаєте очистити базу даних
+      користувачів для [gamemode]."
+    all-data-removed: "&a Усі дані аддонів для [gamemode] видалено з бази даних."
+    confirm-all-data-deletion: "&e Будь ласка, підтвердьте, що ви хочете очистити
+      дані аддонів для [gamemodeу]."
+    write-name: "&e Будь ласка, напишіть ім'я в чаті."
+    new-object-created: "&Створено новий об’єкт для [gamemode]."
+    object-already-exists: "&c Об'єкт &7 [id] &c вже існує. Виберіть інше ім'я."
+    name-changed: "&a Успіх, назву оновлено."
+    write-description: "&e Будь ласка, введіть новий опис у чаті та 'quit' у окремому
+      рядку, щоб завершити."
+    description-changed: "&a Успіх, опис оновлено."
+    write-permissions: "&e Будь ласка, введіть необхідні дозволи, по одному на рядок
+      у чаті, і 'quit' на окремому рядку, щоб завершити."
+    permissions-changed: "&a Успіх, дозволи оновлено."
+    start-downloading: "&a Початок завантаження та імпорту бібліотеки Biomes."
+    written-text: "&a Текст введення:"
+    confirm-data-replacement: "&e Підтвердьте, що ви бажаєте замінити поточні дані
+      новими."
+    new-data-imported: "&a Успіх, нові дані для [gamemode] імпортовано."
+    exported-file-name: "&e Будь ласка, введіть назву файлу для експортованого файлу
+      бази даних. (напишіть 'cancel', щоб вийти)"
+    database-export-completed: "&a Успіх, експорт бази даних для [world] завершено.
+      Файл [file] створено."
+    file-name-exist: "&c Файл із назвою '[id]' існує. Неможливо перезаписати."
+    write-search: "&e Введіть пошукове значення. (напишіть 'cancel', щоб вийти)"
+    search-updated: "&a Значення пошуку оновлено."
+    invalid-biome: "&c Деякі дані в збереженому `[biome]`&r&c недійсні."
+    confirm-biome-deletion: "&e Підтвердьте, що ви хочете видалити [biome]&r&e з [gamemode]."
+    biome-removed: "[biome] &r&a видалено з [gamemode]."
+    confirm-island-data-deletion: "&e Підтвердьте, що ви хочете видалити дані острова
+      [player]."
+    island-data-removed: "[player] &дані острова видалено."
+    confirm-biome-data-deletion: "&e Підтвердьте, що ви хочете видалити всі біоми
+      з [gamemode]."
+    biome-data-removed: Усі біоми видалено з [gamemode].
+    click-text-to-purchase: "&e Ви розблокували &r [biome]&r&e! Натисніть тут, щоб
+      купити."
+    click-text-to-set: "&e Ви розблокували &r [biome]&r&e! Натисніть тут, щоб використати
+      його."
+  messages:
+    biome-not-unlocked: "[biome] &r&c не розблоковано. Ви не можете використовувати
+      його."
+    biome-not-purchased: "&c Ви не можете використовувати &r [biome] &r&c. Вам потрібно
+      його придбати."
+    biome-cannot-be-unlocked: "&c Ви не можете розблокувати &r [biome] &r&c."
+    biome-already-purchased: "&c Ви вже придбали &r [biome] &r&c."
+    island-level-not-reached: "[biome] &r&c вимагає принаймні рівня острова: [number]."
+    missing-permission: "[biome] &r&c потребує дозволу: [permission]."
+    no-credits-buy: "&c У вас недостатньо кредитів, щоб купити &r [biome] &r&c. Це
+      коштує [number]."
+    no-credits-buy-bank: "&c У вас недостатньо кредитів на вашому банківському рахунку,
+      щоб купити &r [biome] &r&c. Це коштує [number]."
+    no-items-buy: "&c У вас недостатньо предметів, щоб купити &r [biome] &r&c. Це
+      вимагає [items]."
+    biome-purchased: "&e Ви придбали &r [biome]&r&e."
+    import-count: "&e Імпортовані [biomes] біоми та [bundles] пакети."
+    start-downloading: "&e Розпочати завантаження бібліотеки."
+    update-start: "&a Початок зміни біому на [biome]&r&a в [number] фрагментів. &e
+      Приблизний час: [time] сек."
+    update-done: "&a Завершено зміну біому на [biome]&r&a."
+    waiting: "&a Додано зміну біома в чергу. &e Приблизний час очікування: [time]
+      сек."
+    biome-already-unlocked: "[biome] &r&e вже розблоковано."
+    everything-already-bought: "&a Ви вже купили всі біоми для цього ігрового режиму."
+    skipping: "&a Пропуск завантаження &r [biome]&r&a."
+    overwriting: "&a Перезапис &r [biome] &r&a в кеші."
+    imported: "&a Імпортований &r [biome] &r&a в кеші."
+    migrate-start: "&a Початок міграції до нового формату даних."
+    migrate-finish: "&a Перехід до нового формату даних завершено."
+    migrate-valid: "&a Усі дані дійсні. Міграція не потрібна."
+    bundle-loaded: "&a Bundle &r [bundle] &a завантажено."
+    clear-queue: "&черга завдань зміни біома для [gamemode] очищена."
+  errors:
+    no-island-data: "&c Острів не має збережених даних."
+    no-biomes-admin: "&c Поточний GameMode не має жодного придатного для використання
+      біома. Імпортуйте або створіть біоми за допомогою /[command]"
+    no-biomes: "&c Поточний GameMode не має жодного придатного для використання біома."
+    no-rank: "&c Вам заборонено змінювати біом на цьому острові."
+    not-enough-level: "&c Для цього біому потрібен принаймні рівень острова [number]."
+    not-enough-money: "&c Ця зміна біомів коштує $[number]."
+    not-enough-money-bank: "&c На вашому банківському рахунку недостатньо кредитів.
+      Зміна біома коштує $[number]."
+    not-enough-items: "&c Ці біоми змінюють вартість [items]."
+    admin-not-on-island: "&c Ви не на острові [user]."
+    incorrect-object: "&c Не вдалося знайти біом із запитаною назвою: [biome]"
+    missing-biome: "&c Назва біома не вказана."
+    incorrect-mode: "&c Режим з назвою '[mode]' не існує."
+    incorrect-range: "&c Дане значення '[number]' не є дійсним числом."
+    no-file: "&c Не вдалося знайти [file] у каталозі біомів."
+    no-load: "&c Не вдалося імпортувати біоми з [file]. Причина: [description]"
+    not-a-gamemode-world: "&c World [world] не є світом GameModeAddon."
+    file-exist: "&c Файл із назвою [file] уже існує. Виберіть інше ім'я."
+    no-library-entries: "&c Не вдалося знайти дійсні записи бібліотеки."
+    not-unlocked: "&c Ви не розблокували цей біом."
+    not-purchased: "&c Ви не придбали цей біом."
+    timeout: "&c Зміна біому закінчується. Можливо, вибрана область була занадто великою
+      або сервер зайнятий."
+    failed: Під час зміни біома на сервері &c виникли деякі проблеми.
+    could-not-remove-money: "&c Щось пішло не так під час зняття грошей."
+    could-not-remove-items: "&c Щось пішло не так під час вилучення елементів."
+    something-went-wrong: "&c Щось пішло не так. Не міг цього зробити."
+protection:
+  flags:
+    BIOMES_ISLAND_PROTECTION:
+      name: Контроль біома
+      description: |-
+        &5&o Перемкніть, хто може змінити
+        &5&o біом острова
+    BIOMES_WORLD_PROTECTION:
+      name: Обмеження острова Біом
+      description: |-
+        &5&o Вимога перемикання
+        &5&o для гравців
+        &5&o бути на своєму острові, щоб
+        &5&o змінити біом.
+      hint: "&c Ви повинні бути на своєму острові, щоб змінити біом!"

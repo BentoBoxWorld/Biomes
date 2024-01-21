@@ -16,6 +16,8 @@ biomes:
       unlock:
         description: "unlocks biome for the player without checks. Adding `true` at the end will mark it as purchased."
         parameters: "<player> <biome-id> [true]"
+      clear-queue:
+        description: "clears biome update queue"
     # This section contains only player commands translations.
     player:
       main:
@@ -864,6 +866,7 @@ biomes:
     migrate-finish: "&a Migration to new data format completed."
     migrate-valid: "&a All data is valid. Migration is not necessary."
     bundle-loaded: "&a Bundle &r [bundle] &a is loaded."
+    clear-queue: "&a Biome change task queue for [gamemode] is cleared."
   errors:
     # Message that is displayed if requested user or island does not have any valid data.
     no-island-data: "&c Island does not have any stored data."
