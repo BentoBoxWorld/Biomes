@@ -1,10 +1,6 @@
 # Biomes Addon
 [![Discord](https://img.shields.io/discord/272499714048524288.svg?logo=discord)](https://discord.bentobox.world)
 [![Build Status](https://ci.codemc.org/buildStatus/icon?job=BentoBoxWorld/Biomes)](https://ci.codemc.org/job/BentoBoxWorld/job/Biomes/)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=BentoBoxWorld_Biomes&metric=bugs)](https://sonarcloud.io/dashboard?id=BentoBoxWorld_Biomes)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=BentoBoxWorld_Biomes&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=BentoBoxWorld_Biomes)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=BentoBoxWorld_Biomes&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=BentoBoxWorld_Biomes)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=BentoBoxWorld_Biomes&metric=security_rating)](https://sonarcloud.io/dashboard?id=BentoBoxWorld_Biomes)
 
 Biomes addon for SkyBlock, SkyGrid, CaveBlock and AcidIsland. It allows island biome changing.
 

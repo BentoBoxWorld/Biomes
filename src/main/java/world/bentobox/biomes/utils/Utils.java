@@ -9,10 +9,7 @@ package world.bentobox.biomes.utils;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -449,6 +446,7 @@ public class Utils
                     BADLANDS,
                     ERODED_BADLANDS,
                     WOODED_BADLANDS,
+                    CHERRY_GROVE,
                     SAVANNA_PLATEAU -> true;
                 default -> false;
             };
