@@ -19,6 +19,7 @@ biomes:
       unlock:
         description: déverrouille le biome pour le joueur sans vérification. L'ajout
           de "true" à la fin le marquera comme acheté.
+        parameters: "<player> <biome-id> [true]"
       clear-queue:
         description: efface la file d'attente de mise à jour du biome
     player:
@@ -26,52 +27,84 @@ biomes:
         description: ouvre l'interface graphique de sélection des biomes
       set:
         description: change le biome pour le joueur
+        parameters: "<biome-id> [mode] [size]"
       buy:
         description: achète le biome demandé
+        parameters: "<biome-id>"
       info:
         description: envoie un message de chat avec une description détaillée du biome
+        parameters: "<biome-id>"
   gui:
     titles:
       player-panel: "&0&l Choisir un biome"
       buy-panel: "&0&l Acheter un biome"
       advanced-panel: "&0&l Mode de mise à jour"
       admin-panel: "&0&l Interface graphique d'administration"
+      settings: "&0&l Paramètres"
       library: "&0&l Bibliothèque"
       manage-biomes: "&0&l Gérer les biomes"
       manage-bundles: "&0&l Gérer les groupes"
       manage-islands: "&0&l Gérer les données des îles"
       edit-biome: "&0&l Modifier le biome : [biome]"
+      edit-bundle: "&0&l Modifier l'ensemble : [bundle]"
+      edit-island: "&0&l Modifier l'île : [island]"
       environment-selector: "&0&l Sélectionner l'environnement"
       biome-selector: "&0&l Sélectionner un biome"
       bundle-selector: "&0&l Sélectionner l'ensemble"
       item-selector: "&0&l Sélectionner les éléments"
     buttons:
       island:
+        name: "&f&l île"
         description: |-
           &7 Change le biome dans son ensemble
           &7 île.
       chunk:
+        name: "&f&l Chunk"
         description: "&7 Modifie le biome par tranches."
-      range: {}
+      range:
+        name: "&f&l Range"
+        description: "&7 Modifie le biome par range."
       reduce:
         name: "&f&l Réduire"
         description: "&7 Réduire de &e [nombre]"
       increase:
         name: "&f&l Augmenter"
         description: "&7 Augmenter de &e [nombre]"
-      accept: {}
-      return: {}
-      previous: {}
-      next: {}
-      quit: {}
-      save: {}
-      cancel: {}
+      accept:
+        name: "&f&l Appliquer les changement"
+        description: |-
+          &7 Change le biome en &e [biome]
+
+          &7 Mode de mise à jour : &e [mode]
+          &7 Plage de mise à jour : &e [number]
+      return:
+        name: "&f&l Retour"
+        description: "&7 Retour au menu précèdent."
+      previous:
+        name: "&f&l Page précédente"
+        description: "&7 Passer à &e [number] &7 page"
+      next:
+        name: "&f&l Page suivante"
+        description: "&7 Passer à &e [number] &7 page"
+      quit:
+        name: "&f&l Quittez"
+        description: "&7 Sortir du GUI."
+      save:
+        name: "&f&l Sauvegarder"
+        description: "&7 Sauvegarder les changements et revenir."
+      cancel:
+        name: "&f&l Annuler"
+        description: "&7 Annuler les changements et revenir"
       search:
+        name: "&f&l Chercher"
         description: |-
           &7 Permet de rechercher un
           &7 élément avec entrée
           &7 valeur de texte.
-      buy: {}
+        search: "&b Valeur : [value]"
+      buy:
+        name: "&f&l Acheter"
+        description: "&7 Acheter un nouveau biome."
       manage_islands:
         name: "&f&l Gérer les îles"
         description: |-
@@ -88,6 +121,7 @@ biomes:
           &7 Permet de gérer les bundles
           &7 données.
       settings:
+        name: "&f&l Paramètres"
         description: |-
           &7 Permet de changer certains
           &7 paramètres supplémentaires.
@@ -104,11 +138,13 @@ biomes:
           &7 bibliothèque qui contient
           &7 biomes partagés.
       export_from_database:
+        name: "&f&l Exporter la base de données"
         description: |-
           &7 Exporter la base de données
           &7 dans un seul fichier situé dans
           &7 le répertoire des addons.
       import_to_database:
+        name: "&f&l Importer la base de données"
         description: |-
           &7 Importer une base de données depuis
           &7 un fichier situé dans l'addon
@@ -124,19 +160,26 @@ biomes:
           &7 Effacer tous les biomes et bundles
           &7 données pour ce mode de jeu.
       add_biome:
+        name: "&f&l Ajouter un biome"
         description: |-
           &7 Crée un nouveau biome qui
           &7 joueurs peuvent utiliser en utilisant
           &7 panneaux utilisateur.
       remove_biome:
+        name: "&f&l Supprimer un biome"
         description: |-
           &7 Supprime les biomes sélectionnés
           &7 à partir des panneaux d'utilisateurs.
+        title: "&e Selectionner un biome:"
+        value: "&e - [biome]"
       accept_selected:
         name: "&f&l Accepter la sélection"
         description: "&7 Accepte les éléments sélectionnés."
         title: "&e Éléments sélectionnés :"
-      environment_element: {}
+        element: "&e - [element]"
+      environment_element:
+        name: "&f&l [environment]"
+        description: "&7 [description]."
       properties:
         name: "&f&l Propriétés"
         description: "&7 Afficher les principales propriétés du biome."
@@ -147,24 +190,33 @@ biomes:
         name: "&f&l Déverrouiller les propriétés"
         description: "&7 Afficher les propriétés de déverrouillage du biome."
       biome:
+        name: "&f&l [biome]"
         description: "&7 Type de biome Minecraft."
+        value: "&7 Biome ID: &e [id]"
       name:
         name: "&f&l Afficher le nom"
         description: |-
           &7 Nom d'affichage du biome.
           &7 Prend en charge les codes de couleur.
+        value: "&7 Valeur actuelle : &r [name]"
       deployed:
         name: "&f&l déployé"
         description: |-
           &7 Bascule si le biome est
           &7 accessible aux joueurs
           &7 ou pas.
+        enabled: "&2 Activer"
+        disabled: "&c Désactiver"
       environment:
+        name: "&f&l Dimension"
         description: |-
           &7 Permet de limiter dans quelle
           &7 dimensionner le biome
           &7 peut être appliqué.
+        enabled: "&2"
+        disabled: "&c"
       icon:
+        name: "&f&l Icone"
         description: |-
           &7 Permet de changer d'icône
           &7 pour ce biome.
@@ -176,7 +228,9 @@ biomes:
           &7 Objets avec des nombres égaux
           &7 seront commandés par leur
           &7 noms d'identification uniques.
+        value: "&7 Commande en cours : &e [number]"
       description:
+        name: "&f&l Description"
         description: |-
           &7 La description spécifique
           &7 pour le biome. La couleur
@@ -184,37 +238,51 @@ biomes:
         value: "&e Description actuelle :"
         none: "&7 La description n'est pas définie."
       unlock_permissions:
+        name: "&f&l Permissions"
         description: |-
           &7 Permet de modifier le déverrouillage
           &7 autorisations pour cela
           &7 biome pour être accessible.
+        title: "&e Permissions: "
+        element: " &8 - [permission]"
         none: "&7 Les autorisations ne sont pas définies."
       unlock_cost:
+        name: "&f&l Coût"
         description: |-
           &7 Permet de modifier le coût de
           &7 déverrouiller ce biome.
         value: "&7 Coût actuel : &e [nombre] $"
       unlock_items:
+        name: "&f&l Items"
         description: |-
           &7 Permet de modifier le déverrouillage
           &7 objets pour ce biome.
+        title: "&e Items: "
+        element: " &8 - [number]x[item]"
         none: "&7 Les éléments ne sont pas définis."
       unlock_level:
+        name: "&f&l Level"
         description: |-
           &7 Permet de changer le
           &7 niveau d'île requis
           &7 pour déverrouiller ce biome.
         value: "&7 Niveau actuel : &e [nombre]"
       change_cost:
+        name: "&f&l Coût"
         description: |-
           &7 Permet de modifier le coût de
           &7 en appliquant ce biome.
+        value: "&7 Coût actuel : &e [number] $"
       change_items:
+        name: "&f&l Items"
         description: |-
           &7 Permet de modifier les éléments
           &7 pour l'application de ce biome.
+        title: "&e Items: "
+        element: " &8 - [number]x[item]"
         none: "&7 Les éléments ne sont pas définis."
       change_type:
+        name: "&f&l [type]"
         description: |-
           &7 Permet de changer le type de coût
           &7 pour l'application de ce biome.
@@ -234,12 +302,16 @@ biomes:
             &7 Le coût du changement de biome est
             &7 augmenté après chaque
             &7 utilisation.
+        enabled: "&2"
+        disabled: "&c"
       change_increment:
         name: "&f&l Incrémenter"
         description: |-
           &7 Permet de changer la
           &7 incrément par utilisation.
+        value: "&7 Valeur actuelle : &e [number]"
       biome-filter:
+        name: "&f&l [filter]"
         description: |-
           &7 Basé sur le filtre biome
           &7 sur le wiki Minecraft.
@@ -277,6 +349,7 @@ biomes:
           &7 Permet de définir le nombre de
           &7 secondes entre les joueurs
           &7 peut à nouveau changer de biome.
+        value: "&7 Refroidissement actuel : &e [number]"
         disabled: "&e Le refroidissement est désactivé."
       default_size:
         name: "&f&l Plage par défaut"
@@ -285,12 +358,15 @@ biomes:
           &7 sera utilisé lorsque le joueur
           &7 change de biome sans
           &7 en l'écrivant.
+        value: "&7 Plage par défaut : &e [number]"
       default_mode:
         name: "&f&l Mode de mise à jour par défaut"
         description: |-
           &7 Permet de définir la mise à jour par défaut
           &7 lorsque les joueurs ne l'ont pas fait
           &7 le fournir.
+        enabled: "&2"
+        disabled: "&c"
       unlock_notify:
         name: "&f&l Notifier au déverrouillage"
         description: |-
@@ -317,6 +393,7 @@ biomes:
           &7 en même temps.
           &7 Les autres seront placés dans
           &7 file d'attente.
+        value: "&7 Valeur actuelle : &e[number]&7."
       use_bank:
         name: "&f&l Utiliser le compte bancaire"
         description: |-
@@ -333,6 +410,8 @@ biomes:
           &7 Permet de changer de joueur
           &7 visibilité du biome dans le
           &7 panneaux de sélection de biomes.
+        enabled: "&2"
+        disabled: "&c"
         all: Tous les biomes
         deployed: Biomes déployés
         accessible: Biomes accessibles
@@ -349,8 +428,16 @@ biomes:
           &7 qui sont créés dans
           &7 mode de jeu actuel.
       island_name:
+        name: "&f&l [name]"
+        island-owner: "[player]"
         unknown: "&c Propriétaire inconnu"
+        description: |-
+          [owner]
+          [members]
+          [id]
+        owner: "&7 Propriétaire : &e [player]"
         title: "&7 Membres insulaires :"
+        element: " &7 - &e [player]"
       change_biome:
         name: "&f&l Changer de biome"
         description: "&7 Changer le biome par île."
@@ -372,11 +459,22 @@ biomes:
           &7 Seuls les biomes de ce
           &7 bundle peut être utilisé sur le
           &7 île.
+        value: "&b Ensemble : [bundle]"
         overwritten: |-
           &c Le propriétaire dispose d'une autorisation qui
           &c écrase le bundle.
       owner_bundle:
         name: "&f&l Propriétaire Bundle"
+        description: |-
+          &7 Bundle attribué à
+          &7 le propriétaire actuel de l'île.
+          &7 Seuls les biomes de ce
+          &7 bundle peut être utilisé sur le
+          &7 île.
+          &7 Autorisation pour l'utilisateur d'attribuer :
+          &7&o '[gamemode].biomes.
+          &7&o bundle.<bundle-id>'
+        value: "&b Ensemble : [bundle]"
       reset_to_default:
         name: "&f&l Réinitialiser aux valeurs par défaut"
         description: |-
@@ -420,12 +518,14 @@ biomes:
           &7 Attribuer un biome
           &7 à ce lot.
         title: "&b Biomes sélectionnés :"
+        value: "&b - [biome]"
       remove_bundle_biome:
         name: "&f&l Supprimer le biome"
         description: |-
           &7 Supprimer un biome
           &7 de ce lot.
         title: "&b Biomes sélectionnés :"
+        value: "&b - [biome]"
       create_bundle:
         name: "&f&l Créer un groupe"
         description: |-
@@ -437,6 +537,7 @@ biomes:
           &7 Supprimer un groupe de
           &7 complètement ce mode de jeu.
         title: "&b Lots sélectionnés :"
+        value: "&b - [bundle]"
       download:
         name: "&f&l Télécharger"
         description: "&7 Télécharger la bibliothèque Web."
@@ -504,16 +605,39 @@ biomes:
         chunk: Chunk
         range: Gamme
       selected: "&2 sélectionnés"
+      island-owner: "[player]"
       unknown: "&e Inconnu"
       biome:
+        lore: |-
+          [description]
+          [biome]
+          [unlock]
+          [change]
+        original: "&7 Biome: &e [biome]"
         unlock:
+          lore: |-
+            [items]
+            [money]
+            [level]
+            [permissions]
           money: "&7 Coût de déverrouillage : &e [nombre] $"
           level: |-
             &7 Nécessite d'atteindre &e [nombre]
             &7 au niveau de l'île.
+          permission-single: "&7 Autorisation manquante : &c [permission]"
           permissions-title: "&c Autorisations manquantes :"
+          permissions-list: "&c - [permission]"
+          item-single: "&7 Déverrouiller l'objet : [color] [number] x [item]"
           item-title: "&7 Déverrouiller des objets :"
+          item-list: "&7 - [color] [number] x [item]"
+          missing: "&c"
+          has: "&e"
         change:
+          lore: |-
+            [items]
+            [money]
+            [mode]
+            [usage]
           mode:
             per_block: |-
               &b&o Coûts du biome par chacun
@@ -522,15 +646,36 @@ biomes:
               &b&o Le changement de biome augmente
               &b&o son prix.
             static: "&b&o Standart changer le prix."
+          money: "&7 Coût : &e $[number]"
+          item-single: "&7 Article : [color] [number] x [item]"
+          item-title: "&7 Items:"
+          item-list: "&7 - [color] [number] x [item]"
+          number-of-usage: |-
+            |&7 Ce biome a été
+            &7 appliqué &e [number] &r&7 fois.
+          missing: "&c"
+          has: "&e"
       bundle:
+        lore: |-
+          [description]
+          [permission]
+          [biomes]
+        permission: |-
+          &7 Autorisation qui doit être
+          &7 attribué au joueur :
+          &7&o [gamemode].biomes.bundle.[id]
         title: "&7 biomes groupés :"
+        value: "&7 - [biome]"
         no-biomes: "&c Aucun biome attribué"
       library:
+        author: "&7 par &e [author]"
         version: "&7 Fabriqué avec des biomes &e [version]"
         lang: "&7 Langue : &e [lang]"
+        gamemode: "&7 Primaire pour &e [gamemode]"
       admin:
         input-mode: Basculer entre les modes de conversation et d'enclume.
   conversations:
+    prefix: "&l&6 [BentoBox]: &r"
     confirm-string: vrai, sur, oui, confirmer, y, valide, correct
     deny-string: faux, désactivé, non, nier, n, invalide, incorrect
     cancel-string: annuler
@@ -538,6 +683,12 @@ biomes:
     cancelled: "&c Conversation annulée !"
     input-number: "&e Veuillez saisir un numéro dans le chat."
     input-seconds: "&e Veuillez entrer une seconde dans le chat."
+    numeric-only: "&c La [value] donnée n'est pas un nombre !"
+    not-valid-value: "&c Le nombre donné [value] n'est pas valide. Elle doit être
+      supérieure à [min] et inférieure à [max] !"
+    data-removed: "&a Les biomes choisis sont supprimés du [gamemode]."
+    confirm-deletion: "&e Veuillez confirmer que vous souhaitez supprimer [number]
+      biomes avec des noms : [value]."
     user-data-removed: "&a Toutes les données utilisateur pour [gamemode] sont effacées
       de la base de données."
     confirm-user-data-deletion: "&e Veuillez confirmer que vous souhaitez effacer
@@ -564,6 +715,8 @@ biomes:
     new-data-imported: "&a Succès, de nouvelles données pour [gamemode] ont été importées."
     exported-file-name: "&e Veuillez entrer un nom de fichier pour le fichier de base
       de données exporté. (écrire 'annuler' pour quitter)"
+    database-export-completed: "&a Succès, l'exportation de la base de données pour
+      [monde] est terminée. Fichier [file] généré."
     file-name-exist: "&c Le fichier portant le nom '[id]' existe. Ne peut pas écraser."
     write-search: "&e Veuillez saisir une valeur de recherche. (écrire 'annuler' pour
       quitter)"
@@ -572,6 +725,9 @@ biomes:
     confirm-biome-deletion: "&e Veuillez confirmer que vous souhaitez supprimer [biome]
       de [gamemode]."
     biome-removed: "[biome] &a est supprimé de [gamemode]."
+    confirm-island-data-deletion: "&e Veuillez confirmer que vous souhaitez supprimer
+      les données de l'île [player]."
+    island-data-removed: "[player] &une donnée d'île est supprimée."
     confirm-biome-data-deletion: "&e Veuillez confirmer que vous souhaitez supprimer
       tous les biomes de [gamemode]."
     biome-data-removed: Tous les biomes sont supprimés de [gamemode].
@@ -584,8 +740,17 @@ biomes:
       l'acheter."
     biome-cannot-be-unlocked: "&c Vous ne pouvez pas déverrouiller &r [biome] &r&c."
     biome-already-purchased: "&c Vous avez déjà acheté &r [biome] &r&c."
+    island-level-not-reached: "[biome] &c nécessite d'avoir au moins le niveau de
+      l'île : [number]."
     missing-permission: "[biome] &c nécessite d'avoir la permission : [permission]."
+    no-credits-buy: "&c Vous n'avez pas assez de crédits pour acheter &r [biome] &r&c.
+      Cela coûte [number]."
+    no-credits-buy-bank: "&c Vous n'avez pas assez de crédits sur votre compte bancaire
+      pour acheter &r [biome] &r&c. Cela coûte [number]."
+    no-items-buy: "&c Vous n'avez pas assez d'articles pour acheter &r [biome] &r&c.
+      Il nécessite [items]."
     biome-purchased: "&e Vous avez acheté &r [biome]."
+    import-count: "&e Importation de [biomes] biomes et de [bundles] bundles."
     start-downloading: "&e Lancer le téléchargement de la bibliothèque."
     update-start: "&eMise à Jour du Biome commencée"
     update-done: "&6[biome]&r&e est mis sur l'île avec succès."
@@ -615,12 +780,18 @@ biomes:
       [number] Pièces d'or"
     not-enough-money-bank: "&c Votre compte bancaire n'a pas assez de crédits. Le
       changement de biome coûte [nombre] $."
+    not-enough-items: "&c Ce biome change le coût [items]."
+    admin-not-on-island: "&cVous n'êtes pas sur l'île de [user]."
     incorrect-object: "&cImpossible de trouver un biome avec un ID donné &d'[biome]'."
     missing-biome: "&cLe biome n'est pas défini."
     incorrect-mode: "&cLa valeur &d'[mode]'&c n'est pas valide. Les valeurs valides
       sont 'ISLAND', 'CHUNK' ou 'SQUARE'."
     incorrect-range: "&cLe numéro &d'[number]'&c n'est pas valide. Les entiers positifs
       sont valides."
+    no-file: "&c Impossible de trouver [file] dans le répertoire des biomes."
+    no-load: "&c Impossible d'importer des biomes depuis [file]. Raison : [description]"
+    not-a-gamemode-world: "&c World [world] n'est pas un monde GameModeAddon."
+    file-exist: "&c Le fichier avec le nom [file] existe déjà. Choisissez un nom différent."
     no-library-entries: "&c Impossible de trouver des entrées de bibliothèque valides."
     not-unlocked: "&c Vous n'avez pas débloqué ce biome."
     not-purchased: "&c Vous n'avez pas acheté ce biome."
@@ -635,7 +806,14 @@ protection:
     BIOMES_ISLAND_PROTECTION:
       name: Biomes protection
       description: "&5&oActiver / Désactiver qui peut \n&5&ochanger le biome sur l’île"
-    BIOMES_WORLD_PROTECTION: {}
+    BIOMES_WORLD_PROTECTION:
+      name: Limite du Biome d'île
+      description: |-
+        &5&oCela permet d’activer / désactiver
+        &5&ol'obligation pour les joueurs d'être
+        &5&o sur leur île pour
+        &5&ochanger de biome.
+      hint: Les changements de biomes ne sont pas autorisés en dehors de l'île!
 meta:
   authors:
   - AFGAME
