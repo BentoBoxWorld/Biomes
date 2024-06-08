@@ -411,6 +411,7 @@ biomes:
       update-mode:
         island: Isla
         chunk: Pedazo
+        range: Distancia
       biome:
         unlock:
           level: |-
