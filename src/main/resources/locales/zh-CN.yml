@@ -679,6 +679,7 @@ biomes:
     confirm-biome-data-deletion: "&e 请确认您要从 [gamemode] 中移除所有生物群系"
     biome-data-removed: 所有生物群系都已从 [gamemode] 中移除
     click-text-to-purchase: "&e 你已解锁 &r [biome]&r&e！点击这里购买它"
+    click-text-to-set: "&e 你已解锁 &r[biome]&r&e！点击这里使用它"
   messages:
     biome-not-unlocked: "[biome] &r&c 未解锁。你不能使用它"
     biome-not-purchased: "&c 你不能使用 &r [biome]&r&c。你需要先购买它"
