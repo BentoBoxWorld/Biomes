@@ -1,0 +1,149 @@
+---
+biomes:
+  commands:
+    admin:
+      main: {}
+      import:
+        parameters: "[overwrite]"
+        description: La commande Admin IMPORT permet d'importer des biomes à partir
+          de biomes.yml file. Ajouter «écraser» à la fin écrasera les biomes existants.
+      migrate: {}
+      set:
+        description: La commande Admin SET permet de changer le biome de l’île de
+          <player>. <type> et <size> n'est pas requis.
+        parameters: "<player> <biome> [<type>] [<size>]"
+      unlock: {}
+      clear-queue: {}
+    player:
+      main: {}
+      set: {}
+      buy: {}
+      info: {}
+  gui:
+    titles: {}
+    buttons:
+      island: {}
+      chunk: {}
+      range: {}
+      reduce: {}
+      increase: {}
+      accept: {}
+      return: {}
+      previous: {}
+      next: {}
+      quit: {}
+      save: {}
+      cancel: {}
+      search: {}
+      buy: {}
+      manage_islands: {}
+      manage_biomes: {}
+      manage_bundles: {}
+      settings: {}
+      import_template: {}
+      web_library: {}
+      export_from_database: {}
+      import_to_database: {}
+      wipe_islands_data: {}
+      wipe_biomes_data: {}
+      add_biome: {}
+      remove_biome: {}
+      accept_selected: {}
+      environment_element: {}
+      properties: {}
+      change_properties: {}
+      unlock_properties: {}
+      biome: {}
+      name: {}
+      deployed: {}
+      environment: {}
+      icon: {}
+      order: {}
+      description: {}
+      unlock_permissions: {}
+      unlock_cost: {}
+      unlock_items: {}
+      unlock_level: {}
+      change_cost: {}
+      change_items: {}
+      change_type:
+        static: {}
+        per_block: {}
+        per_usage: {}
+      change_increment: {}
+      biome-filter: {}
+      protection_range: {}
+      reset: {}
+      cool_down: {}
+      default_size: {}
+      default_mode: {}
+      unlock_notify: {}
+      change_timeout: {}
+      parallel_updates: {}
+      use_bank: {}
+      visibility: {}
+      is_online: {}
+      all_islands: {}
+      island_name: {}
+      change_biome: {}
+      manage_data: {}
+      clear_data: {}
+      island_bundle: {}
+      owner_bundle: {}
+      reset_to_default: {}
+      bundle_info: {}
+      bundle_biomes: {}
+      bundle_name: {}
+      bundle_icon: {}
+      bundle_description: {}
+      bundle_permission: {}
+      add_bundle_biome: {}
+      remove_bundle_biome: {}
+      create_bundle: {}
+      delete_bundle: {}
+      download: {}
+    tips: {}
+    descriptions:
+      update-mode:
+        island: Île
+        chunk: Chunk
+        range: Gamme
+      biome:
+        unlock: {}
+        change:
+          mode: {}
+      bundle: {}
+      library: {}
+      admin:
+        input-mode: Basculer entre les modes de conversation et d'enclume.
+  conversations: {}
+  messages:
+    update-start: "&eMise à Jour du Biome commencée"
+    update-done: "&6[biome]&r&e est mis sur l'île avec succès."
+    skipping: Le [biome] est bien importé.
+    overwriting: Écrasement [biome].
+    imported: "[biome] est importé."
+  errors:
+    no-biomes-admin: "&cLes biomes ne sont pas mis en œuvre dans le monde actuel!
+      Vous devriez utiliser &5/[commande]&c pour les ajouter!"
+    no-biomes: "&cLes biomes ne sont pas mis en œuvre dans le monde actuel!"
+    no-rank: "&cVous n'avez pas le rang pour le faire."
+    not-enough-level: "&cVotre niveau d'île est trop petit. Biome nécessite le niveau
+      [number]"
+    not-enough-money: "&cVous n'avez pas assez d'argent. Changer le biome nécessite
+      [number] Pièces d'or"
+    incorrect-object: "&cImpossible de trouver un biome avec un ID donné &d'[biome]'."
+    missing-biome: "&cLe biome n'est pas défini."
+    incorrect-mode: "&cLa valeur &d'[mode]'&c n'est pas valide. Les valeurs valides
+      sont 'ISLAND', 'CHUNK' ou 'SQUARE'."
+    incorrect-range: "&cLe numéro &d'[number]'&c n'est pas valide. Les entiers positifs
+      sont valides."
+protection:
+  flags:
+    BIOMES_ISLAND_PROTECTION:
+      name: Biomes protection
+      description: "&5&oActiver / Désactiver qui peut \n&5&ochanger le biome sur l’île"
+    BIOMES_WORLD_PROTECTION: {}
+meta:
+  authors:
+  - AFGAME
