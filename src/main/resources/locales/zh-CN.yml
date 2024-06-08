@@ -16,6 +16,8 @@ biomes:
       unlock:
         description: 无需检查即可为玩家解锁生物群落, 末尾添加 `true` 会将其标记为已购买
         parameters: "<player> <biome-id> [true]"
+      clear-queue:
+        description: 清除生物群系更新队列
     player:
       main:
         description: 打开生物群系选择 GUI
@@ -42,7 +44,7 @@ biomes:
       edit-biome: "&0&l 编辑生物群系：[biome]"
       edit-bundle: "&0&l 编辑捆绑包：[bundle]"
       edit-island: "&0&l 编辑岛屿：[island]"
-      environment-selector: "&0&l 选择维度"
+      environment-selector: "&0&l 选择生效维度"
       biome-selector: "&0&l 选择生物群系"
       bundle-selector: "&0&l 选择捆绑包"
       item-selector: "&0&l 选择物品"
@@ -611,7 +613,7 @@ biomes:
             static: "&b&o 固定更改费用"
           money: "&7 费用：&e $[number]"
           item-single: "&7 项目：[color] [number] x [item]"
-          item-title: "&7 项："
+          item-title: "&7 物品："
           item-list: "&7 - [color] [number] x [item]"
           number-of-usage: |-
             |&7 该生物群系已经
@@ -629,14 +631,12 @@ biomes:
           &7&o [gamemode].biomes.bundle.[id]
         title: "&7 生物群系捆绑包："
         value: "&7 - [biome]"
-        no-biomes: "&c 没有指定生物群系"
+        no-biomes: "&c 未指定生物群系"
       library:
         author: "&7 作者 &e [author]"
         version: "&7 Biomes版本 &e [version]"
         lang: "&7 语言：&e [lang]"
         gamemode: "&7 用于 &e [gamemode]"
-      admin:
-        input-mode: 在聊天和铁砧输入模式之间切换。
   conversations:
     prefix: "&l&6 [BentoBox]: &r"
     confirm-string: true, on, yes, confirm, y, valid, correct
@@ -679,7 +679,7 @@ biomes:
     confirm-biome-data-deletion: "&e 请确认您要从 [gamemode] 中移除所有生物群系"
     biome-data-removed: 所有生物群系都已从 [gamemode] 中移除
     click-text-to-purchase: "&e 你已解锁 &r [biome]&r&e！点击这里购买它"
-    click-text-to-set: "&e 你已解锁 &r [biome]&r&e！点击这里使用它"
+    click-text-to-set: "&e 你已解锁 &r[biome]&r&e！点击这里使用它"
   messages:
     biome-not-unlocked: "[biome] &r&c 未解锁。你不能使用它"
     biome-not-purchased: "&c 你不能使用 &r [biome]&r&c。你需要先购买它"
@@ -705,6 +705,7 @@ biomes:
     migrate-finish: "&a 已完成向新数据格式的迁移"
     migrate-valid: "&a 所有数据有效。无需迁移"
     bundle-loaded: "&a 捆绑包 &r [bundle] &a 已加载"
+    clear-queue: "&a [游戏模式] 的生物群系更改任务队列已清除。"
   errors:
     no-island-data: "&c Island 没有任何存储数据"
     no-biomes-admin: "&c 当前游戏模式没有可使用的生物群系。请通过 /[command] 指令导入或创建生物群系"
