@@ -61,7 +61,7 @@ biomes:
       reduce:
         name: "&f&l 减少"
         description: "&7 减少 &e [number]"
-      increase:
+      在crease:
         name: "&f&l 增加"
         description: "&7 增加 &e [number]"
       accept:
