@@ -725,12 +725,14 @@ biomes:
     biome-purchased: "&e Has comprado &r [bioma]&r&e."
     import-count: La importación de biomas terminó. Importados [number] biomas.
     start-downloading: "&e Comience a descargar la biblioteca."
+    update-done: "&6 [biome] &r&e está configurado en la isla con éxito."
     waiting: "&a Se agregó un cambio de bioma en la cola. &e Tiempo de espera estimado:
       [tiempo] seg."
     biome-already-unlocked: "[bioma] &r&e ya está desbloqueado."
     everything-already-bought: "&a Ya has comprado todos los biomas para este modo
       de juego."
     skipping: Omitiendo la importación [biome].
+    overwriting: Sobreescritura [biome].
     imported: "&a Importado &r [bioma] &r&a en caché."
     migrate-start: "&a Iniciando la migración al nuevo formato de datos."
     migrate-finish: "&a Migración al nuevo formato de datos completada."
@@ -750,8 +752,14 @@ biomes:
       cambio de bioma cuesta $[número]."
     not-enough-items: "&c Estos biomas cambian el costo [artículos]."
     admin-not-on-island: "&cNo estás en la isla [user]."
+    incorrect-object: "&cNo se puede encontrar el bioma con la identificación dada
+      &d '[biome]'."
+    missing-biome: "&cBioma no está definido."
+    incorrect-mode: "&c El valor dado &d'[mode]' &c no es válido. Los valores válidos
+      son 'ISLAND', 'CHUNK'  o 'SQUARE'."
     incorrect-range: "&c Número dado &d '[number]' &c no es válido. Válidos son solo
       enteros positivos."
+    no-file: "&cbiomes.yml no encontrado."
     no-load: "&cSe produce un error al importar biomas: [message]!."
     not-a-gamemode-world: "&c World [mundo] no es un mundo GameModeAddon."
     file-exist: "&c El archivo con nombre [archivo] ya existe. Elija un nombre diferente."
@@ -768,5 +776,8 @@ protection:
   flags:
     BIOMES_ISLAND_PROTECTION:
       name: Protección de los biomas
+      description: "&5&o Alternar quién puede \n &5&oCambia el bioma en la isla"
     BIOMES_WORLD_PROTECTION:
       name: Limitación de la isla del bioma
+      description: "&5&o Esto permite habilitar / deshabilitar \n &5 &orequerimientos
+        para que los jugadores \n &5 &oVe a su isla para \n&5&oCambia el biom."
