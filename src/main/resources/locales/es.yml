@@ -17,6 +17,8 @@ biomes:
           <type> y <size> no es requerido.
         parameters: "<player><biome> [ <type> ] [ <size> ]"
       unlock:
+        description: Desbloquea el bioma para el jugador sin controles. Agregar "verdadero"
+          al final lo marcará como comprado.
         parameters: "<player> <biome-id> [true]"
       clear-queue:
         description: borra la cola de actualización de bioma
@@ -120,14 +122,35 @@ biomes:
           &7 de los paquetes.
       settings:
         name: "&f&l Ajustes"
+        description: |-
+          &7 Permite cambiar alguna
+          &7 configuración de complementos.
       import_template:
         name: "&f&l Importar plantilla"
-      web_library: {}
+        description: |-
+          &7 Importar plantilla
+          &7 de archivo ubicado dentro del
+          &7 directorio de complementos.
+      web_library:
+        name: "&f&l Biblioteca web"
+        description: |-
+          &7 Acceder a la biblioteca
+          &7  web que contiene
+          &7 biomas compartidos.
       export_from_database:
         name: "&f&l Exportar base de datos"
+        description: |-
+          &7 Exportar la base de datos
+          &7 en un único archivo ubicado en
+          &7 el directorio de complementos.
       import_to_database:
         name: "&f&l Importar base de datos"
+        description: |-
+          &7 Importar una base de datos desde
+          &7 un archivo ubicado en el complemento
+          &7 directorio.
       wipe_islands_data:
+        name: "&f&l Borrar base de datos de la isla"
         description: |-
           &7 Borrar todos los datos de usuario de biomas
           &7 para este modo de juego.
@@ -725,6 +748,8 @@ biomes:
     biome-purchased: "&e Has comprado &r [bioma]&r&e."
     import-count: La importación de biomas terminó. Importados [number] biomas.
     start-downloading: "&e Comience a descargar la biblioteca."
+    update-start: "&a El bioma inicial cambia a [bioma]&r&a en [número] fragmentos.
+      &e Tiempo estimado: [tiempo] seg."
     update-done: "&6 [biome] &r&e está configurado en la isla con éxito."
     waiting: "&a Se agregó un cambio de bioma en la cola. &e Tiempo de espera estimado:
       [tiempo] seg."
@@ -781,3 +806,4 @@ protection:
       name: Limitación de la isla del bioma
       description: "&5&o Esto permite habilitar / deshabilitar \n &5 &orequerimientos
         para que los jugadores \n &5 &oVe a su isla para \n&5&oCambia el biom."
+      hint: "&c ¡Debes estar en tu isla para cambiar el bioma!"
