@@ -346,11 +346,14 @@ biomes:
         dry: "Dry Biomes"
         cold: "Cold Biomes"
         snowy: "Snowy Biomes"
-        ocean: "Ocean Biomes"
+        aquatic: "Ocean Biomes"
         nether: "Nether Biomes"
         the_end: "The End Biomes"
         neutral: "Neutral Biomes"
         unused: "Unused Biomes"
+        warm: "Warm Biomes"
+        cave: "Cave Biomes"
+        temperate: "Temperate Biomes"
       protection_range:
         name: "&f&l Protection Range"
         description: |-
@@ -581,6 +584,7 @@ biomes:
         enabled: "&2 With Cache clearing"
         disabled: "&c Without Cache clearing"
     tips:
+      click-to-filter: "&e Click &7 to filter."
       click-to-manage: "&e Click &7 to manage."
       click-to-clear: "&e Click &7 to clear."
       click-to-change-biome: "&e Click &7 to change biome."
