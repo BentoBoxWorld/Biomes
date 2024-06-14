@@ -39,6 +39,7 @@ import world.bentobox.biomes.database.objects.BiomesIslandDataObject;
 import world.bentobox.biomes.database.objects.BiomesObject;
 import world.bentobox.biomes.events.BiomeChangedEvent;
 import world.bentobox.biomes.events.BiomePreChangeEvent;
+import world.bentobox.biomes.managers.BiomesAddonManager;
 import world.bentobox.biomes.utils.Constants;
 import world.bentobox.biomes.utils.Utils;
 
@@ -696,7 +697,7 @@ public class BiomeUpdateHelper
             List<ItemStack> itemCost = Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet());
             itemCost.forEach(itemStack -> itemStack.setAmount(itemStack.getAmount() * blockCount));
 
-            this.withdrawItems(changeBiomeStage, itemCost, Collections.emptySet());
+            this.withdrawItems(changeBiomeStage, itemCost, BiomesAddonManager.NO_META_DATA_SET);
         }
 
         if (changeBiomeStage.isDone())
@@ -738,7 +739,7 @@ public class BiomeUpdateHelper
 
             this.withdrawItems(changeBiomeStage,
                 itemCost,
-                Collections.emptySet());
+                    BiomesAddonManager.NO_META_DATA_SET);
         }
 
         if (changeBiomeStage.isDone())
@@ -773,7 +774,7 @@ public class BiomeUpdateHelper
         {
             this.withdrawItems(changeBiomeStage,
                 Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()),
-                Collections.emptySet());
+                    BiomesAddonManager.NO_META_DATA_SET);
         }
 
         if (changeBiomeStage.isDone())
@@ -849,7 +850,7 @@ public class BiomeUpdateHelper
 
             Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()).forEach(item ->
             {
-                if (!Utils.hasRequiredItem(this.callerUser, item, Collections.emptySet()))
+                if (!Utils.hasRequiredItem(this.callerUser, item, BiomesAddonManager.NO_META_DATA_SET))
                 {
                     missingItemList.add(item.clone());
                 }
