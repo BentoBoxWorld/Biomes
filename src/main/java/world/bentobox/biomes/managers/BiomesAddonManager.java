@@ -6,12 +6,26 @@
 package world.bentobox.biomes.managers;
 
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -33,8 +47,8 @@ import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.database.objects.BiomesBundleObject;
 import world.bentobox.biomes.database.objects.BiomesIslandDataObject;
 import world.bentobox.biomes.database.objects.BiomesObject;
-import world.bentobox.biomes.events.BiomeUnlockedEvent;
 import world.bentobox.biomes.events.BiomePurchasedEvent;
+import world.bentobox.biomes.events.BiomeUnlockedEvent;
 import world.bentobox.biomes.utils.Constants;
 import world.bentobox.biomes.utils.Utils;
 
@@ -44,6 +58,8 @@ import world.bentobox.biomes.utils.Utils;
  */
 public class BiomesAddonManager
 {
+    public static final Set<Material> NO_META_DATA_SET = Set.of(Material.TROPICAL_FISH_BUCKET);
+
     /**
      * This is default constructor for Addon Manager.
      *
@@ -1014,7 +1030,7 @@ public class BiomesAddonManager
                 this.withdrawItems(purchaseBiome,
                     user,
                     Utils.groupEqualItems(biomesObject.getUnlockItems(), Collections.emptySet()),
-                    Collections.emptySet());
+                        NO_META_DATA_SET);
             }
         }
 

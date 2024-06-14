@@ -704,7 +704,7 @@ biomes:
               &b&o Changing biome increases
               &b&o its price.
             static: |-
-              &b&o Standart change price.
+              &b&o Standard change price.
           # Text that will replace [money]
           money: |-
             &7 Cost: &e $[number]

@@ -86,7 +86,7 @@ public class Utils
 
 
     /**
-     * This method returns if player has required item in his inventory.
+     * This method returns true if player has required item in his inventory.
      *
      * @param user the user
      * @param requiredItem the required item
