@@ -850,7 +850,7 @@ biomes:
     # Message that appears after clicking on download button in web library.
     start-downloading: "&e Start downloading library."
     # This message is sent to user when biome changing is started.
-    update-start: "&a Starting biome changing to [biome]&r&a in [number] chunks. &e Estimated time: [time] sec."
+    update-start: "&a Starting biome changing to [biome] &r&a in [number] chunks. &e Estimated time: [time] sec."
     # This message is sent to user when biome changing is finished.
     update-done: "&a Finished changing biome to [biome]&r&a."
     # This message is sent to user when his change is placed in queue.

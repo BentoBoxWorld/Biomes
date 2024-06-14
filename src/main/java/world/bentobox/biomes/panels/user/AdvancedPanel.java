@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import world.bentobox.bentobox.BentoBox;
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.TemplatedPanel;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
@@ -487,6 +488,7 @@ public class AdvancedPanel extends CommonPanel
         else
         {
             // Target is specified. It means command must be called by the admin.
+            arguments.remove(0); // Remove "set"
             this.callCommand(false, "set", arguments);
         }
     }
