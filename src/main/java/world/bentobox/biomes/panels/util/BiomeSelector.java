@@ -7,12 +7,18 @@
 package world.bentobox.biomes.panels.util;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
+
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.inventory.ItemStack;
-import java.util.*;
-import java.util.function.BiConsumer;
-import java.util.stream.Collectors;
 
 import lv.id.bonne.panelutils.PanelUtils;
 import world.bentobox.bentobox.api.panels.PanelItem;
@@ -89,7 +95,7 @@ public class BiomeSelector extends PagedSelector<Biome>
     {
         if (this.searchString == null || this.searchString.isBlank())
         {
-            this.filterElements = this.elements;
+            this.filterElements = new ArrayList<>(this.elements); // Clone the elements
         }
         else
         {
@@ -102,7 +108,6 @@ public class BiomeSelector extends PagedSelector<Biome>
                 distinct().
                 collect(Collectors.toList());
         }
-
         if (this.mode != null)
         {
             // Filter biomes according selected mode.
