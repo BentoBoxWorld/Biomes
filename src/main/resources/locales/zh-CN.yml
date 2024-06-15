@@ -237,11 +237,14 @@ biomes:
         dry: 干燥生物群系
         cold: 寒冷生物群系
         snowy: 积雪生物群系
-        ocean: 海洋生物群系
+        aquatic: 海洋生物群系
         nether: 下界生物群系
         the_end: 末地生物群系
         neutral: 中性生物群系
         unused: 未使用的生物群系
+        warm: 温暖生物群系
+        cave: 洞穴生物群系
+        temperate: 温带生物群系
       protection_range:
         name: '&f&l保护范围'
         description: |-
@@ -397,6 +400,7 @@ biomes:
         name: '&f&l 增加'
         description: '&7 增加 &e [number]'
     tips:
+      click-to-filter: '&e点击 &7筛选'
       click-to-manage: '&e点击 &7管理'
       click-to-clear: '&e点击 &7清除'
       click-to-change-biome: '&e点击 &7更改生物群系'
