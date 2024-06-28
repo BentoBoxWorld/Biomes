@@ -34,7 +34,9 @@ biomes:
     titles:
       player-panel: "&0&l选择生物群系"
       buy-panel: "&0&l购买生物群系"
+      advanced-panel: "&0&l更新模式"
       admin-panel: "&0&l管理员GUI"
+      settings: "&0&l设置"
       library: "&0&l库"
       manage-biomes: "&0&l管理生物群系"
       manage-bundles: "&0&l管理捆绑包"
@@ -68,12 +70,19 @@ biomes:
           &7更新模式: &e[mode]
           &7更新范围: &e[number]
       return:
+        name: "&f&l返回"
         description: "&7返回上一级菜单"
-      previous: {}
-      next: {}
+      previous:
+        name: "&f&l上一页"
+        description: "&7跳转至第&e[number]&7页"
+      next:
+        name: "&f&l下一页"
+        description: "&7跳转至第&e[number]&7页"
       quit:
+        name: "&f&l退出"
         description: "&7退出GUI"
       save:
+        name: "&f&l保存"
         description: "&7保存更改并返回"
       cancel:
         name: "&f&l取消"
@@ -312,6 +321,7 @@ biomes:
         description: |-
           &7分配给此岛屿的捆绑包
           &7岛屿仅能使用捆绑包内的生物群系
+        value: "&b捆绑包: &r[bundle]"
         overwritten: "&c岛主拥有的捆绑包权限会覆盖岛屿捆绑包"
       owner_bundle:
         name: "&f&l岛主的捆绑包"
@@ -435,6 +445,11 @@ biomes:
           [change]
         original: "&7生物群系: &e[biome]"
         unlock:
+          lore: |-
+            [items]
+            [money]
+            [level]
+            [permissions]
           money: "&7解锁费用: &e$[number]"
           level: "&7需要&e[number]&7岛屿等级"
           permission-single: "&7缺少权限: &c[permission]"
@@ -471,6 +486,7 @@ biomes:
           &7需要分配给玩家的权限:
           &7&o[gamemode].biomes.bundle.[id]
         title: "&7生物群系捆绑包: "
+        value: "&7- [biome]"
         no-biomes: "&c未指定生物群系"
       library:
         author: "&7作者: &e[author]"
