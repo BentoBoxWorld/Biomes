@@ -15,12 +15,15 @@ biomes:
         parameters: "<player> <biome-id> [mode] [size]"
       unlock:
         description: 无需检查即可为玩家解锁生物群系, 末尾添加`true`会将其标记为已购买
+        parameters: "<player> <biome-id> [true]"
       clear-queue:
         description: 清除生物群系更新队列
     player:
-      main: {}
+      main:
+        description: 打开生物群系选择GUI
       set:
         description: 更改玩家的生物群系
+        parameters: "<biome-id> [mode] [size]"
       buy:
         description: 购买需要的生物群系
         parameters: "<biome-id>"
@@ -240,10 +243,12 @@ biomes:
       cool_down:
         name: "&f&l生物群系冷却"
         description: "&7设置玩家每次更改生物群系之间需要的冷却时间"
+        value: "&7当前冷却时间: &e[number]"
         disabled: "&e已禁用冷却时间"
       default_size:
         name: "&f&l默认范围"
         description: "&7设置玩家更改生物群系的默认范围"
+        value: "&7默认范围: &e[number]"
       default_mode:
         name: "&f&l默认更新模式"
         description: "&7设置当玩家没有指定生物群系的更新模式时默认的更新方式"
@@ -315,6 +320,7 @@ biomes:
           &7岛屿仅能使用捆绑包内的生物群系
           &7权限分配格式:
           &7&o'[gamemode].biomes.bundle.<bundle-id>'
+        value: "&b捆绑包: &r[bundle]"
       reset_to_default:
         name: "&f&l重置为默认值"
         description: "&7重置所有岛屿值到默认设置"
@@ -434,6 +440,7 @@ biomes:
           permission-single: "&7缺少权限: &c[permission]"
           permissions-title: "&c缺少权限: "
           permissions-list: "&c- [permission]"
+          item-single: "&7解锁物品[color] [number] x [item]"
           item-title: "&7 解锁物品: "
           item-list: "&7- [color] [number] x [item]"
           missing: "&c"
@@ -448,6 +455,8 @@ biomes:
             per_block: "&b&o更改生物群系每个方块的费用"
             per_usage: "&b&o更改生物群系每次增加的费用"
             static: "&b&o固定更改费用"
+          money: "&7费用: &e$[number]"
+          item-single: "&7物品: [color] [number] x [item]"
           item-title: "&7物品: "
           item-list: "&7- [color] [number] x [item]"
           number-of-usage: "&7该生物群系应用次数: &e[number]"
@@ -464,6 +473,7 @@ biomes:
         title: "&7生物群系捆绑包: "
         no-biomes: "&c未指定生物群系"
       library:
+        author: "&7作者: &e[author]"
         version: "&7Biomes版本: &e[version]"
         lang: "&7语言: &e[lang]"
         gamemode: "&7用于: &e[gamemode]"
