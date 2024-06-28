@@ -41,6 +41,7 @@ biomes:
       manage-biomes: "&0&l管理生物群系"
       manage-bundles: "&0&l管理捆绑包"
       manage-islands: "&0&l管理岛屿数据"
+      edit-biome: "&0&l编辑生物群系: [biome]"
       edit-bundle: "&0&l编辑捆绑包: [bundle]"
       edit-island: "&0&l编辑岛屿: [island]"
       environment-selector: "&0&l选择生效维度"
@@ -59,6 +60,7 @@ biomes:
         description: "&7按范围更改生物群系"
       reduce:
         name: "&f&l减少"
+        description: "&7减少&e[number]"
       increase:
         name: "&f&l增加"
         description: "&7增加&e[number]"
@@ -131,11 +133,14 @@ biomes:
         name: "&f&l移除生物群系"
         description: "&7从玩家的用户界面移除选择的生物群系"
         title: "&e已选择的生物群系: "
+        value: "&e- [biome]"
       accept_selected:
         name: "&f&l确认选择"
         description: "&7确认选择的元素"
         title: "&e已选择的元素: "
+        element: "&e- [element]"
       environment_element:
+        name: "&f&l[environment]"
         description: "&7[description]"
       properties:
         name: "&f&l属性"
@@ -147,6 +152,7 @@ biomes:
         name: "&f&l解锁属性"
         description: "&7设置解锁生物群系的属性"
       biome:
+        name: "&f&l[biome]"
         description: "&7Minecraft生物群系类型"
         value: "&7生物群系ID: &e[id]"
       name:
@@ -181,6 +187,7 @@ biomes:
         name: "&f&l权限"
         description: "&7设置解锁该生物群系所需要的权限"
         title: "&e权限: "
+        element: "&8- [permission]"
         none: "&7未设置权限"
       unlock_cost:
         name: "&f&l费用"
@@ -190,6 +197,7 @@ biomes:
         name: "&f&l物品"
         description: "&7设置解锁该生物群系需要消耗的物品"
         title: "&e物品: "
+        element: "&8- [number]x[item]"
         none: "&7未设置物品"
       unlock_level:
         name: "&f&l等级"
@@ -203,8 +211,10 @@ biomes:
         name: "&f&l物品"
         description: "&7设置更改该生物群系需要消耗的物品"
         title: "&e物品: "
+        element: "&8- [number]x[item]"
         none: "&7未设置物品"
       change_type:
+        name: "&f&l[type]"
         description: "&7设置更改该生物群系费用的计算方式"
         static:
           name: 固定值
@@ -222,6 +232,7 @@ biomes:
         description: "&7设置更改生物群系每次使用增加的费用"
         value: "&7当前费用: &e[number]"
       biome-filter:
+        name: "&f&l[filter]"
         description: "&7基于Minecraft Wiki的生物群系过滤器"
         lush: 茂密生物群系
         dry: 干燥生物群系
@@ -304,8 +315,15 @@ biomes:
         name: "&f&l全部岛屿"
         description: "&7列出当前游戏模式下所有创建的岛屿"
       island_name:
+        name: "&f&l[name]"
+        island-owner: "[player]"
         unknown: "&c未知的岛主"
+        description: |-
+          [owner]
+          [members]
+          [id]
         owner: "&7岛主: &e[player]"
+        title: "&7岛屿成员: "
         element: " &7- &e[player]"
       change_biome:
         name: "&f&l更改生物群系"
@@ -355,14 +373,17 @@ biomes:
       bundle_permission:
         name: "&f&l捆绑包权限"
         description: "&7将权限赋予给玩家以强制其使用此捆绑包"
+        value: "&e权限: &f[gamemode].biomes.bundle.[id]"
       add_bundle_biome:
         name: "&f&l添加生物群系"
         description: "&7分配一个生物群系给这个捆绑包"
         title: "&b已选择的生物群系: "
+        value: "&b- [biome]"
       remove_bundle_biome:
         name: "&f&l移除生物群系"
         description: "&7移除一个捆绑包包含的生物群系"
         title: "&b已选择的生物群系: "
+        value: "&b- [biome]"
       create_bundle:
         name: "&f&l创建捆绑包"
         description: "&7为该游戏模式创建一个新的捆绑包"
@@ -370,6 +391,7 @@ biomes:
         name: "&f&l删除捆绑包"
         description: "&7从该游戏模式中完全删除此捆绑包"
         title: "&b已选择的捆绑包: "
+        value: "&b- [bundle]"
       download:
         name: "&f&l下载"
         description: "&7下载网络库"
@@ -436,6 +458,7 @@ biomes:
         chunk: 区块模式
         range: 范围模式
       selected: "&2已选择"
+      island-owner: "[player]"
       unknown: "&e未知"
       biome:
         lore: |-
