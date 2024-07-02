@@ -13,9 +13,13 @@ import world.bentobox.bentobox.api.addons.Pladdon;
 
 public class BiomesPladdon extends Pladdon
 {
+    private Addon addon;
+
     @Override
-    public Addon getAddon()
-    {
-        return new BiomesAddon();
+    public Addon getAddon() {
+        if (addon == null) {
+            addon = new BiomesAddon();
+        }
+        return addon;
     }
 }
