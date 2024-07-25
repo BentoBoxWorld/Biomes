@@ -96,7 +96,8 @@ public class BiomesAddon extends Addon
         // Register the reset listener
         this.registerListener(new ChangeOwnerListener(this));
         this.registerListener(new JoinLeaveListener(this));
-        this.registerListener(new IslandLevelListener(this));
+        if(this.getAddonByName("Level").isPresent())
+            this.registerListener(new IslandLevelListener(this));
 
         // Register Flags
         this.registerFlag(BIOMES_WORLD_PROTECTION);
@@ -148,7 +149,7 @@ public class BiomesAddon extends Addon
     {
         super.allLoaded();
 
-        // Try to find Level addon and if it does not exist, display a warning
+        // Try to find Bank addon and if it does not exist, display a warning
         this.getAddonByName("Bank").ifPresentOrElse(addon ->
         {
             this.bankAddon = (Bank) addon;
@@ -171,7 +172,7 @@ public class BiomesAddon extends Addon
             this.logWarning("Level add-on not found. Some features from Biomes Addon will not work!");
         });
 
-        // Try to find Level addon and if it does not exist, display a warning
+        // Try to find Greenhouses addon and if it does not exist, display a warning
         this.getAddonByName("Greenhouses").ifPresentOrElse(addon ->
         {
             this.greenhousesProvided = true;
