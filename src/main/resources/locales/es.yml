@@ -15,7 +15,7 @@ biomes:
       set:
         description: El comando Admin SET permite cambiar el bioma para <player> isla.
           <type> y <size> no es requerido.
-        parameters: "<player><biome> [ <type> ] [ <size> ]"
+        parameters: "<player><biome-id> [mode] [size]"
       unlock:
         description: Desbloquea el bioma para el jugador sin controles. Agregar "verdadero"
           al final lo marcará como comprado.
@@ -198,7 +198,7 @@ biomes:
         description: |-
           &7 Nombre para mostrar del bioma.
           &7 Admite códigos de color.
-        value: "&7 Valor actual: &r [nombre]"
+        value: "&7 Valor actual: &r [name]"
       deployed:
         name: "&f&l Desplegado"
         description: |-
@@ -228,7 +228,7 @@ biomes:
           &7 Objetos con números iguales
           &7 serán ordenados por su
           &7 nombres de identificación únicos.
-        value: "&7 Orden actual: &e [número]"
+        value: "&7 Orden actual: &e [number]"
       description:
         name: "&f&l Descripción"
         description: |-
@@ -266,7 +266,7 @@ biomes:
           &7 Permite cambiar el
           &7 nivel de isla requerido
           &7 por desbloquear este bioma.
-        value: "&7 Nivel actual: &e [número]"
+        value: "&7 Nivel actual: &e [number]"
       change_cost:
         name: "&f&l Coste"
         description: |-
@@ -319,11 +319,14 @@ biomes:
         dry: Biomas secos
         cold: Biomas fríos
         snowy: Biomas nevados
-        ocean: Biomas oceánicos
+        aquatic: Biomas oceánicos
         nether: Biomas inferiores
         the_end: Los biomas finales
         neutral: Biomas neutros
         unused: Biomas no utilizados
+        warm: Biomas cálidos
+        cave: Biomas de cuevas
+        temperate: Biomas templados
       protection_range:
         name: "&f&l Rango de Protección"
         description: |-
@@ -384,7 +387,7 @@ biomes:
           &7 Puede ocurrir en vehículos muy grandes
           &7 islas o servidores bajo
           &7 carga enorme.
-        value: "&7 Tiempo de espera después de: &e [número] min"
+        value: "&7 Tiempo de espera después de: &e [number] min"
       parallel_updates:
         name: "&f&l Actualizaciones paralelas"
         description: |-
@@ -393,7 +396,7 @@ biomes:
           &7 al mismo tiempo.
           &7 Los demás se colocarán en el
           &7 cola.
-        value: "&7 Valor actual: &e[número]&7."
+        value: "&7 Valor actual: &e[number]&7."
       use_bank:
         name: "&f&l Usar cuenta bancaria"
         description: |-
@@ -459,7 +462,7 @@ biomes:
           &7 Sólo biomas de este
           El paquete &7 se puede utilizar en el
           &7 isla.
-        value: "&b paquete: [paquete]"
+        value: "&b paquete: [bundle]"
         overwritten: |-
           &c El propietario tiene un permiso que
           &c sobrescribe el paquete.
@@ -474,7 +477,7 @@ biomes:
           &7 Permiso para que el usuario asigne:
           &7&o '[modo de juego].biomas.
           &7&o paquete.<ID-paquete>'
-        value: "&b paquete: [paquete]"
+        value: "&b paquete: [bundle]"
       reset_to_default:
         name: "&f&l Restablecer los valores predeterminados"
         description: |-
@@ -496,7 +499,7 @@ biomes:
         description: |-
           &7 Cambiar visualización de paquete
           &7 nombre.
-        value: "&e Valor actual: &r [paquete]"
+        value: "&e Valor actual: &r [bundle]"
       bundle_icon:
         name: "&f&l Cambiar Icono"
         description: "&7 Cambiar icono de paquete."
@@ -544,6 +547,7 @@ biomes:
         enabled: "&2 Con borrado de caché"
         disabled: "&c Sin borrar caché"
     tips:
+      click-to-filter: "&e Haga clic en &7 para filtrar."
       click-to-manage: "&e Haga clic en &7 para administrar."
       click-to-clear: "&e Haga clic en &7 para borrar."
       click-to-change-biome: "&e Haga clic en &7 para cambiar de bioma."
@@ -620,11 +624,11 @@ biomes:
             [money]
             [level]
             [permissions]
-          money: "&7 Coste de desbloqueo: &e $[number]"
+          money: "&7 Coste de desbloqueo: &e [number]"
           level: |-
-            &7 Requiere llegar a &e [número]
+            &7 Requiere llegar a &e [number]
             &7 nivel de isla.
-          permission-single: "&7 Falta permiso: &c [permiso]"
+          permission-single: "&7 Falta permiso: &c [permission]"
           permissions-title: "&c Permisos Faltantes:"
           permissions-list: "&c - [permission]"
           item-single: "&7 Desbloquear Item: [color] [number] x [item]"
@@ -646,7 +650,7 @@ biomes:
               &b&o El cambio de bioma aumenta
               & b & o su precio.
             static: "&b&o Precio de cambio estándar."
-          money: "&7 Coste: &e $[number]"
+          money: "&7 Coste: &e [number]"
           item-single: "&7 Item: [color] [number] x [item]"
           item-title: "&7 Items:"
           item-list: "&7 - [color] [number] x [item]"
@@ -663,7 +667,7 @@ biomes:
         permission: |-
           &7 Permiso que debe ser
           &7 asignado al jugador:
-          &7&o [modo de juego].biomes.bundle.[id]
+          &7&o [gamemode].biomes.bundle.[id]
         title: "&7 biomas de paquete:"
         value: "&7 - [biome]"
         no-biomes: "&c No hay biomas asignados"
@@ -671,7 +675,7 @@ biomes:
         author: "&7 por &e [author]"
         version: "&7 Hecho con Biomas &e [version]"
         lang: "&7 Idioma: &e [lang]"
-        gamemode: "&7 Principal para &e [modo de juego]"
+        gamemode: "&7 Principal para &e [gamemode]"
   conversations:
     prefix: "&l&6 [BentoBox]: &r"
     confirm-string: si, verdad, verdadero, confirmar, s, valido, correcto
@@ -681,22 +685,22 @@ biomes:
     cancelled: "&c ¡Conversación cancelada!"
     input-number: "&e Por favor ingresa un número en el chat."
     input-seconds: "&e Por favor ingrese unos segundos en el chat."
-    numeric-only: "&c ¡El [valor] dado no es un número!"
-    not-valid-value: "&c El número dado [valor] no es válido. ¡Debe ser mayor que
+    numeric-only: "&c ¡El [value] dado no es un número!"
+    not-valid-value: "&c El número dado [value] no es válido. ¡Debe ser mayor que
       [min] y menor que [max]!"
-    data-removed: "&a Los biomas elegidos se eliminan del [modo de juego]."
-    confirm-deletion: "&e Confirme que desea eliminar [número] biomas con nombres:
-      [valor]."
-    user-data-removed: "&a Todos los datos del usuario para [modo de juego] se borran
-      de la base de datos."
+    data-removed: "&a Los biomas elegidos se eliminan del [gamemode]."
+    confirm-deletion: "&e Confirme que desea eliminar [number] biomas con nombres:
+      [value]."
+    user-data-removed: "&a Todos los datos del usuario para [gamemode] se borran de
+      la base de datos."
     confirm-user-data-deletion: "&e Confirme que desea borrar la base de datos de
-      usuarios para [modo de juego]."
-    all-data-removed: "&a Todos los datos adicionales para [modo de juego] se borran
-      de la base de datos."
+      usuarios para [gamemode]."
+    all-data-removed: "&a Todos los datos adicionales para [gamemode] se borran de
+      la base de datos."
     confirm-all-data-deletion: "&e Confirme que desea borrar los datos adicionales
-      para [modo de juego]."
+      para [gamemode]."
     write-name: "&e Por favor escribe un nombre en el chat."
-    new-object-created: "&Se crea un nuevo objeto para [modo de juego]."
+    new-object-created: "&Se crea un nuevo objeto para [gamemode]."
     object-already-exists: "&c El objeto &7 [id] &c ya existe. Elija un nombre diferente."
     name-changed: "&a Éxito, se actualizó el nombre."
     write-description: '&e Ingrese una nueva descripción en el chat y "salir" en una
@@ -709,85 +713,82 @@ biomes:
     written-text: "&un texto de entrada:"
     confirm-data-replacement: "&e Confirme que desea reemplazar sus datos actuales
       por uno nuevo."
-    new-data-imported: "&a Éxito, se importaron nuevos datos para [modo de juego]."
+    new-data-imported: "&a Éxito, se importaron nuevos datos para [gamemode]."
     exported-file-name: "&e Introduzca un nombre de archivo para el archivo de base
       de datos exportado. (escriba 'cancelar' para salir)"
     database-export-completed: "&a Éxito, se completó la exportación de la base de
-      datos para [mundo]. Archivo [archivo] generado."
+      datos para [world]. Archivo [file] generado."
     file-name-exist: "&c Existe un archivo con el nombre '[id]'. No se puede sobrescribir."
     write-search: "&e Por favor escriba un valor de búsqueda. (escriba 'cancelar'
       para salir)"
     search-updated: "&un valor de búsqueda actualizado."
-    invalid-biome: "&c Algunos datos almacenados en el `[bioma]`&r&c no son válidos."
-    confirm-biome-deletion: "&e Confirma que deseas eliminar [bioma]&r&e del [modo
-      de juego]."
-    biome-removed: "[bioma] &r&a se elimina de [modo de juego]."
+    invalid-biome: "&c Algunos datos almacenados en el `[biome]`&r&c no son válidos."
+    confirm-biome-deletion: "&e Confirma que deseas eliminar [biome]&r&e del [gamemode]."
+    biome-removed: "[biome] &r&a se elimina de [gamemode]."
     confirm-island-data-deletion: "&e Confirme que desea eliminar los datos de la
-      isla de [jugador]."
-    island-data-removed: "[jugador] & se eliminan los datos de una isla."
+      isla de [player]."
+    island-data-removed: "[player] & se eliminan los datos de una isla."
     confirm-biome-data-deletion: "&e Confirme que desea eliminar todos los biomas
-      de [modo de juego]."
-    biome-data-removed: Todos los biomas se eliminan del [modo de juego].
-    click-text-to-purchase: "&e ¡Has desbloqueado &r [bioma]&r&e! Haga clic aquí para
+      de [gamemode]."
+    biome-data-removed: Todos los biomas se eliminan del [gamemode].
+    click-text-to-purchase: "&e ¡Has desbloqueado &r [biome]&r&e! Haga clic aquí para
       comprarlo."
-    click-text-to-set: "&e ¡Has desbloqueado &r [bioma]&r&e! Haga clic aquí para usarlo."
+    click-text-to-set: "&e ¡Has desbloqueado &r [biome]&r&e! Haga clic aquí para usarlo."
   messages:
-    biome-not-unlocked: "[bioma] &r&c no está desbloqueado. No puedes usarlo."
-    biome-not-purchased: "&c No puedes usar &r [bioma] &r&c. Necesitas comprarlo."
-    biome-cannot-be-unlocked: "&c No puedes desbloquear &r [bioma] &r&c."
-    biome-already-purchased: "&c Ya has comprado &r [bioma] &r&c."
-    island-level-not-reached: "[bioma] &r&c requiere tener al menos el nivel de isla:
-      [número]."
-    missing-permission: "[bioma] &r&c requiere tener permiso: [permiso]."
-    no-credits-buy: "&c No tienes suficientes créditos para comprar &r [bioma] &r&c.
-      Cuesta [número]."
+    biome-not-unlocked: "[biome] &r&c no está desbloqueado. No puedes usarlo."
+    biome-not-purchased: "&c No puedes usar &r [biome] &r&c. Necesitas comprarlo."
+    biome-cannot-be-unlocked: "&c No puedes desbloquear &r [biome] &r&c."
+    biome-already-purchased: "&c Ya has comprado &r [biome] &r&c."
+    island-level-not-reached: "[biome] &r&c requiere tener al menos el nivel de isla:
+      [number]."
+    missing-permission: "[biome] &r&c requiere tener permiso: [permission]."
+    no-credits-buy: "&c No tienes suficientes créditos para comprar &r [biome] &r&c.
+      Cuesta [number]."
     no-credits-buy-bank: "&c No tienes suficientes créditos en tu cuenta bancaria
-      para comprar &r [bioma] &r&c. Cuesta [número]."
-    no-items-buy: "&c No tienes suficientes artículos para comprar &r [bioma] &r&c.
-      Requiere [artículos]."
-    biome-purchased: "&e Has comprado &r [bioma]&r&e."
-    import-count: La importación de biomas terminó. Importados [number] biomas.
+      para comprar &r [biome] &r&c. Cuesta [number]."
+    no-items-buy: "&c No tienes suficientes artículos para comprar &r [biome] &r&c.
+      Requiere [items]."
+    biome-purchased: "&e Has comprado &r [biome]&r&e."
+    import-count: "&e Se importaron [biome] biomas y [bundles] paquetes."
     start-downloading: "&e Comience a descargar la biblioteca."
-    update-start: "&a El bioma inicial cambia a [bioma]&r&a en [número] fragmentos.
-      &e Tiempo estimado: [tiempo] seg."
+    update-start: "&a El bioma inicial cambia a [biome] &r&a en [number] fragmentos.
+      &e Tiempo estimado: [time] seg."
     update-done: "&6 [biome] &r&e está configurado en la isla con éxito."
     waiting: "&a Se agregó un cambio de bioma en la cola. &e Tiempo de espera estimado:
-      [tiempo] seg."
-    biome-already-unlocked: "[bioma] &r&e ya está desbloqueado."
+      [time] seg."
+    biome-already-unlocked: "[biome] &r&e ya está desbloqueado."
     everything-already-bought: "&a Ya has comprado todos los biomas para este modo
       de juego."
     skipping: Omitiendo la importación [biome].
     overwriting: Sobreescritura [biome].
-    imported: "&a Importado &r [bioma] &r&a en caché."
+    imported: "&a Importado &r [biome] &r&a en caché."
     migrate-start: "&a Iniciando la migración al nuevo formato de datos."
     migrate-finish: "&a Migración al nuevo formato de datos completada."
     migrate-valid: "&a Todos los datos son válidos. La migración no es necesaria."
-    bundle-loaded: "&a Paquete &r [paquete] &a está cargado."
-    clear-queue: "& Se borra la cola de tareas de cambio de bioma para [modo de juego]."
+    bundle-loaded: "&a Paquete &r [bundle] &a está cargado."
+    clear-queue: "& Se borra la cola de tareas de cambio de bioma para [gamemode]."
   errors:
     no-island-data: "&c Island no tiene ningún dato almacenado."
-    no-biomes-admin: "&amp; cBiomes no se implementan en el mundo actual! ¡Debe usar
-      &amp; 5 / [comando] &amp; c para agregarlos!"
+    no-biomes-admin: "&c El modo de juego actual no tiene ningún bioma utilizable.
+      Importa o crea biomas usando /[command]"
     no-biomes: "&cBiomas no se implementan en el mundo actual!"
     no-rank: "&cNo tienes rango para hacer eso."
     not-enough-level: "&cEl nivel de tu isla es demasiado pequeño. Bioma requiere
       nivel [number]"
-    not-enough-money: "&cNo tiene suficiente dinero. Cambiar el bioma requiere $[number]"
+    not-enough-money: "&cNo tiene suficiente dinero. Cambiar el bioma requiere [number]"
     not-enough-money-bank: "&c Su cuenta bancaria no tiene suficientes créditos. El
-      cambio de bioma cuesta $[número]."
-    not-enough-items: "&c Estos biomas cambian el costo [artículos]."
+      cambio de bioma cuesta [number]."
+    not-enough-items: "&c Estos biomas cambian el costo [items]."
     admin-not-on-island: "&cNo estás en la isla [user]."
     incorrect-object: "&cNo se puede encontrar el bioma con la identificación dada
       &d '[biome]'."
     missing-biome: "&cBioma no está definido."
-    incorrect-mode: "&c El valor dado &d'[mode]' &c no es válido. Los valores válidos
-      son 'ISLAND', 'CHUNK'  o 'SQUARE'."
-    incorrect-range: "&c Número dado &d '[number]' &c no es válido. Válidos son solo
-      enteros positivos."
-    no-file: "&cbiomes.yml no encontrado."
-    no-load: "&cSe produce un error al importar biomas: [message]!."
-    not-a-gamemode-world: "&c World [mundo] no es un mundo GameModeAddon."
-    file-exist: "&c El archivo con nombre [archivo] ya existe. Elija un nombre diferente."
+    incorrect-mode: "&c El modo con el nombre '[mode]' no existe."
+    incorrect-range: "&c El valor dado '[number]' no es un número válido."
+    no-file: "&c No se pudo encontrar [file] en el directorio de biomas."
+    no-load: "&c No se pudieron importar los biomas desde [file]. Motivo: [description]"
+    not-a-gamemode-world: "&c World [world] no es un mundo GameModeAddon."
+    file-exist: "&c El archivo con nombre [file] ya existe. Elija un nombre diferente."
     no-library-entries: "&c No se pudo encontrar ninguna entrada de biblioteca válida."
     not-unlocked: "&c No has desbloqueado este bioma."
     not-purchased: "&c No has comprado este bioma."
