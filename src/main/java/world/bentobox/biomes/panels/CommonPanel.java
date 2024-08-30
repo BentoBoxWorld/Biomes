@@ -445,7 +445,7 @@ public abstract class CommonPanel
 
         return !this.addon.isEconomyProvided() || cost <= 0 ? "" :
             this.user.getTranslationOrNothing(reference + "money",
-                "[number]", String.valueOf(cost));
+                "[number]", this.addon.getVaultHook().format(cost));
     }
 
 
