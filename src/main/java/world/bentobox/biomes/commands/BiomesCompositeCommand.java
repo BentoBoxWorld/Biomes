@@ -10,7 +10,6 @@ package world.bentobox.biomes.commands;
 import java.util.Iterator;
 import java.util.List;
 
-import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.user.User;

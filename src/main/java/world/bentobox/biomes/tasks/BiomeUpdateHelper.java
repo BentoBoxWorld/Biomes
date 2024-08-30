@@ -828,7 +828,7 @@ public class BiomeUpdateHelper
                     Utils.sendMessage(this.callerUser,
                         this.callerUser.getTranslation(Constants.ERRORS + "not-enough-money-bank",
                             TextVariables.NUMBER,
-                            String.valueOf(this.biome.getCost())));
+                            this.addon.getVaultHook().format(this.biome.getCost())));
                     return false;
                 }
             }
@@ -839,7 +839,7 @@ public class BiomeUpdateHelper
                 Utils.sendMessage(this.callerUser,
                     this.callerUser.getTranslation(Constants.ERRORS + "not-enough-money",
                         TextVariables.NUMBER,
-                        String.valueOf(this.biome.getCost())));
+                        this.addon.getVaultHook().format(this.biome.getCost())));
                 return false;
             }
         }
@@ -898,7 +898,7 @@ public class BiomeUpdateHelper
                     Utils.sendMessage(this.callerUser,
                         this.callerUser.getTranslation(Constants.ERRORS + "not-enough-money-bank",
                             TextVariables.NUMBER,
-                            String.valueOf(cost)));
+                            this.addon.getVaultHook().format(cost)));
                     return false;
                 }
             }
@@ -909,7 +909,7 @@ public class BiomeUpdateHelper
                 Utils.sendMessage(this.callerUser,
                     this.callerUser.getTranslation(Constants.ERRORS + "not-enough-money",
                         TextVariables.NUMBER,
-                        String.valueOf(cost)));
+                        this.addon.getVaultHook().format(cost)));
                 return false;
             }
         }
@@ -984,7 +984,7 @@ public class BiomeUpdateHelper
                     Utils.sendMessage(this.callerUser,
                         this.callerUser.getTranslation(Constants.ERRORS + "not-enough-money-bank",
                             TextVariables.NUMBER,
-                            String.valueOf(cost)));
+                            this.addon.getVaultHook().format(cost)));
                     return false;
                 }
             }
@@ -995,7 +995,7 @@ public class BiomeUpdateHelper
                 Utils.sendMessage(this.callerUser,
                     this.callerUser.getTranslation(Constants.ERRORS + "not-enough-money",
                         TextVariables.NUMBER,
-                        String.valueOf(cost)));
+                        this.addon.getVaultHook().format(cost)));
                 return false;
             }
         }

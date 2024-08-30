@@ -12,6 +12,7 @@ import world.bentobox.bentobox.api.addons.GameModeAddon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.objects.Island;
+import world.bentobox.bentobox.hooks.VaultHook;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.commands.BiomesCompositeCommand;
@@ -202,8 +203,9 @@ public class BiomesCommand extends BiomesCompositeCommand
                     "[description]", BiomesCommand.this.getSingleLineDescription(biomesObject.getDescription()));
                 user.sendMessage("biomes.information.level",
                     "[level]", Long.toString(biomesObject.getUnlockLevel()));
-                user.sendMessage("biomes.information.cost",
-                    "[cost]", Double.toString(biomesObject.getUnlockCost()));
+                double cost = biomesObject.getUnlockCost();
+                String costStr = getPlugin().getHooks().getHook("VaultHook").map(hook -> (VaultHook)hook).map(hook -> hook.format(cost)).orElse(Double.toString(cost));
+                user.sendMessage("biomes.information.cost", "[cost]", costStr);
 
                 biomesObject.getUnlockPermissions().forEach(s ->
                     user.sendMessage("biomes.information.permission", "[permission]", s));
