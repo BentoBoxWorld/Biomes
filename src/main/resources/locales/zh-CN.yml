@@ -1,20 +1,21 @@
+---
 biomes:
   commands:
     admin:
       main:
         description: 主要生物群系管理员命令
       import:
-        parameters: <file>
+        parameters: "<file>"
         description: 导入biomes.yml文件中的生物群系设置
         confirmation: 这将从[gamemode]中移除现有的生物群系并从模板文件中导入新的生物群系 - 请确认
       migrate:
         description: 将原生物群系相关数据转为新格式
       set:
         description: 更改玩家<player>的岛屿生物群系, [type]和[size]可以选择不输入
-        parameters: <player> <biome-id> [mode] [size]
+        parameters: "<player> <biome-id> [mode] [size]"
       unlock:
         description: 无需检查即可为玩家解锁生物群系, 末尾添加`true`会将其标记为已购买
-        parameters: <player> <biome-id> [true]
+        parameters: "<player> <biome-id> [true]"
       clear-queue:
         description: 清除生物群系更新队列
     player:
@@ -22,217 +23,217 @@ biomes:
         description: 打开生物群系选择GUI
       set:
         description: 更改玩家的生物群系
-        parameters: <biome-id> [mode] [size]
+        parameters: "<biome-id> [mode] [size]"
       buy:
         description: 购买需要的生物群系
-        parameters: <biome-id>
+        parameters: "<biome-id>"
       info:
         description: 在聊天信息中发送生物群系的详细描述
-        parameters: <biome-id>
+        parameters: "<biome-id>"
   gui:
     titles:
-      player-panel: '&0&l选择生物群系'
-      buy-panel: '&0&l购买生物群系'
-      advanced-panel: '&0&l更新模式'
-      admin-panel: '&0&l管理员GUI'
-      settings: '&0&l设置'
-      library: '&0&l库'
-      manage-biomes: '&0&l管理生物群系'
-      manage-bundles: '&0&l管理捆绑包'
-      manage-islands: '&0&l管理岛屿数据'
-      edit-biome: '&0&l编辑生物群系: [biome]'
-      edit-bundle: '&0&l编辑捆绑包: [bundle]'
-      edit-island: '&0&l编辑岛屿: [island]'
-      environment-selector: '&0&l选择生效维度'
-      biome-selector: '&0&l选择生物群系'
-      bundle-selector: '&0&l选择捆绑包'
-      item-selector: '&0&l选择物品'
+      player-panel: "&0&l选择生物群系"
+      buy-panel: "&0&l购买生物群系"
+      advanced-panel: "&0&l更新模式"
+      admin-panel: "&0&l管理员GUI"
+      settings: "&0&l设置"
+      library: "&0&l库"
+      manage-biomes: "&0&l管理生物群系"
+      manage-bundles: "&0&l管理捆绑包"
+      manage-islands: "&0&l管理岛屿数据"
+      edit-biome: "&0&l编辑生物群系: [biome]"
+      edit-bundle: "&0&l编辑捆绑包: [bundle]"
+      edit-island: "&0&l编辑岛屿: [island]"
+      environment-selector: "&0&l选择生效维度"
+      biome-selector: "&0&l选择生物群系"
+      bundle-selector: "&0&l选择捆绑包"
+      item-selector: "&0&l选择物品"
     buttons:
       island:
-        name: '&f&l岛屿'
-        description: '&7更改整个岛屿的生物群系'
+        name: "&f&l岛屿"
+        description: "&7更改整个岛屿的生物群系"
       chunk:
-        name: '&f&l区块'
-        description: '&7按区块更改生物群系'
+        name: "&f&l区块"
+        description: "&7按区块更改生物群系"
       range:
-        name: '&f&l范围'
-        description: '&7按范围更改生物群系'
+        name: "&f&l范围"
+        description: "&7按范围更改生物群系"
       reduce:
-        name: '&f&l减少'
-        description: '&7减少&e[number]'
+        name: "&f&l减少"
+        description: "&7减少&e[number]"
       increase:
-        name: '&f&l增加'
-        description: '&7增加&e[number]'
+        name: "&f&l增加"
+        description: "&7增加&e[number]"
       accept:
-        name: '&f&l确认更改'
+        name: "&f&l确认更改"
         description: |-
           &7将生物群系更改为&e[biome]
 
           &7更新模式: &e[mode]
           &7更新范围: &e[number]
       return:
-        name: '&f&l返回'
-        description: '&7返回上一级菜单'
+        name: "&f&l返回"
+        description: "&7返回上一级菜单"
       previous:
-        name: '&f&l上一页'
-        description: '&7跳转至第&e[number]&7页'
+        name: "&f&l上一页"
+        description: "&7跳转至第&e[number]&7页"
       next:
-        name: '&f&l下一页'
-        description: '&7跳转至第&e[number]&7页'
+        name: "&f&l下一页"
+        description: "&7跳转至第&e[number]&7页"
       quit:
-        name: '&f&l退出'
-        description: '&7退出GUI'
+        name: "&f&l退出"
+        description: "&7退出GUI"
       save:
-        name: '&f&l保存'
-        description: '&7保存更改并返回'
+        name: "&f&l保存"
+        description: "&7保存更改并返回"
       cancel:
-        name: '&f&l取消'
-        description: '&7取消更改并返回'
+        name: "&f&l取消"
+        description: "&7取消更改并返回"
       search:
-        name: '&f&l搜索'
-        description: '&7从聊天框输入文本搜索相应的生物群系'
-        search: '&b搜索值: &f[value]'
+        name: "&f&l搜索"
+        description: "&7从聊天框输入文本搜索相应的生物群系"
+        search: "&b搜索值: &f[value]"
       buy:
-        name: '&f&l购买'
-        description: '&7购买新的生物群系'
+        name: "&f&l购买"
+        description: "&7购买新的生物群系"
       manage_islands:
-        name: '&f&l管理岛屿'
-        description: '&7管理岛屿数据'
+        name: "&f&l管理岛屿"
+        description: "&7管理岛屿数据"
       manage_biomes:
-        name: '&f&l管理生物群系'
-        description: '&7管理生物群系数据'
+        name: "&f&l管理生物群系"
+        description: "&7管理生物群系数据"
       manage_bundles:
-        name: '&f&l管理捆绑包'
-        description: '&7管理捆绑包数据'
+        name: "&f&l管理捆绑包"
+        description: "&7管理捆绑包数据"
       settings:
-        name: '&f&l设置'
-        description: '&7管理插件设置'
+        name: "&f&l设置"
+        description: "&7管理插件设置"
       import_template:
-        name: '&f&l导入模板'
-        description: '&7导入插件目录里模板文件的数据'
+        name: "&f&l导入模板"
+        description: "&7导入插件目录里模板文件的数据"
       web_library:
-        name: '&f&l网络库'
-        description: '&7访问网络库中共享的生物群系'
+        name: "&f&l网络库"
+        description: "&7访问网络库中共享的生物群系"
       export_from_database:
-        name: '&f&l导出数据库'
-        description: '&7导出数据库到addons/Biomes目录下'
+        name: "&f&l导出数据库"
+        description: "&7导出数据库到addons/Biomes目录下"
       import_to_database:
-        name: '&f&l导入数据库'
-        description: '&7从addons/Biomes目录下导入数据库'
+        name: "&f&l导入数据库"
+        description: "&7从addons/Biomes目录下导入数据库"
       wipe_islands_data:
-        name: '&f&l清除岛屿数据'
-        description: '&7在该游戏模式清除所有生物群系用户数据'
+        name: "&f&l清除岛屿数据"
+        description: "&7在该游戏模式清除所有生物群系用户数据"
       wipe_biomes_data:
-        name: '&f&l清除生物群系数据库'
-        description: '&7在该游戏模式清除所有生物群系和捆绑包的数据'
+        name: "&f&l清除生物群系数据库"
+        description: "&7在该游戏模式清除所有生物群系和捆绑包的数据"
       add_biome:
-        name: '&f&l添加生物群系'
-        description: '&7创建新的生物群系供玩家在用户界面使用'
+        name: "&f&l添加生物群系"
+        description: "&7创建新的生物群系供玩家在用户界面使用"
       remove_biome:
-        name: '&f&l移除生物群系'
-        description: '&7从玩家的用户界面移除选择的生物群系'
-        title: '&e已选择的生物群系: '
-        value: '&e- [biome]'
+        name: "&f&l移除生物群系"
+        description: "&7从玩家的用户界面移除选择的生物群系"
+        title: "&e已选择的生物群系: "
+        value: "&e- [biome]"
       accept_selected:
-        name: '&f&l确认选择'
-        description: '&7确认选择的元素'
-        title: '&e已选择的元素: '
-        element: '&e- [element]'
+        name: "&f&l确认选择"
+        description: "&7确认选择的元素"
+        title: "&e已选择的元素: "
+        element: "&e- [element]"
       environment_element:
-        name: '&f&l[environment]'
-        description: '&7[description]'
+        name: "&f&l[environment]"
+        description: "&7[description]"
       properties:
-        name: '&f&l属性'
-        description: '&7设置生物群系的主要属性'
+        name: "&f&l属性"
+        description: "&7设置生物群系的主要属性"
       change_properties:
-        name: '&f&l更改属性'
-        description: '&7设置更改生物群系的属性'
+        name: "&f&l更改属性"
+        description: "&7设置更改生物群系的属性"
       unlock_properties:
-        name: '&f&l解锁属性'
-        description: '&7设置解锁生物群系的属性'
+        name: "&f&l解锁属性"
+        description: "&7设置解锁生物群系的属性"
       biome:
-        name: '&f&l[biome]'
-        description: '&7Minecraft生物群系类型'
-        value: '&7生物群系ID: &e[id]'
+        name: "&f&l[biome]"
+        description: "&7Minecraft生物群系类型"
+        value: "&7生物群系ID: &e[id]"
       name:
-        name: '&f&l显示名称'
-        description: '&7生物群系的显示名称(支持颜色代码)'
-        value: '&7当前名称: &r[name]'
+        name: "&f&l显示名称"
+        description: "&7生物群系的显示名称(支持颜色代码)"
+        value: "&7当前名称: &r[name]"
       deployed:
-        name: '&f&l部署'
-        description: '&7切换生物群系是否可供玩家使用'
-        enabled: '&2已启用'
-        disabled: '&c已禁用'
+        name: "&f&l部署"
+        description: "&7切换生物群系是否可供玩家使用"
+        enabled: "&2已启用"
+        disabled: "&c已禁用"
       environment:
-        name: '&f&l维度'
-        description: '&7限制生物群系允许使用的维度'
-        enabled: '&2'
-        disabled: '&c'
+        name: "&f&l维度"
+        description: "&7限制生物群系允许使用的维度"
+        enabled: "&2"
+        disabled: "&c"
       icon:
-        name: '&f&l图标'
-        description: '&7更改该生物群系显示的图标'
+        name: "&f&l图标"
+        description: "&7更改该生物群系显示的图标"
       order:
-        name: '&f&l排序'
+        name: "&f&l排序"
         description: |-
           &7更改该生物群系在用户界面的排序
           &7相同排序的项目将根据它们的唯一ID进行排序判断
-        value: '&7当前排序: &e[number]'
+        value: "&7当前排序: &e[number]"
       description:
-        name: '&f&l描述'
-        description: '&7生物群系的描述(支持颜色代码)'
-        value: '&e当前描述: '
-        none: '&7未设置描述'
+        name: "&f&l描述"
+        description: "&7生物群系的描述(支持颜色代码)"
+        value: "&e当前描述: "
+        none: "&7未设置描述"
       unlock_permissions:
-        name: '&f&l权限'
-        description: '&7设置解锁该生物群系所需要的权限'
-        title: '&e权限: '
-        element: '&8- [permission]'
-        none: '&7未设置权限'
+        name: "&f&l权限"
+        description: "&7设置解锁该生物群系所需要的权限"
+        title: "&e权限: "
+        element: "&8- [permission]"
+        none: "&7未设置权限"
       unlock_cost:
-        name: '&f&l费用'
-        description: '&7设置解锁该生物群系所需要的费用'
-        value: '&7当前费用: &e$[number]'
+        name: "&f&l费用"
+        description: "&7设置解锁该生物群系所需要的费用"
+        value: "&7当前费用: &e$[number]"
       unlock_items:
-        name: '&f&l物品'
-        description: '&7设置解锁该生物群系需要消耗的物品'
-        title: '&e物品: '
-        element: '&8- [number]x[item]'
-        none: '&7未设置物品'
+        name: "&f&l物品"
+        description: "&7设置解锁该生物群系需要消耗的物品"
+        title: "&e物品: "
+        element: "&8- [number]x[item]"
+        none: "&7未设置物品"
       unlock_level:
-        name: '&f&l等级'
-        description: '&7设置解锁该生物群系所需的岛屿等级'
-        value: '&7当前等级: &e[number]'
+        name: "&f&l等级"
+        description: "&7设置解锁该生物群系所需的岛屿等级"
+        value: "&7当前等级: &e[number]"
       change_cost:
-        name: '&f&l费用'
-        description: '&7设置更改该生物群系所需的费用'
-        value: '&7当前费用: &e$[number]'
+        name: "&f&l费用"
+        description: "&7设置更改该生物群系所需的费用"
+        value: "&7当前费用: &e$[number]"
       change_items:
-        name: '&f&l物品'
-        description: '&7设置更改该生物群系需要消耗的物品'
-        title: '&e物品: '
-        element: '&8- [number]x[item]'
-        none: '&7未设置物品'
+        name: "&f&l物品"
+        description: "&7设置更改该生物群系需要消耗的物品"
+        title: "&e物品: "
+        element: "&8- [number]x[item]"
+        none: "&7未设置物品"
       change_type:
-        name: '&f&l[type]'
-        description: '&7设置更改该生物群系费用的计算方式'
+        name: "&f&l[type]"
+        description: "&7设置更改该生物群系费用的计算方式"
         static:
           name: 固定值
-          description: '&7更改生物群系的费用为固定不变的值'
+          description: "&7更改生物群系的费用为固定不变的值"
         per_block:
           name: 方块单价
-          description: '&7更改生物群系的费用按每个方块的单价计算'
+          description: "&7更改生物群系的费用按每个方块的单价计算"
         per_usage:
           name: 使用次数
-          description: '&7更改生物群系的费用按使用次数递增'
-        enabled: '&2'
-        disabled: '&c'
+          description: "&7更改生物群系的费用按使用次数递增"
+        enabled: "&2"
+        disabled: "&c"
       change_increment:
-        name: '&f&l增量'
-        description: '&7设置更改生物群系每次使用增加的费用'
-        value: '&7当前费用: &e[number]'
+        name: "&f&l增量"
+        description: "&7设置更改生物群系每次使用增加的费用"
+        value: "&7当前费用: &e[number]"
       biome-filter:
-        name: '&f&l[filter]'
-        description: '&7基于Minecraft Wiki的生物群系过滤器'
+        name: "&f&l[filter]"
+        description: "&7基于Minecraft Wiki的生物群系过滤器"
         lush: 茂密生物群系
         dry: 干燥生物群系
         cold: 寒冷生物群系
@@ -246,245 +247,242 @@ biomes:
         cave: 洞穴生物群系
         temperate: 温带生物群系
       protection_range:
-        name: '&f&l保护范围'
+        name: "&f&l保护范围"
         description: |-
           &7是否启用当选择更改整个岛屿的生物群系时
           &7以当前岛屿保护范围而不是岛屿最大范围更改
-        enabled: '&2已启用'
-        disabled: '&c已禁用'
+        enabled: "&2已启用"
+        disabled: "&c已禁用"
       reset:
-        name: '&f&l岛主更改时重置'
+        name: "&f&l岛主更改时重置"
         description: |-
           &7是否启用岛屿更换了新的岛主但新岛主没有该生物群系时
           &7强制将岛屿的生物群系变更为默认值
-        enabled: '&2已启用'
-        disabled: '&c已禁用'
+        enabled: "&2已启用"
+        disabled: "&c已禁用"
       cool_down:
-        name: '&f&l生物群系冷却'
-        description: '&7设置玩家每次更改生物群系之间需要的冷却时间'
-        value: '&7当前冷却时间: &e[number]'
-        disabled: '&e已禁用冷却时间'
+        name: "&f&l生物群系冷却"
+        description: "&7设置玩家每次更改生物群系之间需要的冷却时间"
+        value: "&7当前冷却时间: &e[number]"
+        disabled: "&e已禁用冷却时间"
       default_size:
-        name: '&f&l默认范围'
-        description: '&7设置玩家更改生物群系的默认范围'
-        value: '&7默认范围: &e[number]'
+        name: "&f&l默认范围"
+        description: "&7设置玩家更改生物群系的默认范围"
+        value: "&7默认范围: &e[number]"
       default_mode:
-        name: '&f&l默认更新模式'
-        description: '&7设置当玩家没有指定生物群系的更新模式时默认的更新方式'
-        enabled: '&2'
-        disabled: '&c'
+        name: "&f&l默认更新模式"
+        description: "&7设置当玩家没有指定生物群系的更新模式时默认的更新方式"
+        enabled: "&2"
+        disabled: "&c"
       unlock_notify:
-        name: '&f&l解锁通知'
-        description: '&7当玩家解锁新的生物群系时发送一条通知'
-        enabled: '&b解锁通知&a已启用'
-        disabled: '&b解锁通知&c已禁用'
+        name: "&f&l解锁通知"
+        description: "&7当玩家解锁新的生物群系时发送一条通知"
+        enabled: "&b解锁通知&a已启用"
+        disabled: "&b解锁通知&c已禁用"
       change_timeout:
-        name: '&f&l更改超时'
+        name: "&f&l更改超时"
         description: |-
           &7设置当更改生物群系超过指定时间后进程将被强制终止
           &7一般在更改范围巨大和服务器负载严重时发生
-        value: '&7超时时间: &e[number]分钟'
+        value: "&7超时时间: &e[number]分钟"
       parallel_updates:
-        name: '&f&l并行更新'
+        name: "&f&l并行更新"
         description: |-
           &7设置能同时更改的生物群系线程数
           &7超出的更改请求将放入队列中
-        value: '&7当前值: &e[number]'
+        value: "&7当前值: &e[number]"
       use_bank:
-        name: '&f&l使用银行账户'
+        name: "&f&l使用银行账户"
         description: |-
           &7设置是否使用Bank附加组件(Addon)
           &7负责Biomes附加组件(Addon)中的所有的付款请求
-        enabled: '&b使用银行帐户&a已启用'
-        disabled: '&b使用银行账户&c已禁用'
-        missing: '&c未安装Bank附加组件(Addon)'
+        enabled: "&b使用银行帐户&a已启用"
+        disabled: "&b使用银行账户&c已禁用"
+        missing: "&c未安装Bank附加组件(Addon)"
       visibility:
-        name: '&f&l生物群系可见性'
-        description: '&7更改生物群系在玩家生物群系选择界面的可见性'
-        enabled: '&2'
-        disabled: '&c'
+        name: "&f&l生物群系可见性"
+        description: "&7更改生物群系在玩家生物群系选择界面的可见性"
+        enabled: "&2"
+        disabled: "&c"
         all: 所有生物群系
         deployed: 已部署的生物群系
         accessible: 可访问的生物群系
         toggleable: 可切换
       is_online:
-        name: '&f&l玩家在线的岛屿'
-        description: '&7列出有在线成员的所有岛屿'
+        name: "&f&l玩家在线的岛屿"
+        description: "&7列出有在线成员的所有岛屿"
       all_islands:
-        name: '&f&l全部岛屿'
-        description: '&7列出当前游戏模式下所有创建的岛屿'
+        name: "&f&l全部岛屿"
+        description: "&7列出当前游戏模式下所有创建的岛屿"
       island_name:
-        name: '&f&l[name]'
-        island-owner: '[player]'
-        unknown: '&c未知的岛主'
+        name: "&f&l[name]"
+        island-owner: "[player]"
+        unknown: "&c未知的岛主"
         description: |-
           [owner]
           [members]
           [id]
-        owner: '&7岛主: &e[player]'
-        title: '&7岛屿成员: '
-        element: ' &7- &e[player]'
+        owner: "&7岛主: &e[player]"
+        title: "&7岛屿成员: "
+        element: " &7- &e[player]"
       change_biome:
-        name: '&f&l更改生物群系'
-        description: '&7更改每个岛屿的生物群系'
+        name: "&f&l更改生物群系"
+        description: "&7更改每个岛屿的生物群系"
       manage_data:
-        name: '&f&l管理岛屿数据'
-        description: '&7管理特定岛屿的存储数据'
+        name: "&f&l管理岛屿数据"
+        description: "&7管理特定岛屿的存储数据"
       clear_data:
-        name: '&f&l清除岛屿数据'
-        description: '&7清除所有存储的岛屿数据'
+        name: "&f&l清除岛屿数据"
+        description: "&7清除所有存储的岛屿数据"
       island_bundle:
-        name: '&f&l岛屿捆绑包'
+        name: "&f&l岛屿捆绑包"
         description: |-
           &7分配给此岛屿的捆绑包
           &7岛屿仅能使用捆绑包内的生物群系
-        value: '&b捆绑包: &r[bundle]'
-        overwritten: '&c岛主拥有的捆绑包权限会覆盖岛屿捆绑包'
+        value: "&b捆绑包: &r[bundle]"
+        overwritten: "&c岛主拥有的捆绑包权限会覆盖岛屿捆绑包"
       owner_bundle:
-        name: '&f&l岛主的捆绑包'
+        name: "&f&l岛主的捆绑包"
         description: |-
           &7分配给当前岛主的捆绑包
           &7岛屿仅能使用捆绑包内的生物群系
           &7权限分配格式:
           &7&o'[gamemode].biomes.bundle.<bundle-id>'
-        value: '&b捆绑包: &r[bundle]'
+        value: "&b捆绑包: &r[bundle]"
       reset_to_default:
-        name: '&f&l重置为默认值'
-        description: '&7重置所有岛屿值到默认设置'
+        name: "&f&l重置为默认值"
+        description: "&7重置所有岛屿值到默认设置"
       bundle_info:
-        name: '&f&l基础信息'
-        description: '&7查看捆绑包基础信息'
+        name: "&f&l基础信息"
+        description: "&7查看捆绑包基础信息"
       bundle_biomes:
-        name: '&f&l管理生物群系'
-        description: '&7管理分配给捆绑包的生物群系'
+        name: "&f&l管理生物群系"
+        description: "&7管理分配给捆绑包的生物群系"
       bundle_name:
-        name: '&f&l更改名称'
-        description: '&7更改捆绑包显示的名称'
-        value: '&e当前名称: &r[bundle]'
+        name: "&f&l更改名称"
+        description: "&7更改捆绑包显示的名称"
+        value: "&e当前名称: &r[bundle]"
       bundle_icon:
-        name: '&f&l更改图标'
-        description: '&7更改捆绑包图标'
+        name: "&f&l更改图标"
+        description: "&7更改捆绑包图标"
       bundle_description:
-        name: '&f&l更改描述'
-        description: '&7更改捆绑包描述'
-        value: '&e当前描述: '
-        none: '&c无描述'
+        name: "&f&l更改描述"
+        description: "&7更改捆绑包描述"
+        value: "&e当前描述: "
+        none: "&c无描述"
       bundle_permission:
-        name: '&f&l捆绑包权限'
-        description: '&7将权限赋予给玩家以强制其使用此捆绑包'
-        value: '&e权限: &f[gamemode].biomes.bundle.[id]'
+        name: "&f&l捆绑包权限"
+        description: "&7将权限赋予给玩家以强制其使用此捆绑包"
+        value: "&e权限: &f[gamemode].biomes.bundle.[id]"
       add_bundle_biome:
-        name: '&f&l添加生物群系'
-        description: '&7分配一个生物群系给这个捆绑包'
-        title: '&b已选择的生物群系: '
-        value: '&b- [biome]'
+        name: "&f&l添加生物群系"
+        description: "&7分配一个生物群系给这个捆绑包"
+        title: "&b已选择的生物群系: "
+        value: "&b- [biome]"
       remove_bundle_biome:
-        name: '&f&l移除生物群系'
-        description: '&7移除一个捆绑包包含的生物群系'
-        title: '&b已选择的生物群系: '
-        value: '&b- [biome]'
+        name: "&f&l移除生物群系"
+        description: "&7移除一个捆绑包包含的生物群系"
+        title: "&b已选择的生物群系: "
+        value: "&b- [biome]"
       create_bundle:
-        name: '&f&l创建捆绑包'
-        description: '&7为该游戏模式创建一个新的捆绑包'
+        name: "&f&l创建捆绑包"
+        description: "&7为该游戏模式创建一个新的捆绑包"
       delete_bundle:
-        name: '&f&l删除捆绑包'
-        description: '&7从该游戏模式中完全删除此捆绑包'
-        title: '&b已选择的捆绑包: '
-        value: '&b- [bundle]'
+        name: "&f&l删除捆绑包"
+        description: "&7从该游戏模式中完全删除此捆绑包"
+        title: "&b已选择的捆绑包: "
+        value: "&b- [bundle]"
       download:
-        name: '&f&l下载'
-        description: '&7下载网络库'
-        enabled: '&2清除缓存'
-        disabled: '&c不清除缓存'
-      在crease:
-        name: '&f&l 增加'
-        description: '&7 增加 &e [number]'
+        name: "&f&l下载"
+        description: "&7下载网络库"
+        enabled: "&2清除缓存"
+        disabled: "&c不清除缓存"
     tips:
-      click-to-filter: '&e点击 &7筛选'
-      click-to-manage: '&e点击 &7管理'
-      click-to-clear: '&e点击 &7清除'
-      click-to-change-biome: '&e点击 &7更改生物群系'
-      click-to-view: '&e点击 &7查看'
-      click-to-select: '&e点击 &7选择'
-      click-to-choose: '&e点击 &7选择'
-      click-to-complete: '&e点击 &7完成'
-      left-click-to-accept: '&e左键 &7应用'
-      right-click-to-write: '&e右键 &7写入'
-      click-to-reduce: '&e点击 &7减少'
-      click-to-increase: '&e点击 &7增加'
-      click-to-return: '&e点击 &7返回'
-      click-to-quit: '&e点击 &7退出'
-      click-to-wipe: '&e点击 &7擦除'
-      left-click-to-wipe: '&e左键 &7擦除'
-      right-click-to-switch: '&e右键 &7切换'
-      click-to-open: '&e点击 &7打开'
-      click-to-export: '&e点击 &7导出'
-      click-to-create: '&e点击 &7创建'
-      left-click-to-open: '&e左键 &7打开'
-      right-click-to-reset-all: '&e右键 &7全部擦除'
-      click-to-toggle: '&e点击 &7切换'
-      click-to-change: '&e点击 &7更改'
-      shift-click-to-reset: '&eShift + 点击 &7重置'
-      click-to-add: '&e点击 &7添加'
-      click-to-remove: '&e点击 &7删除'
-      left-click-to-cycle: '&e左键 &7向下循环'
-      right-click-to-cycle: '&e右键 &7向上循环'
-      click-to-edit: '&e点击 &7编辑'
-      left-click-to-download: '&e左键 &7下载'
-      right-click-to-toggle: '&e右键 &7切换'
-      click-to-install: '&e点击 &7安装'
-      click-to-reset-all: '&e点击 &7全部重置'
-      right-click-to-select: '&e右键 &7选择'
-      right-click-to-deselect: '&e右键 &7取消选择'
-      left-click-to-choose: '&e左键 &7选择'
-      click-to-buy: '&e点击 &7购买'
-      click-to-cancel: '&e点击 &7取消'
-      click-to-save: '&e点击 &7保存'
-      click-to-deselect: '&e点击 &7取消选择'
-      click-on-item: '&7在物品栏 &e点击物品'
-      left-click-to-edit: '&e左键 &7编辑'
-      right-click-to-clear: '&e右键 &7清除'
-      click-to-previous: '&e点击 &7查看上一页'
-      click-to-next: '&e点击 &7查看下一页'
-      select-before: '&e选择物品 &7继续'
-      click-to-apply: '&e点击 &7应用'
-      right-click-to-open: '&e右键 &7打开'
-      click-to-perform: '&e点击 &7执行'
-      left-click-to-apply: '&e左键 &7应用'
-      right-click-to-unlock: '&e右键 &7解锁'
-      right-click-to-buy: '&e右键 &7购买'
-      right-click-to-change: '&e右键 &7更改'
+      click-to-filter: "&e点击 &7筛选"
+      click-to-manage: "&e点击 &7管理"
+      click-to-clear: "&e点击 &7清除"
+      click-to-change-biome: "&e点击 &7更改生物群系"
+      click-to-view: "&e点击 &7查看"
+      click-to-select: "&e点击 &7选择"
+      click-to-choose: "&e点击 &7选择"
+      click-to-complete: "&e点击 &7完成"
+      left-click-to-accept: "&e左键 &7应用"
+      right-click-to-write: "&e右键 &7写入"
+      click-to-reduce: "&e点击 &7减少"
+      click-to-increase: "&e点击 &7增加"
+      click-to-return: "&e点击 &7返回"
+      click-to-quit: "&e点击 &7退出"
+      click-to-wipe: "&e点击 &7擦除"
+      left-click-to-wipe: "&e左键 &7擦除"
+      right-click-to-switch: "&e右键 &7切换"
+      click-to-open: "&e点击 &7打开"
+      click-to-export: "&e点击 &7导出"
+      click-to-create: "&e点击 &7创建"
+      left-click-to-open: "&e左键 &7打开"
+      right-click-to-reset-all: "&e右键 &7全部擦除"
+      click-to-toggle: "&e点击 &7切换"
+      click-to-change: "&e点击 &7更改"
+      shift-click-to-reset: "&eShift + 点击 &7重置"
+      click-to-add: "&e点击 &7添加"
+      click-to-remove: "&e点击 &7删除"
+      left-click-to-cycle: "&e左键 &7向下循环"
+      right-click-to-cycle: "&e右键 &7向上循环"
+      click-to-edit: "&e点击 &7编辑"
+      left-click-to-download: "&e左键 &7下载"
+      right-click-to-toggle: "&e右键 &7切换"
+      click-to-install: "&e点击 &7安装"
+      click-to-reset-all: "&e点击 &7全部重置"
+      right-click-to-select: "&e右键 &7选择"
+      right-click-to-deselect: "&e右键 &7取消选择"
+      left-click-to-choose: "&e左键 &7选择"
+      click-to-buy: "&e点击 &7购买"
+      click-to-cancel: "&e点击 &7取消"
+      click-to-save: "&e点击 &7保存"
+      click-to-deselect: "&e点击 &7取消选择"
+      click-on-item: "&7在物品栏 &e点击物品"
+      left-click-to-edit: "&e左键 &7编辑"
+      right-click-to-clear: "&e右键 &7清除"
+      click-to-previous: "&e点击 &7查看上一页"
+      click-to-next: "&e点击 &7查看下一页"
+      select-before: "&e选择物品 &7继续"
+      click-to-apply: "&e点击 &7应用"
+      right-click-to-open: "&e右键 &7打开"
+      click-to-perform: "&e点击 &7执行"
+      left-click-to-apply: "&e左键 &7应用"
+      right-click-to-unlock: "&e右键 &7解锁"
+      right-click-to-buy: "&e右键 &7购买"
+      right-click-to-change: "&e右键 &7更改"
     descriptions:
       update-mode:
         island: 岛屿模式
         chunk: 区块模式
         range: 范围模式
-      selected: '&2已选择'
-      island-owner: '[player]'
-      unknown: '&e未知'
+      selected: "&2已选择"
+      island-owner: "[player]"
+      unknown: "&e未知"
       biome:
         lore: |-
           [description]
           [biome]
           [unlock]
           [change]
-        original: '&7生物群系: &e[biome]'
+        original: "&7生物群系: &e[biome]"
         unlock:
           lore: |-
             [items]
             [money]
             [level]
             [permissions]
-          money: '&7解锁费用: &e$[number]'
-          level: '&7需要&e[number]&7岛屿等级'
-          permission-single: '&7缺少权限: &c[permission]'
-          permissions-title: '&c缺少权限: '
-          permissions-list: '&c- [permission]'
-          item-single: '&7解锁物品[color] [number] x [item]'
-          item-title: '&7 解锁物品: '
-          item-list: '&7- [color] [number] x [item]'
-          missing: '&c'
-          has: '&e'
+          money: "&7解锁费用: &e$[number]"
+          level: "&7需要&e[number]&7岛屿等级"
+          permission-single: "&7缺少权限: &c[permission]"
+          permissions-title: "&c缺少权限: "
+          permissions-list: "&c- [permission]"
+          item-single: "&7解锁物品[color] [number] x [item]"
+          item-title: "&7 解锁物品: "
+          item-list: "&7- [color] [number] x [item]"
+          missing: "&c"
+          has: "&e"
         change:
           lore: |-
             [items]
@@ -492,16 +490,16 @@ biomes:
             [mode]
             [usage]
           mode:
-            per_block: '&b&o更改生物群系每个方块的费用'
-            per_usage: '&b&o更改生物群系每次增加的费用'
-            static: '&b&o固定更改费用'
-          money: '&7费用: &e$[number]'
-          item-single: '&7物品: [color] [number] x [item]'
-          item-title: '&7物品: '
-          item-list: '&7- [color] [number] x [item]'
-          number-of-usage: '&7该生物群系应用次数: &e[number]'
-          missing: '&c'
-          has: '&e'
+            per_block: "&b&o更改生物群系每个方块的费用"
+            per_usage: "&b&o更改生物群系每次增加的费用"
+            static: "&b&o固定更改费用"
+          money: "&7费用: &e$[number]"
+          item-single: "&7物品: [color] [number] x [item]"
+          item-title: "&7物品: "
+          item-list: "&7- [color] [number] x [item]"
+          number-of-usage: "&7该生物群系应用次数: &e[number]"
+          missing: "&c"
+          has: "&e"
       bundle:
         lore: |-
           [description]
@@ -510,115 +508,115 @@ biomes:
         permission: |-
           &7需要分配给玩家的权限:
           &7&o[gamemode].biomes.bundle.[id]
-        title: '&7生物群系捆绑包: '
-        value: '&7- [biome]'
-        no-biomes: '&c未指定生物群系'
+        title: "&7生物群系捆绑包: "
+        value: "&7- [biome]"
+        no-biomes: "&c未指定生物群系"
       library:
-        author: '&7作者: &e[author]'
-        version: '&7Biomes版本: &e[version]'
-        lang: '&7语言: &e[lang]'
-        gamemode: '&7用于: &e[gamemode]'
+        author: "&7作者: &e[author]"
+        version: "&7Biomes版本: &e[version]"
+        lang: "&7语言: &e[lang]"
+        gamemode: "&7用于: &e[gamemode]"
   conversations:
-    prefix: '&l&6[BentoBox]: &r'
+    prefix: "&l&6[BentoBox]: &r"
     confirm-string: true, on, yes, confirm, y, valid, correct
     deny-string: false, off, no, deny, n, invalid, incorrect
     cancel-string: cancel
     exit-string: cancel, exit, quit
-    cancelled: '&c对话取消!'
-    input-number: '&e请在聊天框中输入一个数字'
-    input-seconds: '&e请在聊天框中输入所需秒数'
-    numeric-only: '&c给定的[value]不是数字!'
-    not-valid-value: '&c给定的数字[value]无效. 它必须大于[min]并且小于[max]!'
-    data-removed: '&a选择的生物群系已从[gamemode]中移除'
-    confirm-deletion: '&e请确认你要删除[number]个生物群系, 名称: [value]'
-    user-data-removed: '&a[gamemode]的所有用户数据已从数据库中清除'
-    confirm-user-data-deletion: '&e请确认你要清除[gamemode]的用户数据库'
-    all-data-removed: '&a[gamemode]的所有附加组件(Addon)数据已从数据库中清除'
-    confirm-all-data-deletion: '&e请确认你要清除[gamemode]的附加组件(Addon)数据'
-    write-name: '&e请在聊天框中输入想要的名称'
-    new-object-created: '&a为[gamemode]创建了一个新对象'
-    object-already-exists: '&c对象&7[id]&c已存在. 请使用不同的名称.'
-    name-changed: '&a成功, 名称已更新.'
-    write-description: '&e请在聊天框中输入新的描述, 输入''quit''完成编辑.'
-    description-changed: '&a成功, 描述已更新.'
-    write-permissions: '&e请输入所需的权限, 在聊天框中每行为一个权限, 输入''quit''完成编辑.'
-    permissions-changed: '&a成功, 权限已更新.'
-    start-downloading: '&a开始下载和导入Biomes Library'
-    written-text: '&a输入文本: '
-    confirm-data-replacement: '&e请确认你想用新的数据替换当前数据'
-    new-data-imported: '&a成功, [gamemode]的新数据已导入.'
-    exported-file-name: '&e请输入一个名称来为导出的数据库文件命名. (输入''cancel''退出)'
-    database-export-completed: '&a成功, [world]的数据库导出完成. 文件[file]已生成.'
-    file-name-exist: '&c名称为''[id]''的文件已存在, 无法覆盖.'
-    write-search: '&e请输入你想搜索的值. (输入''cancel''退出)'
-    search-updated: '&a搜索值已更新'
-    invalid-biome: '&c存储在`[biome]`中的某些数据无效'
-    confirm-biome-deletion: '&e请确认你要从&r&e[gamemode]&e中移除[biome]'
-    biome-removed: '[biome]&r&a已从[gamemode]中移除'
-    confirm-island-data-deletion: '&e请确认你要删除[player]的岛屿数据'
-    island-data-removed: '[player]&a岛屿数据已删除'
-    confirm-biome-data-deletion: '&e请确认您要从[gamemode]中移除所有生物群系'
-    biome-data-removed: '&a所有生物群系都已从[gamemode]中移除'
-    click-text-to-purchase: '&e你已解锁&r[biome]&r&e! 点击这里购买它.'
-    click-text-to-set: '&e你已解锁&r[biome]&r&e! 点击这里使用它.'
+    cancelled: "&c对话取消!"
+    input-number: "&e请在聊天框中输入一个数字"
+    input-seconds: "&e请在聊天框中输入所需秒数"
+    numeric-only: "&c给定的[value]不是数字!"
+    not-valid-value: "&c给定的数字[value]无效. 它必须大于[min]并且小于[max]!"
+    data-removed: "&a选择的生物群系已从[gamemode]中移除"
+    confirm-deletion: "&e请确认你要删除[number]个生物群系, 名称: [value]"
+    user-data-removed: "&a[gamemode]的所有用户数据已从数据库中清除"
+    confirm-user-data-deletion: "&e请确认你要清除[gamemode]的用户数据库"
+    all-data-removed: "&a[gamemode]的所有附加组件(Addon)数据已从数据库中清除"
+    confirm-all-data-deletion: "&e请确认你要清除[gamemode]的附加组件(Addon)数据"
+    write-name: "&e请在聊天框中输入想要的名称"
+    new-object-created: "&a为[gamemode]创建了一个新对象"
+    object-already-exists: "&c对象&7[id]&c已存在. 请使用不同的名称."
+    name-changed: "&a成功, 名称已更新."
+    write-description: "&e请在聊天框中输入新的描述, 输入'quit'完成编辑."
+    description-changed: "&a成功, 描述已更新."
+    write-permissions: "&e请输入所需的权限, 在聊天框中每行为一个权限, 输入'quit'完成编辑."
+    permissions-changed: "&a成功, 权限已更新."
+    start-downloading: "&a开始下载和导入Biomes Library"
+    written-text: "&a输入文本: "
+    confirm-data-replacement: "&e请确认你想用新的数据替换当前数据"
+    new-data-imported: "&a成功, [gamemode]的新数据已导入."
+    exported-file-name: "&e请输入一个名称来为导出的数据库文件命名. (输入'cancel'退出)"
+    database-export-completed: "&a成功, [world]的数据库导出完成. 文件[file]已生成."
+    file-name-exist: "&c名称为'[id]'的文件已存在, 无法覆盖."
+    write-search: "&e请输入你想搜索的值. (输入'cancel'退出)"
+    search-updated: "&a搜索值已更新"
+    invalid-biome: "&c存储在`[biome]`中的某些数据无效"
+    confirm-biome-deletion: "&e请确认你要从&r&e[gamemode]&e中移除[biome]"
+    biome-removed: "[biome]&r&a已从[gamemode]中移除"
+    confirm-island-data-deletion: "&e请确认你要删除[player]的岛屿数据"
+    island-data-removed: "[player]&a岛屿数据已删除"
+    confirm-biome-data-deletion: "&e请确认您要从[gamemode]中移除所有生物群系"
+    biome-data-removed: "&a所有生物群系都已从[gamemode]中移除"
+    click-text-to-purchase: "&e你已解锁&r[biome]&r&e! 点击这里购买它."
+    click-text-to-set: "&e你已解锁&r[biome]&r&e! 点击这里使用它."
   messages:
-    biome-not-unlocked: '[biome]&r&c未解锁, 你不能使用它.'
-    biome-not-purchased: '&c你不能使用&r[biome]&r&c, 你需要先购买它.'
-    biome-cannot-be-unlocked: '&c你无法解锁&r[biome]'
-    biome-already-purchased: '&c你已经购买了&r[biome], 不可重复购买.'
-    island-level-not-reached: '[biome]&r&c需要的岛屿等级至少为: [number]'
-    missing-permission: '[biome]&r&c需要有权限: [permission]'
-    no-credits-buy: '&c你没有足够的钱来购买&r[biome]&r&c, 它的费用是[number].'
-    no-credits-buy-bank: '&c你的银行账户中没有足够的钱来购买&r[biome]&r&c, 它的费用是[number].'
-    no-items-buy: '&c你没有足够的物品来购买&r[biome]&r&c, 它需要: [items].'
-    biome-purchased: '&e你已经购买了&r[biome]'
-    import-count: '&e已导入[biomes]生物群系和[bundles]捆绑包'
-    start-downloading: '&e开始下载库'
-    update-start: '&a开始将范围&b[number]&a个区块内的生物群系更改为&r[biome], &e 预计所需时间(秒): [time]'
-    update-done: '&a成功更改生物群系为: &r[biome]'
-    waiting: '&a已进入更改生物群系的队列, &e预计等待时间(秒): [time]'
-    biome-already-unlocked: '[biome]&r&e已经解锁了'
-    everything-already-bought: '&a你已经为这个游戏模式购买了所有的生物群系'
-    skipping: '&a跳过&r[biome]&a加载'
-    overwriting: '&a在缓存中覆盖&r[biome]'
-    imported: '&a在缓存中导入&r[biome]'
-    migrate-start: '&a开始迁移到新的数据格式'
-    migrate-finish: '&a已完成向新数据格式的迁移'
-    migrate-valid: '&a所有数据有效, 无需迁移'
-    bundle-loaded: '&a捆绑包&r[bundle]&a已加载'
-    clear-queue: '&a[gamemode]的生物群系更改任务队列已清除'
+    biome-not-unlocked: "[biome]&r&c未解锁, 你不能使用它."
+    biome-not-purchased: "&c你不能使用&r[biome]&r&c, 你需要先购买它."
+    biome-cannot-be-unlocked: "&c你无法解锁&r[biome]"
+    biome-already-purchased: "&c你已经购买了&r[biome], 不可重复购买."
+    island-level-not-reached: "[biome]&r&c需要的岛屿等级至少为: [number]"
+    missing-permission: "[biome]&r&c需要有权限: [permission]"
+    no-credits-buy: "&c你没有足够的钱来购买&r[biome]&r&c, 它的费用是[number]."
+    no-credits-buy-bank: "&c你的银行账户中没有足够的钱来购买&r[biome]&r&c, 它的费用是[number]."
+    no-items-buy: "&c你没有足够的物品来购买&r[biome]&r&c, 它需要: [items]."
+    biome-purchased: "&e你已经购买了&r[biome]"
+    import-count: "&e已导入[biomes]生物群系和[bundles]捆绑包"
+    start-downloading: "&e开始下载库"
+    update-start: "&a开始将范围&b[number]&a个区块内的生物群系更改为&r[biome], &e 预计所需时间(秒): [time]"
+    update-done: "&a成功更改生物群系为: &r[biome]"
+    waiting: "&a已进入更改生物群系的队列, &e预计等待时间(秒): [time]"
+    biome-already-unlocked: "[biome]&r&e已经解锁了"
+    everything-already-bought: "&a你已经为这个游戏模式购买了所有的生物群系"
+    skipping: "&a跳过&r[biome]&a加载"
+    overwriting: "&a在缓存中覆盖&r[biome]"
+    imported: "&a在缓存中导入&r[biome]"
+    migrate-start: "&a开始迁移到新的数据格式"
+    migrate-finish: "&a已完成向新数据格式的迁移"
+    migrate-valid: "&a所有数据有效, 无需迁移"
+    bundle-loaded: "&a捆绑包&r[bundle]&a已加载"
+    clear-queue: "&a[gamemode]的生物群系更改任务队列已清除"
   errors:
-    no-island-data: '&c岛屿没有任何储存数据'
-    no-biomes-admin: '&c当前游戏模式没有可使用的生物群系, 请使用/[command]命令导入或创建生物群系.'
-    no-biomes: '&c当前游戏模式没有可用的生物群系'
-    no-rank: '&c你不能更改该岛屿的生物群系'
-    not-enough-level: '&c更改该生物群系需要的岛屿等级至少为: [number]'
-    not-enough-money: '&c更改该生物群系需要费用: $[number]'
-    not-enough-money-bank: '&c你的银行账户没有足够的费用, 更改该生物群系需要: $[number]'
-    not-enough-items: '&c更改该生物群系需要物品: [items]'
-    admin-not-on-island: '&c你不在[user]的岛屿上'
-    incorrect-object: '&c无法找到指定名称的生物群系: &r[biome]'
-    missing-biome: '&c未指定生物群系名称'
-    incorrect-mode: '&c更新模式''[mode]''不存在, 有效值须为''ISLAND''(岛屿模式), ''CHUNK''(区块模式)或''SQUARE''(范围模式).'
-    incorrect-range: '&c给定的值''[number]''不是有效的整数'
-    no-file: '&cBiomes目录中无法找到文件[file]'
-    no-load: '&c无法从 [file] 中导入生物群系, 原因: [description]'
-    not-a-gamemode-world: '&c[world]不是可用的游戏模式世界'
-    file-exist: '&c[file]文件已存在, 请输入一个不同的名称.'
-    no-library-entries: '&c找不到任何有效的库条目'
-    not-unlocked: '&c你还没有解锁这个生物群系'
-    not-purchased: '&c你还没有购买这个生物群系'
-    timeout: '&c生物群系更改已超时, 可能是所选区域太大或服务器繁忙'
-    failed: '&c服务器在更改生物群系时遇到一些问题'
-    could-not-remove-money: '&c扣款时出现问题'
-    could-not-remove-items: '&c扣除物品时出现问题'
-    something-went-wrong: '&c出现了一些问题, 无法这么做'
+    no-island-data: "&c岛屿没有任何储存数据"
+    no-biomes-admin: "&c当前游戏模式没有可使用的生物群系, 请使用/[command]命令导入或创建生物群系."
+    no-biomes: "&c当前游戏模式没有可用的生物群系"
+    no-rank: "&c你不能更改该岛屿的生物群系"
+    not-enough-level: "&c更改该生物群系需要的岛屿等级至少为: [number]"
+    not-enough-money: "&c更改该生物群系需要费用: $[number]"
+    not-enough-money-bank: "&c你的银行账户没有足够的费用, 更改该生物群系需要: $[number]"
+    not-enough-items: "&c更改该生物群系需要物品: [items]"
+    admin-not-on-island: "&c你不在[user]的岛屿上"
+    incorrect-object: "&c无法找到指定名称的生物群系: &r[biome]"
+    missing-biome: "&c未指定生物群系名称"
+    incorrect-mode: "&c更新模式'[mode]'不存在, 有效值须为'ISLAND'(岛屿模式), 'CHUNK'(区块模式)或'SQUARE'(范围模式)."
+    incorrect-range: "&c给定的值'[number]'不是有效的整数"
+    no-file: "&cBiomes目录中无法找到文件[file]"
+    no-load: "&c无法从 [file] 中导入生物群系, 原因: [description]"
+    not-a-gamemode-world: "&c[world]不是可用的游戏模式世界"
+    file-exist: "&c[file]文件已存在, 请输入一个不同的名称."
+    no-library-entries: "&c找不到任何有效的库条目"
+    not-unlocked: "&c你还没有解锁这个生物群系"
+    not-purchased: "&c你还没有购买这个生物群系"
+    timeout: "&c生物群系更改已超时, 可能是所选区域太大或服务器繁忙"
+    failed: "&c服务器在更改生物群系时遇到一些问题"
+    could-not-remove-money: "&c扣款时出现问题"
+    could-not-remove-items: "&c扣除物品时出现问题"
+    something-went-wrong: "&c出现了一些问题, 无法这么做"
 protection:
   flags:
     BIOMES_ISLAND_PROTECTION:
-      name: '&b&l生物群系管理'
-      description: '&a允许&#FAFAD2或&c禁止&#FAFAD2变更岛屿生物群系'
+      name: "&b&l生物群系管理"
+      description: "&a允许&#FAFAD2或&c禁止&#FAFAD2变更岛屿生物群系"
     BIOMES_WORLD_PROTECTION:
-      name: '&b&l生物群系岛屿限制'
-      description: '&a允许&#FAFAD2或&c禁止&#FAFAD2玩家只有在自己的岛屿上才能更改生物群系'
-      hint: '&c你必须在自己的岛屿上才能更改生物群系!'
+      name: "&b&l生物群系岛屿限制"
+      description: "&a允许&#FAFAD2或&c禁止&#FAFAD2玩家只有在自己的岛屿上才能更改生物群系"
+      hint: "&c你必须在自己的岛屿上才能更改生物群系!"
