@@ -18,7 +18,6 @@ import org.bukkit.block.Biome;
 import org.bukkit.util.BlockVector;
 
 import world.bentobox.bentobox.api.user.User;
-import world.bentobox.bentobox.paperlib.PaperLib;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.database.objects.BiomesObject;
@@ -88,7 +87,7 @@ public class BiomeUpdateTask
         // Scan the next chunk
         this.scanNextChunk().thenAccept(result ->
         {
-            if (!PaperLib.isPaper() && !Bukkit.isPrimaryThread())
+            if (!Util.isPaper() && !Bukkit.isPrimaryThread())
             {
                 this.addon.logError("scanChunk not on Primary Thread!");
             }
@@ -179,7 +178,7 @@ public class BiomeUpdateTask
             return completed;
         }
 
-        if (PaperLib.isPaper())
+        if (Util.isPaper())
         {
             Bukkit.getScheduler().runTaskAsynchronously(this.addon.getPlugin(),
                 () -> this.runBiomeChange(chunkData, chunk, completed));
