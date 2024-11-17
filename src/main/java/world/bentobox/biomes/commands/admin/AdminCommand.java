@@ -6,11 +6,12 @@
 package world.bentobox.biomes.commands.admin;
 
 
-import org.bukkit.Bukkit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import org.bukkit.Bukkit;
 
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
@@ -74,6 +75,8 @@ public class AdminCommand extends BiomesCompositeCommand
         new MigrateCommand(this.getAddon(), this);
         new BiomesSetCommand(this.getAddon(), this);
         new BiomesUnlockCommand(this.getAddon(), this);
+
+        new BiomesClearQueueCommand(this.getAddon(), this);
     }
 
 
@@ -159,12 +162,38 @@ public class AdminCommand extends BiomesCompositeCommand
             }
 
             List<String> args = input.subList(1, input.size());
-            User target = this.getAddon().getPlayers().getUser(input.get(0));
+
+            String targetName = input.get(0);
+            boolean hasTarget;
+            User target;
+
+            if (HERE.equalsIgnoreCase(targetName))
+            {
+                target = this.getIslandsManager().getIslandAt(user.getLocation()).
+                    map(Island::getOwner).
+                    map(User::getInstance).
+                    orElse(null);
+                hasTarget = user.isPlayer();
+            }
+            else
+            {
+                if (AdminCommand.this.getPlayers().getUUID(targetName) != null)
+                {
+                    target = AdminCommand.this.getPlayers().getUser(targetName);
+                }
+                else
+                {
+                    target = null;
+                }
+
+                hasTarget = target != null;
+            }
+
             BiomesObject biome = AdminCommand.this.getBiomeObject(args, user);
             Settings.UpdateMode updateMode = AdminCommand.this.getUpdateMode(args, user);
             int size = AdminCommand.this.getUpdateRange(args, user);
 
-            if (target == null || biome == null || updateMode == null || size < 1)
+            if (!hasTarget || biome == null || updateMode == null || size < 1)
             {
                 // Show help if something fails.
                 this.showHelp(this, user);
@@ -175,9 +204,9 @@ public class AdminCommand extends BiomesCompositeCommand
 
                 BiomeUpdateHelper helper = new BiomeUpdateHelper(this.getAddon(),
                     user,
-                    target,
+                    target == null ? user : target,
                     biome,
-                    this.<BiomesAddon>getAddon().getAddonManager().getIslandData(this.getWorld(), user),
+                    this.<BiomesAddon>getAddon().getAddonManager().getIslandData(this.getWorld(), target),
                     this.getWorld(),
                     updateMode,
                     size,
@@ -214,6 +243,7 @@ public class AdminCommand extends BiomesCompositeCommand
                 case 3:
                     // Create suggestions with all player names that is available for users.
                     Bukkit.getOnlinePlayers().forEach(player -> returnList.add(player.getName()));
+                    returnList.add(HERE);
 
                     break;
                 case 4:
@@ -512,4 +542,61 @@ public class AdminCommand extends BiomesCompositeCommand
             return Optional.of(Util.tabLimit(returnList, lastString));
         }
     }
+
+
+    /**
+     * The queue clear command.
+     */
+    private static class BiomesClearQueueCommand extends CompositeCommand
+    {
+        /**
+         * Migrates biomes
+         *
+         * @param addon - addon
+         * @param cmd - command
+         */
+        public BiomesClearQueueCommand(Addon addon, CompositeCommand cmd)
+        {
+            super(addon, cmd, "clearqueue");
+        }
+
+
+        /**
+         * Execute command.
+         *
+         * @param user the user
+         * @param label the command top label
+         * @param args the args
+         * @return always true.
+         */
+        @Override
+        public boolean execute(User user, String label, List<String> args)
+        {
+            this.<BiomesAddon>getAddon().getAddonManager().clearQueues(user, getWorld());
+            return true;
+        }
+
+
+        /**
+         * Sets command settings.
+         */
+        @Override
+        public void setup()
+        {
+            this.inheritPermission();
+            this.setParametersHelp(Constants.ADMIN_COMMANDS + "clear-queue.parameters");
+            this.setDescription(Constants.ADMIN_COMMANDS + "clear-queue.description");
+        }
+    }
+
+
+// ---------------------------------------------------------------------
+// Section: Static Variables
+// ---------------------------------------------------------------------
+
+
+    /**
+     * The constant HERE.
+     */
+    public static final String HERE = "here";
 }

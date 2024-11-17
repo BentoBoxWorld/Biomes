@@ -6,12 +6,26 @@
 package world.bentobox.biomes.managers;
 
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -27,13 +41,14 @@ import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.Database;
 import world.bentobox.bentobox.database.objects.Island;
+import world.bentobox.bentobox.managers.IslandWorldManager;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.database.objects.BiomesBundleObject;
 import world.bentobox.biomes.database.objects.BiomesIslandDataObject;
 import world.bentobox.biomes.database.objects.BiomesObject;
-import world.bentobox.biomes.events.BiomeUnlockedEvent;
 import world.bentobox.biomes.events.BiomePurchasedEvent;
+import world.bentobox.biomes.events.BiomeUnlockedEvent;
 import world.bentobox.biomes.utils.Constants;
 import world.bentobox.biomes.utils.Utils;
 
@@ -43,6 +58,8 @@ import world.bentobox.biomes.utils.Utils;
  */
 public class BiomesAddonManager
 {
+    public static final Set<Material> NO_META_DATA_SET = Set.of(Material.TROPICAL_FISH_BUCKET);
+
     /**
      * This is default constructor for Addon Manager.
      *
@@ -898,7 +915,7 @@ public class BiomesAddonManager
                         Utils.sendMessage(user,
                             user.getTranslation(Constants.MESSAGES + "no-credits-buy-bank",
                                 Constants.PARAMETER_BIOME, biomesObject.getFriendlyName(),
-                                TextVariables.NUMBER, String.valueOf(biomesObject.getUnlockCost())));
+                                TextVariables.NUMBER, this.addon.getVaultHook().format(biomesObject.getUnlockCost())));
                         return false;
                     }
                 }
@@ -909,7 +926,7 @@ public class BiomesAddonManager
                     Utils.sendMessage(user,
                         user.getTranslation(Constants.MESSAGES + "no-credits-buy",
                             Constants.PARAMETER_BIOME, biomesObject.getFriendlyName(),
-                            TextVariables.NUMBER, String.valueOf(biomesObject.getUnlockCost())));
+                            TextVariables.NUMBER, this.addon.getVaultHook().format(biomesObject.getUnlockCost())));
                     return false;
                 }
             }
@@ -1013,7 +1030,7 @@ public class BiomesAddonManager
                 this.withdrawItems(purchaseBiome,
                     user,
                     Utils.groupEqualItems(biomesObject.getUnlockItems(), Collections.emptySet()),
-                    Collections.emptySet());
+                        NO_META_DATA_SET);
             }
         }
 
@@ -1514,6 +1531,42 @@ public class BiomesAddonManager
 
         return !biomesObject.getUnlockItems().isEmpty() ||
             this.addon.isEconomyProvided() && biomesObject.getUnlockCost() != 0;
+    }
+
+
+    // ---------------------------------------------------------------------
+    // Section: Queue methods
+    // ---------------------------------------------------------------------
+
+
+    /**
+     * This method clears biome change queue for the given world.
+     * @param user User who triggers queue cleaning.
+     * @param world World where queue must be cleared.
+     */
+    public void clearQueues(User user, World world)
+    {
+        IslandWorldManager islandWorldManager = this.addon.getPlugin().getIWM();
+        Optional<GameModeAddon> gameMode = islandWorldManager.getAddon(world);
+
+        gameMode.ifPresent(gamemode -> {
+            // Remove all tasks with the same world as given from the queue.
+            this.addon.getUpdateQueue().getProcessQueue().removeIf(task -> gamemode.getOverWorld() == task.getWorld());
+
+            if (islandWorldManager.isNetherGenerate(world) && islandWorldManager.isNetherIslands(world))
+            {
+                this.addon.getUpdateQueue().getProcessQueue().removeIf(task -> gamemode.getNetherWorld() == task.getWorld());
+            }
+
+            if (islandWorldManager.isEndGenerate(world) && islandWorldManager.isEndIslands(world))
+            {
+                this.addon.getUpdateQueue().getProcessQueue().removeIf(task -> gamemode.getEndWorld() == task.getWorld());
+            }
+
+            Utils.sendMessage(user,
+                user.getTranslationOrNothing(Constants.MESSAGES + "queue.clear",
+                    Constants.PARAMETER_GAMEMODE, gamemode.getDescription().getName()));
+        });
     }
 
 

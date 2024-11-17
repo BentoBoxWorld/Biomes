@@ -81,7 +81,7 @@ biomes:
       &7 A warm ocean is
       &7 ideal for swimming,
       &7 and catching some
-      &7 colorfull fish.
+      &7 colorful fish.
     icon: TROPICAL_FISH
     unlock:
       level: 10
@@ -113,7 +113,7 @@ biomes:
     environment: NORMAL
     name: '&f&l Lush Caves'
     description: |-
-      &7 Deep underground are sill
+      &7 Deep underground are still
       &7 some places with greenery.
     icon: FLOWERING_AZALEA
     unlock:
@@ -158,8 +158,8 @@ biomes:
       &7 Cold and snowy place
       &7 is not for everyone.
       &7 But white foxes and
-      &7 rabbits has places
-      &7 where hide.
+      &7 rabbits have places
+      &7 where they hide.
     icon: SNOW_BLOCK
     unlock:
       level: 50
@@ -172,7 +172,7 @@ biomes:
     environment: NORMAL
     name: '&f&l Mountain Slopes'
     description: |-
-      &7 Dangerous place where
+      &7 A dangerous place where
       &7 only crazy goats can
       &7 survive.
     icon: SNOW_BLOCK
@@ -189,9 +189,9 @@ biomes:
     environment: NORMAL
     name: '&f&l Savanna'
     description: |-
-      &7 Warm and almost dry
+      &7 A warm and almost dry
       &7 place with rapid rains.
-      &7 Only chach trees can
+      &7 Only acacia trees can
       &7 survive there.
     icon: ACACIA_SAPLING
     unlock:
@@ -208,8 +208,8 @@ biomes:
     name: '&f&l Infested Land'
     description: |-
       &7 Mycelium infested blocks
-      &7 that spreads faster then
-      &7 grass and infests everything
+      &7 spread faster than
+      &7 grass and infest everything
       &7 in their way. Almost nothing
       &7 can survive here.
     icon: MYCELIUM
@@ -229,7 +229,7 @@ biomes:
     name: '&f&l Jungle'
     description: |-
       &7 Hard to navigate and
-      &7 and rainy place.
+      &7 a rainy place.
       &7 Ideal for ocelots.
     icon: JUNGLE_SAPLING
     unlock:
@@ -243,8 +243,8 @@ biomes:
     environment: NORMAL
     name: '&f&l Beach'
     description: |-
-      &7 The best place for vacation.
-      &7 Get some suncream and a
+      &7 The best place for a vacation.
+      &7 Get some sunscreen and a
       &7 good mood.
     icon: WATER_BUCKET
     unlock:
@@ -258,7 +258,7 @@ biomes:
     environment: NORMAL
     name: '&f&l Desert'
     description: |-
-      &7 Hot wasteland with no
+      &7 A hot wasteland with no
       &7 water. Even rain does
       &7 not fall here.
     icon: SAND
@@ -275,8 +275,8 @@ biomes:
     description: |-
       &7 A place where every
       &7 bee would love to live.
-      &7 All flowers that you
-      &7 wished are here.
+      &7 All the flowers that you
+      &7 wished for are here.
     icon: ORANGE_TULIP
     unlock:
       level: 75
@@ -298,7 +298,6 @@ biomes:
     change:
       mode: STATIC
       cost: 500
-  # Nether related Biomes
   # Default Nether Biome
   hell:
     biome: NETHER_WASTES
@@ -306,7 +305,7 @@ biomes:
     name: '&f&l Hell'
     description: |-
       &7 Not a place where
-      &7 living should wander.
+      &7 living things should wander.
     icon: NETHERRACK
     unlock:
       level: 250
@@ -337,8 +336,8 @@ biomes:
     environment: NETHER
     name: '&f&l Lost Soul Valley'
     description: |-
-      &7 Who stays here too long
-      &7 may stuck and never be
+      &7 Those who stay here too long
+      &7 may get stuck and never be
       &7 able to leave.
     icon: SOUL_SAND
     unlock:
@@ -354,9 +353,9 @@ biomes:
     environment: NETHER
     name: '&f&l Red Forest'
     description: |-
-      &7 Even in the hell you
-      &7 can fins some places
-      &7 where livings survive.
+      &7 Even in hell you
+      &7 can find some places
+      &7 where life survives.
       &7 Be aware of angry pigs.
     icon: CRIMSON_FUNGUS
     unlock:
@@ -368,13 +367,13 @@ biomes:
       cost: 1000
       items:
         - CRIMSON_FUNGUS:3
-  # Technically, no hostile mobs spawns here.
+  # Technically, no hostile mobs spawn here.
   cyan_forest:
     biome: WARPED_FOREST
     environment: NETHER
     name: '&f&l Cyan Forest'
     description: |-
-      &7 Safe place in unsafe
+      &7 A safe place in an unsafe
       &7 world.
     icon: WARPED_FUNGUS
     unlock:
@@ -386,3 +385,276 @@ biomes:
       cost: 1000
       items:
         - WARPED_FUNGUS:3
+# Eroded Badlands
+  eroded_badlands:
+    biome: ERODED_BADLANDS
+    environment: NORMAL
+    name: '&f&l Eroded Badlands'
+    description: |-
+      &7 A land with its colors
+      &7 striped away by time,
+      &7 leaving beautiful cliffs.
+    icon: GRASS_BLOCK
+    unlock:
+      level: 50
+    change:
+      mode: STATIC
+      cost: 1000
+# Windswept Forest
+  windswept_forest:
+    biome: WINDSWEPT_FOREST
+    environment: NORMAL
+    name: '&f&l Windswept Forest'
+    description: |-
+      &7 A forest battered by
+      &7 strong winds, only the
+      &7 toughest trees survive.
+    icon: GRASS_BLOCK
+    unlock:
+      level: 30
+    change:
+      mode: STATIC
+      cost: 1000
+# Windswept Savanna
+  windswept_savanna:
+    biome: WINDSWEPT_SAVANNA
+    environment: NORMAL
+    name: '&f&l Windswept Savanna'
+    description: |-
+      &7 Dry and cracked lands
+      &7 where strong winds
+      &7 blow through the grass.
+    icon: ACACIA_SAPLING
+    unlock:
+      level: 20
+    change:
+      mode: STATIC
+      cost: 500
+# Stone Shores
+  stony_shore:
+    biome: STONY_SHORE
+    environment: NORMAL
+    name: '&f&l Stony Shore'
+    description: |-
+      &7 The rocky coastline
+      &7 is not a soft place
+      &7 but offers hidden gems.
+    icon: STONE
+    unlock:
+      level: 15
+    change:
+      mode: STATIC
+      cost: 300
+# Mushroom Island
+  mushroom_fields:
+    biome: MUSHROOM_FIELDS
+    environment: NORMAL
+    name: '&f&l Mushroom Fields'
+    description: |-
+      &7 A strange place where
+      &7 mushrooms grow tall
+      &7 and cows are red.
+    icon: MYCELIUM
+    unlock:
+      level: 150
+    change:
+      mode: STATIC
+      cost: 4000
+      items:
+        - RED_MUSHROOM:100
+# Sunflower Plains
+  sunflower_plains:
+    biome: SUNFLOWER_PLAINS
+    environment: NORMAL
+    name: '&f&l Sunflower Plains'
+    description: |-
+      &7 A beautiful open field
+      &7 where sunflowers
+      &7 turn to follow the sun.
+    icon: SUNFLOWER
+    unlock:
+      level: 10
+    change:
+      mode: STATIC
+      cost: 500
+# Jagged Peaks
+  jagged_peaks:
+    biome: JAGGED_PEAKS
+    environment: NORMAL
+    name: '&f&l Jagged Peaks'
+    description: |-
+      &7 Dangerous mountains
+      &7 with sharp cliffs that
+      &7 few dare to climb.
+    icon: STONE
+    unlock:
+      level: 75
+    change:
+      mode: STATIC
+      cost: 1000
+      items:
+        - STONE:64
+# Ice Spikes
+  ice_spikes:
+    biome: ICE_SPIKES
+    environment: NORMAL
+    name: '&f&l Ice Spikes'
+    description: |-
+      &7 Towers of ice rising
+      &7 from the frozen land,
+      &7 where nothing grows.
+    icon: ICE
+    unlock:
+      level: 100
+    change:
+      mode: STATIC
+      cost: 1500
+      items:
+        - ICE:64
+# Deep Frozen Ocean
+  deep_frozen_ocean:
+    biome: DEEP_FROZEN_OCEAN
+    environment: NORMAL
+    name: '&f&l Deep Frozen Ocean'
+    description: |-
+      &7 A cold, deep ocean
+      &7 where icebergs float
+      &7 and polar bears roam.
+    icon: BLUE_ICE
+    unlock:
+      level: 50
+    change:
+      mode: STATIC
+      cost: 1000
+      items:
+        - BLUE_ICE:32
+# Snowy Slopes
+  snowy_slopes:
+    biome: SNOWY_SLOPES
+    environment: NORMAL
+    name: '&f&l Snowy Slopes'
+    description: |-
+      &7 Steep snowy slopes
+      &7 where goats roam
+      &7 and avalanches fall.
+    icon: SNOW_BLOCK
+    unlock:
+      level: 75
+    change:
+      mode: STATIC
+      cost: 1000
+      items:
+        - SNOW_BLOCK:64
+# Frozen Peaks
+  frozen_peaks:
+    biome: FROZEN_PEAKS
+    environment: NORMAL
+    name: '&f&l Frozen Peaks'
+    description: |-
+      &7 Ice-capped mountains
+      &7 where the cold bites
+      &7 harder than anywhere.
+    icon: SNOW_BLOCK
+    unlock:
+      level: 100
+    change:
+      mode: STATIC
+      cost: 1500
+      items:
+        - SNOW_BLOCK:64
+# Old Growth Pine Taiga
+  old_growth_pine_taiga:
+    biome: OLD_GROWTH_PINE_TAIGA
+    environment: NORMAL
+    name: '&f&l Old Growth Pine Taiga'
+    description: |-
+      &7 An ancient forest of
+      &7 towering pines where
+      &7 few dare to tread.
+    icon: SPRUCE_SAPLING
+    unlock:
+      level: 30
+    change:
+      mode: STATIC
+      cost: 500
+      items:
+        - SPRUCE_SAPLING:10
+# Cherry Grove
+  cherry_grove:
+    biome: CHERRY_GROVE
+    environment: NORMAL
+    name: '&f&l Cherry Grove'
+    description: |-
+      &7 A peaceful place filled
+      &7 with cherry blossoms,
+      &7 where spring never ends.
+    icon: CHERRY_LOG
+    unlock:
+      level: 20
+    change:
+      mode: STATIC
+      cost: 300
+      items:
+        - CHERRY_LOG:20
+# Deep Dark
+  deep_dark:
+    biome: DEEP_DARK
+    environment: NORMAL
+    name: '&f&l Deep Dark'
+    description: |-
+      &7 Far underground, a
+      &7 place where the
+      &7 darkness is alive.
+    icon: SCULK
+    unlock:
+      level: 200
+    change:
+      mode: STATIC
+      cost: 2000
+      items:
+        - SCULK:32
+# Sparse Jungle
+  sparse_jungle:
+    biome: SPARSE_JUNGLE
+    environment: NORMAL
+    name: '&f&l Sparse Jungle'
+    description: |-
+      &7 A lightly wooded area
+      &7 where jungle meets
+      &7 open plains.
+    icon: GRASS_BLOCK
+    unlock:
+      level: 15
+    change:
+      mode: STATIC
+      cost: 500
+# Frozen River
+  frozen_river:
+    biome: FROZEN_RIVER
+    environment: NORMAL
+    name: '&f&l Frozen River'
+    description: |-
+      &7 A river frozen in time
+      &7 where only the bravest
+      &7 creatures can survive.
+    icon: ICE
+    unlock:
+      level: 50
+    change:
+      mode: STATIC
+      cost: 500
+# Grove
+  grove:
+    biome: GROVE
+    environment: NORMAL
+    name: '&f&l Grove'
+    description: |-
+      &7 A quiet, snowy forest
+      &7 where the trees stand
+      &7 tall and silent.
+    icon: GRASS_BLOCK
+    unlock:
+      level: 40
+    change:
+      mode: STATIC
+      cost: 600

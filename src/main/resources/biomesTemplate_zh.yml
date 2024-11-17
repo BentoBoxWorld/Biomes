@@ -1,0 +1,1028 @@
+# Rename this file to biomesTemplate.yml to use it for Chinese
+# 将此文件重命名为`biomesTemplate.yml`，以便用于中文。
+biomes:
+# 恶地
+  badlands:
+    biome: badlands
+    environment: normal
+    name: '&b恶地'
+    icon: terracotta
+  badlandsd:
+    biome: badlands
+    environment: nether
+    name: '&b恶地'
+    icon: terracotta
+  badlandsm:
+    biome: badlands
+    environment: the_end
+    name: '&b恶地'
+    icon: terracotta
+# 竹林
+  bamboo_jungle:
+    biome: bamboo_jungle
+    environment: normal
+    name: '&b竹林'
+    icon: bamboo
+  bamboo_jungled:
+    biome: bamboo_jungle
+    environment: nether
+    name: '&b竹林'
+    icon: bamboo
+  bamboo_junglem:
+    biome: bamboo_jungle
+    environment: the_end
+    name: '&b竹林'
+    icon: bamboo
+# 玄武岩三角洲
+  basalt_deltas:
+    biome: basalt_deltas
+    environment: normal
+    name: '&b玄武岩三角洲'
+    icon: basalt
+  basalt_deltasd:
+    biome: basalt_deltas
+    environment: nether
+    name: '&b玄武岩三角洲'
+    icon: basalt
+  basalt_deltasm:
+    biome: basalt_deltas
+    environment: the_end
+    name: '&b玄武岩三角洲'
+    icon: basalt
+# 沙滩
+  beach:
+    biome: beach
+    environment: normal
+    name: '&b沙滩'
+    icon: turtle_egg
+  beachd:
+    biome: beach
+    environment: nether
+    name: '&b沙滩'
+    icon: turtle_egg
+  beachm:
+    biome: beach
+    environment: the_end
+    name: '&b沙滩'
+    icon: turtle_egg
+# 桦木森林
+  birch_forest:
+    biome: birch_forest
+    environment: normal
+    name: '&b桦木森林'
+    icon: grass_block
+  birch_forestd:
+    biome: birch_forest
+    environment: nether
+    name: '&b桦木森林'
+    icon: grass_block
+  birch_forestm:
+    biome: birch_forest
+    environment: the_end
+    name: '&b桦木森林'
+    icon: grass_block
+# 樱花树林
+  cherry_grove:
+    biome: cherry_grove
+    environment: normal
+    name: '&b樱花树林'
+    icon: cherry_log
+  cherry_groved:
+    biome: cherry_grove
+    environment: nether
+    name: '&b樱花树林'
+    icon: cherry_log
+  cherry_grovem:
+    biome: cherry_grove
+    environment: the_end
+    name: '&b樱花树林'
+    icon: cherry_log
+# 冷水海洋
+  cold_ocean:
+    biome: cold_ocean
+    environment: normal
+    name: '&b冷水海洋'
+    icon: grass_block
+  cold_oceand:
+    biome: cold_ocean
+    environment: nether
+    name: '&b冷水海洋'
+    icon: grass_block
+  cold_oceanm:
+    biome: cold_ocean
+    environment: the_end
+    name: '&b冷水海洋'
+    icon: grass_block
+# 绯红森林
+  crimson_forest:
+    biome: crimson_forest
+    environment: normal
+    name: '&b绯红森林'
+    icon: crimson_nylium
+  crimson_forestd:
+    biome: crimson_forest
+    environment: nether
+    name: '&b绯红森林'
+    icon: crimson_nylium
+  crimson_forestm:
+    biome: crimson_forest
+    environment: the_end
+    name: '&b绯红森林'
+    icon: crimson_nylium 
+# 黑森林
+  dark_forest:
+    biome: dark_forest
+    environment: normal
+    name: '&b黑森林'
+    icon: grass_block
+  dark_forestd:
+    biome: dark_forest
+    environment: nether
+    name: '&b黑森林'
+    icon: grass_block
+  dark_forestm:
+    biome: dark_forest
+    environment: the_end
+    name: '&b黑森林'
+    icon: grass_block
+# 冷水深海
+  deep_cold_ocean:
+    biome: deep_cold_ocean
+    environment: normal
+    name: '&b冷水深海'
+    icon: grass_block
+  deep_cold_oceand:
+    biome: deep_cold_ocean
+    environment: nether
+    name: '&b冷水深海'
+    icon: grass_block
+  deep_cold_oceanm:
+    biome: deep_cold_ocean
+    environment: the_end
+    name: '&b冷水深海'
+    icon: grass_block
+# 深暗之域
+  deep_dark:
+    biome: deep_dark
+    environment: normal
+    name: '&b深暗之域'
+    icon: grass_block
+  deep_darkd:
+    biome: deep_dark
+    environment: nether
+    name: '&b深暗之域'
+    icon: grass_block
+  deep_darkm:
+    biome: deep_dark
+    environment: the_end
+    name: '&b深暗之域'
+    icon: grass_block
+# 冰冻深海
+  deep_frozen_ocean:
+    biome: deep_frozen_ocean
+    environment: normal
+    name: '&b冰冻深海'
+    icon: blue_ice
+  deep_frozen_oceand:
+    biome: deep_frozen_ocean
+    environment: nether
+    name: '&b冰冻深海'
+    icon: blue_ice
+  deep_frozen_oceanm:
+    biome: deep_frozen_ocean
+    environment: the_end
+    name: '&b冰冻深海'
+    icon: blue_ice
+# 温水深海
+  deep_lukewarm_ocean:
+    biome: deep_lukewarm_ocean
+    environment: normal
+    name: '&b温水深海'
+    icon: grass_block
+  deep_lukewarm_oceand:
+    biome: deep_lukewarm_ocean
+    environment: nether
+    name: '&b温水深海'
+    icon: grass_block
+  deep_lukewarm_oceanm:
+    biome: deep_lukewarm_ocean
+    environment: the_end
+    name: '&b温水深海'
+    icon: grass_block
+# 深海
+  deep_ocean:
+    biome: deep_ocean
+    environment: normal
+    name: '&b深海'
+    icon: grass_block
+  deep_ocean:
+    biome: deep_ocean
+    environmentd: nether
+    name: '&b深海'
+    icon: grass_block
+  deep_oceanm:
+    biome: deep_ocean
+    environment: the_end
+    name: '&b深海'
+    icon: grass_block
+# 沙漠
+  desert:
+    biome: desert
+    environment: normal
+    name: '&b沙漠'
+    icon: sand
+  desertd:
+    biome: desert
+    environment: nether
+    name: '&b沙漠'
+    icon: sand
+  desertm:
+    biome: desert
+    environment: the_end
+    name: '&b沙漠'
+    icon: sand
+# 溶洞
+  dripstone_caves:
+    biome: dripstone_caves
+    environment: normal
+    name: '&b溶洞'
+    icon: dripstone_block
+  dripstone_cavesd:
+    biome: dripstone_caves
+    environment: nether
+    name: '&b溶洞'
+    icon: dripstone_block
+  dripstone_cavesm:
+    biome: dripstone_caves
+    environment: the_end
+    name: '&b溶洞'
+    icon: dripstone_block
+# 末地荒地
+  end_barrens:
+    biome: end_barrens
+    environment: normal
+    name: '&b末地荒地'
+    icon: grass_block
+  end_barrensd:
+    biome: end_barrens
+    environment: nether
+    name: '&b末地荒地'
+    icon: grass_block
+  end_barrensm:
+    biome: end_barrens
+    environment: the_end
+    name: '&b末地荒地'
+    icon: grass_block
+# 末地高地
+  end_highlands:
+    biome: end_highlands
+    environment: normal
+    name: '&b末地高地'
+    icon: grass_block
+  end_highlandsd:
+    biome: end_highlands
+    environment: nether
+    name: '&b末地高地'
+    icon: grass_block
+  end_highlandsm:
+    biome: end_highlands
+    environment: the_end
+    name: '&b末地高地'
+    icon: grass_block
+# 末地内陆
+  end_midlands:
+    biome: end_midlands
+    environment: normal
+    name: '&b末地内陆'
+    icon: grass_block
+  end_midlandsd:
+    biome: end_midlands
+    environment: nether
+    name: '&b末地内陆'
+    icon: grass_block
+  end_midlandsm:
+    biome: end_midlands
+    environment: the_end
+    name: '&b末地内陆'
+    icon: grass_block
+# 风蚀恶地
+  eroded_badlands:
+    biome: eroded_badlands
+    environment: normal
+    name: '&b风蚀恶地'
+    icon: grass_block
+  eroded_badlandsd:
+    biome: eroded_badlands
+    environment: nether
+    name: '&b风蚀恶地'
+    icon: grass_block
+  eroded_badlandsm:
+    biome: eroded_badlands
+    environment: the_end
+    name: '&b风蚀恶地'
+    icon: grass_block
+# 繁花森林
+  flower_forest:
+    biome: flower_forest
+    environment: normal
+    name: '&b繁花森林'
+    icon: allium
+  flower_forestd:
+    biome: flower_forest
+    environment: nether
+    name: '&b繁花森林'
+    icon: allium
+  flower_forestm:
+    biome: flower_forest
+    environment: the_end
+    name: '&b繁花森林'
+    icon: allium
+# 森林
+  forest:
+    biome: forest
+    environment: normal
+    name: '&b森林'
+    icon: grass_block
+  forestd:
+    biome: forest
+    environment: nether
+    name: '&b森林'
+    icon: grass_block
+  forestm:
+    biome: forest
+    environment: the_end
+    name: '&b森林'
+    icon: grass_block
+# 冻洋
+  frozen_ocean:
+    biome: frozen_ocean
+    environment: normal
+    name: '&b冻洋'
+    icon: grass_block
+  frozen_oceand:
+    biome: frozen_ocean
+    environment: nether
+    name: '&b冻洋'
+    icon: grass_block
+  frozen_oceanm:
+    biome: frozen_ocean
+    environment: the_end
+    name: '&b冻洋'
+    icon: grass_block
+# 冰封山峰
+  frozen_peaks:
+    biome: frozen_peaks
+    environment: normal
+    name: '&b冰封山峰'
+    icon: grass_block
+  frozen_peaksd:
+    biome: frozen_peaks
+    environment: nether
+    name: '&b冰封山峰'
+    icon: grass_block
+  frozen_peaksm:
+    biome: frozen_peaks
+    environment: the_end
+    name: '&b冰封山峰'
+    icon: grass_block 
+# 冻河
+  frozen_river:
+    biome: frozen_river
+    environment: normal
+    name: '&b冻河'
+    icon: grass_block
+  frozen_riverd:
+    biome: frozen_river
+    environment: nether
+    name: '&b冻河'
+    icon: grass_block
+  frozen_riverm:
+    biome: frozen_river
+    environment: the_end
+    name: '&b冻河'
+    icon: grass_block
+# 雪林
+  grove:
+    biome: grove
+    environment: normal
+    name: '&b雪林'
+    icon: grass_block
+  groved:
+    biome: grove
+    environment: nether
+    name: '&b雪林'
+    icon: grass_block
+  grovem:
+    biome: grove
+    environment: the_end
+    name: '&b雪林'
+    icon: grass_block
+# 冰刺之地
+  ice_spikes:
+    biome: ice_spikes
+    environment: normal
+    name: '&b冰刺之地'
+    icon: grass_block
+  ice_spikesd:
+    biome: ice_spikes
+    environment: nether
+    name: '&b冰刺之地'
+    icon: grass_block
+  ice_spikesm:
+    biome: ice_spikes
+    environment: the_end
+    name: '&b冰刺之地'
+    icon: grass_block
+# 尖峭山峰
+  jagged_peaks:
+    biome: jagged_peaks
+    environment: normal
+    name: '&b尖峭山峰'
+    icon: grass_block
+  jagged_peaksd:
+    biome: jagged_peaks
+    environment: nether
+    name: '&b尖峭山峰'
+    icon: grass_block
+  jagged_peaksm:
+    biome: jagged_peaks
+    environment: the_end
+    name: '&b尖峭山峰'
+    icon: grass_block
+# 丛林
+  jungle:
+    biome: jungle
+    environment: normal
+    name: '&b丛林'
+    icon: jungle_log
+  jungled:
+    biome: jungle
+    environment: nether
+    name: '&b丛林'
+    icon: jungle_log
+  junglem:
+    biome: jungle
+    environment: the_end
+    name: '&b丛林'
+    icon: jungle_log
+# 温水海洋
+  lukewarm_ocean:
+    biome: lukewarm_ocean
+    environment: normal
+    name: '&b温水海洋'
+    icon: grass_block
+  lukewarm_oceand:
+    biome: lukewarm_ocean
+    environmentd: nether
+    name: '&b温水海洋'
+    icon: grass_block
+  lukewarm_oceanm:
+    biome: lukewarm_ocean
+    environment: the_end
+    name: '&b温水海洋'
+    icon: grass_block
+# 繁茂洞穴
+  lush_caves:
+    biome: lush_caves
+    environment: normal
+    name: '&b繁茂洞穴'
+    icon: moss_block
+  lush_cavesd:
+    biome: lush_caves
+    environment: nether
+    name: '&b繁茂洞穴'
+    icon: moss_block
+  lush_cavesm:
+    biome: lush_caves
+    environment: the_end
+    name: '&b繁茂洞穴'
+    icon: moss_block
+# 红树林沼泽
+  mangrove_swamp:
+    biome: mangrove_swamp
+    environment: normal
+    name: '&b红树林沼泽'
+    icon: grass_block
+  mangrove_swampd:
+    biome: mangrove_swamp
+    environment: nether
+    name: '&b红树林沼泽'
+    icon: grass_block
+  mangrove_swampm:
+    biome: mangrove_swamp
+    environment: the_end
+    name: '&b红树林沼泽'
+    icon: grass_block
+# 草甸
+  meadow:
+    biome: meadow
+    environment: normal
+    name: '&b草甸'
+    icon: tall_grass
+  meadowd:
+    biome: meadow
+    environment: nether
+    name: '&b草甸'
+    icon: tall_grass
+  meadowm:
+    biome: meadow
+    environment: the_end
+    name: '&b草甸'
+    icon: tall_grass
+# 蘑菇岛
+  mushroom_fields:
+    biome: mushroom_fields
+    environment: normal
+    name: '&b蘑菇岛'
+    icon: mycelium
+  mushroom_fieldsd:
+    biome: mushroom_fields
+    environment: nether
+    name: '&b蘑菇岛'
+    icon: mycelium
+  mushroom_fieldsm:
+    biome: mushroom_fields
+    environment: the_end
+    name: '&b蘑菇岛'
+    icon: mycelium
+# 下界荒地
+  nether_wastes:
+    biome: nether_wastes
+    environment: normal
+    name: '&b下界荒地'
+    icon: netherrack
+  nether_wastesd:
+    biome: nether_wastes
+    environment: nether
+    name: '&b下界荒地'
+    icon: netherrack
+  nether_wastesm:
+    biome: nether_wastes
+    environment: the_end
+    name: '&b下界荒地'
+    icon: netherrack
+# 海洋
+  ocean:
+    biome: ocean
+    environment: normal
+    name: '&b海洋'
+    icon: grass_block
+  oceand:
+    biome: ocean
+    environment: nether
+    name: '&b海洋'
+    icon: grass_block
+  oceanm:
+    biome: ocean
+    environment: the_end
+    name: '&b海洋'
+    icon: grass_block
+# 原始桦木森林
+  old_growth_birch_forest:
+    biome: old_growth_birch_forest
+    environment: normal
+    name: '&b原始桦木森林'
+    icon: grass_block
+  old_growth_birch_forestd:
+    biome: old_growth_birch_forest
+    environment: nether
+    name: '&b原始桦木森林'
+    icon: grass_block
+  old_growth_birch_forestm:
+    biome: old_growth_birch_forest
+    environment: the_end
+    name: '&b原始桦木森林'
+    icon: grass_block
+# 原始松木针叶林
+  old_growth_pine_taiga:
+    biome: old_growth_pine_taiga
+    environment: normal
+    name: '&b原始松木针叶林'
+    icon: grass_block
+  old_growth_pine_taigad:
+    biome: old_growth_pine_taiga
+    environment: nether
+    name: '&b原始松木针叶林'
+    icon: grass_block
+  old_growth_pine_taigam:
+    biome: old_growth_pine_taiga
+    environment: the_end
+    name: '&b原始松木针叶林'
+    icon: grass_block
+# 原始云杉针叶林
+  old_growth_spruce_taiga:
+    biome: old_growth_spruce_taiga
+    environment: normal
+    name: '&b原始云杉针叶林'
+    icon: grass_block
+  old_growth_spruce_taigad:
+    biome: old_growth_spruce_taiga
+    environment: nether
+    name: '&b原始云杉针叶林'
+    icon: grass_block
+  old_growth_spruce_taigam:
+    biome: old_growth_spruce_taiga
+    environment: the_end
+    name: '&b原始云杉针叶林'
+    icon: grass_block
+# 平原
+  plains:
+    biome: plains
+    environment: normal
+    name: '&b平原'
+    icon: grass_block
+  plainsd:
+    biome: plains
+    environment: nether
+    name: '&b平原'
+    icon: grass_block
+  plainsm:
+    biome: plains
+    environment: the_end
+    name: '&b平原'
+    icon: grass_block 
+# 河流
+  river:
+    biome: river
+    environment: normal
+    name: '&b河流'
+    icon: clay
+  riverd:
+    biome: river
+    environment: nether
+    name: '&b河流'
+    icon: clay
+  riverm:
+    biome: river
+    environment: the_end
+    name: '&b河流'
+    icon: clay
+# 热带草原
+  savanna:
+    biome: savanna
+    environment: normal
+    name: '&b热带草原'
+    icon: acacia_log
+  savannad:
+    biome: savanna
+    environment: nether
+    name: '&b热带草原'
+    icon: acacia_log
+  savannam:
+    biome: savanna
+    environment: the_end
+    name: '&b热带草原'
+    icon: acacia_log
+# 热带高原
+  savanna_plateau:
+    biome: savanna_plateau
+    environment: normal
+    name: '&b热带高原'
+    icon: grass_block
+  savanna_plateaud:
+    biome: savanna_plateau
+    environment: nether
+    name: '&b热带高原'
+    icon: grass_block
+  savanna_plateaum:
+    biome: savanna_plateau
+    environment: the_end
+    name: '&b热带高原'
+    icon: grass_block
+# 末地小型岛屿
+  small_end_islands:
+    biome: small_end_islands
+    environment: normal
+    name: '&b末地小型岛屿'
+    icon: grass_block
+  small_end_islandsd:
+    biome: small_end_islands
+    environment: nether
+    name: '&b末地小型岛屿'
+    icon: grass_block
+  small_end_islandsm:
+    biome: small_end_islands
+    environment: the_end
+    name: '&b末地小型岛屿'
+    icon: grass_block
+# 积雪沙滩
+  snowy_beach:
+    biome: snowy_beach
+    environment: normal
+    name: '&b积雪沙滩'
+    icon: grass_block
+  snowy_beachd:
+    biome: snowy_beach
+    environment: nether
+    name: '&b积雪沙滩'
+    icon: grass_block
+  snowy_beachm:
+    biome: snowy_beach
+    environment: the_end
+    name: '&b积雪沙滩'
+    icon: grass_block
+# 雪原
+  snowy_plains:
+    biome: snowy_plains
+    environment: normal
+    name: '&b雪原'
+    icon: snow_block
+  snowy_plainsd:
+    biome: snowy_plains
+    environment: nether
+    name: '&b雪原'
+    icon: snow_block
+  snowy_plainsm:
+    biome: snowy_plains
+    environment: the_end
+    name: '&b雪原'
+    icon: snow_block
+# 积雪山坡
+  snowy_slopes:
+    biome: snowy_slopes
+    environment: normal
+    name: '&b积雪山坡'
+    icon: grass_block
+  snowy_slopesd:
+    biome: snowy_slopes
+    environment: nether
+    name: '&b积雪山坡'
+    icon: grass_block
+  snowy_slopesm:
+    biome: snowy_slopes
+    environment: the_end
+    name: '&b积雪山坡'
+    icon: grass_block
+# 积雪针叶林
+  snowy_taiga:
+    biome: snowy_taiga
+    environment: normal
+    name: '&b积雪针叶林'
+    icon: grass_block
+  snowy_taigad:
+    biome: snowy_taiga
+    environment: nether
+    name: '&b积雪针叶林'
+    icon: grass_block
+  snowy_taigam:
+    biome: snowy_taiga
+    environment: the_end
+    name: '&b积雪针叶林'
+    icon: grass_block
+# 灵魂沙峡谷
+  soul_sand_valley:
+    biome: soul_sand_valley
+    environment: normal
+    name: '&b灵魂沙峡谷'
+    icon: soul_sand
+  soul_sand_valleyd:
+    biome: soul_sand_valley
+    environment: nether
+    name: '&b灵魂沙峡谷'
+    icon: soul_sand
+  soul_sand_valleym:
+    biome: soul_sand_valley
+    environment: the_end
+    name: '&b灵魂沙峡谷'
+    icon: soul_sand
+# 稀疏丛林
+  sparse_jungle:
+    biome: sparse_jungle
+    environment: normal
+    name: '&b稀疏丛林'
+    icon: grass_block
+  sparse_jungled:
+    biome: sparse_jungle
+    environment: nether
+    name: '&b稀疏丛林'
+    icon: grass_block
+  sparse_junglem:
+    biome: sparse_jungle
+    environment: the_end
+    name: '&b稀疏丛林'
+    icon: grass_block
+# 裸岩山峰
+  stony_peaks:
+    biome: stony_peaks
+    environment: normal
+    name: '&b裸岩山峰'
+    icon: grass_block
+  stony_peaksd:
+    biome: stony_peaks
+    environment: nether
+    name: '&b裸岩山峰'
+    icon: grass_block
+  stony_peaksm:
+    biome: stony_peaks
+    environment: the_end
+    name: '&b裸岩山峰'
+    icon: grass_block
+# 石岸
+  stony_shore:
+    biome: stony_shore
+    environment: normal
+    name: '&b石岸'
+    icon: grass_block
+  stony_shored:
+    biome: stony_shore
+    environment: nether
+    name: '&b石岸'
+    icon: grass_block
+  stony_shorem:
+    biome: stony_shore
+    environment: the_end
+    name: '&b石岸'
+    icon: grass_block
+# 向日葵平原
+  sunflower_plains:
+    biome: sunflower_plains
+    environment: normal
+    name: '&b向日葵平原'
+    icon: grass_block
+  sunflower_plainsd:
+    biome: sunflower_plains
+    environment: nether
+    name: '&b向日葵平原'
+    icon: grass_block
+  sunflower_plainsm:
+    biome: sunflower_plains
+    environment: the_end
+    name: '&b向日葵平原'
+    icon: grass_block
+# 沼泽
+  swamp:
+    biome: swamp
+    environment: normal
+    name: '&b沼泽'
+    icon: lily_pad
+  swampd:
+    biome: swamp
+    environment: nether
+    name: '&b沼泽'
+    icon: lily_pad
+  swampm:
+    biome: swamp
+    environment: the_end
+    name: '&b沼泽'
+    icon: lily_pad
+# 针叶林
+  taiga:
+    biome: taiga
+    environment: normal
+    name: '&b针叶林'
+    icon: grass_block
+  taigad:
+    biome: taiga
+    environment: nether
+    name: '&b针叶林'
+    icon: grass_block
+  taigam:
+    biome: taiga
+    environment: the_end
+    name: '&b针叶林'
+    icon: grass_block
+# 末地
+  the_end:
+    biome: the_end
+    environment: normal
+    name: '&b末地'
+    icon: end_stone
+  the_endd:
+    biome: the_end
+    environment: nether
+    name: '&b末地'
+    icon: end_stone
+  the_endm:
+    biome: the_end
+    environment: the_end
+    name: '&b末地'
+    icon: end_stone
+# 虚空
+  the_void:
+    biome: the_void
+    environment: normal
+    name: '&b虚空'
+    icon: bedrock
+  the_voidd:
+    biome: the_void
+    environment: nether
+    name: '&b虚空'
+    icon: bedrock
+  the_voidm:
+    biome: the_void
+    environment: the_end
+    name: '&b虚空'
+    icon: bedrock
+# 暖水海洋
+  warm_ocean:
+    biome: warm_ocean
+    environment: normal
+    name: '&b暖水海洋'
+    icon: brain_coral_fan
+  warm_oceand:
+    biome: warm_ocean
+    environment: nether
+    name: '&b暖水海洋'
+    icon: brain_coral_fan
+  warm_oceanm:
+    biome: warm_ocean
+    environment: the_end
+    name: '&b暖水海洋'
+    icon: brain_coral_fan
+# 诡异森林
+  warped_forest:
+    biome: warped_forest
+    environment: normal
+    name: '&b诡异森林'
+    icon: warped_nylium
+  warped_forestd:
+    biome: warped_forest
+    environment: nether
+    name: '&b诡异森林'
+    icon: warped_nylium
+  warped_forestm:
+    biome: warped_forest
+    environment: the_end
+    name: '&b诡异森林'
+    icon: warped_nylium
+# 风袭森林
+  windswept_forest:
+    biome: windswept_forest
+    environment: normal
+    name: '&b风袭森林'
+    icon: grass_block
+  windswept_forestd:
+    biome: windswept_forest
+    environment: nether
+    name: '&b风袭森林'
+    icon: grass_block
+  windswept_forestm:
+    biome: windswept_forest
+    environment: the_end
+    name: '&b风袭森林'
+    icon: grass_block
+# 风袭沙砾丘陵
+  windswept_gravelly_hills:
+    biome: windswept_gravelly_hills
+    environment: normal
+    name: '&b风袭沙砾丘陵'
+    icon: grass_block
+  windswept_gravelly_hills:
+    biome: windswept_gravelly_hills
+    environment: nether
+    name: '&b风袭沙砾丘陵'
+    icon: grass_block
+  windswept_gravelly_hills:
+    biome: windswept_gravelly_hills
+    environment: the_end
+    name: '&b风袭沙砾丘陵'
+    icon: grass_block
+# 风袭丘陵
+  windswept_hills:
+    biome: windswept_hills
+    environment: normal
+    name: '&b风袭丘陵'
+    icon: grass_block
+  windswept_hillsd:
+    biome: windswept_hills
+    environment: nether
+    name: '&b风袭丘陵'
+    icon: grass_block
+  windswept_hillsm:
+    biome: windswept_hills
+    environment: the_end
+    name: '&b风袭丘陵'
+    icon: grass_block
+# 风袭热带草原
+  windswept_savanna:
+    biome: windswept_savanna
+    environment: normal
+    name: '&b风袭热带草原'
+    icon: grass_block
+  windswept_savannad:
+    biome: windswept_savanna
+    environment: nether
+    name: '&b风袭热带草原'
+    icon: grass_block
+  windswept_savannam:
+    biome: windswept_savanna
+    environment: the_end
+    name: '&b风袭热带草原'
+    icon: grass_block
+# 疏林恶地
+  wooded_badlands:
+    biome: wooded_badlands
+    environment: normal
+    name: '&b疏林恶地'
+    icon: grass_block
+  wooded_badlandsd:
+    biome: wooded_badlands
+    environment: nether
+    name: '&b疏林恶地'
+    icon: grass_block
+  wooded_badlandsm:
+    biome: wooded_badlands
+    environment: the_end
+    name: '&b疏林恶地'
+    icon: grass_block
+``

@@ -16,6 +16,8 @@ biomes:
       unlock:
         description: "unlocks biome for the player without checks. Adding `true` at the end will mark it as purchased."
         parameters: "<player> <biome-id> [true]"
+      clear-queue:
+        description: "clears biome update queue"
     # This section contains only player commands translations.
     player:
       main:
@@ -276,7 +278,7 @@ biomes:
         description: |-
           &7 Allows to change cost of
           &7 unlocking this biome.
-        value: "&7 Current cost: &e $[number]"
+        value: "&7 Current cost: &e [number]"
       unlock_items:
         name: "&f&l Items"
         description: |-
@@ -297,7 +299,7 @@ biomes:
         description: |-
           &7 Allows to change cost of
           &7 applying this biome.
-        value: "&7 Current cost: &e $[number]"
+        value: "&7 Current cost: &e [number]"
       change_items:
         name: "&f&l Items"
         description: |-
@@ -344,11 +346,14 @@ biomes:
         dry: "Dry Biomes"
         cold: "Cold Biomes"
         snowy: "Snowy Biomes"
-        ocean: "Ocean Biomes"
+        aquatic: "Ocean Biomes"
         nether: "Nether Biomes"
         the_end: "The End Biomes"
         neutral: "Neutral Biomes"
         unused: "Unused Biomes"
+        warm: "Warm Biomes"
+        cave: "Cave Biomes"
+        temperate: "Temperate Biomes"
       protection_range:
         name: "&f&l Protection Range"
         description: |-
@@ -579,6 +584,7 @@ biomes:
         enabled: "&2 With Cache clearing"
         disabled: "&c Without Cache clearing"
     tips:
+      click-to-filter: "&e Click &7 to filter."
       click-to-manage: "&e Click &7 to manage."
       click-to-clear: "&e Click &7 to clear."
       click-to-change-biome: "&e Click &7 to change biome."
@@ -660,7 +666,7 @@ biomes:
             [permissions]
           # Text that will replace [money]
           money: |-
-            &7 Unlock cost: &e $[number]
+            &7 Unlock cost: &e [number]
           # Text that will replace [level]
           level: |-
             &7 Requires to reach &e [number]
@@ -698,10 +704,10 @@ biomes:
               &b&o Changing biome increases
               &b&o its price.
             static: |-
-              &b&o Standart change price.
+              &b&o Standard change price.
           # Text that will replace [money]
           money: |-
-            &7 Cost: &e $[number]
+            &7 Cost: &e [number]
           # Text that will replace [items]
           item-single: |-
             &7 Item: [color] [number] x [item]
@@ -848,7 +854,7 @@ biomes:
     # Message that appears after clicking on download button in web library.
     start-downloading: "&e Start downloading library."
     # This message is sent to user when biome changing is started.
-    update-start: "&a Starting biome changing to [biome]&r&a in [number] chunks. &e Estimated time: [time] sec."
+    update-start: "&a Starting biome changing to [biome] &r&a in [number] chunks. &e Estimated time: [time] sec."
     # This message is sent to user when biome changing is finished.
     update-done: "&a Finished changing biome to [biome]&r&a."
     # This message is sent to user when his change is placed in queue.
@@ -864,6 +870,7 @@ biomes:
     migrate-finish: "&a Migration to new data format completed."
     migrate-valid: "&a All data is valid. Migration is not necessary."
     bundle-loaded: "&a Bundle &r [bundle] &a is loaded."
+    clear-queue: "&a Biome change task queue for [gamemode] is cleared."
   errors:
     # Message that is displayed if requested user or island does not have any valid data.
     no-island-data: "&c Island does not have any stored data."
@@ -876,9 +883,9 @@ biomes:
     # Message that is displayed for player if biome requires higher island level.
     not-enough-level: "&c This biome requires at least island level [number]."
     # Message that is displayed for player if biome requires more money than player has.
-    not-enough-money: "&c This biomes change cost $[number]."
+    not-enough-money: "&c This biomes change cost [number]."
     # Message that is displayed for player if biome requires more money than island bank has.
-    not-enough-money-bank: "&c Your bank account has not enough credits. Biome change costs $[number]."
+    not-enough-money-bank: "&c Your bank account has not enough credits. Biome change costs [number]."
     # Message that is displayed for player if biome requires more items than player has.
     not-enough-items: "&c This biomes change cost [items]."
     # Message that is displayed for admin when he tries to change biome on other player island while not being on it.

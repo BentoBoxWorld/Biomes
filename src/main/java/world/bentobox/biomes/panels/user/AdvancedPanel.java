@@ -7,16 +7,17 @@
 package world.bentobox.biomes.panels.user;
 
 
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import world.bentobox.bentobox.api.panels.PanelItem;
 import world.bentobox.bentobox.api.panels.TemplatedPanel;
@@ -487,6 +488,7 @@ public class AdvancedPanel extends CommonPanel
         else
         {
             // Target is specified. It means command must be called by the admin.
+            arguments.remove(0); // Remove "set"
             this.callCommand(false, "set", arguments);
         }
     }

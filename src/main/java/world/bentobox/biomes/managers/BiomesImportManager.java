@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import org.bukkit.Material;
+import org.bukkit.Registry;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.ConfigurationSection;
@@ -232,9 +233,12 @@ public class BiomesImportManager
             biomesObject.setUniqueId(Utils.sanitizeInput(prefix + biomeId.toLowerCase()));
 
             // Read biome or replace it with VOID
-            biomesObject.setBiome(
-                Enums.getIfPresent(Biome.class, details.getString("biome", "").toUpperCase()).
-                    or(Biome.THE_VOID));
+            Biome b = Registry.BIOME.match(details.getString("biome", ""));
+            if (b != null) {
+                biomesObject.setBiome(b);
+            } else {
+                biomesObject.setBiome(Biome.THE_VOID);
+            }
             // Read environment or replace with Normal
             biomesObject.setEnvironment(
                 Enums.getIfPresent(World.Environment.class, details.getString("environment", "").toUpperCase()).

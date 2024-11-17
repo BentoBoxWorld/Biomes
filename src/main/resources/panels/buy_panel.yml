@@ -19,7 +19,7 @@ buy_panel:
       8: biomes_button
     3:
       1:
-        icon: TIPPED_ARROW:INSTANT_HEAL::::1
+        icon: tipped_arrow{CustomPotionColor:11546150}
         title: biomes.gui.buttons.previous.name
         description: biomes.gui.buttons.previous.description
         data:
@@ -36,7 +36,7 @@ buy_panel:
       7: biomes_button
       8: biomes_button
       9:
-        icon: TIPPED_ARROW:JUMP::::1
+        icon: tipped_arrow{CustomPotionColor:8439583}
         title: biomes.gui.buttons.next.name
         description: biomes.gui.buttons.next.description
         data:
