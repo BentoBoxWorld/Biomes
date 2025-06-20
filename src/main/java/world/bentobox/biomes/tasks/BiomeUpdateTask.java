@@ -38,8 +38,7 @@ public class BiomeUpdateTask
      * @param biome BiomeObject that will changed.
      */
     public BiomeUpdateTask(BiomesAddon addon,
-        User user,
-        BiomesObject biome)
+            User user, BiomesObject biome)
     {
         this.addon = addon;
         this.user = user;
@@ -67,7 +66,7 @@ public class BiomeUpdateTask
         for (int x = this.minCoordinate.getBlockX() >> 4, maxX = this.maxCoordinate.getBlockX() >> 4; x <= maxX; x++)
         {
             for (int z = this.minCoordinate.getBlockZ() >> 4, maxZ = this.maxCoordinate.getBlockZ() >> 4; z <= maxZ;
-                z++)
+                    z++)
             {
                 this.chunksToUpdate.add(this.constructChunkData(x, z));
             }
@@ -101,8 +100,8 @@ public class BiomeUpdateTask
                 updateQueue.getProcessStartMap().remove(this);
                 this.result.complete(UpdateQueue.Result.TIMEOUT);
                 this.addon.logError(
-                    "Biome change timed out after " + this.addon.getSettings().getChangeTimeout() + "m for user: " +
-                        this.user.getName());
+                        "Biome change timed out after " + this.addon.getSettings().getChangeTimeout() + "m for user: "
+                                + this.user.getName());
                 return;
             }
 
@@ -155,7 +154,7 @@ public class BiomeUpdateTask
         ChunkData chunkData = this.chunksToUpdate.poll();
 
         chunkData.getChunk(this.world).thenAccept(chunk ->
-            this.scanChunk(chunkData, chunk).thenAccept(completed::complete));
+        this.scanChunk(chunkData, chunk).thenAccept(completed::complete));
 
         return completed;
     }
@@ -178,16 +177,7 @@ public class BiomeUpdateTask
             return completed;
         }
 
-        if (Util.isPaper())
-        {
-            Bukkit.getScheduler().runTaskAsynchronously(this.addon.getPlugin(),
-                () -> this.runBiomeChange(chunkData, chunk, completed));
-        }
-        else
-        {
-            Bukkit.getScheduler().runTask(this.addon.getPlugin(),
-                () -> this.runBiomeChange(chunkData, chunk, completed));
-        }
+        Bukkit.getScheduler().runTask(this.addon.getPlugin(), () -> this.runBiomeChange(chunkData, chunk, completed));
 
         return completed;
     }
@@ -200,20 +190,16 @@ public class BiomeUpdateTask
      * @param chunk the chunk
      * @param completed the completed
      */
-    @SuppressWarnings("deprecated")
     private void runBiomeChange(ChunkData chunkData, Chunk chunk, CompletableFuture<Boolean> completed)
     {
         for (int x = chunkData.minX();
-            x <= chunkData.maxX();
-            x += 4)
+                x <= chunkData.maxX(); x += 4)
         {
             for (int z = chunkData.minZ();
-                z <= chunkData.maxZ();
-                z += 4)
+                    z <= chunkData.maxZ(); z += 4)
             {
                 for (int y = chunkData.minY();
-                    y <= chunkData.maxY();
-                    y += 4)
+                        y <= chunkData.maxY(); y += 4)
                 {
                     // Biome should not be changed in Greenhouses.
                     if (!this.addon.getAddonManager().hasGreenhouseInLocation(this.world, x, y, z))
@@ -283,14 +269,13 @@ public class BiomeUpdateTask
         }
 
         return new ChunkData(chunkX, chunkZ,
-            minX, this.minCoordinate.getBlockY(), minZ,
-            maxX, this.maxCoordinate.getBlockY(), maxZ);
+                minX, this.minCoordinate.getBlockY(), minZ, maxX, this.maxCoordinate.getBlockY(), maxZ);
     }
 
 
-// ---------------------------------------------------------------------
-// Section: Setters
-// ---------------------------------------------------------------------
+    // ---------------------------------------------------------------------
+    // Section: Setters
+    // ---------------------------------------------------------------------
 
 
     /**
@@ -337,9 +322,9 @@ public class BiomeUpdateTask
     }
 
 
-// ---------------------------------------------------------------------
-// Section: Getters
-// ---------------------------------------------------------------------
+    // ---------------------------------------------------------------------
+    // Section: Getters
+    // ---------------------------------------------------------------------
 
 
     /**
@@ -370,11 +355,9 @@ public class BiomeUpdateTask
     public void notifyStarting()
     {
         Utils.sendMessage(this.user, this.user.getTranslation(
-            Constants.MESSAGES + "update-start",
-            "[biome]", this.biomesObject.getFriendlyName(),
-            "[number]", String.valueOf(this.getNumberOfChunks()),
-            "[time]", String.valueOf((int)
-                Math.max(1, this.getNumberOfChunks() * this.addon.getUpdateQueue().getChunkTime()))));
+                Constants.MESSAGES + "update-start", "[biome]", this.biomesObject.getFriendlyName(), "[number]",
+                String.valueOf(this.getNumberOfChunks()), "[time]", String.valueOf(
+                        (int) Math.max(1, this.getNumberOfChunks() * this.addon.getUpdateQueue().getChunkTime()))));
     }
 
 
@@ -384,14 +367,14 @@ public class BiomeUpdateTask
     public void notifyWaiting()
     {
         Utils.sendMessage(this.user,
-            this.user.getTranslation(Constants.MESSAGES + "waiting",
-                "[time]", String.valueOf(this.addon.getUpdateQueue().getQueueTime())));
+                this.user.getTranslation(Constants.MESSAGES + "waiting", "[time]",
+                        String.valueOf(this.addon.getUpdateQueue().getQueueTime())));
     }
 
 
-// ---------------------------------------------------------------------
-// Section: Classes
-// ---------------------------------------------------------------------
+    // ---------------------------------------------------------------------
+    // Section: Classes
+    // ---------------------------------------------------------------------
 
 
     /**
@@ -413,9 +396,9 @@ public class BiomeUpdateTask
     }
 
 
-// ---------------------------------------------------------------------
-// Section: Variables
-// ---------------------------------------------------------------------
+    // ---------------------------------------------------------------------
+    // Section: Variables
+    // ---------------------------------------------------------------------
 
 
     /**
