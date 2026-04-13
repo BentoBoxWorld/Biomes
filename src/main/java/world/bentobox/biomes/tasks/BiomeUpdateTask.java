@@ -53,6 +53,33 @@ public class BiomeUpdateTask
     }
 
 
+    // ---------------------------------------------------------------------
+    // Section: Island ID
+    // ---------------------------------------------------------------------
+
+
+    /**
+     * Sets the unique ID of the island this task is associated with.
+     *
+     * @param islandId the island unique ID
+     */
+    public void setIslandId(String islandId)
+    {
+        this.islandId = islandId;
+    }
+
+
+    /**
+     * Gets the unique ID of the island this task is associated with.
+     *
+     * @return the island unique ID, or {@code null} if not set
+     */
+    public String getIslandId()
+    {
+        return this.islandId;
+    }
+
+
     /**
      * Update chunk queue based on min and max coordinate.
      */
@@ -455,4 +482,9 @@ public class BiomeUpdateTask
      * The Number of chunks.
      */
     private int numberOfChunks;
+
+    /**
+     * The unique ID of the island associated with this task.
+     */
+    private String islandId;
 }

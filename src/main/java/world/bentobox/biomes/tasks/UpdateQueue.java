@@ -131,6 +131,45 @@ public class UpdateQueue
 
 
     /**
+     * Cancels all queued and in-progress biome update tasks for the given island.
+     * Tasks are completed with {@link Result#FAILED} so that any waiting callbacks are notified.
+     *
+     * @param islandId the unique ID of the island whose tasks should be cancelled
+     */
+    public void cancelBiomeUpdates(String islandId)
+    {
+        if (islandId == null)
+        {
+            return;
+        }
+
+        List<BiomeUpdateTask> toCancel = new ArrayList<>();
+
+        this.processQueue.removeIf(task ->
+        {
+            if (islandId.equals(task.getIslandId()))
+            {
+                toCancel.add(task);
+                return true;
+            }
+            return false;
+        });
+
+        this.processStartMap.entrySet().removeIf(entry ->
+        {
+            if (islandId.equals(entry.getKey().getIslandId()))
+            {
+                toCancel.add(entry.getKey());
+                return true;
+            }
+            return false;
+        });
+
+        toCancel.forEach(task -> task.getResult().complete(Result.FAILED));
+    }
+
+
+    /**
      * Updates timer for changing biome.
      *
      * @param timer the timer
