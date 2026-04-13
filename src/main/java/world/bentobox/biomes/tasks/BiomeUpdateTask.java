@@ -7,6 +7,7 @@ package world.bentobox.biomes.tasks;
 
 
 import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -30,6 +31,22 @@ import world.bentobox.biomes.utils.Utils;
  */
 public class BiomeUpdateTask
 {
+    /**
+     * Set of ocean-related biomes that should be skipped when change-ocean-biomes is disabled.
+     */
+    private static final Set<Biome> OCEAN_BIOMES = Set.of(
+        Biome.OCEAN,
+        Biome.WARM_OCEAN,
+        Biome.LUKEWARM_OCEAN,
+        Biome.COLD_OCEAN,
+        Biome.FROZEN_OCEAN,
+        Biome.DEEP_OCEAN,
+        Biome.DEEP_LUKEWARM_OCEAN,
+        Biome.DEEP_COLD_OCEAN,
+        Biome.DEEP_FROZEN_OCEAN
+    );
+
+
     /**
      * Default Update task constructor.
      *
@@ -219,6 +236,8 @@ public class BiomeUpdateTask
      */
     private void runBiomeChange(ChunkData chunkData, Chunk chunk, CompletableFuture<Boolean> completed)
     {
+        boolean changeOceanBiomes = this.addon.getSettings().isChangeOceanBiomes();
+
         for (int x = chunkData.minX();
                 x <= chunkData.maxX(); x += 4)
         {
@@ -228,6 +247,12 @@ public class BiomeUpdateTask
                 for (int y = chunkData.minY();
                         y <= chunkData.maxY(); y += 4)
                 {
+                    // Skip ocean biomes if the setting is disabled.
+                    if (!changeOceanBiomes && OCEAN_BIOMES.contains(this.world.getBiome(x, y, z)))
+                    {
+                        continue;
+                    }
+
                     // Biome should not be changed in Greenhouses.
                     if (!this.addon.getAddonManager().hasGreenhouseInLocation(this.world, x, y, z))
                     {

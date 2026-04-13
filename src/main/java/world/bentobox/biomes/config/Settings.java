@@ -54,6 +54,28 @@ public class Settings implements ConfigObject
 
 
     /**
+     * This method returns if biome changes should also affect ocean biomes.
+     *
+     * @return {@code true} if ocean biomes should be changed, {@code false} otherwise.
+     */
+    public boolean isChangeOceanBiomes()
+    {
+        return this.changeOceanBiomes;
+    }
+
+
+    /**
+     * This method sets value of changeOceanBiomes variable.
+     *
+     * @param changeOceanBiomes new value.
+     */
+    public void setChangeOceanBiomes(boolean changeOceanBiomes)
+    {
+        this.changeOceanBiomes = changeOceanBiomes;
+    }
+
+
+    /**
      * This method returns default update range.
      *
      * @return default update range
@@ -481,6 +503,16 @@ public class Settings implements ConfigObject
     @ConfigEntry(path = "default-mode")
     @SuppressWarnings("javadoc")
     private UpdateMode defaultMode = UpdateMode.ISLAND;
+
+    @ConfigComment("")
+    @ConfigComment("This indicates if biome changes should also affect blocks that are currently")
+    @ConfigComment("in an ocean biome (OCEAN, WARM_OCEAN, LUKEWARM_OCEAN, COLD_OCEAN, FROZEN_OCEAN,")
+    @ConfigComment("DEEP_OCEAN, DEEP_LUKEWARM_OCEAN, DEEP_COLD_OCEAN, DEEP_FROZEN_OCEAN).")
+    @ConfigComment("If set to false, those blocks will keep their ocean biome and will not be changed.")
+    @ConfigComment("Default value = false")
+    @ConfigEntry(path = "change-ocean-biomes")
+    @SuppressWarnings("javadoc")
+    private boolean changeOceanBiomes = false;
 
     @ConfigComment("")
     @ConfigComment("For advanced menu this indicate how large range will be set on GUI opening.")
