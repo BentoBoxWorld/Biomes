@@ -93,6 +93,20 @@ public class BiomesAddon extends Addon
         this.addonManager = new BiomesAddonManager(this);
         this.importManager = new BiomesImportManager(this);
 
+        // Auto-import default biomes for any game mode that has none configured
+        this.getPlugin().getAddonsManager().getGameModeAddons().forEach(gameModeAddon ->
+        {
+            if (!this.settings.getDisabledGameModes().contains(gameModeAddon.getDescription().getName()))
+            {
+                if (!this.addonManager.hasAnyBiome(gameModeAddon.getOverWorld()))
+                {
+                    this.log("No biomes found for " + gameModeAddon.getDescription().getName() +
+                        ". Loading default biomes from biomesTemplate.yml...");
+                    this.importManager.importFile(null, gameModeAddon.getOverWorld());
+                }
+            }
+        });
+
         // Register the reset listener
         this.registerListener(new ChangeOwnerListener(this));
         this.registerListener(new JoinLeaveListener(this));

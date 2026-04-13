@@ -215,12 +215,12 @@ biomes:
     environment: normal
     name: '&b深海'
     icon: grass_block
-  deep_ocean:
+  deep_ocean_nether:
     biome: deep_ocean
-    environmentd: nether
+    environment: nether
     name: '&b深海'
     icon: grass_block
-  deep_oceanm:
+  deep_ocean_end:
     biome: deep_ocean
     environment: the_end
     name: '&b深海'
@@ -231,12 +231,12 @@ biomes:
     environment: normal
     name: '&b沙漠'
     icon: sand
-  desertd:
+  desert-nether:
     biome: desert
     environment: nether
     name: '&b沙漠'
     icon: sand
-  desertm:
+  desert-end:
     biome: desert
     environment: the_end
     name: '&b沙漠'
@@ -967,12 +967,12 @@ biomes:
     environment: normal
     name: '&b风袭沙砾丘陵'
     icon: grass_block
-  windswept_gravelly_hills:
+  windswept_gravelly_hills-d:
     biome: windswept_gravelly_hills
     environment: nether
     name: '&b风袭沙砾丘陵'
     icon: grass_block
-  windswept_gravelly_hills:
+  windswept_gravelly_hills-m:
     biome: windswept_gravelly_hills
     environment: the_end
     name: '&b风袭沙砾丘陵'
@@ -1025,4 +1025,3 @@ biomes:
     environment: the_end
     name: '&b疏林恶地'
     icon: grass_block
-``
