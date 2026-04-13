@@ -224,7 +224,7 @@ public class BiomeEditPanel extends CommonPanel
             }
             case UNLOCK_COST -> {
                 description.add(this.user.getTranslation(reference + "value",
-                    Constants.PARAMETER_NUMBER, String.valueOf(this.biome.getUnlockCost())));
+                    Constants.PARAMETER_NUMBER, Utils.formatDouble(this.biome.getUnlockCost())));
 
                 icon = new ItemStack(this.addon.isEconomyProvided() ? Material.GOLD_INGOT : Material.BARRIER);
                 clickHandler = (panel, user, clickType, i) ->
@@ -534,7 +534,7 @@ public class BiomeEditPanel extends CommonPanel
             }
             case CHANGE_COST -> {
                 description.add(this.user.getTranslation(reference + "value",
-                    Constants.PARAMETER_NUMBER, String.valueOf(this.biome.getCost())));
+                    Constants.PARAMETER_NUMBER, Utils.formatDouble(this.biome.getCost())));
 
                 icon = new ItemStack(this.addon.isEconomyProvided() ? Material.GOLD_INGOT : Material.BARRIER);
                 clickHandler = (panel, user, clickType, i) ->
@@ -649,7 +649,7 @@ public class BiomeEditPanel extends CommonPanel
             }
             case CHANGE_INCREMENT -> {
                 description.add(this.user.getTranslation(reference + "value",
-                    Constants.PARAMETER_NUMBER, String.valueOf(this.biome.getCostIncrement())));
+                    Constants.PARAMETER_NUMBER, Utils.formatDouble(this.biome.getCostIncrement())));
 
                 icon = new ItemStack(Material.REDSTONE_TORCH);
                 clickHandler = (panel, user, clickType, i) ->

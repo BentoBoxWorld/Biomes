@@ -6,6 +6,7 @@
 package world.bentobox.biomes.utils;
 
 
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,6 +38,13 @@ import world.bentobox.biomes.database.objects.BiomesObject;
  */
 public class Utils
 {
+    /**
+     * Decimal format used to display double values with up to 3 decimal places.
+     * ThreadLocal is used because DecimalFormat is not thread-safe.
+     */
+    private static final ThreadLocal<DecimalFormat> DOUBLE_FORMAT =
+        ThreadLocal.withInitial(() -> new DecimalFormat("0.###"));
+
     /**
      * This method groups input items in single itemstack with correct amount and returns it. Allows to remove duplicate
      * items from list.
@@ -1034,6 +1042,20 @@ public class Utils
         }
 
         return translation;
+    }
+
+
+    /**
+     * Formats a double value for display, showing up to 3 decimal places and
+     * removing trailing zeros to avoid floating-point imprecision artefacts
+     * such as {@code 0.0299999999329447746} being shown instead of {@code 0.03}.
+     *
+     * @param value the value to format
+     * @return the formatted string
+     */
+    public static String formatDouble(double value)
+    {
+        return DOUBLE_FORMAT.get().format(value);
     }
 
 

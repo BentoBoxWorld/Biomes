@@ -242,7 +242,7 @@ public abstract class CommonPanel
 
         return !this.addon.isEconomyProvided() || biome.getUnlockCost() <= 0 ? "" :
             this.user.getTranslationOrNothing(reference + "money",
-                "[number]", String.valueOf(biome.getUnlockCost()));
+                "[number]", Utils.formatDouble(biome.getUnlockCost()));
     }
 
 
