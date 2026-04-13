@@ -435,6 +435,11 @@ public class BiomeUpdateHelper
             this.callerUser,
             this.biome);
 
+        if (this.island != null)
+        {
+            task.setIslandId(this.island.getUniqueId());
+        }
+
         // Select world depending on environment.
 
         if (World.Environment.NETHER.equals(this.biome.getEnvironment()))

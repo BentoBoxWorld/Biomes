@@ -17,6 +17,7 @@ import world.bentobox.bentobox.database.objects.Island;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.CommonTestSetup;
 import world.bentobox.biomes.managers.BiomesAddonManager;
+import world.bentobox.biomes.tasks.UpdateQueue;
 
 /**
  * Tests for {@link JoinLeaveListener}.
@@ -28,6 +29,8 @@ class JoinLeaveListenerTest extends CommonTestSetup {
     @Mock
     private BiomesAddonManager addonManager;
     @Mock
+    private UpdateQueue updateQueue;
+    @Mock
     private Island testIsland;
 
     private JoinLeaveListener listener;
@@ -37,6 +40,7 @@ class JoinLeaveListenerTest extends CommonTestSetup {
     public void setUp() throws Exception {
         super.setUp();
         when(addon.getAddonManager()).thenReturn(addonManager);
+        when(addon.getUpdateQueue()).thenReturn(updateQueue);
         when(testIsland.getUniqueId()).thenReturn("test-island-id");
         listener = new JoinLeaveListener(addon);
     }
@@ -62,6 +66,7 @@ class JoinLeaveListenerTest extends CommonTestSetup {
         IslandResettedEvent event = mock(IslandResettedEvent.class);
         when(event.getIsland()).thenReturn(testIsland);
         listener.onIslandCreated(event);
+        verify(updateQueue).cancelBiomeUpdates("test-island-id");
         verify(addonManager).validateIslandData(testIsland);
     }
 
@@ -78,6 +83,7 @@ class JoinLeaveListenerTest extends CommonTestSetup {
         IslandDeleteEvent event = mock(IslandDeleteEvent.class);
         when(event.getIsland()).thenReturn(testIsland);
         listener.onIslandDelete(event);
+        verify(updateQueue).cancelBiomeUpdates("test-island-id");
         verify(addonManager).wipeIslandData("test-island-id");
     }
 }

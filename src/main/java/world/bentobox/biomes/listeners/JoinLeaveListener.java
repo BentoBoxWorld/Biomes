@@ -66,6 +66,7 @@ public class JoinLeaveListener implements Listener
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onIslandCreated(IslandResettedEvent event)
     {
+        this.addon.getUpdateQueue().cancelBiomeUpdates(event.getIsland().getUniqueId());
         this.addon.getAddonManager().validateIslandData(event.getIsland());
     }
 
@@ -90,6 +91,7 @@ public class JoinLeaveListener implements Listener
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onIslandDelete(IslandDeleteEvent event)
     {
+        this.addon.getUpdateQueue().cancelBiomeUpdates(event.getIsland().getUniqueId());
         this.addon.getAddonManager().wipeIslandData(event.getIsland().getUniqueId());
     }
 
