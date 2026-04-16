@@ -1,0 +1,809 @@
+biomes:
+  commands:
+    # 이 섹션은 관리자 명령어 번역만 포함합니다.
+    admin:
+      main:
+        description: "바이옴 관리자 명령어"
+      import:
+        parameters: "<file>"
+        description: "바이옴 가져오기"
+        confirmation: "이렇게 하면 [gamemode]의 기존 바이옴이 제거되고 템플릿 파일에서 새 바이옴을 가져옵니다 - 확인해주세요"
+      migrate:
+        description: "저장된 바이옴 데이터를 새 형식으로 마이그레이션합니다"
+      set:
+        description: "플레이어의 바이옴을 변경합니다"
+        parameters: "<player> <biome-id> [mode] [size]"
+      unlock:
+        description: "검사 없이 플레이어를 위해 바이옴을 해제합니다. 끝에 `true`를 추가하면 구매한 것으로 표시됩니다."
+        parameters: "<player> <biome-id> [true]"
+      clear-queue:
+        description: "바이옴 업데이트 큐를 비웁니다"
+    # 이 섹션은 플레이어 명령어 번역만 포함합니다.
+    player:
+      main:
+        description: "바이옴 선택 GUI 열기"
+      set:
+        description: "플레이어의 바이옴을 변경합니다"
+        parameters: "<biome-id> [mode] [size]"
+      buy:
+        description: "요청한 바이옴을 구매합니다"
+        parameters: "<biome-id>"
+      info:
+        description: "상세한 바이옴 설명이 포함된 채팅 메시지를 보냅니다"
+        parameters: "<biome-id>"
+  gui:
+    titles:
+      player-panel: "<black><bold> 바이옴 선택"
+      buy-panel: "<black><bold> 바이옴 구매"
+      advanced-panel: "<black><bold> 업데이트 모드"
+      admin-panel: "<black><bold> 관리자 GUI"
+      settings: "<black><bold> 설정"
+      library: "<black><bold> 라이브러리"
+      manage-biomes: "<black><bold> 바이옴 관리"
+      manage-bundles: "<black><bold> 번들 관리"
+      manage-islands: "<black><bold> 섬 데이터 관리"
+      edit-biome: "<black><bold> 바이옴 편집: [biome]"
+      edit-bundle: "<black><bold> 번들 편집: [bundle]"
+      edit-island: "<black><bold> 섬 편집: [island]"
+      environment-selector: "<black><bold> 차원 선택"
+      biome-selector: "<black><bold> 바이옴 선택"
+      bundle-selector: "<black><bold> 번들 선택"
+      item-selector: "<black><bold> 아이템 선택"
+    buttons:
+      island:
+        name: "<white><bold> 섬"
+        description: |-
+          <gray> 전체 섬의 바이옴을
+          <gray> 변경합니다.
+      chunk:
+        name: "<white><bold> 청크"
+        description: |-
+          <gray> 청크 단위로 바이옴을
+          <gray> 변경합니다.
+      range:
+        name: "<white><bold> 범위"
+        description: |-
+          <gray> 범위에 따라 바이옴을
+          <gray> 변경합니다.
+      reduce:
+        name: "<white><bold> 감소"
+        description: |-
+          <gray> <yellow> [number] <gray> 만큼 감소
+      increase:
+        name: "<white><bold> 증가"
+        description: |-
+          <gray> <yellow> [number] <gray> 만큼 증가
+      accept:
+        name: "<white><bold> 변경 적용"
+        description: |-
+          <gray> 바이옴을 <yellow> [biome] <gray> 로 변경합니다
+
+          <gray> 업데이트 모드: <yellow> [mode]
+          <gray> 업데이트 범위: <yellow> [number]
+      return:
+        name: "<white><bold> 돌아가기"
+        description: |-
+          <gray> 이전 메뉴로 돌아갑니다.
+      previous:
+        name: "<white><bold> 이전 페이지"
+        description: |-
+          <gray> <yellow> [number] <gray> 페이지로 이동합니다
+      next:
+        name: "<white><bold> 다음 페이지"
+        description: |-
+          <gray> <yellow> [number] <gray> 페이지로 이동합니다
+      quit:
+        name: "<white><bold> 종료"
+        description: |-
+          <gray> GUI를 닫습니다.
+      save:
+        name: "<white><bold> 저장"
+        description: |-
+          <gray> 변경사항을 저장하고 돌아갑니다.
+      cancel:
+        name: "<white><bold> 취소"
+        description: |-
+          <gray> 변경사항을 취소하고 돌아갑니다.
+      search:
+        name: "<white><bold> 검색"
+        description: |-
+          <gray> 입력 텍스트 값으로
+          <gray> 요소를 검색합니다.
+        search: "<aqua> 값: [value]"
+      buy:
+        name: "<white><bold> 구매"
+        description: |-
+          <gray> 새로운 바이옴을 구매합니다.
+      manage_islands:
+        name: "<white><bold> 섬 관리"
+        description: |-
+          <gray> 섬 데이터를 관리합니다.
+      manage_biomes:
+        name: "<white><bold> 바이옴 관리"
+        description: |-
+          <gray> 바이옴 데이터를 관리합니다.
+      manage_bundles:
+        name: "<white><bold> 번들 관리"
+        description: |-
+          <gray> 번들 데이터를 관리합니다.
+      settings:
+        name: "<white><bold> 설정"
+        description: |-
+          <gray> 애드온 설정을 변경합니다.
+      import_template:
+        name: "<white><bold> 템플릿 가져오기"
+        description: |-
+          <gray> 애드온 디렉토리에 있는
+          <gray> 템플릿 파일을
+          <gray> 가져옵니다.
+      web_library:
+        name: "<white><bold> 웹 라이브러리"
+        description: |-
+          <gray> 공유 바이옴이 포함된
+          <gray> 웹 라이브러리에
+          <gray> 액세스합니다.
+      export_from_database:
+        name: "<white><bold> 데이터베이스 내보내기"
+        description: |-
+          <gray> 데이터베이스를 애드온
+          <gray> 디렉토리에 있는 단일 파일로
+          <gray> 내보냅니다.
+      import_to_database:
+        name: "<white><bold> 데이터베이스 가져오기"
+        description: |-
+          <gray> 애드온 디렉토리에 있는
+          <gray> 파일에서 데이터베이스를
+          <gray> 가져옵니다.
+      wipe_islands_data:
+        name: "<white><bold> 섬 데이터 지우기"
+        description: |-
+          <gray> 이 게임모드의 모든
+          <gray> 바이옴 사용자 데이터를 지웁니다.
+      wipe_biomes_data:
+        name: "<white><bold> 바이옴 데이터 지우기"
+        description: |-
+          <gray> 이 게임모드의 모든 바이옴
+          <gray> 및 번들 데이터를 지웁니다.
+      add_biome:
+        name: "<white><bold> 바이옴 추가"
+        description: |-
+          <gray> 플레이어가 사용자 패널에서
+          <gray> 사용할 수 있는 새로운
+          <gray> 바이옴을 생성합니다.
+      remove_biome:
+        name: "<white><bold> 바이옴 제거"
+        description: |-
+          <gray> 사용자 패널에서 선택한
+          <gray> 바이옴을 제거합니다.
+        title: "<yellow> 선택된 바이옴:"
+        value: "<yellow> - [biome]"
+      accept_selected:
+        name: "<white><bold> 선택 항목 적용"
+        description: |-
+          <gray> 선택된 요소를 적용합니다.
+        title: "<yellow> 선택된 요소:"
+        element: "<yellow> - [element]"
+      environment_element:
+        name: "<white><bold> [environment]"
+        description: |-
+          <gray> [description].
+      properties:
+        name: "<white><bold> 속성"
+        description: |-
+          <gray> 주요 바이옴 속성을 봅니다.
+      change_properties:
+        name: "<white><bold> 변경 속성"
+        description: |-
+          <gray> 바이옴 변경 속성을 봅니다.
+      unlock_properties:
+        name: "<white><bold> 해제 속성"
+        description: |-
+          <gray> 바이옴 해제 속성을 봅니다.
+      biome:
+        name: "<white><bold> [biome]"
+        description: |-
+          <gray> 마인크래프트 바이옴 타입.
+        value: "<gray> 바이옴 ID: <yellow> [id]"
+      name:
+        name: "<white><bold> 표시 이름"
+        description: |-
+          <gray> 바이옴의 표시 이름.
+          <gray> 색상 코드를 지원합니다.
+        value: "<gray> 현재 값: <reset> [name]"
+      deployed:
+        name: "<white><bold> 배포됨"
+        description: |-
+          <gray> 바이옴이 플레이어에게
+          <gray> 접근 가능한지 여부를
+          <gray> 전환합니다.
+        enabled: "<dark_green> 활성화됨"
+        disabled: "<red> 비활성화됨"
+      environment:
+        name: "<white><bold> 차원"
+        description: |-
+          <gray> 바이옴을 적용할 수 있는
+          <gray> 차원을 제한합니다.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      icon:
+        name: "<white><bold> 아이콘"
+        description: |-
+          <gray> 이 바이옴의 아이콘을
+          <gray> 변경합니다.
+      order:
+        name: "<white><bold> 순서"
+        description: |-
+          <gray> 객체의 순서를 변경합니다.
+          <gray> 같은 번호를 가진 객체는
+          <gray> 고유 ID 이름으로 정렬됩니다.
+        value: "<gray> 현재 순서: <yellow> [number]"
+      description:
+        name: "<white><bold> 설명"
+        description: |-
+          <gray> 바이옴의 특정 설명.
+          <gray> 색상 코드를 적용해야 합니다.
+        value: "<yellow> 현재 설명:"
+        none: "<gray> 설명이 설정되지 않았습니다."
+      unlock_permissions:
+        name: "<white><bold> 권한"
+        description: |-
+          <gray> 이 바이옴에 액세스하기
+          <gray> 위한 해제 권한을
+          <gray> 변경합니다.
+        title: "<yellow> 권한: "
+        element: " <dark_gray> - [permission]"
+        none: "<gray> 권한이 설정되지 않았습니다."
+      unlock_cost:
+        name: "<white><bold> 비용"
+        description: |-
+          <gray> 이 바이옴을 해제하는
+          <gray> 비용을 변경합니다.
+        value: "<gray> 현재 비용: <yellow> [number]"
+      unlock_items:
+        name: "<white><bold> 아이템"
+        description: |-
+          <gray> 이 바이옴을 해제하기
+          <gray> 위한 아이템을 변경합니다.
+        title: "<yellow> 아이템: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> 아이템이 설정되지 않았습니다."
+      unlock_level:
+        name: "<white><bold> 레벨"
+        description: |-
+          <gray> 이 바이옴을 해제하기
+          <gray> 위한 필수 섬 레벨을
+          <gray> 변경합니다.
+        value: "<gray> 현재 레벨: <yellow> [number]"
+      change_cost:
+        name: "<white><bold> 비용"
+        description: |-
+          <gray> 이 바이옴을 적용하는
+          <gray> 비용을 변경합니다.
+        value: "<gray> 현재 비용: <yellow> [number]"
+      change_items:
+        name: "<white><bold> 아이템"
+        description: |-
+          <gray> 이 바이옴을 적용하기
+          <gray> 위한 아이템을 변경합니다.
+        title: "<yellow> 아이템: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> 아이템이 설정되지 않았습니다."
+      change_type:
+        name: "<white><bold> [type]"
+        description: |-
+          <gray> 이 바이옴을 적용하기
+          <gray> 위한 비용 유형을 변경합니다.
+        static:
+          name: "정적 값"
+          description: |-
+            <gray> 바이옴 변경 비용은
+            <gray> 변하지 않습니다.
+        per_block:
+          name: "블록당"
+          description: |-
+            <gray> 바이옴 변경 비용은
+            <gray> 블록 단위로 계산됩니다.
+        per_usage:
+          name: "사용당"
+          description: |-
+            <gray> 바이옴 변경 비용은
+            <gray> 각 사용 후 증가합니다.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      change_increment:
+        name: "<white><bold> 증분"
+        description: |-
+          <gray> 사용당 증분을
+          <gray> 변경합니다.
+        value: "<gray> 현재 값: <yellow> [number]"
+      biome-filter:
+        name: "<white><bold> [filter]"
+        description: |-
+          <gray> 마인크래프트 위키 기반
+          <gray> 바이옴 필터.
+        lush: "무성한 바이옴"
+        dry: "건조한 바이옴"
+        cold: "추운 바이옴"
+        snowy: "눈 덮인 바이옴"
+        aquatic: "해양 바이옴"
+        nether: "네더 바이옴"
+        the_end: "엔드 바이옴"
+        neutral: "중립 바이옴"
+        unused: "사용되지 않는 바이옴"
+        warm: "따뜻한 바이옴"
+        cave: "동굴 바이옴"
+        temperate: "온화한 바이옴"
+      protection_range:
+        name: "<white><bold> 보호 범위"
+        description: |-
+          <gray> 바이옴 변경을 전체 섬이
+          <gray> 아닌 섬 보호 범위로만
+          <gray> 제한합니다.
+        enabled: "<dark_green> 활성화됨"
+        disabled: "<red> 비활성화됨"
+      reset:
+        name: "<white><bold> 소유자 변경 시 리셋"
+        description: |-
+          <gray> 섬의 소유자가 변경되고
+          <gray> 새 소유자가 현재 바이옴
+          <gray> 권한이 없으면 강제로 기본
+          <gray> 바이옴으로 변경합니다.
+        enabled: "<dark_green> 활성화됨"
+        disabled: "<red> 비활성화됨"
+      cool_down:
+        name: "<white><bold> 바이옴 쿨다운"
+        description: |-
+          <gray> 플레이어가 다시 바이옴을
+          <gray> 변경할 때까지의 시간(초)을
+          <gray> 설정합니다.
+        value: "<gray> 현재 쿨다운: <yellow> [number]"
+        disabled: "<yellow> 쿨다운이 비활성화되었습니다."
+      default_size:
+        name: "<white><bold> 기본 범위"
+        description: |-
+          <gray> 플레이어가 바이옴을
+          <gray> 변경할 때 범위를 쓰지
+          <gray> 않으면 사용될 숫자를 설정합니다.
+        value: "<gray> 기본 범위: <yellow> [number]"
+      default_mode:
+        name: "<white><bold> 기본 업데이트 모드"
+        description: |-
+          <gray> 플레이어가 업데이트
+          <gray> 모드를 제공하지 않을 때
+          <gray> 사용할 기본값을 설정합니다.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      unlock_notify:
+        name: "<white><bold> 해제 시 알림"
+        description: |-
+          <gray> 사용자가 새로운 바이옴을
+          <gray> 해제할 때 메시지가
+          <gray> 전송됩니다.
+        enabled: |-
+          <aqua> 해제 시 알림이 <green> 활성화 <aqua> 되었습니다.
+        disabled: |-
+          <aqua> 해제 시 알림이 <red> 비활성화 <aqua> 되었습니다.
+      change_timeout:
+        name: "<white><bold> 변경 시간 초과"
+        description: |-
+          <gray> 바이옴 업데이트가
+          <gray> 종료될 때까지의 시간(분)을
+          <gray> 설정합니다.
+          <gray> 매우 큰 섬이나 과부하 상태의
+          <gray> 서버에서 발생할 수 있습니다.
+        value: "<gray> 시간 초과: <yellow> [number] 분"
+      parallel_updates:
+        name: "<white><bold> 병렬 업데이트"
+        description: |-
+          <gray> 동시에 발생할 수 있는
+          <gray> 바이옴 업데이트 개수를
+          <gray> 설정합니다.
+          <gray> 나머지는 큐에 배치됩니다.
+        value: |-
+          <gray> 현재 값: <yellow>[number]<gray>.
+      use_bank:
+        name: "<white><bold> 은행 계정 사용"
+        description: |-
+          <gray> Biomes 애드온이 수행하는
+          <gray> 모든 결제가 은행 애드온
+          <gray> 섬 계정을 사용할지 여부를
+          <gray> 전환합니다.
+        enabled: |-
+          <aqua> 은행 계정 사용이 <green> 활성화 <aqua> 되었습니다.
+        disabled: |-
+          <aqua> 은행 계정 사용이 <red> 비활성화 <aqua> 되었습니다.
+        missing: |-
+          <red> 은행 애드온이 설치되어 있지 않습니다.
+      visibility:
+        name: "<white><bold> 바이옴 가시성"
+        description: |-
+          <gray> 바이옴 선택 패널에서
+          <gray> 플레이어 바이옴 가시성을
+          <gray> 변경합니다.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+        all: "모든 바이옴"
+        deployed: "배포된 바이옴"
+        accessible: "접근 가능한 바이옴"
+        toggleable: "토글 가능"
+      is_online:
+        name: "<white><bold> 온라인 플레이어 섬"
+        description: |-
+          <gray> 구성원이 온라인인
+          <gray> 모든 섬을 나열합니다.
+      all_islands:
+        name: "<white><bold> 모든 섬"
+        description: |-
+          <gray> 현재 게임모드에서
+          <gray> 생성된 모든 섬의
+          <gray> 목록입니다.
+      island_name:
+        name: "<white><bold> [name]"
+        island-owner: "[player]"
+        unknown: "<red> 알 수 없는 소유자"
+        description: |-
+          [owner]
+          [members]
+          [id]
+        owner: "<gray> 소유자: <yellow> [player]"
+        title: "<gray> 섬 구성원:"
+        element: " <gray> - <yellow> [player]"
+      change_biome:
+        name: "<white><bold> 바이옴 변경"
+        description: |-
+          <gray> 섬별로 바이옴을 변경합니다.
+      manage_data:
+        name: "<white><bold> 섬 데이터 관리"
+        description: |-
+          <gray> 특정 섬에 저장된
+          <gray> 데이터를 관리합니다.
+      clear_data:
+        name: "<white><bold> 섬 데이터 지우기"
+        description: |-
+          <gray> 섬의 모든 저장된
+          <gray> 데이터를 지웁니다.
+      island_bundle:
+        name: "<white><bold> 섬 번들"
+        description: |-
+          <gray> 현재 섬에 할당된 번들.
+          <gray> 이 번들의 바이옴만
+          <gray> 섬에서 사용할 수 있습니다.
+        value: "<aqua> 번들: [bundle]"
+        overwritten: |-
+          <red> 소유자는 번들을 덮어쓰는
+          <red> 권한을 가지고 있습니다.
+      owner_bundle:
+        name: "<white><bold> 소유자 번들"
+        description: |-
+          <gray> 현재 섬 소유자에게
+          <gray> 할당된 번들.
+          <gray> 이 번들의 바이옴만
+          <gray> 섬에서 사용할 수 있습니다.
+          <gray> 사용자에게 할당할 권한:
+          <gray><italic> '[gamemode].biomes.
+          <gray><italic> bundle.<bundle-id>'
+        value: "<aqua> 번들: [bundle]"
+      reset_to_default:
+        name: "<white><bold> 기본값으로 리셋"
+        description: |-
+          <gray> 모든 섬 값을
+          <gray> 설정의 기본값으로 리셋합니다.
+      bundle_info:
+        name: "<white><bold> 일반 정보"
+        description: |-
+          <gray> 번들 일반 정보를 봅니다.
+      bundle_biomes:
+        name: "<white><bold> 바이옴 관리"
+        description: |-
+          <gray> 번들에 할당된
+          <gray> 바이옴을 관리합니다.
+      bundle_name:
+        name: "<white><bold> 이름 변경"
+        description: |-
+          <gray> 번들 표시 이름을
+          <gray> 변경합니다.
+        value: "<yellow> 현재 값: <reset> [bundle]"
+      bundle_icon:
+        name: "<white><bold> 아이콘 변경"
+        description: |-
+          <gray> 번들 아이콘을 변경합니다.
+      bundle_description:
+        name: "<white><bold> 설명 변경"
+        description: |-
+          <gray> 번들 설명을 변경합니다.
+        value: "<yellow> 현재 값:"
+        none: "<red> 설명 없음"
+      bundle_permission:
+        name: "<white><bold> 번들 권한"
+        description: |-
+          <gray> 이 번들을 강제하기
+          <gray> 위해 사용자에게 추가해야
+          <gray> 할 권한입니다.
+        value: "<yellow> 권한: <white> [gamemode].biomes.bundle.[id]"
+      add_bundle_biome:
+        name: "<white><bold> 바이옴 추가"
+        description: |-
+          <gray> 이 번들에 바이옴을
+          <gray> 할당합니다.
+        title: "<aqua> 선택된 바이옴:"
+        value: "<aqua> - [biome]"
+      remove_bundle_biome:
+        name: "<white><bold> 바이옴 제거"
+        description: |-
+          <gray> 이 번들에서
+          <gray> 바이옴을 제거합니다.
+        title: "<aqua> 선택된 바이옴:"
+        value: "<aqua> - [biome]"
+      create_bundle:
+        name: "<white><bold> 번들 생성"
+        description: |-
+          <gray> 이 게임모드를 위한
+          <gray> 새로운 번들을 생성합니다.
+      delete_bundle:
+        name: "<white><bold> 번들 제거"
+        description: |-
+          <gray> 이 게임모드에서
+          <gray> 번들을 완전히 제거합니다.
+        title: "<aqua> 선택된 번들:"
+        value: "<aqua> - [bundle]"
+      download:
+        name: "<white><bold> 다운로드"
+        description: |-
+          <gray> 웹 라이브러리를 다운로드합니다.
+        enabled: "<dark_green> 캐시 지우기 포함"
+        disabled: "<red> 캐시 지우기 제외"
+    tips:
+      click-to-filter: "<yellow> 클릭 <gray> 하여 필터링합니다."
+      click-to-manage: "<yellow> 클릭 <gray> 하여 관리합니다."
+      click-to-clear: "<yellow> 클릭 <gray> 하여 지웁니다."
+      click-to-change-biome: "<yellow> 클릭 <gray> 하여 바이옴을 변경합니다."
+      click-to-view: "<yellow> 클릭 <gray> 하여 봅니다."
+      click-to-select: "<yellow> 클릭 <gray> 하여 선택합니다."
+      click-to-choose: "<yellow> 클릭 <gray> 하여 선택합니다."
+      click-to-complete: "<yellow> 클릭 <gray> 하여 완료합니다."
+      left-click-to-accept: "<yellow> 왼쪽 클릭 <gray> 하여 적용합니다."
+      right-click-to-write: "<yellow> 오른쪽 클릭 <gray> 하여 작성합니다."
+      click-to-reduce: "<yellow> 클릭 <gray> 하여 감소합니다."
+      click-to-increase: "<yellow> 클릭 <gray> 하여 증가합니다."
+      click-to-return: "<yellow> 클릭 <gray> 하여 돌아갑니다."
+      click-to-quit: "<yellow> 클릭 <gray> 하여 종료합니다."
+      click-to-wipe: "<yellow> 클릭 <gray> 하여 지웁니다."
+      left-click-to-wipe: "<yellow> 왼쪽 클릭 <gray> 하여 지웁니다."
+      right-click-to-switch: "<yellow> 오른쪽 클릭 <gray> 하여 전환합니다."
+      click-to-open: "<yellow> 클릭 <gray> 하여 엽니다."
+      click-to-export: "<yellow> 클릭 <gray> 하여 내보냅니다."
+      click-to-create: "<yellow> 클릭 <gray> 하여 생성합니다."
+      left-click-to-open: "<yellow> 왼쪽 클릭 <gray> 하여 엽니다."
+      right-click-to-reset-all: "<yellow> 오른쪽 클릭 <gray> 하여 모두 지웁니다."
+      click-to-toggle: "<yellow> 클릭 <gray> 하여 전환합니다."
+      click-to-change: "<yellow> 클릭 <gray> 하여 변경합니다."
+      shift-click-to-reset: "<yellow> Shift 클릭 <gray> 하여 리셋합니다."
+      click-to-add: "<yellow> 클릭 <gray> 하여 추가합니다."
+      click-to-remove: "<yellow> 클릭 <gray> 하여 제거합니다."
+      left-click-to-cycle: "<yellow> 왼쪽 클릭 <gray> 하여 아래로 순환합니다."
+      right-click-to-cycle: "<yellow> 오른쪽 클릭 <gray> 하여 위로 순환합니다."
+      click-to-edit: "<yellow> 클릭 <gray> 하여 편집합니다."
+      left-click-to-download: "<yellow> 왼쪽 클릭 <gray> 하여 다운로드합니다."
+      right-click-to-toggle: "<yellow> 오른쪽 클릭 <gray> 하여 전환합니다."
+      click-to-install: "<yellow> 클릭 <gray> 하여 설치합니다."
+      click-to-reset-all: "<yellow> 클릭 <gray> 하여 모두 리셋합니다."
+      right-click-to-select: "<yellow> 오른쪽 클릭 <gray> 하여 선택합니다."
+      right-click-to-deselect: "<yellow> 오른쪽 클릭 <gray> 하여 선택 해제합니다."
+      left-click-to-choose: "<yellow> 왼쪽 클릭 <gray> 하여 선택합니다."
+      click-to-buy: "<yellow> 클릭 <gray> 하여 구매합니다."
+      click-to-cancel: "<yellow> 클릭 <gray> 하여 취소합니다."
+      click-to-save: "<yellow> 클릭 <gray> 하여 저장합니다."
+      click-to-deselect: "<yellow> 클릭 <gray> 하여 선택 해제합니다."
+      click-on-item: |-
+        <yellow> 인벤토리의 아이템을
+        <gray> 클릭 <gray> 하세요.
+      left-click-to-edit: "<yellow> 왼쪽 클릭 <gray> 하여 편집합니다."
+      right-click-to-clear: "<yellow> 오른쪽 클릭 <gray> 하여 지웁니다."
+      click-to-previous: "<yellow> 클릭 <gray> 하여 이전 페이지를 봅니다."
+      click-to-next: "<yellow> 클릭 <gray> 하여 다음 페이지를 봅니다."
+      select-before: "<yellow> 진행하기 전에 <gray> 아이템을 선택하세요."
+      click-to-apply: "<yellow> 클릭 <gray> 하여 적용합니다."
+      right-click-to-open: "<yellow> 오른쪽 클릭 <gray> 하여 엽니다."
+      click-to-perform: "<yellow> 클릭 <gray> 하여 수행합니다."
+      left-click-to-apply: "<yellow> 왼쪽 클릭 <gray> 하여 적용합니다."
+      right-click-to-unlock: "<yellow> 오른쪽 클릭 <gray> 하여 해제합니다."
+      right-click-to-buy: "<yellow> 오른쪽 클릭 <gray> 하여 구매합니다."
+      right-click-to-change: "<yellow> 오른쪽 클릭 <gray> 하여 변경합니다."
+    descriptions:
+      update-mode:
+        island: "섬 모드"
+        chunk: "청크 모드"
+        range: "범위 모드"
+      selected: "<dark_green> 선택됨"
+      island-owner: "[player]"
+      unknown: "<yellow> 알 수 없음"
+      biome:
+        lore: |-
+          [description]
+          [biome]
+          [unlock]
+          [change]
+        original: |-
+          <gray> 바이옴: <yellow> [biome]
+        unlock:
+          lore: |-
+            [items]
+            [money]
+            [level]
+            [permissions]
+          money: |-
+            <gray> 해제 비용: <yellow> [number]
+          level: |-
+            <gray> 도달 필요: <yellow> [number]
+            <gray> 섬 레벨.
+          permission-single: |-
+            <gray> 누락된 권한: <red> [permission]
+          permissions-title: |-
+            <red> 누락된 권한:
+          permissions-list: |-
+            <red> - [permission]
+          item-single: |-
+            <gray> 해제 아이템: [color] [number] x [item]
+          item-title: |-
+            <gray> 해제 아이템:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          missing: "<red>"
+          has: "<yellow>"
+        change:
+          lore: |-
+            [items]
+            [money]
+            [mode]
+            [usage]
+          mode:
+            per_block: |-
+              <aqua><italic> 바이옴은 변경된
+              <aqua><italic> 각 블록마다 비용이 듭니다.
+            per_usage: |-
+              <aqua><italic> 바이옴 변경은
+              <aqua><italic> 사용할 때마다 가격이 올라갑니다.
+            static: |-
+              <aqua><italic> 표준 변경 가격.
+          money: |-
+            <gray> 비용: <yellow> [number]
+          item-single: |-
+            <gray> 아이템: [color] [number] x [item]
+          item-title: |-
+            <gray> 아이템:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          number-of-usage: |-
+            |<gray> 이 바이옴은
+            <gray> <yellow> [number] <reset><gray> 번 적용되었습니다.
+          missing: "<red>"
+          has: "<yellow>"
+      bundle:
+        lore: |-
+          [description]
+          [permission]
+          [biomes]
+        permission: |-
+          <gray> 플레이어에게 할당해야 할
+          <gray> 권한:
+          <gray><italic> [gamemode].biomes.bundle.[id]
+        title: "<gray> 번들 바이옴: "
+        value: "<gray> - [biome]"
+        no-biomes: "<red> 할당된 바이옴이 없습니다"
+      library:
+        author: '<gray> 제작: <yellow> [author]'
+        version: '<gray> Biomes <yellow> [version] <gray> 으로 제작'
+        lang: '<gray> 언어: <yellow> [lang]'
+        gamemode: '<gray> 주로 <yellow> [gamemode] <gray> 용'
+  conversations:
+    prefix: "<bold><gold> [BentoBox]: <reset>"
+    confirm-string: "true, on, yes, confirm, y, valid, correct"
+    deny-string: "false, off, no, deny, n, invalid, incorrect"
+    cancel-string: "cancel"
+    exit-string: "cancel, exit, quit"
+    cancelled: "<red> 대화가 취소되었습니다!"
+    input-number: "<yellow> 채팅에 숫자를 입력하세요."
+    input-seconds: "<yellow> 채팅에 초를 입력하세요."
+    numeric-only: "<red> 주어진 [value]는 숫자가 아닙니다!"
+    not-valid-value: "<red> 주어진 숫자 [value]는 유효하지 않습니다. [min] 보다 크고 [max] 보다 작아야 합니다!"
+    data-removed: "<green> 선택된 바이옴이 [gamemode]에서 제거되었습니다."
+    confirm-deletion: "<yellow> [value] 이름으로 [number] 바이옴을 삭제하려는 것을 확인하세요."
+    user-data-removed: "<green> [gamemode]의 모든 사용자 데이터가 데이터베이스에서 지워졌습니다."
+    confirm-user-data-deletion: "<yellow> [gamemode]의 사용자 데이터베이스를 지우려는 것을 확인하세요."
+    all-data-removed: "<green> [gamemode]의 모든 애드온 데이터가 데이터베이스에서 지워졌습니다."
+    confirm-all-data-deletion: "<yellow> [gamemode]의 애드온 데이터를 지우려는 것을 확인하세요."
+    write-name: "<yellow> 채팅에 이름을 입력하세요."
+    new-object-created: "<green> [gamemode]을 위한 새로운 객체가 생성되었습니다."
+    object-already-exists: "<red> 객체 <gray> [id] <red> 이미 존재합니다. 다른 이름을 선택하세요."
+    name-changed: "<green> 성공, 이름이 업데이트되었습니다."
+    write-description: "<yellow> 채팅에 새로운 설명을 입력하고 끝에 'quit'을 입력하세요."
+    description-changed: "<green> 성공, 설명이 업데이트되었습니다."
+    write-permissions: "<yellow> 채팅에 필수 권한을 한 줄에 하나씩 입력하고 끝에 'quit'을 입력하세요."
+    permissions-changed: "<green> 성공, 권한이 업데이트되었습니다."
+    start-downloading: "<green> Biomes 라이브러리 다운로드 및 가져오기를 시작합니다."
+    written-text: "<green> 입력 텍스트:"
+    confirm-data-replacement: "<yellow> 현재 데이터를 새로운 데이터로 교체하려는 것을 확인하세요."
+    new-data-imported: "<green> 성공, [gamemode]에 대한 새로운 데이터를 가져왔습니다."
+    exported-file-name: "<yellow> 내보낸 데이터베이스 파일의 파일 이름을 입력하세요. (종료하려면 'cancel' 입력)"
+    database-export-completed: "<green> 성공, [world]의 데이터베이스 내보내기가 완료되었습니다. [file] 파일이 생성되었습니다."
+    file-name-exist: "<red> 이름이 '[id]'인 파일이 존재합니다. 덮어쓸 수 없습니다."
+    write-search: "<yellow> 검색 값을 입력하세요. (종료하려면 'cancel' 입력)"
+    search-updated: "<green> 검색 값이 업데이트되었습니다."
+    invalid-biome: "<red> 저장된 `[biome]`<reset><red> 의 일부 데이터가 유효하지 않습니다."
+    confirm-biome-deletion: "<yellow> [gamemode]에서 [biome]<reset><yellow> 을 제거하려는 것을 확인하세요."
+    biome-removed: "[biome] <reset><green> 이 [gamemode]에서 제거되었습니다."
+    confirm-island-data-deletion: "<yellow> [player] 섬 데이터를 제거하려는 것을 확인하세요."
+    island-data-removed: "[player] <green> 섬 데이터가 제거되었습니다."
+    confirm-biome-data-deletion: "<yellow> [gamemode]에서 모든 바이옴을 제거하려는 것을 확인하세요."
+    biome-data-removed: "모든 바이옴이 [gamemode]에서 제거되었습니다."
+    click-text-to-purchase: "<yellow> <reset> [biome]<reset><yellow> 을 해제했습니다! 클릭하여 구매하세요."
+    click-text-to-set: "<yellow> <reset> [biome]<reset><yellow> 을 해제했습니다! 클릭하여 사용하세요."
+    click-text-to-purchase-other-world: "<yellow> <reset> [gamemode]<reset><yellow> 에서 <reset> [biome]<reset><yellow> 을 해제했습니다! 그 세계를 방문하여 구매하세요."
+    click-text-to-set-other-world: "<yellow> <reset> [gamemode]<reset><yellow> 에서 <reset> [biome]<reset><yellow> 을 해제했습니다! 그 세계를 방문하여 사용하세요."
+  messages:
+    biome-not-unlocked: "[biome] <reset><red> 이 해제되지 않았습니다. 사용할 수 없습니다."
+    biome-not-purchased: "<red> <reset> [biome] <reset><red> 을 사용할 수 없습니다. 구매해야 합니다."
+    biome-cannot-be-unlocked: "<red> <reset> [biome] <reset><red> 을 해제할 수 없습니다."
+    biome-already-purchased: "<red> 이미 <reset> [biome] <reset><red> 을 구매했습니다."
+    island-level-not-reached: "[biome] <reset><red> 은 최소 섬 레벨이 필요합니다: [number]."
+    missing-permission: "[biome] <reset><red> 는 다음 권한이 필요합니다: [permission]."
+    no-credits-buy: "<red> <reset> [biome] <reset><red> 을 구매할 크레딧이 부족합니다. [number] 비용이 듭니다."
+    no-credits-buy-bank: "<red> 은행 계정에 <reset> [biome] <reset><red> 을 구매할 크레딧이 부족합니다. [number] 비용이 듭니다."
+    no-items-buy: "<red> <reset> [biome] <reset><red> 을 구매할 아이템이 부족합니다. [items] 필요합니다."
+    biome-purchased: "<yellow> <reset> [biome]<reset><yellow> 을 구매했습니다."
+    import-count: "<yellow> [biomes] 바이옴 및 [bundles] 번들을 가져왔습니다."
+    start-downloading: "<yellow> 라이브러리 다운로드를 시작합니다."
+    update-start: "<green> [biome] <reset><green> 으로 [number] 청크의 바이옴을 변경하기 시작합니다. <yellow> 예상 시간: [time] 초."
+    update-done: "<green> [biome]<reset><green> 으로 바이옴 변경이 완료되었습니다."
+    waiting: "<green> 바이옴 변경을 큐에 추가했습니다. <yellow> 예상 대기 시간: [time] 초."
+    biome-already-unlocked: "[biome] <reset><yellow> 이 이미 해제되었습니다."
+    everything-already-bought: "<green> 이 게임모드의 모든 바이옴을 이미 구매했습니다."
+    skipping: "<green> 로딩 건너뛰기 <reset> [biome]<reset><green>."
+    overwriting: "<green> 캐시에서 <reset> [biome] <reset><green> 를 덮어씁니다."
+    imported: "<green> 캐시에 <reset> [biome] <reset><green> 를 가져왔습니다."
+    migrate-start: "<green> 새로운 데이터 형식으로 마이그레이션을 시작합니다."
+    migrate-finish: "<green> 새로운 데이터 형식으로 마이그레이션이 완료되었습니다."
+    migrate-valid: "<green> 모든 데이터가 유효합니다. 마이그레이션이 필요하지 않습니다."
+    bundle-loaded: "<green> 번들 <reset> [bundle] <green> 이 로드되었습니다."
+    clear-queue: "<green> [gamemode]의 바이옴 변경 작업 큐가 지워졌습니다."
+  errors:
+    no-island-data: "<red> 섬에 저장된 데이터가 없습니다."
+    no-biomes-admin: "<red> 현재 게임모드에 사용 가능한 바이옴이 없습니다. /[command]를 사용하여 바이옴을 가져오거나 생성하세요"
+    no-biomes: "<red> 현재 게임모드에 사용 가능한 바이옴이 없습니다."
+    no-rank: "<red> 이 섬의 바이옴을 변경할 수 없습니다."
+    not-enough-level: "<red> 이 바이옴은 최소 섬 레벨 [number]이 필요합니다."
+    not-enough-money: "<red> 이 바이옴 변경 비용은 [number]입니다."
+    not-enough-money-bank: "<red> 은행 계정에 크레딧이 부족합니다. 바이옴 변경 비용은 [number]입니다."
+    not-enough-items: "<red> 이 바이옴 변경 비용은 [items]입니다."
+    admin-not-on-island: "<red> 당신은 [user] 섬 위에 있지 않습니다."
+    incorrect-object: "<red> 요청한 이름의 바이옴을 찾을 수 없습니다: [biome]"
+    missing-biome: "<red> 바이옴 이름이 지정되지 않았습니다."
+    incorrect-mode: "<red> 이름이 '[mode]'인 모드는 존재하지 않습니다."
+    incorrect-range: "<red> 주어진 값 '[number]'은 유효한 숫자가 아닙니다."
+    no-file: "<red> 바이옴 디렉토리에서 [file]을 찾을 수 없습니다."
+    no-load: "<red> [file]에서 바이옴을 가져올 수 없습니다. 이유: [description]"
+    not-a-gamemode-world: "<red> 세계 [world]는 게임모드 애드온 세계가 아닙니다."
+    file-exist: "<red> [file] 이름의 파일이 이미 존재합니다. 다른 이름을 선택하세요."
+    no-library-entries: "<red> 유효한 라이브러리 항목을 찾을 수 없습니다."
+    not-unlocked: "<red> 이 바이옴을 해제하지 않았습니다."
+    not-purchased: "<red> 이 바이옴을 구매하지 않았습니다."
+    timeout: "<red> 바이옴 변경 시간이 초과되었습니다. 선택한 영역이 너무 크거나 서버가 바쁠 수 있습니다."
+    failed: "<red> 서버가 바이옴을 변경하는 중에 문제가 발생했습니다."
+    could-not-remove-money: "<red> 돈 인출 중에 오류가 발생했습니다."
+    could-not-remove-items: "<red> 아이템 인출 중에 오류가 발생했습니다."
+    something-went-wrong: "<red> 오류가 발생했습니다. 할 수 없습니다."
+protection:
+  flags:
+    BIOMES_ISLAND_PROTECTION:
+      name: "바이옴 제어"
+      description: |-
+        <dark_purple><italic> 섬 바이옴을
+        <dark_purple><italic> 변경할 수 있는 사람을 전환합니다
+    BIOMES_WORLD_PROTECTION:
+      name: "바이옴 섬 제한"
+      description: |-
+        <dark_purple><italic> 플레이어가
+        <dark_purple><italic> 바이옴을 변경하기 위해
+        <dark_purple><italic> 자신의 섬 위에 있어야 하는
+        <dark_purple><italic> 요구사항을 전환합니다.
+      hint: "<red> 바이옴을 변경하려면 당신의 섬 위에 있어야 합니다!"

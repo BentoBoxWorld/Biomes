@@ -1,0 +1,821 @@
+biomes:
+  commands:
+    # Ez a rész csak az adminisztrátor parancsok fordítását tartalmazza.
+    admin:
+      main:
+        description: "fő biómák adminisztrátori parancsa"
+      import:
+        parameters: "<file>"
+        description: "biómákat importál"
+        confirmation: "Ez eltávolítja a [gamemode] meglévő biómáit és az új biómákat a sablonfájlból importálja - kérjük, erősítse meg"
+      migrate:
+        description: "a biómák tárolt adatait az új formátumba migrálják"
+      set:
+        description: "megváltoztatja a játékos biómáját"
+        parameters: "<player> <biome-id> [mode] [size]"
+      unlock:
+        description: "feloldja a biómáját a játékos számára ellenőrzések nélkül. A végén a „true" hozzáadása meg fogja jelölni vásároltként."
+        parameters: "<player> <biome-id> [true]"
+      clear-queue:
+        description: "törli a biómák frissítési sorát"
+    # Ez a rész csak a játékos parancsok fordítását tartalmazza.
+    player:
+      main:
+        description: "megnyitja a biómák kiválasztási GUI-t"
+      set:
+        description: "megváltoztatja a játékos biómáját"
+        parameters: "<biome-id> [mode] [size]"
+      buy:
+        description: "megvásárol egy biómát"
+        parameters: "<biome-id>"
+      info:
+        description: "csevegési üzenetet küld a bióma részletes leírásával"
+        parameters: "<biome-id>"
+  gui:
+    titles:
+      player-panel: "<black><bold> Válassz biómát"
+      buy-panel: "<black><bold> Bióma vásárlása"
+      advanced-panel: "<black><bold> Frissítési mód"
+      # Az alábbi összes cím az adminisztrátor menükhöz tartozik.
+      admin-panel: "<black><bold> Admin GUI"
+      settings: "<black><bold> Beállítások"
+      library: "<black><bold> Könyvtár"
+      manage-biomes: "<black><bold> Biómák kezelése"
+      manage-bundles: "<black><bold> Csomagok kezelése"
+      manage-islands: "<black><bold> Szigetek adatainak kezelése"
+      edit-biome: "<black><bold> Bióma szerkesztése: [biome]"
+      edit-bundle: "<black><bold> Csomag szerkesztése: [bundle]"
+      edit-island: "<black><bold> Sziget szerkesztése: [island]"
+      environment-selector: "<black><bold> Dimenzió kiválasztása"
+      biome-selector: "<black><bold> Bióma kiválasztása"
+      bundle-selector: "<black><bold> Csomag kiválasztása"
+      item-selector: "<black><bold> Elemek kiválasztása"
+    buttons:
+      island:
+        name: "<white><bold> Sziget"
+        description: |-
+          <gray> Megváltoztatja a biómáját az
+          <gray> egész szigeten.
+      chunk:
+        name: "<white><bold> Chunk"
+        description: |-
+          <gray> Megváltoztatja a biómáját
+          <gray> chunkokban.
+      range:
+        name: "<white><bold> Tartomány"
+        description: |-
+          <gray> Megváltoztatja a biómáját
+          <gray> tartomány szerint.
+      reduce:
+        name: "<white><bold> Csökkentés"
+        description: |-
+          <gray> Csökkentés [number]-vel
+      increase:
+        name: "<white><bold> Növelés"
+        description: |-
+          <gray> Növelés [number]-vel
+      accept:
+        name: "<white><bold> Változtatás alkalmazása"
+        description: |-
+          <gray> Megváltoztatja a biómáját erre: <yellow> [biome]
+
+          <gray> Frissítési mód: <yellow> [mode]
+          <gray> Frissítési tartomány: <yellow> [number]
+      return:
+        name: "<white><bold> Vissza"
+        description: |-
+          <gray> Vissza az előző menübe.
+      previous:
+        name: "<white><bold> Előző oldal"
+        description: |-
+          <gray> Váltás a <yellow> [number] <gray> oldalra
+      next:
+        name: "<white><bold> Következő oldal"
+        description: |-
+          <gray> Váltás a <yellow> [number] <gray> oldalra
+      quit:
+        name: "<white><bold> Kilépés"
+        description: |-
+          <gray> Kilépés a GUI-ból.
+      save:
+        name: "<white><bold> Mentés"
+        description: |-
+          <gray> Módosítások mentése és visszalépés.
+      cancel:
+        name: "<white><bold> Mégse"
+        description: |-
+          <gray> Módosítások visszavonása és visszalépés.
+      search:
+        name: "<white><bold> Keresés"
+        description: |-
+          <gray> Lehetővé teszi egy
+          <gray> elemnek a keresését a beírt
+          <gray> szöveges érték alapján.
+        search: "<aqua> Érték: [value]"
+      buy:
+        name: "<white><bold> Vásárlás"
+        description: |-
+          <gray> Új bióma vásárlása.
+      manage_islands:
+        name: "<white><bold> Szigetek kezelése"
+        description: |-
+          <gray> Lehetővé teszi a sziget
+          <gray> adatainak kezelését.
+      manage_biomes:
+        name: "<white><bold> Biómák kezelése"
+        description: |-
+          <gray> Lehetővé teszi a biómák
+          <gray> adatainak kezelését.
+      manage_bundles:
+        name: "<white><bold> Csomagok kezelése"
+        description: |-
+          <gray> Lehetővé teszi a csomagok
+          <gray> adatainak kezelését.
+      settings:
+        name: "<white><bold> Beállítások"
+        description: |-
+          <gray> Lehetővé teszi néhány
+          <gray> bővítmény beállításának módosítását.
+      import_template:
+        name: "<white><bold> Sablon importálása"
+        description: |-
+          <gray> Sablon importálása a
+          <gray> bővítmény könyvtárából
+          <gray> található fájlból.
+      web_library:
+        name: "<white><bold> Webes könyvtár"
+        description: |-
+          <gray> Hozzáférés a webes
+          <gray> könyvtárhoz, amely
+          <gray> megosztott biómákat tartalmaz.
+      export_from_database:
+        name: "<white><bold> Adatbázis exportálása"
+        description: |-
+          <gray> Az adatbázis exportálása
+          <gray> egyetlen fájlba, amely a
+          <gray> bővítmény könyvtárában található.
+      import_to_database:
+        name: "<white><bold> Adatbázis importálása"
+        description: |-
+          <gray> Adatbázis importálása egy
+          <gray> fájlból a bővítmény
+          <gray> könyvtárában.
+      wipe_islands_data:
+        name: "<white><bold> Sziget adatbázis törlése"
+        description: |-
+          <gray> Az összes bióma felhasználói adat
+          <gray> törlése erre a játékmódra.
+      wipe_biomes_data:
+        name: "<white><bold> Biómák adatbázis törlése"
+        description: |-
+          <gray> Az összes bióma és csomag
+          <gray> adat törlése erre a játékmódra.
+      add_biome:
+        name: "<white><bold> Bióma hozzáadása"
+        description: |-
+          <gray> Új biómát hoz létre, amelyet
+          <gray> a játékosok használhatnak a
+          <gray> felhasználói panelek segítségével.
+      remove_biome:
+        name: "<white><bold> Bióma eltávolítása"
+        description: |-
+          <gray> Eltávolítja a kiválasztott biómákat
+          <gray> a felhasználói panelekből.
+        title: "<yellow> Kiválasztott biómák:"
+        value: "<yellow> - [biome]"
+      accept_selected:
+        name: "<white><bold> Kiválasztottak elfogadása"
+        description: |-
+          <gray> Elfogadja a kiválasztott elemeket.
+        title: "<yellow> Kiválasztott elemek:"
+        element: "<yellow> - [element]"
+      environment_element:
+        name: "<white><bold> [environment]"
+        description: |-
+          <gray> [description].
+      properties:
+        name: "<white><bold> Tulajdonságok"
+        description: |-
+          <gray> A bióma fő tulajdonságainak megtekintése.
+      change_properties:
+        name: "<white><bold> Tulajdonságok módosítása"
+        description: |-
+          <gray> A bióma módosítási tulajdonságainak megtekintése.
+      unlock_properties:
+        name: "<white><bold> Feloldási tulajdonságok"
+        description: |-
+          <gray> A bióma feloldási tulajdonságainak megtekintése.
+      biome:
+        name: "<white><bold> [biome]"
+        description: |-
+          <gray> Minecraft bióma típus.
+        value: "<gray> Bióma azonosító: <yellow> [id]"
+      name:
+        name: "<white><bold> Megjelenítési név"
+        description: |-
+          <gray> A bióma megjelenítési neve.
+          <gray> Támogatja a színkódokat.
+        value: "<gray> Aktuális érték: <reset> [name]"
+      deployed:
+        name: "<white><bold> Telepítve"
+        description: |-
+          <gray> Váltógomb, hogy a bióma
+          <gray> elérhető legyen a játékosok
+          <gray> számára vagy sem.
+        enabled: "<dark_green> Engedélyezve"
+        disabled: "<red> Letiltva"
+      environment:
+        name: "<white><bold> Dimenzió"
+        description: |-
+          <gray> Lehetővé teszi a biómának
+          <gray> azt a dimenziót, amelyben
+          <gray> alkalmazható.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      icon:
+        name: "<white><bold> Ikon"
+        description: |-
+          <gray> Lehetővé teszi a bióma
+          <gray> ikonjának megváltoztatását.
+      order:
+        name: "<white><bold> Sorrend"
+        description: |-
+          <gray> Lehetővé teszi az objektumok
+          <gray> sorrendjének módosítását.
+          <gray> Az egyenlő sorszámú objektumok
+          <gray> az egyedi azonosító nevek
+          <gray> alapján rendezésre kerülnek.
+        value: "<gray> Aktuális sorrend: <yellow> [number]"
+      description:
+        name: "<white><bold> Leírás"
+        description: |-
+          <gray> A bióma konkrét leírása.
+          <gray> A színkódokat alkalmazni kell rá.
+        value: "<yellow> Aktuális leírás:"
+        none: "<gray> Leírás nincs beállítva."
+      unlock_permissions:
+        name: "<white><bold> Engedélyek"
+        description: |-
+          <gray> Lehetővé teszi a bióma
+          <gray> feloldási engedélyeinek
+          <gray> módosítását.
+        title: "<yellow> Engedélyek: "
+        element: " <dark_gray> - [permission]"
+        none: "<gray> Engedélyek nincs beállítva."
+      unlock_cost:
+        name: "<white><bold> Ár"
+        description: |-
+          <gray> Lehetővé teszi a bióma
+          <gray> feloldási árának módosítását.
+        value: "<gray> Aktuális ár: <yellow> [number]"
+      unlock_items:
+        name: "<white><bold> Elemek"
+        description: |-
+          <gray> Lehetővé teszi a bióma
+          <gray> feloldási elemeinek módosítását.
+        title: "<yellow> Elemek: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Elemek nincs beállítva."
+      unlock_level:
+        name: "<white><bold> Szint"
+        description: |-
+          <gray> Lehetővé teszi a szükséges
+          <gray> sziget szintjének módosítását
+          <gray> a bióma feloldásához.
+        value: "<gray> Aktuális szint: <yellow> [number]"
+      change_cost:
+        name: "<white><bold> Ár"
+        description: |-
+          <gray> Lehetővé teszi a bióma
+          <gray> alkalmazásának árának módosítását.
+        value: "<gray> Aktuális ár: <yellow> [number]"
+      change_items:
+        name: "<white><bold> Elemek"
+        description: |-
+          <gray> Lehetővé teszi a bióma
+          <gray> alkalmazásához szükséges elemek módosítását.
+        title: "<yellow> Elemek: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Elemek nincs beállítva."
+      change_type:
+        name: "<white><bold> [type]"
+        description: |-
+          <gray> Lehetővé teszi a bióma
+          <gray> alkalmazásának árának típusát módosítani.
+        static:
+          name: "Statikus érték"
+          description: |-
+            <gray> A bióma módosítási ára
+            <gray> nem változik.
+        per_block:
+          name: "Blokkonként"
+          description: |-
+            <gray> A bióma módosítási ára
+            <gray> blokkonként kerül kiszámításra.
+        per_usage:
+          name: "Használatonként"
+          description: |-
+            <gray> A bióma módosítási ára
+            <gray> minden használat után
+            <gray> nő.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      change_increment:
+        name: "<white><bold> Lépésköz"
+        description: |-
+          <gray> Lehetővé teszi a használatonkénti
+          <gray> lépésköz módosítását.
+        value: "<gray> Aktuális érték: <yellow> [number]"
+      biome-filter:
+        name: "<white><bold> [filter]"
+        description: |-
+          <gray> Bióma szűrő a Minecraft
+          <gray> Wiki alapján.
+        lush: "Buja biómák"
+        dry: "Száraz biómák"
+        cold: "Hideg biómák"
+        snowy: "Havas biómák"
+        aquatic: "Óceán biómák"
+        nether: "Nether biómák"
+        the_end: "The End biómák"
+        neutral: "Semleges biómák"
+        unused: "Fel nem használt biómák"
+        warm: "Meleg biómák"
+        cave: "Barlang biómák"
+        temperate: "Mérsékelt biómák"
+      protection_range:
+        name: "<white><bold> Védelmi tartomány"
+        description: |-
+          <gray> Lehetővé teszi a bióma módosítást
+          <gray> csak a sziget védelmi tartományára
+          <gray> korlátozni az egész sziget helyett.
+        enabled: "<dark_green> Engedélyezve"
+        disabled: "<red> Letiltva"
+      reset:
+        name: "<white><bold> Alaphelyzetbe állítás tulajdonos módosításakor"
+        description: |-
+          <gray> Lehetővé teszi a bióma
+          <gray> kényszerített alapértelmezett
+          <gray> módosítását, ha a sziget
+          <gray> tulajdonosa megváltozik.
+        enabled: "<dark_green> Engedélyezve"
+        disabled: "<red> Letiltva"
+      cool_down:
+        name: "<white><bold> Bióma hűtési idő"
+        description: |-
+          <gray> Lehetővé teszi az másodpercek
+          <gray> számának beállítását a játékos
+          <gray> között, amely után ismét módosíthatja a biómáját.
+        value: "<gray> Aktuális hűtési idő: <yellow> [number]"
+        disabled: "<yellow> Hűtési idő letiltva."
+      default_size:
+        name: "<white><bold> Alapértelmezett tartomány"
+        description: |-
+          <gray> Lehetővé teszi azt a szám
+          <gray> beállítását, amely akkor
+          <gray> használandó, amikor a játékos
+          <gray> a biómát beírás nélkül módosítja.
+        value: "<gray> Alapértelmezett tartomány: <yellow> [number]"
+      default_mode:
+        name: "<white><bold> Alapértelmezett frissítési mód"
+        description: |-
+          <gray> Lehetővé teszi az alapértelmezett
+          <gray> frissítési mód beállítását, amikor
+          <gray> a játékosok nem adták meg.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      unlock_notify:
+        name: "<white><bold> Értesítés feloldáskor"
+        description: |-
+          <gray> Egy üzenet kerül küldésre
+          <gray> a felhasználónak, amikor
+          <gray> feloldja az új biómáját.
+        enabled: |-
+          <aqua> Az értesítés feloldáskor <green> engedélyezve van <aqua>.
+        disabled: |-
+          <aqua> Az értesítés feloldáskor <red> letiltva van <aqua>.
+      change_timeout:
+        name: "<white><bold> Módosítás időkorlátja"
+        description: |-
+          <gray> Lehetővé teszi azt az
+          <gray> időkorlát beállítását, amely után
+          <gray> a bióma frissítése leáll.
+          <gray> Olyan nagy szigeteken vagy nagy
+          <gray> terhelés alatt lévő szervereken
+          <gray> fordulhat elő.
+        value: "<gray> Időkorlát: <yellow> [number] perc után"
+      parallel_updates:
+        name: "<white><bold> Párhuzamos frissítések"
+        description: |-
+          <gray> Lehetővé teszi az egyidejű
+          <gray> biómák frissítéseinek számát.
+          <gray> A többi a sorba kerül.
+        value: |-
+          <gray> Aktuális érték: <yellow>[number]<gray>.
+      use_bank:
+        name: "<white><bold> Bank fiók használata"
+        description: |-
+          <gray> Váltógomb, ha az összes
+          <gray> Biomes bővítmény által végzett
+          <gray> kifizetés a Bank bővítmény
+          <gray> sziget számláját használja.
+        enabled: |-
+          <aqua> A bank fiók használata <green> engedélyezve van <aqua>.
+        disabled: |-
+          <aqua> A bank fiók használata <red> letiltva van <aqua>.
+        missing: |-
+          <red> A Bank bővítmény nincs telepítve.
+      visibility:
+        name: "<white><bold> Bióma láthatósága"
+        description: |-
+          <gray> Lehetővé teszi a játékos
+          <gray> biómájának láthatóságét a
+          <gray> biómák kiválasztási paneljeiben.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+        all: "Összes bióma"
+        deployed: "Telepített biómák"
+        accessible: "Elérhető biómák"
+        toggleable: "Váltható"
+      is_online:
+        name: "<white><bold> Online játékos szigetei"
+        description: |-
+          <gray> Az összes szigetet felsorolja,
+          <gray> ahol bármely tag online.
+      all_islands:
+        name: "<white><bold> Összes sziget"
+        description: |-
+          <gray> Az összes sziget listája,
+          <gray> amely az aktuális
+          <gray> játékmódban lett létrehozva.
+      island_name:
+        name: "<white><bold> [name]"
+        island-owner: "[player]"
+        unknown: "<red> Ismeretlen tulajdonos"
+        description: |-
+          [owner]
+          [members]
+          [id]
+        owner: "<gray> Tulajdonos: <yellow> [player]"
+        title: "<gray> Sziget tagok:"
+        element: " <gray> - <yellow> [player]"
+      change_biome:
+        name: "<white><bold> Bióma módosítása"
+        description: |-
+          <gray> Szigetenként módosítja a biómáját.
+      manage_data:
+        name: "<white><bold> Sziget adatainak kezelése"
+        description: |-
+          <gray> Az adatok kezelése, amelyek
+          <gray> az adott szigethez vannak tárolva.
+      clear_data:
+        name: "<white><bold> Sziget adatainak törlése"
+        description: |-
+          <gray> Az összes szigethez tárolt adat törlése.
+      island_bundle:
+        name: "<white><bold> Sziget csomag"
+        description: |-
+          <gray> Az aktuális szigethez rendelt
+          <gray> csomag.
+          <gray> Csak ennek a csomagnak a
+          <gray> biómái használhatók a szigeten.
+        value: "<aqua> Csomag: [bundle]"
+        overwritten: |-
+          <red> A tulajdonosnak van olyan engedélye, amely
+          <red> felülírja a csomagot.
+      owner_bundle:
+        name: "<white><bold> Tulajdonos csomag"
+        description: |-
+          <gray> Az aktuális sziget tulajdonosához rendelt
+          <gray> csomag.
+          <gray> Csak ennek a csomagnak a
+          <gray> biómái használhatók a szigeten.
+          <gray> Engedély a felhasználónak a hozzárendeléshez:
+          <gray><italic> '[gamemode].biomes.
+          <gray><italic> bundle.<bundle-id>'
+        value: "<aqua> Csomag: [bundle]"
+      reset_to_default:
+        name: "<white><bold> Alapértelmezésekre visszaállítás"
+        description: |-
+          <gray> Az összes sziget értékét
+          <gray> alapértelmezésekre visszaállítja.
+      bundle_info:
+        name: "<white><bold> Általános információ"
+        description: |-
+          <gray> Az általános csomag
+          <gray> információjának megtekintése.
+      bundle_biomes:
+        name: "<white><bold> Biómák kezelése"
+        description: |-
+          <gray> A csomaghoz rendelt biómák
+          <gray> kezelése.
+      bundle_name:
+        name: "<white><bold> Név módosítása"
+        description: |-
+          <gray> A csomag megjelenítési
+          <gray> nevét módosítja.
+        value: "<yellow> Aktuális érték: <reset> [bundle]"
+      bundle_icon:
+        name: "<white><bold> Ikon módosítása"
+        description: |-
+          <gray> A csomag ikonjának módosítása.
+      bundle_description:
+        name: "<white><bold> Leírás módosítása"
+        description: |-
+          <gray> A csomag leírásának módosítása.
+        value: "<yellow> Aktuális érték:"
+        none: "<red> Nincs leírás"
+      bundle_permission:
+        name: "<white><bold> Csomag engedély"
+        description: |-
+          <gray> Az a engedély, amelyet
+          <gray> hozzá kell adni a felhasználóhoz a
+          <gray> csomag kényszerre.
+        value: "<yellow> Engedély: <white> [gamemode].biomes.bundle.[id]"
+      add_bundle_biome:
+        name: "<white><bold> Bióma hozzáadása"
+        description: |-
+          <gray> Egy biómát rendelhet
+          <gray> ehhez a csomaghoz.
+        title: "<aqua> Kiválasztott biómák:"
+        value: "<aqua> - [biome]"
+      remove_bundle_biome:
+        name: "<white><bold> Bióma eltávolítása"
+        description: |-
+          <gray> Egy biómát eltávolíthat
+          <gray> ebből a csomagból.
+        title: "<aqua> Kiválasztott biómák:"
+        value: "<aqua> - [biome]"
+      create_bundle:
+        name: "<white><bold> Csomag létrehozása"
+        description: |-
+          <gray> Egy új csomagot hoz létre
+          <gray> erre a játékmódra.
+      delete_bundle:
+        name: "<white><bold> Csomag eltávolítása"
+        description: |-
+          <gray> Eltávolítja a csomagot
+          <gray> erről a játékmódról teljesen.
+        title: "<aqua> Kiválasztott csomagok:"
+        value: "<aqua> - [bundle]"
+      download:
+        name: "<white><bold> Letöltés"
+        description: |-
+          <gray> Webes könyvtár letöltése.
+        enabled: "<dark_green> A gyorsítótár törlésével"
+        disabled: "<red> A gyorsítótár törlése nélkül"
+    tips:
+      click-to-filter: "<yellow> Kattintson <gray> a szűréshez."
+      click-to-manage: "<yellow> Kattintson <gray> a kezeléshez."
+      click-to-clear: "<yellow> Kattintson <gray> a törléshez."
+      click-to-change-biome: "<yellow> Kattintson <gray> a bióma módosításához."
+      click-to-view: "<yellow> Kattintson <gray> a megtekintéshez."
+      click-to-select: "<yellow> Kattintson <gray> a kiválasztáshoz."
+      click-to-choose: "<yellow> Kattintson <gray> a választáshoz."
+      click-to-complete: "<yellow> Kattintson <gray> a befejezéshez."
+      left-click-to-accept: "<yellow> Bal kattintás <gray> az alkalmazáshoz."
+      right-click-to-write: "<yellow> Jobb kattintás <gray> az íráshoz."
+      click-to-reduce: "<yellow> Kattintson <gray> a csökkentéshez."
+      click-to-increase: "<yellow> Kattintson <gray> a növeléshez."
+      click-to-return: "<yellow> Kattintson <gray> a visszalépéshez."
+      click-to-quit: "<yellow> Kattintson <gray> a kilépéshez."
+      click-to-wipe: "<yellow> Kattintson <gray> a törléshez."
+      left-click-to-wipe: "<yellow> Bal kattintás <gray> a törléshez."
+      right-click-to-switch: "<yellow> Jobb kattintás <gray> a váltáshoz."
+      click-to-open: "<yellow> Kattintson <gray> a megnyitáshoz."
+      click-to-export: "<yellow> Kattintson <gray> az exportáláshoz."
+      click-to-create: "<yellow> Kattintson <gray> a létrehozáshoz."
+      left-click-to-open: "<yellow> Bal kattintás <gray> a megnyitáshoz."
+      right-click-to-reset-all: "<yellow> Jobb kattintás <gray> az összes törléshez."
+      click-to-toggle: "<yellow> Kattintson <gray> a váltáshoz."
+      click-to-change: "<yellow> Kattintson <gray> a módosításhoz."
+      shift-click-to-reset: "<yellow> Shift kattintás <gray> az alaphelyzethez."
+      click-to-add: "<yellow> Kattintson <gray> a hozzáadáshoz."
+      click-to-remove: "<yellow> Kattintson <gray> az eltávolításhoz."
+      left-click-to-cycle: "<yellow> Bal kattintás <gray> a le ciklizáláshoz."
+      right-click-to-cycle: "<yellow> Jobb kattintás <gray> a fel ciklizáláshoz."
+      click-to-edit: "<yellow> Kattintson <gray> a szerkesztéshez."
+      left-click-to-download: "<yellow> Bal kattintás <gray> a letöltéshez."
+      right-click-to-toggle: "<yellow> Jobb kattintás <gray> a váltáshoz."
+      click-to-install: "<yellow> Kattintson <gray> a telepítéshez."
+      click-to-reset-all: "<yellow> Kattintson <gray> az összes alaphelyzetéhez."
+      right-click-to-select: "<yellow> Jobb kattintás <gray> a kiválasztáshoz."
+      right-click-to-deselect: "<yellow> Jobb kattintás <gray> a kiválasztás visszavonásához."
+      left-click-to-choose: "<yellow> Bal kattintás <gray> a választáshoz."
+      click-to-buy: "<yellow> Kattintson <gray> a vásárláshoz."
+      click-to-cancel: "<yellow> Kattintson <gray> a mégsehez."
+      click-to-save: "<yellow> Kattintson <gray> a mentéshez."
+      click-to-deselect: "<yellow> Kattintson <gray> a kiválasztás visszavonásához."
+      click-on-item: |-
+        <yellow> Kattintson <gray> a készletben
+        <gray> lévő elemre.
+      left-click-to-edit: "<yellow> Bal kattintás <gray> a szerkesztéshez."
+      right-click-to-clear: "<yellow> Jobb kattintás <gray> a törléshez."
+      click-to-previous: "<yellow> Kattintson <gray> az előző oldal megtekintéséhez."
+      click-to-next: "<yellow> Kattintson <gray> a következő oldal megtekintéséhez."
+      select-before: "<yellow> Válasszon <gray> elem(ek)et a folytatás előtt."
+      click-to-apply: "<yellow> Kattintson <gray> az alkalmazáshoz."
+      right-click-to-open: "<yellow> Jobb kattintás <gray> a megnyitáshoz."
+      click-to-perform: "<yellow> Kattintson <gray> a végrehajtáshoz."
+      left-click-to-apply: "<yellow> Bal kattintás <gray> az alkalmazáshoz."
+      right-click-to-unlock: "<yellow> Jobb kattintás <gray> a feloldáshoz."
+      right-click-to-buy: "<yellow> Jobb kattintás <gray> a vásárláshoz."
+      right-click-to-change: "<yellow> Jobb kattintás <gray> a módosításhoz."
+    descriptions:
+      update-mode:
+        island: "Sziget mód"
+        chunk: "Chunk mód"
+        range: "Tartomány mód"
+      selected: "<dark_green> Kiválasztva"
+      island-owner: "[player]"
+      unknown: "<yellow> Ismeretlen"
+      biome:
+        lore: |-
+          [description]
+          [biome]
+          [unlock]
+          [change]
+        original: |-
+          <gray> Bióma: <yellow> [biome]
+        unlock:
+          lore: |-
+            [items]
+            [money]
+            [level]
+            [permissions]
+          money: |-
+            <gray> Feloldási ár: <yellow> [number]
+          level: |-
+            <gray> Az alábbi sziget szintet kell elérni: <yellow> [number]
+            <gray>.
+          permission-single: |-
+            <gray> Hiányzó engedély: <red> [permission]
+          permissions-title: |-
+            <red> Hiányzó engedélyek:
+          permissions-list: |-
+            <red> - [permission]
+          item-single: |-
+            <gray> Feloldás elem: [color] [number] x [item]
+          item-title: |-
+            <gray> Feloldás elemei:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          missing: "<red>"
+          has: "<yellow>"
+        change:
+          lore: |-
+            [items]
+            [money]
+            [mode]
+            [usage]
+          mode:
+            per_block: |-
+              <aqua><italic> A bióma költsége minden
+              <aqua><italic> módosított blokkonként.
+            per_usage: |-
+              <aqua><italic> A bióma módosítása
+              <aqua><italic> növeli az árát.
+            static: |-
+              <aqua><italic> Szabványos módosítási ár.
+          money: |-
+            <gray> Ár: <yellow> [number]
+          item-single: |-
+            <gray> Elem: [color] [number] x [item]
+          item-title: |-
+            <gray> Elemek:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          number-of-usage: |-
+            |<gray> Ez a bióma már
+            <gray> [number] <reset><gray> alkalommal lett alkalmazva.
+          missing: "<red>"
+          has: "<yellow>"
+      bundle:
+        lore: |-
+          [description]
+          [permission]
+          [biomes]
+        permission: |-
+          <gray> Az a engedély, amely szükséges a
+          <gray> játékoshoz:
+          <gray><italic> [gamemode].biomes.bundle.[id]
+        title: "<gray> Csomag biómái: "
+        value: "<gray> - [biome]"
+        no-biomes: "<red> Nincsenek hozzárendelt biómák"
+      library:
+        author: '<gray> szerzőtől <yellow> [author]'
+        version: '<gray> Biomes verzióval készítve <yellow> [version]'
+        lang: '<gray> Nyelv: <yellow> [lang]'
+        gamemode: '<gray> Elsősorban erre a játékmódra: <yellow> [gamemode]'
+  conversations:
+    prefix: "<bold><gold> [BentoBox]: <reset>"
+    confirm-string: "igaz, be, igen, megerősít, i, érvényes, helyes"
+    deny-string: "hamis, ki, nem, megtagad, n, érvénytelen, helytelen"
+    cancel-string: "mégse"
+    exit-string: "mégse, kilépés, quit"
+    cancelled: "<red> Beszélgetés visszavonva!"
+    input-number: "<yellow> Írjon be egy számot a csevegésbe."
+    input-seconds: "<yellow> Írjon be másodperceket a csevegésbe."
+    numeric-only: "<red> A megadott [value] nem szám!"
+    not-valid-value: "<red> A megadott szám [value] nem érvényes. Nagyobbnak kell lennie, mint [min] és kisebbnek, mint [max]!"
+    data-removed: "<green> A kiválasztott biómák el lettek távolítva a [gamemode]-ból."
+    confirm-deletion: "<yellow> Kérjük, erősítse meg, hogy szeretné törölni [number] biómákat ezekkel a nevekkel: [value]."
+    user-data-removed: "<green> Az összes felhasználói adat a [gamemode] az adatbázisból lett törölve."
+    confirm-user-data-deletion: "<yellow> Kérjük, erősítse meg, hogy szeretné törölni a felhasználó adatbázist a [gamemode]-ból."
+    all-data-removed: "<green> Az összes bővítmény adat a [gamemode] az adatbázisból lett törölve."
+    confirm-all-data-deletion: "<yellow> Kérjük, erősítse meg, hogy szeretné törölni az összes bővítmény adatot a [gamemode]-ból."
+    write-name: "<yellow> Írjon be egy nevet a csevegésbe."
+    new-object-created: "<green> Új objektum a [gamemode] lett létrehozva."
+    object-already-exists: "<red> Az objektum <gray> [id] <red> már létezik. Válasszon más nevet."
+    name-changed: "<green> Siker, a nevet frissítték."
+    write-description: "<yellow> Írjon be egy új leírást a csevegésbe és a 'quit' a saját sorára, hogy befejezze."
+    description-changed: "<green> Siker, a leírást frissítték."
+    write-permissions: "<yellow> Írja be a szükséges engedélyeket, soronként a csevegésbe, és a 'quit' a saját sorára, hogy befejezze."
+    permissions-changed: "<green> Siker, az engedélyeket frissítették."
+    start-downloading: "<green> Megkezdődött a Biomes könyvtár letöltése és importálása."
+    written-text: "<green> Beírt szöveg:"
+    confirm-data-replacement: "<yellow> Kérjük, erősítse meg, hogy szeretné az aktuális adatokat az újabbakkal helyettesíteni."
+    new-data-imported: "<green> Siker, az új adatok a [gamemode] importálva lettek."
+    exported-file-name: "<yellow> Írjon be egy fájlnevet az exportált adatbázis-fájlhoz. (írjon 'mégse' a kilépéshez)"
+    database-export-completed: "<green> Siker, az adatbázis exportálása a [world] befejezve. Fájl [file] létrehozva."
+    file-name-exist: "<red> A fájl a nevével: '[id]' létezik. Nem lehet felülírni."
+    write-search: "<yellow> Írjon be egy keresési értéket. (írjon 'mégse' a kilépéshez)"
+    search-updated: "<green> A keresési érték frissítve."
+    invalid-biome: "<red> Az adatok az említett `[biome]`<reset><red> nem érvényes."
+    confirm-biome-deletion: "<yellow> Kérjük, erősítse meg, hogy szeretné eltávolítani a [biome]<reset><yellow> a [gamemode]-ból."
+    biome-removed: "[biome] <reset><green> el lett távolítva a [gamemode]-ból."
+    confirm-island-data-deletion: "<yellow> Kérjük, erősítse meg, hogy szeretné eltávolítani [player] sziget adatait."
+    island-data-removed: "[player] <green> sziget adatai el lettek távolítva."
+    confirm-biome-data-deletion: "<yellow> Kérjük, erősítse meg, hogy szeretné eltávolítani az összes biómáját a [gamemode]-ból."
+    biome-data-removed: "Az összes bióma el lett távolítva a [gamemode]-ból."
+    click-text-to-purchase: "<yellow> Feloldotta a <reset> [biome]<reset><yellow>! Kattintson ide a vásárlásához."
+    click-text-to-set: "<yellow> Feloldotta a <reset> [biome]<reset><yellow>! Kattintson ide a használatához."
+    click-text-to-purchase-other-world: "<yellow> Feloldotta a <reset> [biome]<reset><yellow> erre: <reset> [gamemode]<reset><yellow>! Látogassa meg azt a világot a vásárlásához."
+    click-text-to-set-other-world: "<yellow> Feloldotta a <reset> [biome]<reset><yellow> erre: <reset> [gamemode]<reset><yellow>! Látogassa meg azt a világot a használatához."
+  messages:
+    biome-not-unlocked: "[biome] <reset><red> nincs feloldva. Nem használhatja."
+    biome-not-purchased: "<red> Nem használhatja a <reset> [biome] <reset><red>. Meg kell vásárolnia."
+    biome-cannot-be-unlocked: "<red> Nem tudja feloldani a <reset> [biome] <reset><red>."
+    biome-already-purchased: "<red> Már megvásárolt a <reset> [biome] <reset><red>."
+    island-level-not-reached: "[biome] <reset><red> szükséges legalább sziget szintje: [number]."
+    missing-permission: "[biome] <reset><red> szükséges a következő engedély: [permission]."
+    no-credits-buy: "<red> Nincs elég kreditje a vásárláshoz <reset> [biome] <reset><red>. [number] költsége."
+    no-credits-buy-bank: "<red> Nincs elég kredidje a bank számláján a vásárláshoz <reset> [biome] <reset><red>. [number] költsége."
+    no-items-buy: "<red> Nincs elég eleme a vásárláshoz <reset> [biome] <reset><red>. [items] szükséges."
+    biome-purchased: "<yellow> Megvásárolt a <reset> [biome]<reset><yellow>."
+    import-count: "<yellow> Importálva [biomes] biómák és [bundles] csomagok."
+    start-downloading: "<yellow> Megkezdődött a könyvtár letöltése."
+    update-start: "<green> Megkezdődött a bióma módosítása erre: [biome] <reset><green> [number] chunk-ban. <yellow> Becsült idő: [time] mp."
+    update-done: "<green> Befejeződött a bióma módosítása erre: [biome]<reset><green>."
+    waiting: "<green> A bióma módosítása a sorba lett hozzáadva. <yellow> Becsült várakozási idő: [time] mp."
+    biome-already-unlocked: "[biome] <reset><yellow> már fel van oldva."
+    everything-already-bought: "<green> Már megvásárolt az összes biómát erre a játékmódra."
+    skipping: "<green> Kihagyás [biome]<reset><green> betöltéséről."
+    overwriting: "<green> Felülírás <reset> [biome] <reset><green> a gyorsítótárban."
+    imported: "<green> Importálás <reset> [biome] <reset><green> a gyorsítótárban."
+    migrate-start: "<green> Megkezdődött az új adatformátumba való migráció."
+    migrate-finish: "<green> Az új adatformátumba való migráció befejeződött."
+    migrate-valid: "<green> Az összes adat érvényes. Migráció nem szükséges."
+    bundle-loaded: "<green> Csomag <reset> [bundle] <green> betöltve."
+    clear-queue: "<green> A bióma frissítési feladat sora a [gamemode] lett törölve."
+  errors:
+    no-island-data: "<red> A szigetnek nincs tárolt adata."
+    no-biomes-admin: "<red> Az aktuális játékmód nem rendelkezik használható biómával. Kérjük, importálja vagy hozza létre a biómákat a /[command] használatával"
+    no-biomes: "<red> Az aktuális játékmód nem rendelkezik használható biómával."
+    no-rank: "<red> Nem engedélyezett a bióma módosítása ezen a szigeten."
+    not-enough-level: "<red> Ez a bióma legalább [number] sziget szintszükséges."
+    not-enough-money: "<red> Ez a biómák módosítása [number] költségű."
+    not-enough-money-bank: "<red> A bank számláján nincs elég kredidje. A biómák módosítása [number] költségű."
+    not-enough-items: "<red> Ez a biómák módosítása [items] költségű."
+    admin-not-on-island: "<red> Nem az [user] szigetén vagy."
+    incorrect-object: "<red> Nem található bioma a kért név alapján: [biome]"
+    missing-biome: "<red> A bióma neve nincs megadva."
+    incorrect-mode: "<red> A(z) '[mode]' nevű mód nem létezik."
+    incorrect-range: "<red> A megadott érték '[number]' nem érvényes szám."
+    no-file: "<red> Nem található [file] a biómák könyvtárában."
+    no-load: "<red> Nem lehet importálni a biómákat a [file]-ból. Oka: [description]"
+    not-a-gamemode-world: "<red> A [world] világnév nem egy GameModeAddon világnév."
+    file-exist: "<red> A [file] nevű fájl már létezik. Válasszon más nevet."
+    no-library-entries: "<red> Nem található semmilyen érvényes könyvtár bejegyzés."
+    not-unlocked: "<red> Nem oldotta fel ezt a biómát."
+    not-purchased: "<red> Nem vásárolta meg ezt a biómát."
+    timeout: "<red> A biómák módosítása lejárt. Valószínűleg a kiválasztott terület túl nagy volt vagy a szerver túl foglalt."
+    failed: "<red> A szerver hibábiba ütközött a bióma módosítása közben."
+    could-not-remove-money: "<red> Valami elment félre a pénz levonása közben."
+    could-not-remove-items: "<red> Valami elment félre az elemek levonása közben."
+    something-went-wrong: "<red> Valami elment félre. Nem lehet megtenni."
+protection:
+  flags:
+    BIOMES_ISLAND_PROTECTION:
+      name: "Biómák vezérlése"
+      description: |-
+        <dark_purple><italic> Váltógomb, aki módosíthatja
+        <dark_purple><italic> a sziget biómáját
+    BIOMES_WORLD_PROTECTION:
+      name: "Bióma sziget korlátozása"
+      description: |-
+        <dark_purple><italic> Váltógomb a
+        <dark_purple><italic> követelmény szerint
+        <dark_purple><italic> a játékosok a szigeten
+        <dark_purple><italic> vannak a biómák módosításához.
+      hint: "<red> A szigeten kell lenned a bióma módosításához!"

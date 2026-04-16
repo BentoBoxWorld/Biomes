@@ -32,271 +32,271 @@ biomes:
         parameters: "<biom-id>"
   gui:
     titles:
-      player-panel: "&0&l Wybierz biom"
-      buy-panel: "&0&l Kup biom"
-      advanced-panel: "&0 Tryb aktualizacji"
-      admin-panel: "&0&l GUI administratora"
-      settings: "&O&l ustawienia"
-      library: "&0&l Biblioteka"
-      manage-biomes: "&0&l Zarządzaj biomami"
-      manage-bundles: "&0&l Zarządzaj pakietami"
-      manage-islands: "&0&l Zarządzaj danymi wysp"
-      edit-biome: "&0&l Edytuj biom: [biome]"
-      edit-bundle: "&0&l Edytuj pakiet: [bundle]"
-      edit-island: "&0&l Edytuj wyspę: [island]"
-      environment-selector: "&0&l Wybierz środowisko"
-      biome-selector: "&0&l Wybierz biom"
-      bundle-selector: "&0&l Wybierz pakiet"
-      item-selector: "&0&l Wybierz elementy"
+      player-panel: "<black><bold> Wybierz biom"
+      buy-panel: "<black><bold> Kup biom"
+      advanced-panel: "<black> Tryb aktualizacji"
+      admin-panel: "<black><bold> GUI administratora"
+      settings: "<italic><bold> ustawienia"
+      library: "<black><bold> Biblioteka"
+      manage-biomes: "<black><bold> Zarządzaj biomami"
+      manage-bundles: "<black><bold> Zarządzaj pakietami"
+      manage-islands: "<black><bold> Zarządzaj danymi wysp"
+      edit-biome: "<black><bold> Edytuj biom: [biome]"
+      edit-bundle: "<black><bold> Edytuj pakiet: [bundle]"
+      edit-island: "<black><bold> Edytuj wyspę: [island]"
+      environment-selector: "<black><bold> Wybierz środowisko"
+      biome-selector: "<black><bold> Wybierz biom"
+      bundle-selector: "<black><bold> Wybierz pakiet"
+      item-selector: "<black><bold> Wybierz elementy"
     buttons:
       island:
-        name: "&f&l Wyspa"
+        name: "<white><bold> Wyspa"
         description: |-
-          &7 Zmienia biom na całej
-          &7 wyspie.
+          <gray> Zmienia biom na całej
+          <gray> wyspie.
       chunk:
-        name: "&f&l Chunk"
-        description: "&7 Zmienia biom w chunkach."
+        name: "<white><bold> Chunk"
+        description: "<gray> Zmienia biom w chunkach."
       range:
-        name: "&f&l Zakres"
-        description: "&7 Zmienia biom według zasięgu."
+        name: "<white><bold> Zakres"
+        description: "<gray> Zmienia biom według zasięgu."
       reduce:
-        name: "&f&l Zmniejsz"
-        description: "&7 Zmniejsz o &e [number]"
+        name: "<white><bold> Zmniejsz"
+        description: "<gray> Zmniejsz o <yellow> [number]"
       increase:
-        name: "&f&l Zwiększ"
-        description: "&7 Zwiększ o &e [number]"
+        name: "<white><bold> Zwiększ"
+        description: "<gray> Zwiększ o <yellow> [number]"
       accept:
-        name: "&f&l Zastosuj zmiany"
+        name: "<white><bold> Zastosuj zmiany"
         description: |-
-          &7 Zmienia biom na &e [biome]
+          <gray> Zmienia biom na <yellow> [biome]
 
-          &7 Tryb aktualizacji: &e [mode]
-          &7 Zakres aktualizacji: &e [number]
+          <gray> Tryb aktualizacji: <yellow> [mode]
+          <gray> Zakres aktualizacji: <yellow> [number]
       return:
-        name: "&f&l Powrót"
-        description: "&7 Powrót do poprzedniego menu."
+        name: "<white><bold> Powrót"
+        description: "<gray> Powrót do poprzedniego menu."
       previous:
-        name: "&f&l Poprzednia strona"
-        description: "&7 Przełącz na &e [number] &7 stronę"
+        name: "<white><bold> Poprzednia strona"
+        description: "<gray> Przełącz na <yellow> [number] <gray> stronę"
       next:
-        name: "&f&l Następna strona"
-        description: "&7 Przełącz na &e [number] &7 stronę"
+        name: "<white><bold> Następna strona"
+        description: "<gray> Przełącz na <yellow> [number] <gray> stronę"
       quit:
-        name: "&f&l Zakończ"
-        description: "&7 Wyjdź z GUI."
+        name: "<white><bold> Zakończ"
+        description: "<gray> Wyjdź z GUI."
       save:
-        name: "&f&l Zapisz"
-        description: "&7 Zapisz zmiany i wróć."
+        name: "<white><bold> Zapisz"
+        description: "<gray> Zapisz zmiany i wróć."
       cancel:
-        name: "&f&l Anuluj"
-        description: "&7 Anuluj zmiany i wróć."
+        name: "<white><bold> Anuluj"
+        description: "<gray> Anuluj zmiany i wróć."
       search:
-        name: "&f&l Szukaj"
-        description: "&7 Umożliwia wyszukiwanie \n&7 elementów za pomocą\n&7 wartości
+        name: "<white><bold> Szukaj"
+        description: "<gray> Umożliwia wyszukiwanie \n<gray> elementów za pomocą\n<gray> wartości
           tekstowej."
-        search: "&b Wartość: [value]"
+        search: "<aqua> Wartość: [value]"
       buy:
-        name: "&f&l Zakup"
-        description: "&7 Kup nowy biom."
+        name: "<white><bold> Zakup"
+        description: "<gray> Kup nowy biom."
       manage_islands:
-        name: "&f&l Zarządzaj wyspami"
-        description: "&7 Pozwala zarządzać danymi wyspy."
+        name: "<white><bold> Zarządzaj wyspami"
+        description: "<gray> Pozwala zarządzać danymi wyspy."
       manage_biomes:
-        name: "&f&l Zarządzaj biomami"
-        description: "&7 Pozwala zarządzać danymi \n biomów."
+        name: "<white><bold> Zarządzaj biomami"
+        description: "<gray> Pozwala zarządzać danymi \n biomów."
       manage_bundles:
-        name: "&f&l Zarządzaj pakietami"
+        name: "<white><bold> Zarządzaj pakietami"
         description: |-
-          &7 Pozwala zarządzać pakietami
-          &7 dane.
+          <gray> Pozwala zarządzać pakietami
+          <gray> dane.
       settings:
-        name: "&f&l Ustawienia"
+        name: "<white><bold> Ustawienia"
         description: |-
-          &7 Pozwala zmienić niektóre
-          &7 ustawienia dodatków.
+          <gray> Pozwala zmienić niektóre
+          <gray> ustawienia dodatków.
       import_template:
-        name: "&f&l Importuj szablon"
+        name: "<white><bold> Importuj szablon"
         description: |-
-          &7 Importuj szablon
-          &7 plik znajduje się wewnątrz
-          &7 katalogu dodatków.
+          <gray> Importuj szablon
+          <gray> plik znajduje się wewnątrz
+          <gray> katalogu dodatków.
       web_library:
-        name: "&f&l Biblioteka internetowa"
-        description: "&7 Uzyskaj dostęp do \n&7 biblioteki zawierającej\n&7 udostępnione
+        name: "<white><bold> Biblioteka internetowa"
+        description: "<gray> Uzyskaj dostęp do \n<gray> biblioteki zawierającej\n<gray> udostępnione
           biomy."
       export_from_database:
-        name: "&f&l Eksportuj bazę danych"
+        name: "<white><bold> Eksportuj bazę danych"
         description: |-
-          &7 Eksportuj bazę danych
-          &7 do jednego pliku znajdującego się w
-          &7 katalog dodatków.
+          <gray> Eksportuj bazę danych
+          <gray> do jednego pliku znajdującego się w
+          <gray> katalog dodatków.
       import_to_database:
-        name: "&f&l Importuj bazę danych"
+        name: "<white><bold> Importuj bazę danych"
         description: |-
-          &7 Importuj bazę danych z
-          &7 plik znajdujący się w dodatku
-          Katalog &7.
+          <gray> Importuj bazę danych z
+          <gray> plik znajdujący się w dodatku
+          Katalog <gray>.
       wipe_islands_data:
-        name: "&f&l Wyczyść bazę danych wysp"
+        name: "<white><bold> Wyczyść bazę danych wysp"
         description: |-
-          &7 Wyczyść wszystkie dane użytkownika biomów
-          &7 dla tego trybu gry.
+          <gray> Wyczyść wszystkie dane użytkownika biomów
+          <gray> dla tego trybu gry.
       wipe_biomes_data:
-        name: "&f&l Wyczyść bazę danych biomów"
+        name: "<white><bold> Wyczyść bazę danych biomów"
         description: |-
-          &7 Wyczyść wszystkie biomy i pakiety
-          &7 danych dla tego trybu gry.
+          <gray> Wyczyść wszystkie biomy i pakiety
+          <gray> danych dla tego trybu gry.
       add_biome:
-        name: "&f&l Dodaj biom"
+        name: "<white><bold> Dodaj biom"
         description: |-
-          &7 Tworzy nowy biom, który
-          &7 gracz może użyć za pomocą
-          &7 paneli użytkownika.
+          <gray> Tworzy nowy biom, który
+          <gray> gracz może użyć za pomocą
+          <gray> paneli użytkownika.
       remove_biome:
-        name: "&f&l Usuń biom"
+        name: "<white><bold> Usuń biom"
         description: |-
-          &7 Usuwa wybrane biomy
-          &7 z paneli użytkownika.
-        title: "&e Wybrane biomy:"
-        value: "&e - [biome]"
+          <gray> Usuwa wybrane biomy
+          <gray> z paneli użytkownika.
+        title: "<yellow> Wybrane biomy:"
+        value: "<yellow> - [biome]"
       accept_selected:
-        name: "&f&l Akceptuj zaznaczone"
-        description: "&7 Akceptuje wybrane elementy."
-        title: "&e Wybrane elementy:"
-        element: "&e - [element]"
+        name: "<white><bold> Akceptuj zaznaczone"
+        description: "<gray> Akceptuje wybrane elementy."
+        title: "<yellow> Wybrane elementy:"
+        element: "<yellow> - [element]"
       environment_element:
-        name: "&f&l [environment]"
-        description: "&7 [description]."
+        name: "<white><bold> [environment]"
+        description: "<gray> [description]."
       properties:
-        name: "&f&l Właściwości"
-        description: "&7 Wyświetl główne właściwości biomu."
+        name: "<white><bold> Właściwości"
+        description: "<gray> Wyświetl główne właściwości biomu."
       change_properties:
-        name: "&f&l Zmień właściwości"
-        description: "&7 Zobacz zmieniające się właściwości biomu."
+        name: "<white><bold> Zmień właściwości"
+        description: "<gray> Zobacz zmieniające się właściwości biomu."
       unlock_properties:
-        name: "&f&l Odblokuj właściwości"
-        description: "&7 Wyświetl właściwości odblokowania biomu."
+        name: "<white><bold> Odblokuj właściwości"
+        description: "<gray> Wyświetl właściwości odblokowania biomu."
       biome:
-        name: "&f&l [biome]"
-        description: "&7 Typ biomu Minecrafta."
-        value: "&7 Identyfikator biomu: &e [id]"
+        name: "<white><bold> [biome]"
+        description: "<gray> Typ biomu Minecrafta."
+        value: "<gray> Identyfikator biomu: <yellow> [id]"
       name:
-        name: "&f&l Wyświetlana nazwa"
+        name: "<white><bold> Wyświetlana nazwa"
         description: |-
-          &7 Wyświetlana nazwa biomu.
-          &7 Obsługuje kody kolorów.
-        value: "&7 Bieżąca wartość: &r [name]"
+          <gray> Wyświetlana nazwa biomu.
+          <gray> Obsługuje kody kolorów.
+        value: "<gray> Bieżąca wartość: <reset> [name]"
       deployed:
-        name: "&f&l Wdrożono"
+        name: "<white><bold> Wdrożono"
         description: |-
-          &7 Przełącza, jeśli biom to
-          &7 dostępne dla graczy
-          &7 czy nie.
-        enabled: "&2 Włączone"
-        disabled: "&c Wyłączone"
+          <gray> Przełącza, jeśli biom to
+          <gray> dostępne dla graczy
+          <gray> czy nie.
+        enabled: "<dark_green> Włączone"
+        disabled: "<red> Wyłączone"
       environment:
-        name: "&f&l Wymiar"
+        name: "<white><bold> Wymiar"
         description: |-
-          &7 Pozwala ograniczyć, w których
-          &7 zwymiaruj biom
-          &7 można zastosować.
-        enabled: "&2"
-        disabled: "&c"
+          <gray> Pozwala ograniczyć, w których
+          <gray> zwymiaruj biom
+          <gray> można zastosować.
+        enabled: "<dark_green>"
+        disabled: "<red>"
       icon:
-        name: "&f&l Ikona"
+        name: "<white><bold> Ikona"
         description: |-
-          &7 Pozwala zmienić ikonę
-          &7 dla tego biomu.
+          <gray> Pozwala zmienić ikonę
+          <gray> dla tego biomu.
       order:
-        name: "&f&l Kolejność"
+        name: "<white><bold> Kolejność"
         description: |-
-          &7 Pozwala zmienić kolejność
-          &7 obiektów.
-          &7 Obiekty o równych numerach
-          &7 zostaną ułożone alfabetycznie
-        value: "&7 Bieżąca kolejność: &e [number]"
+          <gray> Pozwala zmienić kolejność
+          <gray> obiektów.
+          <gray> Obiekty o równych numerach
+          <gray> zostaną ułożone alfabetycznie
+        value: "<gray> Bieżąca kolejność: <yellow> [number]"
       description:
-        name: "&f&l Opis"
+        name: "<white><bold> Opis"
         description: |-
-          &7 Szczegółowy opis
-          &7 dla biomu. Kolor
-          Należy do niego zastosować kody &7.
-        value: "&e Bieżący opis:"
-        none: "&7 Opis nie jest ustawiony."
+          <gray> Szczegółowy opis
+          <gray> dla biomu. Kolor
+          Należy do niego zastosować kody <gray>.
+        value: "<yellow> Bieżący opis:"
+        none: "<gray> Opis nie jest ustawiony."
       unlock_permissions:
-        name: "&f&l Uprawnienia"
+        name: "<white><bold> Uprawnienia"
         description: |-
-          &7 Pozwala na zmianę odblokowania
-          &7 uprawnień do tego
-          &7 biom, aby był dostępny.
-        title: "&e Uprawnienia:"
-        element: " &8 - [permission]"
-        none: "&7 Uprawnienia nie są ustawione."
+          <gray> Pozwala na zmianę odblokowania
+          <gray> uprawnień do tego
+          <gray> biom, aby był dostępny.
+        title: "<yellow> Uprawnienia:"
+        element: " <dark_gray> - [permission]"
+        none: "<gray> Uprawnienia nie są ustawione."
       unlock_cost:
-        name: "&f&l Koszt"
+        name: "<white><bold> Koszt"
         description: |-
-          &7 Pozwala zmienić koszt
-          &7 odblokowanie tego biomu.
-        value: "&7 Bieżący koszt: &e $[number]"
+          <gray> Pozwala zmienić koszt
+          <gray> odblokowanie tego biomu.
+        value: "<gray> Bieżący koszt: <yellow> $[number]"
       unlock_items:
-        name: "&f&l Przedmioty"
+        name: "<white><bold> Przedmioty"
         description: |-
-          &7 Pozwala na zmianę odblokowania
-          &7 elementów dla tego biomu.
-        title: "&e Przedmioty:"
-        element: " &8 - [number]x[item]"
-        none: "&7 Pozycje nie są ustawione."
+          <gray> Pozwala na zmianę odblokowania
+          <gray> elementów dla tego biomu.
+        title: "<yellow> Przedmioty:"
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Pozycje nie są ustawione."
       unlock_level:
-        name: "&f&l Poziom"
+        name: "<white><bold> Poziom"
         description: |-
-          &7 Pozwala na zmianę
-          &7 wymagany poziom wyspy
-          &7 za odblokowanie tego biomu.
-        value: "&7 Bieżący poziom: &e [number]"
+          <gray> Pozwala na zmianę
+          <gray> wymagany poziom wyspy
+          <gray> za odblokowanie tego biomu.
+        value: "<gray> Bieżący poziom: <yellow> [number]"
       change_cost:
-        name: "&f&l Koszt"
+        name: "<white><bold> Koszt"
         description: |-
-          &7 Pozwala zmienić koszt
-          &7 zastosowanie tego biomu.
-        value: "&7 Bieżący koszt: &e $[number]"
+          <gray> Pozwala zmienić koszt
+          <gray> zastosowanie tego biomu.
+        value: "<gray> Bieżący koszt: <yellow> $[number]"
       change_items:
-        name: "&f&l Przedmioty"
+        name: "<white><bold> Przedmioty"
         description: |-
-          &7 Pozwala na zmianę elementów
-          &7 za zastosowanie tego biomu.
-        title: "&e Przedmioty:"
-        element: " &8 - [number]x[item]"
-        none: "&7 Pozycje nie są ustawione."
+          <gray> Pozwala na zmianę elementów
+          <gray> za zastosowanie tego biomu.
+        title: "<yellow> Przedmioty:"
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Pozycje nie są ustawione."
       change_type:
-        name: "&f&l [type]"
+        name: "<white><bold> [type]"
         description: |-
-          &7 Pozwala zmienić rodzaj kosztu
-          &7 za zastosowanie tego biomu.
+          <gray> Pozwala zmienić rodzaj kosztu
+          <gray> za zastosowanie tego biomu.
         static:
           name: Wartość stała
           description: |-
-            &7 Koszt zmiany biomu
-            &7 jest niezmienny.
+            <gray> Koszt zmiany biomu
+            <gray> jest niezmienny.
         per_block:
           name: Za blok
-          description: "&7 Koszt zmiany biomu \n&7 jest obliczany za każdy blok"
+          description: "<gray> Koszt zmiany biomu \n<gray> jest obliczany za każdy blok"
         per_usage:
           name: Na użycie
-          description: "&7 Koszt zmiany biomu \n&7 wzrasta po każdej\n&7 zmianie."
-        enabled: "&2"
-        disabled: "&c"
+          description: "<gray> Koszt zmiany biomu \n<gray> wzrasta po każdej\n<gray> zmianie."
+        enabled: "<dark_green>"
+        disabled: "<red>"
       change_increment:
-        name: "&f&l Przyrost"
+        name: "<white><bold> Przyrost"
         description: |-
-          &7 Pozwala na zmianę
-          &7 przyrost na użycie.
-        value: "&7 Aktualna wartość: &e [number]"
+          <gray> Pozwala na zmianę
+          <gray> przyrost na użycie.
+        value: "<gray> Aktualna wartość: <yellow> [number]"
       biome-filter:
-        name: "&f&l [filter]"
+        name: "<white><bold> [filter]"
         description: |-
-          &7 Oparty na filtrze biomu
-          &7 na Minecraft Wiki.
+          <gray> Oparty na filtrze biomu
+          <gray> na Minecraft Wiki.
         lush: Bujne biomy
         dry: Suche biomy
         cold: Zimne Biomy
@@ -307,302 +307,302 @@ biomes:
         neutral: Neutralne biomy
         unused: Niewykorzystane biomy
       protection_range:
-        name: "&f&l Zakres ochrony"
-        description: "&7 Pozwala ograniczyć zmianę \n&7 biomu tylko do zakresu \n&7
-          ochrony  wyspy zamiast zmieniać biom \n&7 na całej wyspie."
-        enabled: "&2 Włączone"
-        disabled: "&c Wyłączone"
+        name: "<white><bold> Zakres ochrony"
+        description: "<gray> Pozwala ograniczyć zmianę \n<gray> biomu tylko do zakresu \n<gray>
+          ochrony  wyspy zamiast zmieniać biom \n<gray> na całej wyspie."
+        enabled: "<dark_green> Włączone"
+        disabled: "<red> Wyłączone"
       reset:
-        name: "&f&l Resetuj przy zmianie właściciela"
-        description: "&7Pozwala włączyć wymuszenie\n&7zmiany biomu na domyślny, \n&7jeśli
-          wyspa zmieni właściciela, a \n&7nowy właściciel nie ma \n&7aktualnych uprawnień
+        name: "<white><bold> Resetuj przy zmianie właściciela"
+        description: "<gray>Pozwala włączyć wymuszenie\n<gray>zmiany biomu na domyślny, \n<gray>jeśli
+          wyspa zmieni właściciela, a \n<gray>nowy właściciel nie ma \n<gray>aktualnych uprawnień
           do biomu."
-        enabled: "&2 Włączone"
-        disabled: "&c Wyłączone"
+        enabled: "<dark_green> Włączone"
+        disabled: "<red> Wyłączone"
       cool_down:
-        name: "&f&l Ochładzanie biomu"
+        name: "<white><bold> Ochładzanie biomu"
         description: |-
-          &7 Pozwala ustawić liczbę
-          &7 sekund między ponownymi
-          &7 zmianami biomu
-        value: "&7 Aktualny czas odnowienia: &e [number]"
-        disabled: "&e Ochładzanie jest wyłączone."
+          <gray> Pozwala ustawić liczbę
+          <gray> sekund między ponownymi
+          <gray> zmianami biomu
+        value: "<gray> Aktualny czas odnowienia: <yellow> [number]"
+        disabled: "<yellow> Ochładzanie jest wyłączone."
       default_size:
-        name: "&f&l Domyślny zakres"
+        name: "<white><bold> Domyślny zakres"
         description: |-
-          &7 Pozwala ustawić liczbę, która
-          &7 zostanie użyta, gdy gracz
-          &7 zmieni biom bez jej okreslenia
-        value: "&7 Domyślny zakres: &e [number]"
+          <gray> Pozwala ustawić liczbę, która
+          <gray> zostanie użyta, gdy gracz
+          <gray> zmieni biom bez jej okreslenia
+        value: "<gray> Domyślny zakres: <yellow> [number]"
       default_mode:
-        name: "&f&l Domyślny tryb aktualizacji"
-        description: "&7 Pozwala ustawić domyślny \n&7 tryb aktualizacji, gdy gracze
-          \n&7 go nie udostępnili."
-        enabled: "&2"
-        disabled: "&c"
+        name: "<white><bold> Domyślny tryb aktualizacji"
+        description: "<gray> Pozwala ustawić domyślny \n<gray> tryb aktualizacji, gdy gracze
+          \n<gray> go nie udostępnili."
+        enabled: "<dark_green>"
+        disabled: "<red>"
       unlock_notify:
-        name: "&f&l Powiadom o odblokowaniu"
+        name: "<white><bold> Powiadom o odblokowaniu"
         description: |-
-          &7 Wiadomość zostanie wysłana
-          &7 do użytkownika, gdy odblokuje
-          &7 nowy biom.
-        enabled: "&b Powiadamianie o odblokowaniu jest &a włączone &b."
-        disabled: "&b Powiadamianie o odblokowaniu jest &c wyłączone &b."
+          <gray> Wiadomość zostanie wysłana
+          <gray> do użytkownika, gdy odblokuje
+          <gray> nowy biom.
+        enabled: "<aqua> Powiadamianie o odblokowaniu jest <green> włączone <aqua>."
+        disabled: "<aqua> Powiadamianie o odblokowaniu jest <red> wyłączone <aqua>."
       change_timeout:
-        name: "&f&l Upłynął limit czasu na zmianę"
+        name: "<white><bold> Upłynął limit czasu na zmianę"
         description: |-
-          &7 Pozwala ustawić po jak
-          &7-minutowa aktualizacja biomu
-          &7 zostanie rozwiązany.
-          &7 Może się zdarzyć na bardzo dużych
-          &7 wysp lub serwerów pod
-          &7 ogromne obciążenie.
-        value: "&7 Limit czasu po: &e [number] min"
+          <gray> Pozwala ustawić po jak
+          <gray>-minutowa aktualizacja biomu
+          <gray> zostanie rozwiązany.
+          <gray> Może się zdarzyć na bardzo dużych
+          <gray> wysp lub serwerów pod
+          <gray> ogromne obciążenie.
+        value: "<gray> Limit czasu po: <yellow> [number] min"
       parallel_updates:
-        name: "&f&l Aktualizacje równoległe"
+        name: "<white><bold> Aktualizacje równoległe"
         description: |-
-          &7 Pozwala ustawić ile wysp
-          &7 może jednocześnie zmieniać
-          &7 biom
-          &7 Pozostałe zostaną dodane
-          &7 do kolejki
-        value: "&7 Aktualna wartość: &e[number]&7."
+          <gray> Pozwala ustawić ile wysp
+          <gray> może jednocześnie zmieniać
+          <gray> biom
+          <gray> Pozostałe zostaną dodane
+          <gray> do kolejki
+        value: "<gray> Aktualna wartość: <yellow>[number]<gray>."
       use_bank:
-        name: "&f&l Użyj pieniędzy z konta gracza"
-        description: "&7Przełącza, czy wszystkie \n&7płatności dokonywane przez \n&7dodatek
-          Biomes będą \n&7korzystały z rachunku wyspy."
-        enabled: "&b Korzystanie z rachunku gracza jest &a włączone &b."
-        disabled: "&b Korzystanie z rachunku gracza jest &c wyłączone &b."
-        missing: "&c Dodatek Bank nie jest zainstalowany."
+        name: "<white><bold> Użyj pieniędzy z konta gracza"
+        description: "<gray>Przełącza, czy wszystkie \n<gray>płatności dokonywane przez \n<gray>dodatek
+          Biomes będą \n<gray>korzystały z rachunku wyspy."
+        enabled: "<aqua> Korzystanie z rachunku gracza jest <green> włączone <aqua>."
+        disabled: "<aqua> Korzystanie z rachunku gracza jest <red> wyłączone <aqua>."
+        missing: "<red> Dodatek Bank nie jest zainstalowany."
       visibility:
-        name: "&f&l Widoczność biomu"
+        name: "<white><bold> Widoczność biomu"
         description: |-
-          &7 Pozwala zmienić graczowi
-          &7 widoczność biomu w
-          &7 panelu wyboru biomu.
-        enabled: "&2"
-        disabled: "&c"
+          <gray> Pozwala zmienić graczowi
+          <gray> widoczność biomu w
+          <gray> panelu wyboru biomu.
+        enabled: "<dark_green>"
+        disabled: "<red>"
         all: Wszystkie biomy
         deployed: Wdrożone biomy
         accessible: Dostępne biomy
         toggleable: Przełączalny
       is_online:
-        name: "&f&l Wyspy graczy online"
+        name: "<white><bold> Wyspy graczy online"
         description: |-
-          &7 Wymień wszystkie wyspy, na których
-          &7 każdy członek jest online.
+          <gray> Wymień wszystkie wyspy, na których
+          <gray> każdy członek jest online.
       all_islands:
-        name: "&f&l Wszystkie wyspy"
+        name: "<white><bold> Wszystkie wyspy"
         description: |-
-          &7 Lista wszystkich wysp
-          &7, które zostały stworzone w
-          &7 aktualny tryb gry.
+          <gray> Lista wszystkich wysp
+          <gray>, które zostały stworzone w
+          <gray> aktualny tryb gry.
       island_name:
-        name: "&f&l [name]"
+        name: "<white><bold> [name]"
         island-owner: "[player]"
-        unknown: "&c Nieznany właściciel"
+        unknown: "<red> Nieznany właściciel"
         description: |-
           [owner]
           [members]
           [id]
-        owner: "&7 Właściciel: &e [player]"
-        title: "&7 członków wyspy:"
-        element: " &7 - &e [player]"
+        owner: "<gray> Właściciel: <yellow> [player]"
+        title: "<gray> członków wyspy:"
+        element: " <gray> - <yellow> [player]"
       change_biome:
-        name: "&f&l Zmień biom"
-        description: "&7 Zmień biom na wyspę."
+        name: "<white><bold> Zmień biom"
+        description: "<gray> Zmień biom na wyspę."
       manage_data:
-        name: "&f&l Zarządzaj danymi wysp"
+        name: "<white><bold> Zarządzaj danymi wysp"
         description: |-
-          &7 Zarządzaj danymi, które są
-          &7 przechowywane dla konkretnej wyspy.
+          <gray> Zarządzaj danymi, które są
+          <gray> przechowywane dla konkretnej wyspy.
       clear_data:
-        name: "&f&l Wyczyść dane wyspy"
+        name: "<white><bold> Wyczyść dane wyspy"
         description: |-
-          &7 Wyczyść wszystkie zapisane dane dla
-          &7 wyspa.
+          <gray> Wyczyść wszystkie zapisane dane dla
+          <gray> wyspa.
       island_bundle:
-        name: "&f&l Pakiet wysp"
+        name: "<white><bold> Pakiet wysp"
         description: |-
-          &7 Pakiet przypisany do
-          &7 aktualnej wyspy.
-          &7 Biomy tylko z tego
-          &7 pakiety mogą być używane na
-          &7 wyspie.
-        value: "&b Pakiet: [bundle]"
+          <gray> Pakiet przypisany do
+          <gray> aktualnej wyspy.
+          <gray> Biomy tylko z tego
+          <gray> pakiety mogą być używane na
+          <gray> wyspie.
+        value: "<aqua> Pakiet: [bundle]"
         overwritten: |-
-          &c Właściciel ma uprawnienia, które
-          &c nadpisują pakiet.
+          <red> Właściciel ma uprawnienia, które
+          <red> nadpisują pakiet.
       owner_bundle:
-        name: "&f&l Pakiet właściciela"
+        name: "<white><bold> Pakiet właściciela"
         description: |-
-          &7 Pakiet przypisany do
-          &7 obecnego właściciela wyspy.
-          &7 Tylko biomy z tego
-          &7 pakietu mogą być używane na
-          &7 wyspie.
-          &7 Zezwolenie dla użytkownika na przypisanie:
-          &7&o '[gamemode].biome.bundle.<bundle-id>'
-        value: "&b Pakiet: [bundle]"
+          <gray> Pakiet przypisany do
+          <gray> obecnego właściciela wyspy.
+          <gray> Tylko biomy z tego
+          <gray> pakietu mogą być używane na
+          <gray> wyspie.
+          <gray> Zezwolenie dla użytkownika na przypisanie:
+          <gray><italic> '[gamemode].biome.bundle.<bundle-id>'
+        value: "<aqua> Pakiet: [bundle]"
       reset_to_default:
-        name: "&f&l Resetuj do ustawień domyślnych"
+        name: "<white><bold> Resetuj do ustawień domyślnych"
         description: |-
-          &7 Resetuje wszystkie wartości wysp
-          &7 do wartości domyślnych z
-          &7 ustawienia.
+          <gray> Resetuje wszystkie wartości wysp
+          <gray> do wartości domyślnych z
+          <gray> ustawienia.
       bundle_info:
-        name: "&f&l Informacje ogólne"
+        name: "<white><bold> Informacje ogólne"
         description: |-
-          &7 Wyświetl pakiet ogólny
-          &7 informacje.
+          <gray> Wyświetl pakiet ogólny
+          <gray> informacje.
       bundle_biomes:
-        name: "&f&l Zarządzaj biomami"
+        name: "<white><bold> Zarządzaj biomami"
         description: |-
-          &7 Zarządzaj biomami, które są
-          &7 przypisane do pakietu.
+          <gray> Zarządzaj biomami, które są
+          <gray> przypisane do pakietu.
       bundle_name:
-        name: "&f&l Zmień nazwę"
+        name: "<white><bold> Zmień nazwę"
         description: |-
-          &7 Zmień wyświetlanie pakietu
-          &7 imię.
-        value: "&e Bieżąca wartość: &r [bundle]"
+          <gray> Zmień wyświetlanie pakietu
+          <gray> imię.
+        value: "<yellow> Bieżąca wartość: <reset> [bundle]"
       bundle_icon:
-        name: "&f&l Zmień ikonę"
-        description: "&7 Zmień ikonę pakietu."
+        name: "<white><bold> Zmień ikonę"
+        description: "<gray> Zmień ikonę pakietu."
       bundle_description:
-        name: "&f&l Zmień opis"
-        description: "&7 Zmień opis pakietu."
-        value: "&e Aktualna wartość:"
-        none: "&c Brak opisu"
+        name: "<white><bold> Zmień opis"
+        description: "<gray> Zmień opis pakietu."
+        value: "<yellow> Aktualna wartość:"
+        none: "<red> Brak opisu"
       bundle_permission:
-        name: "&f&l Uprawnienie pakietu"
+        name: "<white><bold> Uprawnienie pakietu"
         description: |-
-          &7 Pozwolenie, które musi
-          &7 zostać dodane do użytkownika dla
-          &7 wymuszenia tego pakietu.
-        value: "&e Uprawnienie: &f [gamemode].biomes.bundle.[id]"
+          <gray> Pozwolenie, które musi
+          <gray> zostać dodane do użytkownika dla
+          <gray> wymuszenia tego pakietu.
+        value: "<yellow> Uprawnienie: <white> [gamemode].biomes.bundle.[id]"
       add_bundle_biome:
-        name: "&f&l Dodaj biom"
+        name: "<white><bold> Dodaj biom"
         description: |-
-          &7 Przypisz biom
-          &7 do tego pakietu.
-        title: "&b Wybrane biomy:"
-        value: "&b - [biome]"
+          <gray> Przypisz biom
+          <gray> do tego pakietu.
+        title: "<aqua> Wybrane biomy:"
+        value: "<aqua> - [biome]"
       remove_bundle_biome:
-        name: "&f&l Usuń biom"
+        name: "<white><bold> Usuń biom"
         description: |-
-          &7 Usuń biom
-          &7 z tego pakietu.
-        title: "&b Wybrane biomy:"
-        value: "&b - [biome]"
+          <gray> Usuń biom
+          <gray> z tego pakietu.
+        title: "<aqua> Wybrane biomy:"
+        value: "<aqua> - [biome]"
       create_bundle:
-        name: "&f&l Utwórz pakiet"
+        name: "<white><bold> Utwórz pakiet"
         description: |-
-          &7 Utwórz nowy pakiet
-          &7 dla tego trybu gry.
+          <gray> Utwórz nowy pakiet
+          <gray> dla tego trybu gry.
       delete_bundle:
-        name: "&f&l Usuń pakiet"
+        name: "<white><bold> Usuń pakiet"
         description: |-
-          &7 Usuń pakiet z
-          &7 ten tryb gry całkowicie.
-        title: "&b Wybrane pakiety:"
-        value: "&b - [budle]"
+          <gray> Usuń pakiet z
+          <gray> ten tryb gry całkowicie.
+        title: "<aqua> Wybrane pakiety:"
+        value: "<aqua> - [budle]"
       download:
-        name: "&f&l Pobierz"
-        description: "&7 Pobierz bibliotekę internetową."
-        enabled: "&2 Z czyszczeniem pamięci podręcznej"
-        disabled: "&c Bez czyszczenia pamięci podręcznej"
+        name: "<white><bold> Pobierz"
+        description: "<gray> Pobierz bibliotekę internetową."
+        enabled: "<dark_green> Z czyszczeniem pamięci podręcznej"
+        disabled: "<red> Bez czyszczenia pamięci podręcznej"
     tips:
-      click-to-manage: "&e Kliknij &7, aby zarządzać."
-      click-to-clear: "&e Kliknij &7, aby wyczyścić."
-      click-to-change-biome: "&e Kliknij &7, aby zmienić biom."
-      click-to-view: "&e Kliknij &7, aby wyświetlić."
-      click-to-select: "&e Kliknij &7, aby wybrać."
-      click-to-choose: "&e Kliknij &7, aby wybrać."
-      click-to-complete: "&e Kliknij &7, aby zakończyć."
-      left-click-to-accept: "&e Kliknij lewym przyciskiem &7, aby zastosować."
-      right-click-to-write: "&e Kliknij prawym przyciskiem myszy &7, aby pisać."
-      click-to-reduce: "&e Kliknij &7, aby zmniejszyć."
-      click-to-increase: "&e Kliknij &7, aby zwiększyć."
-      click-to-return: "&e Kliknij &7, aby powrócić."
-      click-to-quit: "&e Kliknij &7, aby zakończyć."
-      click-to-wipe: "&e Kliknij &7, aby wyczyścić."
-      left-click-to-wipe: "&e Kliknij lewym przyciskiem &7, aby wyczyścić."
-      right-click-to-switch: "&e Kliknij prawym przyciskiem &7, aby przełączyć."
-      click-to-open: "&e Kliknij &7, aby otworzyć."
-      click-to-export: "&e Kliknij &7, aby wyeksportować."
-      click-to-create: "&e Kliknij &7, aby utworzyć."
-      left-click-to-open: "&e Kliknij lewym przyciskiem &7, aby otworzyć."
-      right-click-to-reset-all: "&e Kliknij prawym przyciskiem myszy &7, aby wyczyścić
+      click-to-manage: "<yellow> Kliknij <gray>, aby zarządzać."
+      click-to-clear: "<yellow> Kliknij <gray>, aby wyczyścić."
+      click-to-change-biome: "<yellow> Kliknij <gray>, aby zmienić biom."
+      click-to-view: "<yellow> Kliknij <gray>, aby wyświetlić."
+      click-to-select: "<yellow> Kliknij <gray>, aby wybrać."
+      click-to-choose: "<yellow> Kliknij <gray>, aby wybrać."
+      click-to-complete: "<yellow> Kliknij <gray>, aby zakończyć."
+      left-click-to-accept: "<yellow> Kliknij lewym przyciskiem <gray>, aby zastosować."
+      right-click-to-write: "<yellow> Kliknij prawym przyciskiem myszy <gray>, aby pisać."
+      click-to-reduce: "<yellow> Kliknij <gray>, aby zmniejszyć."
+      click-to-increase: "<yellow> Kliknij <gray>, aby zwiększyć."
+      click-to-return: "<yellow> Kliknij <gray>, aby powrócić."
+      click-to-quit: "<yellow> Kliknij <gray>, aby zakończyć."
+      click-to-wipe: "<yellow> Kliknij <gray>, aby wyczyścić."
+      left-click-to-wipe: "<yellow> Kliknij lewym przyciskiem <gray>, aby wyczyścić."
+      right-click-to-switch: "<yellow> Kliknij prawym przyciskiem <gray>, aby przełączyć."
+      click-to-open: "<yellow> Kliknij <gray>, aby otworzyć."
+      click-to-export: "<yellow> Kliknij <gray>, aby wyeksportować."
+      click-to-create: "<yellow> Kliknij <gray>, aby utworzyć."
+      left-click-to-open: "<yellow> Kliknij lewym przyciskiem <gray>, aby otworzyć."
+      right-click-to-reset-all: "<yellow> Kliknij prawym przyciskiem myszy <gray>, aby wyczyścić
         wszystko."
-      click-to-toggle: "&e Kliknij &7, aby przełączyć."
-      click-to-change: "&e Kliknij &7, aby zmienić."
-      shift-click-to-reset: "&e Shift Kliknij &7, aby zresetować."
-      click-to-add: "&e Kliknij &7, aby dodać."
-      click-to-remove: "&e Kliknij &7, aby usunąć."
-      left-click-to-cycle: "&e Kliknij lewym przyciskiem &7, aby przejść w dół."
-      right-click-to-cycle: "&e Kliknij prawym przyciskiem myszy &7, aby przejść w
+      click-to-toggle: "<yellow> Kliknij <gray>, aby przełączyć."
+      click-to-change: "<yellow> Kliknij <gray>, aby zmienić."
+      shift-click-to-reset: "<yellow> Shift Kliknij <gray>, aby zresetować."
+      click-to-add: "<yellow> Kliknij <gray>, aby dodać."
+      click-to-remove: "<yellow> Kliknij <gray>, aby usunąć."
+      left-click-to-cycle: "<yellow> Kliknij lewym przyciskiem <gray>, aby przejść w dół."
+      right-click-to-cycle: "<yellow> Kliknij prawym przyciskiem myszy <gray>, aby przejść w
         górę."
-      click-to-edit: "&e Kliknij &7, aby edytować."
-      left-click-to-download: "&e Kliknij lewym przyciskiem &7, aby pobrać."
-      right-click-to-toggle: "&e Kliknij prawym przyciskiem &7, aby przełączyć."
-      click-to-install: "&e Kliknij &7, aby zainstalować."
-      click-to-reset-all: "&e Kliknij &7, aby zresetować wszystko."
-      right-click-to-select: "&e Kliknij prawym przyciskiem &7, aby wybrać."
-      right-click-to-deselect: "&e Kliknij prawym przyciskiem myszy &7, aby odznaczyć."
-      left-click-to-choose: "&e Kliknij lewym przyciskiem &7, aby wybrać."
-      click-to-buy: "&e Kliknij &7, aby kupić."
-      click-to-cancel: "&e Kliknij &7, aby anulować."
-      click-to-save: "&e Kliknij &7, aby zapisać."
-      click-to-deselect: "&e Kliknij &7, aby odznaczyć."
+      click-to-edit: "<yellow> Kliknij <gray>, aby edytować."
+      left-click-to-download: "<yellow> Kliknij lewym przyciskiem <gray>, aby pobrać."
+      right-click-to-toggle: "<yellow> Kliknij prawym przyciskiem <gray>, aby przełączyć."
+      click-to-install: "<yellow> Kliknij <gray>, aby zainstalować."
+      click-to-reset-all: "<yellow> Kliknij <gray>, aby zresetować wszystko."
+      right-click-to-select: "<yellow> Kliknij prawym przyciskiem <gray>, aby wybrać."
+      right-click-to-deselect: "<yellow> Kliknij prawym przyciskiem myszy <gray>, aby odznaczyć."
+      left-click-to-choose: "<yellow> Kliknij lewym przyciskiem <gray>, aby wybrać."
+      click-to-buy: "<yellow> Kliknij <gray>, aby kupić."
+      click-to-cancel: "<yellow> Kliknij <gray>, aby anulować."
+      click-to-save: "<yellow> Kliknij <gray>, aby zapisać."
+      click-to-deselect: "<yellow> Kliknij <gray>, aby odznaczyć."
       click-on-item: |-
-        &e Kliknij &7 na elemencie w
-        &7 twój ekwipunek.
-      left-click-to-edit: "&e Kliknij lewym przyciskiem &7, aby edytować."
-      right-click-to-clear: "&e Kliknij prawym przyciskiem &7, aby wyczyścić."
-      click-to-previous: "&e Kliknij &7, aby wyświetlić poprzednią stronę."
-      click-to-next: "&e Kliknij &7, aby wyświetlić następną stronę."
-      select-before: "&e Wybierz &7 element(y) przed kontynuowaniem."
-      click-to-apply: "&e Kliknij &7, aby zastosować."
-      right-click-to-open: "&e Kliknij prawym przyciskiem &7, aby otworzyć."
-      click-to-perform: "&e Kliknij &7, aby wykonać."
-      left-click-to-apply: "&e Kliknij lewym przyciskiem &7, aby zastosować."
-      right-click-to-unlock: "&e Kliknij prawym przyciskiem myszy &7, aby odblokować."
-      right-click-to-buy: "&e Kliknij prawym przyciskiem &7, aby kupić."
-      right-click-to-change: "&e Kliknij prawym przyciskiem &7, aby zmienić."
+        <yellow> Kliknij <gray> na elemencie w
+        <gray> twój ekwipunek.
+      left-click-to-edit: "<yellow> Kliknij lewym przyciskiem <gray>, aby edytować."
+      right-click-to-clear: "<yellow> Kliknij prawym przyciskiem <gray>, aby wyczyścić."
+      click-to-previous: "<yellow> Kliknij <gray>, aby wyświetlić poprzednią stronę."
+      click-to-next: "<yellow> Kliknij <gray>, aby wyświetlić następną stronę."
+      select-before: "<yellow> Wybierz <gray> element(y) przed kontynuowaniem."
+      click-to-apply: "<yellow> Kliknij <gray>, aby zastosować."
+      right-click-to-open: "<yellow> Kliknij prawym przyciskiem <gray>, aby otworzyć."
+      click-to-perform: "<yellow> Kliknij <gray>, aby wykonać."
+      left-click-to-apply: "<yellow> Kliknij lewym przyciskiem <gray>, aby zastosować."
+      right-click-to-unlock: "<yellow> Kliknij prawym przyciskiem myszy <gray>, aby odblokować."
+      right-click-to-buy: "<yellow> Kliknij prawym przyciskiem <gray>, aby kupić."
+      right-click-to-change: "<yellow> Kliknij prawym przyciskiem <gray>, aby zmienić."
     descriptions:
       update-mode:
         island: Tryb wyspy
         chunk: Tryb fragmentu
         range: Tryb zasięgu
-      selected: "&2 Wybrane"
+      selected: "<dark_green> Wybrane"
       island-owner: "[player]"
-      unknown: "&e Nieznany"
+      unknown: "<yellow> Nieznany"
       biome:
         lore: |-
           [description]
           [biome]
           [unlock]
           [change]
-        original: "&7 Biom: &e [biome]"
+        original: "<gray> Biom: <yellow> [biome]"
         unlock:
           lore: |-
             [items]
             [money]
             [level]
             [permissions]
-          money: "&7 Koszt odblokowania: &e $[number]"
+          money: "<gray> Koszt odblokowania: <yellow> $[number]"
           level: |-
-            &7 Wymaga osiągnięcia &e [number]
-            &7 poziom wyspy.
-          permission-single: "&7 Brakujące pozwolenie: &c [permission]"
-          permissions-title: "&c Brakujące uprawnienia:"
-          permissions-list: "&c - [permission]"
-          item-single: "&7 Odblokuj przedmiot: [color] [number] x [item]"
-          item-title: "&7 Odblokuj przedmioty:"
-          item-list: "&7 - [color] [numbe] x [item]"
-          missing: "&c"
-          has: "&mi"
+            <gray> Wymaga osiągnięcia <yellow> [number]
+            <gray> poziom wyspy.
+          permission-single: "<gray> Brakujące pozwolenie: <red> [permission]"
+          permissions-title: "<red> Brakujące uprawnienia:"
+          permissions-list: "<red> - [permission]"
+          item-single: "<gray> Odblokuj przedmiot: [color] [number] x [item]"
+          item-title: "<gray> Odblokuj przedmioty:"
+          item-list: "<gray> - [color] [numbe] x [item]"
+          missing: "<red>"
+          has: "<strikethrough>i"
         change:
           lore: |-
             [items]
@@ -611,164 +611,164 @@ biomes:
             [usage]
           mode:
             per_block: |-
-              &b&o Koszt biomu na każdy
-              &b&o zmieniony blok.
+              <aqua><italic> Koszt biomu na każdy
+              <aqua><italic> zmieniony blok.
             per_usage: |-
-              &b&o Zmiana biomu wzrasta
-              &b&o cenę kolejnej zmiany.
-            static: "&b&o Standardowa zmiana ceny."
-          money: "&7 Koszt: &e $[number]"
-          item-single: "&7 Przedmiot: [color] [number] x [item]"
-          item-title: "&7 Przedmioty:"
-          item-list: "&7 - [color] [number] x [item]"
+              <aqua><italic> Zmiana biomu wzrasta
+              <aqua><italic> cenę kolejnej zmiany.
+            static: "<aqua><italic> Standardowa zmiana ceny."
+          money: "<gray> Koszt: <yellow> $[number]"
+          item-single: "<gray> Przedmiot: [color] [number] x [item]"
+          item-title: "<gray> Przedmioty:"
+          item-list: "<gray> - [color] [number] x [item]"
           number-of-usage: |-
-            &7 Ten biom został
-            &7 zastosowano &e [number] &r&7 razy.
-          missing: "&c"
-          has: "&e"
+            <gray> Ten biom został
+            <gray> zastosowano <yellow> [number] <reset><gray> razy.
+          missing: "<red>"
+          has: "<yellow>"
       bundle:
         lore: |-
           [description]
           [permission]
           [biomes]
         permission: |-
-          &7 Pozwolenie, które musi być
-          &7 przypisane do gracza:
-          &7&o [gamemode].biomes.bundle.[id]
-        title: "&7 Pakiet biomów:"
-        value: "&7 - [biome]"
-        no-biomes: "&c Nie przypisano biomów"
+          <gray> Pozwolenie, które musi być
+          <gray> przypisane do gracza:
+          <gray><italic> [gamemode].biomes.bundle.[id]
+        title: "<gray> Pakiet biomów:"
+        value: "<gray> - [biome]"
+        no-biomes: "<red> Nie przypisano biomów"
       library:
-        author: "&7 autor: &e [author]"
-        version: "&7 Wykonane z biomami &e [version]"
-        lang: "&7 Język: &e [lang]"
-        gamemode: "&7 Główny dla &e [gamemode]"
+        author: "<gray> autor: <yellow> [author]"
+        version: "<gray> Wykonane z biomami <yellow> [version]"
+        lang: "<gray> Język: <yellow> [lang]"
+        gamemode: "<gray> Główny dla <yellow> [gamemode]"
   conversations:
-    prefix: "&l&6 [BentoBox]: &r"
+    prefix: "<bold><gold> [BentoBox]: <reset>"
     confirm-string: prawda, wł., tak, potwierdź, y, poprawny, poprawny
     deny-string: fałszywe, wyłączone, nie, zaprzeczyć, n, nieprawidłowe, niepoprawne
     cancel-string: anulować
     exit-string: anuluj, wyjdź, wyjdź
-    cancelled: "&c Rozmowa została anulowana!"
-    input-number: "&e Proszę podać numer na czacie."
-    input-seconds: "&e Wprowadź sekundy na czacie."
-    numeric-only: "&c Podana [value] nie jest liczbą!"
-    not-valid-value: "&c Podana liczba [value] jest nieprawidłowa. Musi być większy
+    cancelled: "<red> Rozmowa została anulowana!"
+    input-number: "<yellow> Proszę podać numer na czacie."
+    input-seconds: "<yellow> Wprowadź sekundy na czacie."
+    numeric-only: "<red> Podana [value] nie jest liczbą!"
+    not-valid-value: "<red> Podana liczba [value] jest nieprawidłowa. Musi być większy
       niż [min] i mniejszy niż [max]!"
-    data-removed: "&a Wybrane biomy są usuwane z [gamemode]."
-    confirm-deletion: "&e Potwierdź, że chcesz usunąć [number] biomów o nazwach: [value]."
-    user-data-removed: "&a Wszystkie dane użytkownika dla trybu [gamemode] są usuwane
+    data-removed: "<green> Wybrane biomy są usuwane z [gamemode]."
+    confirm-deletion: "<yellow> Potwierdź, że chcesz usunąć [number] biomów o nazwach: [value]."
+    user-data-removed: "<green> Wszystkie dane użytkownika dla trybu [gamemode] są usuwane
       z bazy danych."
-    confirm-user-data-deletion: "&e Potwierdź, że chcesz wyczyścić bazę danych użytkowników
+    confirm-user-data-deletion: "<yellow> Potwierdź, że chcesz wyczyścić bazę danych użytkowników
       dla [gamemode]."
-    all-data-removed: "&a Wszystkie dane dodatków dla [gamemode] są usuwane z bazy
+    all-data-removed: "<green> Wszystkie dane dodatków dla [gamemode] są usuwane z bazy
       danych."
-    confirm-all-data-deletion: "&e Potwierdź, że chcesz wyczyścić dane dodatków dla
+    confirm-all-data-deletion: "<yellow> Potwierdź, że chcesz wyczyścić dane dodatków dla
       [gamemode]."
-    write-name: "&e Proszę wpisać nazwę na czacie."
-    new-object-created: "&a Nowy obiekt dla [gamemode] został utworzony."
-    object-already-exists: "&c Obiekt &7 [id] &c już istnieje. Wybierz inną nazwę."
-    name-changed: "&a Sukces, nazwa została zaktualizowana."
-    write-description: "&e Wprowadź nowy opis na czacie. Każda wiadomość to nowa linia
+    write-name: "<yellow> Proszę wpisać nazwę na czacie."
+    new-object-created: "<green> Nowy obiekt dla [gamemode] został utworzony."
+    object-already-exists: "<red> Obiekt <gray> [id] <red> już istnieje. Wybierz inną nazwę."
+    name-changed: "<green> Sukces, nazwa została zaktualizowana."
+    write-description: "<yellow> Wprowadź nowy opis na czacie. Każda wiadomość to nowa linia
       opisu. Aby zakończyć napisz 'quit'."
-    description-changed: "&a Sukces, opis został zaktualizowany."
-    write-permissions: "&e Wprowadź wymagane uprawnienia, po jednym dla każdej linii
+    description-changed: "<green> Sukces, opis został zaktualizowany."
+    write-permissions: "<yellow> Wprowadź wymagane uprawnienia, po jednym dla każdej linii
       na czacie i 'zakończ' w osobnej linii, aby zakończyć."
-    permissions-changed: "&a Sukces, uprawnienia zostały zaktualizowane."
-    start-downloading: "&a Rozpoczęcie pobierania i importowania Biblioteki Biomes."
+    permissions-changed: "<green> Sukces, uprawnienia zostały zaktualizowane."
+    start-downloading: "<green> Rozpoczęcie pobierania i importowania Biblioteki Biomes."
     written-text: "& Tekst wejściowy:"
-    confirm-data-replacement: "&e Potwierdź, że chcesz zastąpić obecne dane nowymi."
-    new-data-imported: "&a Sukces, nowe dane dla [gamemode] zostały zaimportowane."
-    exported-file-name: "&e Proszę podać nazwę pliku dla eksportowanego pliku bazy
+    confirm-data-replacement: "<yellow> Potwierdź, że chcesz zastąpić obecne dane nowymi."
+    new-data-imported: "<green> Sukces, nowe dane dla [gamemode] zostały zaimportowane."
+    exported-file-name: "<yellow> Proszę podać nazwę pliku dla eksportowanego pliku bazy
       danych. (napisz „cancel”, aby wyjść)"
-    database-export-completed: "&a Sukces, eksport bazy danych dla [world] został
+    database-export-completed: "<green> Sukces, eksport bazy danych dla [world] został
       zakończony. Wygenerowano plik [file]."
-    file-name-exist: "&c Plik o nazwie „[id]” istnieje. Nie można nadpisać."
-    write-search: "&e Proszę wpisać wartość wyszukiwania. (napisz „cancel”, aby wyjść)"
-    search-updated: "&a Zaktualizowano wartość wyszukiwania."
-    invalid-biome: "&c Niektóre dane w przechowywanym `[biome]` są nieprawidłowe."
-    confirm-biome-deletion: "&e Potwierdź, że chcesz usunąć [biome] z [gamemode]."
-    biome-removed: "[biome] &a został usunięty z [gamemode]."
-    confirm-island-data-deletion: "&e Potwierdź, że chcesz usunąć dane wyspy [player]."
+    file-name-exist: "<red> Plik o nazwie „[id]” istnieje. Nie można nadpisać."
+    write-search: "<yellow> Proszę wpisać wartość wyszukiwania. (napisz „cancel”, aby wyjść)"
+    search-updated: "<green> Zaktualizowano wartość wyszukiwania."
+    invalid-biome: "<red> Niektóre dane w przechowywanym `[biome]` są nieprawidłowe."
+    confirm-biome-deletion: "<yellow> Potwierdź, że chcesz usunąć [biome] z [gamemode]."
+    biome-removed: "[biome] <green> został usunięty z [gamemode]."
+    confirm-island-data-deletion: "<yellow> Potwierdź, że chcesz usunąć dane wyspy [player]."
     island-data-removed: "[player] i dane wyspy zostały usunięte."
-    confirm-biome-data-deletion: "&e Potwierdź, że chcesz usunąć wszystkie biomy z
+    confirm-biome-data-deletion: "<yellow> Potwierdź, że chcesz usunąć wszystkie biomy z
       [gamemode]."
     biome-data-removed: Wszystkie biomy są usuwane z [gamemode].
-    click-text-to-purchase: "&e Odblokowałeś &r [biome]&r&e! Kliknij tutaj, aby go
+    click-text-to-purchase: "<yellow> Odblokowałeś <reset> [biome]<reset><yellow>! Kliknij tutaj, aby go
       kupić."
-    click-text-to-set: "&e Odblokowałeś &r [biome]&r&e! Kliknij tutaj, aby z niego
+    click-text-to-set: "<yellow> Odblokowałeś <reset> [biome]<reset><yellow>! Kliknij tutaj, aby z niego
       skorzystać."
   messages:
-    biome-not-unlocked: "[biome] &r&c nie jest odblokowany. Nie możesz tego użyć."
-    biome-not-purchased: "&c Nie można używać &r [biome] &r&c. Musisz go kupić."
-    biome-cannot-be-unlocked: "&c Nie można odblokować &r [biome] &r&c."
-    biome-already-purchased: "&c Kupiłeś już &r [biome] &r&c."
-    island-level-not-reached: "[biome] &c wymaga przynajmniej poziomu wyspy: [number]."
+    biome-not-unlocked: "[biome] <reset><red> nie jest odblokowany. Nie możesz tego użyć."
+    biome-not-purchased: "<red> Nie można używać <reset> [biome] <reset><red>. Musisz go kupić."
+    biome-cannot-be-unlocked: "<red> Nie można odblokować <reset> [biome] <reset><red>."
+    biome-already-purchased: "<red> Kupiłeś już <reset> [biome] <reset><red>."
+    island-level-not-reached: "[biome] <red> wymaga przynajmniej poziomu wyspy: [number]."
     missing-permission: "[biome] itp. wymaga pozwolenia: [permission]."
-    no-credits-buy: "&c Nie masz wystarczającej ilości kredytów, aby kupić &r [biome]
-      &r&c. Kosztuje [number]."
-    no-credits-buy-bank: "&c Nie masz wystarczającej liczby kredytów na swoim koncie
-      bankowym, aby kupić &r [biome] &r&c. Kosztuje [number]."
-    no-items-buy: "&c Nie masz wystarczającej liczby przedmiotów do zakupu &r [biome]
-      &r&c. Wymaga [items]."
-    biome-purchased: "&e Kupiłeś &r [biome]."
-    import-count: "&e Zaimportowane [biomes] biomy i pakiety [bundles]."
-    start-downloading: "&e Rozpocznij pobieranie biblioteki."
-    update-start: "&a Rozpoczęcie zmiany biomu na [biome] na [number] chankach. &e
+    no-credits-buy: "<red> Nie masz wystarczającej ilości kredytów, aby kupić <reset> [biome]
+      <reset><red>. Kosztuje [number]."
+    no-credits-buy-bank: "<red> Nie masz wystarczającej liczby kredytów na swoim koncie
+      bankowym, aby kupić <reset> [biome] <reset><red>. Kosztuje [number]."
+    no-items-buy: "<red> Nie masz wystarczającej liczby przedmiotów do zakupu <reset> [biome]
+      <reset><red>. Wymaga [items]."
+    biome-purchased: "<yellow> Kupiłeś <reset> [biome]."
+    import-count: "<yellow> Zaimportowane [biomes] biomy i pakiety [bundles]."
+    start-downloading: "<yellow> Rozpocznij pobieranie biblioteki."
+    update-start: "<green> Rozpoczęcie zmiany biomu na [biome] na [number] chankach. <yellow>
       Szacowany czas: [time] sekund."
-    update-done: "&a Zakończono zmiane biomu na [biome]."
-    waiting: "&a Dodano zmianę biomu w kolejce. &e Szacowany czas oczekiwania: [time]
+    update-done: "<green> Zakończono zmiane biomu na [biome]."
+    waiting: "<green> Dodano zmianę biomu w kolejce. <yellow> Szacowany czas oczekiwania: [time]
       sek."
-    biome-already-unlocked: "&r [biome] &e jest już odblokowany."
-    everything-already-bought: "&a Kupiłeś już wszystkie biomy dla tego trybu gry."
-    skipping: "&a Pomijanie ładowania biomu &r [biome] &r&a."
-    overwriting: "&a Nadpisywanie &r [biome] &r&a w pamięci podręcznej."
-    imported: "&a Zaimportowany &r [biome] &r&a do pamięci podręcznej."
-    migrate-start: "&a Rozpoczęcie migracji do nowego formatu danych."
-    migrate-finish: "&a Migracja do nowego formatu danych zakończona."
-    migrate-valid: "&a Wszystkie dane są prawidłowe. Migracja nie jest konieczna."
-    bundle-loaded: "&a Pakiet &r [bundle] &a jest załadowany."
+    biome-already-unlocked: "<reset> [biome] <yellow> jest już odblokowany."
+    everything-already-bought: "<green> Kupiłeś już wszystkie biomy dla tego trybu gry."
+    skipping: "<green> Pomijanie ładowania biomu <reset> [biome] <reset><green>."
+    overwriting: "<green> Nadpisywanie <reset> [biome] <reset><green> w pamięci podręcznej."
+    imported: "<green> Zaimportowany <reset> [biome] <reset><green> do pamięci podręcznej."
+    migrate-start: "<green> Rozpoczęcie migracji do nowego formatu danych."
+    migrate-finish: "<green> Migracja do nowego formatu danych zakończona."
+    migrate-valid: "<green> Wszystkie dane są prawidłowe. Migracja nie jest konieczna."
+    bundle-loaded: "<green> Pakiet <reset> [bundle] <green> jest załadowany."
   errors:
-    no-island-data: "&c Wyspa nie ma żadnych zapisanych danych."
-    no-biomes-admin: "&c W bieżącym trybie gry nie ma żadnego użytecznego biomu. Zaimportuj
+    no-island-data: "<red> Wyspa nie ma żadnych zapisanych danych."
+    no-biomes-admin: "<red> W bieżącym trybie gry nie ma żadnego użytecznego biomu. Zaimportuj
       lub utwórz biomy za pomocą /[command]"
-    no-biomes: "&c W bieżącym trybie gry nie ma żadnego dostępnego biomu."
-    no-rank: "&c Nie możesz zmieniać biomu na tej wyspie."
-    not-enough-level: "&c Ten biom wymaga co najmniej &e[number] &cpoziomu wyspy."
-    not-enough-money: "&c Ta zmiana biomów kosztuje $[number]."
-    not-enough-money-bank: "&c Na Twoim koncie bankowym nie ma wystarczających środków.
+    no-biomes: "<red> W bieżącym trybie gry nie ma żadnego dostępnego biomu."
+    no-rank: "<red> Nie możesz zmieniać biomu na tej wyspie."
+    not-enough-level: "<red> Ten biom wymaga co najmniej <yellow>[number] <red>poziomu wyspy."
+    not-enough-money: "<red> Ta zmiana biomów kosztuje $[number]."
+    not-enough-money-bank: "<red> Na Twoim koncie bankowym nie ma wystarczających środków.
       Zmiana biomu kosztuje $[number]."
-    not-enough-items: "&c Te biomy zmieniają koszt [items]."
-    admin-not-on-island: "&c Nie jesteś na wyspie [user]."
-    incorrect-object: "&c Nie można znaleźć biomu o żądanej nazwie: [biome]"
-    missing-biome: "&c Nie określono nazwy biomu."
-    incorrect-mode: "&c Tryb o nazwie „[mode]” nie istnieje."
-    incorrect-range: "&c Podana wartość „[number]” nie jest prawidłową liczbą."
-    no-file: "&c Nie można znaleźć [file] w katalogu dodatku &7biomes&c."
-    no-load: "&c Nie można zaimportować biomów z [file]. Powód: [description]"
-    not-a-gamemode-world: "&c Świat [worls] nie jest światem GameModeAddon."
-    file-exist: "&c Plik o nazwie [file] już istnieje. Wybierz inną nazwę."
-    no-library-entries: "&c Nie można znaleźć żadnych poprawnych wpisów w bibliotece."
-    not-unlocked: "&c Nie odblokowałeś tego biomu."
-    not-purchased: "&c Nie kupiłeś tego biomu."
-    timeout: "&c Zmiana biomu skończyła się. Prawdopodobnie wybrany obszar był zbyt
+    not-enough-items: "<red> Te biomy zmieniają koszt [items]."
+    admin-not-on-island: "<red> Nie jesteś na wyspie [user]."
+    incorrect-object: "<red> Nie można znaleźć biomu o żądanej nazwie: [biome]"
+    missing-biome: "<red> Nie określono nazwy biomu."
+    incorrect-mode: "<red> Tryb o nazwie „[mode]” nie istnieje."
+    incorrect-range: "<red> Podana wartość „[number]” nie jest prawidłową liczbą."
+    no-file: "<red> Nie można znaleźć [file] w katalogu dodatku <gray>biomes<red>."
+    no-load: "<red> Nie można zaimportować biomów z [file]. Powód: [description]"
+    not-a-gamemode-world: "<red> Świat [worls] nie jest światem GameModeAddon."
+    file-exist: "<red> Plik o nazwie [file] już istnieje. Wybierz inną nazwę."
+    no-library-entries: "<red> Nie można znaleźć żadnych poprawnych wpisów w bibliotece."
+    not-unlocked: "<red> Nie odblokowałeś tego biomu."
+    not-purchased: "<red> Nie kupiłeś tego biomu."
+    timeout: "<red> Zmiana biomu skończyła się. Prawdopodobnie wybrany obszar był zbyt
       duży lub serwer jest zajęty."
-    failed: "&c Serwer napotkał pewne problemy podczas zmiany biomu."
-    could-not-remove-money: "&c Coś poszło nie tak podczas wypłacania pieniędzy."
-    could-not-remove-items: "&c Coś poszło nie tak podczas wycofywania pozycji."
-    something-went-wrong: "&c Coś poszło nie tak. Nie mogłem tego zrobić."
+    failed: "<red> Serwer napotkał pewne problemy podczas zmiany biomu."
+    could-not-remove-money: "<red> Coś poszło nie tak podczas wypłacania pieniędzy."
+    could-not-remove-items: "<red> Coś poszło nie tak podczas wycofywania pozycji."
+    something-went-wrong: "<red> Coś poszło nie tak. Nie mogłem tego zrobić."
 protection:
   flags:
     BIOMES_ISLAND_PROTECTION:
       name: Kontrola biomu
       description: |-
-        &5&o Przełącz, kto może zmieniać
-        &5&o biom na wyspie
+        <dark_purple><italic> Przełącz, kto może zmieniać
+        <dark_purple><italic> biom na wyspie
     BIOMES_WORLD_PROTECTION:
       name: Ograniczenie Wyspy Biome
       description: |-
-        &5&o Przełącz wymaganie
-        &5&o dla graczy do
-        &5&o bycia na swojej wyspie, aby
-        &5&o zmień biom.
-      hint: "&c Musisz być na swojej wyspie, aby zmienić biom!"
+        <dark_purple><italic> Przełącz wymaganie
+        <dark_purple><italic> dla graczy do
+        <dark_purple><italic> bycia na swojej wyspie, aby
+        <dark_purple><italic> zmień biom.
+      hint: "<red> Musisz być na swojej wyspie, aby zmienić biom!"

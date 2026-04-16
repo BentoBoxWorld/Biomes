@@ -118,7 +118,7 @@ public record ItemSelector(User user, List<ItemStack> itemStacks, BiConsumer<Boo
             }
             case EMPTY -> {
                 description.clear();
-                name = "&r";
+                name = "<reset>";
                 icon = new ItemStack(Material.BARRIER);
                 clickHandler = null;
             }

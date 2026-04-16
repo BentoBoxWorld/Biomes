@@ -60,12 +60,12 @@ biomes:
   simple_ocean:
     biome: DEEP_OCEAN
     environment: NORMAL
-    name: '&f&l Deep Ocean'
+    name: '<white><bold> Deep Ocean'
     description: |-
-      &7 A deep dark ocean may
-      &7 provide some cod,
-      &7 but squids may wander
-      &7 in its depth.
+      <gray> A deep dark ocean may
+      <gray> provide some cod,
+      <gray> but squids may wander
+      <gray> in its depth.
     icon: COD
     change:
       mode: STATIC
@@ -76,12 +76,12 @@ biomes:
   warm_ocean:
     biome: WARM_OCEAN
     environment: NORMAL
-    name: '&f&l Warm Ocean'
+    name: '<white><bold> Warm Ocean'
     description: |-
-      &7 A warm ocean is
-      &7 ideal for swimming,
-      &7 and catching some
-      &7 colorful fish.
+      <gray> A warm ocean is
+      <gray> ideal for swimming,
+      <gray> and catching some
+      <gray> colorful fish.
     icon: TROPICAL_FISH
     unlock:
       level: 10
@@ -94,11 +94,11 @@ biomes:
   frozen_water:
     biome: FROZEN_OCEAN
     environment: NORMAL
-    name: '&f&l Cold Ocean'
+    name: '<white><bold> Cold Ocean'
     description: |-
-      &7 A coldness of this
-      &7 ocean is matched
-      &7 only by its size.
+      <gray> A coldness of this
+      <gray> ocean is matched
+      <gray> only by its size.
     icon: ICE
     unlock:
       level: 20
@@ -111,10 +111,10 @@ biomes:
   pretty_caves:
     biome: LUSH_CAVES
     environment: NORMAL
-    name: '&f&l Lush Caves'
+    name: '<white><bold> Lush Caves'
     description: |-
-      &7 Deep underground are still
-      &7 some places with greenery.
+      <gray> Deep underground are still
+      <gray> some places with greenery.
     icon: FLOWERING_AZALEA
     unlock:
       level: 50
@@ -127,10 +127,10 @@ biomes:
   fields:
     biome: PLAINS
     environment: NORMAL
-    name: '&f&l Plains'
+    name: '<white><bold> Plains'
     description: |-
-      &7 Flat but green, the best
-      &7 starting biome.
+      <gray> Flat but green, the best
+      <gray> starting biome.
     icon: GRASS_BLOCK
     change:
       mode: STATIC
@@ -139,12 +139,12 @@ biomes:
   taiga:
     biome: TAIGA
     environment: NORMAL
-    name: '&f&l Taiga'
+    name: '<white><bold> Taiga'
     description: |-
-      &7 Cold but not snowy
-      &7 forest. Rabbits and
-      &7 foxes love this
-      &7 weather.
+      <gray> Cold but not snowy
+      <gray> forest. Rabbits and
+      <gray> foxes love this
+      <gray> weather.
     icon: FERN
     change:
       mode: STATIC
@@ -153,13 +153,13 @@ biomes:
   cold_fields:
     biome: SNOWY_TAIGA
     environment: NORMAL
-    name: '&f&l Snowy Taiga'
+    name: '<white><bold> Snowy Taiga'
     description: |-
-      &7 Cold and snowy place
-      &7 is not for everyone.
-      &7 But white foxes and
-      &7 rabbits have places
-      &7 where they hide.
+      <gray> Cold and snowy place
+      <gray> is not for everyone.
+      <gray> But white foxes and
+      <gray> rabbits have places
+      <gray> where they hide.
     icon: SNOW_BLOCK
     unlock:
       level: 50
@@ -170,11 +170,11 @@ biomes:
   mountain:
     biome: SNOWY_SLOPES
     environment: NORMAL
-    name: '&f&l Mountain Slopes'
+    name: '<white><bold> Mountain Slopes'
     description: |-
-      &7 A dangerous place where
-      &7 only crazy goats can
-      &7 survive.
+      <gray> A dangerous place where
+      <gray> only crazy goats can
+      <gray> survive.
     icon: SNOW_BLOCK
     unlock:
       level: 75
@@ -187,12 +187,12 @@ biomes:
   savanna:
     biome: SAVANNA_PLATEAU
     environment: NORMAL
-    name: '&f&l Savanna'
+    name: '<white><bold> Savanna'
     description: |-
-      &7 A warm and almost dry
-      &7 place with rapid rains.
-      &7 Only acacia trees can
-      &7 survive there.
+      <gray> A warm and almost dry
+      <gray> place with rapid rains.
+      <gray> Only acacia trees can
+      <gray> survive there.
     icon: ACACIA_SAPLING
     unlock:
       level: 50
@@ -205,13 +205,13 @@ biomes:
   mooshroom:
     biome: MUSHROOM_FIELDS
     environment: NORMAL
-    name: '&f&l Infested Land'
+    name: '<white><bold> Infested Land'
     description: |-
-      &7 Mycelium infested blocks
-      &7 spread faster than
-      &7 grass and infest everything
-      &7 in their way. Almost nothing
-      &7 can survive here.
+      <gray> Mycelium infested blocks
+      <gray> spread faster than
+      <gray> grass and infest everything
+      <gray> in their way. Almost nothing
+      <gray> can survive here.
     icon: MYCELIUM
     unlock:
       level: 150
@@ -226,11 +226,11 @@ biomes:
   jungle:
     biome: JUNGLE
     environment: NORMAL
-    name: '&f&l Jungle'
+    name: '<white><bold> Jungle'
     description: |-
-      &7 Hard to navigate and
-      &7 a rainy place.
-      &7 Ideal for ocelots.
+      <gray> Hard to navigate and
+      <gray> a rainy place.
+      <gray> Ideal for ocelots.
     icon: JUNGLE_SAPLING
     unlock:
       level: 50
@@ -241,11 +241,11 @@ biomes:
   beach:
     biome: BEACH
     environment: NORMAL
-    name: '&f&l Beach'
+    name: '<white><bold> Beach'
     description: |-
-      &7 The best place for a vacation.
-      &7 Get some sunscreen and a
-      &7 good mood.
+      <gray> The best place for a vacation.
+      <gray> Get some sunscreen and a
+      <gray> good mood.
     icon: WATER_BUCKET
     unlock:
       level: 25
@@ -256,11 +256,11 @@ biomes:
   desert:
     biome: DESERT
     environment: NORMAL
-    name: '&f&l Desert'
+    name: '<white><bold> Desert'
     description: |-
-      &7 A hot wasteland with no
-      &7 water. Even rain does
-      &7 not fall here.
+      <gray> A hot wasteland with no
+      <gray> water. Even rain does
+      <gray> not fall here.
     icon: SAND
     unlock:
       level: 25
@@ -271,12 +271,12 @@ biomes:
   forest:
     biome: FLOWER_FOREST
     environment: NORMAL
-    name: '&f&l Flower Forest'
+    name: '<white><bold> Flower Forest'
     description: |-
-      &7 A place where every
-      &7 bee would love to live.
-      &7 All the flowers that you
-      &7 wished for are here.
+      <gray> A place where every
+      <gray> bee would love to live.
+      <gray> All the flowers that you
+      <gray> wished for are here.
     icon: ORANGE_TULIP
     unlock:
       level: 75
@@ -287,11 +287,11 @@ biomes:
   swamp:
     biome: SWAMP
     environment: NORMAL
-    name: '&f&l Swamp'
+    name: '<white><bold> Swamp'
     description: |-
-      &7 A sticky place where
-      &7 you should not want
-      &7 to stay.
+      <gray> A sticky place where
+      <gray> you should not want
+      <gray> to stay.
     icon: BLUE_ORCHID
     unlock:
       level: 75
@@ -302,10 +302,10 @@ biomes:
   hell:
     biome: NETHER_WASTES
     environment: NETHER
-    name: '&f&l Hell'
+    name: '<white><bold> Hell'
     description: |-
-      &7 Not a place where
-      &7 living things should wander.
+      <gray> Not a place where
+      <gray> living things should wander.
     icon: NETHERRACK
     unlock:
       level: 250
@@ -316,12 +316,12 @@ biomes:
   basalt:
     biome: BASALT_DELTAS
     environment: NETHER
-    name: '&f&l Basalt Deltas'
+    name: '<white><bold> Basalt Deltas'
     description: |-
-      &7 A bit cooler place in
-      &7 hell where magma cubes
-      &7 wander and search
-      &7 for food.
+      <gray> A bit cooler place in
+      <gray> hell where magma cubes
+      <gray> wander and search
+      <gray> for food.
     icon: BASALT
     unlock:
       level: 250
@@ -334,11 +334,11 @@ biomes:
   lost_souls:
     biome: SOUL_SAND_VALLEY
     environment: NETHER
-    name: '&f&l Lost Soul Valley'
+    name: '<white><bold> Lost Soul Valley'
     description: |-
-      &7 Those who stay here too long
-      &7 may get stuck and never be
-      &7 able to leave.
+      <gray> Those who stay here too long
+      <gray> may get stuck and never be
+      <gray> able to leave.
     icon: SOUL_SAND
     unlock:
       level: 250
@@ -351,12 +351,12 @@ biomes:
   red_forest:
     biome: CRIMSON_FOREST
     environment: NETHER
-    name: '&f&l Red Forest'
+    name: '<white><bold> Red Forest'
     description: |-
-      &7 Even in hell you
-      &7 can find some places
-      &7 where life survives.
-      &7 Be aware of angry pigs.
+      <gray> Even in hell you
+      <gray> can find some places
+      <gray> where life survives.
+      <gray> Be aware of angry pigs.
     icon: CRIMSON_FUNGUS
     unlock:
       level: 250
@@ -371,10 +371,10 @@ biomes:
   cyan_forest:
     biome: WARPED_FOREST
     environment: NETHER
-    name: '&f&l Cyan Forest'
+    name: '<white><bold> Cyan Forest'
     description: |-
-      &7 A safe place in an unsafe
-      &7 world.
+      <gray> A safe place in an unsafe
+      <gray> world.
     icon: WARPED_FUNGUS
     unlock:
       level: 250
@@ -389,11 +389,11 @@ biomes:
   eroded_badlands:
     biome: ERODED_BADLANDS
     environment: NORMAL
-    name: '&f&l Eroded Badlands'
+    name: '<white><bold> Eroded Badlands'
     description: |-
-      &7 A land with its colors
-      &7 striped away by time,
-      &7 leaving beautiful cliffs.
+      <gray> A land with its colors
+      <gray> striped away by time,
+      <gray> leaving beautiful cliffs.
     icon: GRASS_BLOCK
     unlock:
       level: 50
@@ -404,11 +404,11 @@ biomes:
   windswept_forest:
     biome: WINDSWEPT_FOREST
     environment: NORMAL
-    name: '&f&l Windswept Forest'
+    name: '<white><bold> Windswept Forest'
     description: |-
-      &7 A forest battered by
-      &7 strong winds, only the
-      &7 toughest trees survive.
+      <gray> A forest battered by
+      <gray> strong winds, only the
+      <gray> toughest trees survive.
     icon: GRASS_BLOCK
     unlock:
       level: 30
@@ -419,11 +419,11 @@ biomes:
   windswept_savanna:
     biome: WINDSWEPT_SAVANNA
     environment: NORMAL
-    name: '&f&l Windswept Savanna'
+    name: '<white><bold> Windswept Savanna'
     description: |-
-      &7 Dry and cracked lands
-      &7 where strong winds
-      &7 blow through the grass.
+      <gray> Dry and cracked lands
+      <gray> where strong winds
+      <gray> blow through the grass.
     icon: ACACIA_SAPLING
     unlock:
       level: 20
@@ -434,11 +434,11 @@ biomes:
   stony_shore:
     biome: STONY_SHORE
     environment: NORMAL
-    name: '&f&l Stony Shore'
+    name: '<white><bold> Stony Shore'
     description: |-
-      &7 The rocky coastline
-      &7 is not a soft place
-      &7 but offers hidden gems.
+      <gray> The rocky coastline
+      <gray> is not a soft place
+      <gray> but offers hidden gems.
     icon: STONE
     unlock:
       level: 15
@@ -449,11 +449,11 @@ biomes:
   mushroom_fields:
     biome: MUSHROOM_FIELDS
     environment: NORMAL
-    name: '&f&l Mushroom Fields'
+    name: '<white><bold> Mushroom Fields'
     description: |-
-      &7 A strange place where
-      &7 mushrooms grow tall
-      &7 and cows are red.
+      <gray> A strange place where
+      <gray> mushrooms grow tall
+      <gray> and cows are red.
     icon: MYCELIUM
     unlock:
       level: 150
@@ -466,11 +466,11 @@ biomes:
   sunflower_plains:
     biome: SUNFLOWER_PLAINS
     environment: NORMAL
-    name: '&f&l Sunflower Plains'
+    name: '<white><bold> Sunflower Plains'
     description: |-
-      &7 A beautiful open field
-      &7 where sunflowers
-      &7 turn to follow the sun.
+      <gray> A beautiful open field
+      <gray> where sunflowers
+      <gray> turn to follow the sun.
     icon: SUNFLOWER
     unlock:
       level: 10
@@ -481,11 +481,11 @@ biomes:
   jagged_peaks:
     biome: JAGGED_PEAKS
     environment: NORMAL
-    name: '&f&l Jagged Peaks'
+    name: '<white><bold> Jagged Peaks'
     description: |-
-      &7 Dangerous mountains
-      &7 with sharp cliffs that
-      &7 few dare to climb.
+      <gray> Dangerous mountains
+      <gray> with sharp cliffs that
+      <gray> few dare to climb.
     icon: STONE
     unlock:
       level: 75
@@ -498,11 +498,11 @@ biomes:
   ice_spikes:
     biome: ICE_SPIKES
     environment: NORMAL
-    name: '&f&l Ice Spikes'
+    name: '<white><bold> Ice Spikes'
     description: |-
-      &7 Towers of ice rising
-      &7 from the frozen land,
-      &7 where nothing grows.
+      <gray> Towers of ice rising
+      <gray> from the frozen land,
+      <gray> where nothing grows.
     icon: ICE
     unlock:
       level: 100
@@ -515,11 +515,11 @@ biomes:
   deep_frozen_ocean:
     biome: DEEP_FROZEN_OCEAN
     environment: NORMAL
-    name: '&f&l Deep Frozen Ocean'
+    name: '<white><bold> Deep Frozen Ocean'
     description: |-
-      &7 A cold, deep ocean
-      &7 where icebergs float
-      &7 and polar bears roam.
+      <gray> A cold, deep ocean
+      <gray> where icebergs float
+      <gray> and polar bears roam.
     icon: BLUE_ICE
     unlock:
       level: 50
@@ -532,11 +532,11 @@ biomes:
   snowy_slopes:
     biome: SNOWY_SLOPES
     environment: NORMAL
-    name: '&f&l Snowy Slopes'
+    name: '<white><bold> Snowy Slopes'
     description: |-
-      &7 Steep snowy slopes
-      &7 where goats roam
-      &7 and avalanches fall.
+      <gray> Steep snowy slopes
+      <gray> where goats roam
+      <gray> and avalanches fall.
     icon: SNOW_BLOCK
     unlock:
       level: 75
@@ -549,11 +549,11 @@ biomes:
   frozen_peaks:
     biome: FROZEN_PEAKS
     environment: NORMAL
-    name: '&f&l Frozen Peaks'
+    name: '<white><bold> Frozen Peaks'
     description: |-
-      &7 Ice-capped mountains
-      &7 where the cold bites
-      &7 harder than anywhere.
+      <gray> Ice-capped mountains
+      <gray> where the cold bites
+      <gray> harder than anywhere.
     icon: SNOW_BLOCK
     unlock:
       level: 100
@@ -566,11 +566,11 @@ biomes:
   old_growth_pine_taiga:
     biome: OLD_GROWTH_PINE_TAIGA
     environment: NORMAL
-    name: '&f&l Old Growth Pine Taiga'
+    name: '<white><bold> Old Growth Pine Taiga'
     description: |-
-      &7 An ancient forest of
-      &7 towering pines where
-      &7 few dare to tread.
+      <gray> An ancient forest of
+      <gray> towering pines where
+      <gray> few dare to tread.
     icon: SPRUCE_SAPLING
     unlock:
       level: 30
@@ -583,11 +583,11 @@ biomes:
   cherry_grove:
     biome: CHERRY_GROVE
     environment: NORMAL
-    name: '&f&l Cherry Grove'
+    name: '<white><bold> Cherry Grove'
     description: |-
-      &7 A peaceful place filled
-      &7 with cherry blossoms,
-      &7 where spring never ends.
+      <gray> A peaceful place filled
+      <gray> with cherry blossoms,
+      <gray> where spring never ends.
     icon: CHERRY_LOG
     unlock:
       level: 20
@@ -600,11 +600,11 @@ biomes:
   deep_dark:
     biome: DEEP_DARK
     environment: NORMAL
-    name: '&f&l Deep Dark'
+    name: '<white><bold> Deep Dark'
     description: |-
-      &7 Far underground, a
-      &7 place where the
-      &7 darkness is alive.
+      <gray> Far underground, a
+      <gray> place where the
+      <gray> darkness is alive.
     icon: SCULK
     unlock:
       level: 200
@@ -617,11 +617,11 @@ biomes:
   sparse_jungle:
     biome: SPARSE_JUNGLE
     environment: NORMAL
-    name: '&f&l Sparse Jungle'
+    name: '<white><bold> Sparse Jungle'
     description: |-
-      &7 A lightly wooded area
-      &7 where jungle meets
-      &7 open plains.
+      <gray> A lightly wooded area
+      <gray> where jungle meets
+      <gray> open plains.
     icon: GRASS_BLOCK
     unlock:
       level: 15
@@ -632,11 +632,11 @@ biomes:
   frozen_river:
     biome: FROZEN_RIVER
     environment: NORMAL
-    name: '&f&l Frozen River'
+    name: '<white><bold> Frozen River'
     description: |-
-      &7 A river frozen in time
-      &7 where only the bravest
-      &7 creatures can survive.
+      <gray> A river frozen in time
+      <gray> where only the bravest
+      <gray> creatures can survive.
     icon: ICE
     unlock:
       level: 50
@@ -647,11 +647,11 @@ biomes:
   grove:
     biome: GROVE
     environment: NORMAL
-    name: '&f&l Grove'
+    name: '<white><bold> Grove'
     description: |-
-      &7 A quiet, snowy forest
-      &7 where the trees stand
-      &7 tall and silent.
+      <gray> A quiet, snowy forest
+      <gray> where the trees stand
+      <gray> tall and silent.
     icon: GRASS_BLOCK
     unlock:
       level: 40

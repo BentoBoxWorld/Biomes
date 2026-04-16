@@ -32,267 +32,267 @@ biomes:
         parameters: "<klimaat-id>"
   gui:
     titles:
-      player-panel: "&0&l Kies Klimaat"
-      buy-panel: "&0&l Koop Klimaat"
-      advanced-panel: "&0&l Update-modus"
-      admin-panel: "&0&l Admin GUI"
-      settings: "&0&l Instellingen"
-      library: "&0&l Bibliotheek"
-      manage-biomes: "&0&l Klimaten beheren"
-      manage-bundles: "&0&l Bundels beheren"
-      manage-islands: "&0&l Beheer eiland-data"
-      edit-biome: "&0&l Bewerk Klimaat: [biome]"
-      edit-bundle: "&0&l Bewerk bundel: [bundle]"
-      edit-island: "&0&l Bewerk eiland: [island]"
-      environment-selector: "&0&l Selecteer omgeving"
-      biome-selector: "&0&l Selecteer Klimaat"
-      bundle-selector: "&0&l Selecteer Bundel"
-      item-selector: "&0&l Selecteer Items"
+      player-panel: "<black><bold> Kies Klimaat"
+      buy-panel: "<black><bold> Koop Klimaat"
+      advanced-panel: "<black><bold> Update-modus"
+      admin-panel: "<black><bold> Admin GUI"
+      settings: "<black><bold> Instellingen"
+      library: "<black><bold> Bibliotheek"
+      manage-biomes: "<black><bold> Klimaten beheren"
+      manage-bundles: "<black><bold> Bundels beheren"
+      manage-islands: "<black><bold> Beheer eiland-data"
+      edit-biome: "<black><bold> Bewerk Klimaat: [biome]"
+      edit-bundle: "<black><bold> Bewerk bundel: [bundle]"
+      edit-island: "<black><bold> Bewerk eiland: [island]"
+      environment-selector: "<black><bold> Selecteer omgeving"
+      biome-selector: "<black><bold> Selecteer Klimaat"
+      bundle-selector: "<black><bold> Selecteer Bundel"
+      item-selector: "<black><bold> Selecteer Items"
     buttons:
       island:
-        name: "&f&l Eiland"
-        description: "&7 Veranderd het klimaat op het \n&7 hele eiland."
+        name: "<white><bold> Eiland"
+        description: "<gray> Veranderd het klimaat op het \n<gray> hele eiland."
       chunk:
-        name: "&f&l Chunk"
-        description: "&7 Veranderd klimaat in chunks."
+        name: "<white><bold> Chunk"
+        description: "<gray> Veranderd klimaat in chunks."
       range:
-        name: "&f&l Bereik"
-        description: "&7 Verander klimaat an de hand van bereik."
+        name: "<white><bold> Bereik"
+        description: "<gray> Verander klimaat an de hand van bereik."
       reduce:
-        name: "&f&l Verminder"
-        description: "&7 Verminder met &e [number]"
+        name: "<white><bold> Verminder"
+        description: "<gray> Verminder met <yellow> [number]"
       increase:
-        name: "&f&l Verhoog"
-        description: "&7 Verhoog met &e [number]"
+        name: "<white><bold> Verhoog"
+        description: "<gray> Verhoog met <yellow> [number]"
       accept:
-        name: "&f&l Wijzigingen Toepassen"
+        name: "<white><bold> Wijzigingen Toepassen"
         description: |-
-          &7 Veranderd klimaat naar &e [biome]
+          <gray> Veranderd klimaat naar <yellow> [biome]
 
-          &7 Update mode: &e [mode]
-          &7 Update bereik: &e [number]
+          <gray> Update mode: <yellow> [mode]
+          <gray> Update bereik: <yellow> [number]
       return:
-        name: "&f&l Keer Terug"
-        description: "&7 Keer terug naar het vorige menu."
+        name: "<white><bold> Keer Terug"
+        description: "<gray> Keer terug naar het vorige menu."
       previous:
-        name: "&f&l Vorige pagina"
-        description: "&7 Ga naar pagina &e [number]"
+        name: "<white><bold> Vorige pagina"
+        description: "<gray> Ga naar pagina <yellow> [number]"
       next:
-        name: "&f&l Volgende Pagina"
-        description: "&7 Ga naar pagina &e [number]"
+        name: "<white><bold> Volgende Pagina"
+        description: "<gray> Ga naar pagina <yellow> [number]"
       quit:
-        name: "&f&l Afsluiten"
-        description: "&7 Verlaat het menu."
+        name: "<white><bold> Afsluiten"
+        description: "<gray> Verlaat het menu."
       save:
-        name: "&f&l Opslaan"
-        description: "&7 Sla op en ga terug."
+        name: "<white><bold> Opslaan"
+        description: "<gray> Sla op en ga terug."
       cancel:
-        name: "&f&l Annuleer"
-        description: "&7 Annuleer veranderingen en ga terug."
+        name: "<white><bold> Annuleer"
+        description: "<gray> Annuleer veranderingen en ga terug."
       search:
-        name: "&f&l Zoek"
+        name: "<white><bold> Zoek"
         description: |-
-          &7 Geeft de mogelijkheid
-          &7 om een klimaat te zoeken
-          &7 aan de hand van de naam
-        search: "&b Waarde: [value]"
+          <gray> Geeft de mogelijkheid
+          <gray> om een klimaat te zoeken
+          <gray> aan de hand van de naam
+        search: "<aqua> Waarde: [value]"
       buy:
-        name: "&f&l Koop"
-        description: "&7 Koop een nieuw klimaat."
+        name: "<white><bold> Koop"
+        description: "<gray> Koop een nieuw klimaat."
       manage_islands:
-        name: "&f&l Eilanden beheren "
-        description: "&7 Geeft de mogelijkheid om \n&7 eiland data te beheren."
+        name: "<white><bold> Eilanden beheren "
+        description: "<gray> Geeft de mogelijkheid om \n<gray> eiland data te beheren."
       manage_biomes:
-        name: "&f&l Klimaten beheren"
+        name: "<white><bold> Klimaten beheren"
         description: |-
-          &7 Maakt het mogelijk data van
-          &7 klimaten te beheren
+          <gray> Maakt het mogelijk data van
+          <gray> klimaten te beheren
       manage_bundles:
-        name: "&f&l Bundels beheren"
+        name: "<white><bold> Bundels beheren"
         description: |-
-          &7 Maakt het mogelijk data van
-          &7 bundels te beheren
+          <gray> Maakt het mogelijk data van
+          <gray> bundels te beheren
       settings:
-        name: "&f&l Instellingen"
+        name: "<white><bold> Instellingen"
         description: |-
-          &7 Maakt het mogelijk instellingen van
-          &7 de addon te beheren
+          <gray> Maakt het mogelijk instellingen van
+          <gray> de addon te beheren
       import_template:
-        name: "&f&l Importeer template"
+        name: "<white><bold> Importeer template"
         description: |-
-          &7 Importeer template
-          &7 bestand vanuit de
-          &7 addon folder.
+          <gray> Importeer template
+          <gray> bestand vanuit de
+          <gray> addon folder.
       web_library:
-        name: "&f&l Web Bibliotheek"
+        name: "<white><bold> Web Bibliotheek"
         description: |-
-          &7 Ga naar  de web
-          &7 bibliotheek met
-          &7 gedeelde Klimaten.
+          <gray> Ga naar  de web
+          <gray> bibliotheek met
+          <gray> gedeelde Klimaten.
       export_from_database:
-        name: "&f&l Exporteer Database"
+        name: "<white><bold> Exporteer Database"
         description: |-
-          &7 Exporteer de database
-          &7 naar één bestand in
-          &7 de addon folder.
+          <gray> Exporteer de database
+          <gray> naar één bestand in
+          <gray> de addon folder.
       import_to_database:
-        name: "&f&l Importeer Database"
+        name: "<white><bold> Importeer Database"
         description: |-
-          &7 Importeer een database vanuit
-          &7 één bestand in de addon
-          &7 folder.
+          <gray> Importeer een database vanuit
+          <gray> één bestand in de addon
+          <gray> folder.
       wipe_islands_data:
-        name: "&f&l Verwijder Eiland Database"
-        description: "&7 Verwijder alle klimaat gebruiker \n&7 data voor deze gamemode."
+        name: "<white><bold> Verwijder Eiland Database"
+        description: "<gray> Verwijder alle klimaat gebruiker \n<gray> data voor deze gamemode."
       wipe_biomes_data:
-        name: "&f&l Verwijder Klimaten Database"
+        name: "<white><bold> Verwijder Klimaten Database"
         description: |-
-          &7 Verwijder alle klimaat en bundel
-          &7 data voor deze gamemode.
+          <gray> Verwijder alle klimaat en bundel
+          <gray> data voor deze gamemode.
       add_biome:
-        name: "&f&l Voeg klimaat toe"
+        name: "<white><bold> Voeg klimaat toe"
         description: |-
-          &7 Maakt een nieuw klimaat die
-          &7 spelers kunnen gebruiken in
-          &7 het gebruiker-paneel.
+          <gray> Maakt een nieuw klimaat die
+          <gray> spelers kunnen gebruiken in
+          <gray> het gebruiker-paneel.
       remove_biome:
-        name: "&f&l Verwijder klimaat"
+        name: "<white><bold> Verwijder klimaat"
         description: |-
-          &7 Verwijderd het gestelecteerde klimaat
-          &7 van gebruiker-panelen.
-        title: "&e Geselecteerde klimaten:"
-        value: "&e - [biome]"
+          <gray> Verwijderd het gestelecteerde klimaat
+          <gray> van gebruiker-panelen.
+        title: "<yellow> Geselecteerde klimaten:"
+        value: "<yellow> - [biome]"
       accept_selected:
-        name: "&f&l Accepteer geselecteerde"
-        description: "&7 Accepteert geselecteerde elementen."
-        title: "&e Geselecteerde elementen:"
-        element: "&e - [element]"
+        name: "<white><bold> Accepteer geselecteerde"
+        description: "<gray> Accepteert geselecteerde elementen."
+        title: "<yellow> Geselecteerde elementen:"
+        element: "<yellow> - [element]"
       environment_element:
-        name: "&f&l [environment]"
-        description: "&7 [description]."
+        name: "<white><bold> [environment]"
+        description: "<gray> [description]."
       properties:
-        name: "&f&l Eigenschappen"
-        description: "&7 Bekijk de belangrijkste eigenschappen van het klimaat."
+        name: "<white><bold> Eigenschappen"
+        description: "<gray> Bekijk de belangrijkste eigenschappen van het klimaat."
       change_properties:
-        name: "&f&l Verander eigenschappen"
-        description: "&7 Bekijk veranderende klimaat-eigenschappen."
+        name: "<white><bold> Verander eigenschappen"
+        description: "<gray> Bekijk veranderende klimaat-eigenschappen."
       unlock_properties:
-        name: "&f&l Eigenschappen ontgrendelen"
-        description: "&7 Bekijk ontgrendel-eigenschappen van klimaat."
+        name: "<white><bold> Eigenschappen ontgrendelen"
+        description: "<gray> Bekijk ontgrendel-eigenschappen van klimaat."
       biome:
-        name: "&f&l [biome]"
-        description: "&7 Minecraft Klimaat-type."
-        value: "&7 Klimaat ID: &e [id]"
+        name: "<white><bold> [biome]"
+        description: "<gray> Minecraft Klimaat-type."
+        value: "<gray> Klimaat ID: <yellow> [id]"
       name:
-        name: "&f&l Weergavenaam"
+        name: "<white><bold> Weergavenaam"
         description: |-
-          &7 Weergavenaam voor klimaat.
-          &7 Staat kleur codes toe.
-        value: "&7 Huidige waarde: &r [name]"
+          <gray> Weergavenaam voor klimaat.
+          <gray> Staat kleur codes toe.
+        value: "<gray> Huidige waarde: <reset> [name]"
       deployed:
-        name: "&f&l geïmplementeerd"
+        name: "<white><bold> geïmplementeerd"
         description: |-
-          &7 Schakelt of het klimaat
-          &7 beschikbaar is voor spelers
-          &7 of niet.
-        enabled: "&2 Aan"
-        disabled: "&c Uit"
+          <gray> Schakelt of het klimaat
+          <gray> beschikbaar is voor spelers
+          <gray> of niet.
+        enabled: "<dark_green> Aan"
+        disabled: "<red> Uit"
       environment:
-        name: "&f&l Dimensie"
+        name: "<white><bold> Dimensie"
         description: |-
-          &7 Maakt het mogelijk om te beperken in welke
-          &7 dimensie het klimaat
-          &7 kan worden toegepast.
-        enabled: "&2"
-        disabled: "&c"
+          <gray> Maakt het mogelijk om te beperken in welke
+          <gray> dimensie het klimaat
+          <gray> kan worden toegepast.
+        enabled: "<dark_green>"
+        disabled: "<red>"
       icon:
-        name: "&f&l Icoon"
+        name: "<white><bold> Icoon"
         description: |-
-          &7 Maakt het mogelijk om het icoon te wijzigen
-          &7 voor de klimaat.
+          <gray> Maakt het mogelijk om het icoon te wijzigen
+          <gray> voor de klimaat.
       order:
-        name: "&f&l Volgorde"
-        description: "&7 Maakt het mogelijk om de \n&7 volgorde van objecten aan te
-          passen.\n&7 Objecten met een gelijk nummer\n&7 worden geordend aan de hand
-          van hun\n&7 unieke ids."
-        value: "&7 Huidige volgorde: &e [number]"
+        name: "<white><bold> Volgorde"
+        description: "<gray> Maakt het mogelijk om de \n<gray> volgorde van objecten aan te
+          passen.\n<gray> Objecten met een gelijk nummer\n<gray> worden geordend aan de hand
+          van hun\n<gray> unieke ids."
+        value: "<gray> Huidige volgorde: <yellow> [number]"
       description:
-        name: "&f&l Omschrijving"
+        name: "<white><bold> Omschrijving"
         description: |-
-          &7 De specifieke omschrijving
-          &7 voor het klimaat. de kleurcodes
-          &7 zijn verplicht.
-        value: "&e Huidige omschrijving:"
-        none: "&7 Omschrijving is niet ingesteld."
+          <gray> De specifieke omschrijving
+          <gray> voor het klimaat. de kleurcodes
+          <gray> zijn verplicht.
+        value: "<yellow> Huidige omschrijving:"
+        none: "<gray> Omschrijving is niet ingesteld."
       unlock_permissions:
-        name: "&f&l Permissies"
+        name: "<white><bold> Permissies"
         description: |-
-          &7 Maakt het mogelijk om permissies
-          &7 te krijgen om dit klimaat
-          &7 te krijgen.
-        title: "&e Permissies: "
-        element: " &8 - [permission]"
-        none: "&7 Permissies zijn niet ingesteld."
+          <gray> Maakt het mogelijk om permissies
+          <gray> te krijgen om dit klimaat
+          <gray> te krijgen.
+        title: "<yellow> Permissies: "
+        element: " <dark_gray> - [permission]"
+        none: "<gray> Permissies zijn niet ingesteld."
       unlock_cost:
-        name: "&f&l Prijs"
+        name: "<white><bold> Prijs"
         description: |-
-          &7 Maakt het mogelijk om de prijs te wijzigen
-          &7 voor het ontgrendelen van dit klimaat.
-        value: "&7 Huidige prijs: &e $[number]"
+          <gray> Maakt het mogelijk om de prijs te wijzigen
+          <gray> voor het ontgrendelen van dit klimaat.
+        value: "<gray> Huidige prijs: <yellow> $[number]"
       unlock_items:
-        name: "&f&l Items"
+        name: "<white><bold> Items"
         description: |-
-          &7 Maakt het mogelijk om de items te wijzigen
-          &7 voor dit klimaat
-        title: "&e Items: "
-        element: " &8 - [number]x[item]"
-        none: "&7 Items zijn niet ingesteld."
+          <gray> Maakt het mogelijk om de items te wijzigen
+          <gray> voor dit klimaat
+        title: "<yellow> Items: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Items zijn niet ingesteld."
       unlock_level:
-        name: "&f&l Level"
+        name: "<white><bold> Level"
         description: |-
-          &7 Maakt het mogelijk om het eiland level te wijzigen
-          &7 voor het ontgrendelen van dit klimaat.
-        value: "&7 Huidig level: &e [number]"
+          <gray> Maakt het mogelijk om het eiland level te wijzigen
+          <gray> voor het ontgrendelen van dit klimaat.
+        value: "<gray> Huidig level: <yellow> [number]"
       change_cost:
-        name: "&f&l Prijs"
+        name: "<white><bold> Prijs"
         description: |-
-          &7 Maakt het mogelijk om de prijs te wijzigen
-          &7 voor het selecteren van dit klimaat.
-        value: "&7 Huidige kosten: &e $[number]"
+          <gray> Maakt het mogelijk om de prijs te wijzigen
+          <gray> voor het selecteren van dit klimaat.
+        value: "<gray> Huidige kosten: <yellow> $[number]"
       change_items:
-        name: "&f&l Items"
+        name: "<white><bold> Items"
         description: |-
-          &7 Maakt het mogelijk om de items te wijzigen
-          &7 voor het selecteren van dit klimaat.
-        title: "&e Items: "
-        element: " &8 - [number]x[item]"
-        none: "&7 Items zijn niet ingesteld."
+          <gray> Maakt het mogelijk om de items te wijzigen
+          <gray> voor het selecteren van dit klimaat.
+        title: "<yellow> Items: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Items zijn niet ingesteld."
       change_type:
-        name: "&f&l [type]"
+        name: "<white><bold> [type]"
         description: |-
-          &7 Maakt het mogelijk om de prijs-type te wijzigen
-          &7 voor het selecteren van dit klimaat.
+          <gray> Maakt het mogelijk om de prijs-type te wijzigen
+          <gray> voor het selecteren van dit klimaat.
         static:
           name: Statische waarde
-          description: "&7 Klimaat-verander kosten \n&7 veranderen niet."
+          description: "<gray> Klimaat-verander kosten \n<gray> veranderen niet."
         per_block:
           name: Per blok
-          description: "&7 Klimaat-verander kosten \n&7 worden berekend per block."
+          description: "<gray> Klimaat-verander kosten \n<gray> worden berekend per block."
         per_usage:
           name: Per gebruik
-          description: "&7 Klimaat-verander kosten \n&7 worden verhoogd na elk gebruik."
-        enabled: "&2"
-        disabled: "&c"
+          description: "<gray> Klimaat-verander kosten \n<gray> worden verhoogd na elk gebruik."
+        enabled: "<dark_green>"
+        disabled: "<red>"
       change_increment:
-        name: "&f&l Verhoog"
-        description: "&7 Maakt het mogelijk instellingen van\n&7 de verhoging per
+        name: "<white><bold> Verhoog"
+        description: "<gray> Maakt het mogelijk instellingen van\n<gray> de verhoging per
           gebruik "
-        value: "&7 Huidige waarde: &e [number]"
+        value: "<gray> Huidige waarde: <yellow> [number]"
       biome-filter:
-        name: "&f&l [filter]"
+        name: "<white><bold> [filter]"
         description: |-
-          &7 Klimaat filter op basis
-          &7 van de Minecraft Wiki.
+          <gray> Klimaat filter op basis
+          <gray> van de Minecraft Wiki.
         lush: Weelderige Klimaten
         dry: Droge Klimaten
         cold: Koude Klimaten
@@ -303,288 +303,288 @@ biomes:
         neutral: Neutrale Klimaten
         unused: Ongebruikte Klimaten
       protection_range:
-        name: "&f&l Beschermings-bereik"
-        description: "&7 maakt het mogelijk om \n&7 klimaat-verandering alleen in
-          de \n&7 bescherming-bereik te doen in \n&7 plaats van op het hele eiland"
-        enabled: "&2 Ingeschakeld"
-        disabled: "&c Uitgeschakeld"
+        name: "<white><bold> Beschermings-bereik"
+        description: "<gray> maakt het mogelijk om \n<gray> klimaat-verandering alleen in
+          de \n<gray> bescherming-bereik te doen in \n<gray> plaats van op het hele eiland"
+        enabled: "<dark_green> Ingeschakeld"
+        disabled: "<red> Uitgeschakeld"
       reset:
-        name: "&f&l Reset als de eigenaar wisseld"
-        description: "&7 Maakt het mogelijk om\n&7 het klimaat terug te zetten naar
-          de standaard,\n&7 als het eiland een nieuwe eigenaar krijgt\n&7 en de nieuwe
-          eigenaar het \n&7 klimaat-permissie niet heeft."
-        enabled: "&2 Ingeschakeld"
-        disabled: "&c Uitgeschakeld"
+        name: "<white><bold> Reset als de eigenaar wisseld"
+        description: "<gray> Maakt het mogelijk om\n<gray> het klimaat terug te zetten naar
+          de standaard,\n<gray> als het eiland een nieuwe eigenaar krijgt\n<gray> en de nieuwe
+          eigenaar het \n<gray> klimaat-permissie niet heeft."
+        enabled: "<dark_green> Ingeschakeld"
+        disabled: "<red> Uitgeschakeld"
       cool_down:
-        name: "&f&l Klimaat cooldown"
-        description: "&7 Maakt het mogelijk om een\n&7 cooldown tussen wanneer \n&7
-          spelers het klimaat weer aan kunnen\n&7 passen in te stellen."
-        value: "&7 Huidige cooldown: &e [number]"
-        disabled: "&e Cooldown is uitgeschakeld."
+        name: "<white><bold> Klimaat cooldown"
+        description: "<gray> Maakt het mogelijk om een\n<gray> cooldown tussen wanneer \n<gray>
+          spelers het klimaat weer aan kunnen\n<gray> passen in te stellen."
+        value: "<gray> Huidige cooldown: <yellow> [number]"
+        disabled: "<yellow> Cooldown is uitgeschakeld."
       default_size:
-        name: "&f&l Standaard bereik"
-        description: "&7 Maakt het mogelijk om\n&7 het standaard bereik in te\n&7
-          stellen bij het veranderen van \n&7 het klimaat zonder het te schrijven"
-        value: "&7 Standaard bereik: &e [number]"
+        name: "<white><bold> Standaard bereik"
+        description: "<gray> Maakt het mogelijk om\n<gray> het standaard bereik in te\n<gray>
+          stellen bij het veranderen van \n<gray> het klimaat zonder het te schrijven"
+        value: "<gray> Standaard bereik: <yellow> [number]"
       default_mode:
-        name: "&f&l Standaard Update-modus"
+        name: "<white><bold> Standaard Update-modus"
         description: |-
-          &7 Maakt het mogelijk om de standaard
-          &7 update-modus als spelers
-          &7 dit niet invullen.
-        enabled: "&2"
-        disabled: "&c"
+          <gray> Maakt het mogelijk om de standaard
+          <gray> update-modus als spelers
+          <gray> dit niet invullen.
+        enabled: "<dark_green>"
+        disabled: "<red>"
       unlock_notify:
-        name: "&f&l Informeer bij ontgrendelen"
-        description: "&7 Een bericht wordt verstuurd\n&7 als de speler een nieuw \n&7
+        name: "<white><bold> Informeer bij ontgrendelen"
+        description: "<gray> Een bericht wordt verstuurd\n<gray> als de speler een nieuw \n<gray>
           klimaat ontgrendeld."
-        enabled: "&b Informeren bij ongrendelen staat &a aan&b."
-        disabled: "&b Informeren bij ongrendelen staat &c uit&b."
+        enabled: "<aqua> Informeren bij ongrendelen staat <green> aan<aqua>."
+        disabled: "<aqua> Informeren bij ongrendelen staat <red> uit<aqua>."
       change_timeout:
-        name: "&f&l Timeout voor verandering"
-        description: "&7 Maakt het mogelijk om de \n&7 timeout in minuten waar\n&7
-          het updaten van het klimaat\n&7 wordt gestopt.\n&7 Dit gebeurt mogelijk
-          bij grote\n&7 eilanden of op drukke servers."
-        value: "&7 Timeout na: &e [number] minuten"
+        name: "<white><bold> Timeout voor verandering"
+        description: "<gray> Maakt het mogelijk om de \n<gray> timeout in minuten waar\n<gray>
+          het updaten van het klimaat\n<gray> wordt gestopt.\n<gray> Dit gebeurt mogelijk
+          bij grote\n<gray> eilanden of op drukke servers."
+        value: "<gray> Timeout na: <yellow> [number] minuten"
       parallel_updates:
-        name: "&f&l Parallele Updates"
+        name: "<white><bold> Parallele Updates"
         description: |-
-          &7 Maakt het mogelijk om veel
-          &7 klimaten tegelijk geupdatet
-          &7 kunnen worden tegelijk.
-          &7 Andere worden in een wachtrij
-          &7 gezet.
-        value: "&7 Huidige waarde: &e[number]&7."
+          <gray> Maakt het mogelijk om veel
+          <gray> klimaten tegelijk geupdatet
+          <gray> kunnen worden tegelijk.
+          <gray> Andere worden in een wachtrij
+          <gray> gezet.
+        value: "<gray> Huidige waarde: <yellow>[number]<gray>."
       use_bank:
-        name: "&f&l Gebruik Bank Account"
-        description: "&7 Kies of bank accounts gebruikt\n&7 worden voor betalingen
-          aan de\n&7 Biomes addon. \n&7 Dit gebruikt het Bank Addon \n&7 eiland account."
-        enabled: "&b Gebruik van je Bank Account is &a ingeschakeld &b."
-        disabled: "&b Gebruik van je Bank Account is &c uitgeschakeld &b."
-        missing: "&c De Bank addon is niet geïnstalleerd."
+        name: "<white><bold> Gebruik Bank Account"
+        description: "<gray> Kies of bank accounts gebruikt\n<gray> worden voor betalingen
+          aan de\n<gray> Biomes addon. \n<gray> Dit gebruikt het Bank Addon \n<gray> eiland account."
+        enabled: "<aqua> Gebruik van je Bank Account is <green> ingeschakeld <aqua>."
+        disabled: "<aqua> Gebruik van je Bank Account is <red> uitgeschakeld <aqua>."
+        missing: "<red> De Bank addon is niet geïnstalleerd."
       visibility:
-        name: "&f&l Biome Zichtbaarheid"
+        name: "<white><bold> Biome Zichtbaarheid"
         description: |-
-          &7 Maakt het mogelijk om
-          &7 klimaat zichtbaar te maken in
-          &7 het klimaat selectie paneel.
-        enabled: "&2"
-        disabled: "&c"
+          <gray> Maakt het mogelijk om
+          <gray> klimaat zichtbaar te maken in
+          <gray> het klimaat selectie paneel.
+        enabled: "<dark_green>"
+        disabled: "<red>"
         all: Alle Klimaten
         deployed: Geactiveerde Klimaten
         accessible: Beschikbare Klimaten
         toggleable: Aan/uit-zetbaar
       is_online:
-        name: "&f&l Online Spelers eilanden"
+        name: "<white><bold> Online Spelers eilanden"
         description: |-
-          &7 Alle eilanden waar een speler
-          &7 online is.
+          <gray> Alle eilanden waar een speler
+          <gray> online is.
       all_islands:
-        name: "&f&l Alle eilanden"
+        name: "<white><bold> Alle eilanden"
         description: |-
-          &7 Alle eilanden die gemaakt
-          &7 zijn voor deze gamemode.
+          <gray> Alle eilanden die gemaakt
+          <gray> zijn voor deze gamemode.
       island_name:
-        name: "&f&l [name]"
+        name: "<white><bold> [name]"
         island-owner: "[player]"
-        unknown: "&c Onbekende eigenaar"
+        unknown: "<red> Onbekende eigenaar"
         description: |-
           [owner]
           [members]
           [id]
-        owner: "&7 Eigenaar: &e [player]"
-        title: "&7 Eiland leden:"
-        element: " &7 - &e [player]"
+        owner: "<gray> Eigenaar: <yellow> [player]"
+        title: "<gray> Eiland leden:"
+        element: " <gray> - <yellow> [player]"
       change_biome:
-        name: "&f&l Verander klimaat"
-        description: "&7 Verander klimaat per eiland."
+        name: "<white><bold> Verander klimaat"
+        description: "<gray> Verander klimaat per eiland."
       manage_data:
-        name: "&f&l Beheer Eiland-data"
+        name: "<white><bold> Beheer Eiland-data"
         description: |-
-          &7 Beheer data die is opgeslagen
-          &7 voor dit specfieke eiland.
+          <gray> Beheer data die is opgeslagen
+          <gray> voor dit specfieke eiland.
       clear_data:
-        name: "&f&l Verwijder eiland data"
+        name: "<white><bold> Verwijder eiland data"
         description: |-
-          &7 Verwijder alle opgeslagen
-          &7 eiland-data.
+          <gray> Verwijder alle opgeslagen
+          <gray> eiland-data.
       island_bundle:
-        name: "&f&l Eiland bundel"
+        name: "<white><bold> Eiland bundel"
         description: |-
-          &7 Bundel die is toegewezen aan
-          &7 het huidige eiland.
-          &7 Alleen klimaten van deze
-          &7 bundel kunnen gebruikt worden
-          &7 op dit eiland.
-        value: "&b Bundel: [bundle]"
-        overwritten: "&c De eigenaar heeft een permissie \n&c om de bundel te overschrijven."
+          <gray> Bundel die is toegewezen aan
+          <gray> het huidige eiland.
+          <gray> Alleen klimaten van deze
+          <gray> bundel kunnen gebruikt worden
+          <gray> op dit eiland.
+        value: "<aqua> Bundel: [bundle]"
+        overwritten: "<red> De eigenaar heeft een permissie \n<red> om de bundel te overschrijven."
       owner_bundle:
-        name: "&f&l Eigenaar van bundel"
+        name: "<white><bold> Eigenaar van bundel"
         description: |-
-          &7 Bundel die is toegewezen aan
-          &7 de huidige eiland eigenaar.
-          &7 Alleen de klimaten uit deze
-          &7 bundel kunnen gebruikt worden
-          &7 op het eiland.
-          &7 Permissie om aan de speler te geven:
-          &7&o '[gamemode].biomes.
-          &7&o bundle.<bundle-id>'
-        value: "&b Bundel: [bundle]"
+          <gray> Bundel die is toegewezen aan
+          <gray> de huidige eiland eigenaar.
+          <gray> Alleen de klimaten uit deze
+          <gray> bundel kunnen gebruikt worden
+          <gray> op het eiland.
+          <gray> Permissie om aan de speler te geven:
+          <gray><italic> '[gamemode].biomes.
+          <gray><italic> bundle.<bundle-id>'
+        value: "<aqua> Bundel: [bundle]"
       reset_to_default:
-        name: "&f&l Terugzetten naar standaardwaarden"
+        name: "<white><bold> Terugzetten naar standaardwaarden"
         description: |-
-          &7 Reset alle eiland waardes
-          &7 naar de default waardes
-          &7 uit de instellingen.
+          <gray> Reset alle eiland waardes
+          <gray> naar de default waardes
+          <gray> uit de instellingen.
       bundle_info:
-        name: "&f&l Algemene Informatie"
+        name: "<white><bold> Algemene Informatie"
         description: |-
-          &7 Zie algemene bundel
-          &7 informatie.
+          <gray> Zie algemene bundel
+          <gray> informatie.
       bundle_biomes:
-        name: "&f&l Klimaten beheren"
+        name: "<white><bold> Klimaten beheren"
         description: |-
-          &7 Beheer klimaten die toegevoegd
-          &7 zijn aan de bundel.
+          <gray> Beheer klimaten die toegevoegd
+          <gray> zijn aan de bundel.
       bundle_name:
-        name: "&f&l Verander naam"
-        description: "&7 Verander bundel weergave-naam"
-        value: "&e Huidige waarde: &r [bundle]"
+        name: "<white><bold> Verander naam"
+        description: "<gray> Verander bundel weergave-naam"
+        value: "<yellow> Huidige waarde: <reset> [bundle]"
       bundle_icon:
-        name: "&f&l Verander icoon"
-        description: "&7 Verander bundel icoon"
+        name: "<white><bold> Verander icoon"
+        description: "<gray> Verander bundel icoon"
       bundle_description:
-        name: "&f&l Verander omschrijving"
-        description: "&7 Verander bundel omschrijving."
-        value: "&e Huidige waarde:"
-        none: "&c Geen beschrijving"
+        name: "<white><bold> Verander omschrijving"
+        description: "<gray> Verander bundel omschrijving."
+        value: "<yellow> Huidige waarde:"
+        none: "<red> Geen beschrijving"
       bundle_permission:
-        name: "&f&l Bundel permissies"
+        name: "<white><bold> Bundel permissies"
         description: |-
-          &7 De permissie die toegevoegd
-          &7 moeten worden aan de speler
-          &7 om de bundel te forceren.
-        value: "&e Permissie: &f [gamemode].biomes.bundle.[id]"
+          <gray> De permissie die toegevoegd
+          <gray> moeten worden aan de speler
+          <gray> om de bundel te forceren.
+        value: "<yellow> Permissie: <white> [gamemode].biomes.bundle.[id]"
       add_bundle_biome:
-        name: "&f&l Voeg klimaat toe"
+        name: "<white><bold> Voeg klimaat toe"
         description: |-
-          &7 Voeg een klimaat toe aan
-          &7 deze bundel.
-        title: "&b Geselecteerde klimaten:"
-        value: "&b - [biome]"
+          <gray> Voeg een klimaat toe aan
+          <gray> deze bundel.
+        title: "<aqua> Geselecteerde klimaten:"
+        value: "<aqua> - [biome]"
       remove_bundle_biome:
-        name: "&f&l Verwijder klimaat"
+        name: "<white><bold> Verwijder klimaat"
         description: |-
-          &7 Verwijder een klimaat uit
-          &7 deze bundel.
-        title: "&b Geselecteerde klimaten:"
-        value: "&b - [biome]"
+          <gray> Verwijder een klimaat uit
+          <gray> deze bundel.
+        title: "<aqua> Geselecteerde klimaten:"
+        value: "<aqua> - [biome]"
       create_bundle:
-        name: "&f&l Maak bundel"
+        name: "<white><bold> Maak bundel"
         description: |-
-          &7 Maak een nieuwe bundel
-          &7 voor deze gamemode.
+          <gray> Maak een nieuwe bundel
+          <gray> voor deze gamemode.
       delete_bundle:
-        name: "&f&l Verwijder bundel"
+        name: "<white><bold> Verwijder bundel"
         description: |-
-          &7 Verwijder een bundel voor
-          &7 deze gamemode.
-        title: "&b Geselecteerde Bundels:"
-        value: "&b - [biome]"
+          <gray> Verwijder een bundel voor
+          <gray> deze gamemode.
+        title: "<aqua> Geselecteerde Bundels:"
+        value: "<aqua> - [biome]"
       download:
-        name: "&f&l Download"
-        description: "&7 Download web bibliotheek."
-        enabled: "&2 Met Cache verwijderen"
-        disabled: "&c Zonder Cache te verwijderen"
+        name: "<white><bold> Download"
+        description: "<gray> Download web bibliotheek."
+        enabled: "<dark_green> Met Cache verwijderen"
+        disabled: "<red> Zonder Cache te verwijderen"
     tips:
-      click-to-manage: "&e Klik &7 om te beheren."
-      click-to-clear: "&e Klik &7 om te verwijderen."
-      click-to-change-biome: "&e Klik &7 om klimaat aan te passen."
-      click-to-view: "&e Klik &7 om te zien."
-      click-to-select: "&e Klik &7 om te selecteren."
-      click-to-choose: "&e Klik &7 om te kiezen."
-      click-to-complete: "&e Klik &7 om af te maken."
-      left-click-to-accept: "&e Linker Klik &7 om toe te passen."
-      right-click-to-write: "&e Rechter Klik &7 om op te slaan."
-      click-to-reduce: "&e Klik &7 om te verminderen."
-      click-to-increase: "&e Klik &7 om te verhogen."
-      click-to-return: "&e Klik &7 om terug te gaan."
-      click-to-quit: "&e Klik &7 om te stoppen."
-      click-to-wipe: "&e Klik &7 om te wissen."
-      left-click-to-wipe: "&e Linker Klik &7 om te wissen."
-      right-click-to-switch: "&e Rechter Klik &7 om te wisselen."
-      click-to-open: "&e Klik &7 om te openen."
-      click-to-export: "&e Klik &7 om te exporteren."
-      click-to-create: "&e Klik &7 om te maken."
-      left-click-to-open: "&e Linker Klik &7 om te openen."
-      right-click-to-reset-all: "&e Rechter Klik &7 om alles te wissen."
-      click-to-toggle: "&e Klik &7 om aan/uit te zetten."
-      click-to-change: "&e Klik &7 om te veranderen."
-      shift-click-to-reset: "&e Shift Klik &7 om te resetten."
-      click-to-add: "&e Klik &7 om toe te voegen."
-      click-to-remove: "&e Klik &7 om te verwijderen."
-      left-click-to-cycle: "&e Linker Klik &7 om door te lopen."
-      right-click-to-cycle: "&e Rechter Klik &7 om terug door te lopen."
-      click-to-edit: "&e Klik &7 om bij te werken."
-      left-click-to-download: "&e Linker Klik &7 om te downloaden."
-      right-click-to-toggle: "&e Rechter Klik &7 om aan/uit te zetten."
-      click-to-install: "&e Klik &7 om te installeren."
-      click-to-reset-all: "&e Klik &7 om alles te resetten."
-      right-click-to-select: "&e Rechter Klik &7 om te selecteren."
-      right-click-to-deselect: "&e Rechter Klik &7 om te deselecteren."
-      left-click-to-choose: "&e Linker Klik &7 om te kiezen."
-      click-to-buy: "&e Klik &7 om te kopen."
-      click-to-cancel: "&e Klik &7 om te annuleren."
-      click-to-save: "&e Klik &7 om op te slaan."
-      click-to-deselect: "&e Klik &7 om te deselecteren."
+      click-to-manage: "<yellow> Klik <gray> om te beheren."
+      click-to-clear: "<yellow> Klik <gray> om te verwijderen."
+      click-to-change-biome: "<yellow> Klik <gray> om klimaat aan te passen."
+      click-to-view: "<yellow> Klik <gray> om te zien."
+      click-to-select: "<yellow> Klik <gray> om te selecteren."
+      click-to-choose: "<yellow> Klik <gray> om te kiezen."
+      click-to-complete: "<yellow> Klik <gray> om af te maken."
+      left-click-to-accept: "<yellow> Linker Klik <gray> om toe te passen."
+      right-click-to-write: "<yellow> Rechter Klik <gray> om op te slaan."
+      click-to-reduce: "<yellow> Klik <gray> om te verminderen."
+      click-to-increase: "<yellow> Klik <gray> om te verhogen."
+      click-to-return: "<yellow> Klik <gray> om terug te gaan."
+      click-to-quit: "<yellow> Klik <gray> om te stoppen."
+      click-to-wipe: "<yellow> Klik <gray> om te wissen."
+      left-click-to-wipe: "<yellow> Linker Klik <gray> om te wissen."
+      right-click-to-switch: "<yellow> Rechter Klik <gray> om te wisselen."
+      click-to-open: "<yellow> Klik <gray> om te openen."
+      click-to-export: "<yellow> Klik <gray> om te exporteren."
+      click-to-create: "<yellow> Klik <gray> om te maken."
+      left-click-to-open: "<yellow> Linker Klik <gray> om te openen."
+      right-click-to-reset-all: "<yellow> Rechter Klik <gray> om alles te wissen."
+      click-to-toggle: "<yellow> Klik <gray> om aan/uit te zetten."
+      click-to-change: "<yellow> Klik <gray> om te veranderen."
+      shift-click-to-reset: "<yellow> Shift Klik <gray> om te resetten."
+      click-to-add: "<yellow> Klik <gray> om toe te voegen."
+      click-to-remove: "<yellow> Klik <gray> om te verwijderen."
+      left-click-to-cycle: "<yellow> Linker Klik <gray> om door te lopen."
+      right-click-to-cycle: "<yellow> Rechter Klik <gray> om terug door te lopen."
+      click-to-edit: "<yellow> Klik <gray> om bij te werken."
+      left-click-to-download: "<yellow> Linker Klik <gray> om te downloaden."
+      right-click-to-toggle: "<yellow> Rechter Klik <gray> om aan/uit te zetten."
+      click-to-install: "<yellow> Klik <gray> om te installeren."
+      click-to-reset-all: "<yellow> Klik <gray> om alles te resetten."
+      right-click-to-select: "<yellow> Rechter Klik <gray> om te selecteren."
+      right-click-to-deselect: "<yellow> Rechter Klik <gray> om te deselecteren."
+      left-click-to-choose: "<yellow> Linker Klik <gray> om te kiezen."
+      click-to-buy: "<yellow> Klik <gray> om te kopen."
+      click-to-cancel: "<yellow> Klik <gray> om te annuleren."
+      click-to-save: "<yellow> Klik <gray> om op te slaan."
+      click-to-deselect: "<yellow> Klik <gray> om te deselecteren."
       click-on-item: |-
-        &e Klik &7 op een item in
-        &7 je inventaris.
-      left-click-to-edit: "&e Linker Klik &7 om te bewerken."
-      right-click-to-clear: "&e Rechter Klik &7 om te verwijderen."
-      click-to-previous: "&e Klik &7 om naar de vorige pagina te gaan."
-      click-to-next: "&e Klik &7 om naar de volgende pagina te gaan."
-      select-before: "&e Selecteer &7 item(-s) voor je doorgaat."
-      click-to-apply: "&e Klik &7 om toe te passen."
-      right-click-to-open: "&e Rechter Klik &7 om te openen."
-      click-to-perform: "&e Klik &7 om uit te voeren."
-      left-click-to-apply: "&e Linker Klik &7 om toe te passen."
-      right-click-to-unlock: "&e Rechter Link &7 om te ontgrendelen."
-      right-click-to-buy: "&e Rechter Klik &7 om te kopen."
-      right-click-to-change: "&e Rechter Klik &7 om te veranderen."
+        <yellow> Klik <gray> op een item in
+        <gray> je inventaris.
+      left-click-to-edit: "<yellow> Linker Klik <gray> om te bewerken."
+      right-click-to-clear: "<yellow> Rechter Klik <gray> om te verwijderen."
+      click-to-previous: "<yellow> Klik <gray> om naar de vorige pagina te gaan."
+      click-to-next: "<yellow> Klik <gray> om naar de volgende pagina te gaan."
+      select-before: "<yellow> Selecteer <gray> item(-s) voor je doorgaat."
+      click-to-apply: "<yellow> Klik <gray> om toe te passen."
+      right-click-to-open: "<yellow> Rechter Klik <gray> om te openen."
+      click-to-perform: "<yellow> Klik <gray> om uit te voeren."
+      left-click-to-apply: "<yellow> Linker Klik <gray> om toe te passen."
+      right-click-to-unlock: "<yellow> Rechter Link <gray> om te ontgrendelen."
+      right-click-to-buy: "<yellow> Rechter Klik <gray> om te kopen."
+      right-click-to-change: "<yellow> Rechter Klik <gray> om te veranderen."
     descriptions:
       update-mode:
         island: Eiland Modus
         chunk: Chunk Modus
         range: Radius Modus
-      selected: "&2 Geselecteerd"
+      selected: "<dark_green> Geselecteerd"
       island-owner: "[player]"
-      unknown: "&e Onbekend"
+      unknown: "<yellow> Onbekend"
       biome:
         lore: |-
           [description]
           [biome]
           [unlock]
           [change]
-        original: "&7 Klimaat: &e [biome]"
+        original: "<gray> Klimaat: <yellow> [biome]"
         unlock:
           lore: |-
             [items]
             [money]
             [level]
             [permissions]
-          money: "&7 Ontgrendel-prijs: &e $[number]"
+          money: "<gray> Ontgrendel-prijs: <yellow> $[number]"
           level: |-
-            &7 Eiland level &e [number]
-            &7 is benodigd.
-          permission-single: "&7 Missende permissie: &c [permission]"
-          permissions-title: "&c Missende permissies:"
-          permissions-list: "&c - [permission]"
-          item-single: "&7 Ontgrendel Item: [color] [number] x [item]"
-          item-title: "&7 Ontgrendel-Items:"
-          item-list: "&7 - [color] [number] x [item]"
-          missing: "&c"
-          has: "&e"
+            <gray> Eiland level <yellow> [number]
+            <gray> is benodigd.
+          permission-single: "<gray> Missende permissie: <red> [permission]"
+          permissions-title: "<red> Missende permissies:"
+          permissions-list: "<red> - [permission]"
+          item-single: "<gray> Ontgrendel Item: [color] [number] x [item]"
+          item-title: "<gray> Ontgrendel-Items:"
+          item-list: "<gray> - [color] [number] x [item]"
+          missing: "<red>"
+          has: "<yellow>"
         change:
           lore: |-
             [items]
@@ -592,163 +592,163 @@ biomes:
             [mode]
             [usage]
           mode:
-            per_block: "&b&o Klimaat prijs per \n&b&o veranderd block"
+            per_block: "<aqua><italic> Klimaat prijs per \n<aqua><italic> veranderd block"
             per_usage: |-
-              &b&o Klimaat veranderen verhoogd
-              &b&o de prijs.
-            static: "&b&o Standaard prijs-verandering."
-          money: "&7 Prijs: &e $[number]"
-          item-single: "&7 Item: [color] [number] x [item]"
-          item-title: "&7 Items:"
-          item-list: "&7 - [color] [number] x [item]"
-          number-of-usage: "|&7 Dit klimaat is &e[number] \n&r&7x ingesteld."
-          missing: "&c"
-          has: "&e"
+              <aqua><italic> Klimaat veranderen verhoogd
+              <aqua><italic> de prijs.
+            static: "<aqua><italic> Standaard prijs-verandering."
+          money: "<gray> Prijs: <yellow> $[number]"
+          item-single: "<gray> Item: [color] [number] x [item]"
+          item-title: "<gray> Items:"
+          item-list: "<gray> - [color] [number] x [item]"
+          number-of-usage: "|<gray> Dit klimaat is <yellow>[number] \n<reset><gray>x ingesteld."
+          missing: "<red>"
+          has: "<yellow>"
       bundle:
         lore: |-
           [description]
           [permission]
           [biomes]
-        permission: "&7 Permissie die de speler \n&7 moet krijgen\n&7&o [gamemode].biomes.bundle.[id]"
-        title: "&7 Bundel Klimaten: "
-        value: "&7 - [biome]"
-        no-biomes: "&c Geen klimaat ingesteld"
+        permission: "<gray> Permissie die de speler \n<gray> moet krijgen\n<gray><italic> [gamemode].biomes.bundle.[id]"
+        title: "<gray> Bundel Klimaten: "
+        value: "<gray> - [biome]"
+        no-biomes: "<red> Geen klimaat ingesteld"
       library:
-        author: "&7 door &e [author]"
-        version: "&7 Gemaakt met Biomes &e [version]"
-        lang: "&7 Taal: &e [lang]"
-        gamemode: "&7 Standaard voor &e [gamemode]"
+        author: "<gray> door <yellow> [author]"
+        version: "<gray> Gemaakt met Biomes <yellow> [version]"
+        lang: "<gray> Taal: <yellow> [lang]"
+        gamemode: "<gray> Standaard voor <yellow> [gamemode]"
   conversations:
-    prefix: "&l&6 [BentoBox]: &r"
+    prefix: "<bold><gold> [BentoBox]: <reset>"
     confirm-string: ja, bevestig, valide
     deny-string: nee, uit, n, incorrect
     cancel-string: stop
     exit-string: stop, annuleer
-    cancelled: "&c Conversatie gestopt!"
-    input-number: "&e Schrijf asjeblieft een getal in de chat."
-    input-seconds: "&e Schrijf asjeblieft seconde in de chat."
-    numeric-only: "&c [value] is geen geldig getal!"
-    not-valid-value: "&c De waarde [value] is niet geldig. De waarde moet groter zijn
+    cancelled: "<red> Conversatie gestopt!"
+    input-number: "<yellow> Schrijf asjeblieft een getal in de chat."
+    input-seconds: "<yellow> Schrijf asjeblieft seconde in de chat."
+    numeric-only: "<red> [value] is geen geldig getal!"
+    not-valid-value: "<red> De waarde [value] is niet geldig. De waarde moet groter zijn
       dan [min] en kleiner dan [max]!"
-    data-removed: "&a Gekozen klimaat wordt verwijderd voor [gamemode]."
-    confirm-deletion: "&e Bevestig dat je [number] klimaten wil verwijderen met de
+    data-removed: "<green> Gekozen klimaat wordt verwijderd voor [gamemode]."
+    confirm-deletion: "<yellow> Bevestig dat je [number] klimaten wil verwijderen met de
       namen: [value]."
-    user-data-removed: "&a Alle gebruiker-data voor [gamemode] is verwijderd van de
+    user-data-removed: "<green> Alle gebruiker-data voor [gamemode] is verwijderd van de
       database."
-    confirm-user-data-deletion: "&e Bevestig dat je de gebruiker-data wil verwijderen
+    confirm-user-data-deletion: "<yellow> Bevestig dat je de gebruiker-data wil verwijderen
       voor [gamemode]."
-    all-data-removed: "&a Alle Addon data voor [gamemode] is verwijderd van de database."
-    confirm-all-data-deletion: "&e Bevestig dat je de Addon-data wil verwijderen voor
+    all-data-removed: "<green> Alle Addon data voor [gamemode] is verwijderd van de database."
+    confirm-all-data-deletion: "<yellow> Bevestig dat je de Addon-data wil verwijderen voor
       [gamemode]."
-    write-name: "&e Schrijf asjeblieft de naam in de chat."
-    new-object-created: "&a Er is een nieuw object voor [gamemode] is gemaakt."
-    object-already-exists: "&c Object &7 [id] &c Bestaat al. Kies een andere naam."
-    name-changed: "&a Geslaagd, de naam is geüpdatet."
-    write-description: "&e Schrijf de nieuwe omschrijving, een per regel in de chat,
+    write-name: "<yellow> Schrijf asjeblieft de naam in de chat."
+    new-object-created: "<green> Er is een nieuw object voor [gamemode] is gemaakt."
+    object-already-exists: "<red> Object <gray> [id] <red> Bestaat al. Kies een andere naam."
+    name-changed: "<green> Geslaagd, de naam is geüpdatet."
+    write-description: "<yellow> Schrijf de nieuwe omschrijving, een per regel in de chat,
       en 'stop' op een aparte lijn om het af te ronden."
-    description-changed: "&a Geslaagd, de omschrijving is geüpdatet."
-    write-permissions: "&e Schrijf de benodigde permissies, een per regel in de chat,
+    description-changed: "<green> Geslaagd, de omschrijving is geüpdatet."
+    write-permissions: "<yellow> Schrijf de benodigde permissies, een per regel in de chat,
       en 'stop' op een aparte lijn om het af te ronden."
-    permissions-changed: "&a Geslaagd, permissies zijn bijgewerkt."
-    start-downloading: "&a Begonnen met downloaden en importeren van Biomes Bibliotheek."
-    written-text: "&a Input Tekst:"
-    confirm-data-replacement: "&e Bevestig dat je de bestaande data wil vervangen
+    permissions-changed: "<green> Geslaagd, permissies zijn bijgewerkt."
+    start-downloading: "<green> Begonnen met downloaden en importeren van Biomes Bibliotheek."
+    written-text: "<green> Input Tekst:"
+    confirm-data-replacement: "<yellow> Bevestig dat je de bestaande data wil vervangen
       met nieuwe data."
-    new-data-imported: "&a Geslaagd, nieuwe data voor [gamemode] is geïmporteerd."
-    exported-file-name: "&e Schrijf een bestandsnaam voor het geëxporteerde database
+    new-data-imported: "<green> Geslaagd, nieuwe data voor [gamemode] is geïmporteerd."
+    exported-file-name: "<yellow> Schrijf een bestandsnaam voor het geëxporteerde database
       bestand. (schrijf 'stop' om te stoppen)"
-    database-export-completed: "&a Geslaagd, de database export voor [world] is klaar.
+    database-export-completed: "<green> Geslaagd, de database export voor [world] is klaar.
       Bestand [file] is opgeslagen."
-    file-name-exist: "&c Bestand met naam '[id]' bestaat al. Kan niet overschrijven."
-    write-search: "&e Schrijf asjeblieft een zoek-opdracht. (schrijf 'stop' om te
+    file-name-exist: "<red> Bestand met naam '[id]' bestaat al. Kan niet overschrijven."
+    write-search: "<yellow> Schrijf asjeblieft een zoek-opdracht. (schrijf 'stop' om te
       stoppen)"
-    search-updated: "&a Zoekopdracht geüpdatet"
-    invalid-biome: "&c Er is data in `[biome]`&r&c wat niet geldig is."
-    confirm-biome-deletion: "&e Bevestig dat je klimaat [biome]&r&e wil verwijderen
+    search-updated: "<green> Zoekopdracht geüpdatet"
+    invalid-biome: "<red> Er is data in `[biome]`<reset><red> wat niet geldig is."
+    confirm-biome-deletion: "<yellow> Bevestig dat je klimaat [biome]<reset><yellow> wil verwijderen
       van [gamemode]."
-    biome-removed: "[biome] &r&a is verwijderd van [gamemode]."
-    confirm-island-data-deletion: "&e Bevestig dat je [player] zijn eiland data wil
+    biome-removed: "[biome] <reset><green> is verwijderd van [gamemode]."
+    confirm-island-data-deletion: "<yellow> Bevestig dat je [player] zijn eiland data wil
       verwijderen."
-    island-data-removed: "[player] &a eiland data is verwijderd"
-    confirm-biome-data-deletion: "&e Bevestig dat je alle klimaat-data wil verwijderen
+    island-data-removed: "[player] <green> eiland data is verwijderd"
+    confirm-biome-data-deletion: "<yellow> Bevestig dat je alle klimaat-data wil verwijderen
       voor [gamemode]."
     biome-data-removed: Alle klimaten zijn verwijderd van [gamemode].
-    click-text-to-purchase: "&e You Je hebt &r [biome]&r&eontgrendeld! Klik hier om
+    click-text-to-purchase: "<yellow> You Je hebt <reset> [biome]<reset><yellow>ontgrendeld! Klik hier om
       het te kopen."
-    click-text-to-set: "&e You Je hebt &r [biome]&r&eontgrendeld! Klik hier om het
+    click-text-to-set: "<yellow> You Je hebt <reset> [biome]<reset><yellow>ontgrendeld! Klik hier om het
       te gebruiken."
   messages:
-    biome-not-unlocked: "[biome] &r&c is niet ontgrendeld. Je kan het niet gebruiken."
-    biome-not-purchased: "&c You kan &r [biome] &r&cniet gebruiken. Je moet het eerst
+    biome-not-unlocked: "[biome] <reset><red> is niet ontgrendeld. Je kan het niet gebruiken."
+    biome-not-purchased: "<red> You kan <reset> [biome] <reset><red>niet gebruiken. Je moet het eerst
       kopen."
-    biome-cannot-be-unlocked: "&r [biome] &r&ckan niet ontgrendeld worden."
-    biome-already-purchased: "&c Je hebt klimaat &r [biome] &r&cal gekocht."
-    island-level-not-reached: "&c Voor &r[biome] &r&c heb je minimaal eiland level
+    biome-cannot-be-unlocked: "<reset> [biome] <reset><red>kan niet ontgrendeld worden."
+    biome-already-purchased: "<red> Je hebt klimaat <reset> [biome] <reset><red>al gekocht."
+    island-level-not-reached: "<red> Voor <reset>[biome] <reset><red> heb je minimaal eiland level
       [number] nodig."
-    missing-permission: "[biome] &r&c heeft permissie: [permission] nodig."
-    no-credits-buy: "&c Je hebt niet genoeg credits om &r [biome] &r&c te kopen. Het
+    missing-permission: "[biome] <reset><red> heeft permissie: [permission] nodig."
+    no-credits-buy: "<red> Je hebt niet genoeg credits om <reset> [biome] <reset><red> te kopen. Het
       kost [number]."
-    no-credits-buy-bank: "&c Je hebt niet genoeg credits in je bank-account om &r
-      [biome] &r&c te kopen. Het kost [number]."
-    no-items-buy: "&c Je hebt niet genoeg items om &r [biome] &r&c te kopen. Het kost
+    no-credits-buy-bank: "<red> Je hebt niet genoeg credits in je bank-account om <reset>
+      [biome] <reset><red> te kopen. Het kost [number]."
+    no-items-buy: "<red> Je hebt niet genoeg items om <reset> [biome] <reset><red> te kopen. Het kost
       [items]."
-    biome-purchased: "&e Je hebt &r[biome]&r&e gekocht."
-    import-count: "&e [biomes] klimaten en [bundles] bundels geïmporteerd."
-    start-downloading: "&e Begin Bibliotheek downloaden."
-    update-start: "&a Begonnen met klimaat-verandering naar [biome]&r&a in [number]
-      chunks. &e Verwachte tijd: [time] sec."
-    update-done: "&a Klaar met klimaat verandering naar [biome]&r&a."
-    waiting: "&a Klimaat-verandering toegevoegd aan de wachtrij. &e Verwachte wachttijd:
+    biome-purchased: "<yellow> Je hebt <reset>[biome]<reset><yellow> gekocht."
+    import-count: "<yellow> [biomes] klimaten en [bundles] bundels geïmporteerd."
+    start-downloading: "<yellow> Begin Bibliotheek downloaden."
+    update-start: "<green> Begonnen met klimaat-verandering naar [biome]<reset><green> in [number]
+      chunks. <yellow> Verwachte tijd: [time] sec."
+    update-done: "<green> Klaar met klimaat verandering naar [biome]<reset><green>."
+    waiting: "<green> Klimaat-verandering toegevoegd aan de wachtrij. <yellow> Verwachte wachttijd:
       [time] sec."
-    biome-already-unlocked: "[biome] &r&e is al ontgrendeld."
-    everything-already-bought: "&a Je hebt alle klimaten al gekocht voor deze gamemode."
-    skipping: "&a Laden van &r [biome]&r&a overgeslagen."
-    overwriting: "&r [biome] &r&a aan het overschrijven in cache."
-    imported: "&r [biome] &a is geïmporteerd in de cache."
-    migrate-start: "&a Migratie naar een nieuw data-formaat is begonnen."
-    migrate-finish: "&a Migratie naar een nieuw data-formaat is klaar."
-    migrate-valid: "&a Alle data is geldig. Migratie is niet nodig."
-    bundle-loaded: "&a Bundel &r [bundle] &a is geladen."
+    biome-already-unlocked: "[biome] <reset><yellow> is al ontgrendeld."
+    everything-already-bought: "<green> Je hebt alle klimaten al gekocht voor deze gamemode."
+    skipping: "<green> Laden van <reset> [biome]<reset><green> overgeslagen."
+    overwriting: "<reset> [biome] <reset><green> aan het overschrijven in cache."
+    imported: "<reset> [biome] <green> is geïmporteerd in de cache."
+    migrate-start: "<green> Migratie naar een nieuw data-formaat is begonnen."
+    migrate-finish: "<green> Migratie naar een nieuw data-formaat is klaar."
+    migrate-valid: "<green> Alle data is geldig. Migratie is niet nodig."
+    bundle-loaded: "<green> Bundel <reset> [bundle] <green> is geladen."
   errors:
-    no-island-data: "&c Er is geen data opgeslagen voor dit eiland."
-    no-biomes-admin: "&c Huidige GameMode heeft geen bruikbaar klimaat. Importeer
+    no-island-data: "<red> Er is geen data opgeslagen voor dit eiland."
+    no-biomes-admin: "<red> Huidige GameMode heeft geen bruikbaar klimaat. Importeer
       of maak klimaten met /[command]"
-    no-biomes: "&c Deze GameMode heeft geen bruikbare klimaten."
-    no-rank: "&c Je mag het klimaat niet veranderen op dit eiland."
-    not-enough-level: "&c Om te veranderen naar dit klimaat, moet je eiland minimaal
+    no-biomes: "<red> Deze GameMode heeft geen bruikbare klimaten."
+    no-rank: "<red> Je mag het klimaat niet veranderen op dit eiland."
+    not-enough-level: "<red> Om te veranderen naar dit klimaat, moet je eiland minimaal
       level [number] zijn."
-    not-enough-money: "&c De verandering naar dit klimaat kost $[number]."
-    not-enough-money-bank: "&c Je bank account heeft niet genoeg credits. Klimaat-verandering
+    not-enough-money: "<red> De verandering naar dit klimaat kost $[number]."
+    not-enough-money-bank: "<red> Je bank account heeft niet genoeg credits. Klimaat-verandering
       kost $[number]."
-    not-enough-items: "&c De verandering naar dit klimaat kost [items]."
-    admin-not-on-island: "&c Jij bent geen lid van [user] zijn eiland."
-    incorrect-object: "&c Kan klimaat met naam [biome] niet vinden"
-    missing-biome: "&c Klimaat-naam is niet ingesteld."
-    incorrect-mode: "&c Gamemode met naam '[mode]' bestaat niet."
-    incorrect-range: "&c Waarde '[number]' is geen geldig getal."
-    no-file: "&c Kan bestand [file] niet vinden in de Klimaat folder."
-    no-load: "&c Kan klimaten niet importeren van [file]. Reden: [description]"
-    not-a-gamemode-world: "&c Wereld [world] is geen GameModeAddon wereld."
-    file-exist: "&c Er bestaat al een bestand met naam: [file]. Kies een andere naam."
-    no-library-entries: "&c Kan geen bibliotheek-waardes vinden"
-    not-unlocked: "&c Je hebt dit klimaat nog niet ontgrendeld."
-    not-purchased: "&c Je hebt dit klimaat niet gekocht."
-    timeout: "&c Klimaatverandering is ge-timeout. Het is mogelijk dat de selectie
+    not-enough-items: "<red> De verandering naar dit klimaat kost [items]."
+    admin-not-on-island: "<red> Jij bent geen lid van [user] zijn eiland."
+    incorrect-object: "<red> Kan klimaat met naam [biome] niet vinden"
+    missing-biome: "<red> Klimaat-naam is niet ingesteld."
+    incorrect-mode: "<red> Gamemode met naam '[mode]' bestaat niet."
+    incorrect-range: "<red> Waarde '[number]' is geen geldig getal."
+    no-file: "<red> Kan bestand [file] niet vinden in de Klimaat folder."
+    no-load: "<red> Kan klimaten niet importeren van [file]. Reden: [description]"
+    not-a-gamemode-world: "<red> Wereld [world] is geen GameModeAddon wereld."
+    file-exist: "<red> Er bestaat al een bestand met naam: [file]. Kies een andere naam."
+    no-library-entries: "<red> Kan geen bibliotheek-waardes vinden"
+    not-unlocked: "<red> Je hebt dit klimaat nog niet ontgrendeld."
+    not-purchased: "<red> Je hebt dit klimaat niet gekocht."
+    timeout: "<red> Klimaatverandering is ge-timeout. Het is mogelijk dat de selectie
       te groot is of de server druk is."
-    failed: "&c De server is tegen problemen aangelopen tijdens het veranderen van
+    failed: "<red> De server is tegen problemen aangelopen tijdens het veranderen van
       het klimaat."
-    could-not-remove-money: "&c Er is iets misgegaan tijdens het intrekken van geld."
-    could-not-remove-items: "&c Er is iets misgegaan tijdens het intrekken van items."
-    something-went-wrong: "&c Er is iets misgegaan. Kon het niet doen."
+    could-not-remove-money: "<red> Er is iets misgegaan tijdens het intrekken van geld."
+    could-not-remove-items: "<red> Er is iets misgegaan tijdens het intrekken van items."
+    something-went-wrong: "<red> Er is iets misgegaan. Kon het niet doen."
 protection:
   flags:
     BIOMES_ISLAND_PROTECTION:
       name: Klimaat Veranderen
       description: |-
-        &5&o Kies wie eiland-klimaat
-        &5&o aan kunnen passen
+        <dark_purple><italic> Kies wie eiland-klimaat
+        <dark_purple><italic> aan kunnen passen
     BIOMES_WORLD_PROTECTION:
       name: Klimaat eiland beperking
-      description: "&5&o Kies benodigdheden\n&5&o voor spelers om het\n&5&o klimaat
-        op hun eiland \n&5&o aan te kunnen passen."
-      hint: "&c Je moet op je eiland zijn om het klimaat te veranderen!"
+      description: "<dark_purple><italic> Kies benodigdheden\n<dark_purple><italic> voor spelers om het\n<dark_purple><italic> klimaat
+        op hun eiland \n<dark_purple><italic> aan te kunnen passen."
+      hint: "<red> Je moet op je eiland zijn om het klimaat te veranderen!"
