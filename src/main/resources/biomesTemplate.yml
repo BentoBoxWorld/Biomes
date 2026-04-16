@@ -54,607 +54,830 @@
 # If value is not specified or is not one of these three, static will be used.
 ##########################################################################################
 #
-# Set of biomes that can be used anywhere. This set contains all useful biomes that provides extra content. Comment above each biome shows what unique each biome brings.
+# Biomes are organized by unlock level for easy progression reference.
+# Comments above each biome show what unique mobs/features that biome provides.
 biomes:
-  # Dolphins, Cod, Squid
-  simple_ocean:
-    biome: DEEP_OCEAN
-    environment: NORMAL
-    name: '<white><bold> Deep Ocean'
-    description: |-
-      <gray> A deep dark ocean may
-      <gray> provide some cod,
-      <gray> but squids may wander
-      <gray> in its depth.
-    icon: COD
-    change:
-      mode: STATIC
-      cost: 500
-      items:
-        - COD_BUCKET:1
-  # Tropical Fish, Puffer fish
-  warm_ocean:
-    biome: WARM_OCEAN
-    environment: NORMAL
-    name: '<white><bold> Warm Ocean'
-    description: |-
-      <gray> A warm ocean is
-      <gray> ideal for swimming,
-      <gray> and catching some
-      <gray> colorful fish.
-    icon: TROPICAL_FISH
-    unlock:
-      level: 10
-    change:
-      mode: STATIC
-      cost: 500
-      items:
-        - TROPICAL_FISH_BUCKET:1
-  # Salmon, Polar Bears
-  frozen_water:
-    biome: FROZEN_OCEAN
-    environment: NORMAL
-    name: '<white><bold> Cold Ocean'
-    description: |-
-      <gray> A coldness of this
-      <gray> ocean is matched
-      <gray> only by its size.
-    icon: ICE
-    unlock:
-      level: 20
-    change:
-      mode: STATIC
-      cost: 500
-      items:
-        - ICE:20
-  # Axolotl, Glow squid
-  pretty_caves:
-    biome: LUSH_CAVES
-    environment: NORMAL
-    name: '<white><bold> Lush Caves'
-    description: |-
-      <gray> Deep underground are still
-      <gray> some places with greenery.
-    icon: FLOWERING_AZALEA
-    unlock:
-      level: 50
-    change:
-      mode: STATIC
-      cost: 500
-      items:
-        - MOSS_BLOCK:64
+  # ==================== STARTER TIER (Level 0) ====================
   # Sheep, Pig, Chicken, Cow, Donkey, Horse
   fields:
     biome: PLAINS
     environment: NORMAL
     name: '<white><bold> Plains'
     description: |-
-      <gray> Flat but green, the best
-      <gray> starting biome.
+      <gray> Peaceful grasslands where sheep,
+      <gray> pigs, cows, chickens, horses,
+      <gray> and donkeys roam freely.
+      <gray> Perfect for your first farm.
     icon: GRASS_BLOCK
     change:
       mode: STATIC
       cost: 100
-  # Red fox, other rabbit colors
+  # Red Fox, Rabbit (brown/gold)
   taiga:
     biome: TAIGA
     environment: NORMAL
     name: '<white><bold> Taiga'
     description: |-
-      <gray> Cold but not snowy
-      <gray> forest. Rabbits and
-      <gray> foxes love this
-      <gray> weather.
+      <gray> A cold forest teeming with
+      <gray> foxes and rabbits. Ideal
+      <gray> for hunting and building
+      <gray> cozy cabins.
     icon: FERN
     change:
       mode: STATIC
       cost: 100
-  # Wolf, White Rabbit, White Fox
-  cold_fields:
-    biome: SNOWY_TAIGA
+  # Dolphins, Cod, Squid
+  simple_ocean:
+    biome: DEEP_OCEAN
     environment: NORMAL
-    name: '<white><bold> Snowy Taiga'
+    name: '<white><bold> Deep Ocean'
     description: |-
-      <gray> Cold and snowy place
-      <gray> is not for everyone.
-      <gray> But white foxes and
-      <gray> rabbits have places
-      <gray> where they hide.
-    icon: SNOW_BLOCK
-    unlock:
-      level: 50
-    change:
-      mode: STATIC
-      cost: 500
-  # Goats
-  mountain:
-    biome: SNOWY_SLOPES
-    environment: NORMAL
-    name: '<white><bold> Mountain Slopes'
-    description: |-
-      <gray> A dangerous place where
-      <gray> only crazy goats can
-      <gray> survive.
-    icon: SNOW_BLOCK
-    unlock:
-      level: 75
-    change:
-      mode: STATIC
-      cost: 1000
-      items:
-        - SNOW_BLOCK:64
-  # Llama
-  savanna:
-    biome: SAVANNA_PLATEAU
-    environment: NORMAL
-    name: '<white><bold> Savanna'
-    description: |-
-      <gray> A warm and almost dry
-      <gray> place with rapid rains.
-      <gray> Only acacia trees can
-      <gray> survive there.
-    icon: ACACIA_SAPLING
-    unlock:
-      level: 50
+      <gray> Deep waters rich with cod
+      <gray> and squid. Essential for
+      <gray> fish farming and ocean
+      <gray> exploration.
+    icon: COD
     change:
       mode: STATIC
       cost: 200
       items:
-        - ACACIA_SAPLING:12
-  # Mushroom Cow
-  mooshroom:
-    biome: MUSHROOM_FIELDS
+        - COD_BUCKET:1
+  # ==================== EARLY TIER (Level 5-20) ====================
+  # Frogs, Mud
+  mangrove_swamp:
+    biome: MANGROVE_SWAMP
     environment: NORMAL
-    name: '<white><bold> Infested Land'
+    name: '<white><bold> Mangrove Swamp'
     description: |-
-      <gray> Mycelium infested blocks
-      <gray> spread faster than
-      <gray> grass and infest everything
-      <gray> in their way. Almost nothing
-      <gray> can survive here.
-    icon: MYCELIUM
+      <gray> Waterlogged mangrove roots
+      <gray> where frogs croak their
+      <gray> evening songs. Muddy but
+      <gray> magical.
+    icon: MANGROVE_PROPAGULE
     unlock:
-      level: 150
-      items:
-        - BROWN_MUSHROOM:21
+      level: 5
     change:
       mode: STATIC
-      cost: 4000
+      cost: 300
       items:
-        - RED_MUSHROOM:99
-  # Parrots, Ocelot, Panda
-  jungle:
-    biome: JUNGLE
+        - MUD:32
+  # Rabbits (white), Igloos
+  snowy_plains:
+    biome: SNOWY_PLAINS
     environment: NORMAL
-    name: '<white><bold> Jungle'
+    name: '<white><bold> Snowy Plains'
     description: |-
-      <gray> Hard to navigate and
-      <gray> a rainy place.
-      <gray> Ideal for ocelots.
-    icon: JUNGLE_SAPLING
+      <gray> Classic snowy landscape where
+      <gray> white rabbits burrow beneath
+      <gray> the snow. Perfect for building
+      <gray> snow fortresses.
+    icon: SNOW_BLOCK
     unlock:
-      level: 50
+      level: 8
     change:
       mode: STATIC
       cost: 200
+      items:
+        - SNOW_BLOCK:32
+  # Sunflowers, Bees
+  sunflower_plains:
+    biome: SUNFLOWER_PLAINS
+    environment: NORMAL
+    name: '<white><bold> Sunflower Plains'
+    description: |-
+      <gray> Endless sunflower fields
+      <gray> buzzing with bees. Scenic
+      <gray> and ideal for honey
+      <gray> production.
+    icon: SUNFLOWER
+    unlock:
+      level: 8
+      items:
+        - SUNFLOWER:16
+    change:
+      mode: STATIC
+      cost: 200
+  # Tropical Fish, Puffer fish
+  warm_ocean:
+    biome: WARM_OCEAN
+    environment: NORMAL
+    name: '<white><bold> Warm Ocean'
+    description: |-
+      <gray> Tropical waters where colorful
+      <gray> fish and pufferfish swim.
+      <gray> Essential for rare fish
+      <gray> collection.
+    icon: TROPICAL_FISH
+    unlock:
+      level: 10
+    change:
+      mode: STATIC
+      cost: 300
+      items:
+        - TROPICAL_FISH_BUCKET:1
   # Turtle
   beach:
     biome: BEACH
     environment: NORMAL
     name: '<white><bold> Beach'
     description: |-
-      <gray> The best place for a vacation.
-      <gray> Get some sunscreen and a
-      <gray> good mood.
-    icon: WATER_BUCKET
+      <gray> Golden shores where turtles
+      <gray> nest. Essential for turtle
+      <gray> farming and tropical building
+      <gray> aesthetics.
+    icon: TURTLE_EGG
     unlock:
-      level: 25
+      level: 15
     change:
       mode: STATIC
-      cost: 200
-  # No Rain
+      cost: 250
+  # Salmon, Polar Bears
+  frozen_water:
+    biome: FROZEN_OCEAN
+    environment: NORMAL
+    name: '<white><bold> Cold Ocean'
+    description: |-
+      <gray> Frozen waters where salmon
+      <gray> swim and polar bears roam.
+      <gray> Harsh, beautiful, and
+      <gray> resource-rich.
+    icon: ICE
+    unlock:
+      level: 15
+    change:
+      mode: STATIC
+      cost: 300
+      items:
+        - ICE:20
+  # Rocky coastline
+  stony_shore:
+    biome: STONY_SHORE
+    environment: NORMAL
+    name: '<white><bold> Stony Shore'
+    description: |-
+      <gray> Rocky coastline where stone
+      <gray> meets the sea. Great for
+      <gray> dramatic coastal structures.
+    icon: ANDESITE
+    unlock:
+      level: 18
+    change:
+      mode: STATIC
+      cost: 250
+  # Cherry trees, Bees
+  cherry_grove:
+    biome: CHERRY_GROVE
+    environment: NORMAL
+    name: '<white><bold> Cherry Grove'
+    description: |-
+      <gray> A peaceful place filled with
+      <gray> cherry blossoms where bees
+      <gray> buzz and spring never ends.
+    icon: CHERRY_LOG
+    unlock:
+      level: 20
+      items:
+        - CHERRY_LOG:15
+    change:
+      mode: STATIC
+      cost: 350
+  # No Rain, Husks
   desert:
     biome: DESERT
     environment: NORMAL
     name: '<white><bold> Desert'
     description: |-
-      <gray> A hot wasteland with no
-      <gray> water. Even rain does
-      <gray> not fall here.
+      <gray> A scorching wasteland where
+      <gray> no rain falls. Perfect for
+      <gray> building without weather
+      <gray> interruptions.
     icon: SAND
+    unlock:
+      level: 20
+      items:
+        - SAND:32
+    change:
+      mode: STATIC
+      cost: 400
+  # ==================== MID TIER (Level 25-50) ====================
+  # Wind effects
+  windswept_savanna:
+    biome: WINDSWEPT_SAVANNA
+    environment: NORMAL
+    name: '<white><bold> Windswept Savanna'
+    description: |-
+      <gray> Wind-swept grasslands with
+      <gray> dramatic terrain generation.
+      <gray> Beautiful and open for
+      <gray> expansive building.
+    icon: ACACIA_SAPLING
     unlock:
       level: 25
     change:
       mode: STATIC
+      cost: 300
+  # Sparse jungle features
+  sparse_jungle:
+    biome: SPARSE_JUNGLE
+    environment: NORMAL
+    name: '<white><bold> Sparse Jungle'
+    description: |-
+      <gray> Open jungle clearings where
+      <gray> bamboo and sparse trees
+      <gray> create unique landscapes.
+      <gray> A peaceful jungle variant.
+    icon: BAMBOO
+    unlock:
+      level: 30
+      items:
+        - JUNGLE_SAPLING:8
+    change:
+      mode: STATIC
+      cost: 400
+  # Wolves, Old growth trees
+  old_growth_pine_taiga:
+    biome: OLD_GROWTH_PINE_TAIGA
+    environment: NORMAL
+    name: '<white><bold> Old Growth Pine Taiga'
+    description: |-
+      <gray> An ancient forest of towering
+      <gray> pines where wolves howl and
+      <gray> podzol covers the ground.
+    icon: SPRUCE_SAPLING
+    unlock:
+      level: 35
+    change:
+      mode: STATIC
       cost: 500
-  # Flowers
+      items:
+        - SPRUCE_SAPLING:10
+  # Dark Oak, dense canopy, atmosphere
+  dark_forest:
+    biome: DARK_FOREST
+    environment: NORMAL
+    name: '<white><bold> Dark Forest'
+    description: |-
+      <gray> A dense, shadowy forest
+      <gray> shrouded in perpetual darkness.
+      <gray> Eerie yet rich with dark
+      <gray> oak and exploration.
+    icon: DARK_OAK_LOG
+    unlock:
+      level: 35
+      items:
+        - DARK_OAK_LOG:12
+    change:
+      mode: STATIC
+      cost: 800
+      items:
+        - DARK_OAK_LOG:24
+  # Goats, Wildflowers
+  meadow:
+    biome: MEADOW
+    environment: NORMAL
+    name: '<white><bold> Meadow'
+    description: |-
+      <gray> Rolling grasslands with goats,
+      <gray> wildflowers, and natural beauty.
+      <gray> Perfect for pastoral building
+      <gray> and herding.
+    icon: ALLIUM
+    unlock:
+      level: 40
+    change:
+      mode: STATIC
+      cost: 600
+      items:
+        - GRASS_BLOCK:32
+  # Llama
+  savanna:
+    biome: SAVANNA_PLATEAU
+    environment: NORMAL
+    name: '<white><bold> Savanna'
+    description: |-
+      <gray> Dry grasslands where llamas
+      <gray> roam freely. Perfect for
+      <gray> herding and acacia wood
+      <gray> farming.
+    icon: ACACIA_SAPLING
+    unlock:
+      level: 40
+    change:
+      mode: STATIC
+      cost: 400
+      items:
+        - ACACIA_SAPLING:12
+  # Wolf, White Rabbit, White Fox
+  cold_fields:
+    biome: SNOWY_TAIGA
+    environment: NORMAL
+    name: '<white><bold> Snowy Taiga'
+    description: |-
+      <gray> Frigid tundra where white
+      <gray> rabbits and arctic foxes
+      <gray> thrive. Harsh beauty for
+      <gray> arctic builders.
+    icon: SNOW_BLOCK
+    unlock:
+      level: 45
+    change:
+      mode: STATIC
+      cost: 500
+  # Wind-battered trees
+  windswept_forest:
+    biome: WINDSWEPT_FOREST
+    environment: NORMAL
+    name: '<white><bold> Windswept Forest'
+    description: |-
+      <gray> Ancient forests shaped by
+      <gray> relentless winds. Perfect
+      <gray> for dramatic windswept
+      <gray> building themes.
+    icon: OAK_LEAVES
+    unlock:
+      level: 45
+      items:
+        - OAK_LOG:16
+    change:
+      mode: STATIC
+      cost: 600
+  # Frozen river
+  frozen_river:
+    biome: FROZEN_RIVER
+    environment: NORMAL
+    name: '<white><bold> Frozen River'
+    description: |-
+      <gray> A river frozen in time where
+      <gray> ice fishing and frozen
+      <gray> landscapes create a winter
+      <gray> wonderland.
+    icon: ICE
+    unlock:
+      level: 48
+      items:
+        - ICE:16
+    change:
+      mode: STATIC
+      cost: 500
+  # ==================== ADVANCED TIER (Level 50-75) ====================
+  # Parrots, Ocelot, Panda
+  jungle:
+    biome: JUNGLE
+    environment: NORMAL
+    name: '<white><bold> Jungle'
+    description: |-
+      <gray> Dense rainforests teeming
+      <gray> with parrots, ocelots, and
+      <gray> pandas. One of the most
+      <gray> diverse biomes available.
+    icon: JUNGLE_SAPLING
+    unlock:
+      level: 50
+    change:
+      mode: STATIC
+      cost: 500
+  # Eroded cliffs, terracotta
+  eroded_badlands:
+    biome: ERODED_BADLANDS
+    environment: NORMAL
+    name: '<white><bold> Eroded Badlands'
+    description: |-
+      <gray> Stunning striped cliffs with
+      <gray> orange and red terracotta
+      <gray> layers. Spectacular for
+      <gray> terraforming projects.
+    icon: ORANGE_TERRACOTTA
+    unlock:
+      level: 50
+      items:
+        - TERRACOTTA:20
+    change:
+      mode: STATIC
+      cost: 700
+  # Axolotl, Glow squid
+  pretty_caves:
+    biome: LUSH_CAVES
+    environment: NORMAL
+    name: '<white><bold> Lush Caves'
+    description: |-
+      <gray> Underground greenery where
+      <gray> axolotls swim and glow
+      <gray> squids illuminate the
+      <gray> darkness.
+    icon: FLOWERING_AZALEA
+    unlock:
+      level: 55
+    change:
+      mode: STATIC
+      cost: 700
+      items:
+        - MOSS_BLOCK:64
+  # Pandas, Bamboo farms
+  bamboo_jungle:
+    biome: BAMBOO_JUNGLE
+    environment: NORMAL
+    name: '<white><bold> Bamboo Jungle'
+    description: |-
+      <gray> Towering bamboo forests where
+      <gray> pandas feast endlessly. Great
+      <gray> for bamboo farming and panda
+      <gray> breeding.
+    icon: BAMBOO
+    unlock:
+      level: 55
+    change:
+      mode: PER_USAGE
+      cost: 700
+      increment: 50
+      items:
+        - BAMBOO:20
+  # Polar bears, icebergs
+  deep_frozen_ocean:
+    biome: DEEP_FROZEN_OCEAN
+    environment: NORMAL
+    name: '<white><bold> Deep Frozen Ocean'
+    description: |-
+      <gray> A cold, deep ocean where
+      <gray> icebergs float and polar
+      <gray> bears roam the ice.
+    icon: BLUE_ICE
+    unlock:
+      level: 55
+    change:
+      mode: STATIC
+      cost: 800
+      items:
+        - BLUE_ICE:32
+  # Flowers, Bees
   forest:
     biome: FLOWER_FOREST
     environment: NORMAL
     name: '<white><bold> Flower Forest'
     description: |-
-      <gray> A place where every
-      <gray> bee would love to live.
-      <gray> All the flowers that you
-      <gray> wished for are here.
+      <gray> A paradise where every bee
+      <gray> would love to live. All the
+      <gray> flowers you could wish for
+      <gray> bloom here.
     icon: ORANGE_TULIP
     unlock:
-      level: 75
+      level: 60
     change:
       mode: STATIC
-      cost: 500
-  # Slime and blue orchid
+      cost: 700
+  # Dripstone formations
+  dripstone_caves:
+    biome: DRIPSTONE_CAVES
+    environment: NORMAL
+    name: '<white><bold> Dripstone Caves'
+    description: |-
+      <gray> Underground caverns with
+      <gray> hanging dripstone formations.
+      <gray> A unique cave biome with
+      <gray> otherworldly atmosphere.
+    icon: POINTED_DRIPSTONE
+    unlock:
+      level: 65
+    change:
+      mode: STATIC
+      cost: 900
+      items:
+        - POINTED_DRIPSTONE:32
+  # Slime, Blue Orchid, Witch Huts
   swamp:
     biome: SWAMP
     environment: NORMAL
     name: '<white><bold> Swamp'
     description: |-
-      <gray> A sticky place where
-      <gray> you should not want
-      <gray> to stay.
+      <gray> A murky wetland where slimes
+      <gray> bounce and blue orchids bloom.
+      <gray> Essential for slime farming.
     icon: BLUE_ORCHID
     unlock:
-      level: 75
+      level: 65
     change:
       mode: STATIC
-      cost: 500
+      cost: 800
+  # Goats, Snowy slopes
+  snowy_slopes:
+    biome: SNOWY_SLOPES
+    environment: NORMAL
+    name: '<white><bold> Snowy Slopes'
+    description: |-
+      <gray> Steep snowy slopes where
+      <gray> goats leap between cliffs
+      <gray> and avalanches rumble.
+    icon: SNOW_BLOCK
+    unlock:
+      level: 70
+    change:
+      mode: STATIC
+      cost: 900
+      items:
+        - SNOW_BLOCK:64
+  # Jagged mountain peaks
+  jagged_peaks:
+    biome: JAGGED_PEAKS
+    environment: NORMAL
+    name: '<white><bold> Jagged Peaks'
+    description: |-
+      <gray> Dangerous mountains with
+      <gray> sharp cliffs that few
+      <gray> dare to climb. Epic
+      <gray> views await the brave.
+    icon: POINTED_DRIPSTONE
+    unlock:
+      level: 70
+    change:
+      mode: STATIC
+      cost: 900
+      items:
+        - STONE:64
+  # Powder snow, spruce trees
+  grove:
+    biome: GROVE
+    environment: NORMAL
+    name: '<white><bold> Grove'
+    description: |-
+      <gray> Snowy conifer forests where
+      <gray> powder snow falls gently.
+      <gray> Serene and perfect for
+      <gray> winter wonderlands.
+    icon: POWDER_SNOW_BUCKET
+    unlock:
+      level: 40
+      items:
+        - SPRUCE_SAPLING:8
+    change:
+      mode: STATIC
+      cost: 600
+  # ==================== HIGH TIER (Level 75-100) ====================
+  # Water features
+  river:
+    biome: RIVER
+    environment: NORMAL
+    name: '<white><bold> River'
+    description: |-
+      <gray> Flowing rivers where nature
+      <gray> and water meet. Excellent
+      <gray> for scenic waterway features
+      <gray> across your island.
+    icon: WATER_BUCKET
+    unlock:
+      level: 85
+    change:
+      mode: STATIC
+      cost: 400
+  # Ice towers
+  ice_spikes:
+    biome: ICE_SPIKES
+    environment: NORMAL
+    name: '<white><bold> Ice Spikes'
+    description: |-
+      <gray> Towers of packed ice rising
+      <gray> from the frozen land. A
+      <gray> spectacular and rare frozen
+      <gray> landscape.
+    icon: ICE
+    unlock:
+      level: 90
+    change:
+      mode: STATIC
+      cost: 1000
+      items:
+        - ICE:64
+  # Ice-capped peaks
+  frozen_peaks:
+    biome: FROZEN_PEAKS
+    environment: NORMAL
+    name: '<white><bold> Frozen Peaks'
+    description: |-
+      <gray> Ice-capped mountains where
+      <gray> the cold bites harder than
+      <gray> anywhere. Premium mountain
+      <gray> biome.
+    icon: PACKED_ICE
+    unlock:
+      level: 95
+    change:
+      mode: STATIC
+      cost: 1200
+      items:
+        - SNOW_BLOCK:64
+  # ==================== ELITE TIER (Level 150-200) ====================
+  # Mushroom Cow, no hostile mobs
+  mushroom_fields:
+    biome: MUSHROOM_FIELDS
+    environment: NORMAL
+    name: '<white><bold> Mushroom Fields'
+    description: |-
+      <gray> A strange paradise where
+      <gray> mushrooms grow tall, cows
+      <gray> are red, and no hostile mobs
+      <gray> dare to spawn.
+    icon: MYCELIUM
+    unlock:
+      level: 160
+      items:
+        - BROWN_MUSHROOM:21
+    change:
+      mode: PER_USAGE
+      cost: 3000
+      increment: 300
+      items:
+        - RED_MUSHROOM:64
+  # The Creaking, Pale Oak
+  pale_garden:
+    biome: PALE_GARDEN
+    environment: NORMAL
+    name: '<white><bold> Pale Garden'
+    description: |-
+      <gray> A mysterious pale forest with
+      <gray> white-barked trees and eerie
+      <gray> atmosphere. Home to The
+      <gray> Creaking, a mob like no other.
+    icon: PALE_OAK_LOG
+    unlock:
+      level: 180
+      items:
+        - PALE_OAK_LOG:16
+    change:
+      mode: PER_USAGE
+      cost: 2000
+      increment: 200
+      items:
+        - PALE_OAK_LOG:20
+  # Warden, Sculk
+  deep_dark:
+    biome: DEEP_DARK
+    environment: NORMAL
+    name: '<white><bold> Deep Dark'
+    description: |-
+      <gray> Far underground where the
+      <gray> darkness is alive and the
+      <gray> Warden stalks. Only the
+      <gray> bravest enter here.
+    icon: SCULK
+    unlock:
+      level: 180
+    change:
+      mode: STATIC
+      cost: 2500
+      items:
+        - SCULK:32
+  # End dimension
+  the_end:
+    biome: THE_END
+    environment: THE_END
+    name: '<white><bold> The End'
+    description: |-
+      <gray> The End dimension where the
+      <gray> dragon once ruled. A desolate
+      <gray> kingdom of void and stone
+      <gray> for ultimate builders.
+    icon: END_STONE
+    unlock:
+      level: 200
+    change:
+      mode: STATIC
+      cost: 1500
+      items:
+        - END_STONE:64
+        - PURPUR_BLOCK:20
+  # ==================== NETHER TIER (Level 220+) ====================
   # Default Nether Biome
   hell:
     biome: NETHER_WASTES
     environment: NETHER
     name: '<white><bold> Hell'
     description: |-
-      <gray> Not a place where
-      <gray> living things should wander.
+      <gray> The classic nether wasteland
+      <gray> of fire and lava. Gateway
+      <gray> to all other nether biomes.
     icon: NETHERRACK
     unlock:
-      level: 250
+      level: 220
     change:
       mode: STATIC
-      cost: 1000
-  # Magma Cube
-  basalt:
-    biome: BASALT_DELTAS
-    environment: NETHER
-    name: '<white><bold> Basalt Deltas'
-    description: |-
-      <gray> A bit cooler place in
-      <gray> hell where magma cubes
-      <gray> wander and search
-      <gray> for food.
-    icon: BASALT
-    unlock:
-      level: 250
-    change:
-      mode: STATIC
-      cost: 1000
-      items:
-        - BASALT:64
-  # Skeletons and Ghasts
-  lost_souls:
-    biome: SOUL_SAND_VALLEY
-    environment: NETHER
-    name: '<white><bold> Lost Soul Valley'
-    description: |-
-      <gray> Those who stay here too long
-      <gray> may get stuck and never be
-      <gray> able to leave.
-    icon: SOUL_SAND
-    unlock:
-      level: 250
-    change:
-      mode: STATIC
-      cost: 1000
-      items:
-        - SOUL_SAND:64
+      cost: 1200
   # Piglins and Hoglins
   red_forest:
     biome: CRIMSON_FOREST
     environment: NETHER
     name: '<white><bold> Red Forest'
     description: |-
-      <gray> Even in hell you
-      <gray> can find some places
-      <gray> where life survives.
-      <gray> Be aware of angry pigs.
+      <gray> A crimson forest where
+      <gray> piglins trade and hoglins
+      <gray> charge. Life survives
+      <gray> even in hell.
     icon: CRIMSON_FUNGUS
     unlock:
-      level: 250
+      level: 225
       items:
         - NETHERRACK:64
     change:
       mode: STATIC
-      cost: 1000
+      cost: 1200
       items:
         - CRIMSON_FUNGUS:3
-  # Technically, no hostile mobs spawn here.
+  # Magma Cube
+  basalt:
+    biome: BASALT_DELTAS
+    environment: NETHER
+    name: '<white><bold> Basalt Deltas'
+    description: |-
+      <gray> Volcanic basalt formations
+      <gray> where magma cubes bounce
+      <gray> between pillars of dark
+      <gray> stone.
+    icon: BASALT
+    unlock:
+      level: 230
+    change:
+      mode: STATIC
+      cost: 1200
+      items:
+        - BASALT:64
+  # Technically, no hostile mobs spawn here
   cyan_forest:
     biome: WARPED_FOREST
     environment: NETHER
     name: '<white><bold> Cyan Forest'
     description: |-
-      <gray> A safe place in an unsafe
-      <gray> world.
+      <gray> The only safe place in the
+      <gray> nether. No hostile mobs
+      <gray> spawn in this tranquil
+      <gray> warped forest.
     icon: WARPED_FUNGUS
     unlock:
-      level: 250
+      level: 235
       items:
         - NETHERRACK:64
     change:
       mode: STATIC
-      cost: 1000
+      cost: 1200
       items:
         - WARPED_FUNGUS:3
-# Eroded Badlands
-  eroded_badlands:
-    biome: ERODED_BADLANDS
-    environment: NORMAL
-    name: '<white><bold> Eroded Badlands'
+  # Skeletons and Ghasts
+  lost_souls:
+    biome: SOUL_SAND_VALLEY
+    environment: NETHER
+    name: '<white><bold> Lost Soul Valley'
     description: |-
-      <gray> A land with its colors
-      <gray> striped away by time,
-      <gray> leaving beautiful cliffs.
+      <gray> A haunted valley where
+      <gray> ghasts wail and skeletons
+      <gray> wander. Those who stay too
+      <gray> long may never leave.
+    icon: SOUL_SAND
+    unlock:
+      level: 240
+    change:
+      mode: STATIC
+      cost: 1200
+      items:
+        - SOUL_SAND:64
+# ==================== BUNDLES ====================
+bundles:
+  starter_bundle:
+    name: '<white><bold> Starter Bundle'
+    description: |-
+      <gray> Everything you need to start
+      <gray> your island adventure. Five
+      <gray> essential biomes for new
+      <gray> players.
     icon: GRASS_BLOCK
-    unlock:
-      level: 50
-    change:
-      mode: STATIC
-      cost: 1000
-# Windswept Forest
-  windswept_forest:
-    biome: WINDSWEPT_FOREST
-    environment: NORMAL
-    name: '<white><bold> Windswept Forest'
+    biomes:
+      - fields
+      - taiga
+      - simple_ocean
+      - mangrove_swamp
+      - snowy_plains
+  explorer_bundle:
+    name: '<white><bold> Explorer Bundle'
     description: |-
-      <gray> A forest battered by
-      <gray> strong winds, only the
-      <gray> toughest trees survive.
-    icon: GRASS_BLOCK
-    unlock:
-      level: 30
-    change:
-      mode: STATIC
-      cost: 1000
-# Windswept Savanna
-  windswept_savanna:
-    biome: WINDSWEPT_SAVANNA
-    environment: NORMAL
-    name: '<white><bold> Windswept Savanna'
+      <gray> Expand your horizons across
+      <gray> diverse and exciting biomes.
+      <gray> For players ready to explore
+      <gray> everything.
+    icon: COMPASS
+    biomes:
+      - desert
+      - beach
+      - savanna
+      - jungle
+      - dark_forest
+      - meadow
+      - cherry_grove
+  nether_end_bundle:
+    name: '<white><bold> Nether & End Bundle'
     description: |-
-      <gray> Dry and cracked lands
-      <gray> where strong winds
-      <gray> blow through the grass.
-    icon: ACACIA_SAPLING
-    unlock:
-      level: 20
-    change:
-      mode: STATIC
-      cost: 500
-# Stone Shores
-  stony_shore:
-    biome: STONY_SHORE
-    environment: NORMAL
-    name: '<white><bold> Stony Shore'
-    description: |-
-      <gray> The rocky coastline
-      <gray> is not a soft place
-      <gray> but offers hidden gems.
-    icon: STONE
-    unlock:
-      level: 15
-    change:
-      mode: STATIC
-      cost: 300
-# Mushroom Island
-  mushroom_fields:
-    biome: MUSHROOM_FIELDS
-    environment: NORMAL
-    name: '<white><bold> Mushroom Fields'
-    description: |-
-      <gray> A strange place where
-      <gray> mushrooms grow tall
-      <gray> and cows are red.
-    icon: MYCELIUM
-    unlock:
-      level: 150
-    change:
-      mode: STATIC
-      cost: 4000
-      items:
-        - RED_MUSHROOM:64
-# Sunflower Plains
-  sunflower_plains:
-    biome: SUNFLOWER_PLAINS
-    environment: NORMAL
-    name: '<white><bold> Sunflower Plains'
-    description: |-
-      <gray> A beautiful open field
-      <gray> where sunflowers
-      <gray> turn to follow the sun.
-    icon: SUNFLOWER
-    unlock:
-      level: 10
-    change:
-      mode: STATIC
-      cost: 500
-# Jagged Peaks
-  jagged_peaks:
-    biome: JAGGED_PEAKS
-    environment: NORMAL
-    name: '<white><bold> Jagged Peaks'
-    description: |-
-      <gray> Dangerous mountains
-      <gray> with sharp cliffs that
-      <gray> few dare to climb.
-    icon: STONE
-    unlock:
-      level: 75
-    change:
-      mode: STATIC
-      cost: 1000
-      items:
-        - STONE:64
-# Ice Spikes
-  ice_spikes:
-    biome: ICE_SPIKES
-    environment: NORMAL
-    name: '<white><bold> Ice Spikes'
-    description: |-
-      <gray> Towers of ice rising
-      <gray> from the frozen land,
-      <gray> where nothing grows.
-    icon: ICE
-    unlock:
-      level: 100
-    change:
-      mode: STATIC
-      cost: 1500
-      items:
-        - ICE:64
-# Deep Frozen Ocean
-  deep_frozen_ocean:
-    biome: DEEP_FROZEN_OCEAN
-    environment: NORMAL
-    name: '<white><bold> Deep Frozen Ocean'
-    description: |-
-      <gray> A cold, deep ocean
-      <gray> where icebergs float
-      <gray> and polar bears roam.
-    icon: BLUE_ICE
-    unlock:
-      level: 50
-    change:
-      mode: STATIC
-      cost: 1000
-      items:
-        - BLUE_ICE:32
-# Snowy Slopes
-  snowy_slopes:
-    biome: SNOWY_SLOPES
-    environment: NORMAL
-    name: '<white><bold> Snowy Slopes'
-    description: |-
-      <gray> Steep snowy slopes
-      <gray> where goats roam
-      <gray> and avalanches fall.
-    icon: SNOW_BLOCK
-    unlock:
-      level: 75
-    change:
-      mode: STATIC
-      cost: 1000
-      items:
-        - SNOW_BLOCK:64
-# Frozen Peaks
-  frozen_peaks:
-    biome: FROZEN_PEAKS
-    environment: NORMAL
-    name: '<white><bold> Frozen Peaks'
-    description: |-
-      <gray> Ice-capped mountains
-      <gray> where the cold bites
-      <gray> harder than anywhere.
-    icon: SNOW_BLOCK
-    unlock:
-      level: 100
-    change:
-      mode: STATIC
-      cost: 1500
-      items:
-        - SNOW_BLOCK:64
-# Old Growth Pine Taiga
-  old_growth_pine_taiga:
-    biome: OLD_GROWTH_PINE_TAIGA
-    environment: NORMAL
-    name: '<white><bold> Old Growth Pine Taiga'
-    description: |-
-      <gray> An ancient forest of
-      <gray> towering pines where
-      <gray> few dare to tread.
-    icon: SPRUCE_SAPLING
-    unlock:
-      level: 30
-    change:
-      mode: STATIC
-      cost: 500
-      items:
-        - SPRUCE_SAPLING:10
-# Cherry Grove
-  cherry_grove:
-    biome: CHERRY_GROVE
-    environment: NORMAL
-    name: '<white><bold> Cherry Grove'
-    description: |-
-      <gray> A peaceful place filled
-      <gray> with cherry blossoms,
-      <gray> where spring never ends.
-    icon: CHERRY_LOG
-    unlock:
-      level: 20
-    change:
-      mode: STATIC
-      cost: 300
-      items:
-        - CHERRY_LOG:20
-# Deep Dark
-  deep_dark:
-    biome: DEEP_DARK
-    environment: NORMAL
-    name: '<white><bold> Deep Dark'
-    description: |-
-      <gray> Far underground, a
-      <gray> place where the
-      <gray> darkness is alive.
-    icon: SCULK
-    unlock:
-      level: 200
-    change:
-      mode: STATIC
-      cost: 2000
-      items:
-        - SCULK:32
-# Sparse Jungle
-  sparse_jungle:
-    biome: SPARSE_JUNGLE
-    environment: NORMAL
-    name: '<white><bold> Sparse Jungle'
-    description: |-
-      <gray> A lightly wooded area
-      <gray> where jungle meets
-      <gray> open plains.
-    icon: GRASS_BLOCK
-    unlock:
-      level: 15
-    change:
-      mode: STATIC
-      cost: 500
-# Frozen River
-  frozen_river:
-    biome: FROZEN_RIVER
-    environment: NORMAL
-    name: '<white><bold> Frozen River'
-    description: |-
-      <gray> A river frozen in time
-      <gray> where only the bravest
-      <gray> creatures can survive.
-    icon: ICE
-    unlock:
-      level: 50
-    change:
-      mode: STATIC
-      cost: 500
-# Grove
-  grove:
-    biome: GROVE
-    environment: NORMAL
-    name: '<white><bold> Grove'
-    description: |-
-      <gray> A quiet, snowy forest
-      <gray> where the trees stand
-      <gray> tall and silent.
-    icon: GRASS_BLOCK
-    unlock:
-      level: 40
-    change:
-      mode: STATIC
-      cost: 600
+      <gray> Unlock the dimensions beyond
+      <gray> the overworld. For adventurers
+      <gray> seeking ultimate power.
+    icon: NETHERRACK
+    biomes:
+      - hell
+      - basalt
+      - lost_souls
+      - red_forest
+      - cyan_forest
+      - the_end
