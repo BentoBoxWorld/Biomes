@@ -502,11 +502,18 @@ public class Utils
             boolean available) {
         User user = User.getInstance(uuid);
 
-        WorldSettings settings = addon.getPlugin().getIWM().getWorldSettings(island.getWorld());
-
-        if (user.isOnline())
+        if (!user.isOnline())
         {
-            TextComponent component;
+            return;
+        }
+
+        String islandGameMode = getGameMode(island.getWorld());
+        World playerWorld = user.getWorld();
+        String playerGameMode = playerWorld == null ? "" : getGameMode(playerWorld);
+
+        if (!islandGameMode.isEmpty() && islandGameMode.equals(playerGameMode))
+        {
+            WorldSettings settings = addon.getPlugin().getIWM().getWorldSettings(island.getWorld());
 
             StringBuilder commandBuilder = new StringBuilder();
             commandBuilder.append("/");
@@ -514,18 +521,21 @@ public class Utils
             commandBuilder.append(" ");
             commandBuilder.append(addon.getSettings().getPlayerCommand().split(" ")[0]);
 
-            if (!available) {
-                component = new TextComponent(user.getTranslation(Constants.CONVERSATIONS + "click-text-to-purchase",
-                        Constants.PARAMETER_BIOME, biome.getFriendlyName()));
-            } else
-            {
-                component = new TextComponent(user.getTranslation(Constants.CONVERSATIONS + "click-text-to-set",
-                        Constants.PARAMETER_BIOME, biome.getFriendlyName()));
-            }
-
+            String key = available ? "click-text-to-set" : "click-text-to-purchase";
+            TextComponent component = new TextComponent(user.getTranslation(Constants.CONVERSATIONS + key,
+                    Constants.PARAMETER_BIOME, biome.getFriendlyName()));
             component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, commandBuilder.toString()));
 
             user.getPlayer().spigot().sendMessage(component);
+        }
+        else
+        {
+            String gameModeName = BentoBox.getInstance().getIWM().getAddon(island.getWorld())
+                    .map(a -> a.getDescription().getName()).orElse("");
+            String key = available ? "click-text-to-set-other-world" : "click-text-to-purchase-other-world";
+            user.sendMessage(Constants.CONVERSATIONS + key,
+                    Constants.PARAMETER_BIOME, biome.getFriendlyName(),
+                    "[gamemode]", gameModeName);
         }
     }
 
