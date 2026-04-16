@@ -828,10 +828,6 @@ biomes:
     click-text-to-purchase: "&e You have unlocked &r [biome]&r&e! Click here to buy it."
     # Message that appears when user unlocks new biome and can already use it.
     click-text-to-set: "&e You have unlocked &r [biome]&r&e! Click here to use it."
-    # Message shown when a biome is unlocked while the player is outside that gamemode world.
-    click-text-to-purchase-other-world: "&e You have unlocked &r [biome]&r&e in &r [gamemode]&r&e! Visit that world to buy it."
-    # Message shown when a biome is unlocked while the player is outside that gamemode world.
-    click-text-to-set-other-world: "&e You have unlocked &r [biome]&r&e in &r [gamemode]&r&e! Visit that world to use it."
   messages:
     # Message that is sent to a player if he tries to use locked biome.
     biome-not-unlocked: "[biome] &r&c is not unlocked. You cannot use it."
