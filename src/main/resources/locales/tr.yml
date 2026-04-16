@@ -1,0 +1,821 @@
+biomes:
+  commands:
+    # Bu bölüm yalnızca yönetici komutları çevirilerini içerir.
+    admin:
+      main:
+        description: "ana biyom yönetici komutu"
+      import:
+        parameters: "<file>"
+        description: "biyomları içe aktarır"
+        confirmation: "Bu işlem [gamemode] adresindeki mevcut biyomları kaldıracak ve şablon dosyasından yeni biyomları içe aktaracaktır - lütfen onaylayın"
+      migrate:
+        description: "depolanan biyom verilerini yeni biçime taşır"
+      set:
+        description: "oyuncu için biyomu değiştirir"
+        parameters: "<player> <biome-id> [mode] [size]"
+      unlock:
+        description: "oyuncu için biyomu kontrolsüz olarak kilitlesini açar. Sonuna `true` eklenmesi satın alındı olarak işaretleyecektir."
+        parameters: "<player> <biome-id> [true]"
+      clear-queue:
+        description: "biyom güncelleme kuyruğunu temizler"
+    # Bu bölüm yalnızca oyuncu komutları çevirilerini içerir.
+    player:
+      main:
+        description: "biyom seçim arayüzünü açar"
+      set:
+        description: "oyuncu için biyomu değiştirir"
+        parameters: "<biome-id> [mode] [size]"
+      buy:
+        description: "istenen biyomu satın alır"
+        parameters: "<biome-id>"
+      info:
+        description: "sohbete ayrıntılı biyom açıklaması içeren bir mesaj gönderir"
+        parameters: "<biome-id>"
+  gui:
+    titles:
+      player-panel: "<black><bold> Biyom Seçin"
+      buy-panel: "<black><bold> Biyom Satın Al"
+      advanced-panel: "<black><bold> Güncelleme Modu"
+      admin-panel: "<black><bold> Yönetici Arayüzü"
+      settings: "<black><bold> Ayarlar"
+      library: "<black><bold> Kütüphane"
+      manage-biomes: "<black><bold> Biyomları Yönet"
+      manage-bundles: "<black><bold> Paketleri Yönet"
+      manage-islands: "<black><bold> Ada Verilerini Yönet"
+      edit-biome: "<black><bold> Biyomu Düzenle: [biome]"
+      edit-bundle: "<black><bold> Paketi Düzenle: [bundle]"
+      edit-island: "<black><bold> Adayı Düzenle: [island]"
+      environment-selector: "<black><bold> Ortamı Seçin"
+      biome-selector: "<black><bold> Biyomu Seçin"
+      bundle-selector: "<black><bold> Paketi Seçin"
+      item-selector: "<black><bold> Öğeleri Seçin"
+    buttons:
+      island:
+        name: "<white><bold> Ada"
+        description: |-
+          <gray> Biyomu tüm ada
+          <gray> üzerinde değiştirir.
+      chunk:
+        name: "<white><bold> Bölüm"
+        description: |-
+          <gray> Biyomu bölümler halinde değiştirir.
+      range:
+        name: "<white><bold> Aralık"
+        description: |-
+          <gray> Biyomu aralıklı olarak değiştirir.
+      reduce:
+        name: "<white><bold> Azalt"
+        description: |-
+          <gray> <yellow> [number] <gray> kadar azalt"
+      increase:
+        name: "<white><bold> Arttır"
+        description: |-
+          <gray> <yellow> [number] <gray> kadar arttır"
+      accept:
+        name: "<white><bold> Değişikliği Uygula"
+        description: |-
+          <gray> Biyomu <yellow> [biome] <gray> olarak değiştir
+
+          <gray> Güncelleme modu: <yellow> [mode]
+          <gray> Güncelleme aralığı: <yellow> [number]
+      return:
+        name: "<white><bold> Geri Dön"
+        description: |-
+          <gray> Önceki menüye dön.
+      previous:
+        name: "<white><bold> Önceki Sayfa"
+        description: |-
+          <gray> <yellow> [number] <gray> sayfasına geç"
+      next:
+        name: "<white><bold> Sonraki Sayfa"
+        description: |-
+          <gray> <yellow> [number] <gray> sayfasına geç"
+      quit:
+        name: "<white><bold> Çık"
+        description: |-
+          <gray> Arayüzden çık.
+      save:
+        name: "<white><bold> Kaydet"
+        description: |-
+          <gray> Değişiklikleri kaydet ve dön.
+      cancel:
+        name: "<white><bold> İptal"
+        description: |-
+          <gray> Değişiklikleri iptal et ve dön.
+      search:
+        name: "<white><bold> Ara"
+        description: |-
+          <gray> Giriş metni değeriyle
+          <gray> bir öğe aramasına
+          <gray> izin verir.
+        search: "<aqua> Değer: [value]"
+      buy:
+        name: "<white><bold> Satın Al"
+        description: |-
+          <gray> Yeni bir biyom satın al.
+      manage_islands:
+        name: "<white><bold> Adaları Yönet"
+        description: |-
+          <gray> Ada verilerini
+          <gray> yönetmesine izin verir.
+      manage_biomes:
+        name: "<white><bold> Biyomları Yönet"
+        description: |-
+          <gray> Biyom verilerini
+          <gray> yönetmesine izin verir.
+      manage_bundles:
+        name: "<white><bold> Paketleri Yönet"
+        description: |-
+          <gray> Paket verilerini
+          <gray> yönetmesine izin verir.
+      settings:
+        name: "<white><bold> Ayarlar"
+        description: |-
+          <gray> Bazı eklenti
+          <gray> ayarlarını değiştirmesine izin verir.
+      import_template:
+        name: "<white><bold> Şablonu İçe Aktar"
+        description: |-
+          <gray> Eklenti dizininde
+          <gray> bulunan şablon dosyasını
+          <gray> içe aktar.
+      web_library:
+        name: "<white><bold> Web Kütüphanesi"
+        description: |-
+          <gray> Paylaşılan biyomları
+          <gray> içeren web kütüphanesine
+          <gray> erişin.
+      export_from_database:
+        name: "<white><bold> Veritabanını Dışa Aktar"
+        description: |-
+          <gray> Veritabanını eklenti
+          <gray> dizininde bulunan tek bir
+          <gray> dosyaya dışa aktar.
+      import_to_database:
+        name: "<white><bold> Veritabanını İçe Aktar"
+        description: |-
+          <gray> Veritabanını eklenti
+          <gray> dizininde bulunan bir dosyadan
+          <gray> içe aktar.
+      wipe_islands_data:
+        name: "<white><bold> Ada Veritabanını Temizle"
+        description: |-
+          <gray> Bu oyun modu için tüm
+          <gray> biyom kullanıcı verilerini temizle.
+      wipe_biomes_data:
+        name: "<white><bold> Biyom Veritabanını Temizle"
+        description: |-
+          <gray> Bu oyun modu için tüm
+          <gray> biyom ve paket verilerini temizle.
+      add_biome:
+        name: "<white><bold> Biyom Ekle"
+        description: |-
+          <gray> Oyuncuların kullanıcı
+          <gray> panoları aracılığıyla kullanabilecekleri
+          <gray> yeni bir Biyom oluştur.
+      remove_biome:
+        name: "<white><bold> Biyomu Kaldır"
+        description: |-
+          <gray> Seçilen biyomları
+          <gray> kullanıcı panolarından kaldır.
+        title: "<yellow> Seçilen Biyomlar:"
+        value: "<yellow> - [biome]"
+      accept_selected:
+        name: "<white><bold> Seçilenleri Kabul Et"
+        description: |-
+          <gray> Seçilen öğeleri kabul et.
+        title: "<yellow> Seçilen Öğeler:"
+        element: "<yellow> - [element]"
+      environment_element:
+        name: "<white><bold> [environment]"
+        description: |-
+          <gray> [description].
+      properties:
+        name: "<white><bold> Özellikler"
+        description: |-
+          <gray> Biyomun ana özelliklerini görüntüle.
+      change_properties:
+        name: "<white><bold> Özellikleri Değiştir"
+        description: |-
+          <gray> Değişen biyom özelliklerini görüntüle.
+      unlock_properties:
+        name: "<white><bold> Kilidi Aç Özellikleri"
+        description: |-
+          <gray> Biyom kilit açma özelliklerini görüntüle.
+      biome:
+        name: "<white><bold> [biome]"
+        description: |-
+          <gray> Minecraft Biyom türü.
+        value: "<gray> Biyom ID'si: <yellow> [id]"
+      name:
+        name: "<white><bold> Görüntüleme Adı"
+        description: |-
+          <gray> Biyom için görüntüleme adı.
+          <gray> Renk kodlarını destekler.
+        value: "<gray> Geçerli Değer: <reset> [name]"
+      deployed:
+        name: "<white><bold> Dağıtıldı"
+        description: |-
+          <gray> Biyomun oyunculara
+          <gray> erişilebilir olup olmadığını
+          <gray> değiştirir.
+        enabled: "<dark_green> Etkinleştirildi"
+        disabled: "<red> Devre Dışı Bırakıldı"
+      environment:
+        name: "<white><bold> Boyut"
+        description: |-
+          <gray> Biyomun hangi
+          <gray> boyutta uygulanabilecek olduğunu
+          <gray> sınırlamaya izin verir.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      icon:
+        name: "<white><bold> İkon"
+        description: |-
+          <gray> Bu biyom için ikonu
+          <gray> değiştirmeye izin verir.
+      order:
+        name: "<white><bold> Sıra"
+        description: |-
+          <gray> Nesnelerin sırasını
+          <gray> değiştirmeye izin verir.
+          <gray> Eşit sayılara sahip nesneler
+          <gray> benzersiz kimlik adlarına
+          <gray> göre sıralanır.
+        value: "<gray> Geçerli sıra: <yellow> [number]"
+      description:
+        name: "<white><bold> Açıklama"
+        description: |-
+          <gray> Biyom için spesifik
+          <gray> açıklama. Renk kodları
+          <gray> buna uygulanmalıdır.
+        value: "<yellow> Geçerli açıklama:"
+        none: "<gray> Açıklama belirlenmemiş."
+      unlock_permissions:
+        name: "<white><bold> İzinler"
+        description: |-
+          <gray> Bu biyomun erişilebilir
+          <gray> olması için kilit açma
+          <gray> izinlerini değiştirmeye izin verir.
+        title: "<yellow> İzinler: "
+        element: " <dark_gray> - [permission]"
+        none: "<gray> İzinler belirlenmemiş."
+      unlock_cost:
+        name: "<white><bold> Maliyet"
+        description: |-
+          <gray> Bu biyomun kilidini
+          <gray> açma maliyetini değiştirmeye izin verir.
+        value: "<gray> Geçerli maliyet: <yellow> [number]"
+      unlock_items:
+        name: "<white><bold> Öğeler"
+        description: |-
+          <gray> Bu biyom için kilit açma
+          <gray> öğelerini değiştirmeye izin verir.
+        title: "<yellow> Öğeler: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Öğeler belirlenmemiş."
+      unlock_level:
+        name: "<white><bold> Seviye"
+        description: |-
+          <gray> Bu biyomun kilidini açmak
+          <gray> için gereken ada seviyesini
+          <gray> değiştirmeye izin verir.
+        value: "<gray> Geçerli seviye: <yellow> [number]"
+      change_cost:
+        name: "<white><bold> Maliyet"
+        description: |-
+          <gray> Bu biyomu uygulama
+          <gray> maliyetini değiştirmeye izin verir.
+        value: "<gray> Geçerli maliyet: <yellow> [number]"
+      change_items:
+        name: "<white><bold> Öğeler"
+        description: |-
+          <gray> Bu biyomu uygulamak için
+          <gray> öğeleri değiştirmeye izin verir.
+        title: "<yellow> Öğeler: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Öğeler belirlenmemiş."
+      change_type:
+        name: "<white><bold> [type]"
+        description: |-
+          <gray> Bu biyomu uygulamak için
+          <gray> maliyet türünü değiştirmeye izin verir.
+        static:
+          name: "Statik Değer"
+          description: |-
+            <gray> Biyom değişiklik maliyeti
+            <gray> değişmez.
+        per_block:
+          name: "Blok Başına"
+          description: |-
+            <gray> Biyom değişiklik maliyeti
+            <gray> blok başına hesaplanır.
+        per_usage:
+          name: "Kullanım Başına"
+          description: |-
+            <gray> Biyom değişiklik maliyeti
+            <gray> her kullanımdan sonra
+            <gray> artar.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      change_increment:
+        name: "<white><bold> Artış"
+        description: |-
+          <gray> Kullanım başına artışı
+          <gray> değiştirmeye izin verir.
+        value: "<gray> Geçerli değer: <yellow> [number]"
+      biome-filter:
+        name: "<white><bold> [filter]"
+        description: |-
+          <gray> Minecraft Wiki'ye dayalı
+          <gray> Biyom Filtresi.
+        lush: "Verimli Biyomlar"
+        dry: "Kuru Biyomlar"
+        cold: "Soğuk Biyomlar"
+        snowy: "Karlı Biyomlar"
+        aquatic: "Okyanus Biyomları"
+        nether: "Nether Biyomları"
+        the_end: "The End Biyomları"
+        neutral: "Tarafsız Biyomlar"
+        unused: "Kullanılmayan Biyomlar"
+        warm: "Sıcak Biyomlar"
+        cave: "Mağara Biyomları"
+        temperate: "Ilıman Biyomlar"
+      protection_range:
+        name: "<white><bold> Koruma Aralığı"
+        description: |-
+          <gray> Biyom değişikliğini yalnızca
+          <gray> ada koruma aralığıyla sınırlandırmaya
+          <gray> izin verir; tüm adada biyom
+          <gray> değişikliği yerine.
+        enabled: "<dark_green> Etkinleştirildi"
+        disabled: "<red> Devre Dışı Bırakıldı"
+      reset:
+        name: "<white><bold> Sahip Değişikliğinde Sıfırla"
+        description: |-
+          <gray> Ada sahibi değişirse ve yeni
+          <gray> sahip geçerli biyom izinine sahip
+          <gray> değilse biyomu varsayılan olana
+          <gray> zorunlu olarak değiştirmeyi
+          <gray> etkinleştirmeye izin verir.
+        enabled: "<dark_green> Etkinleştirildi"
+        disabled: "<red> Devre Dışı Bırakıldı"
+      cool_down:
+        name: "<white><bold> Biyom Bekleme Süresi"
+        description: |-
+          <gray> Oyuncunun biyomu tekrar
+          <gray> değiştirebilmesi için arası gereken
+          <gray> saniye sayısını ayarlamaya izin verir.
+        value: "<gray> Geçerli bekleme süresi: <yellow> [number]"
+        disabled: "<yellow> Bekleme süresi devre dışıdır."
+      default_size:
+        name: "<white><bold> Varsayılan Aralık"
+        description: |-
+          <gray> Oyuncu biyomu yazmaması durumunda
+          <gray> kullanılacak sayıyı ayarlamaya
+          <gray> izin verir.
+        value: "<gray> Varsayılan Aralık: <yellow> [number]"
+      default_mode:
+        name: "<white><bold> Varsayılan Güncelleme Modu"
+        description: |-
+          <gray> Oyuncular sağlamadığında varsayılan
+          <gray> güncelleme modunu ayarlamaya
+          <gray> izin verir.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      unlock_notify:
+        name: "<white><bold> Kilidi Açmada Bildir"
+        description: |-
+          <gray> Kullanıcı yeni bir biyomun
+          <gray> kilidini açtığında bir ileti
+          <gray> gönderilir.
+        enabled: |-
+          <aqua> Kilidi açmada bildirim <green> etkindir <aqua>.
+        disabled: |-
+          <aqua> Kilidi açmada bildirim <red> devre dışıdır <aqua>.
+      change_timeout:
+        name: "<white><bold> Değişiklik İçin Zaman Aşımı"
+        description: |-
+          <gray> Biyom güncellemesinin ne
+          <gray> kadar dakika sonra sonlandırılacağını
+          <gray> ayarlamaya izin verir.
+          <gray> Çok büyük adalar veya çok
+          <gray> yüklü sunucularda meydana gelebilir.
+        value: "<gray> Zaman aşımı sonra: <yellow> [number] dk"
+      parallel_updates:
+        name: "<white><bold> Paralel Güncellemeler"
+        description: |-
+          <gray> Kaç biyom güncellemesinin
+          <gray> aynı anda gerçekleşebileceğini
+          <gray> ayarlamaya izin verir.
+          <gray> Diğerleri kuyrukta yerleştirilir.
+        value: |-
+          <gray> Geçerli değer: <yellow>[number]<gray>.
+      use_bank:
+        name: "<white><bold> Banka Hesabını Kullan"
+        description: |-
+          <gray> Biomes eklentisi tarafından yapılan tüm
+          <gray> ödemenin Bank Eklentisinin Ada
+          <gray> Banka Hesabını kullanıp kullanmadığını
+          <gray> değiştirir.
+        enabled: |-
+          <aqua> Banka Hesabı Kullanımı <green> etkindir <aqua>.
+        disabled: |-
+          <aqua> Banka Hesabı Kullanımı <red> devre dışıdır <aqua>.
+        missing: |-
+          <red> Bank eklentisi yüklü değil.
+      visibility:
+        name: "<white><bold> Biyom Görünürlüğü"
+        description: |-
+          <gray> Oyuncu biyom görünürlüğünü
+          <gray> biyom seçim panellerinde
+          <gray> değiştirmeye izin verir.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+        all: "Tüm Biyomlar"
+        deployed: "Dağıtılan Biyomlar"
+        accessible: "Erişilebilir Biyomlar"
+        toggleable: "Değiştirebilir"
+      is_online:
+        name: "<white><bold> Çevrimiçi Oyuncu Adaları"
+        description: |-
+          <gray> Herhangi bir üyenin çevrimiçi
+          <gray> olduğu tüm adaları listele.
+      all_islands:
+        name: "<white><bold> Tüm Adalar"
+        description: |-
+          <gray> Geçerli oyun modunda
+          <gray> oluşturulan tüm adaların
+          <gray> listesi.
+      island_name:
+        name: "<white><bold> [name]"
+        island-owner: "[player]"
+        unknown: "<red> Bilinmeyen Sahip"
+        description: |-
+          [owner]
+          [members]
+          [id]
+        owner: "<gray> Sahip: <yellow> [player]"
+        title: "<gray> Ada Üyeleri:"
+        element: " <gray> - <yellow> [player]"
+      change_biome:
+        name: "<white><bold> Biyomu Değiştir"
+        description: |-
+          <gray> Ada başına biyomu değiştir.
+      manage_data:
+        name: "<white><bold> Ada Verilerini Yönet"
+        description: |-
+          <gray> Belirli ada için depolanan
+          <gray> verileri yönet.
+      clear_data:
+        name: "<white><bold> Ada Verilerini Temizle"
+        description: |-
+          <gray> Ada için tüm depolanan
+          <gray> verileri temizle.
+      island_bundle:
+        name: "<white><bold> Ada Paketi"
+        description: |-
+          <gray> Geçerli adaya atanan
+          <gray> paket.
+          <gray> Yalnızca bu paketteki
+          <gray> biyomlar adada kullanılabilir.
+        value: "<aqua> Paket: [bundle]"
+        overwritten: |-
+          <red> Sahip, paketi geçersiz kılan
+          <red> bir izne sahip.
+      owner_bundle:
+        name: "<white><bold> Sahip Paketi"
+        description: |-
+          <gray> Geçerli ada sahibine atanan
+          <gray> paket.
+          <gray> Yalnızca bu paketteki
+          <gray> biyomlar adada kullanılabilir.
+          <gray> Kullanıcı atama izni:
+          <gray><italic> '[gamemode].biomes.
+          <gray><italic> bundle.<bundle-id>'
+        value: "<aqua> Paket: [bundle]"
+      reset_to_default:
+        name: "<white><bold> Varsayılana Sıfırla"
+        description: |-
+          <gray> Tüm ada değerlerini
+          <gray> ayarlardan varsayılan değerlere
+          <gray> sıfırla.
+      bundle_info:
+        name: "<white><bold> Genel Bilgiler"
+        description: |-
+          <gray> Paket genel bilgilerini
+          <gray> görüntüle.
+      bundle_biomes:
+        name: "<white><bold> Biyomları Yönet"
+        description: |-
+          <gray> Pakete atanan biyomları
+          <gray> yönet.
+      bundle_name:
+        name: "<white><bold> Adı Değiştir"
+        description: |-
+          <gray> Paket görüntüleme adını
+          <gray> değiştir.
+        value: "<yellow> Geçerli Değer: <reset> [bundle]"
+      bundle_icon:
+        name: "<white><bold> İkonu Değiştir"
+        description: |-
+          <gray> Paket ikonunu değiştir.
+      bundle_description:
+        name: "<white><bold> Açıklamayı Değiştir"
+        description: |-
+          <gray> Paket açıklamasını değiştir.
+        value: "<yellow> Geçerli değer:"
+        none: "<red> Açıklama yok"
+      bundle_permission:
+        name: "<white><bold> Paket İzni"
+        description: |-
+          <gray> Bu paketi zorunlu kılmak için
+          <gray> kullanıcıya eklenmelidir.
+        value: "<yellow> İzin: <white> [gamemode].biomes.bundle.[id]"
+      add_bundle_biome:
+        name: "<white><bold> Biyom Ekle"
+        description: |-
+          <gray> Bu pakete bir biyom
+          <gray> ata.
+        title: "<aqua> Seçilen Biyomlar:"
+        value: "<aqua> - [biome]"
+      remove_bundle_biome:
+        name: "<white><bold> Biyomu Kaldır"
+        description: |-
+          <gray> Bu paketten bir biyom
+          <gray> kaldır.
+        title: "<aqua> Seçilen Biyomlar:"
+        value: "<aqua> - [biome]"
+      create_bundle:
+        name: "<white><bold> Paket Oluştur"
+        description: |-
+          <gray> Bu oyun modu için yeni
+          <gray> bir paket oluştur.
+      delete_bundle:
+        name: "<white><bold> Paketi Kaldır"
+        description: |-
+          <gray> Bu oyun modundan tamamen
+          <gray> bir paketi kaldır.
+        title: "<aqua> Seçilen Paketler:"
+        value: "<aqua> - [bundle]"
+      download:
+        name: "<white><bold> İndir"
+        description: |-
+          <gray> Web kütüphanesini indir.
+        enabled: "<dark_green> Önbelleği Temizleme ile"
+        disabled: "<red> Önbelleği Temizleme Olmadan"
+    tips:
+      click-to-filter: "<yellow> Filtrelemek için tıkla <gray>."
+      click-to-manage: "<yellow> Yönetmek için tıkla <gray>."
+      click-to-clear: "<yellow> Temizlemek için tıkla <gray>."
+      click-to-change-biome: "<yellow> Biyomu değiştirmek için tıkla <gray>."
+      click-to-view: "<yellow> Görüntülemek için tıkla <gray>."
+      click-to-select: "<yellow> Seçmek için tıkla <gray>."
+      click-to-choose: "<yellow> Seçmek için tıkla <gray>."
+      click-to-complete: "<yellow> Tamamlamak için tıkla <gray>."
+      left-click-to-accept: "<yellow> Sol tıkla <gray> uygulamak için."
+      right-click-to-write: "<yellow> Sağ tıkla <gray> yazmak için."
+      click-to-reduce: "<yellow> Azaltmak için tıkla <gray>."
+      click-to-increase: "<yellow> Artırmak için tıkla <gray>."
+      click-to-return: "<yellow> Dönmek için tıkla <gray>."
+      click-to-quit: "<yellow> Çıkmak için tıkla <gray>."
+      click-to-wipe: "<yellow> Silmek için tıkla <gray>."
+      left-click-to-wipe: "<yellow> Sol tıkla <gray> silmek için."
+      right-click-to-switch: "<yellow> Sağ tıkla <gray> geçiş yapmak için."
+      click-to-open: "<yellow> Açmak için tıkla <gray>."
+      click-to-export: "<yellow> Dışa aktarmak için tıkla <gray>."
+      click-to-create: "<yellow> Oluşturmak için tıkla <gray>."
+      left-click-to-open: "<yellow> Sol tıkla <gray> açmak için."
+      right-click-to-reset-all: "<yellow> Sağ tıkla <gray> hepsini silmek için."
+      click-to-toggle: "<yellow> Değiştirmek için tıkla <gray>."
+      click-to-change: "<yellow> Değiştirmek için tıkla <gray>."
+      shift-click-to-reset: "<yellow> Shift+tıkla <gray> sıfırlamak için."
+      click-to-add: "<yellow> Eklemek için tıkla <gray>."
+      click-to-remove: "<yellow> Kaldırmak için tıkla <gray>."
+      left-click-to-cycle: "<yellow> Sol tıkla <gray> aşağı geçiş yapmak için."
+      right-click-to-cycle: "<yellow> Sağ tıkla <gray> yukarı geçiş yapmak için."
+      click-to-edit: "<yellow> Düzenlemek için tıkla <gray>."
+      left-click-to-download: "<yellow> Sol tıkla <gray> indirmek için."
+      right-click-to-toggle: "<yellow> Sağ tıkla <gray> değiştirmek için."
+      click-to-install: "<yellow> Yüklemek için tıkla <gray>."
+      click-to-reset-all: "<yellow> Hepsini sıfırlamak için tıkla <gray>."
+      right-click-to-select: "<yellow> Sağ tıkla <gray> seçmek için."
+      right-click-to-deselect: "<yellow> Sağ tıkla <gray> seçimi kaldırmak için."
+      left-click-to-choose: "<yellow> Sol tıkla <gray> seçmek için."
+      click-to-buy: "<yellow> Satın almak için tıkla <gray>."
+      click-to-cancel: "<yellow> İptal etmek için tıkla <gray>."
+      click-to-save: "<yellow> Kaydetmek için tıkla <gray>."
+      click-to-deselect: "<yellow> Seçimi kaldırmak için tıkla <gray>."
+      click-on-item: |-
+        <yellow> Envanterdeki öğeye
+        <gray> tıkla.
+      left-click-to-edit: "<yellow> Sol tıkla <gray> düzenlemek için."
+      right-click-to-clear: "<yellow> Sağ tıkla <gray> temizlemek için."
+      click-to-previous: "<yellow> Önceki sayfayı görmek için tıkla <gray>."
+      click-to-next: "<yellow> Sonraki sayfayı görmek için tıkla <gray>."
+      select-before: "<yellow> Devam etmeden önce öğe(leri) seç <gray>."
+      click-to-apply: "<yellow> Uygulamak için tıkla <gray>."
+      right-click-to-open: "<yellow> Sağ tıkla <gray> açmak için."
+      click-to-perform: "<yellow> Gerçekleştirmek için tıkla <gray>."
+      left-click-to-apply: "<yellow> Sol tıkla <gray> uygulamak için."
+      right-click-to-unlock: "<yellow> Sağ tıkla <gray> kilit açmak için."
+      right-click-to-buy: "<yellow> Sağ tıkla <gray> satın almak için."
+      right-click-to-change: "<yellow> Sağ tıkla <gray> değiştirmek için."
+    descriptions:
+      update-mode:
+        island: "Ada Modu"
+        chunk: "Bölüm Modu"
+        range: "Aralık Modu"
+      selected: "<dark_green> Seçildi"
+      island-owner: "[player]"
+      unknown: "<yellow> Bilinmeyen"
+      biome:
+        lore: |-
+          [description]
+          [biome]
+          [unlock]
+          [change]
+        original: |-
+          <gray> Biyom: <yellow> [biome]
+        unlock:
+          lore: |-
+            [items]
+            [money]
+            [level]
+            [permissions]
+          money: |-
+            <gray> Kilit açma maliyeti: <yellow> [number]
+          level: |-
+            <gray> <yellow> [number]
+            <gray> ada seviyesine ulaşmayı gerektirir.
+          permission-single: |-
+            <gray> Eksik İzin: <red> [permission]
+          permissions-title: |-
+            <red> Eksik İzinler:
+          permissions-list: |-
+            <red> - [permission]
+          item-single: |-
+            <gray> Kilit Açma Öğesi: [color] [number] x [item]
+          item-title: |-
+            <gray> Kilit Açma Öğeleri:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          missing: "<red>"
+          has: "<yellow>"
+        change:
+          lore: |-
+            [items]
+            [money]
+            [mode]
+            [usage]
+          mode:
+            per_block: |-
+              <aqua><italic> Biyom her değişen
+              <aqua><italic> blok için maliyeti vardır.
+            per_usage: |-
+              <aqua><italic> Biyomu değiştirmek onun
+              <aqua><italic> fiyatını artırır.
+            static: |-
+              <aqua><italic> Standart değişiklik fiyatı.
+          money: |-
+            <gray> Maliyet: <yellow> [number]
+          item-single: |-
+            <gray> Öğe: [color] [number] x [item]
+          item-title: |-
+            <gray> Öğeler:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          number-of-usage: |-
+            |<gray> Bu biyom
+            <gray> <yellow> [number] <reset><gray> kez uygulanmıştır.
+          missing: "<red>"
+          has: "<yellow>"
+      bundle:
+        lore: |-
+          [description]
+          [permission]
+          [biomes]
+        permission: |-
+          <gray> Oyuncuya atanması gereken
+          <gray> izin:
+          <gray><italic> [gamemode].biomes.bundle.[id]
+        title: "<gray> Paket Biyomları: "
+        value: "<gray> - [biome]"
+        no-biomes: "<red> Atanmış Biyom Yok"
+      library:
+        author: '<gray> Yazarı <yellow> [author]'
+        version: '<gray> Biomes <yellow> [version] <gray> ile yapılmıştır'
+        lang: '<gray> Dil: <yellow> [lang]'
+        gamemode: '<gray> Esas olarak <yellow> [gamemode] <gray> için'
+  conversations:
+    prefix: "<bold><gold> [BentoBox]: <reset>"
+    confirm-string: "evet, on, tamam, onayla, e, geçerli, doğru"
+    deny-string: "hayır, off, yok, reddet, h, geçersiz, yanlış"
+    cancel-string: "iptal"
+    exit-string: "iptal, çık, kapat"
+    cancelled: "<red> Konuşma iptal edildi!"
+    input-number: "<yellow> Lütfen sohbete bir sayı girin."
+    input-seconds: "<yellow> Lütfen sohbete saniye girin."
+    numeric-only: "<red> Verilen [value] bir sayı değil!"
+    not-valid-value: "<red> Verilen [value] sayısı geçerli değil. [min] den büyük ve [max] den küçük olmalıdır!"
+    data-removed: "<green> Seçilen biyomlar [gamemode] adresinden kaldırılmıştır."
+    confirm-deletion: "<yellow> Lütfen [number] biyomu adlarıyla silmek istediğinizi onaylayın: [value]."
+    user-data-removed: "<green> [gamemode] için tüm kullanıcı verileri veritabanından temizlendi."
+    confirm-user-data-deletion: "<yellow> Lütfen [gamemode] için kullanıcı veritabanını temizlemek istediğinizi onaylayın."
+    all-data-removed: "<green> [gamemode] için tüm eklenti verileri veritabanından temizlendi."
+    confirm-all-data-deletion: "<yellow> Lütfen [gamemode] için eklenti verilerini temizlemek istediğinizi onaylayın."
+    write-name: "<yellow> Lütfen sohbete bir ad yazın."
+    new-object-created: "<green> [gamemode] için yeni nesne oluşturuldu."
+    object-already-exists: "<red> Nesne <gray> [id] <red> zaten var. Farklı bir ad seçin."
+    name-changed: "<green> Başarılı, ad güncellendi."
+    write-description: "<yellow> Lütfen sohbete yeni bir açıklama girin ve bitmek için ayrı bir satırda 'quit' yazın."
+    description-changed: "<green> Başarılı, açıklama güncellendi."
+    write-permissions: "<yellow> Lütfen gerekli izinleri sohbete girin (her biri ayrı satırda), ve bitmek için ayrı bir satırda 'quit' yazın."
+    permissions-changed: "<green> Başarılı, izinler güncellendi."
+    start-downloading: "<green> Biyomlar Kütüphanesi indirilmeye ve içe aktarılmaya başlanıyor."
+    written-text: "<green> Girilen Metin:"
+    confirm-data-replacement: "<yellow> Lütfen geçerli verileri yeni olanlarla değiştirmek istediğinizi onaylayın."
+    new-data-imported: "<green> Başarılı, [gamemode] için yeni veriler içe aktarıldı."
+    exported-file-name: "<yellow> Lütfen dışa aktarılan veritabanı dosyası için bir dosya adı girin. (çıkmak için 'cancel' yazın)"
+    database-export-completed: "<green> Başarılı, [world] için veritabanı dışa aktarması tamamlandı. Dosya [file] oluşturuldu."
+    file-name-exist: "<red> '[id]' adlı dosya var. Üzerine yazılamaz."
+    write-search: "<yellow> Lütfen bir arama değeri yazın. (çıkmak için 'cancel' yazın)"
+    search-updated: "<green> Arama değeri güncellendi."
+    invalid-biome: "<red> Depolanan `[biome]`<reset><red> biyomundaki bazı veriler geçerli değil."
+    confirm-biome-deletion: "<yellow> Lütfen [biome]<reset><yellow> öğesini [gamemode] adresinden kaldırmak istediğinizi onaylayın."
+    biome-removed: "[biome] <reset><green> [gamemode] adresinden kaldırıldı."
+    confirm-island-data-deletion: "<yellow> Lütfen [player] ada verilerini kaldırmak istediğinizi onaylayın."
+    island-data-removed: "[player] <green> ada verileri kaldırıldı."
+    confirm-biome-data-deletion: "<yellow> Lütfen [gamemode] adresindeki tüm biyomları kaldırmak istediğinizi onaylayın."
+    biome-data-removed: "Tüm biyomlar [gamemode] adresinden kaldırıldı."
+    click-text-to-purchase: "<yellow> Kilidi açtınız <reset> [biome]<reset><yellow>! Satın almak için buraya tıklayın."
+    click-text-to-set: "<yellow> Kilidi açtınız <reset> [biome]<reset><yellow>! Kullanmak için buraya tıklayın."
+    click-text-to-purchase-other-world: "<yellow> Kilidi açtınız <reset> [biome]<reset><yellow> [gamemode]<reset><yellow> adresinde! Satın almak için o dünyayı ziyaret edin."
+    click-text-to-set-other-world: "<yellow> Kilidi açtınız <reset> [biome]<reset><yellow> [gamemode]<reset><yellow> adresinde! Kullanmak için o dünyayı ziyaret edin."
+  messages:
+    biome-not-unlocked: "[biome] <reset><red> kilit açılmadı. Kullanamazsınız."
+    biome-not-purchased: "<red> Kullanamazsınız <reset> [biome] <reset><red>. Satın almanız gerekir."
+    biome-cannot-be-unlocked: "<red> Kilidini açamazsınız <reset> [biome] <reset><red>."
+    biome-already-purchased: "<red> Zaten satın aldınız <reset> [biome] <reset><red>."
+    island-level-not-reached: "[biome] <reset><red> en az ada seviyesi gerektirir: [number]."
+    missing-permission: "[biome] <reset><red> izin gerektirir: [permission]."
+    no-credits-buy: "<red> Satın almak için yeterli krediniz yok <reset> [biome] <reset><red>. Maliyeti [number]."
+    no-credits-buy-bank: "<red> Satın almak için banka hesabınızda yeterli krediniz yok <reset> [biome] <reset><red>. Maliyeti [number]."
+    no-items-buy: "<red> Satın almak için yeterli öğeniz yok <reset> [biome] <reset><red>. Gerekliliği [items]."
+    biome-purchased: "<yellow> Satın aldınız <reset> [biome]<reset><yellow>."
+    import-count: "<yellow> [biomes] biyom ve [bundles] paket içe aktarıldı."
+    start-downloading: "<yellow> Kütüphane indirmeye başlanıyor."
+    update-start: "<green> Biyomu <reset> [biome] <reset><green> olarak değiştime başlanıyor [number] bölümde. <yellow> Tahmini zaman: [time] sn."
+    update-done: "<green> Biyomu <reset> [biome]<reset><green> olarak değiştirme tamamlandı."
+    waiting: "<green> Biyom değişikliği kuyrukta eklendi. <yellow> Tahmini bekleme süresi: [time] sn."
+    biome-already-unlocked: "[biome] <reset><yellow> zaten kilit açıldı."
+    everything-already-bought: "<green> Bu oyun modu için zaten tüm biyomları satın aldınız."
+    skipping: "<green> <reset> [biome]<reset><green> yüklemesi atlanıyor."
+    overwriting: "<green> <reset> [biome] <reset><green> önbellekte üzerine yazılıyor."
+    imported: "<green> <reset> [biome] <reset><green> önbelleğe içe aktarıldı."
+    migrate-start: "<green> Yeni veri biçimine geçişe başlanıyor."
+    migrate-finish: "<green> Yeni veri biçimine geçiş tamamlandı."
+    migrate-valid: "<green> Tüm veriler geçerlidir. Geçiş gerekli değildir."
+    bundle-loaded: "<green> Paket <reset> [bundle] <green> yüklendi."
+    clear-queue: "<green> [gamemode] için biyom değişiklik görev kuyruğu temizlendi."
+  errors:
+    no-island-data: "<red> Adanın depolanan verileri yok."
+    no-biomes-admin: "<red> Mevcut oyun modu kullanılabilir biyoma sahip değil. Lütfen /[command] kullanarak biyomları içe aktarın veya oluşturun"
+    no-biomes: "<red> Mevcut oyun modu kullanılabilir biyoma sahip değil."
+    no-rank: "<red> Bu ada üzerinde biyomu değiştirmek için yetkiniz yok."
+    not-enough-level: "<red> Bu biyom en az [number] ada seviyesi gerektirir."
+    not-enough-money: "<red> Bu biyomu değiştirmek [number] maliyetlendirir."
+    not-enough-money-bank: "<red> Banka hesabınızda yeterli kredi yok. Biyom değişikliği [number] maliyetlendirir."
+    not-enough-items: "<red> Bu biyomu değiştirmek [items] maliyetlendirir."
+    admin-not-on-island: "<red> [user] adanızda değilsiniz."
+    incorrect-object: "<red> İstenen adla biyom bulunamadı: [biome]"
+    missing-biome: "<red> Biyom adı belirtilmemiş."
+    incorrect-mode: "<red> '[mode]' adlı mod yok."
+    incorrect-range: "<red> '[number]' değeri geçerli bir sayı değil."
+    no-file: "<red> Biyomlar dizininde [file] bulunamadı."
+    no-load: "<red> [file] adresinden biyomlar içe aktarılamadı. Neden: [description]"
+    not-a-gamemode-world: "<red> [world] dünyası bir GameModeAddon dünyası değil."
+    file-exist: "<red> [file] adlı dosya zaten var. Farklı bir ad seçin."
+    no-library-entries: "<red> Geçerli kütüphane girişleri bulunamadı."
+    not-unlocked: "<red> Bu biyomun kilidini açmamışsınız."
+    not-purchased: "<red> Bu biyomu satın almamışsınız."
+    timeout: "<red> Biyom değişikliği zaman aşımına uğradı. Seçilen alan çok büyük olmuş olabilir veya sunucu meşgul olabilir."
+    failed: "<red> Sunucu biyom değişikliği sırasında sorunlarla karşılaştı."
+    could-not-remove-money: "<red> Para çekilirken sorun oluştu."
+    could-not-remove-items: "<red> Öğe çekilirken sorun oluştu."
+    something-went-wrong: "<red> Sorun oluştu. Yapılamadı."
+protection:
+  flags:
+    BIOMES_ISLAND_PROTECTION:
+      name: "Biyom kontrolü"
+      description: |-
+        <dark_purple><italic> Ada biyomunu kimin
+        <dark_purple><italic> değiştirebileceğini değiştir
+    BIOMES_WORLD_PROTECTION:
+      name: "Biyom Ada Sınırlaması"
+      description: |-
+        <dark_purple><italic> Oyuncuların
+        <dark_purple><italic> biyomu değiştirmek için
+        <dark_purple><italic> adalarında olmak
+        <dark_purple><italic> zorunluluğunu değiştir.
+      hint: "<red> Biyomu değiştirmek için ada üzerinde olmalısınız!"

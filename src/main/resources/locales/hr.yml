@@ -1,0 +1,825 @@
+biomes:
+  commands:
+    # Ovaj odsjek sadrži samo prijevode admin naredbi.
+    admin:
+      main:
+        description: "glavna naredba admin biomima"
+      import:
+        parameters: "<file>"
+        description: "uvozi biome"
+        confirmation: "Ovo će ukloniti postojeće biome iz [gamemode] i uvesti nove biome iz datoteke šablone - molimo potvrdite"
+      migrate:
+        description: "migrira pohranjena podatke biomima u novi format"
+      set:
+        description: "mijenja biom za igrača"
+        parameters: "<player> <biome-id> [mode] [size]"
+      unlock:
+        description: "otključava biom za igrača bez provjere. Dodavanjem `true` na kraju će ga označiti kao kupljenog."
+        parameters: "<player> <biome-id> [true]"
+      clear-queue:
+        description: "briše red čekanja ažuriranja biomima"
+    # Ovaj odsjek sadrži samo prijevode igračvih naredbi.
+    player:
+      main:
+        description: "otvara GUI za odabir biomima"
+      set:
+        description: "mijenja biom za igrača"
+        parameters: "<biome-id> [mode] [size]"
+      buy:
+        description: "kupuje traženi biom"
+        parameters: "<biome-id>"
+      info:
+        description: "šalje poruku u chat s detaljnim opisom biomima"
+        parameters: "<biome-id>"
+  gui:
+    titles:
+      player-panel: "<black><bold> Odaberi Biom"
+      buy-panel: "<black><bold> Kupi Biom"
+      advanced-panel: "<black><bold> Način Ažuriranja"
+      # Svi naslovi ispod ovog komentara su za Admin izbornikе.
+      admin-panel: "<black><bold> Admin GUI"
+      settings: "<black><bold> Postavke"
+      library: "<black><bold> Knjižnica"
+      manage-biomes: "<black><bold> Upravljaj Biomima"
+      manage-bundles: "<black><bold> Upravljaj Paketima"
+      manage-islands: "<black><bold> Upravljaj Podacima Otoka"
+      edit-biome: "<black><bold> Uredi Biom: [biome]"
+      edit-bundle: "<black><bold> Uredi Paket: [bundle]"
+      edit-island: "<black><bold> Uredi Otok: [island]"
+      environment-selector: "<black><bold> Odaberi Okolinu"
+      biome-selector: "<black><bold> Odaberi Biom"
+      bundle-selector: "<black><bold> Odaberi Paket"
+      item-selector: "<black><bold> Odaberi Stavke"
+    buttons:
+      island:
+        name: "<white><bold> Otok"
+        description: |-
+          <gray> Mijenja biom na čitavom
+          <gray> otoku.
+      chunk:
+        name: "<white><bold> Komad"
+        description: |-
+          <gray> Mijenja biom u komadima.
+      range:
+        name: "<white><bold> Domet"
+        description: |-
+          <gray> Mijenja biom po dometu.
+      reduce:
+        name: "<white><bold> Smanjiti"
+        description: |-
+          <gray> Smanjiti za <yellow> [number]
+      increase:
+        name: "<white><bold> Povećati"
+        description: |-
+          <gray> Povećati za <yellow> [number]
+      accept:
+        name: "<white><bold> Primijeni Promjenu"
+        description: |-
+          <gray> Mijenja biom u <yellow> [biome]
+
+          <gray> Način ažuriranja: <yellow> [mode]
+          <gray> Domet ažuriranja: <yellow> [number]
+      return:
+        name: "<white><bold> Nazad"
+        description: |-
+          <gray> Vrati se u prethodni izbornik.
+      previous:
+        name: "<white><bold> Prethodna Stranica"
+        description: |-
+          <gray> Prebaci na <yellow> [number] <gray> stranicu
+      next:
+        name: "<white><bold> Sljedeća Stranica"
+        description: |-
+          <gray> Prebaci na <yellow> [number] <gray> stranicu
+      quit:
+        name: "<white><bold> Izlaz"
+        description: |-
+          <gray> Izlaz iz GUI-ja.
+      save:
+        name: "<white><bold> Spremi"
+        description: |-
+          <gray> Spremi promjene i vrati se.
+      cancel:
+        name: "<white><bold> Otkaži"
+        description: |-
+          <gray> Otkaži promjene i vrati se.
+      search:
+        name: "<white><bold> Pretraži"
+        description: |-
+          <gray> Dozvoljava pretraživanje
+          <gray> elementa s unošenim
+          <gray> tekstom.
+        search: "<aqua> Vrijednost: [value]"
+      buy:
+        name: "<white><bold> Kupi"
+        description: |-
+          <gray> Kupi novi biom.
+      manage_islands:
+        name: "<white><bold> Upravljaj Otocima"
+        description: |-
+          <gray> Dozvoljava upravljanje
+          <gray> podacima otoka.
+      manage_biomes:
+        name: "<white><bold> Upravljaj Biomima"
+        description: |-
+          <gray> Dozvoljava upravljanje
+          <gray> podacima biomima.
+      manage_bundles:
+        name: "<white><bold> Upravljaj Paketima"
+        description: |-
+          <gray> Dozvoljava upravljanje
+          <gray> podacima paketa.
+      settings:
+        name: "<white><bold> Postavke"
+        description: |-
+          <gray> Dozvoljava promjenu nekih
+          <gray> postavki dodatka.
+      import_template:
+        name: "<white><bold> Uvozu Šablonu"
+        description: |-
+          <gray> Uvozu datoteku šablone
+          <gray> nalazi se u direktoriju
+          <gray> dodatka.
+      web_library:
+        name: "<white><bold> Web Knjižnica"
+        description: |-
+          <gray> Pristup web
+          <gray> knjižnici koja sadrži
+          <gray> dijeljene biome.
+      export_from_database:
+        name: "<white><bold> Izvezi Bazu Podataka"
+        description: |-
+          <gray> Izvezi bazu podataka
+          <gray> u jednu datoteku nalazi se u
+          <gray> direktoriju dodatka.
+      import_to_database:
+        name: "<white><bold> Uvozu Bazu Podataka"
+        description: |-
+          <gray> Uvozu bazu podataka iz
+          <gray> datoteke nalazi se u direktoriju
+          <gray> dodatka.
+      wipe_islands_data:
+        name: "<white><bold> Obriši Bazu Otoka"
+        description: |-
+          <gray> Obriši sve korisničke podatke biomima
+          <gray> za ovaj način igre.
+      wipe_biomes_data:
+        name: "<white><bold> Obriši Bazu Biomima"
+        description: |-
+          <gray> Obriši sve podatke biomima i paketa
+          <gray> za ovaj način igre.
+      add_biome:
+        name: "<white><bold> Dodaj Biom"
+        description: |-
+          <gray> Kreira novi Biom koji
+          <gray> mogu koristiti igrači koristeći
+          <gray> korisničke panele.
+      remove_biome:
+        name: "<white><bold> Ukloni Biom"
+        description: |-
+          <gray> Uklanja odabrane biome
+          <gray> iz korisničkih panela.
+        title: "<yellow> Odabrani Biomi:"
+        value: "<yellow> - [biome]"
+      accept_selected:
+        name: "<white><bold> Prihvati Odabrane"
+        description: |-
+          <gray> Prihvaća odabrane elemente.
+        title: "<yellow> Odabrani Elementi:"
+        element: "<yellow> - [element]"
+      environment_element:
+        name: "<white><bold> [environment]"
+        description: |-
+          <gray> [description].
+      properties:
+        name: "<white><bold> Svojstva"
+        description: |-
+          <gray> Pogledaj glavna svojstva biomima.
+      change_properties:
+        name: "<white><bold> Promijeni Svojstva"
+        description: |-
+          <gray> Pogledaj svojstva promjene biomima.
+      unlock_properties:
+        name: "<white><bold> Svojstva Otključavanja"
+        description: |-
+          <gray> Pogledaj svojstva otključavanja biomima.
+      biome:
+        name: "<white><bold> [biome]"
+        description: |-
+          <gray> Tip Minecraft biomima.
+        value: "<gray> ID Biomima: <yellow> [id]"
+      name:
+        name: "<white><bold> Prikazani Naziv"
+        description: |-
+          <gray> Prikazani naziv za biom.
+          <gray> Podržava boje kodove.
+        value: "<gray> Trenutna Vrijednost: <reset> [name]"
+      deployed:
+        name: "<white><bold> Postavljeno"
+        description: |-
+          <gray> Prebacuje je li biom
+          <gray> dostupan igračima
+          <gray> ili ne.
+        enabled: "<dark_green> Omogućeno"
+        disabled: "<red> Onemogućeno"
+      environment:
+        name: "<white><bold> Dimenzija"
+        description: |-
+          <gray> Dozvoljava ograničiti u kojoj
+          <gray> dimenziji se biom
+          <gray> može primijeniti.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      icon:
+        name: "<white><bold> Ikona"
+        description: |-
+          <gray> Dozvoljava promjenu ikone
+          <gray> za ovaj biom.
+      order:
+        name: "<white><bold> Redoslijed"
+        description: |-
+          <gray> Dozvoljava promjenu redoslijeda
+          <gray> objekata.
+          <gray> Objekti s jednakim brojevima
+          <gray> će biti sortirani prema svojim
+          <gray> jedinstvenim id nazivima.
+        value: "<gray> Trenutni redoslijed: <yellow> [number]"
+      description:
+        name: "<white><bold> Opis"
+        description: |-
+          <gray> Specifični opis
+          <gray> za biom. Kodovi boja
+          <gray> moraju biti primijenjeni.
+        value: "<yellow> Trenutni opis:"
+        none: "<gray> Opis nije postavljen."
+      unlock_permissions:
+        name: "<white><bold> Dozvole"
+        description: |-
+          <gray> Dozvoljava promjenu dozvola
+          <gray> otključavanja za ovaj
+          <gray> biom biti dostupan.
+        title: "<yellow> Dozvole: "
+        element: " <dark_gray> - [permission]"
+        none: "<gray> Dozvole nisu postavljene."
+      unlock_cost:
+        name: "<white><bold> Cijena"
+        description: |-
+          <gray> Dozvoljava promjenu cijene
+          <gray> otključavanja ovog biomima.
+        value: "<gray> Trenutna cijena: <yellow> [number]"
+      unlock_items:
+        name: "<white><bold> Stavke"
+        description: |-
+          <gray> Dozvoljava promjenu stavki
+          <gray> otključavanja za ovaj biom.
+        title: "<yellow> Stavke: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Stavke nisu postavljene."
+      unlock_level:
+        name: "<white><bold> Razina"
+        description: |-
+          <gray> Dozvoljava promjenu potrebne
+          <gray> razine otoka
+          <gray> za otključavanje ovog biomima.
+        value: "<gray> Trenutna razina: <yellow> [number]"
+      change_cost:
+        name: "<white><bold> Cijena"
+        description: |-
+          <gray> Dozvoljava promjenu cijene
+          <gray> primjene ovog biomima.
+        value: "<gray> Trenutna cijena: <yellow> [number]"
+      change_items:
+        name: "<white><bold> Stavke"
+        description: |-
+          <gray> Dozvoljava promjenu stavki
+          <gray> za primjenu ovog biomima.
+        title: "<yellow> Stavke: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Stavke nisu postavljene."
+      change_type:
+        name: "<white><bold> [type]"
+        description: |-
+          <gray> Dozvoljava promjenu vrste cijene
+          <gray> za primjenu ovog biomima.
+        static:
+          name: "Statička Vrijednost"
+          description: |-
+            <gray> Cijena promjene biomima se
+            <gray> ne mijenja.
+        per_block:
+          name: "Po Bloku"
+          description: |-
+            <gray> Cijena promjene biomima je
+            <gray> izračunata po bloku.
+        per_usage:
+          name: "Po Korištenju"
+          description: |-
+            <gray> Cijena promjene biomima se
+            <gray> povećava nakon svakog
+            <gray> korištenja.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      change_increment:
+        name: "<white><bold> Povećanje"
+        description: |-
+          <gray> Dozvoljava promjenu
+          <gray> povećanja po korištenju.
+        value: "<gray> Trenutna vrijednost: <yellow> [number]"
+      biome-filter:
+        name: "<white><bold> [filter]"
+        description: |-
+          <gray> Filtar Biomima
+          <gray> na osnovu Minecraft Wiki.
+        lush: "Bujni Biomi"
+        dry: "Suhi Biomi"
+        cold: "Hladni Biomi"
+        snowy: "Snježni Biomi"
+        aquatic: "Oceanski Biomi"
+        nether: "Nether Biomi"
+        the_end: "The End Biomi"
+        neutral: "Neutralni Biomi"
+        unused: "Nekorišteni Biomi"
+        warm: "Topli Biomi"
+        cave: "Špilji Biomi"
+        temperate: "Umjereni Biomi"
+      protection_range:
+        name: "<white><bold> Domet Zaštite"
+        description: |-
+          <gray> Dozvoljava ograničiti promjenu biomima
+          <gray> samo na domet zaštite otoka umjesto
+          <gray> promjene biomima na čitavom
+          <gray> otoku.
+        enabled: "<dark_green> Omogućeno"
+        disabled: "<red> Onemogućeno"
+      reset:
+        name: "<white><bold> Resetiraj na Promjenu Vlasnika"
+        description: |-
+          <gray> Dozvoljava omogućiti forsiranu
+          <gray> promjenu biomima na zadanu,
+          <gray> ako otok promijeni vlasnika
+          <gray> i novi vlasnik nema
+          <gray> dozvolu za trenutni biom.
+        enabled: "<dark_green> Omogućeno"
+        disabled: "<red> Onemogućeno"
+      cool_down:
+        name: "<white><bold> Hladnjak Biomima"
+        description: |-
+          <gray> Dozvoljava postaviti broj
+          <gray> sekundi između promjena biomima
+          <gray> igrača.
+        value: "<gray> Trenutni hladnjak: <yellow> [number]"
+        disabled: "<yellow> Hladnjak je onemogućen."
+      default_size:
+        name: "<white><bold> Zadani Domet"
+        description: |-
+          <gray> Dozvoljava postaviti broj koji
+          <gray> će se koristiti kada igrač
+          <gray> promijeni biom bez
+          <gray> pisanja vrijednosti.
+        value: "<gray> Zadani Domet: <yellow> [number]"
+      default_mode:
+        name: "<white><bold> Zadani Način Ažuriranja"
+        description: |-
+          <gray> Dozvoljava postavljanje zadanog
+          <gray> načina ažuriranja kada igrači
+          <gray> ga nisu dali.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      unlock_notify:
+        name: "<white><bold> Obavijesti na Otključavanju"
+        description: |-
+          <gray> Poruka će biti poslana
+          <gray> korisniku kada otključa
+          <gray> novi biom.
+        enabled: |-
+          <aqua> Obavijest na otključavanju je <green> omogućena <aqua>.
+        disabled: |-
+          <aqua> Obavijest na otključavanju je <red> onemogućena <aqua>.
+      change_timeout:
+        name: "<white><bold> Vremenska Ograničenja za Promjenu"
+        description: |-
+          <gray> Dozvoljava postavljanje nakon
+          <gray> koliko minuta će ažuriranje
+          <gray> biomima biti prekinuto.
+          <gray> Može se dogoditi na vrlo
+          <gray> velikim otocima ili serverima
+          <gray> pod velikom opterećenjem.
+        value: "<gray> Vremensko ograničenje nakon: <yellow> [number] min"
+      parallel_updates:
+        name: "<white><bold> Paralelna Ažuriranja"
+        description: |-
+          <gray> Dozvoljava postavljanje koliko
+          <gray> ažuriranja biomima može biti
+          <gray> istovremeno. Ostala će biti
+          <gray> stavljena u red čekanja.
+        value: |-
+          <gray> Trenutna vrijednost: <yellow>[number]<gray>.
+      use_bank:
+        name: "<white><bold> Koristi Bankovni Račun"
+        description: |-
+          <gray> Prebacuje trebaju li svi
+          <gray> plaćanja koja vrši dodatak
+          <gray> Biomes koristiti bankovni račun
+          <gray> otoka dodatka Bank.
+        enabled: |-
+          <aqua> Korištenje bankovnog računa je <green> omogućeno <aqua>.
+        disabled: |-
+          <aqua> Korištenje bankovnog računa je <red> onemogućeno <aqua>.
+        missing: |-
+          <red> Dodatak Bank nije instaliran.
+      visibility:
+        name: "<white><bold> Vidljivost Biomima"
+        description: |-
+          <gray> Dozvoljava promjenu vidljivosti
+          <gray> biomima igrača u panelima
+          <gray> odabira biomima.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+        all: "Svi Biomi"
+        deployed: "Postavljeni Biomi"
+        accessible: "Dostupni Biomi"
+        toggleable: "Sklopivi"
+      is_online:
+        name: "<white><bold> Otoci Povezanih Igrača"
+        description: |-
+          <gray> Nabroji sve otoke gdje
+          <gray> je bilo koji član na mreži.
+      all_islands:
+        name: "<white><bold> Svi Otoci"
+        description: |-
+          <gray> Popis svih otoka
+          <gray> koji su kreirani u
+          <gray> trenutnom načinu igre.
+      island_name:
+        name: "<white><bold> [name]"
+        island-owner: "[player]"
+        unknown: "<red> Nepoznat Vlasnik"
+        description: |-
+          [owner]
+          [members]
+          [id]
+        owner: "<gray> Vlasnik: <yellow> [player]"
+        title: "<gray> Članovi Otoka:"
+        element: " <gray> - <yellow> [player]"
+      change_biome:
+        name: "<white><bold> Promijeni Biom"
+        description: |-
+          <gray> Promijeni biom na otoku.
+      manage_data:
+        name: "<white><bold> Upravljaj Podacima Otoka"
+        description: |-
+          <gray> Upravljaj podacima koji su
+          <gray> pohranjeni za specifičan otok.
+      clear_data:
+        name: "<white><bold> Obriši Podatke Otoka"
+        description: |-
+          <gray> Obriši sve pohranjena podatke
+          <gray> otoka.
+      island_bundle:
+        name: "<white><bold> Paket Otoka"
+        description: |-
+          <gray> Paket dodijeljen
+          <gray> trenutnom otoku.
+          <gray> Samo biomi iz ovog paketa
+          <gray> mogu se koristiti na otoku.
+        value: "<aqua> Paket: [bundle]"
+        overwritten: |-
+          <red> Vlasnik ima dozvolu koja
+          <red> je prerušuje paket.
+      owner_bundle:
+        name: "<white><bold> Paket Vlasnika"
+        description: |-
+          <gray> Paket dodijeljen
+          <gray> vlasniku otoka.
+          <gray> Samo biomi iz ovog paketa
+          <gray> mogu se koristiti na otoku.
+          <gray> Dozvola za dodjelu korisniku:
+          <gray><italic> '[gamemode].biomes.
+          <gray><italic> bundle.<bundle-id>'
+        value: "<aqua> Paket: [bundle]"
+      reset_to_default:
+        name: "<white><bold> Resetiraj na Zadane"
+        description: |-
+          <gray> Resetira sve vrijednosti
+          <gray> otoka na zadane vrijednosti iz
+          <gray> postavki.
+      bundle_info:
+        name: "<white><bold> Opće Informacije"
+        description: |-
+          <gray> Pogledaj opće informacije
+          <gray> o paketu.
+      bundle_biomes:
+        name: "<white><bold> Upravljaj Biomima"
+        description: |-
+          <gray> Upravljaj biomima koji su
+          <gray> dodijeljeni paketu.
+      bundle_name:
+        name: "<white><bold> Promijeni Naziv"
+        description: |-
+          <gray> Promijeni prikazani
+          <gray> naziv paketa.
+        value: "<yellow> Trenutna Vrijednost: <reset> [bundle]"
+      bundle_icon:
+        name: "<white><bold> Promijeni Ikonu"
+        description: |-
+          <gray> Promijeni ikonu paketa.
+      bundle_description:
+        name: "<white><bold> Promijeni Opis"
+        description: |-
+          <gray> Promijeni opis paketa.
+        value: "<yellow> Trenutna vrijednost:"
+        none: "<red> Nema opisa"
+      bundle_permission:
+        name: "<white><bold> Dozvola Paketa"
+        description: |-
+          <gray> Dozvola koja mora biti
+          <gray> dodata korisniku za
+          <gray> forsiranje ovog paketa.
+        value: "<yellow> Dozvola: <white> [gamemode].biomes.bundle.[id]"
+      add_bundle_biome:
+        name: "<white><bold> Dodaj Biom"
+        description: |-
+          <gray> Dodjeli biom
+          <gray> ovom paketu.
+        title: "<aqua> Odabrani Biomi:"
+        value: "<aqua> - [biome]"
+      remove_bundle_biome:
+        name: "<white><bold> Ukloni Biom"
+        description: |-
+          <gray> Ukloni biom
+          <gray> iz ovog paketa.
+        title: "<aqua> Odabrani Biomi:"
+        value: "<aqua> - [biome]"
+      create_bundle:
+        name: "<white><bold> Kreiraj Paket"
+        description: |-
+          <gray> Kreiraj novi paket
+          <gray> za ovaj način igre.
+      delete_bundle:
+        name: "<white><bold> Ukloni Paket"
+        description: |-
+          <gray> Ukloni paket iz
+          <gray> ovog načina igre potpuno.
+        title: "<aqua> Odabrani Paketi:"
+        value: "<aqua> - [bundle]"
+      download:
+        name: "<white><bold> Preuzmi"
+        description: |-
+          <gray> Preuzmi web knjižnicu.
+        enabled: "<dark_green> S Brisanjem Cache-a"
+        disabled: "<red> Bez Brisanja Cache-a"
+    tips:
+      click-to-filter: "<yellow> Klikni <gray> za filtriranje."
+      click-to-manage: "<yellow> Klikni <gray> za upravljanje."
+      click-to-clear: "<yellow> Klikni <gray> za brisanje."
+      click-to-change-biome: "<yellow> Klikni <gray> za promjenu biomima."
+      click-to-view: "<yellow> Klikni <gray> za prikaz."
+      click-to-select: "<yellow> Klikni <gray> za odabir."
+      click-to-choose: "<yellow> Klikni <gray> za izbor."
+      click-to-complete: "<yellow> Klikni <gray> za završetak."
+      left-click-to-accept: "<yellow> Lijevim Klikom <gray> za primjenu."
+      right-click-to-write: "<yellow> Desnim Klikom <gray> za pisanje."
+      click-to-reduce: "<yellow> Klikni <gray> za smanjenje."
+      click-to-increase: "<yellow> Klikni <gray> za povećanje."
+      click-to-return: "<yellow> Klikni <gray> za povratak."
+      click-to-quit: "<yellow> Klikni <gray> za izlaz."
+      click-to-wipe: "<yellow> Klikni <gray> za brisanje."
+      left-click-to-wipe: "<yellow> Lijevim Klikom <gray> za brisanje."
+      right-click-to-switch: "<yellow> Desnim Klikom <gray> za prebacivanje."
+      click-to-open: "<yellow> Klikni <gray> za otvaranje."
+      click-to-export: "<yellow> Klikni <gray> za izvoz."
+      click-to-create: "<yellow> Klikni <gray> za kreiranje."
+      left-click-to-open: "<yellow> Lijevim Klikom <gray> za otvaranje."
+      right-click-to-reset-all: "<yellow> Desnim Klikom <gray> za brisanje svega."
+      click-to-toggle: "<yellow> Klikni <gray> za prebacivanje."
+      click-to-change: "<yellow> Klikni <gray> za promjenu."
+      shift-click-to-reset: "<yellow> Shift Klik <gray> za resetiranje."
+      click-to-add: "<yellow> Klikni <gray> za dodavanje."
+      click-to-remove: "<yellow> Klikni <gray> za uklanjanje."
+      left-click-to-cycle: "<yellow> Lijevim Klikom <gray> za cikliranje dolje."
+      right-click-to-cycle: "<yellow> Desnim Klikom <gray> za cikliranje gore."
+      click-to-edit: "<yellow> Klikni <gray> za uređivanje."
+      left-click-to-download: "<yellow> Lijevim Klikom <gray> za preuzimanje."
+      right-click-to-toggle: "<yellow> Desnim Klikom <gray> za prebacivanje."
+      click-to-install: "<yellow> Klikni <gray> za instalaciju."
+      click-to-reset-all: "<yellow> Klikni <gray> za resetiranje svega."
+      right-click-to-select: "<yellow> Desnim Klikom <gray> za odabir."
+      right-click-to-deselect: "<yellow> Desnim Klikom <gray> za otkazivanje odabira."
+      left-click-to-choose: "<yellow> Lijevim Klikom <gray> za izbor."
+      click-to-buy: "<yellow> Klikni <gray> za kupnju."
+      click-to-cancel: "<yellow> Klikni <gray> za otkazivanje."
+      click-to-save: "<yellow> Klikni <gray> za spremanje."
+      click-to-deselect: "<yellow> Klikni <gray> za otkazivanje odabira."
+      click-on-item: |-
+        <yellow> Klikni <gray> na stavku u
+        <gray> svojoj torbici.
+      left-click-to-edit: "<yellow> Lijevim Klikom <gray> za uređivanje."
+      right-click-to-clear: "<yellow> Desnim Klikom <gray> za brisanje."
+      click-to-previous: "<yellow> Klikni <gray> za prikaz prethodne stranice."
+      click-to-next: "<yellow> Klikni <gray> za prikaz sljedeće stranice."
+      select-before: "<yellow> Odaberi <gray> stavku(-e) prije nego što nastaviš."
+      click-to-apply: "<yellow> Klikni <gray> za primjenu."
+      right-click-to-open: "<yellow> Desnim Klikom <gray> za otvaranje."
+      click-to-perform: "<yellow> Klikni <gray> za izvršavanje."
+      left-click-to-apply: "<yellow> Lijevim Klikom <gray> za primjenu."
+      right-click-to-unlock: "<yellow> Desnim Klikom <gray> za otključavanje."
+      right-click-to-buy: "<yellow> Desnim Klikom <gray> za kupnju."
+      right-click-to-change: "<yellow> Desnim Klikom <gray> za promjenu."
+    descriptions:
+      update-mode:
+        island: "Način Otoka"
+        chunk: "Način Komada"
+        range: "Način Dometa"
+      selected: "<dark_green> Odabrano"
+      island-owner: "[player]"
+      unknown: "<yellow> Nepoznato"
+      biome:
+        lore: |-
+          [description]
+          [biome]
+          [unlock]
+          [change]
+        original: |-
+          <gray> Biom: <yellow> [biome]
+        unlock:
+          lore: |-
+            [items]
+            [money]
+            [level]
+            [permissions]
+          money: |-
+            <gray> Cijena otključavanja: <yellow> [number]
+          level: |-
+            <gray> Zahtijeva dosizanje <yellow> [number]
+            <gray> razine otoka.
+          permission-single: |-
+            <gray> Nedostaje Dozvola: <red> [permission]
+          permissions-title: |-
+            <red> Nedostaju Dozvole:
+          permissions-list: |-
+            <red> - [permission]
+          item-single: |-
+            <gray> Stavka Otključavanja: [color] [number] x [item]
+          item-title: |-
+            <gray> Stavke Otključavanja:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          missing: "<red>"
+          has: "<yellow>"
+        change:
+          lore: |-
+            [items]
+            [money]
+            [mode]
+            [usage]
+          mode:
+            per_block: |-
+              <aqua><italic> Biom stoji za svaki
+              <aqua><italic> promijenjeni blok.
+            per_usage: |-
+              <aqua><italic> Promjena biomima povećava
+              <aqua><italic> njegovu cijenu.
+            static: |-
+              <aqua><italic> Standardna cijena promjene.
+          money: |-
+            <gray> Cijena: <yellow> [number]
+          item-single: |-
+            <gray> Stavka: [color] [number] x [item]
+          item-title: |-
+            <gray> Stavke:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          number-of-usage: |-
+            <gray> Ovaj biom je bio
+            <gray> primijenjen <yellow> [number] <reset><gray> puta.
+          missing: "<red>"
+          has: "<yellow>"
+      bundle:
+        lore: |-
+          [description]
+          [permission]
+          [biomes]
+        permission: |-
+          <gray> Dozvola koja mora biti
+          <gray> dodijeljena igraču:
+          <gray><italic> [gamemode].biomes.bundle.[id]
+        title: "<gray> Biomi Paketa: "
+        value: "<gray> - [biome]"
+        no-biomes: "<red> Nema Dodijeljenih Biomima"
+      library:
+        author: '<gray> od <yellow> [author]'
+        version: '<gray> Napravljeno sa Biomes <yellow> [version]'
+        lang: '<gray> Jezik: <yellow> [lang]'
+        gamemode: '<gray> Primarno za <yellow> [gamemode]'
+  conversations:
+    prefix: "<bold><gold> [BentoBox]: <reset>"
+    confirm-string: "da, on, prihvati, potvrdi, d, valjano, ispravno"
+    deny-string: "ne, off, odbij, nije, n, nevaljano, neispravno"
+    cancel-string: "otkaži"
+    exit-string: "otkaži, izlaz, izađi"
+    cancelled: "<red> Razgovor otkazan!"
+    input-number: "<yellow> Molim unesite broj u chatu."
+    input-seconds: "<yellow> Molim unesite sekunde u chatu."
+    numeric-only: "<red> Unesena vrijednost [value] nije broj!"
+    not-valid-value: "<red> Uneseni broj [value] nije valjano. Mora biti veće od [min] i manje od [max]!"
+    data-removed: "<green> Odabrani biomi su uklonjeni iz [gamemode]."
+    confirm-deletion: "<yellow> Molim potvrdite da želite obrisati [number] biomima s nazivima: [value]."
+    user-data-removed: "<green> Svi korisnički podaci za [gamemode] su obrisani iz baze podataka."
+    confirm-user-data-deletion: "<yellow> Molim potvrdite da želite obrisati korisničku bazu podataka za [gamemode]."
+    all-data-removed: "<green> Svi podaci dodatka za [gamemode] su obrisani iz baze podataka."
+    confirm-all-data-deletion: "<yellow> Molim potvrdite da želite obrisati podatke dodatka za [gamemode]."
+    write-name: "<yellow> Molim napišite naziv u chatu."
+    new-object-created: "<green> Novi objekt za [gamemode] je kreiran."
+    object-already-exists: "<red> Objekt <gray> [id] <red> već postoji. Odaberite drugačiji naziv."
+    name-changed: "<green> Uspjeh, naziv je ažuriran."
+    write-description: "<yellow> Molim unesite novi opis u chat i napišite 'quit' na vlastitu liniju za završetak."
+    description-changed: "<green> Uspjeh, opis je ažuriran."
+    write-permissions: "<yellow> Molim unesite potrebne dozvole, jednu po liniji u chat, i napišite 'quit' na vlastitu liniju za završetak."
+    permissions-changed: "<green> Uspjeh, dozvole su ažurirane."
+    start-downloading: "<green> Započinjem preuzimanje i uvoz Biomes Library."
+    written-text: "<green> Unesen Tekst:"
+    confirm-data-replacement: "<yellow> Molim potvrdite da želite zamijeniti vaše trenutne podatke novim."
+    new-data-imported: "<green> Uspjeh, novi podaci za [gamemode] su uvedeni."
+    exported-file-name: "<yellow> Molim unesite naziv datoteke za izvezenu datoteku baze podataka. (napišite 'cancel' za izlaz)"
+    database-export-completed: "<green> Uspjeh, izvoz baze podataka za [world] je dovršen. Datoteka [file] generirana."
+    file-name-exist: "<red> Datoteka s nazivom '[id]' postoji. Nije moguće prebrisati."
+    write-search: "<yellow> Molim napišite vrijednost pretraživanja. (napišite 'cancel' za izlaz)"
+    search-updated: "<green> Vrijednost pretraživanja je ažurirana."
+    invalid-biome: "<red> Neki podaci u pohranjenima `[biome]`<reset><red> nisu valjani."
+    confirm-biome-deletion: "<yellow> Molim potvrdite da želite ukloniti [biome]<reset><yellow> iz [gamemode]."
+    biome-removed: "[biome] <reset><green> je uklonjen iz [gamemode]."
+    confirm-island-data-deletion: "<yellow> Molim potvrdite da želite ukloniti podatke otoka igrača [player]."
+    island-data-removed: "[player] <green> podaci otoka su uklonjeni."
+    confirm-biome-data-deletion: "<yellow> Molim potvrdite da želite ukloniti sve biome iz [gamemode]."
+    biome-data-removed: "Svi biomi su uklonjeni iz [gamemode]."
+    click-text-to-purchase: "<yellow> Otključali ste <reset> [biome]<reset><yellow>! Klikni ovdje za kupnju."
+    click-text-to-set: "<yellow> Otključali ste <reset> [biome]<reset><yellow>! Klikni ovdje za korištenje."
+    click-text-to-purchase-other-world: "<yellow> Otključali ste <reset> [biome]<reset><yellow> u <reset> [gamemode]<reset><yellow>! Posjetite taj svijet za kupnju."
+    click-text-to-set-other-world: "<yellow> Otključali ste <reset> [biome]<reset><yellow> u <reset> [gamemode]<reset><yellow>! Posjetite taj svijet za korištenje."
+  messages:
+    biome-not-unlocked: "[biome] <reset><red> nije otključano. Ne možete ga koristiti."
+    biome-not-purchased: "<red> Ne možete koristiti <reset> [biome] <reset><red>. Trebate ga kupiti."
+    biome-cannot-be-unlocked: "<red> Ne možete otključati <reset> [biome] <reset><red>."
+    biome-already-purchased: "<red> Već ste kupili <reset> [biome] <reset><red>."
+    island-level-not-reached: "[biome] <reset><red> zahtijeva minimalno razinu otoka: [number]."
+    missing-permission: "[biome] <reset><red> zahtijeva dozvolu: [permission]."
+    no-credits-buy: "<red> Nemate dovoljno kredita za kupnju <reset> [biome] <reset><red>. Košta [number]."
+    no-credits-buy-bank: "<red> Nemate dovoljno kredita na svojem bankovnom računu za kupnju <reset> [biome] <reset><red>. Košta [number]."
+    no-items-buy: "<red> Nemate dovoljno stavki za kupnju <reset> [biome] <reset><red>. Zahtijeva [items]."
+    biome-purchased: "<yellow> Kupili ste <reset> [biome]<reset><yellow>."
+    import-count: "<yellow> Uvezeni [biomes] biomi i [bundles] paketi."
+    start-downloading: "<yellow> Počni preuzimati knjižnicu."
+    update-start: "<green> Započinjem promjenu biomima u [biome] <reset><green> u [number] komada. <yellow> Procijenjeno vrijeme: [time] sec."
+    update-done: "<green> Dovršio sam promjenu biomima u [biome]<reset><green>."
+    waiting: "<green> Dodao sam promjenu biomima u red čekanja. <yellow> Procijenjeno vrijeme čekanja: [time] sec."
+    biome-already-unlocked: "[biome] <reset><yellow> je već otključano."
+    everything-already-bought: "<green> Već ste kupili sve biome za ovaj način igre."
+    skipping: "<green> Preskaču se učitavanje <reset> [biome]<reset><green>."
+    overwriting: "<green> Prebrisujem <reset> [biome] <reset><green> u cache-u."
+    imported: "<green> Uvezao sam <reset> [biome] <reset><green> u cache-u."
+    migrate-start: "<green> Započinjem migraciju u novi format podataka."
+    migrate-finish: "<green> Migracija u novi format podataka je dovršena."
+    migrate-valid: "<green> Svi podaci su valjani. Migracija nije potrebna."
+    bundle-loaded: "<green> Paket <reset> [bundle] <green> je učitan."
+    clear-queue: "<green> Red čekanja zadataka promjene biomima za [gamemode] je obrisan."
+  errors:
+    no-island-data: "<red> Otok nema nikakvih pohenjenih podataka."
+    no-biomes-admin: "<red> Trenutni GameMode nema nikakvih upotrebljivih biomima. Molim uvezite ili kreirajte biome koristeći /[command]"
+    no-biomes: "<red> Trenutni GameMode nema nikakvih upotrebljivih biomima."
+    no-rank: "<red> Niste dozvoljeni da promijenite biom na ovom otoku."
+    not-enough-level: "<red> Ovaj biom zahtijeva minimalno razinu otoka [number]."
+    not-enough-money: "<red> Ova promjena biomima košta [number]."
+    not-enough-money-bank: "<red> Vaš bankovni račun nema dovoljno kredita. Promjena biomima košta [number]."
+    not-enough-items: "<red> Ova promjena biomima košta [items]."
+    admin-not-on-island: "<red> Niste na otoku igrača [user]."
+    incorrect-object: "<red> Nije moguće pronaći biom s traženim nazivom: [biome]"
+    missing-biome: "<red> Naziv biomima nije specificiran."
+    incorrect-mode: "<red> Način s nazivom '[mode]' ne postoji."
+    incorrect-range: "<red> Unesena vrijednost '[number]' nije valjani broj."
+    no-file: "<red> Nije moguće pronaći [file] u direktoriju biomima."
+    no-load: "<red> Nije moguće uvesti biome iz [file]. Razlog: [description]"
+    not-a-gamemode-world: "<red> Svijet [world] nije GameModeAddon svijet."
+    file-exist: "<red> Datoteka s nazivom [file] već postoji. Odaberite drugačiji naziv."
+    no-library-entries: "<red> Nije moguće pronaći nikakve valjane stavke knjižnice."
+    not-unlocked: "<red> Niste otključali ovaj biom."
+    not-purchased: "<red> Niste kupili ovaj biom."
+    timeout: "<red> Promjena biomima je istekla. Moguće je da je odabrana površina bila previše velika ili je server preopterećen."
+    failed: "<red> Server je naišao na probleme tijekom promjene biomima."
+    could-not-remove-money: "<red> Nešto je pošlo po zlu tijekom povlačenja novca."
+    could-not-remove-items: "<red> Nešto je pošlo po zlu tijekom povlačenja stavki."
+    something-went-wrong: "<red> Nešto je pošlo po zlu. Nije moguće to učiniti."
+protection:
+  flags:
+    BIOMES_ISLAND_PROTECTION:
+      name: "Kontrola Biomima"
+      description: |-
+        <dark_purple><italic> Prebaci tko može
+        <dark_purple><italic> promijeniti biom otoka
+    BIOMES_WORLD_PROTECTION:
+      name: "Ograničenje Biomima Otoka"
+      description: |-
+        <dark_purple><italic> Prebaci zahtjev
+        <dark_purple><italic> da igrači budu
+        <dark_purple><italic> na svom otoku za
+        <dark_purple><italic> promjenu biomima.
+      hint: "<red> Trebate biti na svom otoku za promjenu biomima!"

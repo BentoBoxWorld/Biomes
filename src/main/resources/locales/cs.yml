@@ -1,0 +1,825 @@
+biomes:
+  commands:
+    # Tato sekce obsahuje pouze překlady příkazů správce.
+    admin:
+      main:
+        description: "hlavní příkaz správce biomů"
+      import:
+        parameters: "<file>"
+        description: "importuje biomy"
+        confirmation: "Tím se odstraní stávající biomy z [gamemode] a importují se nové biomy ze souboru šablony - prosím potvrďte"
+      migrate:
+        description: "migruje uložená data biomů do nového formátu"
+      set:
+        description: "změní biom pro hráče"
+        parameters: "<player> <biome-id> [mode] [size]"
+      unlock:
+        description: "odemkne biom pro hráče bez kontroly. Přidáním `true` na konec jej označíte jako koupeného."
+        parameters: "<player> <biome-id> [true]"
+      clear-queue:
+        description: "vymaže frontu aktualizace biomů"
+    # Tato sekce obsahuje pouze překlady příkazů hráčů.
+    player:
+      main:
+        description: "otevře GUI výběru biomů"
+      set:
+        description: "změní biom pro hráče"
+        parameters: "<biome-id> [mode] [size]"
+      buy:
+        description: "koupí požadovaný biom"
+        parameters: "<biome-id>"
+      info:
+        description: "pošle zprávu do chatu s podrobným popisem bioma"
+        parameters: "<biome-id>"
+  gui:
+    titles:
+      player-panel: "<black><bold> Zvolte Biom"
+      buy-panel: "<black><bold> Koupit Biom"
+      advanced-panel: "<black><bold> Režim Aktualizace"
+      # Všechny nadpisy pod tímto komentářem jsou pro Admin nabídky.
+      admin-panel: "<black><bold> Admin GUI"
+      settings: "<black><bold> Nastavení"
+      library: "<black><bold> Knihovna"
+      manage-biomes: "<black><bold> Správa Biomů"
+      manage-bundles: "<black><bold> Správa Balíčků"
+      manage-islands: "<black><bold> Správa Dat Ostrovů"
+      edit-biome: "<black><bold> Upravit Biom: [biome]"
+      edit-bundle: "<black><bold> Upravit Balíček: [bundle]"
+      edit-island: "<black><bold> Upravit Ostrov: [island]"
+      environment-selector: "<black><bold> Zvolte Prostředí"
+      biome-selector: "<black><bold> Zvolte Biom"
+      bundle-selector: "<black><bold> Zvolte Balíček"
+      item-selector: "<black><bold> Zvolte Předměty"
+    buttons:
+      island:
+        name: "<white><bold> Ostrov"
+        description: |-
+          <gray> Změní biom na celém
+          <gray> ostrově.
+      chunk:
+        name: "<white><bold> Chunk"
+        description: |-
+          <gray> Změní biom v chuncích.
+      range:
+        name: "<white><bold> Dosah"
+        description: |-
+          <gray> Změní biom podle dosahu.
+      reduce:
+        name: "<white><bold> Snížit"
+        description: |-
+          <gray> Snížit o <yellow> [number]
+      increase:
+        name: "<white><bold> Zvýšit"
+        description: |-
+          <gray> Zvýšit o <yellow> [number]
+      accept:
+        name: "<white><bold> Použít Změnu"
+        description: |-
+          <gray> Změní biom na <yellow> [biome]
+
+          <gray> Režim aktualizace: <yellow> [mode]
+          <gray> Rozsah aktualizace: <yellow> [number]
+      return:
+        name: "<white><bold> Zpět"
+        description: |-
+          <gray> Vrátit se do předchozí nabídky.
+      previous:
+        name: "<white><bold> Předchozí Strana"
+        description: |-
+          <gray> Přepnout na <yellow> [number] <gray> stránku
+      next:
+        name: "<white><bold> Další Strana"
+        description: |-
+          <gray> Přepnout na <yellow> [number] <gray> stránku
+      quit:
+        name: "<white><bold> Konec"
+        description: |-
+          <gray> Skončit s GUI.
+      save:
+        name: "<white><bold> Uložit"
+        description: |-
+          <gray> Uložit změny a vrátit se.
+      cancel:
+        name: "<white><bold> Zrušit"
+        description: |-
+          <gray> Zrušit změny a vrátit se.
+      search:
+        name: "<white><bold> Hledat"
+        description: |-
+          <gray> Umožňuje vyhledávání
+          <gray> prvku pomocí vstupního
+          <gray> textu.
+        search: "<aqua> Hodnota: [value]"
+      buy:
+        name: "<white><bold> Koupit"
+        description: |-
+          <gray> Koupit nový biom.
+      manage_islands:
+        name: "<white><bold> Správa Ostrovů"
+        description: |-
+          <gray> Umožňuje správu dat
+          <gray> ostrovů.
+      manage_biomes:
+        name: "<white><bold> Správa Biomů"
+        description: |-
+          <gray> Umožňuje správu dat
+          <gray> biomů.
+      manage_bundles:
+        name: "<white><bold> Správa Balíčků"
+        description: |-
+          <gray> Umožňuje správu dat
+          <gray> balíčků.
+      settings:
+        name: "<white><bold> Nastavení"
+        description: |-
+          <gray> Umožňuje změnu některých
+          <gray> nastavení doplňku.
+      import_template:
+        name: "<white><bold> Importovat Šablonu"
+        description: |-
+          <gray> Importovat soubor
+          <gray> šablony umístěný v adresáři
+          <gray> doplňku.
+      web_library:
+        name: "<white><bold> Web Knihovna"
+        description: |-
+          <gray> Přístup k webové
+          <gray> knihovně, která obsahuje
+          <gray> sdílené biomy.
+      export_from_database:
+        name: "<white><bold> Exportovat Databázi"
+        description: |-
+          <gray> Exportovat databázi
+          <gray> do jednoho souboru umístěného v
+          <gray> adresáři doplňku.
+      import_to_database:
+        name: "<white><bold> Importovat Databázi"
+        description: |-
+          <gray> Importovat databázi ze
+          <gray> souboru umístěného v adresáři
+          <gray> doplňku.
+      wipe_islands_data:
+        name: "<white><bold> Vymazat Databázi Ostrovů"
+        description: |-
+          <gray> Vymazat všechna uživatelská data biomů
+          <gray> pro tento herní režim.
+      wipe_biomes_data:
+        name: "<white><bold> Vymazat Databázi Biomů"
+        description: |-
+          <gray> Vymazat všechna data biomů a balíčků
+          <gray> pro tento herní režim.
+      add_biome:
+        name: "<white><bold> Přidat Biom"
+        description: |-
+          <gray> Vytvoří nový Biom, který
+          <gray> mohou hráči používat
+          <gray> v uživatelských panelech.
+      remove_biome:
+        name: "<white><bold> Odebrat Biom"
+        description: |-
+          <gray> Odebere vybrané biomy
+          <gray> z uživatelských panelů.
+        title: "<yellow> Vybrané Biomy:"
+        value: "<yellow> - [biome]"
+      accept_selected:
+        name: "<white><bold> Přijmout Vybrané"
+        description: |-
+          <gray> Přijme vybrané prvky.
+        title: "<yellow> Vybrané Prvky:"
+        element: "<yellow> - [element]"
+      environment_element:
+        name: "<white><bold> [environment]"
+        description: |-
+          <gray> [description].
+      properties:
+        name: "<white><bold> Vlastnosti"
+        description: |-
+          <gray> Zobrazit hlavní vlastnosti bioma.
+      change_properties:
+        name: "<white><bold> Změnit Vlastnosti"
+        description: |-
+          <gray> Zobrazit vlastnosti změny bioma.
+      unlock_properties:
+        name: "<white><bold> Vlastnosti Odemčení"
+        description: |-
+          <gray> Zobrazit vlastnosti odemčení bioma.
+      biome:
+        name: "<white><bold> [biome]"
+        description: |-
+          <gray> Typ bioma Minecraftu.
+        value: "<gray> ID Bioma: <yellow> [id]"
+      name:
+        name: "<white><bold> Zobrazovaný Název"
+        description: |-
+          <gray> Zobrazovaný název bioma.
+          <gray> Podporuje barevné kódy.
+        value: "<gray> Aktuální Hodnota: <reset> [name]"
+      deployed:
+        name: "<white><bold> Nasazeno"
+        description: |-
+          <gray> Přepíná, zda je biom
+          <gray> přístupné hráčům
+          <gray> nebo ne.
+        enabled: "<dark_green> Povoleno"
+        disabled: "<red> Zakázáno"
+      environment:
+        name: "<white><bold> Dimenze"
+        description: |-
+          <gray> Umožňuje omezit, v jaké
+          <gray> dimenzi lze biom
+          <gray> aplikovat.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      icon:
+        name: "<white><bold> Ikona"
+        description: |-
+          <gray> Umožňuje změnit ikonu
+          <gray> pro tento biom.
+      order:
+        name: "<white><bold> Pořadí"
+        description: |-
+          <gray> Umožňuje změnit pořadí
+          <gray> objektů.
+          <gray> Objekty se stejnými čísly
+          <gray> budou seřazeny podle jejich
+          <gray> jedinečných názvů identifikátorů.
+        value: "<gray> Aktuální pořadí: <yellow> [number]"
+      description:
+        name: "<white><bold> Popis"
+        description: |-
+          <gray> Konkrétní popis
+          <gray> bioma. Barevné kódy
+          <gray> musí být aplikovány.
+        value: "<yellow> Aktuální popis:"
+        none: "<gray> Popis není nastaven."
+      unlock_permissions:
+        name: "<white><bold> Oprávnění"
+        description: |-
+          <gray> Umožňuje změnit oprávnění
+          <gray> odemčení pro tento
+          <gray> biom aby byl přístupný.
+        title: "<yellow> Oprávnění: "
+        element: " <dark_gray> - [permission]"
+        none: "<gray> Oprávnění nejsou nastavena."
+      unlock_cost:
+        name: "<white><bold> Cena"
+        description: |-
+          <gray> Umožňuje změnit cenu
+          <gray> odemčení tohoto bioma.
+        value: "<gray> Aktuální cena: <yellow> [number]"
+      unlock_items:
+        name: "<white><bold> Předměty"
+        description: |-
+          <gray> Umožňuje změnit předměty
+          <gray> odemčení pro tento biom.
+        title: "<yellow> Předměty: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Předměty nejsou nastaveny."
+      unlock_level:
+        name: "<white><bold> Úroveň"
+        description: |-
+          <gray> Umožňuje změnit požadovanou
+          <gray> úroveň ostrova
+          <gray> pro odemčení tohoto bioma.
+        value: "<gray> Aktuální úroveň: <yellow> [number]"
+      change_cost:
+        name: "<white><bold> Cena"
+        description: |-
+          <gray> Umožňuje změnit cenu
+          <gray> aplikace tohoto bioma.
+        value: "<gray> Aktuální cena: <yellow> [number]"
+      change_items:
+        name: "<white><bold> Předměty"
+        description: |-
+          <gray> Umožňuje změnit předměty
+          <gray> pro aplikaci tohoto bioma.
+        title: "<yellow> Předměty: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Předměty nejsou nastaveny."
+      change_type:
+        name: "<white><bold> [type]"
+        description: |-
+          <gray> Umožňuje změnit typ ceny
+          <gray> pro aplikaci tohoto bioma.
+        static:
+          name: "Statická Hodnota"
+          description: |-
+            <gray> Cena změny bioma se
+            <gray> nemění.
+        per_block:
+          name: "Za Blok"
+          description: |-
+            <gray> Cena změny bioma je
+            <gray> počítána za blok.
+        per_usage:
+          name: "Za Použití"
+          description: |-
+            <gray> Cena změny bioma se
+            <gray> zvyšuje po každém
+            <gray> použití.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      change_increment:
+        name: "<white><bold> Přírůstek"
+        description: |-
+          <gray> Umožňuje změnit
+          <gray> přírůstek za použití.
+        value: "<gray> Aktuální hodnota: <yellow> [number]"
+      biome-filter:
+        name: "<white><bold> [filter]"
+        description: |-
+          <gray> Filtr Bioma založený
+          <gray> na Minecraft Wiki.
+        lush: "Zelená Bioma"
+        dry: "Suchá Bioma"
+        cold: "Studená Bioma"
+        snowy: "Sněžná Bioma"
+        aquatic: "Oceánská Bioma"
+        nether: "Nether Bioma"
+        the_end: "The End Bioma"
+        neutral: "Neutrální Bioma"
+        unused: "Nepoužitá Bioma"
+        warm: "Teplá Bioma"
+        cave: "Jeskyňová Bioma"
+        temperate: "Mírná Bioma"
+      protection_range:
+        name: "<white><bold> Ochranný Dosah"
+        description: |-
+          <gray> Umožňuje omezit změnu bioma
+          <gray> pouze na rozsah ochrany ostrova
+          <gray> místo změny bioma na celém
+          <gray> ostrově.
+        enabled: "<dark_green> Povoleno"
+        disabled: "<red> Zakázáno"
+      reset:
+        name: "<white><bold> Reset Při Změně Vlastníka"
+        description: |-
+          <gray> Umožňuje povolit nucené
+          <gray> změny bioma na výchozí,
+          <gray> pokud se změní vlastník ostrova
+          <gray> a nový vlastník nemá
+          <gray> oprávnění pro aktuální biom.
+        enabled: "<dark_green> Povoleno"
+        disabled: "<red> Zakázáno"
+      cool_down:
+        name: "<white><bold> Cooldown Bioma"
+        description: |-
+          <gray> Umožňuje nastavit počet
+          <gray> sekund mezi změnami bioma
+          <gray> hráčem.
+        value: "<gray> Aktuální cooldown: <yellow> [number]"
+        disabled: "<yellow> Cooldown je zakázán."
+      default_size:
+        name: "<white><bold> Výchozí Dosah"
+        description: |-
+          <gray> Umožňuje nastavit číslo, které
+          <gray> se bude používat, když hráč
+          <gray> změní biom bez
+          <gray> uvedení hodnoty.
+        value: "<gray> Výchozí Dosah: <yellow> [number]"
+      default_mode:
+        name: "<white><bold> Výchozí Režim Aktualizace"
+        description: |-
+          <gray> Umožňuje nastavit výchozí režim
+          <gray> aktualizace, když hráči jej
+          <gray> neposkytnuli.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      unlock_notify:
+        name: "<white><bold> Upozornit Na Odemčení"
+        description: |-
+          <gray> Zpráva bude poslána
+          <gray> uživateli, když si odemkne
+          <gray> nový biom.
+        enabled: |-
+          <aqua> Upozornění na odemčení je <green> povoleno <aqua>.
+        disabled: |-
+          <aqua> Upozornění na odemčení je <red> zakázáno <aqua>.
+      change_timeout:
+        name: "<white><bold> Časový Limit Na Změnu"
+        description: |-
+          <gray> Umožňuje nastavit, po kolika
+          <gray> minutách bude aktualizace bioma
+          <gray> ukončena.
+          <gray> Může se stát na velmi velkých
+          <gray> ostrovech nebo serverech pod
+          <gray> velkou zátěží.
+        value: "<gray> Časový limit po: <yellow> [number] min"
+      parallel_updates:
+        name: "<white><bold> Paralelní Aktualizace"
+        description: |-
+          <gray> Umožňuje nastavit, kolik biomů
+          <gray> se může aktualizovat současně.
+          <gray> Ostatní budou zařazeny do
+          <gray> fronty.
+        value: |-
+          <gray> Aktuální hodnota: <yellow>[number]<gray>.
+      use_bank:
+        name: "<white><bold> Použít Bankovní Účet"
+        description: |-
+          <gray> Přepíná, zda všechny platby
+          <gray> prováděné doplňkem Biomes budou
+          <gray> používat bankovní účet ostrova
+          <gray> doplňku Bank.
+        enabled: |-
+          <aqua> Použití bankovního účtu je <green> povoleno <aqua>.
+        disabled: |-
+          <aqua> Použití bankovního účtu je <red> zakázáno <aqua>.
+        missing: |-
+          <red> Doplněk Bank není nainstalován.
+      visibility:
+        name: "<white><bold> Viditelnost Bioma"
+        description: |-
+          <gray> Umožňuje změnit viditelnost
+          <gray> bioma hráče v panelech
+          <gray> výběru bioma.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+        all: "Všechna Bioma"
+        deployed: "Nasazená Bioma"
+        accessible: "Přístupná Bioma"
+        toggleable: "Přepínatelná"
+      is_online:
+        name: "<white><bold> Online Ostrovy Hráčů"
+        description: |-
+          <gray> Vypsat všechny ostrovy,
+          <gray> kde je online nějaký člen.
+      all_islands:
+        name: "<white><bold> Všechny Ostrovy"
+        description: |-
+          <gray> Seznam všech ostrovů
+          <gray> vytvořených v
+          <gray> aktuálním herním režimu.
+      island_name:
+        name: "<white><bold> [name]"
+        island-owner: "[player]"
+        unknown: "<red> Neznámý Vlastník"
+        description: |-
+          [owner]
+          [members]
+          [id]
+        owner: "<gray> Vlastník: <yellow> [player]"
+        title: "<gray> Členové Ostrova:"
+        element: " <gray> - <yellow> [player]"
+      change_biome:
+        name: "<white><bold> Změnit Biom"
+        description: |-
+          <gray> Změnit biom na ostrově.
+      manage_data:
+        name: "<white><bold> Správa Dat Ostrova"
+        description: |-
+          <gray> Správa dat, která jsou
+          <gray> uložena pro konkrétní ostrov.
+      clear_data:
+        name: "<white><bold> Vymazat Data Ostrova"
+        description: |-
+          <gray> Vymazat všechna uložená data
+          <gray> ostrova.
+      island_bundle:
+        name: "<white><bold> Balíček Ostrova"
+        description: |-
+          <gray> Balíček přiřazený
+          <gray> aktuálnímu ostrovu.
+          <gray> Na ostrově lze používat pouze
+          <gray> biomy z tohoto balíčku.
+        value: "<aqua> Balíček: [bundle]"
+        overwritten: |-
+          <red> Vlastník má oprávnění, které
+          <red> přepisuje balíček.
+      owner_bundle:
+        name: "<white><bold> Balíček Vlastníka"
+        description: |-
+          <gray> Balíček přiřazený
+          <gray> vlastníkovi ostrova.
+          <gray> Na ostrově lze používat pouze
+          <gray> biomy z tohoto balíčku.
+          <gray> Oprávnění pro uživatele k přiřazení:
+          <gray><italic> '[gamemode].biomes.
+          <gray><italic> bundle.<bundle-id>'
+        value: "<aqua> Balíček: [bundle]"
+      reset_to_default:
+        name: "<white><bold> Reset Na Výchozí"
+        description: |-
+          <gray> Resetuje všechny hodnoty ostrova
+          <gray> na výchozí hodnoty z
+          <gray> nastavení.
+      bundle_info:
+        name: "<white><bold> Obecné Informace"
+        description: |-
+          <gray> Zobrazit obecné informace
+          <gray> o balíčku.
+      bundle_biomes:
+        name: "<white><bold> Správa Biomů"
+        description: |-
+          <gray> Správa biomů přiřazených
+          <gray> balíčku.
+      bundle_name:
+        name: "<white><bold> Změnit Název"
+        description: |-
+          <gray> Změnit zobrazovaný
+          <gray> název balíčku.
+        value: "<yellow> Aktuální Hodnota: <reset> [bundle]"
+      bundle_icon:
+        name: "<white><bold> Změnit Ikonu"
+        description: |-
+          <gray> Změnit ikonu balíčku.
+      bundle_description:
+        name: "<white><bold> Změnit Popis"
+        description: |-
+          <gray> Změnit popis balíčku.
+        value: "<yellow> Aktuální hodnota:"
+        none: "<red> Žádný popis"
+      bundle_permission:
+        name: "<white><bold> Oprávnění Balíčku"
+        description: |-
+          <gray> Oprávnění, které musí být
+          <gray> přidáno uživateli pro
+          <gray> vynucení tohoto balíčku.
+        value: "<yellow> Oprávnění: <white> [gamemode].biomes.bundle.[id]"
+      add_bundle_biome:
+        name: "<white><bold> Přidat Biom"
+        description: |-
+          <gray> Přiřadit biom
+          <gray> tomuto balíčku.
+        title: "<aqua> Vybrané Biomy:"
+        value: "<aqua> - [biome]"
+      remove_bundle_biome:
+        name: "<white><bold> Odebrat Biom"
+        description: |-
+          <gray> Odebrat biom
+          <gray> z tohoto balíčku.
+        title: "<aqua> Vybrané Biomy:"
+        value: "<aqua> - [biome]"
+      create_bundle:
+        name: "<white><bold> Vytvořit Balíček"
+        description: |-
+          <gray> Vytvořit nový balíček
+          <gray> pro tento herní režim.
+      delete_bundle:
+        name: "<white><bold> Odebrat Balíček"
+        description: |-
+          <gray> Odebrat balíček z
+          <gray> tohoto herního režimu úplně.
+        title: "<aqua> Vybrané Balíčky:"
+        value: "<aqua> - [bundle]"
+      download:
+        name: "<white><bold> Stáhnout"
+        description: |-
+          <gray> Stáhnout webovou knihovnu.
+        enabled: "<dark_green> S Vymazáním Mezipaměti"
+        disabled: "<red> Bez Vymazání Mezipaměti"
+    tips:
+      click-to-filter: "<yellow> Klikněte <gray> k filtrování."
+      click-to-manage: "<yellow> Klikněte <gray> ke správě."
+      click-to-clear: "<yellow> Klikněte <gray> k vymazání."
+      click-to-change-biome: "<yellow> Klikněte <gray> k změně bioma."
+      click-to-view: "<yellow> Klikněte <gray> k zobrazení."
+      click-to-select: "<yellow> Klikněte <gray> k výběru."
+      click-to-choose: "<yellow> Klikněte <gray> k volbě."
+      click-to-complete: "<yellow> Klikněte <gray> k dokončení."
+      left-click-to-accept: "<yellow> Levý Klik <gray> k aplikaci."
+      right-click-to-write: "<yellow> Pravý Klik <gray> k zápisu."
+      click-to-reduce: "<yellow> Klikněte <gray> k snížení."
+      click-to-increase: "<yellow> Klikněte <gray> ke zvýšení."
+      click-to-return: "<yellow> Klikněte <gray> k návratu."
+      click-to-quit: "<yellow> Klikněte <gray> k skončení."
+      click-to-wipe: "<yellow> Klikněte <gray> k vymazání."
+      left-click-to-wipe: "<yellow> Levý Klik <gray> k vymazání."
+      right-click-to-switch: "<yellow> Pravý Klik <gray> k přepnutí."
+      click-to-open: "<yellow> Klikněte <gray> k otevření."
+      click-to-export: "<yellow> Klikněte <gray> k exportu."
+      click-to-create: "<yellow> Klikněte <gray> k vytvoření."
+      left-click-to-open: "<yellow> Levý Klik <gray> k otevření."
+      right-click-to-reset-all: "<yellow> Pravý Klik <gray> k vymazání všeho."
+      click-to-toggle: "<yellow> Klikněte <gray> k přepnutí."
+      click-to-change: "<yellow> Klikněte <gray> k změně."
+      shift-click-to-reset: "<yellow> Shift Klik <gray> k resetování."
+      click-to-add: "<yellow> Klikněte <gray> k přidání."
+      click-to-remove: "<yellow> Klikněte <gray> k odebrání."
+      left-click-to-cycle: "<yellow> Levý Klik <gray> k cyklování dolů."
+      right-click-to-cycle: "<yellow> Pravý Klik <gray> k cyklování nahoru."
+      click-to-edit: "<yellow> Klikněte <gray> k úpravě."
+      left-click-to-download: "<yellow> Levý Klik <gray> k stažení."
+      right-click-to-toggle: "<yellow> Pravý Klik <gray> k přepnutí."
+      click-to-install: "<yellow> Klikněte <gray> k instalaci."
+      click-to-reset-all: "<yellow> Klikněte <gray> k resetování všeho."
+      right-click-to-select: "<yellow> Pravý Klik <gray> k výběru."
+      right-click-to-deselect: "<yellow> Pravý Klik <gray> k zrušení výběru."
+      left-click-to-choose: "<yellow> Levý Klik <gray> k volbě."
+      click-to-buy: "<yellow> Klikněte <gray> k nákupu."
+      click-to-cancel: "<yellow> Klikněte <gray> ke zrušení."
+      click-to-save: "<yellow> Klikněte <gray> k uložení."
+      click-to-deselect: "<yellow> Klikněte <gray> k zrušení výběru."
+      click-on-item: |-
+        <yellow> Klikněte <gray> na předmět v
+        <gray> se svým inventářem.
+      left-click-to-edit: "<yellow> Levý Klik <gray> k úpravě."
+      right-click-to-clear: "<yellow> Pravý Klik <gray> k vymazání."
+      click-to-previous: "<yellow> Klikněte <gray> k zobrazení předchozí stránky."
+      click-to-next: "<yellow> Klikněte <gray> k zobrazení další stránky."
+      select-before: "<yellow> Vyberte <gray> předmět(-y) před pokračováním."
+      click-to-apply: "<yellow> Klikněte <gray> k aplikaci."
+      right-click-to-open: "<yellow> Pravý Klik <gray> k otevření."
+      click-to-perform: "<yellow> Klikněte <gray> k provedení."
+      left-click-to-apply: "<yellow> Levý Klik <gray> k aplikaci."
+      right-click-to-unlock: "<yellow> Pravý Klik <gray> k odemčení."
+      right-click-to-buy: "<yellow> Pravý Klik <gray> k nákupu."
+      right-click-to-change: "<yellow> Pravý Klik <gray> k změně."
+    descriptions:
+      update-mode:
+        island: "Režim Ostrova"
+        chunk: "Režim Chunku"
+        range: "Režim Dosahu"
+      selected: "<dark_green> Vybráno"
+      island-owner: "[player]"
+      unknown: "<yellow> Neznámý"
+      biome:
+        lore: |-
+          [description]
+          [biome]
+          [unlock]
+          [change]
+        original: |-
+          <gray> Biom: <yellow> [biome]
+        unlock:
+          lore: |-
+            [items]
+            [money]
+            [level]
+            [permissions]
+          money: |-
+            <gray> Cena odemčení: <yellow> [number]
+          level: |-
+            <gray> Vyžaduje dosažení <yellow> [number]
+            <gray> úrovně ostrova.
+          permission-single: |-
+            <gray> Chybějící Oprávnění: <red> [permission]
+          permissions-title: |-
+            <red> Chybějící Oprávnění:
+          permissions-list: |-
+            <red> - [permission]
+          item-single: |-
+            <gray> Předmět Odemčení: [color] [number] x [item]
+          item-title: |-
+            <gray> Předměty Odemčení:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          missing: "<red>"
+          has: "<yellow>"
+        change:
+          lore: |-
+            [items]
+            [money]
+            [mode]
+            [usage]
+          mode:
+            per_block: |-
+              <aqua><italic> Biom stojí za každý
+              <aqua><italic> změněný blok.
+            per_usage: |-
+              <aqua><italic> Změna bioma zvyšuje
+              <aqua><italic> jeho cenu.
+            static: |-
+              <aqua><italic> Standardní cena změny.
+          money: |-
+            <gray> Cena: <yellow> [number]
+          item-single: |-
+            <gray> Předmět: [color] [number] x [item]
+          item-title: |-
+            <gray> Předměty:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          number-of-usage: |-
+            <gray> Tento biom byl
+            <gray> aplikován <yellow> [number] <reset><gray> krát.
+          missing: "<red>"
+          has: "<yellow>"
+      bundle:
+        lore: |-
+          [description]
+          [permission]
+          [biomes]
+        permission: |-
+          <gray> Oprávnění, které musí být
+          <gray> přiřazeno hráči:
+          <gray><italic> [gamemode].biomes.bundle.[id]
+        title: "<gray> Biomy Balíčku: "
+        value: "<gray> - [biome]"
+        no-biomes: "<red> Žádná Bioma Přiřazena"
+      library:
+        author: '<gray> od <yellow> [author]'
+        version: '<gray> Vytvořeno s Biomes <yellow> [version]'
+        lang: '<gray> Jazyk: <yellow> [lang]'
+        gamemode: '<gray> Primárně pro <yellow> [gamemode]'
+  conversations:
+    prefix: "<bold><gold> [BentoBox]: <reset>"
+    confirm-string: "ano, on, přijmout, potvrdit, y, platný, správný"
+    deny-string: "ne, off, zamítnout, deny, n, neplatný, nesprávný"
+    cancel-string: "zrušit"
+    exit-string: "zrušit, skončit, konec"
+    cancelled: "<red> Konverzace zrušena!"
+    input-number: "<yellow> Prosím zadejte číslo do chatu."
+    input-seconds: "<yellow> Prosím zadejte sekundy do chatu."
+    numeric-only: "<red> Zadaná hodnota [value] není číslo!"
+    not-valid-value: "<red> Zadané číslo [value] není platné. Musí být větší než [min] a menší než [max]!"
+    data-removed: "<green> Vybraná bioma jsou odebrána z [gamemode]."
+    confirm-deletion: "<yellow> Prosím potvrďte, že chcete smazat [number] biomů s názvy: [value]."
+    user-data-removed: "<green> Všechna uživatelská data pro [gamemode] jsou vymazána z databáze."
+    confirm-user-data-deletion: "<yellow> Prosím potvrďte, že chcete vymazat databázi uživatelů pro [gamemode]."
+    all-data-removed: "<green> Všechna data doplňku pro [gamemode] jsou vymazána z databáze."
+    confirm-all-data-deletion: "<yellow> Prosím potvrďte, že chcete vymazat data doplňku pro [gamemode]."
+    write-name: "<yellow> Prosím napište název do chatu."
+    new-object-created: "<green> Nový objekt pro [gamemode] je vytvořen."
+    object-already-exists: "<red> Objekt <gray> [id] <red> již existuje. Zvolte jiný název."
+    name-changed: "<green> Úspěch, název byl aktualizován."
+    write-description: "<yellow> Prosím zadejte nový popis do chatu a napište 'quit' na vlastní řádek pro skončení."
+    description-changed: "<green> Úspěch, popis byl aktualizován."
+    write-permissions: "<yellow> Prosím zadejte požadovaná oprávnění, jedno za řádek do chatu, a napište 'quit' na vlastní řádek pro skončení."
+    permissions-changed: "<green> Úspěch, oprávnění byla aktualizována."
+    start-downloading: "<green> Začínam stahovat a importovat Biomes Library."
+    written-text: "<green> Zadaný Text:"
+    confirm-data-replacement: "<yellow> Prosím potvrďte, že chcete nahradit vaše aktuální data novými."
+    new-data-imported: "<green> Úspěch, nová data pro [gamemode] byla importována."
+    exported-file-name: "<yellow> Prosím zadejte název souboru pro exportovaný soubor databáze. (napište 'cancel' k ukončení)"
+    database-export-completed: "<green> Úspěch, export databáze pro [world] je dokončen. Soubor [file] vytvořen."
+    file-name-exist: "<red> Soubor s názvem '[id]' existuje. Nelze přepsat."
+    write-search: "<yellow> Prosím napište vyhledávací hodnotu. (napište 'cancel' k ukončení)"
+    search-updated: "<green> Vyhledávací hodnota aktualizována."
+    invalid-biome: "<red> Některá data v uloženém `[biome]`<reset><red> nejsou platná."
+    confirm-biome-deletion: "<yellow> Prosím potvrďte, že chcete odebrat [biome]<reset><yellow> z [gamemode]."
+    biome-removed: "[biome] <reset><green> je odebráno z [gamemode]."
+    confirm-island-data-deletion: "<yellow> Prosím potvrďte, že chcete odebrat data ostrova hráče [player]."
+    island-data-removed: "[player] <green> data ostrova jsou odebrána."
+    confirm-biome-data-deletion: "<yellow> Prosím potvrďte, že chcete odebrat všechna bioma z [gamemode]."
+    biome-data-removed: "Všechna bioma jsou odebrána z [gamemode]."
+    click-text-to-purchase: "<yellow> Odemkli jste <reset> [biome]<reset><yellow>! Klikněte zde k nákupu."
+    click-text-to-set: "<yellow> Odemkli jste <reset> [biome]<reset><yellow>! Klikněte zde k použití."
+    click-text-to-purchase-other-world: "<yellow> Odemkli jste <reset> [biome]<reset><yellow> v <reset> [gamemode]<reset><yellow>! Navštivte tento svět k nákupu."
+    click-text-to-set-other-world: "<yellow> Odemkli jste <reset> [biome]<reset><yellow> v <reset> [gamemode]<reset><yellow>! Navštivte tento svět k použití."
+  messages:
+    biome-not-unlocked: "[biome] <reset><red> není odemčeno. Nemůžete jej používat."
+    biome-not-purchased: "<red> Nemůžete používat <reset> [biome] <reset><red>. Musíte jej koupit."
+    biome-cannot-be-unlocked: "<red> Nemůžete odemknout <reset> [biome] <reset><red>."
+    biome-already-purchased: "<red> Již jste koupili <reset> [biome] <reset><red>."
+    island-level-not-reached: "[biome] <reset><red> vyžaduje dosažení nejméně úrovně ostrova: [number]."
+    missing-permission: "[biome] <reset><red> vyžaduje oprávnění: [permission]."
+    no-credits-buy: "<red> Nemáte dostatek kreditu k nákupu <reset> [biome] <reset><red>. Stojí [number]."
+    no-credits-buy-bank: "<red> Nemáte dostatek kreditu na vašem bankovním účtu k nákupu <reset> [biome] <reset><red>. Stojí [number]."
+    no-items-buy: "<red> Nemáte dostatek předmětů k nákupu <reset> [biome] <reset><red>. Vyžaduje [items]."
+    biome-purchased: "<yellow> Koupili jste <reset> [biome]<reset><yellow>."
+    import-count: "<yellow> Importováno [biomes] biomů a [bundles] balíčků."
+    start-downloading: "<yellow> Začíná stahování knihovny."
+    update-start: "<green> Začínám měnit biom na [biome] <reset><green> v [number] chuncích. <yellow> Odhadovaný čas: [time] sec."
+    update-done: "<green> Skončil jsem měnit biom na [biome]<reset><green>."
+    waiting: "<green> Změna bioma přidána do fronty. <yellow> Odhadovaný čas čekání: [time] sec."
+    biome-already-unlocked: "[biome] <reset><yellow> je již odemčeno."
+    everything-already-bought: "<green> Již jste si koupili všechna bioma pro tento herní režim."
+    skipping: "<green> Přeskakuji načítání <reset> [biome]<reset><green>."
+    overwriting: "<green> Přepisuji <reset> [biome] <reset><green> v mezipaměti."
+    imported: "<green> Importoval jsem <reset> [biome] <reset><green> v mezipaměti."
+    migrate-start: "<green> Začínám migraci do nového formátu dat."
+    migrate-finish: "<green> Migrace do nového formátu dat dokončena."
+    migrate-valid: "<green> Všechna data jsou platná. Migrace není nutná."
+    bundle-loaded: "<green> Balíček <reset> [bundle] <green> je načten."
+    clear-queue: "<green> Fronta úkolů změny bioma pro [gamemode] je vymazána."
+  errors:
+    no-island-data: "<red> Ostrov nemá žádná uložená data."
+    no-biomes-admin: "<red> Aktuální GameMode nemá žádné použitelné biomy. Prosím importujte nebo vytvořte biomy pomocí /[command]"
+    no-biomes: "<red> Aktuální GameMode nemá žádné použitelné biomy."
+    no-rank: "<red> Nemáte právo měnit biom na tomto ostrově."
+    not-enough-level: "<red> Toto biom vyžaduje nejméně úroveň ostrova [number]."
+    not-enough-money: "<red> Změna tohoto bioma stojí [number]."
+    not-enough-money-bank: "<red> Váš bankovní účet nemá dostatek kreditu. Změna bioma stojí [number]."
+    not-enough-items: "<red> Změna tohoto bioma stojí [items]."
+    admin-not-on-island: "<red> Nejste na ostrově hráče [user]."
+    incorrect-object: "<red> Nelze najít biom s požadovaným názvem: [biome]"
+    missing-biome: "<red> Název bioma není specifikován."
+    incorrect-mode: "<red> Režim s názvem '[mode]' neexistuje."
+    incorrect-range: "<red> Zadaná hodnota '[number]' není platné číslo."
+    no-file: "<red> Nelze najít [file] v adresáři biomů."
+    no-load: "<red> Nelze importovat biomy z [file]. Důvod: [description]"
+    not-a-gamemode-world: "<red> Svět [world] není svět GameModeAddon."
+    file-exist: "<red> Soubor s názvem [file] již existuje. Zvolte jiný název."
+    no-library-entries: "<red> Nelze najít žádné platné položky knihovny."
+    not-unlocked: "<red> Nemáte odemčeno toto biom."
+    not-purchased: "<red> Nemáte koupeno toto biom."
+    timeout: "<red> Změna bioma vypršela. Možná byla vybraná oblast příliš velká nebo je server přetížený."
+    failed: "<red> Server narazil na problémy při změně bioma."
+    could-not-remove-money: "<red> Něco se pokazilo při stažení peněz."
+    could-not-remove-items: "<red> Něco se pokazilo při stažení předmětů."
+    something-went-wrong: "<red> Něco se pokazilo. Nelze to udělat."
+protection:
+  flags:
+    BIOMES_ISLAND_PROTECTION:
+      name: "Kontrola Bioma"
+      description: |-
+        <dark_purple><italic> Přepnout, kdo může
+        <dark_purple><italic> měnit biom ostrova
+    BIOMES_WORLD_PROTECTION:
+      name: "Omezení Bioma Ostrova"
+      description: |-
+        <dark_purple><italic> Přepnout požadavek
+        <dark_purple><italic> aby byli hráči
+        <dark_purple><italic> na svém ostrově aby
+        <dark_purple><italic> změnili biom.
+      hint: "<red> Musíte být na svém ostrově k změně bioma!"

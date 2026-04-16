@@ -1,0 +1,826 @@
+biomes:
+  commands:
+    # This section contains only admin commands translations.
+    admin:
+      main:
+        description: "lệnh admin biomes chính"
+      import:
+        parameters: "<file>"
+        description: "nhập các biome"
+        confirmation: "Điều này sẽ loại bỏ các biome hiện có từ [gamemode] và nhập các biome mới từ tệp mẫu - vui lòng xác nhận"
+      migrate:
+        description: "di chuyển dữ liệu lưu trữ biome sang định dạng mới"
+      set:
+        description: "thay đổi biome cho người chơi"
+        parameters: "<player> <biome-id> [mode] [size]"
+      unlock:
+        description: "mở khóa biome cho người chơi mà không cần kiểm tra. Thêm `true` ở cuối sẽ đánh dấu nó là đã mua."
+        parameters: "<player> <biome-id> [true]"
+      clear-queue:
+        description: "xóa hàng đợi cập nhật biome"
+    # This section contains only player commands translations.
+    player:
+      main:
+        description: "mở giao diện chọn biome"
+      set:
+        description: "thay đổi biome cho người chơi"
+        parameters: "<biome-id> [mode] [size]"
+      buy:
+        description: "mua biome được yêu cầu"
+        parameters: "<biome-id>"
+      info:
+        description: "gửi tin nhắn trò chuyện với mô tả chi tiết biome"
+        parameters: "<biome-id>"
+  gui:
+    titles:
+      player-panel: "<black><bold> Chọn Biome"
+      buy-panel: "<black><bold> Mua Biome"
+      advanced-panel: "<black><bold> Chế Độ Cập Nhật"
+      admin-panel: "<black><bold> Giao Diện Admin"
+      settings: "<black><bold> Cài Đặt"
+      library: "<black><bold> Thư Viện"
+      manage-biomes: "<black><bold> Quản Lý Biome"
+      manage-bundles: "<black><bold> Quản Lý Gói"
+      manage-islands: "<black><bold> Quản Lý Dữ Liệu Đảo"
+      edit-biome: "<black><bold> Chỉnh Sửa Biome: [biome]"
+      edit-bundle: "<black><bold> Chỉnh Sửa Gói: [bundle]"
+      edit-island: "<black><bold> Chỉnh Sửa Đảo: [island]"
+      environment-selector: "<black><bold> Chọn Môi Trường"
+      biome-selector: "<black><bold> Chọn Biome"
+      bundle-selector: "<black><bold> Chọn Gói"
+      item-selector: "<black><bold> Chọn Mục"
+    buttons:
+      island:
+        name: "<white><bold> Đảo"
+        description: |-
+          <gray> Thay đổi biome trên toàn bộ
+          <gray> đảo.
+      chunk:
+        name: "<white><bold> Khối"
+        description: |-
+          <gray> Thay đổi biome trong các khối.
+      range:
+        name: "<white><bold> Phạm Vi"
+        description: |-
+          <gray> Thay đổi biome theo phạm vi.
+      reduce:
+        name: "<white><bold> Giảm"
+        description: |-
+          <gray> Giảm bởi <yellow> [number]
+      increase:
+        name: "<white><bold> Tăng"
+        description: |-
+          <gray> Tăng bởi <yellow> [number]
+      accept:
+        name: "<white><bold> Áp Dụng Thay Đổi"
+        description: |-
+          <gray> Thay đổi biome thành <yellow> [biome]
+
+          <gray> Chế độ cập nhật: <yellow> [mode]
+          <gray> Phạm vi cập nhật: <yellow> [number]
+      return:
+        name: "<white><bold> Quay Lại"
+        description: |-
+          <gray> Quay lại menu trước đó.
+      previous:
+        name: "<white><bold> Trang Trước"
+        description: |-
+          <gray> Chuyển đến trang <yellow> [number] <gray>
+      next:
+        name: "<white><bold> Trang Tiếp"
+        description: |-
+          <gray> Chuyển đến trang <yellow> [number] <gray>
+      quit:
+        name: "<white><bold> Thoát"
+        description: |-
+          <gray> Thoát khỏi giao diện.
+      save:
+        name: "<white><bold> Lưu"
+        description: |-
+          <gray> Lưu các thay đổi và quay lại.
+      cancel:
+        name: "<white><bold> Hủy"
+        description: |-
+          <gray> Hủy các thay đổi và quay lại.
+      search:
+        name: "<white><bold> Tìm Kiếm"
+        description: |-
+          <gray> Cho phép tìm kiếm một
+          <gray> phần tử với giá trị
+          <gray> văn bản nhập vào.
+        search: "<aqua> Giá Trị: [value]"
+      buy:
+        name: "<white><bold> Mua"
+        description: |-
+          <gray> Mua một biome mới.
+      manage_islands:
+        name: "<white><bold> Quản Lý Đảo"
+        description: |-
+          <gray> Cho phép quản lý dữ liệu
+          <gray> đảo.
+      manage_biomes:
+        name: "<white><bold> Quản Lý Biome"
+        description: |-
+          <gray> Cho phép quản lý dữ liệu
+          <gray> biome.
+      manage_bundles:
+        name: "<white><bold> Quản Lý Gói"
+        description: |-
+          <gray> Cho phép quản lý dữ liệu
+          <gray> gói.
+      settings:
+        name: "<white><bold> Cài Đặt"
+        description: |-
+          <gray> Cho phép thay đổi một số
+          <gray> cài đặt của addon.
+      import_template:
+        name: "<white><bold> Nhập Mẫu"
+        description: |-
+          <gray> Nhập tệp mẫu
+          <gray> nằm bên trong thư mục
+          <gray> addon.
+      web_library:
+        name: "<white><bold> Thư Viện Web"
+        description: |-
+          <gray> Truy cập thư viện web
+          <gray> chứa các biome
+          <gray> được chia sẻ.
+      export_from_database:
+        name: "<white><bold> Xuất Cơ Sở Dữ Liệu"
+        description: |-
+          <gray> Xuất cơ sở dữ liệu
+          <gray> vào một tệp duy nhất nằm trong
+          <gray> thư mục addon.
+      import_to_database:
+        name: "<white><bold> Nhập Cơ Sở Dữ Liệu"
+        description: |-
+          <gray> Nhập cơ sở dữ liệu từ
+          <gray> một tệp nằm trong thư mục
+          <gray> addon.
+      wipe_islands_data:
+        name: "<white><bold> Xóa Cơ Sở Dữ Liệu Đảo"
+        description: |-
+          <gray> Xóa tất cả dữ liệu người dùng biome
+          <gray> cho chế độ trò chơi này.
+      wipe_biomes_data:
+        name: "<white><bold> Xóa Cơ Sở Dữ Liệu Biome"
+        description: |-
+          <gray> Xóa tất cả dữ liệu biome và gói
+          <gray> cho chế độ trò chơi này.
+      add_biome:
+        name: "<white><bold> Thêm Biome"
+        description: |-
+          <gray> Tạo Biome mới mà
+          <gray> người chơi có thể sử dụng bằng cách
+          <gray> sử dụng các panel người dùng.
+      remove_biome:
+        name: "<white><bold> Loại Bỏ Biome"
+        description: |-
+          <gray> Loại bỏ các biome được chọn
+          <gray> khỏi các panel người dùng.
+        title: "<yellow> Biome Đã Chọn:"
+        value: "<yellow> - [biome]"
+      accept_selected:
+        name: "<white><bold> Chấp Nhận Đã Chọn"
+        description: |-
+          <gray> Chấp nhận các phần tử đã chọn.
+        title: "<yellow> Phần Tử Đã Chọn:"
+        element: "<yellow> - [element]"
+      environment_element:
+        name: "<white><bold> [environment]"
+        description: |-
+          <gray> [description].
+      properties:
+        name: "<white><bold> Thuộc Tính"
+        description: |-
+          <gray> Xem các thuộc tính biome chính.
+      change_properties:
+        name: "<white><bold> Thay Đổi Thuộc Tính"
+        description: |-
+          <gray> Xem các thuộc tính thay đổi biome.
+      unlock_properties:
+        name: "<white><bold> Thuộc Tính Mở Khóa"
+        description: |-
+          <gray> Xem các thuộc tính mở khóa biome.
+      biome:
+        name: "<white><bold> [biome]"
+        description: |-
+          <gray> Loại Biome Minecraft.
+        value: "<gray> ID Biome: <yellow> [id]"
+      name:
+        name: "<white><bold> Tên Hiển Thị"
+        description: |-
+          <gray> Tên hiển thị cho biome.
+          <gray> Hỗ trợ mã màu.
+        value: "<gray> Giá Trị Hiện Tại: <reset> [name]"
+      deployed:
+        name: "<white><bold> Được Triển Khai"
+        description: |-
+          <gray> Chuyển đổi nếu biome
+          <gray> có thể truy cập được cho
+          <gray> người chơi hoặc không.
+        enabled: "<dark_green> Bật"
+        disabled: "<red> Tắt"
+      environment:
+        name: "<white><bold> Thứ Nguyên"
+        description: |-
+          <gray> Cho phép giới hạn trong
+          <gray> thứ nguyên nào mà biome
+          <gray> có thể được áp dụng.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      icon:
+        name: "<white><bold> Biểu Tượng"
+        description: |-
+          <gray> Cho phép thay đổi biểu tượng
+          <gray> cho biome này.
+      order:
+        name: "<white><bold> Thứ Tự"
+        description: |-
+          <gray> Cho phép thay đổi thứ tự của
+          <gray> các đối tượng.
+          <gray> Các đối tượng có số bằng nhau
+          <gray> sẽ được sắp xếp theo tên
+          <gray> id duy nhất của chúng.
+        value: "<gray> Thứ tự hiện tại: <yellow> [number]"
+      description:
+        name: "<white><bold> Mô Tả"
+        description: |-
+          <gray> Mô tả cụ thể
+          <gray> cho biome. Mã màu
+          <gray> phải được áp dụng cho nó.
+        value: "<yellow> Mô tả hiện tại:"
+        none: "<gray> Mô tả chưa được đặt."
+      unlock_permissions:
+        name: "<white><bold> Quyền Hạn"
+        description: |-
+          <gray> Cho phép thay đổi các quyền
+          <gray> mở khóa cho biome này
+          <gray> để có thể truy cập.
+        title: "<yellow> Quyền Hạn: "
+        element: " <dark_gray> - [permission]"
+        none: "<gray> Quyền hạn chưa được đặt."
+      unlock_cost:
+        name: "<white><bold> Chi Phí"
+        description: |-
+          <gray> Cho phép thay đổi chi phí của
+          <gray> mở khóa biome này.
+        value: "<gray> Chi phí hiện tại: <yellow> [number]"
+      unlock_items:
+        name: "<white><bold> Mục"
+        description: |-
+          <gray> Cho phép thay đổi các mục
+          <gray> mở khóa cho biome này.
+        title: "<yellow> Mục: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Mục chưa được đặt."
+      unlock_level:
+        name: "<white><bold> Cấp Độ"
+        description: |-
+          <gray> Cho phép thay đổi cấp độ
+          <gray> đảo cần thiết
+          <gray> để mở khóa biome này.
+        value: "<gray> Cấp độ hiện tại: <yellow> [number]"
+      change_cost:
+        name: "<white><bold> Chi Phí"
+        description: |-
+          <gray> Cho phép thay đổi chi phí của
+          <gray> việc áp dụng biome này.
+        value: "<gray> Chi phí hiện tại: <yellow> [number]"
+      change_items:
+        name: "<white><bold> Mục"
+        description: |-
+          <gray> Cho phép thay đổi các mục
+          <gray> để áp dụng biome này.
+        title: "<yellow> Mục: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Mục chưa được đặt."
+      change_type:
+        name: "<white><bold> [type]"
+        description: |-
+          <gray> Cho phép thay đổi loại chi phí
+          <gray> để áp dụng biome này.
+        static:
+          name: "Giá Trị Tĩnh"
+          description: |-
+            <gray> Chi phí thay đổi biome không
+            <gray> thay đổi.
+        per_block:
+          name: "Trên Mỗi Khối"
+          description: |-
+            <gray> Chi phí thay đổi biome được
+            <gray> tính trên mỗi khối.
+        per_usage:
+          name: "Trên Mỗi Lần Sử Dụng"
+          description: |-
+            <gray> Chi phí thay đổi biome
+            <gray> tăng lên sau mỗi lần
+            <gray> sử dụng.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      change_increment:
+        name: "<white><bold> Gia Tăng"
+        description: |-
+          <gray> Cho phép thay đổi
+          <gray> gia tăng trên mỗi lần sử dụng.
+        value: "<gray> Giá trị hiện tại: <yellow> [number]"
+      biome-filter:
+        name: "<white><bold> [filter]"
+        description: |-
+          <gray> Bộ Lọc Biome dựa trên
+          <gray> Minecraft Wiki.
+        lush: "Biome Xanh Tươi"
+        dry: "Biome Khô Cằn"
+        cold: "Biome Lạnh"
+        snowy: "Biome Tuyết"
+        aquatic: "Biome Đại Dương"
+        nether: "Biome Nether"
+        the_end: "Biome The End"
+        neutral: "Biome Trung Lập"
+        unused: "Biome Chưa Sử Dụng"
+        warm: "Biome Ấm Áp"
+        cave: "Biome Hang Động"
+        temperate: "Biome Ôn Hòa"
+      protection_range:
+        name: "<white><bold> Phạm Vi Bảo Vệ"
+        description: |-
+          <gray> Cho phép giới hạn việc thay đổi
+          <gray> biome chỉ trong phạm vi bảo vệ
+          <gray> đảo thay vì thay đổi biome trên
+          <gray> toàn bộ đảo.
+        enabled: "<dark_green> Bật"
+        disabled: "<red> Tắt"
+      reset:
+        name: "<white><bold> Đặt Lại Khi Thay Đổi Chủ Sở Hữu"
+        description: |-
+          <gray> Cho phép bật việc buộc thay đổi
+          <gray> biome thành biome mặc định,
+          <gray> nếu đảo thay đổi chủ sở hữu
+          <gray> và chủ sở hữu mới không có
+          <gray> quyền hạn biome hiện tại.
+        enabled: "<dark_green> Bật"
+        disabled: "<red> Tắt"
+      cool_down:
+        name: "<white><bold> Biome Hạ Nhiệt"
+        description: |-
+          <gray> Cho phép đặt số giây
+          <gray> giữa mỗi lần người chơi
+          <gray> có thể thay đổi biome lại.
+        value: "<gray> Hạ nhiệt hiện tại: <yellow> [number]"
+        disabled: "<yellow> Hạ nhiệt bị vô hiệu hóa."
+      default_size:
+        name: "<white><bold> Phạm Vi Mặc Định"
+        description: |-
+          <gray> Cho phép đặt số sẽ được sử dụng
+          <gray> khi người chơi thay đổi biome
+          <gray> mà không viết nó.
+        value: "<gray> Phạm Vi Mặc Định: <yellow> [number]"
+      default_mode:
+        name: "<white><bold> Chế Độ Cập Nhật Mặc Định"
+        description: |-
+          <gray> Cho phép đặt chế độ cập nhật
+          <gray> mặc định khi người chơi
+          <gray> không cung cấp nó.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      unlock_notify:
+        name: "<white><bold> Thông Báo Khi Mở Khóa"
+        description: |-
+          <gray> Một tin nhắn sẽ được gửi
+          <gray> cho người dùng khi họ mở khóa
+          <gray> một biome mới.
+        enabled: |-
+          <aqua> Thông báo khi mở khóa là <green> bật <aqua>.
+        disabled: |-
+          <aqua> Thông báo khi mở khóa là <red> tắt <aqua>.
+      change_timeout:
+        name: "<white><bold> Hết Thời Gian Cho Thay Đổi"
+        description: |-
+          <gray> Cho phép đặt sau bao nhiêu
+          <gray> phút việc cập nhật biome
+          <gray> sẽ bị chấm dứt.
+          <gray> Có thể xảy ra trên các đảo
+          <gray> rất lớn hoặc máy chủ chịu
+          <gray> tải rất lớn.
+        value: "<gray> Hết thời gian sau: <yellow> [number] phút"
+      parallel_updates:
+        name: "<white><bold> Cập Nhật Song Song"
+        description: |-
+          <gray> Cho phép đặt có bao nhiêu biome
+          <gray> cập nhật có thể xảy ra cùng
+          <gray> một lúc.
+          <gray> Những cái khác sẽ được đặt vào
+          <gray> hàng đợi.
+        value: |-
+          <gray> Giá trị hiện tại: <yellow>[number]<gray>.
+      use_bank:
+        name: "<white><bold> Sử Dụng Tài Khoản Ngân Hàng"
+        description: |-
+          <gray> Chuyển đổi nếu tất cả các
+          <gray> khoản thanh toán được thực hiện
+          <gray> bởi addon Biomes sẽ sử dụng
+          <gray> tài khoản đảo Ngân Hàng Addon.
+        enabled: |-
+          <aqua> Sử dụng Tài Khoản Ngân Hàng là <green> bật <aqua>.
+        disabled: |-
+          <aqua> Sử dụng Tài Khoản Ngân Hàng là <red> tắt <aqua>.
+        missing: |-
+          <red> Addon Ngân Hàng chưa được cài đặt.
+      visibility:
+        name: "<white><bold> Khả Năng Hiển Thị Biome"
+        description: |-
+          <gray> Cho phép thay đổi khả năng
+          <gray> hiển thị biome của người chơi
+          <gray> trong các panel lựa chọn biome.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+        all: "Tất Cả Biome"
+        deployed: "Biome Được Triển Khai"
+        accessible: "Biome Có Thể Truy Cập"
+        toggleable: "Có Thể Chuyển Đổi"
+      is_online:
+        name: "<white><bold> Đảo Người Chơi Trực Tuyến"
+        description: |-
+          <gray> Liệt kê tất cả các đảo có
+          <gray> bất kỳ thành viên nào trực tuyến.
+      all_islands:
+        name: "<white><bold> Tất Cả Đảo"
+        description: |-
+          <gray> Danh sách tất cả các đảo
+          <gray> được tạo trong chế độ trò chơi
+          <gray> hiện tại.
+      island_name:
+        name: "<white><bold> [name]"
+        island-owner: "[player]"
+        unknown: "<red> Chủ Sở Hữu Không Xác Định"
+        description: |-
+          [owner]
+          [members]
+          [id]
+        owner: "<gray> Chủ Sở Hữu: <yellow> [player]"
+        title: "<gray> Thành Viên Đảo:"
+        element: " <gray> - <yellow> [player]"
+      change_biome:
+        name: "<white><bold> Thay Đổi Biome"
+        description: |-
+          <gray> Thay đổi biome trên từng đảo.
+      manage_data:
+        name: "<white><bold> Quản Lý Dữ Liệu Đảo"
+        description: |-
+          <gray> Quản lý dữ liệu được
+          <gray> lưu trữ cho đảo cụ thể.
+      clear_data:
+        name: "<white><bold> Xóa Dữ Liệu Đảo"
+        description: |-
+          <gray> Xóa tất cả dữ liệu được lưu trữ
+          <gray> cho đảo.
+      island_bundle:
+        name: "<white><bold> Gói Đảo"
+        description: |-
+          <gray> Gói được gán cho
+          <gray> đảo hiện tại.
+          <gray> Chỉ các biome từ gói này
+          <gray> mới có thể được sử dụng
+          <gray> trên đảo.
+        value: "<aqua> Gói: [bundle]"
+        overwritten: |-
+          <red> Chủ sở hữu có quyền hạn
+          <red> ghi đè gói.
+      owner_bundle:
+        name: "<white><bold> Gói Chủ Sở Hữu"
+        description: |-
+          <gray> Gói được gán cho
+          <gray> chủ sở hữu đảo hiện tại.
+          <gray> Chỉ các biome từ gói này
+          <gray> mới có thể được sử dụng
+          <gray> trên đảo.
+          <gray> Quyền hạn cho người dùng để gán:
+          <gray><italic> '[gamemode].biomes.
+          <gray><italic> bundle.<bundle-id>'
+        value: "<aqua> Gói: [bundle]"
+      reset_to_default:
+        name: "<white><bold> Đặt Lại Thành Mặc Định"
+        description: |-
+          <gray> Đặt lại tất cả các giá trị
+          <gray> đảo thành các giá trị
+          <gray> mặc định từ cài đặt.
+      bundle_info:
+        name: "<white><bold> Thông Tin Chung"
+        description: |-
+          <gray> Xem thông tin gói
+          <gray> chung.
+      bundle_biomes:
+        name: "<white><bold> Quản Lý Biome"
+        description: |-
+          <gray> Quản lý các biome được gán
+          <gray> cho gói.
+      bundle_name:
+        name: "<white><bold> Thay Đổi Tên"
+        description: |-
+          <gray> Thay đổi tên hiển thị
+          <gray> của gói.
+        value: "<yellow> Giá Trị Hiện Tại: <reset> [bundle]"
+      bundle_icon:
+        name: "<white><bold> Thay Đổi Biểu Tượng"
+        description: |-
+          <gray> Thay đổi biểu tượng gói.
+      bundle_description:
+        name: "<white><bold> Thay Đổi Mô Tả"
+        description: |-
+          <gray> Thay đổi mô tả gói.
+        value: "<yellow> Giá trị hiện tại:"
+        none: "<red> Không có mô tả"
+      bundle_permission:
+        name: "<white><bold> Quyền Hạn Gói"
+        description: |-
+          <gray> Quyền hạn phải được
+          <gray> thêm vào người dùng
+          <gray> để buộc gói này.
+        value: "<yellow> Quyền Hạn: <white> [gamemode].biomes.bundle.[id]"
+      add_bundle_biome:
+        name: "<white><bold> Thêm Biome"
+        description: |-
+          <gray> Gán một biome
+          <gray> cho gói này.
+        title: "<aqua> Biome Đã Chọn:"
+        value: "<aqua> - [biome]"
+      remove_bundle_biome:
+        name: "<white><bold> Loại Bỏ Biome"
+        description: |-
+          <gray> Loại bỏ một biome
+          <gray> khỏi gói này.
+        title: "<aqua> Biome Đã Chọn:"
+        value: "<aqua> - [biome]"
+      create_bundle:
+        name: "<white><bold> Tạo Gói"
+        description: |-
+          <gray> Tạo một gói mới
+          <gray> cho chế độ trò chơi này.
+      delete_bundle:
+        name: "<white><bold> Loại Bỏ Gói"
+        description: |-
+          <gray> Loại bỏ một gói khỏi
+          <gray> chế độ trò chơi này hoàn toàn.
+        title: "<aqua> Gói Đã Chọn:"
+        value: "<aqua> - [bundle]"
+      download:
+        name: "<white><bold> Tải Xuống"
+        description: |-
+          <gray> Tải xuống thư viện web.
+        enabled: "<dark_green> Với Xóa Bộ Nhớ Cache"
+        disabled: "<red> Không Xóa Bộ Nhớ Cache"
+    tips:
+      click-to-filter: "<yellow> Nhấp <gray> để lọc."
+      click-to-manage: "<yellow> Nhấp <gray> để quản lý."
+      click-to-clear: "<yellow> Nhấp <gray> để xóa."
+      click-to-change-biome: "<yellow> Nhấp <gray> để thay đổi biome."
+      click-to-view: "<yellow> Nhấp <gray> để xem."
+      click-to-select: "<yellow> Nhấp <gray> để chọn."
+      click-to-choose: "<yellow> Nhấp <gray> để chọn."
+      click-to-complete: "<yellow> Nhấp <gray> để hoàn tất."
+      left-click-to-accept: "<yellow> Nhấp Chuột Trái <gray> để áp dụng."
+      right-click-to-write: "<yellow> Nhấp Chuột Phải <gray> để viết."
+      click-to-reduce: "<yellow> Nhấp <gray> để giảm."
+      click-to-increase: "<yellow> Nhấp <gray> để tăng."
+      click-to-return: "<yellow> Nhấp <gray> để quay lại."
+      click-to-quit: "<yellow> Nhấp <gray> để thoát."
+      click-to-wipe: "<yellow> Nhấp <gray> để xóa."
+      left-click-to-wipe: "<yellow> Nhấp Chuột Trái <gray> để xóa."
+      right-click-to-switch: "<yellow> Nhấp Chuột Phải <gray> để chuyển."
+      click-to-open: "<yellow> Nhấp <gray> để mở."
+      click-to-export: "<yellow> Nhấp <gray> để xuất."
+      click-to-create: "<yellow> Nhấp <gray> để tạo."
+      left-click-to-open: "<yellow> Nhấp Chuột Trái <gray> để mở."
+      right-click-to-reset-all: "<yellow> Nhấp Chuột Phải <gray> để xóa tất cả."
+      click-to-toggle: "<yellow> Nhấp <gray> để chuyển đổi."
+      click-to-change: "<yellow> Nhấp <gray> để thay đổi."
+      shift-click-to-reset: "<yellow> Shift + Nhấp <gray> để đặt lại."
+      click-to-add: "<yellow> Nhấp <gray> để thêm."
+      click-to-remove: "<yellow> Nhấp <gray> để loại bỏ."
+      left-click-to-cycle: "<yellow> Nhấp Chuột Trái <gray> để chu kỳ xuống."
+      right-click-to-cycle: "<yellow> Nhấp Chuột Phải <gray> để chu kỳ lên."
+      click-to-edit: "<yellow> Nhấp <gray> để chỉnh sửa."
+      left-click-to-download: "<yellow> Nhấp Chuột Trái <gray> để tải xuống."
+      right-click-to-toggle: "<yellow> Nhấp Chuột Phải <gray> để chuyển đổi."
+      click-to-install: "<yellow> Nhấp <gray> để cài đặt."
+      click-to-reset-all: "<yellow> Nhấp <gray> để đặt lại tất cả."
+      right-click-to-select: "<yellow> Nhấp Chuột Phải <gray> để chọn."
+      right-click-to-deselect: "<yellow> Nhấp Chuột Phải <gray> để bỏ chọn."
+      left-click-to-choose: "<yellow> Nhấp Chuột Trái <gray> để chọn."
+      click-to-buy: "<yellow> Nhấp <gray> để mua."
+      click-to-cancel: "<yellow> Nhấp <gray> để hủy."
+      click-to-save: "<yellow> Nhấp <gray> để lưu."
+      click-to-deselect: "<yellow> Nhấp <gray> để bỏ chọn."
+      click-on-item: |-
+        <yellow> Nhấp <gray> vào mục trong
+        <gray> kho hàng của bạn.
+      left-click-to-edit: "<yellow> Nhấp Chuột Trái <gray> để chỉnh sửa."
+      right-click-to-clear: "<yellow> Nhấp Chuột Phải <gray> để xóa."
+      click-to-previous: "<yellow> Nhấp <gray> để xem trang trước."
+      click-to-next: "<yellow> Nhấp <gray> để xem trang tiếp."
+      select-before: "<yellow> Chọn <gray> mục trước khi tiếp tục."
+      click-to-apply: "<yellow> Nhấp <gray> để áp dụng."
+      right-click-to-open: "<yellow> Nhấp Chuột Phải <gray> để mở."
+      click-to-perform: "<yellow> Nhấp <gray> để thực hiện."
+      left-click-to-apply: "<yellow> Nhấp Chuột Trái <gray> để áp dụng."
+      right-click-to-unlock: "<yellow> Nhấp Chuột Phải <gray> để mở khóa."
+      right-click-to-buy: "<yellow> Nhấp Chuột Phải <gray> để mua."
+      right-click-to-change: "<yellow> Nhấp Chuột Phải <gray> để thay đổi."
+    descriptions:
+      update-mode:
+        island: "Chế Độ Đảo"
+        chunk: "Chế Độ Khối"
+        range: "Chế Độ Phạm Vi"
+      selected: "<dark_green> Đã Chọn"
+      island-owner: "[player]"
+      unknown: "<yellow> Không Xác Định"
+      biome:
+        lore: |-
+          [description]
+          [biome]
+          [unlock]
+          [change]
+        original: |-
+          <gray> Biome: <yellow> [biome]
+        unlock:
+          lore: |-
+            [items]
+            [money]
+            [level]
+            [permissions]
+          money: |-
+            <gray> Chi phí mở khóa: <yellow> [number]
+          level: |-
+            <gray> Yêu cầu đạt <yellow> [number]
+            <gray> cấp độ đảo.
+          permission-single: |-
+            <gray> Quyền Hạn Bị Thiếu: <red> [permission]
+          permissions-title: |-
+            <red> Quyền Hạn Bị Thiếu:
+          permissions-list: |-
+            <red> - [permission]
+          item-single: |-
+            <gray> Mục Mở Khóa: [color] [number] x [item]
+          item-title: |-
+            <gray> Mục Mở Khóa:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          missing: "<red>"
+          has: "<yellow>"
+        change:
+          lore: |-
+            [items]
+            [money]
+            [mode]
+            [usage]
+          mode:
+            per_block: |-
+              <aqua><italic> Biome chi phí trên mỗi
+              <aqua><italic> khối được thay đổi.
+            per_usage: |-
+              <aqua><italic> Thay đổi biome làm tăng
+              <aqua><italic> giá của nó.
+            static: |-
+              <aqua><italic> Giá thay đổi tiêu chuẩn.
+          money: |-
+            <gray> Chi phí: <yellow> [number]
+          item-single: |-
+            <gray> Mục: [color] [number] x [item]
+          item-title: |-
+            <gray> Mục:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          number-of-usage: |-
+            |<gray> Biome này đã được
+            <gray> áp dụng <yellow> [number] <reset><gray> lần.
+          missing: "<red>"
+          has: "<yellow>"
+      bundle:
+        lore: |-
+          [description]
+          [permission]
+          [biomes]
+        permission: |-
+          <gray> Quyền hạn phải được
+          <gray> gán cho người chơi:
+          <gray><italic> [gamemode].biomes.bundle.[id]
+        title: "<gray> Biome Gói: "
+        value: "<gray> - [biome]"
+        no-biomes: "<red> Không Có Biome Được Gán"
+      library:
+        author: '<gray> bởi <yellow> [author]'
+        version: '<gray> Được tạo với Biomes <yellow> [version]'
+        lang: '<gray> Ngôn Ngữ: <yellow> [lang]'
+        gamemode: '<gray> Chủ Yếu Cho <yellow> [gamemode]'
+  conversations:
+    prefix: "<bold><gold> [BentoBox]: <reset>"
+    confirm-string: "đúng, bật, có, xác nhận, c, hợp lệ, chính xác"
+    deny-string: "sai, tắt, không, từ chối, k, không hợp lệ, không chính xác"
+    cancel-string: "hủy"
+    exit-string: "hủy, thoát, quit"
+    cancelled: "<red> Cuộc trò chuyện đã bị hủy!"
+    input-number: "<yellow> Vui lòng nhập một số trong trò chuyện."
+    input-seconds: "<yellow> Vui lòng nhập một số giây trong trò chuyện."
+    numeric-only: "<red> Giá trị [value] không phải là một số!"
+    not-valid-value: "<red> Số [value] không hợp lệ. Nó phải lớn hơn [min] và nhỏ hơn [max]!"
+    data-removed: "<green> Các biome được chọn được loại bỏ khỏi [gamemode]."
+    confirm-deletion: "<yellow> Vui lòng xác nhận rằng bạn muốn xóa [number] biome có tên: [value]."
+    user-data-removed: "<green> Tất cả dữ liệu người dùng cho [gamemode] được xóa khỏi cơ sở dữ liệu."
+    confirm-user-data-deletion: "<yellow> Vui lòng xác nhận rằng bạn muốn xóa cơ sở dữ liệu người dùng cho [gamemode]."
+    all-data-removed: "<green> Tất cả dữ liệu addon cho [gamemode] được xóa khỏi cơ sở dữ liệu."
+    confirm-all-data-deletion: "<yellow> Vui lòng xác nhận rằng bạn muốn xóa dữ liệu addon cho [gamemode]."
+    write-name: "<yellow> Vui lòng viết một tên trong trò chuyện."
+    new-object-created: "<green> Đối tượng mới cho [gamemode] được tạo."
+    object-already-exists: "<red> Đối tượng <gray> [id] <red> đã tồn tại. Chọn một tên khác."
+    name-changed: "<green> Thành công, tên đã được cập nhật."
+    write-description: "<yellow> Vui lòng nhập một mô tả mới trong trò chuyện và 'thoát' trên một dòng riêng để kết thúc."
+    description-changed: "<green> Thành công, mô tả đã được cập nhật."
+    write-permissions: "<yellow> Vui lòng nhập các quyền hạn cần thiết, mỗi dòng một quyền trong trò chuyện, và 'thoát' trên một dòng riêng để kết thúc."
+    permissions-changed: "<green> Thành công, quyền hạn đã được cập nhật."
+    start-downloading: "<green> Bắt đầu tải xuống và nhập Thư Viện Biome."
+    written-text: "<green> Văn Bản Nhập Vào:"
+    confirm-data-replacement: "<yellow> Vui lòng xác nhận rằng bạn muốn thay thế dữ liệu hiện tại của mình bằng dữ liệu mới."
+    new-data-imported: "<green> Thành công, dữ liệu mới cho [gamemode] đã được nhập."
+    exported-file-name: "<yellow> Vui lòng nhập tên tệp cho tệp cơ sở dữ liệu được xuất. (viết 'hủy' để thoát)"
+    database-export-completed: "<green> Thành công, xuất cơ sở dữ liệu cho [world] đã hoàn tất. Tệp [file] được tạo."
+    file-name-exist: "<red> Tệp có tên '[id]' tồn tại. Không thể ghi đè."
+    write-search: "<yellow> Vui lòng viết một giá trị tìm kiếm. (viết 'hủy' để thoát)"
+    search-updated: "<green> Giá trị tìm kiếm đã được cập nhật."
+    invalid-biome: "<red> Một số dữ liệu được lưu trữ `[biome]`<reset><red> không hợp lệ."
+    confirm-biome-deletion: "<yellow> Vui lòng xác nhận rằng bạn muốn loại bỏ [biome]<reset><yellow> khỏi [gamemode]."
+    biome-removed: "[biome] <reset><green> được loại bỏ khỏi [gamemode]."
+    confirm-island-data-deletion: "<yellow> Vui lòng xác nhận rằng bạn muốn loại bỏ dữ liệu đảo [player]."
+    island-data-removed: "Dữ liệu đảo [player] <green> được loại bỏ."
+    confirm-biome-data-deletion: "<yellow> Vui lòng xác nhận rằng bạn muốn loại bỏ tất cả biome khỏi [gamemode]."
+    biome-data-removed: "Tất cả biome được loại bỏ khỏi [gamemode]."
+    click-text-to-purchase: "<yellow> Bạn đã mở khóa <reset> [biome]<reset><yellow>! Nhấp vào đây để mua nó."
+    click-text-to-set: "<yellow> Bạn đã mở khóa <reset> [biome]<reset><yellow>! Nhấp vào đây để sử dụng nó."
+    click-text-to-purchase-other-world: "<yellow> Bạn đã mở khóa <reset> [biome]<reset><yellow> trong <reset> [gamemode]<reset><yellow>! Ghé thăm thế giới đó để mua nó."
+    click-text-to-set-other-world: "<yellow> Bạn đã mở khóa <reset> [biome]<reset><yellow> trong <reset> [gamemode]<reset><yellow>! Ghé thăm thế giới đó để sử dụng nó."
+  messages:
+    biome-not-unlocked: "[biome] <reset><red> không được mở khóa. Bạn không thể sử dụng nó."
+    biome-not-purchased: "<red> Bạn không thể sử dụng <reset> [biome] <reset><red>. Bạn cần phải mua nó."
+    biome-cannot-be-unlocked: "<red> Bạn không thể mở khóa <reset> [biome] <reset><red>."
+    biome-already-purchased: "<red> Bạn đã mua <reset> [biome] <reset><red>."
+    island-level-not-reached: "[biome] <reset><red> yêu cầu có ít nhất cấp độ đảo: [number]."
+    missing-permission: "[biome] <reset><red> yêu cầu có quyền hạn: [permission]."
+    no-credits-buy: "<red> Bạn không có đủ tín dụng để mua <reset> [biome] <reset><red>. Nó chi phí [number]."
+    no-credits-buy-bank: "<red> Bạn không có đủ tín dụng trong tài khoản ngân hàng của bạn để mua <reset> [biome] <reset><red>. Nó chi phí [number]."
+    no-items-buy: "<red> Bạn không có đủ mục để mua <reset> [biome] <reset><red>. Nó yêu cầu [items]."
+    biome-purchased: "<yellow> Bạn đã mua <reset> [biome]<reset><yellow>."
+    import-count: "<yellow> Đã nhập [biomes] biome và [bundles] gói."
+    start-downloading: "<yellow> Bắt đầu tải xuống thư viện."
+    update-start: "<green> Bắt đầu thay đổi biome thành [biome] <reset><green> trong [number] khối. <yellow> Thời gian ước tính: [time] giây."
+    update-done: "<green> Kết thúc thay đổi biome thành [biome]<reset><green>."
+    waiting: "<green> Thêm thay đổi biome vào hàng đợi. <yellow> Thời gian chờ ước tính: [time] giây."
+    biome-already-unlocked: "[biome] <reset><yellow> đã được mở khóa."
+    everything-already-bought: "<green> Bạn đã mua tất cả biome cho chế độ trò chơi này."
+    skipping: "<green> Bỏ qua tải <reset> [biome]<reset><green>."
+    overwriting: "<green> Ghi đè <reset> [biome] <reset><green> trong bộ nhớ cache."
+    imported: "<green> Đã nhập <reset> [biome] <reset><green> vào bộ nhớ cache."
+    migrate-start: "<green> Bắt đầu di chuyển sang định dạng dữ liệu mới."
+    migrate-finish: "<green> Di chuyển sang định dạng dữ liệu mới đã hoàn tất."
+    migrate-valid: "<green> Tất cả dữ liệu hợp lệ. Di chuyển không cần thiết."
+    bundle-loaded: "<green> Gói <reset> [bundle] <green> được tải."
+    clear-queue: "<green> Hàng đợi tác vụ thay đổi biome cho [gamemode] được xóa."
+  errors:
+    no-island-data: "<red> Đảo không có bất kỳ dữ liệu được lưu trữ nào."
+    no-biomes-admin: "<red> Chế độ trò chơi hiện tại không có biome nào có thể sử dụng. Vui lòng nhập hoặc tạo biome bằng cách sử dụng /[command]"
+    no-biomes: "<red> Chế độ trò chơi hiện tại không có biome nào có thể sử dụng."
+    no-rank: "<red> Bạn không được phép thay đổi biome trên đảo này."
+    not-enough-level: "<red> Biome này yêu cầu ít nhất cấp độ đảo [number]."
+    not-enough-money: "<red> Chi phí thay đổi biome này [number]."
+    not-enough-money-bank: "<red> Tài khoản ngân hàng của bạn không có đủ tín dụng. Chi phí thay đổi biome [number]."
+    not-enough-items: "<red> Chi phí thay đổi biome này [items]."
+    admin-not-on-island: "<red> Bạn không ở trên đảo của [user]."
+    incorrect-object: "<red> Không tìm thấy biome có tên được yêu cầu: [biome]"
+    missing-biome: "<red> Tên biome không được xác định."
+    incorrect-mode: "<red> Chế độ có tên '[mode]' không tồn tại."
+    incorrect-range: "<red> Giá trị '[number]' không phải là một số hợp lệ."
+    no-file: "<red> Không tìm thấy [file] trong thư mục biome."
+    no-load: "<red> Không thể nhập biome từ [file]. Lý do: [description]"
+    not-a-gamemode-world: "<red> Thế giới [world] không phải là một thế giới GameModeAddon."
+    file-exist: "<red> Tệp có tên [file] đã tồn tại. Chọn một tên khác."
+    no-library-entries: "<red> Không tìm thấy bất kỳ mục thư viện hợp lệ nào."
+    not-unlocked: "<red> Bạn chưa mở khóa biome này."
+    not-purchased: "<red> Bạn chưa mua biome này."
+    timeout: "<red> Thay đổi biome hết thời gian. Có thể khu vực được chọn quá lớn hoặc máy chủ bận rộn."
+    failed: "<red> Máy chủ gặp phải một số vấn đề trong khi thay đổi biome."
+    could-not-remove-money: "<red> Có điều gì đó sai trong khi rút tiền."
+    could-not-remove-items: "<red> Có điều gì đó sai trong khi loại bỏ mục."
+    something-went-wrong: "<red> Có điều gì đó sai. Không thể làm được."
+protection:
+  flags:
+    BIOMES_ISLAND_PROTECTION:
+      name: "Kiểm soát Biome"
+      description: |-
+        <dark_purple><italic> Chuyển đổi ai có thể thay đổi
+        <dark_purple><italic> biome của đảo
+    BIOMES_WORLD_PROTECTION:
+      name: "Giới Hạn Biome Đảo"
+      description: |-
+        <dark_purple><italic> Chuyển đổi yêu cầu
+        <dark_purple><italic> cho người chơi ở
+        <dark_purple><italic> trên đảo của họ
+        <dark_purple><italic> để thay đổi biome.
+      hint: "<red> Bạn phải ở trên đảo của bạn để thay đổi biome!"
