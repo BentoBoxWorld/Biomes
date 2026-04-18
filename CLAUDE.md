@@ -8,7 +8,7 @@ Biomes is a BentoBox addon for Minecraft Spigot servers that allows players to c
 
 - **Main class:** `world.bentobox.biomes.BiomesAddon`
 - **Java version:** 21
-- **Current version:** 2.2.1-SNAPSHOT
+- **Current version:** 2.3.0-SNAPSHOT
 
 ## Build Commands
 
@@ -71,8 +71,8 @@ Inter-addon API via BentoBox's web request system: `BiomeDataRequestHandler`, `B
 
 | Dependency | Version | Role |
 |-----------|---------|------|
-| BentoBox | 3.4.0+ | Core framework (required) |
-| Spigot | 1.21.5+ | Minecraft server API (required) |
+| BentoBox | 3.14.0+ | Core framework (required) |
+| Paper | 1.21.11+ | Minecraft server API (required) |
 | Bank | 1.4.0+ | Island bank economy (optional) |
 | Level | 2.5.0+ | Island level unlock conditions (optional) |
 | Greenhouses | 1.9.2+ | Biome effects (optional) |
@@ -84,13 +84,17 @@ Inter-addon API via BentoBox's web request system: `BiomeDataRequestHandler`, `B
 - `config.yml` — Main settings (update mode, cooldowns, feature flags)
 - `biomesTemplate.yml` — Default biome definitions loaded on first run
 - `panels/*.yml` — GUI panel layouts
-- `locales/` — Translations (11 languages)
+- `locales/` — Translations (23 languages)
 
 The addon is installed by placing the JAR in `plugins/BentoBox/addons/`.
 
+## Text Formatting
+
+The addon uses MiniMessage for all user-facing text formatting (locale strings, panel titles, descriptions). Legacy `&`-style color codes have been fully migrated to MiniMessage tags (e.g., `<red>`, `<bold>`, `<yellow>`).
+
 ## Testing
 
-Tests use JUnit 4 + Mockito + PowerMock. There are currently no tests implemented, but the infrastructure (maven-surefire, JaCoCo) is configured in pom.xml.
+Tests use JUnit 5 + Mockito 5. Test classes exist under `src/test/java/`. JaCoCo is configured for coverage reporting.
 
 ## CI/CD
 

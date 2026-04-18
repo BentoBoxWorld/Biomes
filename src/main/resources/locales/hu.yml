@@ -14,7 +14,7 @@ biomes:
         description: "megváltoztatja a játékos biómáját"
         parameters: "<player> <biome-id> [mode] [size]"
       unlock:
-        description: "feloldja a biómáját a játékos számára ellenőrzések nélkül. A végén a „true" hozzáadása meg fogja jelölni vásároltként."
+        description: "feloldja a biómáját a játékos számára ellenőrzések nélkül. A végén a 'true' hozzáadása meg fogja jelölni vásároltként."
         parameters: "<player> <biome-id> [true]"
       clear-queue:
         description: "törli a biómák frissítési sorát"
