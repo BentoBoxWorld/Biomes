@@ -10,6 +10,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
@@ -67,6 +68,7 @@ public class BiomeUpdateTask
         this.result = new CompletableFuture<>();
 
         this.processCounter = new AtomicInteger(0);
+        this.cancelled = new AtomicBoolean(false);
     }
 
 
@@ -94,6 +96,16 @@ public class BiomeUpdateTask
     public String getIslandId()
     {
         return this.islandId;
+    }
+
+
+    /**
+     * Cancels this biome update task.
+     * Sets the cancelled flag so that ongoing processing stops at the next chunk boundary.
+     */
+    public void cancel()
+    {
+        this.cancelled.set(true);
     }
 
 
@@ -133,6 +145,14 @@ public class BiomeUpdateTask
             if (!Util.isPaper() && !Bukkit.isPrimaryThread())
             {
                 this.addon.logError("scanChunk not on Primary Thread!");
+            }
+
+            // If the task was cancelled, stop processing immediately.
+            if (this.cancelled.get())
+            {
+                updateQueue.getProcessStartMap().remove(this);
+                this.result.complete(UpdateQueue.Result.FAILED);
+                return;
             }
 
             long runTime = System.currentTimeMillis() - updateQueue.getProcessStartMap().get(this);
@@ -236,6 +256,12 @@ public class BiomeUpdateTask
      */
     private void runBiomeChange(ChunkData chunkData, Chunk chunk, CompletableFuture<Boolean> completed)
     {
+        if (this.cancelled.get())
+        {
+            completed.complete(false);
+            return;
+        }
+
         boolean changeOceanBiomes = this.addon.getSettings().isChangeOceanBiomes();
 
         for (int x = chunkData.minX();
@@ -477,6 +503,12 @@ public class BiomeUpdateTask
      * Instance of AtomicInteger that counts processed chunks.
      */
     private final AtomicInteger processCounter;
+
+    /**
+     * Flag indicating this task has been cancelled.
+     * When set to {@code true}, processing stops at the next chunk boundary.
+     */
+    private final AtomicBoolean cancelled;
 
     /**
      * Instance of biome that is required to be changed.
