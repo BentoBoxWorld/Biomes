@@ -85,6 +85,22 @@ public class WebManager
                     getContent("biomes/catalog.json").
                     getContent().replaceAll("\\n", "");
             }
+            catch (IllegalAccessException e)
+            {
+                if (this.plugin.getSettings().isLogGithubDownloadData())
+                {
+                    String message = e.getMessage();
+
+                    if (message != null && !message.isEmpty())
+                    {
+                        this.plugin.logError("Could not connect to GitHub. " + message);
+                    }
+                    else
+                    {
+                        this.plugin.logError("Could not connect to GitHub.");
+                    }
+                }
+            }
             catch (Exception e)
             {
                 this.plugin.logError("An error occurred when downloading data from GitHub...");
