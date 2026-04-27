@@ -7,6 +7,7 @@ package world.bentobox.biomes.utils;
 
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -43,7 +44,7 @@ public class Utils
      * ThreadLocal is used because DecimalFormat is not thread-safe.
      */
     private static final ThreadLocal<DecimalFormat> DOUBLE_FORMAT =
-        ThreadLocal.withInitial(() -> new DecimalFormat("0.###"));
+        ThreadLocal.withInitial(() -> new DecimalFormat("0.###", DecimalFormatSymbols.getInstance(Locale.ROOT)));
 
     /**
      * This method groups input items in single itemstack with correct amount and returns it. Allows to remove duplicate

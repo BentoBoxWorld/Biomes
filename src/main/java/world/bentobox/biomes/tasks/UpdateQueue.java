@@ -165,7 +165,11 @@ public class UpdateQueue
             return false;
         });
 
-        toCancel.forEach(task -> task.getResult().complete(Result.FAILED));
+        toCancel.forEach(task ->
+        {
+            task.cancel();
+            task.getResult().complete(Result.FAILED);
+        });
     }
 
 
