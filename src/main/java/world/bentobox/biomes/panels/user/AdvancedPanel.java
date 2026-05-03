@@ -79,6 +79,9 @@ public class AdvancedPanel extends CommonPanel
         panelBuilder.registerTypeBuilder("ACCEPT", this::createValueButton);
         panelBuilder.registerTypeBuilder("RETURN", this::createReturnButton);
 
+        // Register command button
+        panelBuilder.registerTypeBuilder("COMMAND", this::createCommandButton);
+
         // Register unknown type builder.
         panelBuilder.build();
     }
