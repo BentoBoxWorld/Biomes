@@ -752,6 +752,11 @@ public abstract class CommonPanel
      */
     protected void executeCommand(@NonNull String command)
     {
+        if (this.user.getPlayer() == null)
+        {
+            return;
+        }
+
         this.user.closeInventory();
         this.user.getPlayer().performCommand(command);
     }
