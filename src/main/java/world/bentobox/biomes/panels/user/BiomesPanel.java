@@ -109,6 +109,9 @@ public class BiomesPanel extends CommonPanel
         // Register buy and return buttons
         panelBuilder.registerTypeBuilder("PURCHASE", this::createPurchaseButton);
 
+        // Register command button
+        panelBuilder.registerTypeBuilder("COMMAND", this::createCommandButton);
+
         // Register unknown type builder.
         panelBuilder.build();
     }
@@ -243,6 +246,9 @@ public class BiomesPanel extends CommonPanel
                         }
                         case "ADVANCED_PANEL" -> {
                             AdvancedPanel.open(this, biomesObject, null);
+                        }
+                        case "COMMAND" -> {
+                            this.executeCommand(action.content());
                         }
                     }
                 }
