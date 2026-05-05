@@ -123,6 +123,9 @@ public class BuyPanel extends CommonPanel
         panelBuilder.registerTypeBuilder("PREVIOUS", this::createPreviousButton);
         panelBuilder.registerTypeBuilder("RETURN", this::createReturnButton);
 
+        // Register command button
+        panelBuilder.registerTypeBuilder("COMMAND", this::createCommandButton);
+
         // Register unknown type builder.
         panelBuilder.build();
     }
@@ -236,10 +239,16 @@ public class BuyPanel extends CommonPanel
         {
             for (ItemTemplateRecord.ActionRecords action : activeActions)
             {
-                if (clickType == action.clickType() &&
-                    "BUY".equalsIgnoreCase(action.actionType()))
+                if (clickType == action.clickType())
                 {
-                    this.buyBiome(biomesObject);
+                    if ("BUY".equalsIgnoreCase(action.actionType()))
+                    {
+                        this.buyBiome(biomesObject);
+                    }
+                    else if ("COMMAND".equalsIgnoreCase(action.actionType()))
+                    {
+                        this.executeCommand(action.content());
+                    }
                 }
             }
 

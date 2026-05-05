@@ -6,6 +6,8 @@
 package world.bentobox.biomes.utils;
 
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,6 +39,13 @@ import world.bentobox.biomes.database.objects.BiomesObject;
  */
 public class Utils
 {
+    /**
+     * Decimal format used to display double values with up to 3 decimal places.
+     * ThreadLocal is used because DecimalFormat is not thread-safe.
+     */
+    private static final ThreadLocal<DecimalFormat> DOUBLE_FORMAT =
+        ThreadLocal.withInitial(() -> new DecimalFormat("0.###", DecimalFormatSymbols.getInstance(Locale.ROOT)));
+
     /**
      * This method groups input items in single itemstack with correct amount and returns it. Allows to remove duplicate
      * items from list.
@@ -494,11 +503,18 @@ public class Utils
             boolean available) {
         User user = User.getInstance(uuid);
 
-        WorldSettings settings = addon.getPlugin().getIWM().getWorldSettings(island.getWorld());
-
-        if (user.isOnline())
+        if (!user.isOnline())
         {
-            TextComponent component;
+            return;
+        }
+
+        String islandGameMode = getGameMode(island.getWorld());
+        World playerWorld = user.getWorld();
+        String playerGameMode = playerWorld == null ? "" : getGameMode(playerWorld);
+
+        if (!islandGameMode.isEmpty() && islandGameMode.equals(playerGameMode))
+        {
+            WorldSettings settings = addon.getPlugin().getIWM().getWorldSettings(island.getWorld());
 
             StringBuilder commandBuilder = new StringBuilder();
             commandBuilder.append("/");
@@ -506,18 +522,21 @@ public class Utils
             commandBuilder.append(" ");
             commandBuilder.append(addon.getSettings().getPlayerCommand().split(" ")[0]);
 
-            if (!available) {
-                component = new TextComponent(user.getTranslation(Constants.CONVERSATIONS + "click-text-to-purchase",
-                        Constants.PARAMETER_BIOME, biome.getFriendlyName()));
-            } else
-            {
-                component = new TextComponent(user.getTranslation(Constants.CONVERSATIONS + "click-text-to-set",
-                        Constants.PARAMETER_BIOME, biome.getFriendlyName()));
-            }
-
+            String key = available ? "click-text-to-set" : "click-text-to-purchase";
+            TextComponent component = new TextComponent(user.getTranslation(Constants.CONVERSATIONS + key,
+                    Constants.PARAMETER_BIOME, biome.getFriendlyName()));
             component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, commandBuilder.toString()));
 
             user.getPlayer().spigot().sendMessage(component);
+        }
+        else
+        {
+            String gameModeName = BentoBox.getInstance().getIWM().getAddon(island.getWorld())
+                    .map(a -> a.getDescription().getName()).orElse("");
+            String key = available ? "click-text-to-set-other-world" : "click-text-to-purchase-other-world";
+            user.sendMessage(Constants.CONVERSATIONS + key,
+                    Constants.PARAMETER_BIOME, biome.getFriendlyName(),
+                    "[gamemode]", gameModeName);
         }
     }
 
@@ -1034,6 +1053,20 @@ public class Utils
         }
 
         return translation;
+    }
+
+
+    /**
+     * Formats a double value for display, showing up to 3 decimal places and
+     * removing trailing zeros to avoid floating-point imprecision artefacts
+     * such as {@code 0.0299999999329447746} being shown instead of {@code 0.03}.
+     *
+     * @param value the value to format
+     * @return the formatted string
+     */
+    public static String formatDouble(double value)
+    {
+        return DOUBLE_FORMAT.get().format(value);
     }
 
 

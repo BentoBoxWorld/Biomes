@@ -3,10 +3,10 @@ buy_panel:
   type: INVENTORY
   background:
     icon: PURPLE_STAINED_GLASS_PANE
-    title: "&b&r" # Empty text
+    title: "<aqua><reset>" # Empty text
   border:
     icon: PURPLE_STAINED_GLASS_PANE
-    title: "&b&r"  # Empty text
+    title: "<aqua><reset>"  # Empty text
   force-shown: []
   content:
     2:

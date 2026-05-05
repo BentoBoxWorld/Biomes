@@ -222,12 +222,12 @@ public class BiomesBundleObject implements DataObject
     {
         dummyBundle = new BiomesBundleObject();
         dummyBundle.setBundleIcon(new ItemStack(Material.STRUCTURE_VOID));
-        dummyBundle.setFriendlyName("&f&l No Bundle");
+        dummyBundle.setFriendlyName("<white><bold> No Bundle");
         dummyBundle.setUniqueId(null);
 
         List<String> description = new ArrayList<>();
-        description.add("&cThis is not an actual");
-        description.add("&cbundle.");
+        description.add("<red>This is not an actual");
+        description.add("<red>bundle.");
 
         dummyBundle.setDescription(description);
     }

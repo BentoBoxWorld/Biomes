@@ -1,0 +1,825 @@
+biomes:
+  commands:
+    # Этот раздел содержит только переводы команд администратора.
+    admin:
+      main:
+        description: "главная команда администратора биомов"
+      import:
+        parameters: "<file>"
+        description: "импортирует биомы"
+        confirmation: "Это удалит существующие биомы из [gamemode] и импортирует новые биомы из файла шаблона - пожалуйста подтвердите"
+      migrate:
+        description: "переносит сохраненные данные биомов в новый формат"
+      set:
+        description: "изменяет биом для игрока"
+        parameters: "<player> <biome-id> [mode] [size]"
+      unlock:
+        description: "разблокирует биом для игрока без проверок. Добавление `true` в конце отметит как куплено."
+        parameters: "<player> <biome-id> [true]"
+      clear-queue:
+        description: "очищает очередь обновления биома"
+    # Этот раздел содержит только переводы команд игрока.
+    player:
+      main:
+        description: "открывает графический интерфейс выбора биома"
+      set:
+        description: "изменяет биом для игрока"
+        parameters: "<biome-id> [mode] [size]"
+      buy:
+        description: "покупает запрашиваемый биом"
+        parameters: "<biome-id>"
+      info:
+        description: "отправляет сообщение в чат с подробным описанием биома"
+        parameters: "<biome-id>"
+  gui:
+    titles:
+      player-panel: "<black><bold> Выберите Биом"
+      buy-panel: "<black><bold> Купить Биом"
+      advanced-panel: "<black><bold> Режим Обновления"
+      admin-panel: "<black><bold> Панель Администратора"
+      settings: "<black><bold> Параметры"
+      library: "<black><bold> Библиотека"
+      manage-biomes: "<black><bold> Управление Биомами"
+      manage-bundles: "<black><bold> Управление Наборами"
+      manage-islands: "<black><bold> Управление Данными Островов"
+      edit-biome: "<black><bold> Редактировать Биом: [biome]"
+      edit-bundle: "<black><bold> Редактировать Набор: [bundle]"
+      edit-island: "<black><bold> Редактировать Остров: [island]"
+      environment-selector: "<black><bold> Выберите Среду"
+      biome-selector: "<black><bold> Выберите Биом"
+      bundle-selector: "<black><bold> Выберите Набор"
+      item-selector: "<black><bold> Выберите Предметы"
+    buttons:
+      island:
+        name: "<white><bold> Остров"
+        description: |-
+          <gray> Изменяет биом на всем
+          <gray> острове.
+      chunk:
+        name: "<white><bold> Чанк"
+        description: |-
+          <gray> Изменяет биом по чанкам.
+      range:
+        name: "<white><bold> Радиус"
+        description: |-
+          <gray> Изменяет биом по радиусу.
+      reduce:
+        name: "<white><bold> Уменьшить"
+        description: |-
+          <gray> Уменьшить на <yellow> [number]
+      increase:
+        name: "<white><bold> Увеличить"
+        description: |-
+          <gray> Увеличить на <yellow> [number]
+      accept:
+        name: "<white><bold> Применить Изменение"
+        description: |-
+          <gray> Изменить биом на <yellow> [biome]
+
+          <gray> Режим обновления: <yellow> [mode]
+          <gray> Диапазон обновления: <yellow> [number]
+      return:
+        name: "<white><bold> Вернуться"
+        description: |-
+          <gray> Вернуться в предыдущее меню.
+      previous:
+        name: "<white><bold> Предыдущая Страница"
+        description: |-
+          <gray> Переключиться на страницу <yellow> [number]
+      next:
+        name: "<white><bold> Следующая Страница"
+        description: |-
+          <gray> Переключиться на страницу <yellow> [number]
+      quit:
+        name: "<white><bold> Выход"
+        description: |-
+          <gray> Выход из графического интерфейса.
+      save:
+        name: "<white><bold> Сохранить"
+        description: |-
+          <gray> Сохранить изменения и вернуться.
+      cancel:
+        name: "<white><bold> Отменить"
+        description: |-
+          <gray> Отменить изменения и вернуться.
+      search:
+        name: "<white><bold> Поиск"
+        description: |-
+          <gray> Позволяет искать
+          <gray> элемент с вводимым
+          <gray> текстовым значением.
+        search: "<aqua> Значение: [value]"
+      buy:
+        name: "<white><bold> Купить"
+        description: |-
+          <gray> Купить новый биом.
+      manage_islands:
+        name: "<white><bold> Управление Островами"
+        description: |-
+          <gray> Позволяет управлять
+          <gray> данными острова.
+      manage_biomes:
+        name: "<white><bold> Управление Биомами"
+        description: |-
+          <gray> Позволяет управлять
+          <gray> данными биомов.
+      manage_bundles:
+        name: "<white><bold> Управление Наборами"
+        description: |-
+          <gray> Позволяет управлять
+          <gray> данными наборов.
+      settings:
+        name: "<white><bold> Параметры"
+        description: |-
+          <gray> Позволяет изменять
+          <gray> некоторые параметры дополнения.
+      import_template:
+        name: "<white><bold> Импортировать Шаблон"
+        description: |-
+          <gray> Импортировать файл шаблона
+          <gray> расположенный в директории
+          <gray> дополнения.
+      web_library:
+        name: "<white><bold> Веб-Библиотека"
+        description: |-
+          <gray> Получить доступ к веб-
+          <gray> библиотеке, которая содержит
+          <gray> общие биомы.
+      export_from_database:
+        name: "<white><bold> Экспортировать БД"
+        description: |-
+          <gray> Экспортировать базу данных
+          <gray> в один файл, расположенный в
+          <gray> директории дополнения.
+      import_to_database:
+        name: "<white><bold> Импортировать БД"
+        description: |-
+          <gray> Импортировать базу данных из
+          <gray> файла, расположенного в
+          <gray> директории дополнения.
+      wipe_islands_data:
+        name: "<white><bold> Очистить БД Островов"
+        description: |-
+          <gray> Очистить все данные биомов
+          <gray> пользователя для этого режима игры.
+      wipe_biomes_data:
+        name: "<white><bold> Очистить БД Биомов"
+        description: |-
+          <gray> Очистить все данные биомов и наборов
+          <gray> для этого режима игры.
+      add_biome:
+        name: "<white><bold> Добавить Биом"
+        description: |-
+          <gray> Создает новый Биом, который
+          <gray> игроки могут использовать
+          <gray> через пользовательские панели.
+      remove_biome:
+        name: "<white><bold> Удалить Биом"
+        description: |-
+          <gray> Удаляет выбранные биомы
+          <gray> из пользовательских панелей.
+        title: "<yellow> Выбранные Биомы:"
+        value: "<yellow> - [biome]"
+      accept_selected:
+        name: "<white><bold> Принять Выбранное"
+        description: |-
+          <gray> Принимает выбранные элементы.
+        title: "<yellow> Выбранные Элементы:"
+        element: "<yellow> - [element]"
+      environment_element:
+        name: "<white><bold> [environment]"
+        description: |-
+          <gray> [description].
+      properties:
+        name: "<white><bold> Свойства"
+        description: |-
+          <gray> Просмотреть основные свойства биома.
+      change_properties:
+        name: "<white><bold> Изменить Свойства"
+        description: |-
+          <gray> Просмотреть изменяемые свойства биома.
+      unlock_properties:
+        name: "<white><bold> Разблокировать Свойства"
+        description: |-
+          <gray> Просмотреть свойства разблокировки биома.
+      biome:
+        name: "<white><bold> [biome]"
+        description: |-
+          <gray> Тип биома Minecraft.
+        value: "<gray> ID Биома: <yellow> [id]"
+      name:
+        name: "<white><bold> Отображаемое Имя"
+        description: |-
+          <gray> Отображаемое имя для биома.
+          <gray> Поддерживает коды цветов.
+        value: "<gray> Текущее Значение: <reset> [name]"
+      deployed:
+        name: "<white><bold> Развернуто"
+        description: |-
+          <gray> Переключает доступность
+          <gray> биома для игроков
+          <gray> или нет.
+        enabled: "<dark_green> Включено"
+        disabled: "<red> Отключено"
+      environment:
+        name: "<white><bold> Измерение"
+        description: |-
+          <gray> Позволяет ограничить в каком
+          <gray> измерении может быть применен
+          <gray> биом.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      icon:
+        name: "<white><bold> Иконка"
+        description: |-
+          <gray> Позволяет изменить иконку
+          <gray> для этого биома.
+      order:
+        name: "<white><bold> Порядок"
+        description: |-
+          <gray> Позволяет изменить порядок
+          <gray> объектов.
+          <gray> Объекты с равными числами
+          <gray> будут отсортированы по их
+          <gray> уникальным именам.
+        value: "<gray> Текущий порядок: <yellow> [number]"
+      description:
+        name: "<white><bold> Описание"
+        description: |-
+          <gray> Конкретное описание
+          <gray> для биома. Коды цветов
+          <gray> должны быть применены к нему.
+        value: "<yellow> Текущее описание:"
+        none: "<gray> Описание не задано."
+      unlock_permissions:
+        name: "<white><bold> Разрешения"
+        description: |-
+          <gray> Позволяет изменять
+          <gray> разрешения разблокировки для
+          <gray> доступности этого биома.
+        title: "<yellow> Разрешения: "
+        element: " <dark_gray> - [permission]"
+        none: "<gray> Разрешения не задано."
+      unlock_cost:
+        name: "<white><bold> Стоимость"
+        description: |-
+          <gray> Позволяет изменять стоимость
+          <gray> разблокировки этого биома.
+        value: "<gray> Текущая стоимость: <yellow> [number]"
+      unlock_items:
+        name: "<white><bold> Предметы"
+        description: |-
+          <gray> Позволяет изменять предметы
+          <gray> разблокировки для этого биома.
+        title: "<yellow> Предметы: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Предметы не заданы."
+      unlock_level:
+        name: "<white><bold> Уровень"
+        description: |-
+          <gray> Позволяет изменять требуемый
+          <gray> уровень острова
+          <gray> для разблокировки этого биома.
+        value: "<gray> Текущий уровень: <yellow> [number]"
+      change_cost:
+        name: "<white><bold> Стоимость"
+        description: |-
+          <gray> Позволяет изменять стоимость
+          <gray> применения этого биома.
+        value: "<gray> Текущая стоимость: <yellow> [number]"
+      change_items:
+        name: "<white><bold> Предметы"
+        description: |-
+          <gray> Позволяет изменять предметы
+          <gray> для применения этого биома.
+        title: "<yellow> Предметы: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Предметы не заданы."
+      change_type:
+        name: "<white><bold> [type]"
+        description: |-
+          <gray> Позволяет изменять тип стоимости
+          <gray> для применения этого биома.
+        static:
+          name: "Статическое Значение"
+          description: |-
+            <gray> Стоимость изменения биома не
+            <gray> изменяется.
+        per_block:
+          name: "За Блок"
+          description: |-
+            <gray> Стоимость изменения биома
+            <gray> рассчитывается за блок.
+        per_usage:
+          name: "За Использование"
+          description: |-
+            <gray> Стоимость изменения биома
+            <gray> увеличивается после каждого
+            <gray> использования.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      change_increment:
+        name: "<white><bold> Приращение"
+        description: |-
+          <gray> Позволяет изменять
+          <gray> приращение за использование.
+        value: "<gray> Текущее значение: <yellow> [number]"
+      biome-filter:
+        name: "<white><bold> [filter]"
+        description: |-
+          <gray> Фильтр Биома на основе
+          <gray> Вики Minecraft.
+        lush: "Пышные Биомы"
+        dry: "Засушливые Биомы"
+        cold: "Холодные Биомы"
+        snowy: "Снежные Биомы"
+        aquatic: "Океанские Биомы"
+        nether: "Биомы Нижнего Мира"
+        the_end: "Биомы The End"
+        neutral: "Нейтральные Биомы"
+        unused: "Неиспользуемые Биомы"
+        warm: "Теплые Биомы"
+        cave: "Пещерные Биомы"
+        temperate: "Умеренные Биомы"
+      protection_range:
+        name: "<white><bold> Диапазон Защиты"
+        description: |-
+          <gray> Позволяет ограничить изменение
+          <gray> биома только диапазоном защиты
+          <gray> острова вместо изменения биома
+          <gray> на всем острове.
+        enabled: "<dark_green> Включено"
+        disabled: "<red> Отключено"
+      reset:
+        name: "<white><bold> Сброс При Смене Владельца"
+        description: |-
+          <gray> Позволяет включить принудительное
+          <gray> изменение биома на используемый по умолчанию,
+          <gray> если остров меняет владельца и новый
+          <gray> владелец не имеет разрешения
+          <gray> для текущего биома.
+        enabled: "<dark_green> Включено"
+        disabled: "<red> Отключено"
+      cool_down:
+        name: "<white><bold> Перезарядка Биома"
+        description: |-
+          <gray> Позволяет установить количество
+          <gray> секунд между изменениями
+          <gray> биома игроком.
+        value: "<gray> Текущая перезарядка: <yellow> [number]"
+        disabled: "<yellow> Перезарядка отключена."
+      default_size:
+        name: "<white><bold> Диапазон По Умолчанию"
+        description: |-
+          <gray> Позволяет установить число,
+          <gray> которое будет использоваться, когда
+          <gray> игрок изменяет биом без
+          <gray> его указания.
+        value: "<gray> Диапазон По Умолчанию: <yellow> [number]"
+      default_mode:
+        name: "<white><bold> Режим Обновления По Умолчанию"
+        description: |-
+          <gray> Позволяет установить режим обновления
+          <gray> по умолчанию, когда игроки его
+          <gray> не указали.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      unlock_notify:
+        name: "<white><bold> Уведомление При Разблокировке"
+        description: |-
+          <gray> Сообщение будет отправлено
+          <gray> пользователю при разблокировке
+          <gray> нового биома.
+        enabled: |-
+          <aqua> Уведомление при разблокировке <green> включено <aqua>.
+        disabled: |-
+          <aqua> Уведомление при разблокировке <red> отключено <aqua>.
+      change_timeout:
+        name: "<white><bold> Тайм-Аут Для Изменения"
+        description: |-
+          <gray> Позволяет установить, через сколько
+          <gray> минут обновление биома будет
+          <gray> остановлено.
+          <gray> Может случиться на очень больших
+          <gray> островах или серверах под
+          <gray> огромной нагрузкой.
+        value: "<gray> Тайм-аут через: <yellow> [number] мин"
+      parallel_updates:
+        name: "<white><bold> Параллельные Обновления"
+        description: |-
+          <gray> Позволяет установить, сколько
+          <gray> обновлений биома могут происходить
+          <gray> одновременно.
+          <gray> Остальные будут помещены в
+          <gray> очередь.
+        value: |-
+          <gray> Текущее значение: <yellow>[number]<gray>.
+      use_bank:
+        name: "<white><bold> Использовать Банковский Счет"
+        description: |-
+          <gray> Переключает использование всеми
+          <gray> платежами дополнения Biomes
+          <gray> банковского счета острова из
+          <gray> дополнения Bank.
+        enabled: |-
+          <aqua> Использование банковского счета <green> включено <aqua>.
+        disabled: |-
+          <aqua> Использование банковского счета <red> отключено <aqua>.
+        missing: |-
+          <red> Дополнение Bank не установлено.
+      visibility:
+        name: "<white><bold> Видимость Биома"
+        description: |-
+          <gray> Позволяет изменять видимость
+          <gray> биома игрока на панелях выбора
+          <gray> биома.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+        all: "Все Биомы"
+        deployed: "Развернутые Биомы"
+        accessible: "Доступные Биомы"
+        toggleable: "Переключаемые"
+      is_online:
+        name: "<white><bold> Острова С Игроками В Сети"
+        description: |-
+          <gray> Список всех островов, где
+          <gray> любой участник онлайн.
+      all_islands:
+        name: "<white><bold> Все Острова"
+        description: |-
+          <gray> Список всех островов,
+          <gray> которые созданы в
+          <gray> текущем режиме игры.
+      island_name:
+        name: "<white><bold> [name]"
+        island-owner: "[player]"
+        unknown: "<red> Неизвестный Владелец"
+        description: |-
+          [owner]
+          [members]
+          [id]
+        owner: "<gray> Владелец: <yellow> [player]"
+        title: "<gray> Члены Острова:"
+        element: " <gray> - <yellow> [player]"
+      change_biome:
+        name: "<white><bold> Изменить Биом"
+        description: |-
+          <gray> Изменить биом на острове.
+      manage_data:
+        name: "<white><bold> Управление Данными Острова"
+        description: |-
+          <gray> Управлять данными, которые
+          <gray> хранятся для конкретного острова.
+      clear_data:
+        name: "<white><bold> Очистить Данные Острова"
+        description: |-
+          <gray> Очистить все сохраненные
+          <gray> данные острова.
+      island_bundle:
+        name: "<white><bold> Набор Острова"
+        description: |-
+          <gray> Набор, который назначен
+          <gray> текущему острову.
+          <gray> Только биомы из этого
+          <gray> набора могут быть использованы на острове.
+        value: "<aqua> Набор: [bundle]"
+        overwritten: |-
+          <red> Владелец имеет разрешение,
+          <red> которое переопределяет набор.
+      owner_bundle:
+        name: "<white><bold> Набор Владельца"
+        description: |-
+          <gray> Набор, который назначен
+          <gray> владельцу текущего острова.
+          <gray> Только биомы из этого
+          <gray> набора могут быть использованы на острове.
+          <gray> Разрешение для пользователя для назначения:
+          <gray><italic> '[gamemode].biomes.
+          <gray><italic> bundle.<bundle-id>'
+        value: "<aqua> Набор: [bundle]"
+      reset_to_default:
+        name: "<white><bold> Сброс На Значения По Умолчанию"
+        description: |-
+          <gray> Сбросить все значения
+          <gray> острова на значения по умолчанию
+          <gray> из параметров.
+      bundle_info:
+        name: "<white><bold> Основная Информация"
+        description: |-
+          <gray> Просмотреть основную
+          <gray> информацию набора.
+      bundle_biomes:
+        name: "<white><bold> Управление Биомами"
+        description: |-
+          <gray> Управлять биомами, которые
+          <gray> назначены набору.
+      bundle_name:
+        name: "<white><bold> Изменить Имя"
+        description: |-
+          <gray> Изменить отображаемое
+          <gray> имя набора.
+        value: "<yellow> Текущее Значение: <reset> [bundle]"
+      bundle_icon:
+        name: "<white><bold> Изменить Иконку"
+        description: |-
+          <gray> Изменить иконку набора.
+      bundle_description:
+        name: "<white><bold> Изменить Описание"
+        description: |-
+          <gray> Изменить описание набора.
+        value: "<yellow> Текущее значение:"
+        none: "<red> Нет описания"
+      bundle_permission:
+        name: "<white><bold> Разрешение Набора"
+        description: |-
+          <gray> Разрешение, которое должно быть
+          <gray> добавлено пользователю для
+          <gray> принудительного использования этого набора.
+        value: "<yellow> Разрешение: <white> [gamemode].biomes.bundle.[id]"
+      add_bundle_biome:
+        name: "<white><bold> Добавить Биом"
+        description: |-
+          <gray> Назначить биом
+          <gray> этому набору.
+        title: "<aqua> Выбранные Биомы:"
+        value: "<aqua> - [biome]"
+      remove_bundle_biome:
+        name: "<white><bold> Удалить Биом"
+        description: |-
+          <gray> Удалить биом
+          <gray> из этого набора.
+        title: "<aqua> Выбранные Биомы:"
+        value: "<aqua> - [biome]"
+      create_bundle:
+        name: "<white><bold> Создать Набор"
+        description: |-
+          <gray> Создать новый набор
+          <gray> для этого режима игры.
+      delete_bundle:
+        name: "<white><bold> Удалить Набор"
+        description: |-
+          <gray> Удалить набор из этого
+          <gray> режима игры полностью.
+        title: "<aqua> Выбранные Наборы:"
+        value: "<aqua> - [bundle]"
+      download:
+        name: "<white><bold> Загрузить"
+        description: |-
+          <gray> Загрузить веб-библиотеку.
+        enabled: "<dark_green> С Очисткой Кэша"
+        disabled: "<red> Без Очистки Кэша"
+    tips:
+      click-to-filter: "<yellow> Нажмите <gray> для фильтрации."
+      click-to-manage: "<yellow> Нажмите <gray> для управления."
+      click-to-clear: "<yellow> Нажмите <gray> для очистки."
+      click-to-change-biome: "<yellow> Нажмите <gray> для изменения биома."
+      click-to-view: "<yellow> Нажмите <gray> для просмотра."
+      click-to-select: "<yellow> Нажмите <gray> для выбора."
+      click-to-choose: "<yellow> Нажмите <gray> для выбора."
+      click-to-complete: "<yellow> Нажмите <gray> для завершения."
+      left-click-to-accept: "<yellow> Левый клик <gray> для применения."
+      right-click-to-write: "<yellow> Правый клик <gray> для ввода."
+      click-to-reduce: "<yellow> Нажмите <gray> для уменьшения."
+      click-to-increase: "<yellow> Нажмите <gray> для увеличения."
+      click-to-return: "<yellow> Нажмите <gray> для возврата."
+      click-to-quit: "<yellow> Нажмите <gray> для выхода."
+      click-to-wipe: "<yellow> Нажмите <gray> для удаления."
+      left-click-to-wipe: "<yellow> Левый клик <gray> для удаления."
+      right-click-to-switch: "<yellow> Правый клик <gray> для переключения."
+      click-to-open: "<yellow> Нажмите <gray> для открытия."
+      click-to-export: "<yellow> Нажмите <gray> для экспорта."
+      click-to-create: "<yellow> Нажмите <gray> для создания."
+      left-click-to-open: "<yellow> Левый клик <gray> для открытия."
+      right-click-to-reset-all: "<yellow> Правый клик <gray> для удаления всего."
+      click-to-toggle: "<yellow> Нажмите <gray> для переключения."
+      click-to-change: "<yellow> Нажмите <gray> для изменения."
+      shift-click-to-reset: "<yellow> Shift+клик <gray> для сброса."
+      click-to-add: "<yellow> Нажмите <gray> для добавления."
+      click-to-remove: "<yellow> Нажмите <gray> для удаления."
+      left-click-to-cycle: "<yellow> Левый клик <gray> для циклирования вниз."
+      right-click-to-cycle: "<yellow> Правый клик <gray> для циклирования вверх."
+      click-to-edit: "<yellow> Нажмите <gray> для редактирования."
+      left-click-to-download: "<yellow> Левый клик <gray> для загрузки."
+      right-click-to-toggle: "<yellow> Правый клик <gray> для переключения."
+      click-to-install: "<yellow> Нажмите <gray> для установки."
+      click-to-reset-all: "<yellow> Нажмите <gray> для сброса всего."
+      right-click-to-select: "<yellow> Правый клик <gray> для выбора."
+      right-click-to-deselect: "<yellow> Правый клик <gray> для отмены выбора."
+      left-click-to-choose: "<yellow> Левый клик <gray> для выбора."
+      click-to-buy: "<yellow> Нажмите <gray> для покупки."
+      click-to-cancel: "<yellow> Нажмите <gray> для отмены."
+      click-to-save: "<yellow> Нажмите <gray> для сохранения."
+      click-to-deselect: "<yellow> Нажмите <gray> для отмены выбора."
+      click-on-item: |-
+        <yellow> Нажмите <gray> на предмет в
+        <gray> вашем инвентаре.
+      left-click-to-edit: "<yellow> Левый клик <gray> для редактирования."
+      right-click-to-clear: "<yellow> Правый клик <gray> для очистки."
+      click-to-previous: "<yellow> Нажмите <gray> для просмотра предыдущей страницы."
+      click-to-next: "<yellow> Нажмите <gray> для просмотра следующей страницы."
+      select-before: "<yellow> Выберите <gray> предмет(ы) перед продолжением."
+      click-to-apply: "<yellow> Нажмите <gray> для применения."
+      right-click-to-open: "<yellow> Правый клик <gray> для открытия."
+      click-to-perform: "<yellow> Нажмите <gray> для выполнения."
+      left-click-to-apply: "<yellow> Левый клик <gray> для применения."
+      right-click-to-unlock: "<yellow> Правый клик <gray> для разблокировки."
+      right-click-to-buy: "<yellow> Правый клик <gray> для покупки."
+      right-click-to-change: "<yellow> Правый клик <gray> для изменения."
+    descriptions:
+      update-mode:
+        island: "Режим Острова"
+        chunk: "Режим Чанка"
+        range: "Режим Радиуса"
+      selected: "<dark_green> Выбрано"
+      island-owner: "[player]"
+      unknown: "<yellow> Неизвестно"
+      biome:
+        lore: |-
+          [description]
+          [biome]
+          [unlock]
+          [change]
+        original: |-
+          <gray> Биом: <yellow> [biome]
+        unlock:
+          lore: |-
+            [items]
+            [money]
+            [level]
+            [permissions]
+          money: |-
+            <gray> Стоимость разблокировки: <yellow> [number]
+          level: |-
+            <gray> Требует достижения <yellow> [number]
+            <gray> уровня острова.
+          permission-single: |-
+            <gray> Отсутствует Разрешение: <red> [permission]
+          permissions-title: |-
+            <red> Отсутствуют Разрешения:
+          permissions-list: |-
+            <red> - [permission]
+          item-single: |-
+            <gray> Предмет Разблокировки: [color] [number] x [item]
+          item-title: |-
+            <gray> Предметы Разблокировки:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          missing: "<red>"
+          has: "<yellow>"
+        change:
+          lore: |-
+            [items]
+            [money]
+            [mode]
+            [usage]
+          mode:
+            per_block: |-
+              <aqua><italic> Биом стоит за каждый
+              <aqua><italic> измененный блок.
+            per_usage: |-
+              <aqua><italic> Изменение биома увеличивает
+              <aqua><italic> его цену.
+            static: |-
+              <aqua><italic> Стандартная цена изменения.
+          money: |-
+            <gray> Стоимость: <yellow> [number]
+          item-single: |-
+            <gray> Предмет: [color] [number] x [item]
+          item-title: |-
+            <gray> Предметы:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          number-of-usage: |-
+            |<gray> Этот биом был
+            <gray> применен <yellow> [number] <reset><gray> раз.
+          missing: "<red>"
+          has: "<yellow>"
+      bundle:
+        lore: |-
+          [description]
+          [permission]
+          [biomes]
+        permission: |-
+          <gray> Разрешение, которое должно быть
+          <gray> назначено игроку:
+          <gray><italic> [gamemode].biomes.bundle.[id]
+        title: "<gray> Биомы Набора: "
+        value: "<gray> - [biome]"
+        no-biomes: "<red> Нет Назначенных Биомов"
+      library:
+        author: '<gray> от <yellow> [author]'
+        version: '<gray> Сделано с помощью Biomes <yellow> [version]'
+        lang: '<gray> Язык: <yellow> [lang]'
+        gamemode: '<gray> Основной для <yellow> [gamemode]'
+  conversations:
+    prefix: "<bold><gold> [BentoBox]: <reset>"
+    confirm-string: "истина, on, да, подтверждение, y, действительный, правильно"
+    deny-string: "ложь, off, нет, отрицание, n, недействительный, неправильно"
+    cancel-string: "отмена"
+    exit-string: "отмена, выход, выйти"
+    cancelled: "<red> Разговор отменен!"
+    input-number: "<yellow> Пожалуйста введите число в чат."
+    input-seconds: "<yellow> Пожалуйста введите секунды в чат."
+    numeric-only: "<red> Значение [value] не является числом!"
+    not-valid-value: "<red> Число [value] не является действительным. Оно должно быть больше [min] и меньше [max]!"
+    data-removed: "<green> Выбранные биомы удалены из [gamemode]."
+    confirm-deletion: "<yellow> Пожалуйста подтвердите, что вы хотите удалить [number] биомов с именами: [value]."
+    user-data-removed: "<green> Все данные пользователя для [gamemode] удалены из базы данных."
+    confirm-user-data-deletion: "<yellow> Пожалуйста подтвердите, что вы хотите очистить базу данных пользователя для [gamemode]."
+    all-data-removed: "<green> Все данные дополнения для [gamemode] удалены из базы данных."
+    confirm-all-data-deletion: "<yellow> Пожалуйста подтвердите, что вы хотите очистить данные дополнения для [gamemode]."
+    write-name: "<yellow> Пожалуйста напишите имя в чат."
+    new-object-created: "<green> Новый объект для [gamemode] создан."
+    object-already-exists: "<red> Объект <gray> [id] <red> уже существует. Выберите другое имя."
+    name-changed: "<green> Успешно, имя было обновлено."
+    write-description: "<yellow> Пожалуйста введите новое описание в чат и 'quit' на отдельной строке для завершения."
+    description-changed: "<green> Успешно, описание было обновлено."
+    write-permissions: "<yellow> Пожалуйста введите необходимые разрешения, одно в строке в чат, и 'quit' на отдельной строке для завершения."
+    permissions-changed: "<green> Успешно, разрешения были обновлены."
+    start-downloading: "<green> Начинается загрузка и импорт Библиотеки Биомов."
+    written-text: "<green> Введенный Текст:"
+    confirm-data-replacement: "<yellow> Пожалуйста подтвердите, что вы хотите заменить текущие данные новыми."
+    new-data-imported: "<green> Успешно, новые данные для [gamemode] импортированы."
+    exported-file-name: "<yellow> Пожалуйста введите имя файла для экспортированного файла базы данных. (напишите 'cancel' для выхода)"
+    database-export-completed: "<green> Успешно, экспорт базы данных для [world] завершен. Файл [file] создан."
+    file-name-exist: "<red> Файл с именем '[id]' существует. Невозможно перезаписать."
+    write-search: "<yellow> Пожалуйста напишите значение поиска. (напишите 'cancel' для выхода)"
+    search-updated: "<green> Значение поиска обновлено."
+    invalid-biome: "<red> Некоторые данные в сохраненном биоме `[biome]`<reset><red> не действительны."
+    confirm-biome-deletion: "<yellow> Пожалуйста подтвердите, что вы хотите удалить [biome]<reset><yellow> из [gamemode]."
+    biome-removed: "[biome] <reset><green> удален из [gamemode]."
+    confirm-island-data-deletion: "<yellow> Пожалуйста подтвердите, что вы хотите удалить данные острова [player]."
+    island-data-removed: "[player] <green> данные острова удалены."
+    confirm-biome-data-deletion: "<yellow> Пожалуйста подтвердите, что вы хотите удалить все биомы из [gamemode]."
+    biome-data-removed: "Все биомы удалены из [gamemode]."
+    click-text-to-purchase: "<yellow> Вы разблокировали <reset> [biome]<reset><yellow>! Нажмите здесь для покупки."
+    click-text-to-set: "<yellow> Вы разблокировали <reset> [biome]<reset><yellow>! Нажмите здесь для использования."
+    click-text-to-purchase-other-world: "<yellow> Вы разблокировали <reset> [biome]<reset><yellow> в <reset> [gamemode]<reset><yellow>! Посетите тот мир для покупки."
+    click-text-to-set-other-world: "<yellow> Вы разблокировали <reset> [biome]<reset><yellow> в <reset> [gamemode]<reset><yellow>! Посетите тот мир для использования."
+  messages:
+    biome-not-unlocked: "[biome] <reset><red> не разблокирован. Вы не можете его использовать."
+    biome-not-purchased: "<red> Вы не можете использовать <reset> [biome] <reset><red>. Вы должны его купить."
+    biome-cannot-be-unlocked: "<red> Вы не можете разблокировать <reset> [biome] <reset><red>."
+    biome-already-purchased: "<red> Вы уже купили <reset> [biome] <reset><red>."
+    island-level-not-reached: "[biome] <reset><red> требует минимум уровня острова: [number]."
+    missing-permission: "[biome] <reset><red> требует разрешение: [permission]."
+    no-credits-buy: "<red> У вас недостаточно кредитов для покупки <reset> [biome] <reset><red>. Это стоит [number]."
+    no-credits-buy-bank: "<red> На вашем банковском счете недостаточно кредитов для покупки <reset> [biome] <reset><red>. Это стоит [number]."
+    no-items-buy: "<red> У вас недостаточно предметов для покупки <reset> [biome] <reset><red>. Требуется [items]."
+    biome-purchased: "<yellow> Вы купили <reset> [biome]<reset><yellow>."
+    import-count: "<yellow> Импортировано [biomes] биомов и [bundles] наборов."
+    start-downloading: "<yellow> Начинается загрузка библиотеки."
+    update-start: "<green> Начинается изменение биома на <reset> [biome] <reset><green> в [number] чанках. <yellow> Приблизительное время: [time] сек."
+    update-done: "<green> Завершено изменение биома на <reset> [biome]<reset><green>."
+    waiting: "<green> Изменение биома добавлено в очередь. <yellow> Приблизительное время ожидания: [time] сек."
+    biome-already-unlocked: "[biome] <reset><yellow> уже разблокирован."
+    everything-already-bought: "<green> Вы уже купили все биомы для этого режима игры."
+    skipping: "<green> Пропуск загрузки <reset> [biome]<reset><green>."
+    overwriting: "<green> Перезаписывается <reset> [biome] <reset><green> в кэше."
+    imported: "<green> Импортирован <reset> [biome] <reset><green> в кэш."
+    migrate-start: "<green> Начинается миграция на новый формат данных."
+    migrate-finish: "<green> Миграция на новый формат данных завершена."
+    migrate-valid: "<green> Все данные действительны. Миграция не требуется."
+    bundle-loaded: "<green> Набор <reset> [bundle] <green> загружен."
+    clear-queue: "<green> Очередь задач изменения биома для [gamemode] очищена."
+  errors:
+    no-island-data: "<red> На острове нет сохраненных данных."
+    no-biomes-admin: "<red> Текущий режим игры не имеет используемых биомов. Пожалуйста импортируйте или создайте биомы используя /[command]"
+    no-biomes: "<red> Текущий режим игры не имеет используемых биомов."
+    no-rank: "<red> Вам не разрешено изменять биом на этом острове."
+    not-enough-level: "<red> Этот биом требует минимум уровня острова [number]."
+    not-enough-money: "<red> Изменение этого биома стоит [number]."
+    not-enough-money-bank: "<red> На вашем банковском счете недостаточно кредитов. Изменение биома стоит [number]."
+    not-enough-items: "<red> Изменение этого биома стоит [items]."
+    admin-not-on-island: "<red> Вы не находитесь на острове [user]."
+    incorrect-object: "<red> Не удалось найти биом с запрашиваемым именем: [biome]"
+    missing-biome: "<red> Имя биома не указано."
+    incorrect-mode: "<red> Режим с именем '[mode]' не существует."
+    incorrect-range: "<red> Значение '[number]' не является действительным числом."
+    no-file: "<red> Не удалось найти [file] в директории биомов."
+    no-load: "<red> Не удалось импортировать биомы из [file]. Причина: [description]"
+    not-a-gamemode-world: "<red> Мир [world] не является миром GameModeAddon."
+    file-exist: "<red> Файл с именем [file] уже существует. Выберите другое имя."
+    no-library-entries: "<red> Не удалось найти действительные записи в библиотеке."
+    not-unlocked: "<red> Вы не разблокировали этот биом."
+    not-purchased: "<red> Вы не купили этот биом."
+    timeout: "<red> Изменение биома истекло по времени. Возможно выбранная область была слишком большой или сервер занят."
+    failed: "<red> Сервер столкнулся с проблемами при изменении биома."
+    could-not-remove-money: "<red> Что-то пошло не так при снятии денег."
+    could-not-remove-items: "<red> Что-то пошло не так при снятии предметов."
+    something-went-wrong: "<red> Что-то пошло не так. Не удалось это сделать."
+protection:
+  flags:
+    BIOMES_ISLAND_PROTECTION:
+      name: "Контроль биома"
+      description: |-
+        <dark_purple><italic> Переключает кто может изменять
+        <dark_purple><italic> биом острова
+    BIOMES_WORLD_PROTECTION:
+      name: "Ограничение Биома Острова"
+      description: |-
+        <dark_purple><italic> Переключает требование
+        <dark_purple><italic> для игроков находиться
+        <dark_purple><italic> на своем острове для
+        <dark_purple><italic> изменения биома.
+      hint: "<red> Вы должны находиться на своем острове для изменения биома!"

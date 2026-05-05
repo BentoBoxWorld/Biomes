@@ -93,6 +93,21 @@ public class BiomesAddon extends Addon
         this.addonManager = new BiomesAddonManager(this);
         this.importManager = new BiomesImportManager(this);
 
+        // Defer default-biome imports until after startup to avoid setup-time side effects.
+        Bukkit.getScheduler().runTask(this.getPlugin(), () ->
+            this.getPlugin().getAddonsManager().getGameModeAddons().forEach(gameModeAddon ->
+            {
+                if (!this.settings.getDisabledGameModes().contains(gameModeAddon.getDescription().getName()))
+                {
+                    if (!this.addonManager.hasAnyBiome(gameModeAddon.getOverWorld()))
+                    {
+                        this.log("No biomes found for " + gameModeAddon.getDescription().getName() +
+                            ". Loading default biomes from biomesTemplate.yml...");
+                        this.importManager.importFile(null, gameModeAddon.getOverWorld());
+                    }
+                }
+            }));
+
         // Register the reset listener
         this.registerListener(new ChangeOwnerListener(this));
         this.registerListener(new JoinLeaveListener(this));

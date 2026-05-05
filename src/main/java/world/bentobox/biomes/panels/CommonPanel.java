@@ -10,8 +10,10 @@ package world.bentobox.biomes.panels;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
+import org.eclipse.jdt.annotation.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -20,7 +22,9 @@ import java.util.stream.Collectors;
 
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.panels.PanelItem;
+import world.bentobox.bentobox.api.panels.TemplatedPanel;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
+import world.bentobox.bentobox.api.panels.reader.ItemTemplateRecord;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
@@ -242,7 +246,7 @@ public abstract class CommonPanel
 
         return !this.addon.isEconomyProvided() || biome.getUnlockCost() <= 0 ? "" :
             this.user.getTranslationOrNothing(reference + "money",
-                "[number]", String.valueOf(biome.getUnlockCost()));
+                "[number]", Utils.formatDouble(biome.getUnlockCost()));
     }
 
 
@@ -674,6 +678,87 @@ public abstract class CommonPanel
     public static void reopen(CommonPanel panel)
     {
         panel.build();
+    }
+
+
+    /**
+     * Create a generic command button panel item.
+     * The button executes commands defined in the template's action entries
+     * when the player clicks it.
+     *
+     * @param template the template
+     * @param slot the item slot
+     * @return the panel item
+     */
+    @NonNull
+    protected PanelItem createCommandButton(@NonNull ItemTemplateRecord template, TemplatedPanel.ItemSlot slot)
+    {
+        PanelItemBuilder builder = new PanelItemBuilder();
+
+        if (template.icon() != null)
+        {
+            builder.icon(template.icon().clone());
+        }
+
+        if (template.title() != null)
+        {
+            builder.name(this.user.getTranslation(this.world, template.title()));
+        }
+
+        if (template.description() != null)
+        {
+            builder.description(this.user.getTranslation(this.world, template.description()));
+        }
+
+        // Add ClickHandler
+        builder.clickHandler((panel, user, clickType, i) ->
+        {
+            for (ItemTemplateRecord.ActionRecords action : template.actions())
+            {
+                if (clickType == action.clickType() &&
+                    "COMMAND".equalsIgnoreCase(action.actionType()))
+                {
+                    this.executeCommand(action.content());
+                }
+            }
+
+            return true;
+        });
+
+        // Collect tooltips.
+        List<String> tooltips = template.actions().stream().
+            filter(action -> action.tooltip() != null).
+            map(action -> this.user.getTranslation(this.world, action.tooltip())).
+            filter(text -> !text.isBlank()).
+            collect(Collectors.toCollection(() -> new ArrayList<>(template.actions().size())));
+
+        // Add tooltips.
+        if (!tooltips.isEmpty())
+        {
+            // Empty line and tooltips.
+            builder.description("");
+            builder.description(tooltips);
+        }
+
+        return builder.build();
+    }
+
+
+    /**
+     * Execute the given command as the player.
+     * Closes the player's inventory before dispatching the command.
+     *
+     * @param command the command string to execute (without leading slash)
+     */
+    protected void executeCommand(@NonNull String command)
+    {
+        if (this.user.getPlayer() == null)
+        {
+            return;
+        }
+
+        this.user.closeInventory();
+        this.user.getPlayer().performCommand(command);
     }
 
 

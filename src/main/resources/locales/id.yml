@@ -1,0 +1,825 @@
+biomes:
+  commands:
+    # Bagian ini hanya berisi terjemahan perintah admin.
+    admin:
+      main:
+        description: "perintah admin bioma utama"
+      import:
+        parameters: "<file>"
+        description: "mengimpor bioma"
+        confirmation: "Ini akan menghapus bioma [gamemode] yang ada dan mengimpor bioma baru dari file template - silakan konfirmasi"
+      migrate:
+        description: "melakukan migrasi data bioma yang disimpan ke format baru"
+      set:
+        description: "mengubah bioma untuk pemain"
+        parameters: "<player> <biome-id> [mode] [size]"
+      unlock:
+        description: "membuka bioma untuk pemain tanpa pemeriksaan. Menambahkan 'true' di akhir akan menandainya sebagai dibeli."
+        parameters: "<player> <biome-id> [true]"
+      clear-queue:
+        description: "membersihkan antrian pembaruan bioma"
+    # Bagian ini hanya berisi terjemahan perintah pemain.
+    player:
+      main:
+        description: "membuka GUI pemilihan bioma"
+      set:
+        description: "mengubah bioma untuk pemain"
+        parameters: "<biome-id> [mode] [size]"
+      buy:
+        description: "membeli bioma yang diminta"
+        parameters: "<biome-id>"
+      info:
+        description: "mengirim pesan obrolan dengan deskripsi bioma terperinci"
+        parameters: "<biome-id>"
+  gui:
+    titles:
+      player-panel: "<black><bold> Pilih Bioma"
+      buy-panel: "<black><bold> Beli Bioma"
+      advanced-panel: "<black><bold> Mode Pembaruan"
+      # Semua Judul di bawah komentar ini adalah untuk Menu Admin.
+      admin-panel: "<black><bold> GUI Admin"
+      settings: "<black><bold> Pengaturan"
+      library: "<black><bold> Perpustakaan"
+      manage-biomes: "<black><bold> Kelola Bioma"
+      manage-bundles: "<black><bold> Kelola Paket"
+      manage-islands: "<black><bold> Kelola Data Pulau"
+      edit-biome: "<black><bold> Edit Bioma: [biome]"
+      edit-bundle: "<black><bold> Edit Paket: [bundle]"
+      edit-island: "<black><bold> Edit Pulau: [island]"
+      environment-selector: "<black><bold> Pilih Lingkungan"
+      biome-selector: "<black><bold> Pilih Bioma"
+      bundle-selector: "<black><bold> Pilih Paket"
+      item-selector: "<black><bold> Pilih Item"
+    buttons:
+      island:
+        name: "<white><bold> Pulau"
+        description: |-
+          <gray> Mengubah bioma di seluruh
+          <gray> pulau.
+      chunk:
+        name: "<white><bold> Chunk"
+        description: |-
+          <gray> Mengubah bioma di chunk.
+      range:
+        name: "<white><bold> Jangkauan"
+        description: |-
+          <gray> Mengubah bioma berdasarkan jangkauan.
+      reduce:
+        name: "<white><bold> Kurangi"
+        description: |-
+          <gray> Kurangi sebesar <yellow> [number]
+      increase:
+        name: "<white><bold> Tambah"
+        description: |-
+          <gray> Tambah sebesar <yellow> [number]
+      accept:
+        name: "<white><bold> Terapkan Perubahan"
+        description: |-
+          <gray> Mengubah bioma ke <yellow> [biome]
+
+          <gray> Mode pembaruan: <yellow> [mode]
+          <gray> Jangkauan pembaruan: <yellow> [number]
+      return:
+        name: "<white><bold> Kembali"
+        description: |-
+          <gray> Kembali ke menu sebelumnya.
+      previous:
+        name: "<white><bold> Halaman Sebelumnya"
+        description: |-
+          <gray> Beralih ke halaman <yellow> [number]
+      next:
+        name: "<white><bold> Halaman Berikutnya"
+        description: |-
+          <gray> Beralih ke halaman <yellow> [number]
+      quit:
+        name: "<white><bold> Keluar"
+        description: |-
+          <gray> Keluar dari GUI.
+      save:
+        name: "<white><bold> Simpan"
+        description: |-
+          <gray> Simpan perubahan dan kembali.
+      cancel:
+        name: "<white><bold> Batal"
+        description: |-
+          <gray> Batalkan perubahan dan kembali.
+      search:
+        name: "<white><bold> Cari"
+        description: |-
+          <gray> Memungkinkan pencarian elemen
+          <gray> dengan nilai teks input.
+        search: "<aqua> Nilai: [value]"
+      buy:
+        name: "<white><bold> Beli"
+        description: |-
+          <gray> Beli bioma baru.
+      manage_islands:
+        name: "<white><bold> Kelola Pulau"
+        description: |-
+          <gray> Memungkinkan mengelola data
+          <gray> pulau.
+      manage_biomes:
+        name: "<white><bold> Kelola Bioma"
+        description: |-
+          <gray> Memungkinkan mengelola data
+          <gray> bioma.
+      manage_bundles:
+        name: "<white><bold> Kelola Paket"
+        description: |-
+          <gray> Memungkinkan mengelola data
+          <gray> paket.
+      settings:
+        name: "<white><bold> Pengaturan"
+        description: |-
+          <gray> Memungkinkan untuk mengubah
+          <gray> beberapa pengaturan addon.
+      import_template:
+        name: "<white><bold> Impor Template"
+        description: |-
+          <gray> Impor file template yang
+          <gray> berada di dalam folder
+          <gray> addon.
+      web_library:
+        name: "<white><bold> Perpustakaan Web"
+        description: |-
+          <gray> Akses perpustakaan web
+          <gray> yang berisi bioma
+          <gray> yang dibagikan.
+      export_from_database:
+        name: "<white><bold> Ekspor Database"
+        description: |-
+          <gray> Ekspor database menjadi
+          <gray> satu file yang terletak di
+          <gray> folder addon.
+      import_to_database:
+        name: "<white><bold> Impor Database"
+        description: |-
+          <gray> Impor database dari file
+          <gray> yang terletak di folder
+          <gray> addon.
+      wipe_islands_data:
+        name: "<white><bold> Bersihkan Database Pulau"
+        description: |-
+          <gray> Bersihkan semua data bioma pengguna
+          <gray> untuk mode permainan ini.
+      wipe_biomes_data:
+        name: "<white><bold> Bersihkan Database Bioma"
+        description: |-
+          <gray> Bersihkan semua bioma dan
+          <gray> data paket untuk mode permainan ini.
+      add_biome:
+        name: "<white><bold> Tambah Bioma"
+        description: |-
+          <gray> Membuat bioma baru yang dapat
+          <gray> digunakan pemain menggunakan
+          <gray> panel pengguna.
+      remove_biome:
+        name: "<white><bold> Hapus Bioma"
+        description: |-
+          <gray> Menghapus bioma yang dipilih
+          <gray> dari panel pengguna.
+        title: "<yellow> Bioma yang Dipilih:"
+        value: "<yellow> - [biome]"
+      accept_selected:
+        name: "<white><bold> Terima yang Dipilih"
+        description: |-
+          <gray> Menerima elemen yang dipilih.
+        title: "<yellow> Elemen yang Dipilih:"
+        element: "<yellow> - [element]"
+      environment_element:
+        name: "<white><bold> [environment]"
+        description: |-
+          <gray> [description].
+      properties:
+        name: "<white><bold> Properti"
+        description: |-
+          <gray> Lihat properti bioma utama.
+      change_properties:
+        name: "<white><bold> Ubah Properti"
+        description: |-
+          <gray> Lihat properti perubahan bioma.
+      unlock_properties:
+        name: "<white><bold> Properti Pembukaan"
+        description: |-
+          <gray> Lihat properti pembukaan bioma.
+      biome:
+        name: "<white><bold> [biome]"
+        description: |-
+          <gray> Jenis bioma Minecraft.
+        value: "<gray> ID Bioma: <yellow> [id]"
+      name:
+        name: "<white><bold> Nama Tampilan"
+        description: |-
+          <gray> Nama tampilan untuk bioma.
+          <gray> Mendukung kode warna.
+        value: "<gray> Nilai Saat Ini: <reset> [name]"
+      deployed:
+        name: "<white><bold> Diterapkan"
+        description: |-
+          <gray> Mengalihkan jika bioma dapat
+          <gray> diakses oleh pemain
+          <gray> atau tidak.
+        enabled: "<dark_green> Diaktifkan"
+        disabled: "<red> Dinonaktifkan"
+      environment:
+        name: "<white><bold> Dimensi"
+        description: |-
+          <gray> Memungkinkan membatasi dimensi
+          <gray> tempat bioma dapat
+          <gray> diterapkan.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      icon:
+        name: "<white><bold> Ikon"
+        description: |-
+          <gray> Memungkinkan mengubah ikon
+          <gray> untuk bioma ini.
+      order:
+        name: "<white><bold> Urutan"
+        description: |-
+          <gray> Memungkinkan mengubah urutan
+          <gray> objek.
+          <gray> Objek dengan angka yang sama
+          <gray> akan diurutkan berdasarkan
+          <gray> nama id unik mereka.
+        value: "<gray> Urutan saat ini: <yellow> [number]"
+      description:
+        name: "<white><bold> Deskripsi"
+        description: |-
+          <gray> Deskripsi spesifik untuk
+          <gray> bioma. Kode warna harus
+          <gray> diterapkan.
+        value: "<yellow> Deskripsi saat ini:"
+        none: "<gray> Deskripsi tidak diatur."
+      unlock_permissions:
+        name: "<white><bold> Izin"
+        description: |-
+          <gray> Memungkinkan mengubah izin
+          <gray> pembukaan untuk bioma ini
+          <gray> dapat diakses.
+        title: "<yellow> Izin: "
+        element: " <dark_gray> - [permission]"
+        none: "<gray> Izin tidak diatur."
+      unlock_cost:
+        name: "<white><bold> Biaya"
+        description: |-
+          <gray> Memungkinkan mengubah biaya
+          <gray> pembukaan bioma ini.
+        value: "<gray> Biaya saat ini: <yellow> [number]"
+      unlock_items:
+        name: "<white><bold> Item"
+        description: |-
+          <gray> Memungkinkan mengubah item
+          <gray> pembukaan untuk bioma ini.
+        title: "<yellow> Item: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Item tidak diatur."
+      unlock_level:
+        name: "<white><bold> Level"
+        description: |-
+          <gray> Memungkinkan mengubah level
+          <gray> pulau yang diperlukan untuk
+          <gray> pembukaan bioma ini.
+        value: "<gray> Level saat ini: <yellow> [number]"
+      change_cost:
+        name: "<white><bold> Biaya"
+        description: |-
+          <gray> Memungkinkan mengubah biaya
+          <gray> penerapan bioma ini.
+        value: "<gray> Biaya saat ini: <yellow> [number]"
+      change_items:
+        name: "<white><bold> Item"
+        description: |-
+          <gray> Memungkinkan mengubah item
+          <gray> untuk penerapan bioma ini.
+        title: "<yellow> Item: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Item tidak diatur."
+      change_type:
+        name: "<white><bold> [type]"
+        description: |-
+          <gray> Memungkinkan mengubah jenis
+          <gray> biaya penerapan bioma.
+        static:
+          name: "Nilai Statis"
+          description: |-
+            <gray> Biaya perubahan bioma
+            <gray> tidak berubah.
+        per_block:
+          name: "Per Blok"
+          description: |-
+            <gray> Biaya perubahan bioma
+            <gray> dihitung per blok.
+        per_usage:
+          name: "Per Penggunaan"
+          description: |-
+            <gray> Biaya perubahan bioma
+            <gray> meningkat setelah setiap
+            <gray> penggunaan.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      change_increment:
+        name: "<white><bold> Peningkatan"
+        description: |-
+          <gray> Memungkinkan mengubah
+          <gray> peningkatan per penggunaan.
+        value: "<gray> Nilai saat ini: <yellow> [number]"
+      biome-filter:
+        name: "<white><bold> [filter]"
+        description: |-
+          <gray> Filter bioma berdasarkan
+          <gray> Wiki Minecraft.
+        lush: "Bioma Subur"
+        dry: "Bioma Kering"
+        cold: "Bioma Dingin"
+        snowy: "Bioma Bersalju"
+        aquatic: "Bioma Laut"
+        nether: "Bioma Nether"
+        the_end: "Bioma The End"
+        neutral: "Bioma Netral"
+        unused: "Bioma Tidak Digunakan"
+        warm: "Bioma Hangat"
+        cave: "Bioma Gua"
+        temperate: "Bioma Sedang"
+      protection_range:
+        name: "<white><bold> Jangkauan Perlindungan"
+        description: |-
+          <gray> Memungkinkan membatasi perubahan
+          <gray> bioma hanya pada jangkauan
+          <gray> perlindungan pulau bukan seluruh
+          <gray> pulau.
+        enabled: "<dark_green> Diaktifkan"
+        disabled: "<red> Dinonaktifkan"
+      reset:
+        name: "<white><bold> Atur Ulang Saat Pemilik Berubah"
+        description: |-
+          <gray> Memungkinkan mengaktifkan
+          <gray> perubahan bioma paksa ke yang
+          <gray> default jika pulau mengubah
+          <gray> pemiliknya.
+        enabled: "<dark_green> Diaktifkan"
+        disabled: "<red> Dinonaktifkan"
+      cool_down:
+        name: "<white><bold> Pendinginan Bioma"
+        description: |-
+          <gray> Memungkinkan mengatur jumlah
+          <gray> detik antara pemain dapat
+          <gray> mengubah bioma lagi.
+        value: "<gray> Waktu pendinginan saat ini: <yellow> [number]"
+        disabled: "<yellow> Pendinginan dinonaktifkan."
+      default_size:
+        name: "<white><bold> Jangkauan Default"
+        description: |-
+          <gray> Memungkinkan mengatur angka yang
+          <gray> akan digunakan ketika pemain
+          <gray> mengubah bioma tanpa
+          <gray> menuliskannya.
+        value: "<gray> Jangkauan Default: <yellow> [number]"
+      default_mode:
+        name: "<white><bold> Mode Pembaruan Default"
+        description: |-
+          <gray> Memungkinkan mengatur mode
+          <gray> pembaruan default ketika pemain
+          <gray> tidak menyediakannya.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      unlock_notify:
+        name: "<white><bold> Beri Tahu Saat Pembukaan"
+        description: |-
+          <gray> Pesan akan dikirim kepada
+          <gray> pengguna ketika dia membuka
+          <gray> bioma baru.
+        enabled: |-
+          <aqua> Pemberian tahu saat pembukaan <green> diaktifkan <aqua>.
+        disabled: |-
+          <aqua> Pemberian tahu saat pembukaan <red> dinonaktifkan <aqua>.
+      change_timeout:
+        name: "<white><bold> Batas Waktu Perubahan"
+        description: |-
+          <gray> Memungkinkan mengatur setelah
+          <gray> berapa menit pembaruan bioma
+          <gray> akan dihentikan.
+          <gray> Mungkin terjadi di pulau yang
+          <gray> sangat besar atau server di
+          <gray> bawah beban berat.
+        value: "<gray> Batas waktu setelah: <yellow> [number] menit"
+      parallel_updates:
+        name: "<white><bold> Pembaruan Paralel"
+        description: |-
+          <gray> Memungkinkan mengatur berapa banyak
+          <gray> pembaruan bioma yang dapat terjadi
+          <gray> pada saat yang bersamaan.
+          <gray> Lainnya akan ditempatkan di
+          <gray> antrian.
+        value: |-
+          <gray> Nilai saat ini: <yellow>[number]<gray>.
+      use_bank:
+        name: "<white><bold> Gunakan Rekening Bank"
+        description: |-
+          <gray> Mengalihkan jika semua pembayaran
+          <gray> yang dilakukan oleh addon Biomas
+          <gray> akan menggunakan rekening pulau
+          <gray> addon Bank.
+        enabled: |-
+          <aqua> Penggunaan Rekening Bank <green> diaktifkan <aqua>.
+        disabled: |-
+          <aqua> Penggunaan Rekening Bank <red> dinonaktifkan <aqua>.
+        missing: |-
+          <red> Addon Bank tidak diinstal.
+      visibility:
+        name: "<white><bold> Visibilitas Bioma"
+        description: |-
+          <gray> Memungkinkan mengubah visibilitas
+          <gray> bioma pemain di panel pemilihan
+          <gray> bioma.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+        all: "Semua Bioma"
+        deployed: "Bioma Diterapkan"
+        accessible: "Bioma Dapat Diakses"
+        toggleable: "Dapat Diubah"
+      is_online:
+        name: "<white><bold> Pulau Pemain Online"
+        description: |-
+          <gray> Daftar semua pulau di mana
+          <gray> anggota apa pun sedang online.
+      all_islands:
+        name: "<white><bold> Semua Pulau"
+        description: |-
+          <gray> Daftar semua pulau yang
+          <gray> dibuat di mode permainan
+          <gray> saat ini.
+      island_name:
+        name: "<white><bold> [name]"
+        island-owner: "[player]"
+        unknown: "<red> Pemilik Tidak Diketahui"
+        description: |-
+          [owner]
+          [members]
+          [id]
+        owner: "<gray> Pemilik: <yellow> [player]"
+        title: "<gray> Anggota Pulau:"
+        element: " <gray> - <yellow> [player]"
+      change_biome:
+        name: "<white><bold> Ubah Bioma"
+        description: |-
+          <gray> Ubah bioma per pulau.
+      manage_data:
+        name: "<white><bold> Kelola Data Pulau"
+        description: |-
+          <gray> Kelola data yang disimpan
+          <gray> untuk pulau spesifik.
+      clear_data:
+        name: "<white><bold> Bersihkan Data Pulau"
+        description: |-
+          <gray> Bersihkan semua data yang
+          <gray> disimpan untuk pulau.
+      island_bundle:
+        name: "<white><bold> Paket Pulau"
+        description: |-
+          <gray> Paket yang ditugaskan ke
+          <gray> pulau saat ini.
+          <gray> Hanya bioma dari paket ini
+          <gray> yang dapat digunakan di
+          <gray> pulau.
+        value: "<aqua> Paket: [bundle]"
+        overwritten: |-
+          <red> Pemilik memiliki izin yang
+          <red> menimpa paket.
+      owner_bundle:
+        name: "<white><bold> Paket Pemilik"
+        description: |-
+          <gray> Paket yang ditugaskan ke
+          <gray> pemilik pulau saat ini.
+          <gray> Hanya bioma dari paket ini
+          <gray> yang dapat digunakan di
+          <gray> pulau.
+          <gray> Izin untuk pengguna menetapkan:
+          <gray><italic> '[gamemode].biomes.
+          <gray><italic> bundle.<bundle-id>'
+        value: "<aqua> Paket: [bundle]"
+      reset_to_default:
+        name: "<white><bold> Atur Ulang ke Default"
+        description: |-
+          <gray> Atur ulang semua nilai pulau
+          <gray> ke nilai default dari
+          <gray> pengaturan.
+      bundle_info:
+        name: "<white><bold> Informasi Umum"
+        description: |-
+          <gray> Lihat informasi paket
+          <gray> umum.
+      bundle_biomes:
+        name: "<white><bold> Kelola Bioma"
+        description: |-
+          <gray> Kelola bioma yang ditugaskan
+          <gray> ke paket.
+      bundle_name:
+        name: "<white><bold> Ubah Nama"
+        description: |-
+          <gray> Ubah nama tampilan paket.
+        value: "<yellow> Nilai Saat Ini: <reset> [bundle]"
+      bundle_icon:
+        name: "<white><bold> Ubah Ikon"
+        description: |-
+          <gray> Ubah ikon paket.
+      bundle_description:
+        name: "<white><bold> Ubah Deskripsi"
+        description: |-
+          <gray> Ubah deskripsi paket.
+        value: "<yellow> Nilai saat ini:"
+        none: "<red> Tidak ada deskripsi"
+      bundle_permission:
+        name: "<white><bold> Izin Paket"
+        description: |-
+          <gray> Izin yang harus ditambahkan
+          <gray> ke pengguna untuk
+          <gray> memaksa paket ini.
+        value: "<yellow> Izin: <white> [gamemode].biomes.bundle.[id]"
+      add_bundle_biome:
+        name: "<white><bold> Tambah Bioma"
+        description: |-
+          <gray> Tugaskan bioma ke
+          <gray> paket ini.
+        title: "<aqua> Bioma yang Dipilih:"
+        value: "<aqua> - [biome]"
+      remove_bundle_biome:
+        name: "<white><bold> Hapus Bioma"
+        description: |-
+          <gray> Hapus bioma dari
+          <gray> paket ini.
+        title: "<aqua> Bioma yang Dipilih:"
+        value: "<aqua> - [biome]"
+      create_bundle:
+        name: "<white><bold> Buat Paket"
+        description: |-
+          <gray> Buat paket baru untuk
+          <gray> mode permainan ini.
+      delete_bundle:
+        name: "<white><bold> Hapus Paket"
+        description: |-
+          <gray> Hapus paket dari mode
+          <gray> permainan ini sepenuhnya.
+        title: "<aqua> Paket yang Dipilih:"
+        value: "<aqua> - [bundle]"
+      download:
+        name: "<white><bold> Unduh"
+        description: |-
+          <gray> Unduh perpustakaan web.
+        enabled: "<dark_green> Dengan Pembersihan Cache"
+        disabled: "<red> Tanpa Pembersihan Cache"
+    tips:
+      click-to-filter: "<yellow> Klik <gray> untuk menyaring."
+      click-to-manage: "<yellow> Klik <gray> untuk mengelola."
+      click-to-clear: "<yellow> Klik <gray> untuk membersihkan."
+      click-to-change-biome: "<yellow> Klik <gray> untuk mengubah bioma."
+      click-to-view: "<yellow> Klik <gray> untuk melihat."
+      click-to-select: "<yellow> Klik <gray> untuk memilih."
+      click-to-choose: "<yellow> Klik <gray> untuk memilih."
+      click-to-complete: "<yellow> Klik <gray> untuk menyelesaikan."
+      left-click-to-accept: "<yellow> Klik Kiri <gray> untuk menerapkan."
+      right-click-to-write: "<yellow> Klik Kanan <gray> untuk menulis."
+      click-to-reduce: "<yellow> Klik <gray> untuk mengurangi."
+      click-to-increase: "<yellow> Klik <gray> untuk meningkatkan."
+      click-to-return: "<yellow> Klik <gray> untuk kembali."
+      click-to-quit: "<yellow> Klik <gray> untuk keluar."
+      click-to-wipe: "<yellow> Klik <gray> untuk menghapus."
+      left-click-to-wipe: "<yellow> Klik Kiri <gray> untuk menghapus."
+      right-click-to-switch: "<yellow> Klik Kanan <gray> untuk beralih."
+      click-to-open: "<yellow> Klik <gray> untuk membuka."
+      click-to-export: "<yellow> Klik <gray> untuk mengekspor."
+      click-to-create: "<yellow> Klik <gray> untuk membuat."
+      left-click-to-open: "<yellow> Klik Kiri <gray> untuk membuka."
+      right-click-to-reset-all: "<yellow> Klik Kanan <gray> untuk menghapus semua."
+      click-to-toggle: "<yellow> Klik <gray> untuk mengganti."
+      click-to-change: "<yellow> Klik <gray> untuk mengubah."
+      shift-click-to-reset: "<yellow> Shift Klik <gray> untuk mengatur ulang."
+      click-to-add: "<yellow> Klik <gray> untuk menambah."
+      click-to-remove: "<yellow> Klik <gray> untuk menghapus."
+      left-click-to-cycle: "<yellow> Klik Kiri <gray> untuk siklus bawah."
+      right-click-to-cycle: "<yellow> Klik Kanan <gray> untuk siklus atas."
+      click-to-edit: "<yellow> Klik <gray> untuk mengedit."
+      left-click-to-download: "<yellow> Klik Kiri <gray> untuk mengunduh."
+      right-click-to-toggle: "<yellow> Klik Kanan <gray> untuk mengganti."
+      click-to-install: "<yellow> Klik <gray> untuk menginstal."
+      click-to-reset-all: "<yellow> Klik <gray> untuk mengatur ulang semua."
+      right-click-to-select: "<yellow> Klik Kanan <gray> untuk memilih."
+      right-click-to-deselect: "<yellow> Klik Kanan <gray> untuk batalkan pilihan."
+      left-click-to-choose: "<yellow> Klik Kiri <gray> untuk memilih."
+      click-to-buy: "<yellow> Klik <gray> untuk membeli."
+      click-to-cancel: "<yellow> Klik <gray> untuk membatalkan."
+      click-to-save: "<yellow> Klik <gray> untuk menyimpan."
+      click-to-deselect: "<yellow> Klik <gray> untuk batalkan pilihan."
+      click-on-item: |-
+        <yellow> Klik <gray> pada item di
+        <gray> inventori Anda.
+      left-click-to-edit: "<yellow> Klik Kiri <gray> untuk mengedit."
+      right-click-to-clear: "<yellow> Klik Kanan <gray> untuk membersihkan."
+      click-to-previous: "<yellow> Klik <gray> untuk melihat halaman sebelumnya."
+      click-to-next: "<yellow> Klik <gray> untuk melihat halaman berikutnya."
+      select-before: "<yellow> Pilih <gray> item(-s) sebelum melanjutkan."
+      click-to-apply: "<yellow> Klik <gray> untuk menerapkan."
+      right-click-to-open: "<yellow> Klik Kanan <gray> untuk membuka."
+      click-to-perform: "<yellow> Klik <gray> untuk melakukan."
+      left-click-to-apply: "<yellow> Klik Kiri <gray> untuk menerapkan."
+      right-click-to-unlock: "<yellow> Klik Kanan <gray> untuk membuka."
+      right-click-to-buy: "<yellow> Klik Kanan <gray> untuk membeli."
+      right-click-to-change: "<yellow> Klik Kanan <gray> untuk mengubah."
+    descriptions:
+      update-mode:
+        island: "Mode Pulau"
+        chunk: "Mode Chunk"
+        range: "Mode Jangkauan"
+      selected: "<dark_green> Dipilih"
+      island-owner: "[player]"
+      unknown: "<yellow> Tidak Diketahui"
+      biome:
+        lore: |-
+          [description]
+          [biome]
+          [unlock]
+          [change]
+        original: |-
+          <gray> Bioma: <yellow> [biome]
+        unlock:
+          lore: |-
+            [items]
+            [money]
+            [level]
+            [permissions]
+          money: |-
+            <gray> Biaya pembukaan: <yellow> [number]
+          level: |-
+            <gray> Memerlukan untuk mencapai <yellow> [number]
+            <gray> level pulau.
+          permission-single: |-
+            <gray> Izin Hilang: <red> [permission]
+          permissions-title: |-
+            <red> Izin Hilang:
+          permissions-list: |-
+            <red> - [permission]
+          item-single: |-
+            <gray> Item Pembukaan: [color] [number] x [item]
+          item-title: |-
+            <gray> Item Pembukaan:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          missing: "<red>"
+          has: "<yellow>"
+        change:
+          lore: |-
+            [items]
+            [money]
+            [mode]
+            [usage]
+          mode:
+            per_block: |-
+              <aqua><italic> Bioma biaya per setiap
+              <aqua><italic> blok yang diubah.
+            per_usage: |-
+              <aqua><italic> Mengubah bioma meningkatkan
+              <aqua><italic> harganya.
+            static: |-
+              <aqua><italic> Harga perubahan standar.
+          money: |-
+            <gray> Biaya: <yellow> [number]
+          item-single: |-
+            <gray> Item: [color] [number] x [item]
+          item-title: |-
+            <gray> Item:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          number-of-usage: |-
+            |<gray> Bioma ini telah
+            <gray> diterapkan <yellow> [number] <reset><gray> kali.
+          missing: "<red>"
+          has: "<yellow>"
+      bundle:
+        lore: |-
+          [description]
+          [permission]
+          [biomes]
+        permission: |-
+          <gray> Izin yang harus
+          <gray> ditugaskan ke pemain:
+          <gray><italic> [gamemode].biomes.bundle.[id]
+        title: "<gray> Bioma Paket: "
+        value: "<gray> - [biome]"
+        no-biomes: "<red> Tidak Ada Bioma yang Ditugaskan"
+      library:
+        author: '<gray> oleh <yellow> [author]'
+        version: '<gray> Dibuat dengan Biomas <yellow> [version]'
+        lang: '<gray> Bahasa: <yellow> [lang]'
+        gamemode: '<gray> Terutama untuk <yellow> [gamemode]'
+  conversations:
+    prefix: "<bold><gold> [BentoBox]: <reset>"
+    confirm-string: "benar, aktif, ya, konfirmasi, y, valid, benar"
+    deny-string: "salah, nonaktif, tidak, tolak, n, tidak valid, salah"
+    cancel-string: "batal"
+    exit-string: "batal, keluar, quit"
+    cancelled: "<red> Percakapan dibatalkan!"
+    input-number: "<yellow> Masukkan angka di obrolan."
+    input-seconds: "<yellow> Masukkan detik di obrolan."
+    numeric-only: "<red> Nilai yang diberikan [value] bukan angka!"
+    not-valid-value: "<red> Angka yang diberikan [value] tidak valid. Harus lebih besar dari [min] dan lebih kecil dari [max]!"
+    data-removed: "<green> Bioma yang dipilih dihapus dari [gamemode]."
+    confirm-deletion: "<yellow> Harap konfirmasi bahwa Anda ingin menghapus [number] bioma dengan nama: [value]."
+    user-data-removed: "<green> Semua data pengguna untuk [gamemode] dihapus dari database."
+    confirm-user-data-deletion: "<yellow> Harap konfirmasi bahwa Anda ingin menghapus database pengguna untuk [gamemode]."
+    all-data-removed: "<green> Semua data addon untuk [gamemode] dihapus dari database."
+    confirm-all-data-deletion: "<yellow> Harap konfirmasi bahwa Anda ingin menghapus semua data addon untuk [gamemode]."
+    write-name: "<yellow> Tuliskan nama di obrolan."
+    new-object-created: "<green> Objek baru untuk [gamemode] dibuat."
+    object-already-exists: "<red> Objek <gray> [id] <red> sudah ada. Pilih nama yang berbeda."
+    name-changed: "<green> Sukses, nama telah diperbarui."
+    write-description: "<yellow> Masukkan deskripsi baru di obrolan dan 'quit' di baris terpisah untuk menyelesaikan."
+    description-changed: "<green> Sukses, deskripsi telah diperbarui."
+    write-permissions: "<yellow> Masukkan izin yang diperlukan, satu per baris di obrolan, dan 'quit' di baris terpisah untuk menyelesaikan."
+    permissions-changed: "<green> Sukses, izin telah diperbarui."
+    start-downloading: "<green> Mulai mengunduh dan mengimpor Perpustakaan Bioma."
+    written-text: "<green> Teks Input:"
+    confirm-data-replacement: "<yellow> Harap konfirmasi bahwa Anda ingin mengganti data saat ini dengan yang baru."
+    new-data-imported: "<green> Sukses, data baru untuk [gamemode] diimpor."
+    exported-file-name: "<yellow> Masukkan nama file untuk file database yang diekspor. (tulis 'batal' untuk keluar)"
+    database-export-completed: "<green> Sukses, ekspor database untuk [world] selesai. File [file] dibuat."
+    file-name-exist: "<red> File dengan nama '[id]' ada. Tidak dapat menimpa."
+    write-search: "<yellow> Tuliskan nilai pencarian. (tulis 'batal' untuk keluar)"
+    search-updated: "<green> Nilai pencarian diperbarui."
+    invalid-biome: "<red> Beberapa data dalam penyimpanan `[biome]`<reset><red> tidak valid."
+    confirm-biome-deletion: "<yellow> Harap konfirmasi bahwa Anda ingin menghapus [biome]<reset><yellow> dari [gamemode]."
+    biome-removed: "[biome] <reset><green> dihapus dari [gamemode]."
+    confirm-island-data-deletion: "<yellow> Harap konfirmasi bahwa Anda ingin menghapus data pulau [player]."
+    island-data-removed: "[player] <green> data pulau dihapus."
+    confirm-biome-data-deletion: "<yellow> Harap konfirmasi bahwa Anda ingin menghapus semua bioma dari [gamemode]."
+    biome-data-removed: "Semua bioma dihapus dari [gamemode]."
+    click-text-to-purchase: "<yellow> Anda telah membuka <reset> [biome]<reset><yellow>! Klik di sini untuk membelinya."
+    click-text-to-set: "<yellow> Anda telah membuka <reset> [biome]<reset><yellow>! Klik di sini untuk menggunakannya."
+    click-text-to-purchase-other-world: "<yellow> Anda telah membuka <reset> [biome]<reset><yellow> di <reset> [gamemode]<reset><yellow>! Kunjungi dunia itu untuk membelinya."
+    click-text-to-set-other-world: "<yellow> Anda telah membuka <reset> [biome]<reset><yellow> di <reset> [gamemode]<reset><yellow>! Kunjungi dunia itu untuk menggunakannya."
+  messages:
+    biome-not-unlocked: "[biome] <reset><red> tidak terbuka. Anda tidak dapat menggunakannya."
+    biome-not-purchased: "<red> Anda tidak dapat menggunakan <reset> [biome] <reset><red>. Anda perlu membelinya."
+    biome-cannot-be-unlocked: "<red> Anda tidak dapat membuka <reset> [biome] <reset><red>."
+    biome-already-purchased: "<red> Anda sudah membeli <reset> [biome] <reset><red>."
+    island-level-not-reached: "[biome] <reset><red> memerlukan untuk memiliki setidaknya level pulau: [number]."
+    missing-permission: "[biome] <reset><red> memerlukan untuk memiliki izin: [permission]."
+    no-credits-buy: "<red> Anda tidak memiliki cukup kredit untuk membeli <reset> [biome] <reset><red>. Ini biaya [number]."
+    no-credits-buy-bank: "<red> Anda tidak memiliki cukup kredit di rekening bank Anda untuk membeli <reset> [biome] <reset><red>. Ini biaya [number]."
+    no-items-buy: "<red> Anda tidak memiliki cukup item untuk membeli <reset> [biome] <reset><red>. Diperlukan [items]."
+    biome-purchased: "<yellow> Anda telah membeli <reset> [biome]<reset><yellow>."
+    import-count: "<yellow> Diimpor [biomes] bioma dan [bundles] paket."
+    start-downloading: "<yellow> Mulai mengunduh perpustakaan."
+    update-start: "<green> Mulai mengubah bioma menjadi [biome] <reset><green> di [number] chunk. <yellow> Waktu Perkiraan: [time] detik."
+    update-done: "<green> Selesai mengubah bioma menjadi [biome]<reset><green>."
+    waiting: "<green> Penambahan perubahan bioma di antrian. <yellow> Perkiraan waktu tunggu: [time] detik."
+    biome-already-unlocked: "[biome] <reset><yellow> sudah terbuka."
+    everything-already-bought: "<green> Anda sudah membeli semua bioma untuk mode permainan ini."
+    skipping: "<green> Melewatkan pemuatan <reset> [biome]<reset><green>."
+    overwriting: "<green> Menimpa <reset> [biome] <reset><green> di cache."
+    imported: "<green> Diimpor <reset> [biome] <reset><green> di cache."
+    migrate-start: "<green> Mulai migrasi ke format data baru."
+    migrate-finish: "<green> Migrasi ke format data baru selesai."
+    migrate-valid: "<green> Semua data valid. Migrasi tidak perlu."
+    bundle-loaded: "<green> Paket <reset> [bundle] <green> dimuat."
+    clear-queue: "<green> Antrian tugas pembaruan bioma untuk [gamemode] dihapus."
+  errors:
+    no-island-data: "<red> Pulau tidak memiliki data yang tersimpan."
+    no-biomes-admin: "<red> Mode Permainan saat ini tidak memiliki bioma yang dapat digunakan. Harap impor atau buat bioma menggunakan /[command]"
+    no-biomes: "<red> Mode Permainan saat ini tidak memiliki bioma yang dapat digunakan."
+    no-rank: "<red> Anda tidak diizinkan mengubah bioma di pulau ini."
+    not-enough-level: "<red> Bioma ini memerlukan setidaknya level pulau [number]."
+    not-enough-money: "<red> Perubahan bioma ini biaya [number]."
+    not-enough-money-bank: "<red> Rekening bank Anda tidak memiliki cukup kredit. Perubahan bioma biaya [number]."
+    not-enough-items: "<red> Perubahan bioma ini biaya [items]."
+    admin-not-on-island: "<red> Anda tidak berada di pulau [user]."
+    incorrect-object: "<red> Tidak dapat menemukan bioma dengan nama yang diminta: [biome]"
+    missing-biome: "<red> Nama bioma tidak ditentukan."
+    incorrect-mode: "<red> Mode dengan nama '[mode]' tidak ada."
+    incorrect-range: "<red> Nilai yang diberikan '[number]' bukan angka yang valid."
+    no-file: "<red> Tidak dapat menemukan [file] di direktori bioma."
+    no-load: "<red> Tidak dapat mengimpor bioma dari [file]. Alasan: [description]"
+    not-a-gamemode-world: "<red> Dunia [world] bukan dunia GameModeAddon."
+    file-exist: "<red> File dengan nama [file] sudah ada. Pilih nama yang berbeda."
+    no-library-entries: "<red> Tidak dapat menemukan entri perpustakaan yang valid."
+    not-unlocked: "<red> Anda belum membuka bioma ini."
+    not-purchased: "<red> Anda belum membeli bioma ini."
+    timeout: "<red> Perubahan bioma kehabisan waktu. Mungkin area yang dipilih terlalu besar atau server sedang sibuk."
+    failed: "<red> Server mengalami masalah saat mengubah bioma."
+    could-not-remove-money: "<red> Sesuatu terjadi kesalahan saat menarik uang."
+    could-not-remove-items: "<red> Sesuatu terjadi kesalahan saat menarik item."
+    something-went-wrong: "<red> Sesuatu terjadi kesalahan. Tidak bisa melakukannya."
+protection:
+  flags:
+    BIOMES_ISLAND_PROTECTION:
+      name: "Kontrol bioma"
+      description: |-
+        <dark_purple><italic> Alihkan siapa yang dapat mengubah
+        <dark_purple><italic> bioma pulau
+    BIOMES_WORLD_PROTECTION:
+      name: "Pembatasan bioma pulau"
+      description: |-
+        <dark_purple><italic> Alihkan persyaratan
+        <dark_purple><italic> untuk pemain agar
+        <dark_purple><italic> berada di pulau mereka untuk
+        <dark_purple><italic> mengubah bioma.
+      hint: "<red> Anda harus berada di pulau Anda untuk mengubah bioma!"

@@ -1,0 +1,826 @@
+biomes:
+  commands:
+    # Questa sezione contiene solo le traduzioni dei comandi admin.
+    admin:
+      main:
+        description: "comando admin biomi principale"
+      import:
+        parameters: "<file>"
+        description: "importa biomi"
+        confirmation: "Questo rimuoverà i biomi [gamemode] esistenti e importerà i nuovi biomi dal file template - si prega di confermare"
+      migrate:
+        description: "migra i dati dei biomi immagazzinati al nuovo formato"
+      set:
+        description: "cambia il bioma del giocatore"
+        parameters: "<player> <biome-id> [mode] [size]"
+      unlock:
+        description: "sblocca il bioma per il giocatore senza controlli. L'aggiunta di 'true' alla fine lo markerà come acquistato."
+        parameters: "<player> <biome-id> [true]"
+      clear-queue:
+        description: "cancella la coda di aggiornamento dei biomi"
+    # Questa sezione contiene solo le traduzioni dei comandi del giocatore.
+    player:
+      main:
+        description: "apre la GUI di selezione dei biomi"
+      set:
+        description: "cambia il bioma del giocatore"
+        parameters: "<biome-id> [mode] [size]"
+      buy:
+        description: "acquista il bioma richiesto"
+        parameters: "<biome-id>"
+      info:
+        description: "invia un messaggio di chat con la descrizione dettagliata del bioma"
+        parameters: "<biome-id>"
+  gui:
+    titles:
+      player-panel: "<black><bold> Scegli Bioma"
+      buy-panel: "<black><bold> Acquista Bioma"
+      advanced-panel: "<black><bold> Modalità Aggiornamento"
+      # Tutti i Titoli sotto questo commento sono per i Menu Admin.
+      admin-panel: "<black><bold> GUI Admin"
+      settings: "<black><bold> Impostazioni"
+      library: "<black><bold> Libreria"
+      manage-biomes: "<black><bold> Gestisci Biomi"
+      manage-bundles: "<black><bold> Gestisci Bundle"
+      manage-islands: "<black><bold> Gestisci Dati Isola"
+      edit-biome: "<black><bold> Modifica Bioma: [biome]"
+      edit-bundle: "<black><bold> Modifica Bundle: [bundle]"
+      edit-island: "<black><bold> Modifica Isola: [island]"
+      environment-selector: "<black><bold> Seleziona Ambiente"
+      biome-selector: "<black><bold> Seleziona Bioma"
+      bundle-selector: "<black><bold> Seleziona Bundle"
+      item-selector: "<black><bold> Seleziona Oggetti"
+    buttons:
+      island:
+        name: "<white><bold> Isola"
+        description: |-
+          <gray> Cambia il bioma su tutta
+          <gray> l'isola.
+      chunk:
+        name: "<white><bold> Chunk"
+        description: |-
+          <gray> Cambia il bioma nei chunk.
+      range:
+        name: "<white><bold> Portata"
+        description: |-
+          <gray> Cambia il bioma per portata.
+      reduce:
+        name: "<white><bold> Riduci"
+        description: |-
+          <gray> Riduci di <yellow> [number]
+      increase:
+        name: "<white><bold> Aumenta"
+        description: |-
+          <gray> Aumenta di <yellow> [number]
+      accept:
+        name: "<white><bold> Applica Modifica"
+        description: |-
+          <gray> Cambia il bioma a <yellow> [biome]
+
+          <gray> Modalità aggiornamento: <yellow> [mode]
+          <gray> Portata aggiornamento: <yellow> [number]
+      return:
+        name: "<white><bold> Indietro"
+        description: |-
+          <gray> Torna al menu precedente.
+      previous:
+        name: "<white><bold> Pagina Precedente"
+        description: |-
+          <gray> Passa alla pagina <yellow> [number]
+      next:
+        name: "<white><bold> Pagina Successiva"
+        description: |-
+          <gray> Passa alla pagina <yellow> [number]
+      quit:
+        name: "<white><bold> Esci"
+        description: |-
+          <gray> Esci dalla GUI.
+      save:
+        name: "<white><bold> Salva"
+        description: |-
+          <gray> Salva le modifiche e torna.
+      cancel:
+        name: "<white><bold> Annulla"
+        description: |-
+          <gray> Annulla le modifiche e torna.
+      search:
+        name: "<white><bold> Cerca"
+        description: |-
+          <gray> Consente di cercare un
+          <gray> elemento con valore di testo
+          <gray> di input.
+        search: "<aqua> Valore: [value]"
+      buy:
+        name: "<white><bold> Acquista"
+        description: |-
+          <gray> Acquista un nuovo bioma.
+      manage_islands:
+        name: "<white><bold> Gestisci Isole"
+        description: |-
+          <gray> Consente di gestire i dati
+          <gray> dell'isola.
+      manage_biomes:
+        name: "<white><bold> Gestisci Biomi"
+        description: |-
+          <gray> Consente di gestire i dati
+          <gray> dei biomi.
+      manage_bundles:
+        name: "<white><bold> Gestisci Bundle"
+        description: |-
+          <gray> Consente di gestire i dati
+          <gray> dei bundle.
+      settings:
+        name: "<white><bold> Impostazioni"
+        description: |-
+          <gray> Consente di modificare
+          <gray> alcune impostazioni del componente aggiuntivo.
+      import_template:
+        name: "<white><bold> Importa Template"
+        description: |-
+          <gray> Importa il file template
+          <gray> situato dentro la cartella
+          <gray> del componente aggiuntivo.
+      web_library:
+        name: "<white><bold> Libreria Web"
+        description: |-
+          <gray> Accedi alla libreria web
+          <gray> che contiene biomi
+          <gray> condivisi.
+      export_from_database:
+        name: "<white><bold> Esporta Database"
+        description: |-
+          <gray> Esporta il database in un
+          <gray> singolo file situato nella
+          <gray> cartella del componente aggiuntivo.
+      import_to_database:
+        name: "<white><bold> Importa Database"
+        description: |-
+          <gray> Importa un database da un
+          <gray> file situato nella cartella
+          <gray> del componente aggiuntivo.
+      wipe_islands_data:
+        name: "<white><bold> Cancella Database Isola"
+        description: |-
+          <gray> Cancella tutti i dati dei biomi dell'utente
+          <gray> per questa modalità di gioco.
+      wipe_biomes_data:
+        name: "<white><bold> Cancella Database Biomi"
+        description: |-
+          <gray> Cancella tutti i biomi e i
+          <gray> dati del bundle per questa modalità di gioco.
+      add_biome:
+        name: "<white><bold> Aggiungi Bioma"
+        description: |-
+          <gray> Crea un nuovo bioma che
+          <gray> i giocatori possono usare usando
+          <gray> i pannelli utente.
+      remove_biome:
+        name: "<white><bold> Rimuovi Bioma"
+        description: |-
+          <gray> Rimuove i biomi selezionati
+          <gray> dai pannelli utente.
+        title: "<yellow> Biomi Selezionati:"
+        value: "<yellow> - [biome]"
+      accept_selected:
+        name: "<white><bold> Accetta Selezionati"
+        description: |-
+          <gray> Accetta gli elementi selezionati.
+        title: "<yellow> Elementi Selezionati:"
+        element: "<yellow> - [element]"
+      environment_element:
+        name: "<white><bold> [environment]"
+        description: |-
+          <gray> [description].
+      properties:
+        name: "<white><bold> Proprietà"
+        description: |-
+          <gray> Visualizza le proprietà principali del bioma.
+      change_properties:
+        name: "<white><bold> Modifica Proprietà"
+        description: |-
+          <gray> Visualizza le proprietà di modifica del bioma.
+      unlock_properties:
+        name: "<white><bold> Proprietà di Sblocco"
+        description: |-
+          <gray> Visualizza le proprietà di sblocco del bioma.
+      biome:
+        name: "<white><bold> [biome]"
+        description: |-
+          <gray> Tipo di bioma Minecraft.
+        value: "<gray> ID Bioma: <yellow> [id]"
+      name:
+        name: "<white><bold> Nome Visualizzato"
+        description: |-
+          <gray> Nome visualizzato per il bioma.
+          <gray> Supporta i codici colore.
+        value: "<gray> Valore Attuale: <reset> [name]"
+      deployed:
+        name: "<white><bold> Distribuito"
+        description: |-
+          <gray> Attiva/disattiva se il bioma è
+          <gray> accessibile ai giocatori
+          <gray> o no.
+        enabled: "<dark_green> Abilitato"
+        disabled: "<red> Disabilitato"
+      environment:
+        name: "<white><bold> Dimensione"
+        description: |-
+          <gray> Consente di limitare in quale
+          <gray> dimensione il bioma
+          <gray> può essere applicato.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      icon:
+        name: "<white><bold> Icona"
+        description: |-
+          <gray> Consente di modificare l'icona
+          <gray> per questo bioma.
+      order:
+        name: "<white><bold> Ordine"
+        description: |-
+          <gray> Consente di modificare l'ordine
+          <gray> degli oggetti.
+          <gray> Gli oggetti con numeri uguali
+          <gray> verranno ordinati in base ai
+          <gray> loro nomi id univoci.
+        value: "<gray> Ordine attuale: <yellow> [number]"
+      description:
+        name: "<white><bold> Descrizione"
+        description: |-
+          <gray> La descrizione specifica
+          <gray> per il bioma. I codici colore
+          <gray> devono essere applicati ad esso.
+        value: "<yellow> Descrizione attuale:"
+        none: "<gray> Descrizione non impostata."
+      unlock_permissions:
+        name: "<white><bold> Permessi"
+        description: |-
+          <gray> Consente di modificare i
+          <gray> permessi di sblocco per questo
+          <gray> bioma per essere accessibile.
+        title: "<yellow> Permessi: "
+        element: " <dark_gray> - [permission]"
+        none: "<gray> Permessi non impostati."
+      unlock_cost:
+        name: "<white><bold> Costo"
+        description: |-
+          <gray> Consente di modificare il costo di
+          <gray> sblocco di questo bioma.
+        value: "<gray> Costo attuale: <yellow> [number]"
+      unlock_items:
+        name: "<white><bold> Oggetti"
+        description: |-
+          <gray> Consente di modificare gli oggetti di
+          <gray> sblocco per questo bioma.
+        title: "<yellow> Oggetti: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Oggetti non impostati."
+      unlock_level:
+        name: "<white><bold> Livello"
+        description: |-
+          <gray> Consente di modificare il
+          <gray> livello dell'isola richiesto
+          <gray> per lo sblocco di questo bioma.
+        value: "<gray> Livello attuale: <yellow> [number]"
+      change_cost:
+        name: "<white><bold> Costo"
+        description: |-
+          <gray> Consente di modificare il costo di
+          <gray> applicazione di questo bioma.
+        value: "<gray> Costo attuale: <yellow> [number]"
+      change_items:
+        name: "<white><bold> Oggetti"
+        description: |-
+          <gray> Consente di modificare gli oggetti
+          <gray> per l'applicazione di questo bioma.
+        title: "<yellow> Oggetti: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Oggetti non impostati."
+      change_type:
+        name: "<white><bold> [type]"
+        description: |-
+          <gray> Consente di modificare il tipo di
+          <gray> costo di applicazione del bioma.
+        static:
+          name: "Valore Statico"
+          description: |-
+            <gray> Il costo di modifica del bioma
+            <gray> non cambia.
+        per_block:
+          name: "Per Blocco"
+          description: |-
+            <gray> Il costo di modifica del bioma è
+            <gray> calcolato per blocco.
+        per_usage:
+          name: "Per Utilizzo"
+          description: |-
+            <gray> Il costo di modifica del bioma
+            <gray> aumenta dopo ogni
+            <gray> utilizzo.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      change_increment:
+        name: "<white><bold> Incremento"
+        description: |-
+          <gray> Consente di modificare
+          <gray> l'incremento per utilizzo.
+        value: "<gray> Valore attuale: <yellow> [number]"
+      biome-filter:
+        name: "<white><bold> [filter]"
+        description: |-
+          <gray> Filtro bioma basato su
+          <gray> Minecraft Wiki.
+        lush: "Biomi Lussureggianti"
+        dry: "Biomi Secchi"
+        cold: "Biomi Freddi"
+        snowy: "Biomi Nevosi"
+        aquatic: "Biomi Oceanici"
+        nether: "Biomi Nether"
+        the_end: "Biomi The End"
+        neutral: "Biomi Neutrali"
+        unused: "Biomi Inutilizzati"
+        warm: "Biomi Caldi"
+        cave: "Biomi Caverna"
+        temperate: "Biomi Temperati"
+      protection_range:
+        name: "<white><bold> Portata di Protezione"
+        description: |-
+          <gray> Consente di limitare la modifica
+          <gray> del bioma solo alla portata di
+          <gray> protezione dell'isola invece di
+          <gray> modificare il bioma su tutta l'isola.
+        enabled: "<dark_green> Abilitato"
+        disabled: "<red> Disabilitato"
+      reset:
+        name: "<white><bold> Ripristina al Cambio Proprietario"
+        description: |-
+          <gray> Consente di abilitare la modifica
+          <gray> del bioma forzata a quella
+          <gray> predefinita se l'isola cambia il suo
+          <gray> proprietario.
+        enabled: "<dark_green> Abilitato"
+        disabled: "<red> Disabilitato"
+      cool_down:
+        name: "<white><bold> Raffreddamento Bioma"
+        description: |-
+          <gray> Consente di impostare il numero di
+          <gray> secondi tra i quali il giocatore
+          <gray> può modificare il bioma di nuovo.
+        value: "<gray> Tempo di raffreddamento attuale: <yellow> [number]"
+        disabled: "<yellow> Raffreddamento disabilitato."
+      default_size:
+        name: "<white><bold> Portata Predefinita"
+        description: |-
+          <gray> Consente di impostare il numero che
+          <gray> verrà utilizzato quando il giocatore
+          <gray> modifica il bioma senza
+          <gray> scriverlo.
+        value: "<gray> Portata Predefinita: <yellow> [number]"
+      default_mode:
+        name: "<white><bold> Modalità Aggiornamento Predefinita"
+        description: |-
+          <gray> Consente di impostare la modalità di
+          <gray> aggiornamento predefinita quando i
+          <gray> giocatori non l'hanno fornita.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      unlock_notify:
+        name: "<white><bold> Notifica su Sblocco"
+        description: |-
+          <gray> Un messaggio verrà inviato
+          <gray> a un utente quando sblocca
+          <gray> un nuovo bioma.
+        enabled: |-
+          <aqua> La notifica su sblocco è <green> abilitata <aqua>.
+        disabled: |-
+          <aqua> La notifica su sblocco è <red> disabilitata <aqua>.
+      change_timeout:
+        name: "<white><bold> Timeout per Modifica"
+        description: |-
+          <gray> Consente di impostare dopo quanti
+          <gray> minuti l'aggiornamento del bioma
+          <gray> verrà terminato.
+          <gray> Può accadere su isole molto grandi
+          <gray> o server sotto un carico
+          <gray> enorme.
+        value: "<gray> Timeout dopo: <yellow> [number] min"
+      parallel_updates:
+        name: "<white><bold> Aggiornamenti Paralleli"
+        description: |-
+          <gray> Consente di impostare quanti
+          <gray> aggiornamenti del bioma possono
+          <gray> accadere contemporaneamente.
+          <gray> Gli altri verranno messi in coda.
+        value: |-
+          <gray> Valore attuale: <yellow>[number]<gray>.
+      use_bank:
+        name: "<white><bold> Usa Conto Bancario"
+        description: |-
+          <gray> Attiva/disattiva se tutti i pagamenti
+          <gray> effettuati dal componente aggiuntivo
+          <gray> Biomas utilizzeranno il conto
+          <gray> dell'isola del componente aggiuntivo Banca.
+        enabled: |-
+          <aqua> L'utilizzo del conto bancario è <green> abilitato <aqua>.
+        disabled: |-
+          <aqua> L'utilizzo del conto bancario è <red> disabilitato <aqua>.
+        missing: |-
+          <red> Il componente aggiuntivo Banca non è installato.
+      visibility:
+        name: "<white><bold> Visibilità Bioma"
+        description: |-
+          <gray> Consente di modificare la
+          <gray> visibilità del bioma del giocatore
+          <gray> nei pannelli di selezione dei biomi.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+        all: "Tutti i Biomi"
+        deployed: "Biomi Distribuiti"
+        accessible: "Biomi Accessibili"
+        toggleable: "Commutabile"
+      is_online:
+        name: "<white><bold> Isole Giocatore Online"
+        description: |-
+          <gray> Elenca tutte le isole dove
+          <gray> qualsiasi membro è online.
+      all_islands:
+        name: "<white><bold> Tutte le Isole"
+        description: |-
+          <gray> Elenco di tutte le isole che
+          <gray> sono state create nella
+          <gray> modalità di gioco attuale.
+      island_name:
+        name: "<white><bold> [name]"
+        island-owner: "[player]"
+        unknown: "<red> Proprietario Sconosciuto"
+        description: |-
+          [owner]
+          [members]
+          [id]
+        owner: "<gray> Proprietario: <yellow> [player]"
+        title: "<gray> Membri Isola:"
+        element: " <gray> - <yellow> [player]"
+      change_biome:
+        name: "<white><bold> Modifica Bioma"
+        description: |-
+          <gray> Modifica il bioma per isola.
+      manage_data:
+        name: "<white><bold> Gestisci Dati Isola"
+        description: |-
+          <gray> Gestisci i dati che sono
+          <gray> memorizzati per l'isola specifica.
+      clear_data:
+        name: "<white><bold> Cancella Dati Isola"
+        description: |-
+          <gray> Cancella tutti i dati
+          <gray> memorizzati per l'isola.
+      island_bundle:
+        name: "<white><bold> Bundle Isola"
+        description: |-
+          <gray> Bundle che è assegnato
+          <gray> all'isola attuale.
+          <gray> Solo i biomi di questo
+          <gray> bundle possono essere usati
+          <gray> sull'isola.
+        value: "<aqua> Bundle: [bundle]"
+        overwritten: |-
+          <red> Il proprietario ha un permesso che
+          <red> sovrascrive il bundle.
+      owner_bundle:
+        name: "<white><bold> Bundle Proprietario"
+        description: |-
+          <gray> Bundle che è assegnato al
+          <gray> proprietario dell'isola attuale.
+          <gray> Solo i biomi di questo
+          <gray> bundle possono essere usati
+          <gray> sull'isola.
+          <gray> Permesso per l'utente di assegnare:
+          <gray><italic> '[gamemode].biomes.
+          <gray><italic> bundle.<bundle-id>'
+        value: "<aqua> Bundle: [bundle]"
+      reset_to_default:
+        name: "<white><bold> Ripristina ai Valori Predefiniti"
+        description: |-
+          <gray> Ripristina tutti i valori
+          <gray> dell'isola ai valori predefiniti
+          <gray> dalle impostazioni.
+      bundle_info:
+        name: "<white><bold> Informazioni Generali"
+        description: |-
+          <gray> Visualizza le informazioni
+          <gray> generali del bundle.
+      bundle_biomes:
+        name: "<white><bold> Gestisci Biomi"
+        description: |-
+          <gray> Gestisci i biomi che sono
+          <gray> assegnati al bundle.
+      bundle_name:
+        name: "<white><bold> Cambia Nome"
+        description: |-
+          <gray> Cambia il nome visualizzato
+          <gray> del bundle.
+        value: "<yellow> Valore Attuale: <reset> [bundle]"
+      bundle_icon:
+        name: "<white><bold> Cambia Icona"
+        description: |-
+          <gray> Cambia l'icona del bundle.
+      bundle_description:
+        name: "<white><bold> Cambia Descrizione"
+        description: |-
+          <gray> Cambia la descrizione del bundle.
+        value: "<yellow> Valore attuale:"
+        none: "<red> Nessuna descrizione"
+      bundle_permission:
+        name: "<white><bold> Permesso Bundle"
+        description: |-
+          <gray> Il permesso che deve essere
+          <gray> aggiunto all'utente per
+          <gray> forzare questo bundle.
+        value: "<yellow> Permesso: <white> [gamemode].biomes.bundle.[id]"
+      add_bundle_biome:
+        name: "<white><bold> Aggiungi Bioma"
+        description: |-
+          <gray> Assegna un bioma a
+          <gray> questo bundle.
+        title: "<aqua> Biomi Selezionati:"
+        value: "<aqua> - [biome]"
+      remove_bundle_biome:
+        name: "<white><bold> Rimuovi Bioma"
+        description: |-
+          <gray> Rimuovi un bioma da
+          <gray> questo bundle.
+        title: "<aqua> Biomi Selezionati:"
+        value: "<aqua> - [biome]"
+      create_bundle:
+        name: "<white><bold> Crea Bundle"
+        description: |-
+          <gray> Crea un nuovo bundle
+          <gray> per questa modalità di gioco.
+      delete_bundle:
+        name: "<white><bold> Rimuovi Bundle"
+        description: |-
+          <gray> Rimuovi un bundle da
+          <gray> questa modalità di gioco completamente.
+        title: "<aqua> Bundle Selezionati:"
+        value: "<aqua> - [bundle]"
+      download:
+        name: "<white><bold> Scarica"
+        description: |-
+          <gray> Scarica la libreria web.
+        enabled: "<dark_green> Con Pulizia della Cache"
+        disabled: "<red> Senza Pulizia della Cache"
+    tips:
+      click-to-filter: "<yellow> Clicca <gray> per filtrare."
+      click-to-manage: "<yellow> Clicca <gray> per gestire."
+      click-to-clear: "<yellow> Clicca <gray> per cancellare."
+      click-to-change-biome: "<yellow> Clicca <gray> per modificare il bioma."
+      click-to-view: "<yellow> Clicca <gray> per visualizzare."
+      click-to-select: "<yellow> Clicca <gray> per selezionare."
+      click-to-choose: "<yellow> Clicca <gray> per scegliere."
+      click-to-complete: "<yellow> Clicca <gray> per completare."
+      left-click-to-accept: "<yellow> Clicca con il Tasto Sinistro <gray> per applicare."
+      right-click-to-write: "<yellow> Clicca con il Tasto Destro <gray> per scrivere."
+      click-to-reduce: "<yellow> Clicca <gray> per ridurre."
+      click-to-increase: "<yellow> Clicca <gray> per aumentare."
+      click-to-return: "<yellow> Clicca <gray> per tornare."
+      click-to-quit: "<yellow> Clicca <gray> per uscire."
+      click-to-wipe: "<yellow> Clicca <gray> per cancellare."
+      left-click-to-wipe: "<yellow> Clicca con il Tasto Sinistro <gray> per cancellare."
+      right-click-to-switch: "<yellow> Clicca con il Tasto Destro <gray> per passare."
+      click-to-open: "<yellow> Clicca <gray> per aprire."
+      click-to-export: "<yellow> Clicca <gray> per esportare."
+      click-to-create: "<yellow> Clicca <gray> per creare."
+      left-click-to-open: "<yellow> Clicca con il Tasto Sinistro <gray> per aprire."
+      right-click-to-reset-all: "<yellow> Clicca con il Tasto Destro <gray> per cancellare tutto."
+      click-to-toggle: "<yellow> Clicca <gray> per commutare."
+      click-to-change: "<yellow> Clicca <gray> per modificare."
+      shift-click-to-reset: "<yellow> Shift Clicca <gray> per ripristinare."
+      click-to-add: "<yellow> Clicca <gray> per aggiungere."
+      click-to-remove: "<yellow> Clicca <gray> per rimuovere."
+      left-click-to-cycle: "<yellow> Clicca con il Tasto Sinistro <gray> per ciclo giù."
+      right-click-to-cycle: "<yellow> Clicca con il Tasto Destro <gray> per ciclo su."
+      click-to-edit: "<yellow> Clicca <gray> per modificare."
+      left-click-to-download: "<yellow> Clicca con il Tasto Sinistro <gray> per scaricare."
+      right-click-to-toggle: "<yellow> Clicca con il Tasto Destro <gray> per commutare."
+      click-to-install: "<yellow> Clicca <gray> per installare."
+      click-to-reset-all: "<yellow> Clicca <gray> per ripristinare tutto."
+      right-click-to-select: "<yellow> Clicca con il Tasto Destro <gray> per selezionare."
+      right-click-to-deselect: "<yellow> Clicca con il Tasto Destro <gray> per deselezionare."
+      left-click-to-choose: "<yellow> Clicca con il Tasto Sinistro <gray> per scegliere."
+      click-to-buy: "<yellow> Clicca <gray> per comprare."
+      click-to-cancel: "<yellow> Clicca <gray> per annullare."
+      click-to-save: "<yellow> Clicca <gray> per salvare."
+      click-to-deselect: "<yellow> Clicca <gray> per deselezionare."
+      click-on-item: |-
+        <yellow> Clicca <gray> su elemento nel
+        <gray> tuo inventario.
+      left-click-to-edit: "<yellow> Clicca con il Tasto Sinistro <gray> per modificare."
+      right-click-to-clear: "<yellow> Clicca con il Tasto Destro <gray> per cancellare."
+      click-to-previous: "<yellow> Clicca <gray> per visualizzare la pagina precedente."
+      click-to-next: "<yellow> Clicca <gray> per visualizzare la pagina successiva."
+      select-before: "<yellow> Seleziona <gray> elemento(-i) prima di procedere."
+      click-to-apply: "<yellow> Clicca <gray> per applicare."
+      right-click-to-open: "<yellow> Clicca con il Tasto Destro <gray> per aprire."
+      click-to-perform: "<yellow> Clicca <gray> per eseguire."
+      left-click-to-apply: "<yellow> Clicca con il Tasto Sinistro <gray> per applicare."
+      right-click-to-unlock: "<yellow> Clicca con il Tasto Destro <gray> per sbloccare."
+      right-click-to-buy: "<yellow> Clicca con il Tasto Destro <gray> per comprare."
+      right-click-to-change: "<yellow> Clicca con il Tasto Destro <gray> per modificare."
+    descriptions:
+      update-mode:
+        island: "Modalità Isola"
+        chunk: "Modalità Chunk"
+        range: "Modalità Portata"
+      selected: "<dark_green> Selezionato"
+      island-owner: "[player]"
+      unknown: "<yellow> Sconosciuto"
+      biome:
+        lore: |-
+          [description]
+          [biome]
+          [unlock]
+          [change]
+        original: |-
+          <gray> Bioma: <yellow> [biome]
+        unlock:
+          lore: |-
+            [items]
+            [money]
+            [level]
+            [permissions]
+          money: |-
+            <gray> Costo di sblocco: <yellow> [number]
+          level: |-
+            <gray> Richiede di raggiungere <yellow> [number]
+            <gray> livello dell'isola.
+          permission-single: |-
+            <gray> Permesso Mancante: <red> [permission]
+          permissions-title: |-
+            <red> Permessi Mancanti:
+          permissions-list: |-
+            <red> - [permission]
+          item-single: |-
+            <gray> Elemento di Sblocco: [color] [number] x [item]
+          item-title: |-
+            <gray> Elementi di Sblocco:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          missing: "<red>"
+          has: "<yellow>"
+        change:
+          lore: |-
+            [items]
+            [money]
+            [mode]
+            [usage]
+          mode:
+            per_block: |-
+              <aqua><italic> Il bioma costa per ogni
+              <aqua><italic> blocco modificato.
+            per_usage: |-
+              <aqua><italic> Modificare il bioma
+              <aqua><italic> aumenta il suo prezzo.
+            static: |-
+              <aqua><italic> Prezzo di modifica standard.
+          money: |-
+            <gray> Costo: <yellow> [number]
+          item-single: |-
+            <gray> Elemento: [color] [number] x [item]
+          item-title: |-
+            <gray> Elementi:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          number-of-usage: |-
+            |<gray> Questo bioma è stato
+            <gray> applicato <yellow> [number] <reset><gray> volte.
+          missing: "<red>"
+          has: "<yellow>"
+      bundle:
+        lore: |-
+          [description]
+          [permission]
+          [biomes]
+        permission: |-
+          <gray> Permesso che deve essere
+          <gray> assegnato al giocatore:
+          <gray><italic> [gamemode].biomes.bundle.[id]
+        title: "<gray> Biomi Bundle: "
+        value: "<gray> - [biome]"
+        no-biomes: "<red> Nessun Bioma Assegnato"
+      library:
+        author: '<gray> da <yellow> [author]'
+        version: '<gray> Creato con Biomas <yellow> [version]'
+        lang: '<gray> Lingua: <yellow> [lang]'
+        gamemode: '<gray> Principalmente per <yellow> [gamemode]'
+  conversations:
+    prefix: "<bold><gold> [BentoBox]: <reset>"
+    confirm-string: "vero, si, sì, conferma, y, valido, corretto"
+    deny-string: "falso, no, nega, n, non valido, scorretto"
+    cancel-string: "annulla"
+    exit-string: "annulla, esci, quit"
+    cancelled: "<red> Conversazione annullata!"
+    input-number: "<yellow> Inserisci un numero nella chat."
+    input-seconds: "<yellow> Inserisci i secondi nella chat."
+    numeric-only: "<red> Il valore fornito [value] non è un numero!"
+    not-valid-value: "<red> Il numero fornito [value] non è valido. Deve essere maggiore di [min] e minore di [max]!"
+    data-removed: "<green> I biomi selezionati sono stati rimossi da [gamemode]."
+    confirm-deletion: "<yellow> Conferma che desideri eliminare [number] biomi con i nomi: [value]."
+    user-data-removed: "<green> Tutti i dati utente per [gamemode] sono stati cancellati dal database."
+    confirm-user-data-deletion: "<yellow> Conferma che desideri cancellare il database utente per [gamemode]."
+    all-data-removed: "<green> Tutti i dati del componente aggiuntivo per [gamemode] sono stati cancellati dal database."
+    confirm-all-data-deletion: "<yellow> Conferma che desideri cancellare tutti i dati del componente aggiuntivo per [gamemode]."
+    write-name: "<yellow> Scrivi un nome nella chat."
+    new-object-created: "<green> Nuovo oggetto per [gamemode] è stato creato."
+    object-already-exists: "<red> L'oggetto <gray> [id] <red> esiste già. Scegli un nome diverso."
+    name-changed: "<green> Successo, il nome è stato aggiornato."
+    write-description: "<yellow> Inserisci una nuova descrizione nella chat e 'quit' su una riga a se per completare."
+    description-changed: "<green> Successo, la descrizione è stata aggiornata."
+    write-permissions: "<yellow> Inserisci i permessi richiesti, uno per riga nella chat, e 'quit' su una riga a se per completare."
+    permissions-changed: "<green> Successo, i permessi sono stati aggiornati."
+    start-downloading: "<green> Inizio del download e dell'importazione della Libreria Biomi."
+    written-text: "<green> Testo di Input:"
+    confirm-data-replacement: "<yellow> Conferma che desideri sostituire i dati attuali con quelli nuovi."
+    new-data-imported: "<green> Successo, i nuovi dati per [gamemode] sono stati importati."
+    exported-file-name: "<yellow> Inserisci un nome file per il file database esportato. (scrivi 'annulla' per uscire)"
+    database-export-completed: "<green> Successo, l'esportazione del database per [world] è stata completata. File [file] generato."
+    file-name-exist: "<red> Il file con nome '[id]' esiste. Impossibile sovrascrivere."
+    write-search: "<yellow> Scrivi un valore di ricerca. (scrivi 'annulla' per uscire)"
+    search-updated: "<green> Valore di ricerca aggiornato."
+    invalid-biome: "<red> Alcuni dati memorizzati in `[biome]`<reset><red> non sono validi."
+    confirm-biome-deletion: "<yellow> Conferma che desideri rimuovere [biome]<reset><yellow> da [gamemode]."
+    biome-removed: "[biome] <reset><green> è stato rimosso da [gamemode]."
+    confirm-island-data-deletion: "<yellow> Conferma che desideri rimuovere i dati dell'isola di [player]."
+    island-data-removed: "[player] <green> i dati dell'isola sono stati rimossi."
+    confirm-biome-data-deletion: "<yellow> Conferma che desideri rimuovere tutti i biomi da [gamemode]."
+    biome-data-removed: "Tutti i biomi sono stati rimossi da [gamemode]."
+    click-text-to-purchase: "<yellow> Hai sbloccato <reset> [biome]<reset><yellow>! Clicca qui per acquistarlo."
+    click-text-to-set: "<yellow> Hai sbloccato <reset> [biome]<reset><yellow>! Clicca qui per utilizzarlo."
+    click-text-to-purchase-other-world: "<yellow> Hai sbloccato <reset> [biome]<reset><yellow> in <reset> [gamemode]<reset><yellow>! Visita quel mondo per acquistarlo."
+    click-text-to-set-other-world: "<yellow> Hai sbloccato <reset> [biome]<reset><yellow> in <reset> [gamemode]<reset><yellow>! Visita quel mondo per utilizzarlo."
+  messages:
+    biome-not-unlocked: "[biome] <reset><red> non è sbloccato. Non puoi usarlo."
+    biome-not-purchased: "<red> Non puoi usare <reset> [biome] <reset><red>. Devi acquistarlo."
+    biome-cannot-be-unlocked: "<red> Non puoi sbloccare <reset> [biome] <reset><red>."
+    biome-already-purchased: "<red> Hai già acquistato <reset> [biome] <reset><red>."
+    island-level-not-reached: "[biome] <reset><red> richiede di avere almeno il livello dell'isola: [number]."
+    missing-permission: "[biome] <reset><red> richiede di avere il permesso: [permission]."
+    no-credits-buy: "<red> Non hai abbastanza crediti per acquistare <reset> [biome] <reset><red>. Costa [number]."
+    no-credits-buy-bank: "<red> Non hai abbastanza crediti nel tuo conto bancario per acquistare <reset> [biome] <reset><red>. Costa [number]."
+    no-items-buy: "<red> Non hai abbastanza oggetti per acquistare <reset> [biome] <reset><red>. Richiede [items]."
+    biome-purchased: "<yellow> Hai acquistato <reset> [biome]<reset><yellow>."
+    import-count: "<yellow> Importati [biomes] biomi e [bundles] bundle."
+    start-downloading: "<yellow> Inizio del download della libreria."
+    update-start: "<green> Inizio del cambio del bioma a [biome] <reset><green> in [number] chunk. <yellow> Tempo Stimato: [time] sec."
+    update-done: "<green> Completato il cambio del bioma a [biome]<reset><green>."
+    waiting: "<green> Aggiunta della modifica del bioma in coda. <yellow> Tempo di attesa stimato: [time] sec."
+    biome-already-unlocked: "[biome] <reset><yellow> è già sbloccato."
+    everything-already-bought: "<green> Hai già acquistato tutti i biomi per questa modalità di gioco."
+    skipping: "<green> Saltataggio del caricamento di <reset> [biome]<reset><green>."
+    overwriting: "<green> Sovrascrittura <reset> [biome] <reset><green> nella cache."
+    imported: "<green> Importato <reset> [biome] <reset><green> nella cache."
+    migrate-start: "<green> Inizio della migrazione al nuovo formato dati."
+    migrate-finish: "<green> Migrazione al nuovo formato dati completata."
+    migrate-valid: "<green> Tutti i dati sono validi. La migrazione non è necessaria."
+    bundle-loaded: "<green> Bundle <reset> [bundle] <green> caricato."
+    clear-queue: "<green> La coda dell'attività di aggiornamento del bioma per [gamemode] è stata cancellata."
+  errors:
+    no-island-data: "<red> L'isola non ha dati memorizzati."
+    no-biomes-admin: "<red> La Modalità di Gioco attuale non dispone di alcun bioma utilizzabile. Importa o crea biomi utilizzando /[command]"
+    no-biomes: "<red> La Modalità di Gioco attuale non dispone di alcun bioma utilizzabile."
+    no-rank: "<red> Non sei autorizzato a modificare il bioma su questa isola."
+    not-enough-level: "<red> Questo bioma richiede almeno il livello dell'isola [number]."
+    not-enough-money: "<red> Questa modifica del bioma costa [number]."
+    not-enough-money-bank: "<red> Il tuo conto bancario non ha abbastanza crediti. La modifica del bioma costa [number]."
+    not-enough-items: "<red> Questa modifica del bioma costa [items]."
+    admin-not-on-island: "<red> Non sei sull'isola di [user]."
+    incorrect-object: "<red> Impossibile trovare il bioma con il nome richiesto: [biome]"
+    missing-biome: "<red> Il nome del bioma non è specificato."
+    incorrect-mode: "<red> La modalità con nome '[mode]' non esiste."
+    incorrect-range: "<red> Il valore fornito '[number]' non è un numero valido."
+    no-file: "<red> Impossibile trovare [file] nella directory dei biomi."
+    no-load: "<red> Impossibile importare i biomi da [file]. Motivo: [description]"
+    not-a-gamemode-world: "<red> Il mondo [world] non è un mondo GameModeAddon."
+    file-exist: "<red> Il file con nome [file] esiste già. Scegli un nome diverso."
+    no-library-entries: "<red> Impossibile trovare alcuna voce di libreria valida."
+    not-unlocked: "<red> Non hai sbloccato questo bioma."
+    not-purchased: "<red> Non hai acquistato questo bioma."
+    timeout: "<red> La modifica del bioma ha esaurito il tempo. Probabilmente l'area selezionata era troppo grande o il server è occupato."
+    failed: "<red> Il server ha riscontrato alcuni problemi durante la modifica del bioma."
+    could-not-remove-money: "<red> Qualcosa è andato storto durante il ritiro del denaro."
+    could-not-remove-items: "<red> Qualcosa è andato storto durante il ritiro degli oggetti."
+    something-went-wrong: "<red> Qualcosa è andato storto. Impossibile farlo."
+protection:
+  flags:
+    BIOMES_ISLAND_PROTECTION:
+      name: "Controllo del bioma"
+      description: |-
+        <dark_purple><italic> Attiva/disattiva chi può modificare
+        <dark_purple><italic> il bioma dell'isola
+    BIOMES_WORLD_PROTECTION:
+      name: "Limitazione del bioma dell'isola"
+      description: |-
+        <dark_purple><italic> Attiva/disattiva il requisito
+        <dark_purple><italic> affinché i giocatori siano
+        <dark_purple><italic> sulla loro isola per
+        <dark_purple><italic> modificare il bioma.
+      hint: "<red> Devi essere sulla tua isola per modificare il bioma!"

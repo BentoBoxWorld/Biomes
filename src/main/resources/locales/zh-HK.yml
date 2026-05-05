@@ -1,0 +1,820 @@
+biomes:
+  commands:
+    # This section contains only admin commands translations.
+    admin:
+      main:
+        description: "主要生物群系管理指令"
+      import:
+        parameters: "<file>"
+        description: "匯入生物群系"
+        confirmation: "這將移除 [gamemode] 中現有的生物群系並從範本檔案匯入新的生物群系 - 請確認"
+      migrate:
+        description: "將生物群系儲存的資料遷移到新格式"
+      set:
+        description: "更改玩家的生物群系"
+        parameters: "<player> <biome-id> [mode] [size]"
+      unlock:
+        description: "不經檢查為玩家解鎖生物群系。在末尾添加 `true` 將其標記為已購買。"
+        parameters: "<player> <biome-id> [true]"
+      clear-queue:
+        description: "清空生物群系更新隊列"
+    # This section contains only player commands translations.
+    player:
+      main:
+        description: "打開生物群系選擇介面"
+      set:
+        description: "更改玩家的生物群系"
+        parameters: "<biome-id> [mode] [size]"
+      buy:
+        description: "購買要求的生物群系"
+        parameters: "<biome-id>"
+      info:
+        description: "發送一條聊天訊息，包含詳細的生物群系描述"
+        parameters: "<biome-id>"
+  gui:
+    titles:
+      player-panel: "<black><bold> 選擇生物群系"
+      buy-panel: "<black><bold> 購買生物群系"
+      advanced-panel: "<black><bold> 更新模式"
+      admin-panel: "<black><bold> 管理員介面"
+      settings: "<black><bold> 設定"
+      library: "<black><bold> 資料庫"
+      manage-biomes: "<black><bold> 管理生物群系"
+      manage-bundles: "<black><bold> 管理套件"
+      manage-islands: "<black><bold> 管理島嶼資料"
+      edit-biome: "<black><bold> 編輯生物群系: [biome]"
+      edit-bundle: "<black><bold> 編輯套件: [bundle]"
+      edit-island: "<black><bold> 編輯島嶼: [island]"
+      environment-selector: "<black><bold> 選擇環境"
+      biome-selector: "<black><bold> 選擇生物群系"
+      bundle-selector: "<black><bold> 選擇套件"
+      item-selector: "<black><bold> 選擇物品"
+    buttons:
+      island:
+        name: "<white><bold> 島嶼"
+        description: |-
+          <gray> 更改整個
+          <gray> 島嶼的生物群系。
+      chunk:
+        name: "<white><bold> 區塊"
+        description: |-
+          <gray> 在區塊中更改生物群系。
+      range:
+        name: "<white><bold> 範圍"
+        description: |-
+          <gray> 按範圍更改生物群系。
+      reduce:
+        name: "<white><bold> 減少"
+        description: |-
+          <gray> 減少 <yellow> [number]
+      increase:
+        name: "<white><bold> 增加"
+        description: |-
+          <gray> 增加 <yellow> [number]
+      accept:
+        name: "<white><bold> 應用更改"
+        description: |-
+          <gray> 將生物群系更改為 <yellow> [biome]
+
+          <gray> 更新模式: <yellow> [mode]
+          <gray> 更新範圍: <yellow> [number]
+      return:
+        name: "<white><bold> 返回"
+        description: |-
+          <gray> 返回上一個選單。
+      previous:
+        name: "<white><bold> 上一頁"
+        description: |-
+          <gray> 切換到第 <yellow> [number] <gray> 頁
+      next:
+        name: "<white><bold> 下一頁"
+        description: |-
+          <gray> 切換到第 <yellow> [number] <gray> 頁
+      quit:
+        name: "<white><bold> 退出"
+        description: |-
+          <gray> 退出介面。
+      save:
+        name: "<white><bold> 儲存"
+        description: |-
+          <gray> 儲存更改並返回。
+      cancel:
+        name: "<white><bold> 取消"
+        description: |-
+          <gray> 取消更改並返回。
+      search:
+        name: "<white><bold> 搜尋"
+        description: |-
+          <gray> 允許搜尋一個
+          <gray> 具有輸入文字
+          <gray> 值的元素。
+        search: "<aqua> 值: [value]"
+      buy:
+        name: "<white><bold> 購買"
+        description: |-
+          <gray> 購買新生物群系。
+      manage_islands:
+        name: "<white><bold> 管理島嶼"
+        description: |-
+          <gray> 允許管理島嶼
+          <gray> 資料。
+      manage_biomes:
+        name: "<white><bold> 管理生物群系"
+        description: |-
+          <gray> 允許管理生物群系
+          <gray> 資料。
+      manage_bundles:
+        name: "<white><bold> 管理套件"
+        description: |-
+          <gray> 允許管理套件
+          <gray> 資料。
+      settings:
+        name: "<white><bold> 設定"
+        description: |-
+          <gray> 允許更改一些
+          <gray> 插件設定。
+      import_template:
+        name: "<white><bold> 匯入範本"
+        description: |-
+          <gray> 匯入位於
+          <gray> 插件目錄內的範本
+          <gray> 檔案。
+      web_library:
+        name: "<white><bold> 網路資料庫"
+        description: |-
+          <gray> 訪問包含
+          <gray> 共享生物群系的網路
+          <gray> 資料庫。
+      export_from_database:
+        name: "<white><bold> 匯出資料庫"
+        description: |-
+          <gray> 將資料庫匯出
+          <gray> 到位於插件目錄中的
+          <gray> 單個檔案。
+      import_to_database:
+        name: "<white><bold> 匯入資料庫"
+        description: |-
+          <gray> 從位於插件
+          <gray> 目錄中的檔案匯入
+          <gray> 資料庫。
+      wipe_islands_data:
+        name: "<white><bold> 清除島嶼資料庫"
+        description: |-
+          <gray> 清除此遊戲模式下
+          <gray> 所有生物群系使用者資料。
+      wipe_biomes_data:
+        name: "<white><bold> 清除生物群系資料庫"
+        description: |-
+          <gray> 清除此遊戲模式下
+          <gray> 所有生物群系和套件資料。
+      add_biome:
+        name: "<white><bold> 新增生物群系"
+        description: |-
+          <gray> 建立新生物群系
+          <gray> 供玩家使用者可以使用
+          <gray> 透過使用者面板使用。
+      remove_biome:
+        name: "<white><bold> 移除生物群系"
+        description: |-
+          <gray> 從使用者面板移除
+          <gray> 選定的生物群系。
+        title: "<yellow> 選定的生物群系:"
+        value: "<yellow> - [biome]"
+      accept_selected:
+        name: "<white><bold> 接受已選項目"
+        description: |-
+          <gray> 接受選定的元素。
+        title: "<yellow> 選定的元素:"
+        element: "<yellow> - [element]"
+      environment_element:
+        name: "<white><bold> [environment]"
+        description: |-
+          <gray> [description]。
+      properties:
+        name: "<white><bold> 屬性"
+        description: |-
+          <gray> 檢視主要生物群系屬性。
+      change_properties:
+        name: "<white><bold> 更改屬性"
+        description: |-
+          <gray> 檢視更改生物群系屬性。
+      unlock_properties:
+        name: "<white><bold> 解鎖屬性"
+        description: |-
+          <gray> 檢視解鎖生物群系屬性。
+      biome:
+        name: "<white><bold> [biome]"
+        description: |-
+          <gray> Minecraft 生物群系類型。
+        value: "<gray> 生物群系 ID: <yellow> [id]"
+      name:
+        name: "<white><bold> 顯示名稱"
+        description: |-
+          <gray> 生物群系的顯示名稱。
+          <gray> 支援色彩代碼。
+        value: "<gray> 目前值: <reset> [name]"
+      deployed:
+        name: "<white><bold> 已部署"
+        description: |-
+          <gray> 切換生物群系是否
+          <gray> 玩家可以存取
+          <gray> 或否。
+        enabled: "<dark_green> 已啟用"
+        disabled: "<red> 已停用"
+      environment:
+        name: "<white><bold> 維度"
+        description: |-
+          <gray> 允許限制生物群系
+          <gray> 在哪個維度中
+          <gray> 可以被應用。
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      icon:
+        name: "<white><bold> 圖示"
+        description: |-
+          <gray> 允許更改此生物群系
+          <gray> 的圖示。
+      order:
+        name: "<white><bold> 順序"
+        description: |-
+          <gray> 允許更改
+          <gray> 物件的順序。
+          <gray> 具有相同數字的物件
+          <gray> 將按照其唯一 ID
+          <gray> 名稱順序排列。
+        value: "<gray> 目前順序: <yellow> [number]"
+      description:
+        name: "<white><bold> 描述"
+        description: |-
+          <gray> 生物群系的特定
+          <gray> 描述。色彩代碼
+          <gray> 必須應用於它。
+        value: "<yellow> 目前描述:"
+        none: "<gray> 描述未設定。"
+      unlock_permissions:
+        name: "<white><bold> 權限"
+        description: |-
+          <gray> 允許更改此
+          <gray> 生物群系的解鎖權限
+          <gray> 以便可以存取。
+        title: "<yellow> 權限: "
+        element: " <dark_gray> - [permission]"
+        none: "<gray> 權限未設定。"
+      unlock_cost:
+        name: "<white><bold> 成本"
+        description: |-
+          <gray> 允許更改解鎖此
+          <gray> 生物群系的成本。
+        value: "<gray> 目前成本: <yellow> [number]"
+      unlock_items:
+        name: "<white><bold> 物品"
+        description: |-
+          <gray> 允許更改此生物群系
+          <gray> 的解鎖物品。
+        title: "<yellow> 物品: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> 物品未設定。"
+      unlock_level:
+        name: "<white><bold> 等級"
+        description: |-
+          <gray> 允許更改解鎖此
+          <gray> 生物群系所需的
+          <gray> 島嶼等級。
+        value: "<gray> 目前等級: <yellow> [number]"
+      change_cost:
+        name: "<white><bold> 成本"
+        description: |-
+          <gray> 允許更改應用此
+          <gray> 生物群系的成本。
+        value: "<gray> 目前成本: <yellow> [number]"
+      change_items:
+        name: "<white><bold> 物品"
+        description: |-
+          <gray> 允許更改應用此
+          <gray> 生物群系的物品。
+        title: "<yellow> 物品: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> 物品未設定。"
+      change_type:
+        name: "<white><bold> [type]"
+        description: |-
+          <gray> 允許更改應用此
+          <gray> 生物群系的成本類型。
+        static:
+          name: "靜態值"
+          description: |-
+            <gray> 生物群系更改成本
+            <gray> 不會改變。
+        per_block:
+          name: "每個方塊"
+          description: |-
+            <gray> 生物群系更改成本
+            <gray> 按每個方塊計算。
+        per_usage:
+          name: "每次使用"
+          description: |-
+            <gray> 生物群系更改成本
+            <gray> 在每次使用後
+            <gray> 增加。
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      change_increment:
+        name: "<white><bold> 增量"
+        description: |-
+          <gray> 允許更改每次
+          <gray> 使用的增量。
+        value: "<gray> 目前值: <yellow> [number]"
+      biome-filter:
+        name: "<white><bold> [filter]"
+        description: |-
+          <gray> 基於 Minecraft Wiki
+          <gray> 的生物群系篩選。
+        lush: "茂盛生物群系"
+        dry: "乾燥生物群系"
+        cold: "寒冷生物群系"
+        snowy: "雪地生物群系"
+        aquatic: "海洋生物群系"
+        nether: "下界生物群系"
+        the_end: "末地生物群系"
+        neutral: "中立生物群系"
+        unused: "未使用生物群系"
+        warm: "溫暖生物群系"
+        cave: "洞穴生物群系"
+        temperate: "溫帶生物群系"
+      protection_range:
+        name: "<white><bold> 保護範圍"
+        description: |-
+          <gray> 允許限制生物群系
+          <gray> 更改只在島嶼保護
+          <gray> 範圍內，而不是在
+          <gray> 整個島嶼上更改。
+        enabled: "<dark_green> 已啟用"
+        disabled: "<red> 已停用"
+      reset:
+        name: "<white><bold> 主人更換時重置"
+        description: |-
+          <gray> 允許啟用在島嶼
+          <gray> 更改所有者時強制將
+          <gray> 生物群系更改為預設生物群系，
+          <gray> 且新所有者不具有目前
+          <gray> 生物群系權限。
+        enabled: "<dark_green> 已啟用"
+        disabled: "<red> 已停用"
+      cool_down:
+        name: "<white><bold> 生物群系冷卻時間"
+        description: |-
+          <gray> 允許設定秒數
+          <gray> 玩家可以再次
+          <gray> 更改生物群系之間。
+        value: "<gray> 目前冷卻時間: <yellow> [number]"
+        disabled: "<yellow> 冷卻時間已停用。"
+      default_size:
+        name: "<white><bold> 預設範圍"
+        description: |-
+          <gray> 允許設定數字
+          <gray> 在玩家更改生物群系
+          <gray> 而不寫入時使用。
+        value: "<gray> 預設範圍: <yellow> [number]"
+      default_mode:
+        name: "<white><bold> 預設更新模式"
+        description: |-
+          <gray> 允許設定當玩家
+          <gray> 未提供時的預設
+          <gray> 更新模式。
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      unlock_notify:
+        name: "<white><bold> 解鎖時通知"
+        description: |-
+          <gray> 當使用者解鎖
+          <gray> 新生物群系時，
+          <gray> 將向其發送訊息。
+        enabled: |-
+          <aqua> 解鎖時通知為 <green> 已啟用 <aqua>。
+        disabled: |-
+          <aqua> 解鎖時通知為 <red> 已停用 <aqua>。
+      change_timeout:
+        name: "<white><bold> 更改超時"
+        description: |-
+          <gray> 允許設定幾分鐘
+          <gray> 後生物群系更新
+          <gray> 將被終止。
+          <gray> 在非常大的島嶼或
+          <gray> 載入量很大的伺服器上可能發生。
+        value: "<gray> 超時於: <yellow> [number] 分"
+      parallel_updates:
+        name: "<white><bold> 並行更新"
+        description: |-
+          <gray> 允許設定多少
+          <gray> 生物群系更新可能
+          <gray> 同時發生。其他的
+          <gray> 將被放入隊列。
+        value: |-
+          <gray> 目前值: <yellow>[number]<gray>。
+      use_bank:
+        name: "<white><bold> 使用銀行帳戶"
+        description: |-
+          <gray> 切換所有由 Biomes
+          <gray> 插件進行的付款是否
+          <gray> 將使用銀行插件
+          <gray> 島嶼帳戶。
+        enabled: |-
+          <aqua> 使用銀行帳戶 <green> 已啟用 <aqua>。
+        disabled: |-
+          <aqua> 使用銀行帳戶 <red> 已停用 <aqua>。
+        missing: |-
+          <red> 未安裝銀行插件。
+      visibility:
+        name: "<white><bold> 生物群系可見性"
+        description: |-
+          <gray> 允許更改玩家生物群系
+          <gray> 在生物群系選擇面板中
+          <gray> 的可見性。
+        enabled: "<dark_green>"
+        disabled: "<red>"
+        all: "所有生物群系"
+        deployed: "已部署生物群系"
+        accessible: "可存取生物群系"
+        toggleable: "可切換"
+      is_online:
+        name: "<white><bold> 線上玩家島嶼"
+        description: |-
+          <gray> 列出所有至少有一名
+          <gray> 成員在線的島嶼。
+      all_islands:
+        name: "<white><bold> 所有島嶼"
+        description: |-
+          <gray> 目前遊戲模式中
+          <gray> 建立的所有島嶼
+          <gray> 的列表。
+      island_name:
+        name: "<white><bold> [name]"
+        island-owner: "[player]"
+        unknown: "<red> 未知所有者"
+        description: |-
+          [owner]
+          [members]
+          [id]
+        owner: "<gray> 所有者: <yellow> [player]"
+        title: "<gray> 島嶼成員:"
+        element: " <gray> - <yellow> [player]"
+      change_biome:
+        name: "<white><bold> 更改生物群系"
+        description: |-
+          <gray> 按島嶼更改生物群系。
+      manage_data:
+        name: "<white><bold> 管理島嶼資料"
+        description: |-
+          <gray> 管理為特定
+          <gray> 島嶼儲存的資料。
+      clear_data:
+        name: "<white><bold> 清除島嶼資料"
+        description: |-
+          <gray> 清除為
+          <gray> 島嶼儲存的所有資料。
+      island_bundle:
+        name: "<white><bold> 島嶼套件"
+        description: |-
+          <gray> 指派給目前
+          <gray> 島嶼的套件。只有
+          <gray> 來自此套件的生物群系
+          <gray> 可以在島嶼上使用。
+        value: "<aqua> 套件: [bundle]"
+        overwritten: |-
+          <red> 所有者具有覆蓋
+          <red> 套件的權限。
+      owner_bundle:
+        name: "<white><bold> 所有者套件"
+        description: |-
+          <gray> 指派給目前島嶼
+          <gray> 所有者的套件。只有
+          <gray> 來自此套件的生物群系
+          <gray> 可以在島嶼上使用。
+          <gray> 給使用者指派的權限:
+          <gray><italic> '[gamemode].biomes.
+          <gray><italic> bundle.<bundle-id>'
+        value: "<aqua> 套件: [bundle]"
+      reset_to_default:
+        name: "<white><bold> 重置為預設值"
+        description: |-
+          <gray> 將所有島嶼值重置
+          <gray> 為設定中的預設值。
+      bundle_info:
+        name: "<white><bold> 常規資訊"
+        description: |-
+          <gray> 檢視常規套件
+          <gray> 資訊。
+      bundle_biomes:
+        name: "<white><bold> 管理生物群系"
+        description: |-
+          <gray> 管理指派給套件
+          <gray> 的生物群系。
+      bundle_name:
+        name: "<white><bold> 更改名稱"
+        description: |-
+          <gray> 更改套件顯示名稱。
+        value: "<yellow> 目前值: <reset> [bundle]"
+      bundle_icon:
+        name: "<white><bold> 更改圖示"
+        description: |-
+          <gray> 更改套件圖示。
+      bundle_description:
+        name: "<white><bold> 更改描述"
+        description: |-
+          <gray> 更改套件描述。
+        value: "<yellow> 目前值:"
+        none: "<red> 無描述"
+      bundle_permission:
+        name: "<white><bold> 套件權限"
+        description: |-
+          <gray> 必須添加到使用者
+          <gray> 的權限
+          <gray> 以強制此套件。
+        value: "<yellow> 權限: <white> [gamemode].biomes.bundle.[id]"
+      add_bundle_biome:
+        name: "<white><bold> 新增生物群系"
+        description: |-
+          <gray> 將生物群系指派
+          <gray> 到此套件。
+        title: "<aqua> 選定的生物群系:"
+        value: "<aqua> - [biome]"
+      remove_bundle_biome:
+        name: "<white><bold> 移除生物群系"
+        description: |-
+          <gray> 從此套件移除
+          <gray> 生物群系。
+        title: "<aqua> 選定的生物群系:"
+        value: "<aqua> - [biome]"
+      create_bundle:
+        name: "<white><bold> 建立套件"
+        description: |-
+          <gray> 為此遊戲模式
+          <gray> 建立新套件。
+      delete_bundle:
+        name: "<white><bold> 移除套件"
+        description: |-
+          <gray> 從此遊戲模式
+          <gray> 完全移除套件。
+        title: "<aqua> 選定的套件:"
+        value: "<aqua> - [bundle]"
+      download:
+        name: "<white><bold> 下載"
+        description: |-
+          <gray> 下載網路資料庫。
+        enabled: "<dark_green> 清除快取"
+        disabled: "<red> 不清除快取"
+    tips:
+      click-to-filter: "<yellow> 按一下 <gray> 以篩選。"
+      click-to-manage: "<yellow> 按一下 <gray> 以管理。"
+      click-to-clear: "<yellow> 按一下 <gray> 以清除。"
+      click-to-change-biome: "<yellow> 按一下 <gray> 以更改生物群系。"
+      click-to-view: "<yellow> 按一下 <gray> 以檢視。"
+      click-to-select: "<yellow> 按一下 <gray> 以選擇。"
+      click-to-choose: "<yellow> 按一下 <gray> 以選擇。"
+      click-to-complete: "<yellow> 按一下 <gray> 以完成。"
+      left-click-to-accept: "<yellow> 左鍵按一下 <gray> 以應用。"
+      right-click-to-write: "<yellow> 右鍵按一下 <gray> 以寫入。"
+      click-to-reduce: "<yellow> 按一下 <gray> 以減少。"
+      click-to-increase: "<yellow> 按一下 <gray> 以增加。"
+      click-to-return: "<yellow> 按一下 <gray> 以返回。"
+      click-to-quit: "<yellow> 按一下 <gray> 以退出。"
+      click-to-wipe: "<yellow> 按一下 <gray> 以擦除。"
+      left-click-to-wipe: "<yellow> 左鍵按一下 <gray> 以擦除。"
+      right-click-to-switch: "<yellow> 右鍵按一下 <gray> 以切換。"
+      click-to-open: "<yellow> 按一下 <gray> 以開啟。"
+      click-to-export: "<yellow> 按一下 <gray> 以匯出。"
+      click-to-create: "<yellow> 按一下 <gray> 以建立。"
+      left-click-to-open: "<yellow> 左鍵按一下 <gray> 以開啟。"
+      right-click-to-reset-all: "<yellow> 右鍵按一下 <gray> 以擦除全部。"
+      click-to-toggle: "<yellow> 按一下 <gray> 以切換。"
+      click-to-change: "<yellow> 按一下 <gray> 以更改。"
+      shift-click-to-reset: "<yellow> Shift + 按一下 <gray> 以重置。"
+      click-to-add: "<yellow> 按一下 <gray> 以新增。"
+      click-to-remove: "<yellow> 按一下 <gray> 以移除。"
+      left-click-to-cycle: "<yellow> 左鍵按一下 <gray> 以向下循環。"
+      right-click-to-cycle: "<yellow> 右鍵按一下 <gray> 以向上循環。"
+      click-to-edit: "<yellow> 按一下 <gray> 以編輯。"
+      left-click-to-download: "<yellow> 左鍵按一下 <gray> 以下載。"
+      right-click-to-toggle: "<yellow> 右鍵按一下 <gray> 以切換。"
+      click-to-install: "<yellow> 按一下 <gray> 以安裝。"
+      click-to-reset-all: "<yellow> 按一下 <gray> 以重置全部。"
+      right-click-to-select: "<yellow> 右鍵按一下 <gray> 以選擇。"
+      right-click-to-deselect: "<yellow> 右鍵按一下 <gray> 以取消選擇。"
+      left-click-to-choose: "<yellow> 左鍵按一下 <gray> 以選擇。"
+      click-to-buy: "<yellow> 按一下 <gray> 以購買。"
+      click-to-cancel: "<yellow> 按一下 <gray> 以取消。"
+      click-to-save: "<yellow> 按一下 <gray> 以儲存。"
+      click-to-deselect: "<yellow> 按一下 <gray> 以取消選擇。"
+      click-on-item: |-
+        <yellow> 按一下 <gray> 您庫存中的
+        <gray> 物品。
+      left-click-to-edit: "<yellow> 左鍵按一下 <gray> 以編輯。"
+      right-click-to-clear: "<yellow> 右鍵按一下 <gray> 以清除。"
+      click-to-previous: "<yellow> 按一下 <gray> 以檢視上一頁。"
+      click-to-next: "<yellow> 按一下 <gray> 以檢視下一頁。"
+      select-before: "<yellow> 選擇 <gray> 項目後繼續。"
+      click-to-apply: "<yellow> 按一下 <gray> 以應用。"
+      right-click-to-open: "<yellow> 右鍵按一下 <gray> 以開啟。"
+      click-to-perform: "<yellow> 按一下 <gray> 以執行。"
+      left-click-to-apply: "<yellow> 左鍵按一下 <gray> 以應用。"
+      right-click-to-unlock: "<yellow> 右鍵按一下 <gray> 以解鎖。"
+      right-click-to-buy: "<yellow> 右鍵按一下 <gray> 以購買。"
+      right-click-to-change: "<yellow> 右鍵按一下 <gray> 以更改。"
+    descriptions:
+      update-mode:
+        island: "島嶼模式"
+        chunk: "區塊模式"
+        range: "範圍模式"
+      selected: "<dark_green> 已選擇"
+      island-owner: "[player]"
+      unknown: "<yellow> 未知"
+      biome:
+        lore: |-
+          [description]
+          [biome]
+          [unlock]
+          [change]
+        original: |-
+          <gray> 生物群系: <yellow> [biome]
+        unlock:
+          lore: |-
+            [items]
+            [money]
+            [level]
+            [permissions]
+          money: |-
+            <gray> 解鎖成本: <yellow> [number]
+          level: |-
+            <gray> 需要達到 <yellow> [number]
+            <gray> 島嶼等級。
+          permission-single: |-
+            <gray> 缺少權限: <red> [permission]
+          permissions-title: |-
+            <red> 缺少權限:
+          permissions-list: |-
+            <red> - [permission]
+          item-single: |-
+            <gray> 解鎖物品: [color] [number] x [item]
+          item-title: |-
+            <gray> 解鎖物品:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          missing: "<red>"
+          has: "<yellow>"
+        change:
+          lore: |-
+            [items]
+            [money]
+            [mode]
+            [usage]
+          mode:
+            per_block: |-
+              <aqua><italic> 生物群系成本
+              <aqua><italic> 按每個更改的方塊計算。
+            per_usage: |-
+              <aqua><italic> 更改生物群系會增加
+              <aqua><italic> 其價格。
+            static: |-
+              <aqua><italic> 標準更改價格。
+          money: |-
+            <gray> 成本: <yellow> [number]
+          item-single: |-
+            <gray> 物品: [color] [number] x [item]
+          item-title: |-
+            <gray> 物品:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          number-of-usage: |-
+            |<gray> 此生物群系已被
+            <gray> 應用 <yellow> [number] <reset><gray> 次。
+          missing: "<red>"
+          has: "<yellow>"
+      bundle:
+        lore: |-
+          [description]
+          [permission]
+          [biomes]
+        permission: |-
+          <gray> 必須指派給
+          <gray> 玩家的權限:
+          <gray><italic> [gamemode].biomes.bundle.[id]
+        title: "<gray> 套件生物群系: "
+        value: "<gray> - [biome]"
+        no-biomes: "<red> 沒有指派生物群系"
+      library:
+        author: '<gray> 由 <yellow> [author] <gray> 製作'
+        version: '<gray> 使用 Biomes <yellow> [version] <gray> 製作'
+        lang: '<gray> 語言: <yellow> [lang]'
+        gamemode: '<gray> 主要用於 <yellow> [gamemode]'
+  conversations:
+    prefix: "<bold><gold> [BentoBox]: <reset>"
+    confirm-string: "是, 開, 是的, 確認, y, 有效, 正確"
+    deny-string: "否, 關, 不是, 拒絕, n, 無效, 不正確"
+    cancel-string: "取消"
+    exit-string: "取消, 退出, quit"
+    cancelled: "<red> 對話已取消!"
+    input-number: "<yellow> 請在聊天中輸入一個數字。"
+    input-seconds: "<yellow> 請在聊天中輸入秒數。"
+    numeric-only: "<red> 給定的 [value] 不是數字!"
+    not-valid-value: "<red> 給定的數字 [value] 無效。它必須大於 [min] 且小於 [max]!"
+    data-removed: "<green> 選定的生物群系已從 [gamemode] 中移除。"
+    confirm-deletion: "<yellow> 請確認您要刪除 [number] 個名稱為 [value] 的生物群系。"
+    user-data-removed: "<green> [gamemode] 的所有使用者資料已從資料庫中清除。"
+    confirm-user-data-deletion: "<yellow> 請確認您要清除 [gamemode] 的使用者資料庫。"
+    all-data-removed: "<green> [gamemode] 的所有插件資料已從資料庫中清除。"
+    confirm-all-data-deletion: "<yellow> 請確認您要清除 [gamemode] 的插件資料。"
+    write-name: "<yellow> 請在聊天中寫入一個名稱。"
+    new-object-created: "<green> 為 [gamemode] 建立了新物件。"
+    object-already-exists: "<red> 物件 <gray> [id] <red> 已存在。選擇不同的名稱。"
+    name-changed: "<green> 成功，名稱已更新。"
+    write-description: "<yellow> 請在聊天中輸入新描述，並在單獨的行上輸入 'quit' 以完成。"
+    description-changed: "<green> 成功，描述已更新。"
+    write-permissions: "<yellow> 請在聊天中輸入所需權限，每行一個，並在單獨的行上輸入 'quit' 以完成。"
+    permissions-changed: "<green> 成功，權限已更新。"
+    start-downloading: "<green> 開始下載並匯入生物群系資料庫。"
+    written-text: "<green> 輸入文字:"
+    confirm-data-replacement: "<yellow> 請確認您要使用新資料替換目前資料。"
+    new-data-imported: "<green> 成功，[gamemode] 的新資料已匯入。"
+    exported-file-name: "<yellow> 請輸入匯出資料庫檔案的檔案名稱。(寫 'cancel' 退出)"
+    database-export-completed: "<green> 成功，[world] 的資料庫匯出已完成。產生檔案 [file]。"
+    file-name-exist: "<red> 名稱為 '[id]' 的檔案已存在。無法覆蓋。"
+    write-search: "<yellow> 請寫入搜尋值。(寫 'cancel' 退出)"
+    search-updated: "<green> 搜尋值已更新。"
+    invalid-biome: "<red> 儲存的 `[biome]`<reset><red> 中的某些資料無效。"
+    confirm-biome-deletion: "<yellow> 請確認您要從 [gamemode] 中移除 [biome]<reset><yellow>。"
+    biome-removed: "[biome] <reset><green> 已從 [gamemode] 中移除。"
+    confirm-island-data-deletion: "<yellow> 請確認您要移除 [player] 島嶼資料。"
+    island-data-removed: "[player] <green> 島嶼資料已移除。"
+    confirm-biome-data-deletion: "<yellow> 請確認您要從 [gamemode] 中移除所有生物群系。"
+    biome-data-removed: "所有生物群系已從 [gamemode] 中移除。"
+    click-text-to-purchase: "<yellow> 您已解鎖 <reset> [biome]<reset><yellow>! 按一下此處購買。"
+    click-text-to-set: "<yellow> 您已解鎖 <reset> [biome]<reset><yellow>! 按一下此處使用。"
+    click-text-to-purchase-other-world: "<yellow> 您已在 <reset> [gamemode]<reset><yellow> 中解鎖 <reset> [biome]<reset><yellow>! 訪問該世界購買。"
+    click-text-to-set-other-world: "<yellow> 您已在 <reset> [gamemode]<reset><yellow> 中解鎖 <reset> [biome]<reset><yellow>! 訪問該世界使用。"
+  messages:
+    biome-not-unlocked: "[biome] <reset><red> 未被解鎖。您無法使用它。"
+    biome-not-purchased: "<red> 您無法使用 <reset> [biome] <reset><red>。您需要購買它。"
+    biome-cannot-be-unlocked: "<red> 您無法解鎖 <reset> [biome] <reset><red>。"
+    biome-already-purchased: "<red> 您已購買 <reset> [biome] <reset><red>。"
+    island-level-not-reached: "[biome] <reset><red> 要求島嶼等級至少為: [number]。"
+    missing-permission: "[biome] <reset><red> 要求擁有權限: [permission]。"
+    no-credits-buy: "<red> 您沒有足夠的信用購買 <reset> [biome] <reset><red>。它費用 [number]。"
+    no-credits-buy-bank: "<red> 您的銀行帳戶中沒有足夠的信用購買 <reset> [biome] <reset><red>。它費用 [number]。"
+    no-items-buy: "<red> 您沒有足夠的物品購買 <reset> [biome] <reset><red>。它需要 [items]。"
+    biome-purchased: "<yellow> 您已購買 <reset> [biome]<reset><yellow>。"
+    import-count: "<yellow> 已匯入 [biomes] 個生物群系和 [bundles] 個套件。"
+    start-downloading: "<yellow> 開始下載資料庫。"
+    update-start: "<green> 開始將生物群系更改為 [biome] <reset><green> 在 [number] 個區塊中。<yellow> 估計時間: [time] 秒。"
+    update-done: "<green> 完成將生物群系更改為 [biome]<reset><green>。"
+    waiting: "<green> 已將生物群系更改添加到隊列中。<yellow> 估計等待時間: [time] 秒。"
+    biome-already-unlocked: "[biome] <reset><yellow> 已被解鎖。"
+    everything-already-bought: "<green> 您已購買此遊戲模式的所有生物群系。"
+    skipping: "<green> 跳過載入 <reset> [biome]<reset><green>。"
+    overwriting: "<green> 在快取中覆蓋 <reset> [biome] <reset><green>。"
+    imported: "<green> 在快取中匯入 <reset> [biome] <reset><green>。"
+    migrate-start: "<green> 開始遷移到新資料格式。"
+    migrate-finish: "<green> 遷移到新資料格式已完成。"
+    migrate-valid: "<green> 所有資料有效。不需要遷移。"
+    bundle-loaded: "<green> 套件 <reset> [bundle] <green> 已載入。"
+    clear-queue: "<green> [gamemode] 的生物群系更改任務隊列已清除。"
+  errors:
+    no-island-data: "<red> 島嶼沒有任何儲存的資料。"
+    no-biomes-admin: "<red> 目前遊戲模式沒有任何可用生物群系。請使用 /[command] 匯入或建立生物群系"
+    no-biomes: "<red> 目前遊戲模式沒有任何可用生物群系。"
+    no-rank: "<red> 您不被允許在此島嶼上更改生物群系。"
+    not-enough-level: "<red> 此生物群系需要至少島嶼等級 [number]。"
+    not-enough-money: "<red> 此生物群系更改費用 [number]。"
+    not-enough-money-bank: "<red> 您的銀行帳戶沒有足夠的信用。生物群系更改費用 [number]。"
+    not-enough-items: "<red> 此生物群系更改費用 [items]。"
+    admin-not-on-island: "<red> 您不在 [user] 的島嶼上。"
+    incorrect-object: "<red> 找不到要求名稱的生物群系: [biome]"
+    missing-biome: "<red> 未指定生物群系名稱。"
+    incorrect-mode: "<red> 名稱為 '[mode]' 的模式不存在。"
+    incorrect-range: "<red> 給定值 '[number]' 不是有效數字。"
+    no-file: "<red> 在生物群系目錄中找不到 [file]。"
+    no-load: "<red> 無法從 [file] 匯入生物群系。原因: [description]"
+    not-a-gamemode-world: "<red> 世界 [world] 不是遊戲模式插件世界。"
+    file-exist: "<red> 名稱為 [file] 的檔案已存在。選擇不同的名稱。"
+    no-library-entries: "<red> 找不到任何有效的資料庫項目。"
+    not-unlocked: "<red> 您尚未解鎖此生物群系。"
+    not-purchased: "<red> 您尚未購買此生物群系。"
+    timeout: "<red> 生物群系更改超時。可能選定的區域太大或伺服器忙碌。"
+    failed: "<red> 伺服器在更改生物群系時遇到問題。"
+    could-not-remove-money: "<red> 提款時出現問題。"
+    could-not-remove-items: "<red> 移除物品時出現問題。"
+    something-went-wrong: "<red> 出現問題。無法完成。"
+protection:
+  flags:
+    BIOMES_ISLAND_PROTECTION:
+      name: "生物群系控制"
+      description: |-
+        <dark_purple><italic> 切換誰可以更改
+        <dark_purple><italic> 島嶼生物群系
+    BIOMES_WORLD_PROTECTION:
+      name: "生物群系島嶼限制"
+      description: |-
+        <dark_purple><italic> 切換玩家需要
+        <dark_purple><italic> 在其島嶼上的
+        <dark_purple><italic> 要求以更改
+        <dark_purple><italic> 生物群系。
+      hint: "<red> 您必須在島嶼上才能更改生物群系!"

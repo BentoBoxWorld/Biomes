@@ -7,8 +7,10 @@ package world.bentobox.biomes.tasks;
 
 
 import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
@@ -31,6 +33,22 @@ import world.bentobox.biomes.utils.Utils;
 public class BiomeUpdateTask
 {
     /**
+     * Set of ocean-related biomes that should be skipped when change-ocean-biomes is disabled.
+     */
+    private static final Set<Biome> OCEAN_BIOMES = Set.of(
+        Biome.OCEAN,
+        Biome.WARM_OCEAN,
+        Biome.LUKEWARM_OCEAN,
+        Biome.COLD_OCEAN,
+        Biome.FROZEN_OCEAN,
+        Biome.DEEP_OCEAN,
+        Biome.DEEP_LUKEWARM_OCEAN,
+        Biome.DEEP_COLD_OCEAN,
+        Biome.DEEP_FROZEN_OCEAN
+    );
+
+
+    /**
      * Default Update task constructor.
      *
      * @param addon BiomeAddon object.
@@ -50,6 +68,44 @@ public class BiomeUpdateTask
         this.result = new CompletableFuture<>();
 
         this.processCounter = new AtomicInteger(0);
+        this.cancelled = new AtomicBoolean(false);
+    }
+
+
+    // ---------------------------------------------------------------------
+    // Section: Island ID
+    // ---------------------------------------------------------------------
+
+
+    /**
+     * Sets the unique ID of the island this task is associated with.
+     *
+     * @param islandId the island unique ID
+     */
+    public void setIslandId(String islandId)
+    {
+        this.islandId = islandId;
+    }
+
+
+    /**
+     * Gets the unique ID of the island this task is associated with.
+     *
+     * @return the island unique ID, or {@code null} if not set
+     */
+    public String getIslandId()
+    {
+        return this.islandId;
+    }
+
+
+    /**
+     * Cancels this biome update task.
+     * Sets the cancelled flag so that ongoing processing stops at the next chunk boundary.
+     */
+    public void cancel()
+    {
+        this.cancelled.set(true);
     }
 
 
@@ -89,6 +145,14 @@ public class BiomeUpdateTask
             if (!Util.isPaper() && !Bukkit.isPrimaryThread())
             {
                 this.addon.logError("scanChunk not on Primary Thread!");
+            }
+
+            // If the task was cancelled, stop processing immediately.
+            if (this.cancelled.get())
+            {
+                updateQueue.getProcessStartMap().remove(this);
+                this.result.complete(UpdateQueue.Result.FAILED);
+                return;
             }
 
             long runTime = System.currentTimeMillis() - updateQueue.getProcessStartMap().get(this);
@@ -192,6 +256,14 @@ public class BiomeUpdateTask
      */
     private void runBiomeChange(ChunkData chunkData, Chunk chunk, CompletableFuture<Boolean> completed)
     {
+        if (this.cancelled.get())
+        {
+            completed.complete(false);
+            return;
+        }
+
+        boolean changeOceanBiomes = this.addon.getSettings().isChangeOceanBiomes();
+
         for (int x = chunkData.minX();
                 x <= chunkData.maxX(); x += 4)
         {
@@ -201,6 +273,12 @@ public class BiomeUpdateTask
                 for (int y = chunkData.minY();
                         y <= chunkData.maxY(); y += 4)
                 {
+                    // Skip ocean biomes if the setting is disabled.
+                    if (!changeOceanBiomes && OCEAN_BIOMES.contains(this.world.getBiome(x, y, z)))
+                    {
+                        continue;
+                    }
+
                     // Biome should not be changed in Greenhouses.
                     if (!this.addon.getAddonManager().hasGreenhouseInLocation(this.world, x, y, z))
                     {
@@ -427,6 +505,12 @@ public class BiomeUpdateTask
     private final AtomicInteger processCounter;
 
     /**
+     * Flag indicating this task has been cancelled.
+     * When set to {@code true}, processing stops at the next chunk boundary.
+     */
+    private final AtomicBoolean cancelled;
+
+    /**
      * Instance of biome that is required to be changed.
      */
     private final Biome biome;
@@ -455,4 +539,9 @@ public class BiomeUpdateTask
      * The Number of chunks.
      */
     private int numberOfChunks;
+
+    /**
+     * The unique ID of the island associated with this task.
+     */
+    private String islandId;
 }

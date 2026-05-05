@@ -1,0 +1,829 @@
+biomes:
+  commands:
+    # Dieser Abschnitt enthält nur Übersetzungen für Admin-Befehle.
+    admin:
+      main:
+        description: "Hauptbefehl des Biom-Administrators"
+      import:
+        parameters: "<file>"
+        description: "importiert Biome"
+        confirmation: "Dies wird vorhandene Biome aus [gamemode] entfernen und neue Biome aus der Vorlagendatei importieren - bitte bestätigen Sie"
+      migrate:
+        description: "migriert gespeicherte Biomendaten in das neue Format"
+      set:
+        description: "ändert das Biom für den Spieler"
+        parameters: "<player> <biome-id> [mode] [size]"
+      unlock:
+        description: "entsperrt das Biom für den Spieler ohne Überprüfung. Wenn Sie am Ende `true` hinzufügen, wird es als gekauft markiert."
+        parameters: "<player> <biome-id> [true]"
+      clear-queue:
+        description: "löscht die Biom-Update-Warteschlange"
+    # Dieser Abschnitt enthält nur Übersetzungen für Spielerbefehle.
+    player:
+      main:
+        description: "öffnet die GUI zur Biomauswahl"
+      set:
+        description: "ändert das Biom für den Spieler"
+        parameters: "<biome-id> [mode] [size]"
+      buy:
+        description: "kauft das angeforderte Biom"
+        parameters: "<biome-id>"
+      info:
+        description: "sendet eine Chatnachricht mit detaillierter Biombeschreibung"
+        parameters: "<biome-id>"
+  gui:
+    titles:
+      player-panel: "<black><bold> Biom Wählen"
+      buy-panel: "<black><bold> Biom Kaufen"
+      advanced-panel: "<black><bold> Aktualisierungsmodus"
+      # Alle Titel unter diesem Kommentar sind für Admin-Menüs.
+      admin-panel: "<black><bold> Admin GUI"
+      settings: "<black><bold> Einstellungen"
+      library: "<black><bold> Bibliothek"
+      manage-biomes: "<black><bold> Biome Verwalten"
+      manage-bundles: "<black><bold> Bündel Verwalten"
+      manage-islands: "<black><bold> Inseldaten Verwalten"
+      edit-biome: "<black><bold> Biom Bearbeiten: [biome]"
+      edit-bundle: "<black><bold> Bündel Bearbeiten: [bundle]"
+      edit-island: "<black><bold> Insel Bearbeiten: [island]"
+      environment-selector: "<black><bold> Umgebung Wählen"
+      biome-selector: "<black><bold> Biom Wählen"
+      bundle-selector: "<black><bold> Bündel Wählen"
+      item-selector: "<black><bold> Gegenstände Wählen"
+    buttons:
+      island:
+        name: "<white><bold> Insel"
+        description: |-
+          <gray> Ändert das Biom auf der
+          <gray> gesamten Insel.
+      chunk:
+        name: "<white><bold> Chunk"
+        description: |-
+          <gray> Ändert das Biom in Chunks.
+      range:
+        name: "<white><bold> Bereich"
+        description: |-
+          <gray> Ändert das Biom nach Bereich.
+      reduce:
+        name: "<white><bold> Verringern"
+        description: |-
+          <gray> Um <yellow> [number] verringern
+      increase:
+        name: "<white><bold> Erhöhen"
+        description: |-
+          <gray> Um <yellow> [number] erhöhen
+      accept:
+        name: "<white><bold> Änderung Anwenden"
+        description: |-
+          <gray> Ändert das Biom zu <yellow> [biome]
+
+          <gray> Aktualisierungsmodus: <yellow> [mode]
+          <gray> Aktualisierungsbereich: <yellow> [number]
+      return:
+        name: "<white><bold> Zurück"
+        description: |-
+          <gray> Zum vorherigen Menü zurückkehren.
+      previous:
+        name: "<white><bold> Vorherige Seite"
+        description: |-
+          <gray> Zu Seite <yellow> [number] <gray> wechseln
+      next:
+        name: "<white><bold> Nächste Seite"
+        description: |-
+          <gray> Zu Seite <yellow> [number] <gray> wechseln
+      quit:
+        name: "<white><bold> Beenden"
+        description: |-
+          <gray> GUI verlassen.
+      save:
+        name: "<white><bold> Speichern"
+        description: |-
+          <gray> Änderungen speichern und zurückkehren.
+      cancel:
+        name: "<white><bold> Abbrechen"
+        description: |-
+          <gray> Änderungen verwerfen und zurückkehren.
+      search:
+        name: "<white><bold> Suchen"
+        description: |-
+          <gray> Ermöglicht die Suche nach
+          <gray> einem Element mit
+          <gray> eingegeben Text.
+        search: "<aqua> Wert: [value]"
+      buy:
+        name: "<white><bold> Kaufen"
+        description: |-
+          <gray> Ein neues Biom kaufen.
+      manage_islands:
+        name: "<white><bold> Inseln Verwalten"
+        description: |-
+          <gray> Ermöglicht die Verwaltung
+          <gray> von Inseldaten.
+      manage_biomes:
+        name: "<white><bold> Biome Verwalten"
+        description: |-
+          <gray> Ermöglicht die Verwaltung
+          <gray> von Biomdaten.
+      manage_bundles:
+        name: "<white><bold> Bündel Verwalten"
+        description: |-
+          <gray> Ermöglicht die Verwaltung
+          <gray> von Bündeldaten.
+      settings:
+        name: "<white><bold> Einstellungen"
+        description: |-
+          <gray> Ermöglicht das Ändern
+          <gray> einiger Add-on-Einstellungen.
+      import_template:
+        name: "<white><bold> Vorlage Importieren"
+        description: |-
+          <gray> Importiere die Vorlagendatei
+          <gray> im Add-on-Verzeichnis.
+      web_library:
+        name: "<white><bold> Web-Bibliothek"
+        description: |-
+          <gray> Greifen Sie auf die Web-
+          <gray> Bibliothek zu, die
+          <gray> freigegebene Biome enthält.
+      export_from_database:
+        name: "<white><bold> Datenbank Exportieren"
+        description: |-
+          <gray> Exportiere die Datenbank
+          <gray> in eine einzelne Datei im
+          <gray> Add-on-Verzeichnis.
+      import_to_database:
+        name: "<white><bold> Datenbank Importieren"
+        description: |-
+          <gray> Importiere eine Datenbank aus
+          <gray> einer Datei im Add-on-
+          <gray> Verzeichnis.
+      wipe_islands_data:
+        name: "<white><bold> Inseldatenbank Löschen"
+        description: |-
+          <gray> Löschen Sie alle Biom-Benutzerdaten
+          <gray> für diesen Spielmodus.
+      wipe_biomes_data:
+        name: "<white><bold> Biomdatenbank Löschen"
+        description: |-
+          <gray> Löschen Sie alle Biom- und Bündel-
+          <gray> daten für diesen Spielmodus.
+      add_biome:
+        name: "<white><bold> Biom Hinzufügen"
+        description: |-
+          <gray> Erstellt ein neues Biom, das
+          <gray> Spieler in Benutzer-
+          <gray> panels verwenden können.
+      remove_biome:
+        name: "<white><bold> Biom Entfernen"
+        description: |-
+          <gray> Entfernt ausgewählte Biome
+          <gray> aus Benutzerpanels.
+        title: "<yellow> Ausgewählte Biome:"
+        value: "<yellow> - [biome]"
+      accept_selected:
+        name: "<white><bold> Ausgewählte Akzeptieren"
+        description: |-
+          <gray> Akzeptiert ausgewählte Elemente.
+        title: "<yellow> Ausgewählte Elemente:"
+        element: "<yellow> - [element]"
+      environment_element:
+        name: "<white><bold> [environment]"
+        description: |-
+          <gray> [description].
+      properties:
+        name: "<white><bold> Eigenschaften"
+        description: |-
+          <gray> Zeige Haupt-Biomeigenschaften.
+      change_properties:
+        name: "<white><bold> Eigenschaften Ändern"
+        description: |-
+          <gray> Zeige Biom-Änderungseigenschaften.
+      unlock_properties:
+        name: "<white><bold> Entsperr-Eigenschaften"
+        description: |-
+          <gray> Zeige Biom-Entsperreigenschaften.
+      biome:
+        name: "<white><bold> [biome]"
+        description: |-
+          <gray> Minecraft-Biomtyp.
+        value: "<gray> Biom-ID: <yellow> [id]"
+      name:
+        name: "<white><bold> Anzeigename"
+        description: |-
+          <gray> Anzeigename für das Biom.
+          <gray> Unterstützt Farbcodes.
+        value: "<gray> Aktueller Wert: <reset> [name]"
+      deployed:
+        name: "<white><bold> Bereitgestellt"
+        description: |-
+          <gray> Schaltet um, ob das Biom
+          <gray> für Spieler zugänglich ist
+          <gray> oder nicht.
+        enabled: "<dark_green> Aktiviert"
+        disabled: "<red> Deaktiviert"
+      environment:
+        name: "<white><bold> Dimension"
+        description: |-
+          <gray> Ermöglicht es, in welcher
+          <gray> Dimension das Biom
+          <gray> angewendet werden kann.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      icon:
+        name: "<white><bold> Symbol"
+        description: |-
+          <gray> Ermöglicht das Ändern des
+          <gray> Symbols für dieses Biom.
+      order:
+        name: "<white><bold> Reihenfolge"
+        description: |-
+          <gray> Ermöglicht das Ändern der
+          <gray> Reihenfolge von Objekten.
+          <gray> Objekte mit gleichen Nummern
+          <gray> werden nach ihren eindeutigen
+          <gray> ID-Namen sortiert.
+        value: "<gray> Aktuelle Reihenfolge: <yellow> [number]"
+      description:
+        name: "<white><bold> Beschreibung"
+        description: |-
+          <gray> Die spezifische Beschreibung
+          <gray> für das Biom. Die Farbcodes
+          <gray> müssen angewendet werden.
+        value: "<yellow> Aktuelle Beschreibung:"
+        none: "<gray> Beschreibung ist nicht gesetzt."
+      unlock_permissions:
+        name: "<white><bold> Berechtigung"
+        description: |-
+          <gray> Ermöglicht das Ändern der
+          <gray> Entsperr-Berechtigung für
+          <gray> dieses Biom.
+        title: "<yellow> Berechtigungen: "
+        element: " <dark_gray> - [permission]"
+        none: "<gray> Berechtigungen sind nicht gesetzt."
+      unlock_cost:
+        name: "<white><bold> Kosten"
+        description: |-
+          <gray> Ermöglicht das Ändern der
+          <gray> Kosten zum Entsperren dieses Bioms.
+        value: "<gray> Aktuelle Kosten: <yellow> [number]"
+      unlock_items:
+        name: "<white><bold> Gegenstände"
+        description: |-
+          <gray> Ermöglicht das Ändern der
+          <gray> Entsperr-Gegenstände für dieses Biom.
+        title: "<yellow> Gegenstände: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Gegenstände sind nicht gesetzt."
+      unlock_level:
+        name: "<white><bold> Stufe"
+        description: |-
+          <gray> Ermöglicht das Ändern der
+          <gray> erforderlichen Inselstufe
+          <gray> zum Entsperren dieses Bioms.
+        value: "<gray> Aktuelle Stufe: <yellow> [number]"
+      change_cost:
+        name: "<white><bold> Kosten"
+        description: |-
+          <gray> Ermöglicht das Ändern der
+          <gray> Kosten beim Anwenden dieses Bioms.
+        value: "<gray> Aktuelle Kosten: <yellow> [number]"
+      change_items:
+        name: "<white><bold> Gegenstände"
+        description: |-
+          <gray> Ermöglicht das Ändern der
+          <gray> Gegenstände zum Anwenden dieses Bioms.
+        title: "<yellow> Gegenstände: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Gegenstände sind nicht gesetzt."
+      change_type:
+        name: "<white><bold> [type]"
+        description: |-
+          <gray> Ermöglicht das Ändern des
+          <gray> Kostentyps beim Anwenden
+          <gray> dieses Bioms.
+        static:
+          name: "Statischer Wert"
+          description: |-
+            <gray> Die Kosten für die Biomänderung
+            <gray> ändern sich nicht.
+        per_block:
+          name: "Pro Block"
+          description: |-
+            <gray> Die Kosten für die Biomänderung
+            <gray> werden pro Block berechnet.
+        per_usage:
+          name: "Pro Verwendung"
+          description: |-
+            <gray> Die Kosten für die Biomänderung
+            <gray> erhöhen sich nach jeder
+            <gray> Verwendung.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      change_increment:
+        name: "<white><bold> Inkrementieren"
+        description: |-
+          <gray> Ermöglicht das Ändern des
+          <gray> Inkrements pro Verwendung.
+        value: "<gray> Aktueller Wert: <yellow> [number]"
+      biome-filter:
+        name: "<white><bold> [filter]"
+        description: |-
+          <gray> Biom-Filter basierend
+          <gray> auf Minecraft Wiki.
+        lush: "Üppige Biome"
+        dry: "Trockene Biome"
+        cold: "Kalte Biome"
+        snowy: "Schneebedeckte Biome"
+        aquatic: "Ozean-Biome"
+        nether: "Nether-Biome"
+        the_end: "The End Biome"
+        neutral: "Neutrale Biome"
+        unused: "Ungenutzte Biome"
+        warm: "Warme Biome"
+        cave: "Höhlen-Biome"
+        temperate: "Gemäßigte Biome"
+      protection_range:
+        name: "<white><bold> Schutzbereich"
+        description: |-
+          <gray> Ermöglicht es, die Biomänderung
+          <gray> nur auf den Inselschutzbereich
+          <gray> statt auf die ganze Insel zu
+          <gray> begrenzen.
+        enabled: "<dark_green> Aktiviert"
+        disabled: "<red> Deaktiviert"
+      reset:
+        name: "<white><bold> Beim Eigentümerwechsel Zurücksetzen"
+        description: |-
+          <gray> Ermöglicht das Erzwingen der
+          <gray> Biomänderung auf die Standard-
+          <gray> einstellung, wenn sich der
+          <gray> Inseleigentümer ändert und der
+          <gray> neue Eigentümer keine Berechtigung
+          <gray> für das aktuelle Biom hat.
+        enabled: "<dark_green> Aktiviert"
+        disabled: "<red> Deaktiviert"
+      cool_down:
+        name: "<white><bold> Biom-Cooldown"
+        description: |-
+          <gray> Ermöglicht das Einstellen der
+          <gray> Anzahl der Sekunden zwischen
+          <gray> den Biomänderungen des Spielers.
+        value: "<gray> Aktueller Cooldown: <yellow> [number]"
+        disabled: "<yellow> Cooldown ist deaktiviert."
+      default_size:
+        name: "<white><bold> Standard-Bereich"
+        description: |-
+          <gray> Ermöglicht das Einstellen der
+          <gray> Zahl, die verwendet wird, wenn
+          <gray> der Spieler das Biom ohne
+          <gray> Eingabe ändert.
+        value: "<gray> Standard-Bereich: <yellow> [number]"
+      default_mode:
+        name: "<white><bold> Standard-Aktualisierungsmodus"
+        description: |-
+          <gray> Ermöglicht das Einstellen des
+          <gray> Standard-Aktualisierungsmodus,
+          <gray> wenn Spieler ihn nicht angeben.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      unlock_notify:
+        name: "<white><bold> Bei Entsperrung Benachrichtigen"
+        description: |-
+          <gray> Eine Nachricht wird an den
+          <gray> Benutzer gesendet, wenn er
+          <gray> ein neues Biom entsperrt.
+        enabled: |-
+          <aqua> Benachrichtigung beim Entsperren ist <green> aktiviert <aqua>.
+        disabled: |-
+          <aqua> Benachrichtigung beim Entsperren ist <red> deaktiviert <aqua>.
+      change_timeout:
+        name: "<white><bold> Timeout für Änderung"
+        description: |-
+          <gray> Ermöglicht das Einstellen, nach
+          <gray> wie vielen Minuten die
+          <gray> Biom-Aktualisierung beendet wird.
+          <gray> Kann auf sehr großen Inseln oder
+          <gray> Servern unter großer Last vorkommen.
+        value: "<gray> Timeout nach: <yellow> [number] min"
+      parallel_updates:
+        name: "<white><bold> Parallele Aktualisierungen"
+        description: |-
+          <gray> Ermöglicht das Einstellen, wie viele
+          <gray> Biom-Aktualisierungen gleichzeitig
+          <gray> stattfinden können. Andere werden
+          <gray> in die Warteschlange eingereiht.
+        value: |-
+          <gray> Aktueller Wert: <yellow>[number]<gray>.
+      use_bank:
+        name: "<white><bold> Bank-Konto Verwenden"
+        description: |-
+          <gray> Schaltet um, ob alle von der
+          <gray> Biomes-Erweiterung durchgeführten
+          <gray> Zahlungen das Bank-Addon-
+          <gray> Inselnkonto verwenden.
+        enabled: |-
+          <aqua> Verwendung des Bank-Kontos ist <green> aktiviert <aqua>.
+        disabled: |-
+          <aqua> Verwendung des Bank-Kontos ist <red> deaktiviert <aqua>.
+        missing: |-
+          <red> Das Bank-Addon ist nicht installiert.
+      visibility:
+        name: "<white><bold> Biom-Sichtbarkeit"
+        description: |-
+          <gray> Ermöglicht das Ändern der
+          <gray> Biomvisibilität des Spielers
+          <gray> in den Biomauswahlpanels.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+        all: "Alle Biome"
+        deployed: "Bereitgestellte Biome"
+        accessible: "Zugängliche Biome"
+        toggleable: "Umschaltbar"
+      is_online:
+        name: "<white><bold> Online-Spieler-Inseln"
+        description: |-
+          <gray> Alle Inseln auflisten, auf
+          <gray> denen ein Mitglied online ist.
+      all_islands:
+        name: "<white><bold> Alle Inseln"
+        description: |-
+          <gray> Liste aller Inseln, die
+          <gray> im aktuellen Spielmodus
+          <gray> erstellt wurden.
+      island_name:
+        name: "<white><bold> [name]"
+        island-owner: "[player]"
+        unknown: "<red> Unbekannter Eigentümer"
+        description: |-
+          [owner]
+          [members]
+          [id]
+        owner: "<gray> Eigentümer: <yellow> [player]"
+        title: "<gray> Inselmitglieder:"
+        element: " <gray> - <yellow> [player]"
+      change_biome:
+        name: "<white><bold> Biom Ändern"
+        description: |-
+          <gray> Biom auf der Insel ändern.
+      manage_data:
+        name: "<white><bold> Inseldaten Verwalten"
+        description: |-
+          <gray> Verwalten Sie Daten, die
+          <gray> für eine bestimmte Insel
+          <gray> gespeichert sind.
+      clear_data:
+        name: "<white><bold> Inseldaten Löschen"
+        description: |-
+          <gray> Alle gespeicherten Inseldaten
+          <gray> löschen.
+      island_bundle:
+        name: "<white><bold> Insel-Bündel"
+        description: |-
+          <gray> Das dem aktuellen
+          <gray> Inselbündel zugewiesene
+          <gray> Bündel. Nur Biome aus diesem
+          <gray> Bündel können auf der Insel
+          <gray> verwendet werden.
+        value: "<aqua> Bündel: [bundle]"
+        overwritten: |-
+          <red> Der Eigentümer hat eine Berechtigung,
+          <red> die das Bündel überschreibt.
+      owner_bundle:
+        name: "<white><bold> Eigentümer-Bündel"
+        description: |-
+          <gray> Das dem Inseleigentümer
+          <gray> zugewiesene Bündel. Nur Biome
+          <gray> aus diesem Bündel können auf
+          <gray> der Insel verwendet werden.
+          <gray> Berechtigung für den Benutzer zum
+          <gray> Zuweisen: '<gamemode>.biomes.
+          <gray><italic> bundle.<bundle-id>'
+        value: "<aqua> Bündel: [bundle]"
+      reset_to_default:
+        name: "<white><bold> Auf Standard Zurücksetzen"
+        description: |-
+          <gray> Setzt alle Inselwerte auf
+          <gray> die Standardwerte aus
+          <gray> den Einstellungen zurück.
+      bundle_info:
+        name: "<white><bold> Allgemeine Informationen"
+        description: |-
+          <gray> Zeige allgemeine Bündel-
+          <gray> informationen.
+      bundle_biomes:
+        name: "<white><bold> Biome Verwalten"
+        description: |-
+          <gray> Verwalten Sie Biome, die
+          <gray> dem Bündel zugewiesen sind.
+      bundle_name:
+        name: "<white><bold> Namen Ändern"
+        description: |-
+          <gray> Ändern Sie den angezeigten
+          <gray> Namen des Bündels.
+        value: "<yellow> Aktueller Wert: <reset> [bundle]"
+      bundle_icon:
+        name: "<white><bold> Symbol Ändern"
+        description: |-
+          <gray> Ändern Sie das Bündelsymbol.
+      bundle_description:
+        name: "<white><bold> Beschreibung Ändern"
+        description: |-
+          <gray> Ändern Sie die Bündelbeschreibung.
+        value: "<yellow> Aktueller Wert:"
+        none: "<red> Keine Beschreibung"
+      bundle_permission:
+        name: "<white><bold> Bündel-Berechtigung"
+        description: |-
+          <gray> Die Berechtigung, die
+          <gray> dem Benutzer hinzugefügt werden
+          <gray> muss, um dieses Bündel zu
+          <gray> erzwingen.
+        value: "<yellow> Berechtigung: <white> [gamemode].biomes.bundle.[id]"
+      add_bundle_biome:
+        name: "<white><bold> Biom Hinzufügen"
+        description: |-
+          <gray> Weisen Sie ein Biom
+          <gray> diesem Bündel zu.
+        title: "<aqua> Ausgewählte Biome:"
+        value: "<aqua> - [biome]"
+      remove_bundle_biome:
+        name: "<white><bold> Biom Entfernen"
+        description: |-
+          <gray> Entfernen Sie ein Biom
+          <gray> aus diesem Bündel.
+        title: "<aqua> Ausgewählte Biome:"
+        value: "<aqua> - [biome]"
+      create_bundle:
+        name: "<white><bold> Bündel Erstellen"
+        description: |-
+          <gray> Erstellen Sie ein neues
+          <gray> Bündel für diesen Spielmodus.
+      delete_bundle:
+        name: "<white><bold> Bündel Entfernen"
+        description: |-
+          <gray> Entfernen Sie ein Bündel
+          <gray> vollständig aus diesem Spielmodus.
+        title: "<aqua> Ausgewählte Bündel:"
+        value: "<aqua> - [bundle]"
+      download:
+        name: "<white><bold> Download"
+        description: |-
+          <gray> Web-Bibliothek herunterladen.
+        enabled: "<dark_green> Mit Zwischenspeicher Löschen"
+        disabled: "<red> Ohne Zwischenspeicher Löschen"
+    tips:
+      click-to-filter: "<yellow> Klicke <gray> zum Filtern."
+      click-to-manage: "<yellow> Klicke <gray> zum Verwalten."
+      click-to-clear: "<yellow> Klicke <gray> zum Löschen."
+      click-to-change-biome: "<yellow> Klicke <gray> um das Biom zu ändern."
+      click-to-view: "<yellow> Klicke <gray> zur Ansicht."
+      click-to-select: "<yellow> Klicke <gray> zum Auswählen."
+      click-to-choose: "<yellow> Klicke <gray> zum Auswählen."
+      click-to-complete: "<yellow> Klicke <gray> zum Abschluss."
+      left-click-to-accept: "<yellow> Linksklick <gray> zum Anwenden."
+      right-click-to-write: "<yellow> Rechtsklick <gray> zum Schreiben."
+      click-to-reduce: "<yellow> Klicke <gray> zum Verringern."
+      click-to-increase: "<yellow> Klicke <gray> zum Erhöhen."
+      click-to-return: "<yellow> Klicke <gray> zur Rückkehr."
+      click-to-quit: "<yellow> Klicke <gray> zum Beenden."
+      click-to-wipe: "<yellow> Klicke <gray> zum Löschen."
+      left-click-to-wipe: "<yellow> Linksklick <gray> zum Löschen."
+      right-click-to-switch: "<yellow> Rechtsklick <gray> zum Wechseln."
+      click-to-open: "<yellow> Klicke <gray> zum Öffnen."
+      click-to-export: "<yellow> Klicke <gray> zum Exportieren."
+      click-to-create: "<yellow> Klicke <gray> zum Erstellen."
+      left-click-to-open: "<yellow> Linksklick <gray> zum Öffnen."
+      right-click-to-reset-all: "<yellow> Rechtsklick <gray> um alles zu löschen."
+      click-to-toggle: "<yellow> Klicke <gray> zum Umschalten."
+      click-to-change: "<yellow> Klicke <gray> zum Ändern."
+      shift-click-to-reset: "<yellow> Shift-Klick <gray> zum Zurücksetzen."
+      click-to-add: "<yellow> Klicke <gray> zum Hinzufügen."
+      click-to-remove: "<yellow> Klicke <gray> zum Entfernen."
+      left-click-to-cycle: "<yellow> Linksklick <gray> um nach unten zu durchlaufen."
+      right-click-to-cycle: "<yellow> Rechtsklick <gray> um nach oben zu durchlaufen."
+      click-to-edit: "<yellow> Klicke <gray> zum Bearbeiten."
+      left-click-to-download: "<yellow> Linksklick <gray> zum Herunterladen."
+      right-click-to-toggle: "<yellow> Rechtsklick <gray> zum Umschalten."
+      click-to-install: "<yellow> Klicke <gray> zum Installieren."
+      click-to-reset-all: "<yellow> Klicke <gray> um alles zurückzusetzen."
+      right-click-to-select: "<yellow> Rechtsklick <gray> zum Auswählen."
+      right-click-to-deselect: "<yellow> Rechtsklick <gray> um die Auswahl aufzuheben."
+      left-click-to-choose: "<yellow> Linksklick <gray> zum Auswählen."
+      click-to-buy: "<yellow> Klicke <gray> zum Kaufen."
+      click-to-cancel: "<yellow> Klicke <gray> zum Abbrechen."
+      click-to-save: "<yellow> Klicke <gray> zum Speichern."
+      click-to-deselect: "<yellow> Klicke <gray> um die Auswahl aufzuheben."
+      click-on-item: |-
+        <yellow> Klicke <gray> auf den Gegenstand in
+        <gray> deinem Inventar.
+      left-click-to-edit: "<yellow> Linksklick <gray> zum Bearbeiten."
+      right-click-to-clear: "<yellow> Rechtsklick <gray> zum Löschen."
+      click-to-previous: "<yellow> Klicke <gray> um die vorherige Seite anzuzeigen."
+      click-to-next: "<yellow> Klicke <gray> um die nächste Seite anzuzeigen."
+      select-before: "<yellow> Wählen <gray> Sie Gegenstand(-stände) vor dem Fortfahren."
+      click-to-apply: "<yellow> Klicke <gray> zum Anwenden."
+      right-click-to-open: "<yellow> Rechtsklick <gray> zum Öffnen."
+      click-to-perform: "<yellow> Klicke <gray> zum Ausführen."
+      left-click-to-apply: "<yellow> Linksklick <gray> zum Anwenden."
+      right-click-to-unlock: "<yellow> Rechtsklick <gray> zum Entsperren."
+      right-click-to-buy: "<yellow> Rechtsklick <gray> zum Kaufen."
+      right-click-to-change: "<yellow> Rechtsklick <gray> zum Ändern."
+    descriptions:
+      update-mode:
+        island: "Inselmodus"
+        chunk: "Chunk-Modus"
+        range: "Bereichsmodus"
+      selected: "<dark_green> Ausgewählt"
+      island-owner: "[player]"
+      unknown: "<yellow> Unbekannt"
+      biome:
+        lore: |-
+          [description]
+          [biome]
+          [unlock]
+          [change]
+        original: |-
+          <gray> Biom: <yellow> [biome]
+        unlock:
+          lore: |-
+            [items]
+            [money]
+            [level]
+            [permissions]
+          money: |-
+            <gray> Entsperrkosten: <yellow> [number]
+          level: |-
+            <gray> Muss Inselstufe erreichen <yellow> [number]
+            <gray>.
+          permission-single: |-
+            <gray> Fehlende Berechtigung: <red> [permission]
+          permissions-title: |-
+            <red> Fehlende Berechtigungen:
+          permissions-list: |-
+            <red> - [permission]
+          item-single: |-
+            <gray> Entsperr-Gegenstand: [color] [number] x [item]
+          item-title: |-
+            <gray> Entsperr-Gegenstände:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          missing: "<red>"
+          has: "<yellow>"
+        change:
+          lore: |-
+            [items]
+            [money]
+            [mode]
+            [usage]
+          mode:
+            per_block: |-
+              <aqua><italic> Das Biom kostet pro
+              <aqua><italic> verändertem Block.
+            per_usage: |-
+              <aqua><italic> Das Ändern des Bioms
+              <aqua><italic> erhöht seinen Preis.
+            static: |-
+              <aqua><italic> Standardpreis für Änderung.
+          money: |-
+            <gray> Kosten: <yellow> [number]
+          item-single: |-
+            <gray> Gegenstand: [color] [number] x [item]
+          item-title: |-
+            <gray> Gegenstände:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          number-of-usage: |-
+            <gray> Dieses Biom wurde
+            <gray> <yellow> [number] <reset><gray> Mal angewendet.
+          missing: "<red>"
+          has: "<yellow>"
+      bundle:
+        lore: |-
+          [description]
+          [permission]
+          [biomes]
+        permission: |-
+          <gray> Berechtigung, die
+          <gray> dem Spieler zugewiesen werden
+          <gray> muss: '<gamemode>.biomes.
+          <gray><italic> bundle.[id]'
+        title: "<gray> Bündel-Biome: "
+        value: "<gray> - [biome]"
+        no-biomes: "<red> Keine Biome Zugewiesen"
+      library:
+        author: '<gray> von <yellow> [author]'
+        version: '<gray> Erstellt mit Biomes <yellow> [version]'
+        lang: '<gray> Sprache: <yellow> [lang]'
+        gamemode: '<gray> Hauptsächlich für <yellow> [gamemode]'
+  conversations:
+    prefix: "<bold><gold> [BentoBox]: <reset>"
+    confirm-string: "ja, an, akzeptieren, bestätigen, j, gültig, korrekt"
+    deny-string: "nein, aus, ablehnen, leugnen, n, ungültig, falsch"
+    cancel-string: "abbrechen"
+    exit-string: "abbrechen, beenden, verlassen"
+    cancelled: "<red> Gespräch abgebrochen!"
+    input-number: "<yellow> Bitte geben Sie eine Zahl in den Chat ein."
+    input-seconds: "<yellow> Bitte geben Sie Sekunden in den Chat ein."
+    numeric-only: "<red> Der eingegebene Wert [value] ist keine Zahl!"
+    not-valid-value: "<red> Die eingegebene Zahl [value] ist nicht gültig. Sie muss größer als [min] und kleiner als [max] sein!"
+    data-removed: "<green> Ausgewählte Biome wurden aus [gamemode] entfernt."
+    confirm-deletion: "<yellow> Bitte bestätigen Sie, dass Sie [number] Biome mit Namen: [value] löschen möchten."
+    user-data-removed: "<green> Alle Benutzerdaten für [gamemode] wurden aus der Datenbank gelöscht."
+    confirm-user-data-deletion: "<yellow> Bitte bestätigen Sie, dass Sie die Benutzerdatenbank für [gamemode] löschen möchten."
+    all-data-removed: "<green> Alle Add-on-Daten für [gamemode] wurden aus der Datenbank gelöscht."
+    confirm-all-data-deletion: "<yellow> Bitte bestätigen Sie, dass Sie die Add-on-Daten für [gamemode] löschen möchten."
+    write-name: "<yellow> Bitte schreiben Sie einen Namen in den Chat."
+    new-object-created: "<green> Neues Objekt für [gamemode] erstellt."
+    object-already-exists: "<red> Objekt <gray> [id] <red> existiert bereits. Wählen Sie einen anderen Namen."
+    name-changed: "<green> Erfolg, der Name wurde aktualisiert."
+    write-description: "<yellow> Bitte geben Sie eine neue Beschreibung in den Chat ein und schreiben Sie 'quit' auf einer eigenen Zeile, um zu beenden."
+    description-changed: "<green> Erfolg, die Beschreibung wurde aktualisiert."
+    write-permissions: "<yellow> Bitte geben Sie die erforderlichen Berechtigungen ein, eine pro Zeile in den Chat, und schreiben Sie 'quit' auf einer eigenen Zeile, um zu beenden."
+    permissions-changed: "<green> Erfolg, Berechtigungen wurden aktualisiert."
+    start-downloading: "<green> Beginne mit dem Herunterladen und Importieren der Biomes-Bibliothek."
+    written-text: "<green> Eingegebener Text:"
+    confirm-data-replacement: "<yellow> Bitte bestätigen Sie, dass Sie Ihre aktuellen Daten durch neue ersetzen möchten."
+    new-data-imported: "<green> Erfolg, neue Daten für [gamemode] wurden importiert."
+    exported-file-name: "<yellow> Bitte geben Sie einen Dateinamen für die exportierte Datenbankdatei ein. (geben Sie 'cancel' ein, um zu beenden)"
+    database-export-completed: "<green> Erfolg, der Datenbankexport für [world] ist abgeschlossen. Datei [file] erstellt."
+    file-name-exist: "<red> Datei mit Namen '[id]' existiert. Kann nicht überschreiben."
+    write-search: "<yellow> Bitte geben Sie einen Suchwert ein. (geben Sie 'cancel' ein, um zu beenden)"
+    search-updated: "<green> Suchwert aktualisiert."
+    invalid-biome: "<red> Einige Daten in gespeichert `[biome]`<reset><red> sind ungültig."
+    confirm-biome-deletion: "<yellow> Bitte bestätigen Sie, dass Sie [biome]<reset><yellow> aus [gamemode] entfernen möchten."
+    biome-removed: "[biome] <reset><green> wurde aus [gamemode] entfernt."
+    confirm-island-data-deletion: "<yellow> Bitte bestätigen Sie, dass Sie die Inseldaten von Spieler [player] entfernen möchten."
+    island-data-removed: "[player] <green> Inseldaten wurden entfernt."
+    confirm-biome-data-deletion: "<yellow> Bitte bestätigen Sie, dass Sie alle Biome aus [gamemode] entfernen möchten."
+    biome-data-removed: "Alle Biome wurden aus [gamemode] entfernt."
+    click-text-to-purchase: "<yellow> Sie haben <reset> [biome]<reset><yellow> entsperrt! Klicken Sie hier um zu kaufen."
+    click-text-to-set: "<yellow> Sie haben <reset> [biome]<reset><yellow> entsperrt! Klicken Sie hier um es zu verwenden."
+    click-text-to-purchase-other-world: "<yellow> Sie haben <reset> [biome]<reset><yellow> in <reset> [gamemode]<reset><yellow> entsperrt! Besuchen Sie diese Welt um zu kaufen."
+    click-text-to-set-other-world: "<yellow> Sie haben <reset> [biome]<reset><yellow> in <reset> [gamemode]<reset><yellow> entsperrt! Besuchen Sie diese Welt um es zu verwenden."
+  messages:
+    biome-not-unlocked: "[biome] <reset><red> ist nicht entsperrt. Sie können es nicht verwenden."
+    biome-not-purchased: "<red> Sie können <reset> [biome] <reset><red> nicht verwenden. Sie müssen es kaufen."
+    biome-cannot-be-unlocked: "<red> Sie können <reset> [biome] <reset><red> nicht entsperren."
+    biome-already-purchased: "<red> Sie haben bereits <reset> [biome] <reset><red> gekauft."
+    island-level-not-reached: "[biome] <reset><red> erfordert mindestens Inselstufe: [number]."
+    missing-permission: "[biome] <reset><red> erfordert Berechtigung: [permission]."
+    no-credits-buy: "<red> Sie haben nicht genug Credits um <reset> [biome] <reset><red> zu kaufen. Es kostet [number]."
+    no-credits-buy-bank: "<red> Sie haben nicht genug Credits auf Ihrem Bankkonto um <reset> [biome] <reset><red> zu kaufen. Es kostet [number]."
+    no-items-buy: "<red> Sie haben nicht genug Gegenstände um <reset> [biome] <reset><red> zu kaufen. Es erfordert [items]."
+    biome-purchased: "<yellow> Sie haben <reset> [biome]<reset><yellow> gekauft."
+    import-count: "<yellow> [biomes] Biome und [bundles] Bündel importiert."
+    start-downloading: "<yellow> Beginne mit dem Herunterladen der Bibliothek."
+    update-start: "<green> Starte die Biomänderung zu [biome] <reset><green> in [number] Chunks. <yellow> Geschätzte Zeit: [time] sec."
+    update-done: "<green> Biomänderung zu [biome]<reset><green> abgeschlossen."
+    waiting: "<green> Biomänderung in Warteschlange eingefügt. <yellow> Geschätzte Wartezeit: [time] sec."
+    biome-already-unlocked: "[biome] <reset><yellow> ist bereits entsperrt."
+    everything-already-bought: "<green> Sie haben bereits alle Biome für diesen Spielmodus gekauft."
+    skipping: "<green> Überspringe Laden <reset> [biome]<reset><green>."
+    overwriting: "<green> Überschreibe <reset> [biome] <reset><green> im Cache."
+    imported: "<green> Importierte <reset> [biome] <reset><green> im Cache."
+    migrate-start: "<green> Starte Migration zu neuem Datenformat."
+    migrate-finish: "<green> Migration zu neuem Datenformat abgeschlossen."
+    migrate-valid: "<green> Alle Daten sind gültig. Migration ist nicht erforderlich."
+    bundle-loaded: "<green> Bündel <reset> [bundle] <green> geladen."
+    clear-queue: "<green> Biomänderungs-Task-Warteschlange für [gamemode] gelöscht."
+  errors:
+    no-island-data: "<red> Insel hat keine gespeicherten Daten."
+    no-biomes-admin: "<red> Der aktuelle GameMode hat keine verwendbaren Biome. Bitte importieren oder erstellen Sie Biome mit /[command]"
+    no-biomes: "<red> Der aktuelle GameMode hat keine verwendbaren Biome."
+    no-rank: "<red> Sie dürfen das Biom auf dieser Insel nicht ändern."
+    not-enough-level: "<red> Dieses Biom erfordert mindestens Inselstufe [number]."
+    not-enough-money: "<red> Diese Biomänderung kostet [number]."
+    not-enough-money-bank: "<red> Ihr Bankkonto hat nicht genug Credits. Biomänderung kostet [number]."
+    not-enough-items: "<red> Diese Biomänderung kostet [items]."
+    admin-not-on-island: "<red> Sie befinden sich nicht auf der Insel von [user]."
+    incorrect-object: "<red> Konnte Biom mit angeforderten Namen nicht finden: [biome]"
+    missing-biome: "<red> Biomname ist nicht angegeben."
+    incorrect-mode: "<red> Modus mit Name '[mode]' existiert nicht."
+    incorrect-range: "<red> Angegebene Wert '[number]' ist keine gültige Zahl."
+    no-file: "<red> Konnte [file] im Biome-Verzeichnis nicht finden."
+    no-load: "<red> Konnte Biome aus [file] nicht importieren. Grund: [description]"
+    not-a-gamemode-world: "<red> Welt [world] ist keine GameModeAddon-Welt."
+    file-exist: "<red> Datei mit Namen [file] existiert bereits. Wählen Sie einen anderen Namen."
+    no-library-entries: "<red> Konnte keine gültigen Bibliothekseinträge finden."
+    not-unlocked: "<red> Sie haben dieses Biom nicht entsperrt."
+    not-purchased: "<red> Sie haben dieses Biom nicht gekauft."
+    timeout: "<red> Biomänderung ist abgelaufen. Möglicherweise war der ausgewählte Bereich zu groß oder der Server ist überlastet."
+    failed: "<red> Server ist auf Probleme bei der Biomänderung gestoßen."
+    could-not-remove-money: "<red> Etwas ist beim Abheben von Geld schief gelaufen."
+    could-not-remove-items: "<red> Etwas ist beim Abheben von Gegenständen schief gelaufen."
+    something-went-wrong: "<red> Etwas ist schief gelaufen. Konnte es nicht tun."
+protection:
+  flags:
+    BIOMES_ISLAND_PROTECTION:
+      name: "Biomkontrolle"
+      description: |-
+        <dark_purple><italic> Schalte um, wer
+        <dark_purple><italic> das Inselbiom ändern kann
+    BIOMES_WORLD_PROTECTION:
+      name: "Biom-Inselbeschränkung"
+      description: |-
+        <dark_purple><italic> Anforderung umschalten
+        <dark_purple><italic> dass Spieler auf ihrer
+        <dark_purple><italic> Insel sein müssen um
+        <dark_purple><italic> das Biom zu ändern.
+      hint: "<red> Sie müssen auf Ihrer Insel sein, um das Biom zu ändern!"

@@ -3,10 +3,10 @@ main_panel:
   type: INVENTORY
   background:
     icon: BLACK_STAINED_GLASS_PANE
-    title: "&b&r" # Empty text
+    title: "<aqua><reset>" # Empty text
   border:
     icon: BLACK_STAINED_GLASS_PANE
-    title: "&b&r"  # Empty text
+    title: "<aqua><reset>"  # Empty text
   force-shown: []
   content:
     1:

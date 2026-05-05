@@ -1,0 +1,825 @@
+biomes:
+  commands:
+    # Această secțiune conține doar traduceri pentru comenzile de administrator.
+    admin:
+      main:
+        description: "comanda principală de administrator pentru biome"
+      import:
+        parameters: "<file>"
+        description: "importă biome"
+        confirmation: "Aceasta va elimina biomele existente din [gamemode] și va importa biome noi din fișierul șablon - vă rog confirmați"
+      migrate:
+        description: "migrează datele stocate de biome în format nou"
+      set:
+        description: "schimbă biomul pentru jucător"
+        parameters: "<player> <biome-id> [mode] [size]"
+      unlock:
+        description: "deblochează biomul pentru jucător fără verificări. Adăugând `true` la sfârșit va marca ca cumpărat."
+        parameters: "<player> <biome-id> [true]"
+      clear-queue:
+        description: "șterge coada de actualizare a biomului"
+    # Această secțiune conține doar traduceri pentru comenzile jucătorului.
+    player:
+      main:
+        description: "deschide interfața de selecție a biomelor"
+      set:
+        description: "schimbă biomul pentru jucător"
+        parameters: "<biome-id> [mode] [size]"
+      buy:
+        description: "cumpără biomul solicitat"
+        parameters: "<biome-id>"
+      info:
+        description: "trimite un mesaj de chat cu descrierea detaliată a biomului"
+        parameters: "<biome-id>"
+  gui:
+    titles:
+      player-panel: "<black><bold> Alege Biomul"
+      buy-panel: "<black><bold> Cumpără Biomul"
+      advanced-panel: "<black><bold> Mod Actualizare"
+      admin-panel: "<black><bold> Interfață Administrator"
+      settings: "<black><bold> Setări"
+      library: "<black><bold> Bibliotecă"
+      manage-biomes: "<black><bold> Gestionează Biome"
+      manage-bundles: "<black><bold> Gestionează Pachete"
+      manage-islands: "<black><bold> Gestionează Date Insule"
+      edit-biome: "<black><bold> Editează Biomul: [biome]"
+      edit-bundle: "<black><bold> Editează Pachetul: [bundle]"
+      edit-island: "<black><bold> Editează Insula: [island]"
+      environment-selector: "<black><bold> Selectează Mediu"
+      biome-selector: "<black><bold> Selectează Biomul"
+      bundle-selector: "<black><bold> Selectează Pachetul"
+      item-selector: "<black><bold> Selectează Articole"
+    buttons:
+      island:
+        name: "<white><bold> Insula"
+        description: |-
+          <gray> Schimbă biomul pe toată
+          <gray> insula.
+      chunk:
+        name: "<white><bold> Chunk"
+        description: |-
+          <gray> Schimbă biomul în chunckuri.
+      range:
+        name: "<white><bold> Rază"
+        description: |-
+          <gray> Schimbă biomul după rază.
+      reduce:
+        name: "<white><bold> Reduce"
+        description: |-
+          <gray> Reduce cu <yellow> [number]
+      increase:
+        name: "<white><bold> Mărește"
+        description: |-
+          <gray> Mărește cu <yellow> [number]
+      accept:
+        name: "<white><bold> Aplică Schimbare"
+        description: |-
+          <gray> Schimbă biomul în <yellow> [biome]
+
+          <gray> Mod actualizare: <yellow> [mode]
+          <gray> Rază actualizare: <yellow> [number]
+      return:
+        name: "<white><bold> Întoarcere"
+        description: |-
+          <gray> Înapoi la meniul anterior.
+      previous:
+        name: "<white><bold> Pagina Anterioară"
+        description: |-
+          <gray> Comută la pagina <yellow> [number]
+      next:
+        name: "<white><bold> Pagina Următoare"
+        description: |-
+          <gray> Comută la pagina <yellow> [number]
+      quit:
+        name: "<white><bold> Ieși"
+        description: |-
+          <gray> Ieși din interfață.
+      save:
+        name: "<white><bold> Salvează"
+        description: |-
+          <gray> Salvează modificări și întoarce-te.
+      cancel:
+        name: "<white><bold> Anulează"
+        description: |-
+          <gray> Anulează modificări și întoarce-te.
+      search:
+        name: "<white><bold> Caută"
+        description: |-
+          <gray> Permite căutarea unui
+          <gray> element cu valoare de text
+          <gray> de intrare.
+        search: "<aqua> Valoare: [value]"
+      buy:
+        name: "<white><bold> Cumpără"
+        description: |-
+          <gray> Cumpără un nou biom.
+      manage_islands:
+        name: "<white><bold> Gestionează Insule"
+        description: |-
+          <gray> Permite gestionarea
+          <gray> datelor insulei.
+      manage_biomes:
+        name: "<white><bold> Gestionează Biome"
+        description: |-
+          <gray> Permite gestionarea
+          <gray> datelor biomelor.
+      manage_bundles:
+        name: "<white><bold> Gestionează Pachete"
+        description: |-
+          <gray> Permite gestionarea
+          <gray> datelor pachetelor.
+      settings:
+        name: "<white><bold> Setări"
+        description: |-
+          <gray> Permite modificarea unor
+          <gray> setări ale extensiei.
+      import_template:
+        name: "<white><bold> Importă Șablon"
+        description: |-
+          <gray> Importă fișier șablon
+          <gray> situat în directorul
+          <gray> extensiei.
+      web_library:
+        name: "<white><bold> Bibliotecă Web"
+        description: |-
+          <gray> Accesează biblioteca web
+          <gray> care conține biome
+          <gray> partajate.
+      export_from_database:
+        name: "<white><bold> Exportă Bază de Date"
+        description: |-
+          <gray> Exportă baza de date
+          <gray> într-un singur fișier situat
+          <gray> în directorul extensiei.
+      import_to_database:
+        name: "<white><bold> Importă Bază de Date"
+        description: |-
+          <gray> Importă o bază de date
+          <gray> dintr-un fișier situat în
+          <gray> directorul extensiei.
+      wipe_islands_data:
+        name: "<white><bold> Șterge Baza de Date Insule"
+        description: |-
+          <gray> Șterge toate datele
+          <gray> biomelor utilizatorului pentru acest mod de joc.
+      wipe_biomes_data:
+        name: "<white><bold> Șterge Baza de Date Biome"
+        description: |-
+          <gray> Șterge toate datele biomelor și pachetelor
+          <gray> pentru acest mod de joc.
+      add_biome:
+        name: "<white><bold> Adaugă Biomul"
+        description: |-
+          <gray> Creează un nou Biom pe care
+          <gray> jucătorii pot să-l folosească
+          <gray> folosind panourile utilizatorului.
+      remove_biome:
+        name: "<white><bold> Elimină Biomul"
+        description: |-
+          <gray> Elimină biomele selectate
+          <gray> din panourile utilizatorului.
+        title: "<yellow> Biome Selectate:"
+        value: "<yellow> - [biome]"
+      accept_selected:
+        name: "<white><bold> Acceptă Selectate"
+        description: |-
+          <gray> Acceptă elementele selectate.
+        title: "<yellow> Elemente Selectate:"
+        element: "<yellow> - [element]"
+      environment_element:
+        name: "<white><bold> [environment]"
+        description: |-
+          <gray> [description].
+      properties:
+        name: "<white><bold> Proprietăți"
+        description: |-
+          <gray> Vizualizează proprietățile principale ale biomului.
+      change_properties:
+        name: "<white><bold> Schimbă Proprietăți"
+        description: |-
+          <gray> Vizualizează schimbarea proprietăților biomului.
+      unlock_properties:
+        name: "<white><bold> Deblochează Proprietăți"
+        description: |-
+          <gray> Vizualizează deblocharea proprietăților biomului.
+      biome:
+        name: "<white><bold> [biome]"
+        description: |-
+          <gray> Tip de biom Minecraft.
+        value: "<gray> ID Biom: <yellow> [id]"
+      name:
+        name: "<white><bold> Nume Afișat"
+        description: |-
+          <gray> Nume afișat pentru biom.
+          <gray> Suportă coduri de culoare.
+        value: "<gray> Valoare Actuală: <reset> [name]"
+      deployed:
+        name: "<white><bold> Implementat"
+        description: |-
+          <gray> Comută dacă biomul este
+          <gray> accesibil jucătorilor
+          <gray> sau nu.
+        enabled: "<dark_green> Activat"
+        disabled: "<red> Dezactivat"
+      environment:
+        name: "<white><bold> Dimensiune"
+        description: |-
+          <gray> Permite limitarea în care
+          <gray> dimensiune poate fi aplicat
+          <gray> biomul.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      icon:
+        name: "<white><bold> Pictogramă"
+        description: |-
+          <gray> Permite schimbarea pictogramei
+          <gray> pentru acest biom.
+      order:
+        name: "<white><bold> Ordine"
+        description: |-
+          <gray> Permite schimbarea ordinii
+          <gray> obiectelor.
+          <gray> Obiectele cu numere egale
+          <gray> vor fi ordonate după
+          <gray> numele lor unic.
+        value: "<gray> Ordine actuală: <yellow> [number]"
+      description:
+        name: "<white><bold> Descriere"
+        description: |-
+          <gray> Descrierea specifică
+          <gray> pentru biom. Codurile de culoare
+          <gray> trebuie aplicate acesteia.
+        value: "<yellow> Descriere actuală:"
+        none: "<gray> Descrierea nu este stabilită."
+      unlock_permissions:
+        name: "<white><bold> Permisiuni"
+        description: |-
+          <gray> Permite schimbarea
+          <gray> permisiunilor de deblocare pentru
+          <gray> acest biom să fie accesibil.
+        title: "<yellow> Permisiuni: "
+        element: " <dark_gray> - [permission]"
+        none: "<gray> Permisiunile nu sunt stabilite."
+      unlock_cost:
+        name: "<white><bold> Cost"
+        description: |-
+          <gray> Permite schimbarea costului
+          <gray> deblochării acestui biom.
+        value: "<gray> Cost actual: <yellow> [number]"
+      unlock_items:
+        name: "<white><bold> Articole"
+        description: |-
+          <gray> Permite schimbarea articolelor
+          <gray> de deblocare pentru acest biom.
+        title: "<yellow> Articole: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Articolele nu sunt stabilite."
+      unlock_level:
+        name: "<white><bold> Nivel"
+        description: |-
+          <gray> Permite schimbarea nivelului
+          <gray> insulei necesar
+          <gray> pentru deblocharea acestui biom.
+        value: "<gray> Nivel actual: <yellow> [number]"
+      change_cost:
+        name: "<white><bold> Cost"
+        description: |-
+          <gray> Permite schimbarea costului
+          <gray> aplicării acestui biom.
+        value: "<gray> Cost actual: <yellow> [number]"
+      change_items:
+        name: "<white><bold> Articole"
+        description: |-
+          <gray> Permite schimbarea articolelor
+          <gray> pentru aplicarea acestui biom.
+        title: "<yellow> Articole: "
+        element: " <dark_gray> - [number]x[item]"
+        none: "<gray> Articolele nu sunt stabilite."
+      change_type:
+        name: "<white><bold> [type]"
+        description: |-
+          <gray> Permite schimbarea tipului de cost
+          <gray> pentru aplicarea acestui biom.
+        static:
+          name: "Valoare Statică"
+          description: |-
+            <gray> Costul schimbării biomului nu
+            <gray> se schimbă.
+        per_block:
+          name: "Per Bloc"
+          description: |-
+            <gray> Costul schimbării biomului este
+            <gray> calculat pe bloc.
+        per_usage:
+          name: "Per Utilizare"
+          description: |-
+            <gray> Costul schimbării biomului
+            <gray> crește după fiecare
+            <gray> utilizare.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      change_increment:
+        name: "<white><bold> Increment"
+        description: |-
+          <gray> Permite schimbarea
+          <gray> incrementului per utilizare.
+        value: "<gray> Valoare actuală: <yellow> [number]"
+      biome-filter:
+        name: "<white><bold> [filter]"
+        description: |-
+          <gray> Filtru Biom bazat
+          <gray> pe Wiki-ul Minecraft.
+        lush: "Biome Luxuriante"
+        dry: "Biome Uscate"
+        cold: "Biome Reci"
+        snowy: "Biome Ninsate"
+        aquatic: "Biome Oceanice"
+        nether: "Biome Nether"
+        the_end: "Biome The End"
+        neutral: "Biome Neutre"
+        unused: "Biome Nefolosite"
+        warm: "Biome Calde"
+        cave: "Biome Peșteri"
+        temperate: "Biome Temperate"
+      protection_range:
+        name: "<white><bold> Rază Protecție"
+        description: |-
+          <gray> Permite limitarea schimbării
+          <gray> biomului doar la raza de
+          <gray> protecție a insulei în loc de
+          <gray> schimbarea biomului pe toată insula.
+        enabled: "<dark_green> Activată"
+        disabled: "<red> Dezactivată"
+      reset:
+        name: "<white><bold> Resetare la Schimbarea Proprietarului"
+        description: |-
+          <gray> Permite activarea forțării
+          <gray> schimbării biomului la cel implicit,
+          <gray> dacă insula se schimbă din proprietar
+          <gray> și noul proprietar nu are
+          <gray> permisiunea biomului curent.
+        enabled: "<dark_green> Activată"
+        disabled: "<red> Dezactivată"
+      cool_down:
+        name: "<white><bold> Răgaz Biom"
+        description: |-
+          <gray> Permite stabilirea numărului
+          <gray> de secunde între moment când
+          <gray> jucătorul poate schimba biomul din nou.
+        value: "<gray> Răgaz actual: <yellow> [number]"
+        disabled: "<yellow> Răgazul este dezactivat."
+      default_size:
+        name: "<white><bold> Rază Implicită"
+        description: |-
+          <gray> Permite stabilirea numărului care
+          <gray> va fi folosit când jucătorul
+          <gray> schimbă biomul fără a-l
+          <gray> specifica.
+        value: "<gray> Rază Implicită: <yellow> [number]"
+      default_mode:
+        name: "<white><bold> Mod Actualizare Implicit"
+        description: |-
+          <gray> Permite stabilirea modului implicit
+          <gray> de actualizare când jucătorii nu
+          <gray> l-au furnizat.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+      unlock_notify:
+        name: "<white><bold> Notificare la Deblocare"
+        description: |-
+          <gray> Un mesaj va fi trimis
+          <gray> utilizatorului când deblochează
+          <gray> un nou biom.
+        enabled: |-
+          <aqua> Notificarea la deblocare este <green> activată <aqua>.
+        disabled: |-
+          <aqua> Notificarea la deblocare este <red> dezactivată <aqua>.
+      change_timeout:
+        name: "<white><bold> Timeout Pentru Schimbare"
+        description: |-
+          <gray> Permite stabilirea după câte
+          <gray> minute actualizarea biomului
+          <gray> va fi terminată.
+          <gray> Poate să se întâmple pe insule
+          <gray> foarte mari sau servere sub
+          <gray> încarcare imensă.
+        value: "<gray> Timeout după: <yellow> [number] min"
+      parallel_updates:
+        name: "<white><bold> Actualizări Paralele"
+        description: |-
+          <gray> Permite stabilirea câte actualizări
+          <gray> de biom pot să se întâmple în
+          <gray> același timp.
+          <gray> Celelalte vor fi plasate în
+          <gray> coadă.
+        value: |-
+          <gray> Valoare actuală: <yellow>[number]<gray>.
+      use_bank:
+        name: "<white><bold> Folosește Cont Bancar"
+        description: |-
+          <gray> Comută dacă toate plățile
+          <gray> făcute de extensia Biomes vor
+          <gray> folosi Contul Bancar al Insulei
+          <gray> din Extensia Bank.
+        enabled: |-
+          <aqua> Utilizarea Contului Bancar este <green> activată <aqua>.
+        disabled: |-
+          <aqua> Utilizarea Contului Bancar este <red> dezactivată <aqua>.
+        missing: |-
+          <red> Extensia Bank nu este instalată.
+      visibility:
+        name: "<white><bold> Vizibilitate Biom"
+        description: |-
+          <gray> Permite modificarea vizibilității
+          <gray> biomului jucătorului în panourile
+          <gray> de selecție a biomului.
+        enabled: "<dark_green>"
+        disabled: "<red>"
+        all: "Toate Biomele"
+        deployed: "Biome Implementate"
+        accessible: "Biome Accesibile"
+        toggleable: "Comutabil"
+      is_online:
+        name: "<white><bold> Insule cu Jucători Online"
+        description: |-
+          <gray> Listează toate insulele unde
+          <gray> orice membru este online.
+      all_islands:
+        name: "<white><bold> Toate Insulele"
+        description: |-
+          <gray> Lista tuturor insulelor
+          <gray> care sunt create în
+          <gray> modul de joc curent.
+      island_name:
+        name: "<white><bold> [name]"
+        island-owner: "[player]"
+        unknown: "<red> Proprietar Necunoscut"
+        description: |-
+          [owner]
+          [members]
+          [id]
+        owner: "<gray> Proprietar: <yellow> [player]"
+        title: "<gray> Membri Insulei:"
+        element: " <gray> - <yellow> [player]"
+      change_biome:
+        name: "<white><bold> Schimbă Biomul"
+        description: |-
+          <gray> Schimbă biomul per insulă.
+      manage_data:
+        name: "<white><bold> Gestionează Datele Insulei"
+        description: |-
+          <gray> Gestionează datele care sunt
+          <gray> stocate pentru insula specifică.
+      clear_data:
+        name: "<white><bold> Șterge Datele Insulei"
+        description: |-
+          <gray> Șterge toate datele stocate
+          <gray> pentru insulă.
+      island_bundle:
+        name: "<white><bold> Pachet Insulă"
+        description: |-
+          <gray> Pachetul care este atribuit
+          <gray> insulei curente.
+          <gray> Doar biomele din acest
+          <gray> pachet pot fi folosite pe insulă.
+        value: "<aqua> Pachet: [bundle]"
+        overwritten: |-
+          <red> Proprietarul are o permisiune care
+          <red> suprascrie pachetul.
+      owner_bundle:
+        name: "<white><bold> Pachet Proprietar"
+        description: |-
+          <gray> Pachetul care este atribuit
+          <gray> proprietarului insulei curente.
+          <gray> Doar biomele din acest
+          <gray> pachet pot fi folosite pe insulă.
+          <gray> Permisiune pentru utilizator pentru atribuire:
+          <gray><italic> '[gamemode].biomes.
+          <gray><italic> bundle.<bundle-id>'
+        value: "<aqua> Pachet: [bundle]"
+      reset_to_default:
+        name: "<white><bold> Resetare la Implicit"
+        description: |-
+          <gray> Resetează toate valorile
+          <gray> insulei la valorile implicite
+          <gray> din setări.
+      bundle_info:
+        name: "<white><bold> Informații Generale"
+        description: |-
+          <gray> Vizualizează informațiile
+          <gray> generale ale pachetului.
+      bundle_biomes:
+        name: "<white><bold> Gestionează Biome"
+        description: |-
+          <gray> Gestionează biomele care sunt
+          <gray> atribuite pachetului.
+      bundle_name:
+        name: "<white><bold> Schimbă Nume"
+        description: |-
+          <gray> Schimbă numele afișat
+          <gray> al pachetului.
+        value: "<yellow> Valoare Actuală: <reset> [bundle]"
+      bundle_icon:
+        name: "<white><bold> Schimbă Pictogramă"
+        description: |-
+          <gray> Schimbă pictograma pachetului.
+      bundle_description:
+        name: "<white><bold> Schimbă Descriere"
+        description: |-
+          <gray> Schimbă descrierea pachetului.
+        value: "<yellow> Valoare actuală:"
+        none: "<red> Nicio descriere"
+      bundle_permission:
+        name: "<white><bold> Permisiune Pachet"
+        description: |-
+          <gray> Permisiunea care trebuie
+          <gray> adăugată utilizatorului pentru
+          <gray> a forța acest pachet.
+        value: "<yellow> Permisiune: <white> [gamemode].biomes.bundle.[id]"
+      add_bundle_biome:
+        name: "<white><bold> Adaugă Biomul"
+        description: |-
+          <gray> Atribuie un biom
+          <gray> acestui pachet.
+        title: "<aqua> Biome Selectate:"
+        value: "<aqua> - [biome]"
+      remove_bundle_biome:
+        name: "<white><bold> Elimină Biomul"
+        description: |-
+          <gray> Elimină un biom
+          <gray> din acest pachet.
+        title: "<aqua> Biome Selectate:"
+        value: "<aqua> - [biome]"
+      create_bundle:
+        name: "<white><bold> Creează Pachet"
+        description: |-
+          <gray> Creează un nou pachet
+          <gray> pentru acest mod de joc.
+      delete_bundle:
+        name: "<white><bold> Elimină Pachetul"
+        description: |-
+          <gray> Elimină un pachet din
+          <gray> acest mod de joc complet.
+        title: "<aqua> Pachete Selectate:"
+        value: "<aqua> - [bundle]"
+      download:
+        name: "<white><bold> Descarcă"
+        description: |-
+          <gray> Descarcă biblioteca web.
+        enabled: "<dark_green> Cu Ștergerea Cache-ului"
+        disabled: "<red> Fără Ștergerea Cache-ului"
+    tips:
+      click-to-filter: "<yellow> Apasă <gray> pentru a filtra."
+      click-to-manage: "<yellow> Apasă <gray> pentru a gestiona."
+      click-to-clear: "<yellow> Apasă <gray> pentru a șterge."
+      click-to-change-biome: "<yellow> Apasă <gray> pentru a schimba biomul."
+      click-to-view: "<yellow> Apasă <gray> pentru a vizualiza."
+      click-to-select: "<yellow> Apasă <gray> pentru a selecta."
+      click-to-choose: "<yellow> Apasă <gray> pentru a alege."
+      click-to-complete: "<yellow> Apasă <gray> pentru a completa."
+      left-click-to-accept: "<yellow> Apasă cu Butonul Stâng <gray> pentru a aplica."
+      right-click-to-write: "<yellow> Apasă cu Butonul Drept <gray> pentru a scrie."
+      click-to-reduce: "<yellow> Apasă <gray> pentru a reduce."
+      click-to-increase: "<yellow> Apasă <gray> pentru a mări."
+      click-to-return: "<yellow> Apasă <gray> pentru a te întoarce."
+      click-to-quit: "<yellow> Apasă <gray> pentru a ieși."
+      click-to-wipe: "<yellow> Apasă <gray> pentru a șterge."
+      left-click-to-wipe: "<yellow> Apasă cu Butonul Stâng <gray> pentru a șterge."
+      right-click-to-switch: "<yellow> Apasă cu Butonul Drept <gray> pentru a comuta."
+      click-to-open: "<yellow> Apasă <gray> pentru a deschide."
+      click-to-export: "<yellow> Apasă <gray> pentru a exporta."
+      click-to-create: "<yellow> Apasă <gray> pentru a crea."
+      left-click-to-open: "<yellow> Apasă cu Butonul Stâng <gray> pentru a deschide."
+      right-click-to-reset-all: "<yellow> Apasă cu Butonul Drept <gray> pentru a șterge tot."
+      click-to-toggle: "<yellow> Apasă <gray> pentru a comuta."
+      click-to-change: "<yellow> Apasă <gray> pentru a schimba."
+      shift-click-to-reset: "<yellow> Shift+Apasă <gray> pentru a reseta."
+      click-to-add: "<yellow> Apasă <gray> pentru a adăuga."
+      click-to-remove: "<yellow> Apasă <gray> pentru a elimina."
+      left-click-to-cycle: "<yellow> Apasă cu Butonul Stâng <gray> pentru a cicla în jos."
+      right-click-to-cycle: "<yellow> Apasă cu Butonul Drept <gray> pentru a cicla în sus."
+      click-to-edit: "<yellow> Apasă <gray> pentru a edita."
+      left-click-to-download: "<yellow> Apasă cu Butonul Stâng <gray> pentru a descărca."
+      right-click-to-toggle: "<yellow> Apasă cu Butonul Drept <gray> pentru a comuta."
+      click-to-install: "<yellow> Apasă <gray> pentru a instala."
+      click-to-reset-all: "<yellow> Apasă <gray> pentru a reseta tot."
+      right-click-to-select: "<yellow> Apasă cu Butonul Drept <gray> pentru a selecta."
+      right-click-to-deselect: "<yellow> Apasă cu Butonul Drept <gray> pentru a deselecta."
+      left-click-to-choose: "<yellow> Apasă cu Butonul Stâng <gray> pentru a alege."
+      click-to-buy: "<yellow> Apasă <gray> pentru a cumpăra."
+      click-to-cancel: "<yellow> Apasă <gray> pentru a anula."
+      click-to-save: "<yellow> Apasă <gray> pentru a salva."
+      click-to-deselect: "<yellow> Apasă <gray> pentru a deselecta."
+      click-on-item: |-
+        <yellow> Apasă <gray> pe articol din
+        <gray> inventarul tău.
+      left-click-to-edit: "<yellow> Apasă cu Butonul Stâng <gray> pentru a edita."
+      right-click-to-clear: "<yellow> Apasă cu Butonul Drept <gray> pentru a șterge."
+      click-to-previous: "<yellow> Apasă <gray> pentru a vizualiza pagina anterioară."
+      click-to-next: "<yellow> Apasă <gray> pentru a vizualiza pagina următoare."
+      select-before: "<yellow> Selectează <gray> articol(-e) înainte de a continua."
+      click-to-apply: "<yellow> Apasă <gray> pentru a aplica."
+      right-click-to-open: "<yellow> Apasă cu Butonul Drept <gray> pentru a deschide."
+      click-to-perform: "<yellow> Apasă <gray> pentru a executa."
+      left-click-to-apply: "<yellow> Apasă cu Butonul Stâng <gray> pentru a aplica."
+      right-click-to-unlock: "<yellow> Apasă cu Butonul Drept <gray> pentru a debloca."
+      right-click-to-buy: "<yellow> Apasă cu Butonul Drept <gray> pentru a cumpăra."
+      right-click-to-change: "<yellow> Apasă cu Butonul Drept <gray> pentru a schimba."
+    descriptions:
+      update-mode:
+        island: "Modul Insulă"
+        chunk: "Modul Chunk"
+        range: "Modul Rază"
+      selected: "<dark_green> Selectat"
+      island-owner: "[player]"
+      unknown: "<yellow> Necunoscut"
+      biome:
+        lore: |-
+          [description]
+          [biome]
+          [unlock]
+          [change]
+        original: |-
+          <gray> Biom: <yellow> [biome]
+        unlock:
+          lore: |-
+            [items]
+            [money]
+            [level]
+            [permissions]
+          money: |-
+            <gray> Cost deblocare: <yellow> [number]
+          level: |-
+            <gray> Necesită atingerea a <yellow> [number]
+            <gray> nivelului insulei.
+          permission-single: |-
+            <gray> Permisiune Lipsă: <red> [permission]
+          permissions-title: |-
+            <red> Permisiuni Lipsă:
+          permissions-list: |-
+            <red> - [permission]
+          item-single: |-
+            <gray> Articol Deblocare: [color] [number] x [item]
+          item-title: |-
+            <gray> Articole Deblocare:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          missing: "<red>"
+          has: "<yellow>"
+        change:
+          lore: |-
+            [items]
+            [money]
+            [mode]
+            [usage]
+          mode:
+            per_block: |-
+              <aqua><italic> Biomul costă pentru fiecare
+              <aqua><italic> bloc schimbat.
+            per_usage: |-
+              <aqua><italic> Schimbarea biomului crește
+              <aqua><italic> prețul acestuia.
+            static: |-
+              <aqua><italic> Preț standard de schimbare.
+          money: |-
+            <gray> Cost: <yellow> [number]
+          item-single: |-
+            <gray> Articol: [color] [number] x [item]
+          item-title: |-
+            <gray> Articole:
+          item-list: |-
+            <gray> - [color] [number] x [item]
+          number-of-usage: |-
+            |<gray> Acest biom a fost
+            <gray> aplicat <yellow> [number] <reset><gray> ori.
+          missing: "<red>"
+          has: "<yellow>"
+      bundle:
+        lore: |-
+          [description]
+          [permission]
+          [biomes]
+        permission: |-
+          <gray> Permisiune care trebuie
+          <gray> atribuită jucătorului:
+          <gray><italic> [gamemode].biomes.bundle.[id]
+        title: "<gray> Biome Pachet: "
+        value: "<gray> - [biome]"
+        no-biomes: "<red> Niciun Biom Atribuit"
+      library:
+        author: '<gray> de <yellow> [author]'
+        version: '<gray> Făcut cu Biomes <yellow> [version]'
+        lang: '<gray> Limbă: <yellow> [lang]'
+        gamemode: '<gray> Primar pentru <yellow> [gamemode]'
+  conversations:
+    prefix: "<bold><gold> [BentoBox]: <reset>"
+    confirm-string: "adevărat, on, da, confirm, y, valid, corect"
+    deny-string: "fals, off, nu, deny, n, invalid, incorect"
+    cancel-string: "anulare"
+    exit-string: "anulare, ieși, quit"
+    cancelled: "<red> Conversație anulată!"
+    input-number: "<yellow> Vă rog introduceți un număr în chat."
+    input-seconds: "<yellow> Vă rog introduceți secundele în chat."
+    numeric-only: "<red> Valoarea dată [value] nu este un număr!"
+    not-valid-value: "<red> Numărul dat [value] nu este valid. Trebuie să fie mai mare decât [min] și mai mic decât [max]!"
+    data-removed: "<green> Biomele alese sunt eliminate din [gamemode]."
+    confirm-deletion: "<yellow> Vă rog confirmați că doriți să ștergeți [number] biome cu nume: [value]."
+    user-data-removed: "<green> Toate datele utilizatorului pentru [gamemode] sunt șterse din baza de date."
+    confirm-user-data-deletion: "<yellow> Vă rog confirmați că doriți să ștergeți baza de date a utilizatorului pentru [gamemode]."
+    all-data-removed: "<green> Toate datele extensiei pentru [gamemode] sunt șterse din baza de date."
+    confirm-all-data-deletion: "<yellow> Vă rog confirmați că doriți să ștergeți datele extensiei pentru [gamemode]."
+    write-name: "<yellow> Vă rog scrieți un nume în chat."
+    new-object-created: "<green> Noul obiect pentru [gamemode] este creat."
+    object-already-exists: "<red> Obiect <gray> [id] <red> există deja. Alegeți un alt nume."
+    name-changed: "<green> Succes, numele a fost actualizat."
+    write-description: "<yellow> Vă rog introduceți o nouă descriere în chat și 'quit' pe o linie de sine stătătoare pentru a termina."
+    description-changed: "<green> Succes, descrierea a fost actualizată."
+    write-permissions: "<yellow> Vă rog introduceți permisiunile necesare, una per linie în chat, și 'quit' pe o linie de sine stătătoare pentru a termina."
+    permissions-changed: "<green> Succes, permisiunile au fost actualizate."
+    start-downloading: "<green> Se începe descărcarea și importarea Bibliotecii Biome."
+    written-text: "<green> Text de Intrare:"
+    confirm-data-replacement: "<yellow> Vă rog confirmați că doriți să înlocuiți datele curente cu altele noi."
+    new-data-imported: "<green> Succes, datele noi pentru [gamemode] au fost importate."
+    exported-file-name: "<yellow> Vă rog introduceți un nume de fișier pentru fișierul de bază de date exportat. (scrieți 'cancel' pentru a ieși)"
+    database-export-completed: "<green> Succes, exportul bazei de date pentru [world] este finalizat. Fișier [file] generat."
+    file-name-exist: "<red> Fișier cu nume '[id]' există. Nu se poate suprascrie."
+    write-search: "<yellow> Vă rog scrieți o valoare de căutare. (scrieți 'cancel' pentru a ieși)"
+    search-updated: "<green> Valoarea de căutare actualizată."
+    invalid-biome: "<red> Unele date din biomul stocat `[biome]`<reset><red> nu sunt valide."
+    confirm-biome-deletion: "<yellow> Vă rog confirmați că doriți să eliminați [biome]<reset><yellow> din [gamemode]."
+    biome-removed: "[biome] <reset><green> este eliminat din [gamemode]."
+    confirm-island-data-deletion: "<yellow> Vă rog confirmați că doriți să eliminați datele insulei [player]."
+    island-data-removed: "[player] <green> datele insulei sunt eliminate."
+    confirm-biome-data-deletion: "<yellow> Vă rog confirmați că doriți să eliminați toate biomele din [gamemode]."
+    biome-data-removed: "Toate biomele sunt eliminate din [gamemode]."
+    click-text-to-purchase: "<yellow> Ați deblocat <reset> [biome]<reset><yellow>! Apasă aici pentru a-l cumpăra."
+    click-text-to-set: "<yellow> Ați deblocat <reset> [biome]<reset><yellow>! Apasă aici pentru a-l folosi."
+    click-text-to-purchase-other-world: "<yellow> Ați deblocat <reset> [biome]<reset><yellow> în <reset> [gamemode]<reset><yellow>! Vizitați acea lume pentru a-l cumpăra."
+    click-text-to-set-other-world: "<yellow> Ați deblocat <reset> [biome]<reset><yellow> în <reset> [gamemode]<reset><yellow>! Vizitați acea lume pentru a-l folosi."
+  messages:
+    biome-not-unlocked: "[biome] <reset><red> nu este deblocat. Nu îl puteți folosi."
+    biome-not-purchased: "<red> Nu puteți folosi <reset> [biome] <reset><red>. Trebuie să-l cumpărați."
+    biome-cannot-be-unlocked: "<red> Nu puteți debloca <reset> [biome] <reset><red>."
+    biome-already-purchased: "<red> Ați cumpărat deja <reset> [biome] <reset><red>."
+    island-level-not-reached: "[biome] <reset><red> necesită să aveți cel puțin nivelul insulei: [number]."
+    missing-permission: "[biome] <reset><red> necesită să aveți permisiune: [permission]."
+    no-credits-buy: "<red> Nu aveți suficiente credite pentru a cumpăra <reset> [biome] <reset><red>. Costă [number]."
+    no-credits-buy-bank: "<red> Nu aveți suficiente credite în contul vostru bancar pentru a cumpăra <reset> [biome] <reset><red>. Costă [number]."
+    no-items-buy: "<red> Nu aveți suficiente articole pentru a cumpăra <reset> [biome] <reset><red>. Necesită [items]."
+    biome-purchased: "<yellow> Ați cumpărat <reset> [biome]<reset><yellow>."
+    import-count: "<yellow> Importate [biomes] biome și [bundles] pachete."
+    start-downloading: "<yellow> Descărcarea bibliotecii se începe."
+    update-start: "<green> Se începe schimbarea biomului în <reset> [biome] <reset><green> în [number] chunckuri. <yellow> Timp estimat: [time] sec."
+    update-done: "<green> Schimbarea biomului în <reset> [biome]<reset><green> este terminată."
+    waiting: "<green> Schimbare biom adăugată în coadă. <yellow> Timp de așteptare estimat: [time] sec."
+    biome-already-unlocked: "[biome] <reset><yellow> este deja deblocat."
+    everything-already-bought: "<green> Ați cumpărat deja toate biomele pentru acest mod de joc."
+    skipping: "<green> Se omite încărcarea <reset> [biome]<reset><green>."
+    overwriting: "<green> Se suprascrie <reset> [biome] <reset><green> în cache."
+    imported: "<green> Importat <reset> [biome] <reset><green> în cache."
+    migrate-start: "<green> Se începe migrarea la noul format de date."
+    migrate-finish: "<green> Migrarea la noul format de date este finalizată."
+    migrate-valid: "<green> Toate datele sunt valide. Migrarea nu este necesară."
+    bundle-loaded: "<green> Pachetul <reset> [bundle] <green> este încărcat."
+    clear-queue: "<green> Coada de sarcini de schimbare a biomului pentru [gamemode] este golită."
+  errors:
+    no-island-data: "<red> Insula nu are niciun fel de date stocate."
+    no-biomes-admin: "<red> Modul de joc curent nu are niciun biom utilizabil. Vă rog importați sau creați biome folosind /[command]"
+    no-biomes: "<red> Modul de joc curent nu are niciun biom utilizabil."
+    no-rank: "<red> Nu sunteți autorizat să schimbați biomul pe această insulă."
+    not-enough-level: "<red> Acest biom necesită cel puțin nivelul insulei [number]."
+    not-enough-money: "<red> Schimbarea acestui biom costă [number]."
+    not-enough-money-bank: "<red> Contul vostru bancar nu are suficiente credite. Schimbarea biomului costă [number]."
+    not-enough-items: "<red> Schimbarea acestui biom costă [items]."
+    admin-not-on-island: "<red> Nu sunteți pe insula [user]."
+    incorrect-object: "<red> Nu s-a putut găsi biomul cu numele solicitat: [biome]"
+    missing-biome: "<red> Numele biomului nu este specificat."
+    incorrect-mode: "<red> Modul cu nume '[mode]' nu există."
+    incorrect-range: "<red> Valoarea dată '[number]' nu este un număr valid."
+    no-file: "<red> Nu s-a putut găsi [file] în directorul biomelor."
+    no-load: "<red> Nu s-a putut importa biome din [file]. Motiv: [description]"
+    not-a-gamemode-world: "<red> Lumea [world] nu este o lume GameModeAddon."
+    file-exist: "<red> Fișier cu nume [file] există deja. Alegeți un alt nume."
+    no-library-entries: "<red> Nu s-au putut găsi intrări valide în bibliotecă."
+    not-unlocked: "<red> Nu ați deblocat acest biom."
+    not-purchased: "<red> Nu ați cumpărat acest biom."
+    timeout: "<red> Schimbarea biomului a depășit timp. Posibil că zona selectată era prea mare sau serverul este ocupat."
+    failed: "<red> Serverul a întâmpinat probleme la schimbarea biomului."
+    could-not-remove-money: "<red> Ceva nu a funcționat la retragerea banilor."
+    could-not-remove-items: "<red> Ceva nu a funcționat la retragerea articolelor."
+    something-went-wrong: "<red> Ceva nu a funcționat. Nu s-a putut face."
+protection:
+  flags:
+    BIOMES_ISLAND_PROTECTION:
+      name: "Control biom"
+      description: |-
+        <dark_purple><italic> Comută cine poate schimba
+        <dark_purple><italic> biomul insulei
+    BIOMES_WORLD_PROTECTION:
+      name: "Limitare Biom Insulă"
+      description: |-
+        <dark_purple><italic> Comută necesitatea
+        <dark_purple><italic> pentru jucători să fie
+        <dark_purple><italic> pe insula lor pentru a
+        <dark_purple><italic> schimba biomul.
+      hint: "<red> Trebuie să fii pe insula ta pentru a schimba biomul!"
