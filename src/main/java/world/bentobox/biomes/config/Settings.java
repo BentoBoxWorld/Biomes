@@ -509,10 +509,12 @@ public class Settings implements ConfigObject
     @ConfigComment("in an ocean biome (OCEAN, WARM_OCEAN, LUKEWARM_OCEAN, COLD_OCEAN, FROZEN_OCEAN,")
     @ConfigComment("DEEP_OCEAN, DEEP_LUKEWARM_OCEAN, DEEP_COLD_OCEAN, DEEP_FROZEN_OCEAN).")
     @ConfigComment("If set to false, those blocks will keep their ocean biome and will not be changed.")
-    @ConfigComment("Default value = false")
+    @ConfigComment("Note: islands in void worlds (e.g. SkyBlock) default to an ocean biome, so")
+    @ConfigComment("setting this to false will prevent biome changes from taking effect on them.")
+    @ConfigComment("Default value = true")
     @ConfigEntry(path = "change-ocean-biomes")
     @SuppressWarnings("javadoc")
-    private boolean changeOceanBiomes = false;
+    private boolean changeOceanBiomes = true;
 
     @ConfigComment("")
     @ConfigComment("For advanced menu this indicate how large range will be set on GUI opening.")
