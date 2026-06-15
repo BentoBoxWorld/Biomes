@@ -287,7 +287,13 @@ public class BiomesAddon extends Addon
             // Disable
             this.logError("Biomes settings could not load! Addon disabled.");
             this.setState(State.DISABLED);
+            return;
         }
+
+        // Save the settings straight back to disk. Loading only reads values and never writes
+        // missing keys, so this ensures any config options that were added to the Settings class
+        // but are absent from an existing config.yml are written out with their default values.
+        this.saveSettings();
 
         // Save existing panels.
         this.saveResource("panels/main_panel.yml", false);
