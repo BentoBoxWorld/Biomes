@@ -9,6 +9,15 @@
 #     'RANGE' - updates biome by block in given range
 default-mode: ISLAND
 #
+# This indicates if biome changes should also affect blocks that are currently
+# in an ocean biome (OCEAN, WARM_OCEAN, LUKEWARM_OCEAN, COLD_OCEAN, FROZEN_OCEAN,
+# DEEP_OCEAN, DEEP_LUKEWARM_OCEAN, DEEP_COLD_OCEAN, DEEP_FROZEN_OCEAN).
+# If set to false, those blocks will keep their ocean biome and will not be changed.
+# Note: islands in void worlds (e.g. SkyBlock) default to an ocean biome, so
+# setting this to false will prevent biome changes from taking effect on them.
+# Default value = true
+change-ocean-biomes: true
+#
 # For advanced menu this indicate how large range will be set on GUI opening.
 # If advanced menu is disabled or in biome set command update range is not set
 # then update algorithm will use this value as update range.
