@@ -15,7 +15,7 @@
 #    order: <Integer>                         # Integer. Order of current biome. Default -1.
 #    unlock:                                  # Section that configures biomes unlock/buy options. Not required.
 #      level: <Long>                          # Minimal island level for biome to be unlockable. Requires Level addon. Default 0.
-#      permissions: [<String>]                # Set of permissions for biome to be unlockable. Default empty.
+#      permission: [<String>]                 # Set of permissions for biome to be unlockable. Default empty.
 #      cost: <Double>                         # Purchase cost (once) for biome. Requires Vault and Economy plugins. Default 0.
 #      items: [<Item>]                        # Set of items for purchasing biome (once). Write format for each item can be found in: https://docs.bentobox.world/en/latest/BentoBox/ItemParser/. Default empty.
 #    change:                                  # Section that configures cost for each biome usage. Not required.
