@@ -1,0 +1,927 @@
+biomes:
+  commands:
+    # This section contains only admin commands translations.
+    admin:
+      main:
+        description: 生態域管理主指令
+      import:
+        parameters: <檔案>
+        description: 匯入生態域資料
+        confirmation: 這將移除 [gamemode] 的所有生態域，並從範本檔案匯入新的生態域，請確認是否繼續。
+      migrate:
+        description: 將生態域資料遷移至新的資料格式
+      set:
+        description: 變更玩家島嶼的生態域
+        parameters: <玩家> <生態域 ID> [模式] [大小]
+      unlock:
+        description: 無需檢查解鎖條件即可為玩家解鎖生態域；若最後加上 true，則會同時標記為已購買。
+        parameters: <玩家> <生態域 ID> [true]
+      clear-queue:
+        description: 清除生態域更新等待佇列
+    # This section contains only player commands translations.
+    player:
+      main:
+        description: 開啟生態域選擇介面
+      set:
+        description: 變更島嶼生態域
+        parameters: <生態域 ID> [模式] [大小]
+      buy:
+        description: 購買指定生態域
+        parameters: <生態域 ID>
+      info:
+        description: 在聊天室顯示生態域詳細資訊
+        parameters: <生態域 ID>
+  gui:
+    titles:
+      player-panel: <black><bold> 選擇生態域
+      buy-panel: <black><bold> 購買生態域
+      advanced-panel: <black><bold> 生態域更新模式
+      # All Titles Below this comment is for Admin Menus.
+      admin-panel: <black><bold> 管理介面
+      settings: <black><bold> 設定
+      library: <black><bold> 資料庫
+      manage-biomes: <black><bold> 管理生態域
+      manage-bundles: <black><bold> 管理套件
+      manage-islands: <black><bold> 管理島嶼資料
+      edit-biome: '<black><bold> 編輯生態域：[biome]'
+      edit-bundle: '<black><bold> 編輯套件：[bundle]'
+      edit-island: '<black><bold> 編輯島嶼：[island]'
+      environment-selector: <black><bold> 選擇維度
+      biome-selector: <black><bold> 選擇生態域
+      bundle-selector: <black><bold> 選擇套件
+      item-selector: <black><bold> 選擇物品
+    buttons:
+      island:
+        name: <white><bold> 島嶼
+        description: |-
+          <gray> 將整座島嶼
+          <gray> 變更為指定的
+          <gray> 生態域。
+      chunk:
+        name: <white><bold> 區塊
+        description: <gray> 以區塊為單位變更生態域。
+      range:
+        name: <white><bold> 範圍
+        description: <gray> 依指定範圍變更生態域。
+      reduce:
+        name: <white><bold> 減少
+        description: <gray> 減少 <yellow>[number]
+      increase:
+        name: <white><bold> 增加
+        description: <gray> 增加 <yellow>[number]
+      accept:
+        name: <white><bold> 套用變更
+        description: |-
+          <gray> 將生態域變更為
+          <yellow>[biome]
+          <gray> 更新模式：<yellow>[mode]
+          <gray> 更新範圍：<yellow>[number]
+      return:
+        name: <white><bold> 返回
+        description: <gray> 返回上一個選單。
+      previous:
+        name: <white><bold> 上一頁
+        description: <gray> 前往第 <yellow>[number] <gray> 頁
+      next:
+        name: <white><bold> 下一頁
+        description: <gray> 前往第 <yellow>[number] <gray> 頁
+      quit:
+        name: <white><bold> 離開
+        description: <gray> 關閉此介面。
+      save:
+        name: <white><bold> 儲存
+        description: <gray> 儲存變更並返回。
+      cancel:
+        name: <white><bold> 取消
+        description: <gray> 取消變更並返回。
+      search:
+        name: <white><bold> 搜尋
+        description: |-
+          <gray> 輸入文字以搜尋
+          <gray> 指定的項目。
+        search: '<aqua>搜尋內容：[value]'
+      buy:
+        name: <white><bold> 購買
+        description: <gray> 購買新的生態域。
+      manage_islands:
+        name: <white><bold> 管理島嶼
+        description: |-
+          <gray> 管理島嶼
+          <gray> 資料。
+      manage_biomes:
+        name: <white><bold> 管理生態域
+        description: |-
+          <gray> 管理生態域
+          <gray> 資料。
+      manage_bundles:
+        name: <white><bold> 管理套件
+        description: |-
+          <gray> 管理套件
+          <gray> 資料。
+      settings:
+        name: <white><bold> 設定
+        description: |-
+          <gray> 調整 Biomes
+          <gray> 附加元件設定。
+      import_template:
+        name: <white><bold> 匯入範本
+        description: |-
+          <gray> 從附加元件
+          <gray> 資料夾匯入
+          <gray> 範本檔案。
+      web_library:
+        name: <white><bold> 線上資料庫
+        description: |-
+          <gray> 存取包含
+          <gray> 共用生態域的
+          <gray> 線上資料庫。
+      export_from_database:
+        name: <white><bold> 匯出資料庫
+        description: |-
+          <gray> 將資料庫匯出成
+          <gray> 檔案，並儲存至
+          <gray> 附加元件資料夾。
+      import_to_database:
+        name: <white><bold> 匯入資料庫
+        description: |-
+          <gray> 從附加元件
+          <gray> 資料夾中的檔案
+          <gray> 匯入資料庫。
+      wipe_islands_data:
+        name: <white><bold> 清除島嶼資料
+        description: |-
+          <gray> 清除此遊戲模式
+          <gray> 的所有島嶼
+          <gray> 生態域資料。
+      wipe_biomes_data:
+        name: <white><bold> 清除生態域資料
+        description: |-
+          <gray> 清除此遊戲模式
+          <gray> 的所有生態域
+          <gray> 與套件資料。
+      add_biome:
+        name: <white><bold> 新增生態域
+        description: |-
+          <gray> 建立新的生態域，
+          <gray> 讓玩家能透過
+          <gray> 選單使用。
+      remove_biome:
+        name: <white><bold> 移除生態域
+        description: |-
+          <gray> 從玩家選單中
+          <gray> 移除所選的
+          <gray> 生態域。
+        title: '<yellow>已選擇的生態域：'
+        value: <yellow> - [biome]
+      accept_selected:
+        name: <white><bold> 確認選擇
+        description: <gray> 確認目前選擇的項目。
+        title: '<yellow>已選擇的項目：'
+        element: <yellow> - [element]
+      environment_element:
+        name: <white><bold>[environment]
+        description: <gray>[description]。
+      properties:
+        name: <white><bold> 屬性
+        description: <gray> 檢視生態域主要屬性。
+      change_properties:
+        name: <white><bold> 變更屬性
+        description: <gray> 檢視可修改的生態域屬性。
+      unlock_properties:
+        name: <white><bold> 解鎖條件
+        description: <gray> 檢視生態域的解鎖條件。
+      biome:
+        name: <white><bold>[biome]
+        description: <gray>Minecraft 生態域類型。
+        value: '<gray>生態域 ID：<yellow>[id]'
+      name:
+        name: <white><bold> 顯示名稱
+        description: |-
+          <gray> 生態域的顯示名稱。
+          <gray> 支援色彩代碼。
+        value: '<gray>目前的值：<reset>[name]'
+      deployed:
+        name: <white><bold> 已部署
+        description: |-
+          <gray> 切換此生態域是否
+          <gray> 開放給玩家使用。
+        enabled: <dark_green> 已啟用
+        disabled: <red> 已停用
+      environment:
+        name: <white><bold> 維度
+        description: |-
+          <gray> 限制此生態域
+          <gray> 可套用的維度。
+        enabled: <dark_green>
+        disabled: <red>
+      icon:
+        name: <white><bold> 圖示
+        description: |-
+          <gray> 變更此生態域的
+          <gray> 圖示。
+      order:
+        name: <white><bold> 排序
+        description: |-
+          <gray> 調整物件的
+          <gray> 排序順序。
+          <gray> 若數值相同，
+          <gray> 將依唯一 ID
+          <gray> 排序。
+        value: '<gray>目前排序：<yellow>[number]'
+      description:
+        name: <white><bold> 描述
+        description: |-
+          <gray> 生態域的詳細描述。
+          <gray> 支援色彩代碼。
+        value: '<yellow>目前描述：'
+        none: <gray>尚未設定描述。
+      unlock_permissions:
+        name: <white><bold> 解鎖權限
+        description: |-
+          <gray> 設定解鎖此
+          <gray> 生態域所需的
+          <gray> 權限。
+        title: '<yellow>權限：'
+        element: ' <dark_gray>- [permission]'
+        none: <gray>尚未設定權限。
+      unlock_cost:
+        name: <white><bold> 解鎖花費
+        description: |-
+          <gray> 設定解鎖此
+          <gray> 生態域所需花費。
+        value: '<gray>目前花費：<yellow>[number]'
+      unlock_items:
+        name: <white><bold> 解鎖物品
+        description: |-
+          <gray> 設定解鎖此
+          <gray> 生態域所需物品。
+        title: '<yellow>物品：'
+        element: ' <dark_gray>- [number]×[item]'
+        none: <gray>尚未設定物品。
+      unlock_level:
+        name: <white><bold> 解鎖等級
+        description: |-
+          <gray> 設定解鎖此
+          <gray> 生態域所需的
+          <gray> 島嶼等級。
+        value: '<gray>目前等級：<yellow>[number]'
+      change_cost:
+        name: <white><bold> 套用花費
+        description: |-
+          <gray> 設定套用此
+          <gray> 生態域所需花費。
+        value: '<gray>目前花費：<yellow>[number]'
+      change_items:
+        name: <white><bold> 套用物品
+        description: |-
+          <gray> 設定套用此
+          <gray> 生態域所需物品。
+        title: '<yellow>物品：'
+        element: ' <dark_gray>- [number]×[item]'
+        none: <gray>尚未設定物品。
+      change_type:
+        name: <white><bold>[type]
+        description: |-
+          <gray> 設定套用生態域
+          <gray> 的花費計算方式。
+        static:
+          name: 固定值
+          description: |-
+            <gray> 套用生態域的
+            <gray> 花費固定不變。
+        per_block:
+          name: 每方塊
+          description: |-
+            <gray> 花費將依照
+            <gray> 變更的方塊數量計算。
+        per_usage:
+          name: 每次使用
+          description: |-
+            <gray> 每次套用後，
+            <gray> 花費都會
+            <gray> 增加。
+        enabled: <dark_green> 已啟用
+        disabled: <red> 已停用
+      change_increment:
+        name: <white><bold> 遞增值
+        description: |-
+          <gray> 設定每次使用後
+          <gray> 增加的數值。
+        value: '<gray>目前數值：<yellow>[number]'
+      biome-filter:
+        name: <white><bold>[filter]
+        description: |-
+          <gray> 依據 Minecraft Wiki
+          <gray> 的生態域分類。
+        lush: 繁茂生態域
+        dry: 乾燥生態域
+        cold: 寒冷生態域
+        snowy: 雪地生態域
+        aquatic: 海洋生態域
+        nether: 地獄生態域
+        the_end: 終界生態域
+        neutral: 中性生態域
+        unused: 未使用生態域
+        warm: 溫暖生態域
+        cave: 洞穴生態域
+        temperate: 溫帶生態域
+      protection_range:
+        name: <white><bold> 保護範圍
+        description: |-
+          <gray> 限制生態域變更
+          <gray> 僅套用於島嶼
+          <gray> 保護範圍內，
+          <gray> 而非整座島嶼。
+        enabled: <dark_green> 已啟用
+        disabled: <red> 已停用
+      reset:
+        name: <white><bold> 島主變更時重設
+        description: |-
+          <gray> 若島嶼更換島主，
+          <gray> 且新島主沒有目前
+          <gray> 生態域的使用權限，
+          <gray> 則自動恢復為
+          <gray> 預設生態域。
+        enabled: <dark_green> 已啟用
+        disabled: <red> 已停用
+      cool_down:
+        name: <white><bold> 生態域冷卻時間
+        description: |-
+          <gray> 設定玩家再次
+          <gray> 變更生態域前
+          <gray> 必須等待的秒數。
+        value: '<gray>目前冷卻時間：<yellow>[number]'
+        disabled: <yellow>已停用冷卻時間。
+      default_size:
+        name: <white><bold> 預設範圍
+        description: |-
+          <gray> 玩家未指定範圍時，
+          <gray> 將使用此預設值。
+        value: '<gray>預設範圍：<yellow>[number]'
+      default_mode:
+        name: <white><bold> 預設更新模式
+        description: |-
+          <gray> 玩家未指定更新模式時，
+          <gray> 將使用此預設值。
+        enabled: <dark_green>
+        disabled: <red>
+      unlock_notify:
+        name: <white><bold> 解鎖通知
+        description: |-
+          <gray> 玩家解鎖新的
+          <gray> 生態域時，
+          <gray> 將收到通知。
+        enabled: <aqua>解鎖通知已<green>啟用<aqua>。
+        disabled: <aqua>解鎖通知已<red>停用<aqua>。
+      change_timeout:
+        name: <white><bold> 更新逾時時間
+        description: |-
+          <gray> 設定生態域更新
+          <gray> 超過多少分鐘後
+          <gray> 自動終止。
+          <gray> 大型島嶼或
+          <gray> 伺服器負載過高時
+          <gray> 可能會發生。
+        value: '<gray>逾時時間：<yellow>[number] 分鐘'
+      parallel_updates:
+        name: <white><bold> 平行更新
+        description: |-
+          <gray> 設定可同時進行
+          <gray> 的生態域更新數量。
+          <gray> 其餘更新將會
+          <gray> 進入等待佇列。
+        value: '<gray>目前數值：<yellow>[number]<gray>。'
+      use_bank:
+        name: <white><bold> 使用銀行帳戶
+        description: |-
+          <gray> 設定 Biomes
+          <gray> 附加元件的所有付款
+          <gray> 是否使用 Bank
+          <gray> 附加元件的島嶼銀行帳戶。
+        enabled: <aqua>已<green>啟用<aqua>使用銀行帳戶。
+        disabled: <aqua>已<red>停用<aqua>使用銀行帳戶。
+        missing: <red>尚未安裝 Bank 附加元件。
+      visibility:
+        name: <white><bold> 生態域顯示
+        description: |-
+          <gray> 設定玩家在
+          <gray> 生態域選擇介面中
+          <gray> 可看到的生態域。
+        enabled: <dark_green>
+        disabled: <red>
+        all: 所有生態域
+        deployed: 已部署的生態域
+        accessible: 可使用的生態域
+        toggleable: 可切換
+      is_online:
+        name: <white><bold> 線上玩家島嶼
+        description: |-
+          <gray> 顯示至少有
+          <gray> 一位成員在線上的
+          <gray> 所有島嶼。
+      all_islands:
+        name: <white><bold> 所有島嶼
+        description: |-
+          <gray> 顯示目前遊戲模式
+          <gray> 中建立的
+          <gray> 所有島嶼。
+      island_name:
+        name: <white><bold> [name]
+        island-owner: '[player]'
+        unknown: <red>未知島主
+        description: |-
+          [owner]
+          [members]
+          [id]
+        owner: '<gray>島主：<yellow>[player]'
+        title: '<gray>島嶼成員：'
+        element: ' <gray>- <yellow>[player]'
+      change_biome:
+        name: <white><bold> 變更生態域
+        description: <gray>變更此島嶼的生態域。
+      manage_data:
+        name: <white><bold> 管理島嶼資料
+        description: |-
+          <gray> 管理此島嶼
+          <gray> 儲存的資料。
+      clear_data:
+        name: <white><bold> 清除島嶼資料
+        description: |-
+          <gray> 清除此島嶼
+          <gray> 的所有資料。
+      island_bundle:
+        name: <white><bold> 島嶼套件
+        description: |-
+          <gray> 指派給目前島嶼的
+          <gray> 生態域套件。
+          <gray> 島嶼只能使用
+          <gray> 此套件中的
+          <gray> 生態域。
+        value: '<aqua>套件：[bundle]'
+        overwritten: |-
+          <red>島主擁有可覆寫
+          <red>套件設定的權限。
+      owner_bundle:
+        name: <white><bold> 島主套件
+        description: |-
+          <gray> 指派給目前島主的
+          <gray> 生態域套件。
+          <gray> 島嶼只能使用
+          <gray> 此套件中的
+          <gray> 生態域。
+          <gray> 指派權限：
+          <gray><italic>'[gamemode].biomes.bundle.<bundle-id>'
+        value: '<aqua>套件：[bundle]'
+      reset_to_default:
+        name: <white><bold> 重設為預設值
+        description: |-
+          <gray> 將所有島嶼設定
+          <gray> 重設為設定檔中的
+          <gray> 預設值。
+      bundle_info:
+        name: <white><bold> 基本資訊
+        description: |-
+          <gray> 檢視套件的
+          <gray> 基本資訊。
+      bundle_biomes:
+        name: <white><bold> 管理生態域
+        description: |-
+          <gray> 管理此套件
+          <gray> 包含的生態域。
+      bundle_name:
+        name: <white><bold> 變更名稱
+        description: |-
+          <gray> 變更套件的
+          <gray> 顯示名稱。
+        value: '<yellow>目前的值：<reset>[bundle]'
+      bundle_icon:
+        name: <white><bold> 變更圖示
+        description: <gray>變更套件圖示。
+      bundle_description:
+        name: <white><bold> 變更描述
+        description: <gray>變更套件描述。
+        value: '<yellow>目前的值：'
+        none: <red>尚未設定描述。
+      bundle_permission:
+        name: <white><bold> 套件權限
+        description: |-
+          <gray> 將此權限給予玩家後，
+          <gray> 即可強制使用
+          <gray> 此套件。
+        value: '<yellow>權限：<white>[gamemode].biomes.bundle.[id]'
+      add_bundle_biome:
+        name: <white><bold> 新增生態域
+        description: |-
+          <gray> 將生態域加入
+          <gray> 此套件。
+        title: '<aqua>已選擇的生態域：'
+        value: <aqua>- [biome]
+      remove_bundle_biome:
+        name: <white><bold> 移除生態域
+        description: |-
+          <gray> 將生態域從
+          <gray> 此套件中移除。
+        title: '<aqua>已選擇的生態域：'
+        value: <aqua>- [biome]
+      create_bundle:
+        name: <white><bold> 建立套件
+        description: |-
+          <gray> 為目前遊戲模式
+          <gray> 建立新的套件。
+      delete_bundle:
+        name: <white><bold> 移除套件
+        description: |-
+          <gray> 從目前遊戲模式
+          <gray> 完全移除此套件。
+        title: '<aqua>已選擇的套件：'
+        value: <aqua>- [bundle]
+      download:
+        name: <white><bold> 下載
+        description: <gray>下載線上資料庫。
+        enabled: <dark_green>清除快取後下載
+        disabled: <red>直接下載（不清除快取）
+    tips:
+      click-to-filter: <yellow> 點擊 <gray> 即可篩選。
+      click-to-manage: <yellow> 點擊 <gray> 即可管理。
+      click-to-clear: <yellow> 點擊 <gray> 即可清除。
+      click-to-change-biome: <yellow> 點擊 <gray> 即可變更生態域。
+      click-to-view: <yellow> 點擊 <gray> 即可檢視。
+      click-to-select: <yellow> 點擊 <gray> 即可選擇。
+      click-to-choose: <yellow> 點擊 <gray> 即可選取。
+      click-to-complete: <yellow> 點擊 <gray> 即可完成。
+      left-click-to-accept: <yellow> 左鍵 <gray> 即可套用。
+      right-click-to-write: <yellow> 右鍵 <gray> 即可輸入。
+      click-to-reduce: <yellow> 點擊 <gray> 即可減少。
+      click-to-increase: <yellow> 點擊 <gray> 即可增加。
+      click-to-return: <yellow> 點擊 <gray> 即可返回。
+      click-to-quit: <yellow> 點擊 <gray> 即可離開。
+      click-to-wipe: <yellow> 點擊 <gray> 即可清除。
+      left-click-to-wipe: <yellow> 左鍵 <gray> 即可清除。
+      right-click-to-switch: <yellow> 右鍵 <gray> 即可切換。
+      click-to-open: <yellow> 點擊 <gray> 即可開啟。
+      click-to-export: <yellow> 點擊 <gray> 即可匯出。
+      click-to-create: <yellow> 點擊 <gray> 即可建立。
+      left-click-to-open: <yellow> 左鍵 <gray> 即可開啟。
+      right-click-to-reset-all: <yellow> 右鍵 <gray> 即可全部重設。
+      click-to-toggle: <yellow> 點擊 <gray> 即可切換。
+      click-to-change: <yellow> 點擊 <gray> 即可變更。
+      shift-click-to-reset: <yellow> Shift + 左鍵 <gray> 即可重設。
+      click-to-add: <yellow> 點擊 <gray> 即可新增。
+      click-to-remove: <yellow> 點擊 <gray> 即可移除。
+      left-click-to-cycle: <yellow> 左鍵 <gray> 即可切換至上一個。
+      right-click-to-cycle: <yellow> 右鍵 <gray> 即可切換至下一個。
+      click-to-edit: <yellow> 點擊 <gray> 即可編輯。
+      left-click-to-download: <yellow> 左鍵 <gray> 即可下載。
+      right-click-to-toggle: <yellow> 右鍵 <gray> 即可切換。
+      click-to-install: <yellow> 點擊 <gray> 即可安裝。
+      click-to-reset-all: <yellow> 點擊 <gray> 即可全部重設。
+      right-click-to-select: <yellow> 右鍵 <gray> 即可選擇。
+      right-click-to-deselect: <yellow> 右鍵 <gray> 即可取消選擇。
+      left-click-to-choose: <yellow> 左鍵 <gray> 即可選取。
+      click-to-buy: <yellow> 點擊 <gray> 即可購買。
+      click-to-cancel: <yellow> 點擊 <gray> 即可取消。
+      click-to-save: <yellow> 點擊 <gray> 即可儲存。
+      click-to-deselect: <yellow> 點擊 <gray> 即可取消選擇。
+      click-on-item: |-
+       <yellow> 點擊 <gray> 背包中的
+        <gray> 物品。
+      left-click-to-edit: <yellow> 左鍵 <gray> 即可編輯。
+      right-click-to-clear: <yellow> 右鍵 <gray> 即可清除。
+      click-to-previous: <yellow> 點擊 <gray> 即可檢視上一頁。
+      click-to-next: <yellow> 點擊 <gray> 即可檢視下一頁。
+      select-before: <yellow> 請先選擇 <gray> 項目後再繼續。
+      click-to-apply: <yellow> 點擊 <gray> 即可套用。
+      right-click-to-open: <yellow> 右鍵 <gray> 即可開啟。
+      click-to-perform: <yellow> 點擊 <gray> 即可執行。
+      left-click-to-apply: <yellow> 左鍵 <gray> 即可套用。
+      right-click-to-unlock: <yellow> 右鍵 <gray> 即可解鎖。
+      right-click-to-buy: <yellow> 右鍵 <gray> 即可購買。
+      right-click-to-change: <yellow> 右鍵 <gray> 即可變更。
+    descriptions:
+      update-mode:
+        island: 島嶼模式
+        chunk: 區塊模式
+        range: 範圍模式
+      selected: <dark_green> 已選擇
+      island-owner: '[player]'
+      unknown: <yellow> 未知
+      biome:
+        lore: |-
+          [description]
+          [biome]
+          [unlock]
+          [change]
+        original: '<gray> 生態域：<yellow> [biome]'
+        unlock:
+          lore: |-
+            [items]
+            [money]
+            [level]
+            [permissions]
+          money: '<gray> 解鎖花費：<yellow> [number]'
+          level: |-
+            <gray> 需要島嶼等級達到
+            <yellow> [number]
+          permission-single: '<gray> 缺少權限：<red> [permission]'
+          permissions-title: '<red> 缺少權限：'
+          permissions-list: <red> - [permission]
+          item-single: '<gray> 解鎖物品：[color] [number] × [item]'
+          item-title: '<gray> 解鎖物品：'
+          item-list: <gray> - [color] [number] × [item]
+          missing: <red>
+          has: <yellow>
+        change:
+          lore: |-
+            [items]
+            [money]
+            [mode]
+            [usage]
+          mode:
+            per_block: |-
+              <aqua><italic> 生態域花費將依照
+              <aqua><italic> 變更的方塊數量計算。
+            per_usage: |-
+              <aqua><italic> 每次套用生態域後，
+              <aqua><italic> 花費都會增加。
+            static: <aqua><italic> 固定變更花費。
+          money: '<gray> 花費：<yellow> [number]'
+          item-single: '<gray> 物品：[color] [number] × [item]'
+          item-title: '<gray> 物品：'
+          item-list: <gray> - [color] [number] × [item]
+          number-of-usage: |-
+            <gray> 此生態域已被
+            <gray> 套用 <yellow>[number] <gray> 次。
+          missing: <red>
+          has: <yellow>
+      bundle:
+        lore: |-
+          [description]
+          [permission]
+          [biomes]
+        permission: |-
+          <gray> 玩家必須擁有
+          <gray> 下列權限：
+          <gray><italic> [gamemode].biomes.bundle.[id]
+        title: '<gray> 套件包含的生態域：'
+        value: <gray> - [biome]
+        no-biomes: <red> 尚未加入任何生態域
+      library:
+        author: <gray>作者：<yellow> [author]
+        version: <gray>使用 Biomes <yellow>[version] <gray>建立
+        lang: '<gray>語言：<yellow> [lang]'
+        gamemode: <gray>主要適用於 <yellow>[gamemode]
+  conversations:
+    # Prefix for messages that are send from server.
+    prefix: '<bold><gold> [BentoBox]: <reset>'
+    # List of strings that are valid for confirming input. (separated with ,)
+    confirm-string: true, on, yes, confirm, y, valid, correct
+
+    # List of strings that are valid for denying input. (separated with ,)
+    deny-string: false, off, no, deny, n, invalid, incorrect
+    # String that allows to cancel conversation. (can be only one)
+    cancel-string: cancel
+    # List of strings that allows to exit conversation. (separated with ,)
+    exit-string: cancel, exit, quit
+    # Message that is send to user when conversation is cancelled.
+    cancelled: <red> 已取消操作！
+    # Message that appears when admin clicks on number editing button.
+    input-number: <yellow> 請在聊天室輸入一個數字。
+    # Message that appears when admin clicks on seconds editing button.
+    input-seconds: <yellow> 請在聊天室輸入秒數。
+    # Error message that is showed if user input a value that is not a number.
+    numeric-only: <red>「[value]」不是有效的數字！
+    # Error message that is showed if user input a number that is smaller or larger that allowed.
+    not-valid-value: <red> 數值 [value] 無效，必須大於 [min] 且小於 [max]！
+    # Message that confirms user data removing.
+    data-removed: <green> 已從 [gamemode] 移除所選的生態域。
+    # Message that asks confirmation for user data removing.
+    confirm-deletion: '<yellow>請確認是否要刪除 [number] 個生態域：[value]。'
+    # Message that confirms user data removing.
+    user-data-removed: <green> 已清除 [gamemode] 的所有玩家資料。
+    # Message that asks confirmation for user data removing.
+    confirm-user-data-deletion: <yellow>請確認是否要清除 [gamemode] 的玩家資料。
+    # Message that confirms user data removing.
+    all-data-removed: <green> 已清除 [gamemode] 的所有附加元件資料。
+    # Message that asks confirmation for user data removing.
+    confirm-all-data-deletion: <yellow>請確認是否要清除 [gamemode] 的附加元件資料。
+    # Message that asks user to write a name
+    write-name: <yellow> 請在聊天室輸入名稱。
+    # Message that confirms new object creation.
+    new-object-created: <green> 已為 [gamemode] 建立新的物件。
+    # Error message that sends that object cannot be created with a given name
+    object-already-exists: <red>物件 <gray>[id]<red> 已存在，請使用其他名稱。
+    # Message that confirms name changing
+    name-changed: <green> 已成功更新名稱。
+    # Message that appears after clicking
+    write-description: <yellow> 請在聊天室輸入新的描述，完成後請單獨輸入一行「quit」。
+    # Message that appears after successful description change.
+    description-changed: <green> 已成功更新描述。
+    # Message that appears when admin clicks on permission editing button.
+    write-permissions: <yellow> 請在聊天室逐行輸入所需的權限，完成後請單獨輸入一行「quit」。
+    # Message that appears after successful permission updating.
+    permissions-changed: <green> 已成功更新權限。
+    # Message that appears when user clicks on library installation.
+    start-downloading: <green> 正在下載並匯入 Biomes 線上資料庫。
+    # Message that appears when writing multiline text.
+    written-text: '<green>輸入內容：'
+    # Message that appears after importing library data into database.
+    confirm-data-replacement: <yellow>請確認是否要以新資料取代目前的資料。
+    # Message that appears after successful data importing
+    new-data-imported: <green> 已成功匯入 [gamemode] 的新資料。
+    # Message that appears after admin clicks on database exporting button.
+    exported-file-name: <yellow>請輸入匯出資料庫的檔案名稱。（輸入「cancel」可取消）
+    # Message that appears after successful database exporting to file.
+    database-export-completed: <green> 已完成 [world] 的資料庫匯出，已產生檔案 [file]。
+    # Message that appears if input file name is already taken.
+    file-name-exist: <red>檔案「[id]」已存在，無法覆寫。
+    # Message that asks for search value input.
+    write-search: <yellow>請輸入搜尋內容。（輸入「cancel」可取消）
+
+    # Message that appears after updating search value.
+    search-updated: <green> 已更新搜尋內容。
+    # Message that appears when admin tries to deploy invalid biome.
+    invalid-biome: <red>已儲存的「[biome]」<reset><red>包含無效資料。
+    # Message that appears when admin tries to delete biome.
+    confirm-biome-deletion: <yellow>請確認是否要從 [gamemode] 移除 <reset>[biome]<reset><yellow>。
+    # Message that appears when admin removed biome.
+    biome-removed: '[biome] <reset><green> 已從 [gamemode] 移除。'
+
+    # Message that appears when admin tries to delete island data.
+    confirm-island-data-deletion: <yellow>請確認是否要移除 [player] 的島嶼資料。
+    # Message that appears when admin removed island data.
+    island-data-removed: '[player] <green>的島嶼資料已移除。'
+    # Message that appears when admin tries to delete biome.
+    confirm-biome-data-deletion: <yellow>請確認是否要移除 [gamemode] 的所有生態域。
+    # Message that appears when admin removed biome.
+    biome-data-removed: <green>已移除 [gamemode] 的所有生態域。
+    # Message that appears when user unlocks new biome and need to buy it.
+    click-text-to-purchase: <yellow>你已解鎖 <reset>[biome]<reset><yellow>！點擊這裡即可購買。
+    # Message that appears when user unlocks new biome and can already use it.
+    click-text-to-set: <yellow>你已解鎖 <reset>[biome]<reset><yellow>！點擊這裡即可使用。
+    # Message shown when a biome is unlocked while the player is outside that gamemode world.
+    click-text-to-purchase-other-world: <yellow>你已在 <reset>[gamemode]<reset><yellow> 解鎖 <reset>[biome]<reset><yellow>！請前往該世界購買。
+    # Message shown when a biome is unlocked while the player is outside that gamemode world.
+    click-text-to-set-other-world: <yellow>你已在 <reset>[gamemode]<reset><yellow> 解鎖 <reset>[biome]<reset><yellow>！請前往該世界使用。
+  messages:
+    # Message that is sent to a player if he tries to use locked biome.
+    biome-not-unlocked: '[biome] <reset><red> 尚未解鎖，無法使用。'
+    # Message that is sent to a player if he tries to use biome which he has not purchased.
+    biome-not-purchased: <red>你無法使用 <reset>[biome]<reset><red>，必須先購買。
+    # Message that is sent to player if he tries to unlock invalid or undeployed biome.
+    biome-cannot-be-unlocked: <red>無法解鎖 <reset>[biome]<reset><red>。
+    # Message that is sent to player if he tries to buy biome that he already owns.
+    biome-already-purchased: <red>你已經購買過 <reset>[biome]<reset><red>。
+    # Message that is sent to player if he tries purchase biome without reaching required level.
+    island-level-not-reached: '[biome] <reset><red> 需要島嶼等級至少達到 [number]。'
+    # Message that is sent to player if he tries purchase biome without required permission.
+    missing-permission: '[biome] <reset><red> 需要權限：[permission]。'
+    # Message that is sent to player if he tries purchase biome without required money in account.
+    no-credits-buy: <red>你的餘額不足，無法購買 <reset>[biome]<reset><red>，需要 [number]。
+    # Message that is sent to player if he tries purchase biome without required money in bank account.
+    no-credits-buy-bank: <red>你的銀行帳戶餘額不足，無法購買 <reset>[biome]<reset><red>，需要 [number]。
+    # Message that is sent to player if he tries purchase biome without required items in account.
+    no-items-buy: <red>你的物品不足，無法購買 <reset>[biome]<reset><red>，需要 [items]。
+    # Message that is sent to player when he buys a biome.
+    biome-purchased: <yellow>你已購買 <reset>[biome]<reset><yellow>。
+    # Message that is sent to player after importing biomes.
+    import-count: <yellow>已匯入 [biomes] 個生態域與 [bundles] 個套件。
+    # Message that appears after clicking on download button in web library.
+    start-downloading: <yellow>開始下載 Biomes 線上資料庫。
+    # This message is sent to user when biome changing is started.
+    update-start: '<green>開始將生態域變更為 [biome]<reset><green>，共需更新 [number] 個區塊。<yellow>預估時間：[time] 秒。'
+    # This message is sent to user when biome changing is finished.
+    update-done: <green>已成功將生態域變更為 [biome]<reset><green>。
+    # This message is sent to user when his change is placed in queue.
+    waiting: '<green>已將生態域更新加入等待佇列。<yellow>預估等待時間：[time] 秒。'
+    # Message that is sent to player when the biome is already unlocked.
+    biome-already-unlocked: '[biome] <reset><yellow> 已經解鎖。'
+    # Message that is displayed for players if gamemode does not have any biome.
+    everything-already-bought: <green>你已購買此遊戲模式的所有生態域。
+    skipping: <green>略過載入 <reset>[biome]<reset><green>。
+    overwriting: <green>已覆寫快取中的 <reset>[biome]<reset><green>。
+    imported: <green>已將 <reset>[biome]<reset><green> 匯入快取。
+    migrate-start: <green>開始遷移至新的資料格式。
+    migrate-finish: <green>已完成遷移至新的資料格式。
+    migrate-valid: <green>所有資料皆有效，無需進行遷移。
+    bundle-loaded: <green>已載入套件 <reset>[bundle]<green>。
+    clear-queue: <green>已清除 [gamemode] 的生態域更新等待佇列。
+  errors:
+    # Message that is displayed if requested user or island does not have any valid data.
+    no-island-data: <red>該島嶼沒有任何已儲存的資料。
+    # Message that is displayed for admins if gamemode does not have any biome.
+    no-biomes-admin: <red>目前的遊戲模式沒有任何可用的生態域，請使用 /[command] 匯入或建立生態域。
+    # Message that is displayed for players if gamemode does not have any biome.
+    no-biomes: <red>目前的遊戲模式沒有任何可用的生態域。
+    # Message that is displayed for player if biome change is protected by island protection flag.
+    no-rank: <red>你沒有權限變更此島嶼的生態域。
+    # Message that is displayed for player if biome requires higher island level.
+    not-enough-level: <red>此生態域需要島嶼等級至少達到 [number]。
+    # Message that is displayed for player if biome requires more money than player has.
+    not-enough-money: <red>變更此生態域需要花費 [number]。
+    # Message that is displayed for player if biome requires more money than island bank has.
+    not-enough-money-bank: <red>島嶼銀行帳戶餘額不足，變更此生態域需要花費 [number]。
+    # Message that is displayed for player if biome requires more items than player has.
+    not-enough-items: <red>變更此生態域需要 [items]。
+    # Message that is displayed for admin when he tries to change biome on other player island while not being on it.
+    admin-not-on-island: <red>你目前不在 [user] 的島嶼上。
+    # Message that is displayed for players when they use command, but requested biome does not exist.
+    incorrect-object: '<red>找不到名稱為 [biome] 的生態域。'
+    # Message that is displayed for players when they use command, but biome is not specified.
+    missing-biome: <red>尚未指定生態域名稱。
+    # Message that is displayed for players when they write incorrect update mode name.
+    incorrect-mode: <red>不存在名稱為「[mode]」的模式。
+    # Message that is displayed for players when they write incorrect number.
+    incorrect-range: <red>「[number]」不是有效的數值。
+    # Error message that is displayed when user tries to import file that does not exist.
+    no-file: <red>在 Biomes 資料夾中找不到 [file]。
+    # Error message that is displayed when user tries to import broken (incorrect) file.
+    no-load: '<red>無法從 [file] 匯入生態域。原因：[description]'
+    # Error message that is displayed when user tries to import biomes in non-gamemode world. May be impossible to reach.
+    not-a-gamemode-world: <red>世界 [world] 不是 GameModeAddon 世界。
+    # Error message that is displayed when user tires to export biomes to a file that already exist.
+    file-exist: <red>檔案 [file] 已存在，請使用其他名稱。
+    # Error message that is displayed when user opens library gui but there are no elements to display.
+    no-library-entries: <red>找不到任何可用的資料庫項目。
+    # Error message that is displayed when user tries to use biome that is not unlocked.
+    not-unlocked: <red>你尚未解鎖此生態域。
+    # Error message that is displayed when user tries to use biome that is not purchased.
+    not-purchased: <red>你尚未購買此生態域。
+    # Error message that is displayed when biome update task run out of time.
+    timeout: <red>生態域變更已逾時，可能是選取範圍過大或伺服器目前負載過高。
+    # Error message that is displayed when biome update task failed.
+    failed: <red>變更生態域時發生錯誤。
+    # Error message that is displayed when addon failed to withdraw money.
+    could-not-remove-money: <red>扣除費用時發生錯誤。
+    # Error message that is displayed when addon failed to withdraw items.
+    could-not-remove-items: <red>扣除物品時發生錯誤。
+    # Error message that is displayed when addon has some error to do some stuff.
+    something-went-wrong: <red>發生未知錯誤，無法完成此操作。
+#    materials:
+#        # Names should be lowercase.
+#        cobblestone: "Cobblestone"
+#        # Also supports descriptions.
+#        stone:
+#            name: "Stone"
+#            description: ""
+#    biomes:
+#        # Names should be lowercase.
+#        plains: "Plains"
+#        # Also supports descriptions.
+#        jungle_hills:
+#            name: "Jungle Hills"
+#            description: ""
+#    item-stacks:
+#        # Non-specific item meta translations.
+#        # TYPE is the item type
+#        # META is a content of item meta.
+#        generic: "[type] [meta]"
+#        # Non-specific meta translations. Will replace [meta]
+#        meta:
+#            upgraded: "Upgraded"
+#            extended: "Extended"
+#            potion-meta: "<yellow> [type] [upgraded] [extended]"
+#            # Be aware, enchants are always listed below item in separate line.
+#            enchant-meta: "    <gray> - <yellow> [type] [level]"
+#            skull-meta: ": <yellow> [player-name]"
+#            book-meta: "<yellow> [title] [author]"
+#        # Custom Enchantment Translation.
+#        enchant:
+#            menting: "Mending"
+#            unbreaking: "Unbreaking"
+#        # Custom Potion Translation.
+#        potion-type:
+#            water_breathing: "Water Breathing"
+#        # You can also create specific item translations
+#        # Like translate all potions.
+#        potion:
+#            # This will overwrite generic translation.
+#            name: "[type] [upgraded] [extended]"
+#            # Type is either specific translation or potion effect.
+#            water_breathing: "Potion of Water Breathing"
+#        stone_shovel:
+#            # This will mean that only stone shovels will not show
+#            # meta information.
+#            name: "[type]"
+#    # Showcase how to support multi-linguistic biomes
+#    custom-biomes:
+#        # Database ID name.
+#        example_biome_id:
+#            name: "<dark_green> Translated Name"
+#            description: |-
+#                <gray> Translated Custom
+#                <gray> description
+protection:
+  flags:
+    BIOMES_ISLAND_PROTECTION:
+      name: 生態域控制
+      description: |-
+        <dark_purple><italic> 設定誰可以變更
+        <dark_purple><italic> 島嶼的生態域。
+    BIOMES_WORLD_PROTECTION:
+      name: 生態域島嶼限制
+      description: |-
+        <dark_purple><italic> 設定玩家是否必須
+        <dark_purple><italic> 位於自己的島嶼上
+        <dark_purple><italic> 才能變更
+        <dark_purple><italic> 生態域。
+      hint: <red>你必須位於自己的島嶼上才能變更生態域！
