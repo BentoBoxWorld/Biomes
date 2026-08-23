@@ -42,6 +42,7 @@ import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.Database;
 import world.bentobox.bentobox.database.objects.Island;
 import world.bentobox.bentobox.managers.IslandWorldManager;
+import world.bentobox.bentobox.util.Pair;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.database.objects.BiomesBundleObject;
@@ -933,13 +934,13 @@ public class BiomesAddonManager
 
             if (!biomesObject.getUnlockItems().isEmpty())
             {
-                List<ItemStack> missingItemList = new ArrayList<>();
+                List<Pair<ItemStack, Integer>> missingItemList = new ArrayList<>();
 
-                Utils.groupEqualItems(biomesObject.getUnlockItems(), Collections.emptySet()).forEach(item ->
+                Utils.groupEqualItems(biomesObject.getUnlockItems(), Collections.emptySet()).forEach(itemAmountPair ->
                 {
-                    if (!Utils.hasRequiredItem(user, item, Collections.emptySet()))
+                    if (!Utils.hasRequiredItem(user, itemAmountPair, Collections.emptySet()))
                     {
-                        missingItemList.add(item.clone());
+                        missingItemList.add(itemAmountPair);
                     }
                 });
 
@@ -947,10 +948,10 @@ public class BiomesAddonManager
                 {
                     // Not enough items
                     StringBuilder missingItems = new StringBuilder();
-                    missingItemList.forEach(itemStack -> missingItems.
-                        append(itemStack.getAmount()).
+                    missingItemList.forEach(pair -> missingItems.
+                        append(pair.getValue()).
                         append(" ").
-                        append(Utils.prettifyObject(itemStack, user)).
+                        append(Utils.prettifyObject(pair.getKey(), user)).
                         append(" "));
 
                     Utils.sendMessage(user,
@@ -1091,7 +1092,7 @@ public class BiomesAddonManager
      */
     private void withdrawItems(CompletableFuture<Boolean> changeBiomeStage,
         User user,
-        List<ItemStack> requiredItemList,
+        List<Pair<ItemStack, Integer>> requiredItemList,
         Set<Material> ignoreMetaData)
     {
         if (user.getPlayer().getGameMode() == GameMode.CREATIVE)
@@ -1100,17 +1101,17 @@ public class BiomesAddonManager
             return;
         }
 
-        for (ItemStack required : requiredItemList)
+        for (Pair<ItemStack, Integer> required : requiredItemList)
         {
-            int amountToBeRemoved = required.getAmount();
+            int amountToBeRemoved = required.getValue();
             List<ItemStack> itemsInInventory;
 
-            if (ignoreMetaData.contains(required.getType()))
+            if (ignoreMetaData.contains(required.getKey().getType()))
             {
                 // Use collecting method that ignores item meta.
                 itemsInInventory = Arrays.stream(user.getInventory().getContents()).
                     filter(Objects::nonNull).
-                    filter(i -> i.getType().equals(required.getType())).
+                    filter(i -> i.getType().equals(required.getKey().getType())).
                     collect(Collectors.toList());
             }
             else
@@ -1118,7 +1119,7 @@ public class BiomesAddonManager
                 // Use collecting method that compares item meta.
                 itemsInInventory = Arrays.stream(user.getInventory().getContents()).
                     filter(Objects::nonNull).
-                    filter(i -> i.isSimilar(required)).
+                    filter(i -> i.isSimilar(required.getKey())).
                     collect(Collectors.toList());
             }
 
@@ -1126,9 +1127,6 @@ public class BiomesAddonManager
             {
                 if (amountToBeRemoved > 0)
                 {
-                    ItemStack dummy = itemStack.clone();
-                    dummy.setAmount(1);
-
                     // Remove either the full amount or the remaining amount
                     if (itemStack.getAmount() >= amountToBeRemoved)
                     {
@@ -1148,7 +1146,7 @@ public class BiomesAddonManager
                 Utils.sendMessage(user,
                     user.getTranslation(Constants.ERRORS + "could-not-remove-items"));
 
-                this.addon.logError("Could not remove " + amountToBeRemoved + " of " + required.getType() +
+                this.addon.logError("Could not remove " + amountToBeRemoved + " of " + required.getKey().getType() +
                     " from player's inventory!");
 
                 changeBiomeStage.complete(false);

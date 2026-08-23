@@ -265,11 +265,11 @@ public class BiomeEditPanel extends CommonPanel
 
                     Utils.groupEqualItems(this.biome.getUnlockItems(), Collections.emptySet()).
                         stream().
-                        sorted(Comparator.comparing(ItemStack::getType)).
-                        forEach(itemStack ->
+                        sorted(Comparator.comparing(o -> o.getKey().getType())).
+                        forEach(itemAmountPair ->
                             description.add(this.user.getTranslationOrNothing(reference + "element",
-                                "[number]", String.valueOf(itemStack.getAmount()),
-                                "[item]", Utils.prettifyObject(itemStack, this.user))));
+                                "[number]", String.valueOf(itemAmountPair.getValue()),
+                                "[item]", Utils.prettifyObject(itemAmountPair.getKey(), this.user))));
                 }
 
                 icon = new ItemStack(Material.CHEST);
@@ -575,11 +575,11 @@ public class BiomeEditPanel extends CommonPanel
 
                     Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()).
                         stream().
-                        sorted(Comparator.comparing(ItemStack::getType)).
-                        forEach(itemStack ->
+                        sorted(Comparator.comparing(o -> o.getKey().getType())).
+                        forEach(itemAmountPair ->
                             description.add(this.user.getTranslationOrNothing(reference + "element",
-                                "[number]", String.valueOf(itemStack.getAmount()),
-                                "[item]", Utils.prettifyObject(itemStack, this.user))));
+                                "[number]", String.valueOf(itemAmountPair.getValue()),
+                                "[item]", Utils.prettifyObject(itemAmountPair.getKey(), this.user))));
                 }
 
                 icon = new ItemStack(Material.CHEST);

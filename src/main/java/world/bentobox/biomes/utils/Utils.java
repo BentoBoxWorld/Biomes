@@ -19,6 +19,7 @@ import org.bukkit.inventory.meta.*;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -28,6 +29,7 @@ import world.bentobox.bentobox.api.configuration.WorldSettings;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.objects.Island;
 import world.bentobox.bentobox.hooks.LangUtilsHook;
+import world.bentobox.bentobox.util.Pair;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.config.Settings;
@@ -47,46 +49,51 @@ public class Utils
         ThreadLocal.withInitial(() -> new DecimalFormat("0.###", DecimalFormatSymbols.getInstance(Locale.ROOT)));
 
     /**
-     * This method groups input items in single itemstack with correct amount and returns it. Allows to remove duplicate
-     * items from list.
+     * This method groups input items and maps them to their total required amounts.
+     * Bypasses the 1.20.5+ max stack size limit by storing totals in a Pair.
      *
      * @param requiredItems Input item list
      * @param ignoreMetaData Set that contains items which can ignore meta data.
-     * @return List that contains unique items that cannot be grouped.
+     * @return List of Pairs containing the unique ItemStack (amount set to 1) and its total required amount.
      */
-    public static List<ItemStack> groupEqualItems(List<ItemStack> requiredItems, Set<Material> ignoreMetaData)
+    @NotNull
+    public static List<Pair<ItemStack, Integer>> groupEqualItems(@NotNull List<ItemStack> requiredItems,
+        @NotNull Set<Material> ignoreMetaData)
     {
-        List<ItemStack> returnItems = new ArrayList<>(requiredItems.size());
-
-        // Group all equal items in single stack, as otherwise it will be too complicated to check if all
-        // items are in players inventory.
+        List<Pair<ItemStack, Integer>> returnItems = new ArrayList<>();
 
         for (ItemStack item : requiredItems)
         {
-            boolean isUnique = item != null;
-
-            int i = 0;
-            final int requiredSize = returnItems.size();
-
-            while (i < requiredSize && isUnique)
+            if (item == null)
             {
-                ItemStack required = returnItems.get(i);
+                continue;
+            }
+
+            boolean isUnique = true;
+
+            for (int i = 0; i < returnItems.size(); i++)
+            {
+                Pair<ItemStack, Integer> pair = returnItems.get(i);
+
+                ItemStack required = pair.getKey();
+                int currentAmount = pair.getValue();
 
                 // Merge items which meta can be ignored or is similar to item in required list.
                 if (required.isSimilar(item) ||
-                        ignoreMetaData.contains(item.getType()) && item.getType().equals(required.getType()))
+                    (ignoreMetaData.contains(item.getType()) && item.getType().equals(required.getType())))
                 {
-                    required.setAmount(required.getAmount() + item.getAmount());
+                    returnItems.set(i, new Pair<>(required, currentAmount + item.getAmount()));
                     isUnique = false;
+                    break;
                 }
-
-                i++;
             }
 
             if (isUnique)
             {
-                // The same issue as in other places. Clone prevents from changing original item.
-                returnItems.add(item.clone());
+                ItemStack clone = item.clone();
+                clone.setAmount(1);
+
+                returnItems.add(new Pair<>(clone, item.getAmount()));
             }
         }
 
@@ -98,12 +105,13 @@ public class Utils
      * This method returns true if player has required item in his inventory.
      *
      * @param user the user
-     * @param requiredItem the required item
+     * @param itemPair the required item and amount pair
      * @param ignoreMetaData the ignore meta data
      * @return {@code true} if item is in his inventory, otherwise {@code false}
      */
     public static boolean hasRequiredItem(@Nullable User user,
-            ItemStack requiredItem, Set<Material> ignoreMetaData)
+        Pair<ItemStack, Integer> itemPair,
+        Set<Material> ignoreMetaData)
     {
         if (user == null)
         {
@@ -118,6 +126,7 @@ public class Utils
         else
         {
             int numInInventory;
+            ItemStack requiredItem = itemPair.getKey();
 
             if (!ignoreMetaData.isEmpty() && ignoreMetaData.contains(requiredItem.getType()))
             {
@@ -132,7 +141,7 @@ public class Utils
                         .sum();
             }
 
-            return numInInventory >= requiredItem.getAmount();
+            return numInInventory >= itemPair.getValue();
         }
     }
 

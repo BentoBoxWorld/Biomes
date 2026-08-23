@@ -26,6 +26,7 @@ import world.bentobox.bentobox.api.panels.TemplatedPanel;
 import world.bentobox.bentobox.api.panels.builders.PanelItemBuilder;
 import world.bentobox.bentobox.api.panels.reader.ItemTemplateRecord;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.bentobox.util.Pair;
 import world.bentobox.bentobox.util.Util;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.database.objects.BiomesBundleObject;
@@ -264,7 +265,7 @@ public abstract class CommonPanel
         if (!biome.getUnlockItems().isEmpty())
         {
             // Yes list duplication for complete menu.
-            List<ItemStack> missingItems = Utils.groupEqualItems(biome.getUnlockItems(), Collections.emptySet());
+            List<Pair<ItemStack, Integer>> missingItems = Utils.groupEqualItems(biome.getUnlockItems(), Collections.emptySet());
 
             StringBuilder itemBuilder = new StringBuilder();
 
@@ -272,7 +273,7 @@ public abstract class CommonPanel
             {
                 String color;
 
-                if (Utils.hasRequiredItem(this.user, missingItems.get(0), Collections.emptySet()))
+                if (Utils.hasRequiredItem(this.user, missingItems.getFirst(), Collections.emptySet()))
                 {
                     color = this.user.getTranslationOrNothing(reference + "has");
                 }
@@ -283,17 +284,17 @@ public abstract class CommonPanel
 
                 itemBuilder.append(this.user.getTranslationOrNothing(reference + "item-single",
                     "[color]", color,
-                    "[number]", String.valueOf(missingItems.get(0).getAmount()),
-                    "[item]", Utils.prettifyObject(missingItems.get(0), this.user)));
+                    "[number]", String.valueOf(missingItems.getFirst().getValue()),
+                    "[item]", Utils.prettifyObject(missingItems.getFirst().getKey(), this.user)));
             }
             else if (!missingItems.isEmpty())
             {
                 itemBuilder.append(this.user.getTranslationOrNothing(reference + "item-title"));
-                missingItems.forEach(item ->
+                missingItems.forEach(itemAmountPair ->
                 {
                     String color;
 
-                    if (Utils.hasRequiredItem(this.user, item, Collections.emptySet()))
+                    if (Utils.hasRequiredItem(this.user, itemAmountPair, Collections.emptySet()))
                     {
                         color = this.user.getTranslationOrNothing(reference + "has");
                     }
@@ -305,8 +306,8 @@ public abstract class CommonPanel
                     itemBuilder.append("\n");
                     itemBuilder.append(this.user.getTranslationOrNothing(reference + "item-list",
                         "[color]", color,
-                        "[number]", String.valueOf(item.getAmount()),
-                        "[item]", Utils.prettifyObject(item, this.user)));
+                        "[number]", String.valueOf(itemAmountPair.getValue()),
+                        "[item]", Utils.prettifyObject(itemAmountPair.getKey(), this.user)));
                 });
             }
 
@@ -336,14 +337,14 @@ public abstract class CommonPanel
             List<String> missingPermissions = biome.getUnlockPermissions().stream().
                 filter(permission -> target == null || !target.hasPermission(permission)).
                 sorted().
-                collect(Collectors.toList());
+                toList();
 
             StringBuilder permissionBuilder = new StringBuilder();
 
             if (missingPermissions.size() == 1)
             {
                 permissionBuilder.append(this.user.getTranslationOrNothing(reference + "permission-single",
-                    Constants.PARAMETER_PERMISSION, missingPermissions.get(0)));
+                    Constants.PARAMETER_PERMISSION, missingPermissions.getFirst()));
             }
             else if (!missingPermissions.isEmpty())
             {
@@ -481,18 +482,19 @@ public abstract class CommonPanel
             }
 
             // Yes list duplication for complete menu.
-            List<ItemStack> missingItems = Utils.groupEqualItems(biome.getItemCost(), Collections.emptySet());
+            List<Pair<ItemStack, Integer>> missingItems =
+                Utils.groupEqualItems(biome.getItemCost(), Collections.emptySet());
 
             StringBuilder itemBuilder = new StringBuilder();
 
             if (missingItems.size() == 1)
             {
-                int amount = missingItems.get(0).getAmount();
-                missingItems.get(0).setAmount(amount + (int) increment);
+                int amount = missingItems.getFirst().getValue() + (int) increment;
+                ItemStack item = missingItems.getFirst().getKey();
 
                 String color;
 
-                if (Utils.hasRequiredItem(this.user, missingItems.get(0), Collections.emptySet()))
+                if (Utils.hasRequiredItem(this.user, new Pair<>(item, amount), Collections.emptySet()))
                 {
                     color = this.user.getTranslationOrNothing(reference + "has");
                 }
@@ -503,20 +505,20 @@ public abstract class CommonPanel
 
                 itemBuilder.append(this.user.getTranslationOrNothing(reference + "item-single",
                     "[color]", color,
-                    "[number]", String.valueOf((int) (amount + amount * increment)),
-                    "[item]", Utils.prettifyObject(missingItems.get(0), this.user)));
+                    "[number]", String.valueOf(amount),
+                    "[item]", Utils.prettifyObject(item, this.user)));
             }
             else if (!missingItems.isEmpty())
             {
                 itemBuilder.append(this.user.getTranslationOrNothing(reference + "item-title"));
-                missingItems.forEach(item ->
+                missingItems.forEach(itemAmountPair ->
                 {
-                    int amount = item.getAmount();
-                    item.setAmount(amount + amount * (int) increment);
+                    int amount = itemAmountPair.getValue() + (int) increment;
+                    ItemStack item = itemAmountPair.getKey();
 
                     String color;
 
-                    if (Utils.hasRequiredItem(this.user, item, Collections.emptySet()))
+                    if (Utils.hasRequiredItem(this.user, new Pair<>(item, amount), Collections.emptySet()))
                     {
                         color = this.user.getTranslationOrNothing(reference + "has");
                     }
@@ -528,7 +530,7 @@ public abstract class CommonPanel
                     itemBuilder.append("\n");
                     itemBuilder.append(this.user.getTranslationOrNothing(reference + "item-list",
                         "[color]", color,
-                        "[number]", String.valueOf((int) (amount + amount * increment)),
+                        "[number]", String.valueOf(amount),
                         "[item]", Utils.prettifyObject(item, this.user)));
                 });
             }

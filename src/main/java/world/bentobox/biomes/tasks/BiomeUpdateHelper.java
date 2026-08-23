@@ -24,6 +24,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.BlockVector;
+import org.jetbrains.annotations.NotNull;
 
 import net.milkbowl.vault.economy.EconomyResponse;
 import world.bentobox.bank.BankManager;
@@ -33,6 +34,7 @@ import world.bentobox.bank.data.TxType;
 import world.bentobox.bentobox.api.localization.TextVariables;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.objects.Island;
+import world.bentobox.bentobox.util.Pair;
 import world.bentobox.biomes.BiomesAddon;
 import world.bentobox.biomes.config.Settings.UpdateMode;
 import world.bentobox.biomes.database.objects.BiomesIslandDataObject;
@@ -610,7 +612,7 @@ public class BiomeUpdateHelper
      * @param ignoreMetaData items that can ignore metadata.
      */
     private void withdrawItems(CompletableFuture<Boolean> changeBiomeStage,
-        List<ItemStack> requiredItemList,
+        List<Pair<ItemStack, Integer>> requiredItemList,
         Set<Material> ignoreMetaData)
     {
         if (this.callerUser.getPlayer().getGameMode() == GameMode.CREATIVE)
@@ -619,17 +621,17 @@ public class BiomeUpdateHelper
             return;
         }
 
-        for (ItemStack required : requiredItemList)
+        for (Pair<ItemStack, Integer> required : requiredItemList)
         {
-            int amountToBeRemoved = required.getAmount();
+            int amountToBeRemoved = required.getValue();
             List<ItemStack> itemsInInventory;
 
-            if (ignoreMetaData.contains(required.getType()))
+            if (ignoreMetaData.contains(required.getKey().getType()))
             {
                 // Use collecting method that ignores item meta.
                 itemsInInventory = Arrays.stream(this.callerUser.getInventory().getContents()).
                     filter(Objects::nonNull).
-                    filter(i -> i.getType().equals(required.getType())).
+                    filter(i -> i.getType().equals(required.getKey().getType())).
                     collect(Collectors.toList());
             }
             else
@@ -637,7 +639,7 @@ public class BiomeUpdateHelper
                 // Use collecting method that compares item meta.
                 itemsInInventory = Arrays.stream(this.callerUser.getInventory().getContents()).
                     filter(Objects::nonNull).
-                    filter(i -> i.isSimilar(required)).
+                    filter(i -> i.isSimilar(required.getKey())).
                     collect(Collectors.toList());
             }
 
@@ -667,7 +669,7 @@ public class BiomeUpdateHelper
                 Utils.sendMessage(this.callerUser,
                     this.callerUser.getTranslation(Constants.ERRORS + "could-not-remove-items"));
 
-                this.addon.logError("Could not remove " + amountToBeRemoved + " of " + required.getType() +
+                this.addon.logError("Could not remove " + amountToBeRemoved + " of " + required.getKey().getType() +
                     " from player's inventory!");
 
                 changeBiomeStage.complete(false);
@@ -699,10 +701,14 @@ public class BiomeUpdateHelper
 
         if (!this.biome.getItemCost().isEmpty())
         {
-            List<ItemStack> itemCost = Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet());
-            itemCost.forEach(itemStack -> itemStack.setAmount(itemStack.getAmount() * blockCount));
+            List<Pair<ItemStack, Integer>> itemCost =
+                Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet());
 
-            this.withdrawItems(changeBiomeStage, itemCost, BiomesAddonManager.NO_META_DATA_SET);
+            List<Pair<ItemStack, Integer>> scaledCost = itemCost.stream().
+                map(pair -> new Pair<>(pair.getKey(), pair.getValue() * blockCount)).
+                toList();
+
+            this.withdrawItems(changeBiomeStage, scaledCost, BiomesAddonManager.NO_META_DATA_SET);
         }
 
         if (changeBiomeStage.isDone())
@@ -738,13 +744,14 @@ public class BiomeUpdateHelper
 
         if (!this.biome.getItemCost().isEmpty())
         {
-            List<ItemStack> itemCost = Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet());
-            itemCost.forEach(itemStack -> itemStack.setAmount(
-                itemStack.getAmount() + (int) increment));
+            List<Pair<ItemStack, Integer>> itemCost =
+                Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet());
 
-            this.withdrawItems(changeBiomeStage,
-                itemCost,
-                    BiomesAddonManager.NO_META_DATA_SET);
+            List<Pair<ItemStack, Integer>> scaledCost = itemCost.stream().
+                map(pair -> new Pair<>(pair.getKey(), pair.getValue() + (int) increment)).
+                toList();
+
+            this.withdrawItems(changeBiomeStage, scaledCost, BiomesAddonManager.NO_META_DATA_SET);
         }
 
         if (changeBiomeStage.isDone())
@@ -851,13 +858,13 @@ public class BiomeUpdateHelper
 
         if (!this.biome.getItemCost().isEmpty())
         {
-            List<ItemStack> missingItemList = new ArrayList<>();
+            List<Pair<ItemStack, Integer>> missingItemList = new ArrayList<>();
 
-            Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()).forEach(item ->
+            Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()).forEach(itemAmountPair ->
             {
-                if (!Utils.hasRequiredItem(this.callerUser, item, BiomesAddonManager.NO_META_DATA_SET))
+                if (!Utils.hasRequiredItem(this.callerUser, itemAmountPair, BiomesAddonManager.NO_META_DATA_SET))
                 {
-                    missingItemList.add(item.clone());
+                    missingItemList.add(itemAmountPair);
                 }
             });
 
@@ -865,10 +872,10 @@ public class BiomeUpdateHelper
             {
                 // Not enough items
                 StringBuilder missingItems = new StringBuilder();
-                missingItemList.forEach(itemStack -> missingItems.
-                    append(itemStack.getAmount()).
+                missingItemList.forEach(itemAmountPair -> missingItems.
+                    append(itemAmountPair.getValue()).
                     append(" ").
-                    append(Utils.prettifyObject(itemStack, this.callerUser)).
+                    append(Utils.prettifyObject(itemAmountPair.getKey(), this.callerUser)).
                     append(" "));
 
                 Utils.sendMessage(this.callerUser,
@@ -921,17 +928,16 @@ public class BiomeUpdateHelper
 
         if (!this.biome.getItemCost().isEmpty())
         {
-            List<ItemStack> missingItemList = new ArrayList<>();
+            List<Pair<ItemStack, Integer>> missingItemList = new ArrayList<>();
 
-            Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()).forEach(item ->
+            Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()).forEach(itemAmountPair ->
             {
-                ItemStack clone = item.clone();
-                // Increase items by increment.
-                clone.setAmount(clone.getAmount() + (int) increment);
+                Pair<ItemStack, Integer> adjustedPair = new Pair<>(itemAmountPair.getKey(),
+                    itemAmountPair.getValue() + (int) increment);
 
-                if (!Utils.hasRequiredItem(this.callerUser, clone, Collections.emptySet()))
+                if (!Utils.hasRequiredItem(this.callerUser, adjustedPair, Collections.emptySet()))
                 {
-                    missingItemList.add(clone);
+                    missingItemList.add(adjustedPair);
                 }
             });
 
@@ -939,10 +945,10 @@ public class BiomeUpdateHelper
             {
                 // Not enough items
                 StringBuilder missingItems = new StringBuilder();
-                missingItemList.forEach(itemStack -> missingItems.
-                    append(itemStack.getAmount()).
+                missingItemList.forEach(itemAmountPair -> missingItems.
+                    append(itemAmountPair.getValue()).
                     append(" ").
-                    append(Utils.prettifyObject(itemStack, this.callerUser)).
+                    append(Utils.prettifyObject(itemAmountPair.getKey(), this.callerUser)).
                     append(" "));
 
                 Utils.sendMessage(this.callerUser,
@@ -1007,17 +1013,16 @@ public class BiomeUpdateHelper
 
         if (!this.biome.getItemCost().isEmpty())
         {
-            List<ItemStack> missingItemList = new ArrayList<>();
+            List<Pair<ItemStack, Integer>> missingItemList = new ArrayList<>();
 
-            Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()).forEach(item ->
+            Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet()).forEach(itemAmountPair ->
             {
-                ItemStack clone = item.clone();
-                // Increase items by increment.
-                clone.setAmount(clone.getAmount() * blockCount);
+                Pair<ItemStack, Integer> itemPair = new Pair<>(itemAmountPair.getKey(),
+                    itemAmountPair.getValue() * blockCount);
 
-                if (!Utils.hasRequiredItem(this.callerUser, clone, Collections.emptySet()))
+                if (!Utils.hasRequiredItem(this.callerUser, itemPair, Collections.emptySet()))
                 {
-                    missingItemList.add(clone);
+                    missingItemList.add(itemPair);
                 }
             });
 
@@ -1026,9 +1031,9 @@ public class BiomeUpdateHelper
                 // Not enough items
                 StringBuilder missingItems = new StringBuilder();
                 missingItemList.forEach(itemStack -> missingItems.
-                    append(itemStack.getAmount()).
+                    append(itemStack.getValue()).
                     append(" ").
-                    append(Utils.prettifyObject(itemStack, this.callerUser)).
+                    append(Utils.prettifyObject(itemStack.getKey(), this.callerUser)).
                     append(" "));
 
                 Utils.sendMessage(this.callerUser,
