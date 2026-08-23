@@ -727,7 +727,7 @@ public class BiomeUpdateHelper
         if (this.addon.isEconomyProvided())
         {
             this.withdrawMoney(changeBiomeStage,
-                this.biome.getCost() + increment * this.biome.getCost());
+                this.biome.getCost() + increment);
         }
 
         if (changeBiomeStage.isDone())
@@ -740,7 +740,7 @@ public class BiomeUpdateHelper
         {
             List<ItemStack> itemCost = Utils.groupEqualItems(this.biome.getItemCost(), Collections.emptySet());
             itemCost.forEach(itemStack -> itemStack.setAmount(
-                itemStack.getAmount() + (int) increment * itemStack.getAmount()));
+                itemStack.getAmount() + (int) increment));
 
             this.withdrawItems(changeBiomeStage,
                 itemCost,
@@ -893,7 +893,7 @@ public class BiomeUpdateHelper
 
         if (this.addon.isEconomyProvided())
         {
-            double cost = this.biome.getCost() + increment * this.biome.getCost();
+            double cost = this.biome.getCost() + increment;
 
             if (this.addon.getSettings().isUseBankAccount() && this.addon.isBankProvided())
             {
@@ -927,7 +927,7 @@ public class BiomeUpdateHelper
             {
                 ItemStack clone = item.clone();
                 // Increase items by increment.
-                clone.setAmount(clone.getAmount() + clone.getAmount() * (int) increment);
+                clone.setAmount(clone.getAmount() + (int) increment);
 
                 if (!Utils.hasRequiredItem(this.callerUser, clone, Collections.emptySet()))
                 {

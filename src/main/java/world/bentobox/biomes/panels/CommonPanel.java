@@ -444,7 +444,7 @@ public abstract class CommonPanel
         {
             int counter = target.getBiomeChangeCounter(biome.getUniqueId());
 
-            cost = cost + biome.getCostIncrement() * cost * counter;
+            cost = cost + biome.getCostIncrement() * counter;
         }
 
         return !this.addon.isEconomyProvided() || cost <= 0 ? "" :
@@ -488,7 +488,7 @@ public abstract class CommonPanel
             if (missingItems.size() == 1)
             {
                 int amount = missingItems.get(0).getAmount();
-                missingItems.get(0).setAmount(amount + amount * (int) increment);
+                missingItems.get(0).setAmount(amount + (int) increment);
 
                 String color;
 
