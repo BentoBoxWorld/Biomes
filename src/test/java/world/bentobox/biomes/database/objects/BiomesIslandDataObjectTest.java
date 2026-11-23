@@ -12,8 +12,11 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import org.mockbukkit.mockbukkit.MockBukkit;
 
 /**
  * Tests for {@link BiomesIslandDataObject}.
@@ -24,7 +27,15 @@ class BiomesIslandDataObjectTest {
 
     @BeforeEach
     void setUp() {
+        // Some tests make a BiomesObject, whose icon needs a server's item registry. Without one, the Bukkit
+        // classes fail to initialise and stay broken for every test class that runs afterwards.
+        MockBukkit.mock();
         obj = new BiomesIslandDataObject();
+    }
+
+    @AfterEach
+    void tearDown() {
+        MockBukkit.unmock();
     }
 
     @Test
